@@ -30,12 +30,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
                 return OverrideIGlobalContextFake;
             }
 
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
-            string dbConnectionInfo = configuration.GetConnectionString(DbContextBaseUtil.GlobalConnectionString);
+            string dbConnectionInfo = ConfigurationHelper.GetConnectionString(DbContextBaseUtil.GlobalConnectionString);
             dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
 
             DbContextOptionsBuilder<GlobalContext> optionsBuilder = new DbContextOptionsBuilder<GlobalContext>();
@@ -153,10 +148,19 @@ namespace AmitalCloud.Infrastructure.Data.Context
             base.OnModelCreating(modelBuilder);
         }
 
+        public void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                base.Dispose();
+            }
+
+        }
+
         public override void Dispose()
         {
             //Database.Connection.Close();
-            base.Dispose();
+            Dispose(true);
         }
 
         public void DetectChanges()
@@ -227,11 +231,6 @@ namespace AmitalCloud.Infrastructure.Data.Context
         public DbContext GetActiveDbContext()
         {
             return this;
-        }
-
-        void IContext.Dispose()
-        {
-            base.Dispose();
         }
 
         public Task<int> SaveChangesAsync()

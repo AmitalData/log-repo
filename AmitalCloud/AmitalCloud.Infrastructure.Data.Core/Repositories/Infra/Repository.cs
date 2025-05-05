@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
@@ -393,13 +395,34 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         private void HandleUnitOfWorkException(DbUpdateException dbEx)
         {
-            foreach (var validationErrors in dbEx.EntityValidationErrors)
+            _errorMessage = GetValidationErrors();
+        }
+        private string GetValidationErrors()
+        {
+            var errorMessage = new StringBuilder();
+
+            var context = _dbContext.GetActiveDbContext();
+
+            foreach (var entry in context.ChangeTracker.Entries())
             {
-                foreach (var validationError in validationErrors.ValidationErrors)
+                var entity = entry.Entity;
+                var validationContext = new ValidationContext(entity);
+                var validationResults = new List<ValidationResult>();
+
+                bool isValid = Validator.TryValidateObject(
+                    entity,
+                    validationContext,
+                    validationResults,
+                    validateAllProperties: true
+                );
+
+                foreach (var validationResult in validationResults)
                 {
-                    _errorMessage = _errorMessage + $"Property: {validationError.PropertyName} Error: {validationError.ErrorMessage} {Environment.NewLine}";
+                    errorMessage.AppendLine($"Error: {validationResult.ErrorMessage}");
                 }
             }
+
+            return errorMessage.ToString();
         }
         private IQueryable<TEntity> GetQuery<TKey>(ISpecification<TEntity, TKey> spec)
         {

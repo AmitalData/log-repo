@@ -37,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private UserPM GetSinglePMFromCache(Expression<Func<UserPM, bool>> predicate, string entityName)
         {
             UserPM entity;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) != null)
                 {

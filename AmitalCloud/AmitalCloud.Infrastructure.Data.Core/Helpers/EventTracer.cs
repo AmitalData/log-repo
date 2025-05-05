@@ -15,6 +15,18 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class EventTracer
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public EventTracer(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private string GetUsername()
+        {
+            return _httpContextAccessor.HttpContext?.User?.Identity?.Name;
+        }
+
         public static void CreateTraceEvent(EventTracerArgs args)
         {
             if (string.IsNullOrEmpty(args.EventTypeCode))
@@ -43,24 +55,24 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                         myUserId = args.UserId;
                         if (tenant != 0)
                         {
-                            if (HttpContext.Current != null && HttpContext.Current.User != null)
+                            // todo: not working because static function doesnot work with DI
+                            // string email = GetUsername();
+                            string email = null;
+                            if (!string.IsNullOrEmpty(email))
                             {
-                                string email = HttpContext.Current.User.Identity.Name;
-                                if (!string.IsNullOrEmpty(email))
+                                UserRepository userRepository = new UserRepository(uow);
+                                User user = userRepository.GetSingleUserByEmail(email, 0, true);
+                                if (user != null)
                                 {
-                                    UserRepository userRepository = new UserRepository(uow);
-                                    User user = userRepository.GetSingleUserByEmail(email, 0, true);
-                                    if (user != null)
+                                    User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
+                                    if (systemUser != null)
                                     {
-                                        User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
-                                        if (systemUser != null)
-                                        {
-                                            myUserId = systemUser.Id;
-                                        }
-                                        myCustomerCareUserEmail = user.Contact.Email;
+                                        myUserId = systemUser.Id;
                                     }
+                                    myCustomerCareUserEmail = user.Contact.Email;
                                 }
                             }
+
                         }
                     }
                     #endregion

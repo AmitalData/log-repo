@@ -25,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             string entityName = "UserLoginLogPM" + id + tenant;
             UserLoginLogPM entity;
 
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                 {

@@ -33,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Data.Security
             ContactPM loggedContact = null;
             try
             {
-                if (HttpContext.Current != null)
+                if (HttpContextHelper.HttpContext != null)
                 {
                     loggedContact = new ContactQuery(tenant).GetContactByEmailOnly(AuthenticationUtil.ResolveUserIdentityName(tenant), tenant);
 

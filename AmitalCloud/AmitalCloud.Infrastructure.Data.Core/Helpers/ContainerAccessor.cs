@@ -1,6 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Data.Services;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -8,9 +11,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
     {
 
         #region Members
-
-        private static IUnityContainer _container;
-
+        private static IServiceProvider _serviceProvider;
+        private static IServiceCollection _services;
         #endregion
 
         #region Properties
@@ -18,18 +20,17 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         /// <summary>
         /// The Unity container for the current application
         /// </summary>
-        public static IUnityContainer Container
+        public IServiceProvider ServiceProvider
         {
             get
             {
-                if (_container == null)
+                if (_serviceProvider == null)
                 {
-                    _container = new UnityContainer();
+                    InitContainer();
                 }
-                return _container;
+                return _serviceProvider;
             }
         }
-
         #endregion
 
         #region IContainerAccessor Members
@@ -37,10 +38,17 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         /// <summary>
         /// Returns the Unity container of the application 
         /// </summary>
-        IUnityContainer IContainerAccessor.Container
+        /// 
+        /*
+        IServiceProvider IContainerAccessor.ServiceProvider
         {
-            get { return Container; }
+            get { return ServiceProvider; }
         }
+
+        IServiceProvider ServiceProvider
+        {
+            get { return _serviceProvider; }
+        }*/
 
         #endregion
 
@@ -48,61 +56,59 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public static void InitContainer()
         {
-            if (_container == null)
+            if (_serviceProvider == null)
             {
-                _container = new UnityContainer();
+                // Initialize ServiceCollection
+                _services = new ServiceCollection();
+                _services.AddScoped<IBlobService>(provider =>
+                {
+                    var storageServiceMode = AmitalCloudSettings.StorageServiceMode;
+                    switch (storageServiceMode)
+                    {
+                        case "azure":
+                            return new AzureBlobService();
+                        case "db":
+                            return new DatabaseBlobService();
+                        case "fs":
+                            return new FileSystemBlobService();
+                        default:
+                            return new AzureBlobService();
+                    }
+                });
+
+                _services.AddScoped<IQueueService>(provider =>
+                {
+                    var queueServiceMode = AmitalCloudSettings.QueueServiceMode;
+                    switch (queueServiceMode)
+                    {
+                        case "azure":
+                            return new AzureQueueService();
+                        case "db":
+                            return new DbQueueService();
+                        default:
+                            return new AzureQueueService();
+                    }
+                });
+
+                // Build the service provider
+                _serviceProvider = _services.BuildServiceProvider();
             }
-
-            // Register the relevant types for the 
-            // container here through classes or configuration
-
-            switch (AmitalCloudSettings.StorageServiceMode)
-            {
-                case "azure":
-                    _container.RegisterType<IBlobService, AzureBlobService>("StorageService", new InjectionFactory(c => new AzureBlobService()));
-                    break;
-                case "db":
-                    _container.RegisterType<IBlobService, DatabaseBlobService>("StorageService", new InjectionFactory(c => new DatabaseBlobService()));
-                    break;
-                case "fs":
-                    _container.RegisterType<IBlobService, FileSystemBlobService>("StorageService", new InjectionFactory(c => new FileSystemBlobService()));
-                    break;
-                default:
-                    _container.RegisterType<IBlobService, AzureBlobService>("StorageService", new InjectionFactory(c => new AzureBlobService()));
-                    break;
-
-
-            }
-
-            switch (AmitalCloudSettings.QueueServiceMode)
-            {
-                case "azure":
-                    _container.RegisterType<IQueueService, AzureQueueService>("QueueService", new InjectionFactory(c => new AzureQueueService()));
-                    break;
-                case "db":
-                    _container.RegisterType<IQueueService, DbQueueService>("QueueService", new InjectionFactory(c => new DbQueueService()));
-                    break;
-                default:
-                    _container.RegisterType<IQueueService, AzureQueueService>("QueueService", new InjectionFactory(c => new AzureQueueService()));
-                    break;
-
-
-            }
-
-
 
         }
 
-        public static void RegisterTypeFactory<TFrom, TTo>(string key, TTo _factoryObject) where TTo : TFrom
+        public static void RegisterTypeFactory<TFrom, TTo>(string key, TTo _factoryObject)
+            where TFrom : class
+            where TTo : class, TFrom
         {
-            _container.RegisterType<TFrom, TTo>(key, new InjectionFactory(c => _factoryObject));
+            _services.AddScoped<TFrom, TTo>();
+            _serviceProvider = _services.BuildServiceProvider(); // Rebuild the provider after registration
         }
 
         public static void CleanUp()
         {
-            if (Container != null)
+            if (_serviceProvider != null)
             {
-                Container.Dispose();
+                (_serviceProvider as IDisposable)?.Dispose();
             }
         }
 
@@ -115,11 +121,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             var o1 = o.GetType().UnderlyingSystemType.Name;
             return o.GetType().Name;
         }
-        public static I ResolveSafe<I>(this IUnityContainer unityContainer)
+        public static I ResolveSafe<I>(this IServiceProvider serviceProvider)
         {
-            if ((unityContainer as UnityContainer).IsRegistered<I>())
+            if (serviceProvider.GetService<I>() != null)
             {
-                return ContainerAccessor.Container.Resolve<I>();
+                return serviceProvider.GetService<I>();
             }
             return default(I);
         }

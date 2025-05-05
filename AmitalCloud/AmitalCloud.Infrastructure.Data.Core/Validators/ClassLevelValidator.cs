@@ -19,9 +19,8 @@ namespace AmitalCloud.Infrastructure.Data.Validators
         string errorMessage = "";
         IRulesValidator ruleValidator;
         public bool IsHybrid { get; set; }
-        public ClassLevelValidator(string objectTableName, int tenant)
+        public ClassLevelValidator(IRulesValidator ruleValidator, string objectTableName, int tenant)
         {
-            ruleValidator = ContainerAccessor.Container.Resolve(typeof(IRulesValidator), "RulesValidator", new ParameterOverride("", 1)) as IRulesValidator;
             ruleValidator.Initialize(tenant);
 
             this.objectTableName = objectTableName;

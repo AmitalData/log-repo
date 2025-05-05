@@ -4,6 +4,7 @@ using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Transactions;
 using Microsoft.Extensions.Caching.Memory;
+using System.Collections;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -27,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public System.Collections.IDictionaryEnumerator GetEnumerator()
         {
-            return cache.GetEnumerator();
+            return ((IDictionary)cache).GetEnumerator();
         }
 
         public void Insert(string key, object value, int tenant = -1)
@@ -183,17 +184,17 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             if (tenant == -1)
             {
-                if (HttpContext.Current.Items.Contains("Tenant"))
+                if (HttpContextHelper.HttpContext.Items.ContainsKey("Tenant"))
                 {
-                    tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
+                    tenant = Convert.ToInt32(HttpContextHelper.HttpContext.Items["Tenant"]);
                 }
-                else if (HttpContext.Current.Items.Contains("authToken"))
+                else if (HttpContextHelper.HttpContext.Items.ContainsKey("authToken"))
                 {
-                    tenant = (HttpContext.Current.Items["authToken"] as AuthenticationToken).Tenant;
+                    tenant = (HttpContextHelper.HttpContext.Items["authToken"] as AuthenticationToken).Tenant;
                 }
                 else
                 {
-                    string token = HttpContext.Current.Request.Headers["Token"];
+                    string token = HttpContextHelper.HttpContext.Request.Headers["Token"];
                     if (!string.IsNullOrEmpty(token))
                     {
                         string cacheKey = $"Token_({token})";

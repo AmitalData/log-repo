@@ -13,13 +13,20 @@ namespace AmitalCloud.Infrastructure.Data.Services
     {
         private int Tenant { get; set; }
         private string QueueCode { get; set; }
-        private QueueClient QueueClient { get; set; }
-        private ServiceBusMessage CurrentMessage { get; set; }
+        private ServiceBusReceiver QueueClient { get; set; }
+        private ServiceBusSender QueueSender { get; set; }
+        private ServiceBusReceivedMessage CurrentMessage { get; set; }
         public void InitializeQueue(string queueCode, int tenant)
         {
             this.Tenant = tenant;
             this.QueueCode = queueCode;
             this.QueueClient = Communications.GetQueueClient(this.QueueCode);
+
+            /*
+            var client = new ServiceBusClient(connectionString);
+            this.QueueClient = client.CreateReceiver(this.QueueCode);
+            this.QueueSender = client.CreateSender(this.QueueCode);
+            */
         }
 
         public void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null)
@@ -28,13 +35,13 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 ServiceBusMessage message = new ServiceBusMessage();
                 foreach (string key in messageValues.Keys)
-                    message.Properties[key] = messageValues[key];
+                    message.ApplicationProperties[key] = messageValues[key];
                 if (delayTime != null)
                 {
-                    message.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(delayTime.Value);
+                    message.ScheduledEnqueueTime = DateTime.UtcNow.Add(delayTime.Value);
                 }
 
-                this.QueueClient.Send(message);
+                this.QueueSender.SendMessageAsync(message).Wait();
 
                 scope.Complete();
             }
@@ -48,11 +55,11 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 QueueResponse response = new QueueResponse();
                 if (this.CurrentMessage == null)
                 {
-                    ServiceBusMessage message = this.QueueClient.Receive(serverWaitTime.Value);
+                    ServiceBusReceivedMessage message = this.QueueClient.ReceiveMessageAsync(serverWaitTime.Value).Result;
                     if (message != null)
                     {
                         response.MessageId = message.MessageId;
-                        response.MessageValues = message.Properties.ToDictionary(pair => pair.Key, pair => (pair.Value != null ? pair.Value.ToString() : null));
+                        response.MessageValues = message.ApplicationProperties.ToDictionary(pair => pair.Key, pair => (pair.Value != null ? pair.Value.ToString() : null));
                         response.RetryNumber = message.DeliveryCount;
                         this.CurrentMessage = message;
                     }
@@ -75,7 +82,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 if (this.CurrentMessage != null)
                 {
-                    this.CurrentMessage.Complete();
+                    this.QueueClient.CompleteMessageAsync(this.CurrentMessage).Wait();
                     this.CurrentMessage = null;
                 }
 
@@ -89,9 +96,12 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 if (this.CurrentMessage != null)
                 {
-                    this.CurrentMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.Add(delayTime);
+                    this.QueueClient.AbandonMessageAsync(this.CurrentMessage).Wait();
 
-                    this.CurrentMessage.Abandon();
+                    ServiceBusMessage delayedMessage = new ServiceBusMessage(this.CurrentMessage);
+                    delayedMessage.ScheduledEnqueueTime = DateTime.UtcNow.Add(delayTime);
+
+                    this.QueueSender.SendMessageAsync(delayedMessage).Wait();
                     this.CurrentMessage = null;
                 }
                 scope.Complete();
@@ -104,7 +114,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             {
                 if (this.CurrentMessage != null)
                 {
-                    this.CurrentMessage.Abandon();
+                    this.QueueClient.AbandonMessageAsync(this.CurrentMessage).Wait();
                     this.CurrentMessage = null;
                 }
 

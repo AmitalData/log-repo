@@ -1,10 +1,7 @@
-// using Microsoft.WindowsAzure.Storage.Table;
-using Azure.Data.Tables;
-using System;
 
 namespace AmitalCloud.Infrastructure.Data.Azure
 {
-    public class CommunicationLogsAzure : TableEntity
+    public class CommunicationLogsAzure
     {
         public string Id { get; set; }
         public int Tenant { get; set; }

@@ -301,7 +301,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                currentDb = new GlobalDBRepository(ConfigurationHelper.Conf).GetGlobalDBByTenant(tenant);
 
             }
             string dbConnectionInfo = currentDb.DBConnection;

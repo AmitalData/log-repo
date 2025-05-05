@@ -43,7 +43,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             List<ObjectTableRuleField> currentquery;
             List<ObjectTableRuleField> query = new List<ObjectTableRuleField>();
             string rulesFieldsListName = "RuleFields" + tenant;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
                 if (CacheManager.CacheWrapper.Get(rulesFieldsListName) == null)
                 {

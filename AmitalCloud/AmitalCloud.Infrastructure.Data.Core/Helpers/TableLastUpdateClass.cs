@@ -41,11 +41,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 entityObjectTable = entityObjectTable ?? GetObjectTable(tenant, tableName, tableLastUpdateM, (IAmitalCloudContext)uow.Context);
                 if (loggedUser == null)
                 {
-                    if (HttpContext.Current != null && HttpContext.Current.User != null)
+                    if (HttpContextHelper.User != null)
                     {
-                        if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                        if (!string.IsNullOrEmpty(HttpContextHelper.User.Identity.Name))
                         {
-                            loggedUser = userRepository.GetMulti(d => d.Tenant == tenant && d.Contact.Email == HttpContext.Current.User.Identity.Name).FirstOrDefault();                //GetSingleUserByEmail(HttpContext.Current.User.Identity.Name, tenant, true);
+                            loggedUser = userRepository.GetMulti(d => d.Tenant == tenant && d.Contact.Email == HttpContextHelper.User.Identity.Name).FirstOrDefault();                //GetSingleUserByEmail(HttpContextHelper.User.Identity.Name, tenant, true);
                         }
                     }
                 }
@@ -110,10 +110,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             if (loggedUser == null)
             {
-                if (HttpContext.Current != null && HttpContext.Current.User != null &&
-                    !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (HttpContextHelper.User != null &&
+                    !string.IsNullOrEmpty(HttpContextHelper.User.Identity.Name))
                 {
-                    loggedUser = GetSingleUserByEmail(tenant, userRepository, HttpContext.Current.User.Identity.Name);// userRepository.GetSingleUserByEmail(HttpContext.Current.User.Identity.Name, tenant);
+                    loggedUser = GetSingleUserByEmail(tenant, userRepository, HttpContextHelper.User.Identity.Name);// userRepository.GetSingleUserByEmail(HttpContextHelper.User.Identity.Name, tenant);
                 }
                 else
                 {
@@ -154,11 +154,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         //    ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
         //    ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
         //    ContactRepository contactRepository = new ContactRepository(tenant);
-        //    if (HttpContext.Current != null && HttpContext.Current.User != null)
+        //    if (HttpContextHelper != null && HttpContextHelper.User != null)
         //    {
-        //        if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+        //        if (!string.IsNullOrEmpty(HttpContextHelper.User.Identity.Name))
         //        {
-        //            User loggedContact = GetUser(tenant, null);//contactRepository.GetSingleContactByEmail(HttpContext.Current.User.Identity.Name, tenant);
+        //            User loggedContact = GetUser(tenant, null);//contactRepository.GetSingleContactByEmail(HttpContextHelper.User.Identity.Name, tenant);
         //            ObjectTable entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
         //            if (entityObjectTable != null && loggedContact != null && entityObjectTable.CacheOnClient)
         //            {

@@ -416,16 +416,6 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
             return response;
         }
-        private void LogTime(string msg)
-        {
-            DateTime stopLogAt = new DateTime(2023, 06, 01);
-            string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
-            if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
-                stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-            // msg += DateTime.Now.ToString();
-
-            AmitalCloudSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
-        }
         public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60, int? selectCount = null)
         {
             if (!AmitalCloudSettings.IsCostomsDeploy)
@@ -496,28 +486,29 @@ namespace AmitalCloud.Infrastructure.Data.Services
                             if (vQueueMessages.Value != DBNull.Value)
                             {
                                 // LogTime($"{QueueCode} start extract data returnd from proc");
-                                OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
-
-                                while (reader.Read())
+                                using (OracleDataReader reader = cmd.ExecuteReader())
                                 {
-                                    if (reader["id"].ToString() == "0")
+                                    while (reader.Read())
                                     {
-                                        continue;
+                                        if (reader["id"].ToString() == "0")
+                                        {
+                                            continue;
+                                        }
+
+                                        var response = new QueueResponse();
+                                        response.MessageId = reader["id"].ToString();
+                                        response.RetryNumber = Convert.ToInt32(reader["retrynumber"]);
+                                        response.MessageCreatedServerTime = Convert.ToDateTime(reader["createdatetime"]);
+
+                                        var messageBody = reader["messagebody"].ToString();
+
+                                        if (!string.IsNullOrEmpty(messageBody))
+                                        {
+                                            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
+                                            response.MessageValues = messageValues;
+                                        }
+                                        responseList.Add(response);
                                     }
-
-                                    var response = new QueueResponse();
-                                    response.MessageId = reader["id"].ToString();
-                                    response.RetryNumber = Convert.ToInt32(reader["retrynumber"]);
-                                    response.MessageCreatedServerTime = Convert.ToDateTime(reader["createdatetime"]);
-
-                                    var messageBody = reader["messagebody"].ToString();
-
-                                    if (!string.IsNullOrEmpty(messageBody))
-                                    {
-                                        Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
-                                        response.MessageValues = messageValues;
-                                    }
-                                    responseList.Add(response);
                                 }
                             }
                         }

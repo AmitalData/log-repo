@@ -2,6 +2,7 @@ using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Model.EntityClasses ;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -111,7 +112,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static string GetDbConnection(int tenant)
         {
 
-            return AmitalCloudContext.GetContext(tenant).Database.Connection.ConnectionString;
+            return AmitalCloudContext.GetContext(tenant).Database.GetDbConnection().ConnectionString;
         }
         public static DateTime GetEndOfTodayDate(int tenant)
         {

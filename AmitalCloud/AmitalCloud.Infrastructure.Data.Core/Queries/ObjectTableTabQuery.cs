@@ -3,6 +3,7 @@ using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Model.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace AmitalCloud.Infrastructure.Data.Queries
 {

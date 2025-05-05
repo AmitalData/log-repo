@@ -10,19 +10,21 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static void SendMessageToTopic(string Key)
         {
             if (AmitalCloudSettings.IsCostomsDeploy || AmitalCloudSettings.DeploymentStage == "amitalstorage") return;
-            ServiceBusMessage message = new ServiceBusMessage();
-            message.Label = "InvalidateCache";
-            message.Properties["Key"] = Key;
-            // message.TimeToLive = new TimeSpan(0, 5, 0);
-            TopicClient client = TopicClient.CreateFromConnectionString(StorageAcountDetails.GetSettingByName(AmitalCloudSettings.DeploymentStage), StorageAcountDetails.DataCacheTopicName);
 
+            string connectionString = StorageAcountDetails.GetSettingByName(AmitalCloudSettings.DeploymentStage);
+            string topicName = StorageAcountDetails.DataCacheTopicName;
 
-            client.Send(message);
+            var client = new ServiceBusClient(connectionString);
+            ServiceBusSender sender = client.CreateSender(topicName);
 
+            var message = new ServiceBusMessage
+            {
+                Subject = "InvalidateCache",
+                ApplicationProperties = { ["Key"] = Key }
+                // TimeToLive = TimeSpan.FromMinutes(5) // optional
+            };
+
+            sender.SendMessageAsync(message).GetAwaiter().GetResult();
         }
-
-
-
-
     }
 }

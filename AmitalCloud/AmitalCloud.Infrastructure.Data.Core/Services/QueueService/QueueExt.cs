@@ -65,25 +65,33 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             return (T)Convert.ChangeType(value, typeof(T));
         }
-        public static bool SafeComplete(this ServiceBusMessage msg)
+        public static bool SafeComplete(this ServiceBusReceiver receiver, ServiceBusReceivedMessage msg)
         {
             try
             {
-                msg.Complete();
+                receiver.CompleteMessageAsync(msg).Wait();
                 return true;
             }
-            catch { }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
-        public static bool SafeAbandon(this ServiceBusMessage msg)
+        public static bool SafeAbandon(this ServiceBusReceiver receiver, ServiceBusReceivedMessage msg, IDictionary<string, object> properties = null)
         {
             try
             {
-                msg.Abandon(msg.Properties);
+                if (properties != null)
+                    receiver.AbandonMessageAsync(msg, properties).Wait();
+                else
+                    receiver.AbandonMessageAsync(msg).Wait();
+
                 return true;
             }
-            catch { }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
     }
     public enum SBQueueNames

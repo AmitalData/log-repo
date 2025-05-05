@@ -21,8 +21,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant, string to, string correlationID)
         {
-            (currentContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             DateTime dateTime = DateTime.Now.AddDays(-1);// 
             var q = (from a in context.CommunicationLogs
                      where a.To == to && a.EntityId == entityId && a.CommunicationStatusTypeCode == "W" && a.CorrelationID == correlationID
@@ -34,8 +32,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public CommunicationLog GetSingleCommunicationLogInProccess(string entityId, int tenant, List<string> subjects)
         {
-            (currentContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             DateTime dateTime = DateTime.Now.AddDays(-3);// 
             var q = (from a in context.CommunicationLogs
                      where a.EntityId == entityId && a.CommunicationStatusTypeCode == "W" && subjects.Contains(a.Subject)
@@ -55,7 +51,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public CommunicationLog GetSingleCommunicationByCorrelationID(int tenant, string correlationID)
         {
-            (currentContext as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
             bool lastDay = true;
             var q = (from a in context.CommunicationLogs
                      where a.CorrelationID == correlationID

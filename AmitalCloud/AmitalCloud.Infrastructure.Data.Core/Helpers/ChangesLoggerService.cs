@@ -117,9 +117,7 @@ namespace AmitalCloud.Infrastructure.Domain.Helpers
         {
             try
             {
-
-
-                string UntilDateyyyyMMdd = ConfigurationManager.AppSettings[appSettingKeyValueIsLogUntilDateyyyyMMdd];//"2018062018HD312280.LogUntilDateyyyyMMdd"];
+                string UntilDateyyyyMMdd = ConfigurationHelper.GetValue(appSettingKeyValueIsLogUntilDateyyyyMMdd);
                 if (string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
                 {
                     return false;
@@ -131,19 +129,12 @@ namespace AmitalCloud.Infrastructure.Domain.Helpers
                                                         CultureInfo.InvariantCulture,
                                                         DateTimeStyles.None);
 
-                if (DateTime.Now > stopLogAt)
-                {
-                    return false;
-                }
-                return true;
+                return !(DateTime.Now > stopLogAt);
             }
-            catch ///(Exception)
+            catch
             {
-
-                //throw;
                 return false;
             }
         }
     }
-
 }

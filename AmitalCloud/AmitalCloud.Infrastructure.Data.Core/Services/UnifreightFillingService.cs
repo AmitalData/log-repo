@@ -1,6 +1,7 @@
 ﻿using Amital.UpDown.Common;
 using Amital.UpDown.Common.Client;
 using Amital.UpDown.Common.ModelShared.Filling;
+using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System;
@@ -78,7 +79,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             int chunkSizeInKB = 100;
             try
             {
-                var sUploadChunkSizeInKB = ConfigurationManager.AppSettings["20180711.UploadChunkSizeInKB"] as string;
+                var sUploadChunkSizeInKB = ConfigurationHelper.GetValue("20180711.UploadChunkSizeInKB");
                 if (!string.IsNullOrWhiteSpace(sUploadChunkSizeInKB))
                 {
                     int.TryParse(sUploadChunkSizeInKB, out chunkSizeInKB);

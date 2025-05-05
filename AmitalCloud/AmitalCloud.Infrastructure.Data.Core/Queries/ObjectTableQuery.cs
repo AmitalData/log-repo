@@ -39,7 +39,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private List<ObjectTablePM> GetTenantZeroObjectTables()
         {
             string tenantZeroObjectTablesCacheKeyName = "tenantZeroObjectTables";
-            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName) != null)
+            if (HttpContextHelper.HttpContext != null && CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName) != null)
             {
                 return (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantZeroObjectTablesCacheKeyName);
             }
@@ -69,7 +69,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             List<ObjectTablePM> zeroTenantTables = new List<ObjectTablePM>();
             if (tenant != 0)
             {
-                if (HttpContext.Current != null)
+                if (HttpContextHelper.HttpContext != null)
                 {
                     currentTenantTables = (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(tenantListName);
                     if (currentTenantTables == null)
@@ -84,7 +84,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 }
             }
 
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
                 zeroTenantTables = (List<ObjectTablePM>)CacheManager.CacheWrapper.Get(listName);
 

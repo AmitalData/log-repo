@@ -5,13 +5,22 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class GlobalDbHelper
     {
-        public static GlobalDB GetGlobalDB(int tenant) => GlobalDBRepository.GetGlobalDBByTenant(tenant);
-        private static GlobalDB GetGlobalDbFromEnviroment()
+        private readonly GlobalDBRepository _globalDBRepository;
+        private readonly IConfiguration _configuration;
+        public GlobalDbHelper(IConfiguration configuration)
+        {
+            _globalDBRepository = new GlobalDBRepository(configuration);
+        }
+        public GlobalDB GetGlobalDB(int tenant)
+        {
+            return _globalDBRepository.GetGlobalDBByTenant(tenant);
+        }
+        private GlobalDB GetGlobalDbFromEnviroment()
         {
             return new GlobalDB()
             {
                 Id = "0",
-                DBConnection = ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString,
+                DBConnection = _configuration.GetConnectionString("SystemMainStr"),
                 IsUpgrading = false,
                 IsActive = true,
                 SharedDWConnection = null,

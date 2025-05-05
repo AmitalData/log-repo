@@ -71,11 +71,11 @@ namespace AmitalCloud.Infrastructure.Data.Services
         private static string GetCurrentWorkerName()
         {
             string workerName = null;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
-                if (HttpContext.Current.Items.Contains("workerrolename"))
+                if (HttpContextHelper.HttpContext?.Items?.ContainsKey("workerrolename") == true)
                 {
-                    workerName = HttpContext.Current.Items["workerrolename"].ToString();
+                    workerName = HttpContextHelper.HttpContext.Items["workerrolename"].ToString();
 
                 }
             }
@@ -119,7 +119,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     WaitingStatus = newWatingStatus,
                 };
                 workerRoleNameRepository.Insert(entity);
-                if (HttpContext.Current != null)
+                if (HttpContextHelper.HttpContext != null)
                 {
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
@@ -136,7 +136,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
         {
             string cacheKey = $"WorkerRoleNamePM_({workerName})";
             WorkerRoleName entity;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
                 entity = (WorkerRoleName)CacheManager.CacheWrapper.Get(cacheKey);
                 if (entity == null)

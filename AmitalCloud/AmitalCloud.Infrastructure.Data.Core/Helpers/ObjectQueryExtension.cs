@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Common;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -15,8 +15,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
     {
         public static IQueryable<TSource> Include<TSource>(this IQueryable<TSource> source, string path) where TSource : class
         {
-            return QueryableExtensions.Include(source, path);
+            return EntityFrameworkQueryableExtensions.Include(source, path);
         }
+
         public static IQueryable<T> FullTextSearch<T>(this IQueryable<T> queryable, string searchKey)
         {
             return FullTextSearch<T>(queryable, searchKey, false);
@@ -83,31 +84,35 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="dbCtx"></param>
         /// <returns></returns>
-        static EntitySet GetMetaDataEntitySet<TEntity>(DbContext dbCtx)
+        public static IEntityType GetMetaDataEntitySet<TEntity>(DbContext dbCtx)
         {
             Type entityType = typeof(TEntity);
             string entityName = entityType.Name;
-            MetadataWorkspace metaDataWS = ((IObjectContextAdapter)dbCtx).ObjectContext.MetadataWorkspace;
 
-            //IEnumerable<EntitySet> entitySets;
-            var entitySets = metaDataWS.GetItemCollection(DataSpace.SSpace)
-                             .GetItems<EntityContainer>()
-                             .Single()
-                             .BaseEntitySets
-                             .OfType<EntitySet>()
-                             .Where(entitySet => !entitySet.MetadataProperties.Contains("Type")
-                                                || entitySet.MetadataProperties["Type"].ToString() == "Tables");
+            // Get the entity type from the model in DbContext
+            var entityTypeModel = dbCtx.Model.FindEntityType(entityType);
 
-            List<EntitySet> provisionedTables = entitySets.ToList();
-            EntitySet returnValue = provisionedTables.FirstOrDefault(t => t.Name == entityName);
-            //When an Entity inherits a base class, the corresponding
-            //table is sometimes named for the base class
-            while (null == returnValue && null != entityType)
+            if (entityTypeModel == null)
+            {
+                throw new InvalidOperationException($"Entity type {entityType.Name} not found in model.");
+            }
+
+            // Find the corresponding table in the model
+            var entitySets = dbCtx.Model.GetEntityTypes()
+                                        .Where(t => t.GetTableName() != null) // Ensure it's a table (not a view or other type)
+                                        .ToList();
+
+            // Look for the entity set by name (entity name corresponds to table name in EF Core)
+            var returnValue = entitySets.FirstOrDefault(t => t.Name == entityName);
+
+            // If not found, check if the entity is a subclass and get the base type
+            while (returnValue == null && entityType.BaseType != null)
             {
                 entityType = entityType.BaseType;
                 entityName = entityType.Name;
-                returnValue = provisionedTables.FirstOrDefault(t => t.Name == entityName);
+                returnValue = entitySets.FirstOrDefault(t => t.Name == entityName);
             }
+
             return returnValue;
         }
 
@@ -118,19 +123,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         /// <param name="entitySet"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        static string GetStringPropertyFromEntityMetaData(MetadataItem entitySet, string propertyName)
+        static string GetStringPropertyFromEntityMetaData(IEntityType entityType, string propertyName)
         {
-            string returnValue = string.Empty;
-            MetadataProperty metaProp;
-            if (entitySet == null) throw new ArgumentNullException("entitySet");
-            if (entitySet.MetadataProperties.TryGetValue(propertyName, false, out metaProp))
-            {
-                if (metaProp != null && metaProp.Value != null)
-                {
-                    returnValue = metaProp.Value as string;
-                }
-            }
-            return returnValue;
+            var property = entityType.FindProperty(propertyName);
+            return property?.Name;
         }
 
         /// <summary>
@@ -473,21 +469,6 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             return FreeTextExInternal<TEntity>(thisQuery, dbCtx, containsSearchText, columnNames, true);
         }
         #endregion
-
-        public static List<TSource> FullTextSearch33<TSource>(this IQueryable<TSource> source, DbContext context, string fieldToSearch, string searchValue, bool useContains) where TSource : class
-        {
-            string queryToExecute = source.ToString();
-            if (useContains)
-            {
-                queryToExecute = queryToExecute + @"and contains(" + fieldToSearch + ",'" + "\"" + searchValue + "*\"" + "')";
-            }
-            else
-            {
-                queryToExecute = queryToExecute + @"and freetext(" + fieldToSearch + ",'" + searchValue + "')";
-            }
-            List<TSource> dataList = context.Database.SqlQuery<TSource>(queryToExecute).ToList();
-            return dataList;
-        }
 
     }
 }

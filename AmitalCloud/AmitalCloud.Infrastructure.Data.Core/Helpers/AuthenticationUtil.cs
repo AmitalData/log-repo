@@ -25,10 +25,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             string IP4Address = String.Empty;
 
-            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
+            string currentIP = HttpContextHelper.Request.Headers["X-Real-IP"];
             if (string.IsNullOrEmpty(currentIP))
             {
-                currentIP = HttpContext.Current.Request.UserHostAddress;
+                currentIP = HttpContextHelper.HttpContext?.Connection?.RemoteIpAddress?.ToString();
             }
             foreach (IPAddress IPA in Dns.GetHostAddresses(currentIP))
             {
@@ -65,9 +65,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 email = AuthenticatedUserEmail;
                 return email;
             }
-            if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            if (HttpContextHelper.User != null && HttpContextHelper.User.Identity != null && !string.IsNullOrEmpty(HttpContextHelper.User.Identity.Name))
             {
-                email = HttpContext.Current.User.Identity.Name;
+                email = HttpContextHelper.User.Identity.Name;
             }
             else
             {
@@ -81,27 +81,22 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
         public static string GetAuthenticatedUser()
         {
-            if (HttpContext.Current != null)
+            if (!string.IsNullOrEmpty(HttpContextHelper.User?.Identity?.Name))
             {
-
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-                {
-                    return HttpContext.Current.User.Identity.Name;
-                }
-                else
-                {
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    if (!string.IsNullOrEmpty(token))
-                    {
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        if (authToken != null)
-                            return authToken.Email;
-                    }
-
-                    throw new Exception("Sorry! this user is not authorized!");
-                }
+                return HttpContextHelper.User.Identity.Name;
             }
-            throw new Exception("Sorry! this user is not authorized!");
+            else
+            {
+                string token = HttpContextHelper.Request.Headers["Token"];
+                if (!string.IsNullOrEmpty(token))
+                {
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    if (authToken != null)
+                        return authToken.Email;
+                }
+
+                throw new Exception("Sorry! this user is not authorized!");
+            }
         }
         private string ResolveLoggingUserId1(int Tenant)
         {
@@ -152,8 +147,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             var name = WindowsIdentity.GetCurrent().Name;
 
             //WindowsIdentity.Impersonate 
-            //IClaimsPrincipal claimsPrincipal = HttpContext.Current.User as IClaimsPrincipal;
-            HttpContext.Current.User = new GenericPrincipal(
+            //IClaimsPrincipal claimsPrincipal = HttpContextHelper.User as IClaimsPrincipal;
+            HttpContextHelper.User = new GenericPrincipal(
                     identity,
                     new string[] { "Role1", "Roll2" }
                     ); ;
@@ -163,11 +158,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             string systemEmail = SystemIdentityName(Tenant);
             string defaultName = "";
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.User != null)
             {
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrEmpty(HttpContextHelper.User.Identity.Name))
                 {
-                    defaultName = HttpContext.Current.User.Identity.Name;
+                    defaultName = HttpContextHelper.User.Identity.Name;
                 }
 
             }
@@ -319,9 +314,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
 
                 System.Threading.Thread.CurrentPrincipal = myPrincipal; //myPrincipal;
-                if (HttpContext.Current != null)
+                if (HttpContextHelper.HttpContext != null)
                 {
-                    HttpContext.Current.User = myPrincipal;
+                    HttpContextHelper.User = myPrincipal;
 
                 }
 
@@ -431,9 +426,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
 
             System.Threading.Thread.CurrentPrincipal = claimsPrincipal; //myPrincipal;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.User != null)
             {
-                HttpContext.Current.User = claimsPrincipal;
+                HttpContextHelper.User = claimsPrincipal;
 
             }
 
@@ -485,9 +480,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UserName:" + Environment.UserName);
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Thread.CurrentPrincipal.Identity.Name:" + Thread.CurrentPrincipal.Identity.Name);
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.User != null)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("HttpContext.Current.User.Identity.Name:" + HttpContext.Current.User.Identity.Name);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("HttpContextHelper.User.Identity.Name:" + HttpContextHelper.User.Identity.Name);
             }
 
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WindowsIdentity.GetCurrent().Name:" + WindowsIdentity.GetCurrent().Name);
@@ -504,11 +499,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             string systemEmail = "system@tenant" + Tenant.ToString() + ".com";
             string defaultName = "";
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.User != null)
             {
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrEmpty(HttpContextHelper.User.Identity.Name))
                 {
-                    defaultName = HttpContext.Current.User.Identity.Name;
+                    defaultName = HttpContextHelper.User.Identity.Name;
                 }
             }
             if (String.IsNullOrWhiteSpace(defaultName))
@@ -521,9 +516,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         public static bool IsAuthenticatedUserExists()
         {
             bool exists = false;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.User != null)
             {
-                if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                if (!string.IsNullOrEmpty(HttpContextHelper.User.Identity.Name))
                 {
                     exists = true;
                 }

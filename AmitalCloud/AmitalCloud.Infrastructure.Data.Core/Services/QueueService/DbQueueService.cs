@@ -411,27 +411,25 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
         private static void AddQueueDetailsToRequestHeaders(string messageBody, string sQueueMessageId)
         {
-            if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            if (HttpContextHelper.Request != null)
             {
-                if (HttpContext.Current.Response.Headers["SentQueueMessages"] == null)
+                if (string.IsNullOrEmpty(HttpContextHelper.Response.Headers["SentQueueMessages"]))
                 {
                     Dictionary<string, string> dictionary = new Dictionary<string, string>
                     {
                         { sQueueMessageId, messageBody }
                     };
                     string addedQueues = dictionary.FromDictionaryToJson();
-                    HttpContext.Current.Response.Headers.Add("SentQueueMessages", addedQueues);
+                    HttpContextHelper.Response.Headers.Add("SentQueueMessages", addedQueues);
 
                 }
                 else
                 {
-                    string openedQueues = HttpContext.Current.Response.Headers["SentQueueMessages"];
+                    string openedQueues = HttpContextHelper.Response.Headers["SentQueueMessages"];
                     Dictionary<string, string> dictionary = openedQueues.FromJsonToDictionary();
                     dictionary.Add(sQueueMessageId, messageBody);
                     string addedQueues = dictionary.FromDictionaryToJson();
-                    HttpContext.Current.Response.Headers["SentQueueMessages"] = addedQueues;
-
-
+                    HttpContextHelper.Response.Headers["SentQueueMessages"] = addedQueues;
                 }
             }
         }
@@ -1083,21 +1081,23 @@ namespace AmitalCloud.Infrastructure.Data.Services
                                 cmd.Parameters.Add(selectCountPar);
 
                                 var output = cmd.ExecuteNonQuery();
-                                OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
-                                while (reader.Read())
+                                using (OracleDataReader reader = cmd.ExecuteReader())
                                 {
-                                    var response = new QueueResponse()
+                                    while (reader.Read())
                                     {
-                                        MessageId = reader.GetString(0),
-                                        RetryNumber = reader.GetInt32(2),
-                                        MessageCreatedServerTime = reader.GetDateTime(3),
-                                    };
-                                    if (!string.IsNullOrEmpty(reader.GetString(1).ToString()))
-                                    {
-                                        Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary((reader.GetString(1).ToString()));
-                                        response.MessageValues = messageValues;
+                                        var response = new QueueResponse()
+                                        {
+                                            MessageId = reader.GetString(0),
+                                            RetryNumber = reader.GetInt32(2),
+                                            MessageCreatedServerTime = reader.GetDateTime(3),
+                                        };
+                                        if (!string.IsNullOrEmpty(reader.GetString(1).ToString()))
+                                        {
+                                            Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary((reader.GetString(1).ToString()));
+                                            response.MessageValues = messageValues;
+                                        }
+                                        responseList.Add(response);
                                     }
-                                    responseList.Add(response);
                                 }
                             }
                             catch (Exception ex)

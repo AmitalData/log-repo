@@ -304,8 +304,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             //email
             string email = "";
-            if (HttpContext.Current != null)
-                email = HttpContext.Current.User.Identity.Name;
+            if (HttpContextHelper.User != null)
+                email = HttpContextHelper.User.Identity.Name;
             else
                 email = "system@tenant" + tenant.ToString() + ".com";
             Contact contactPM = new Repository<Contact>(tenant).GetMulti(a => a.Email == email && a.Tenant == tenant).FirstOrDefault();    //GetSingleContactByEmailAndTenant(email, tenant);

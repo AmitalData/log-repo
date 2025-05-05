@@ -1,4 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Domain.DataContracts;
+﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -11,23 +12,17 @@ namespace AmitalCloud.Infrastructure.Domain.Helpers
         public static int GetCurrentTenant()
         {
             var tenant = -1;
-            if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
+            if (HttpContextHelper.HttpContext?.Items?.ContainsKey("Tenant") == true)
             {
-                tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
+                tenant = Convert.ToInt32(HttpContextHelper.HttpContext.Items["Tenant"]);
             }
             else
             {
-                tenant = GetTenantDBFromConfig();
+                throw new NotImplementedException("Tenant not found");
             }
             return tenant;
         }
 
-        public static int GetTenantDBFromConfig()
-        {
-            string tenantValue = ConfigurationManager.AppSettings["TenantDB"];
-            int tenant = string.IsNullOrEmpty(tenantValue) ? 0 : Convert.ToInt32(tenantValue);
-            return tenant;
-        }
         public class Emails
         {
             public const string FromNoReply = "no-reply@amital.co.il";

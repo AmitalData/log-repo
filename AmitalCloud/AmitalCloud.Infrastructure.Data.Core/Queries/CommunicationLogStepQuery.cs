@@ -163,7 +163,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public static byte[] GetBlob_NoCache(int tenant, Document document, Stopwatch stopwatch, string filePath)
         {
             byte[] myArryByte = null;
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            //todo
+            //IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             LogMessagingUtil.Instance.AppendLine("Try Read Bolb :" + filePath);
 
             BlobFileInfo fileInfo = new BlobFileInfo()
@@ -175,7 +176,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 FileSize = document.FileSize,
 
             };
-            myArryByte = storageservice.Read(fileInfo);
+            //myArryByte = storageservice.Read(fileInfo);
 
             stopwatch.Stop();
             LogMessagingUtil.Instance.AppendLine("getBolb:" + filePath + "Took:" + stopwatch.Elapsed.ToString());

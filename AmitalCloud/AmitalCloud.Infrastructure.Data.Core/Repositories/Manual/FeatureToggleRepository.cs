@@ -55,7 +55,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         {
             bool result = false;
             string featureToggleName = "featuretoggle" + toggleCode + tenant;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
                 if (CacheManager.CacheWrapper.Get(featureToggleName) == null)
                 {

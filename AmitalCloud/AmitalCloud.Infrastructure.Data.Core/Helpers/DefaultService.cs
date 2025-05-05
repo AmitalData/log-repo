@@ -34,7 +34,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             if (CacheManager.CacheWrapper == null)
             {
-                CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache);
+                // todo
+                //CacheManager.CacheWrapper = new CacheWrapper(HttpRuntime.Cache);
             }
             return CacheManager.GetOrInsertNewObject(
                 cacheKey,

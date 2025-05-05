@@ -37,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 string myMainAddressId = addresslist.Where(a => a.AddressTypeId.ToUpper() == "M").FirstOrDefault().Id;
                 string myBillingAddressId = addresslist.Where(a => a.AddressTypeId.ToUpper() == "B").FirstOrDefault().Id;
                 string myPickupDeliveryAddressId = addresslist.Where(a => a.AddressTypeId.ToUpper() == "P").FirstOrDefault().Id;
-                if (HttpContext.Current != null)
+                if (HttpContextHelper.HttpContext != null)
                 {
                     entity = (CardPM)CacheManager.CacheWrapper.Get(entityKeyString);
                     if (entity == null)

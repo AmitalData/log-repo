@@ -1,21 +1,19 @@
+using Azure;
 using Azure.Data.Tables;
 
 namespace AmitalCloud.Infrastructure.Data.Azure
 {
-    public class CommunicationLogsAzureContext //: TableServiceContext
+    public class CommunicationLogsAzureContext
     {
         public string TableName = "CommunicationLogsAzure";
-        //TableServiceContext serviceContext = null;
         private TableEntity communicationLogsAzures;
         public TableClient ErrorLogtable;
 
         public CommunicationLogsAzureContext()
         {
-            ErrorLogtable = StorageAcountDetails.TableClient.GetTableReference(TableName);
+            ErrorLogtable = StorageAcountDetails.TableClient.GetTableClient(TableName);
             ErrorLogtable.CreateIfNotExists();
-            //serviceContext = StorageAcountDetails.TableClient.GetTableServiceContext();
         }
-
 
         public TableEntity CommunicationLogsAzureEntity
         {
@@ -30,21 +28,12 @@ namespace AmitalCloud.Infrastructure.Data.Azure
 
         public void Add(TableEntity entity)
         {
-            TableOperation insertOperation = TableOperation.Insert(entity);
-            ErrorLogtable.Execute(insertOperation);
-            //serviceContext.AddObject(TableName, entity);
-            //serviceContext.SaveChangesWithRetries();
+            ErrorLogtable.AddEntity(entity);
         }
 
         public void Update(TableEntity entity)
         {
-            TableOperation updateOperation = TableOperation.Merge(entity);
-            ErrorLogtable.Execute(updateOperation);
-
-            //serviceContext.AttachTo(TableName, entity, null);
-            //serviceContext.UpdateObject(entity);
-            //serviceContext.SaveChangesWithRetries(SaveChangesOptions.ReplaceOnUpdate);
+            ErrorLogtable.UpdateEntity(entity, ETag.All, TableUpdateMode.Merge);
         }
     }
-
 }

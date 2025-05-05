@@ -36,7 +36,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 		}
         public static IAmitalCloudContext GetContext(int tenant)
         {           
-            string dbConnectionInfo = GlobalDbHelper.GetGlobalDB(tenant).DBConnection;
+            string dbConnectionInfo = new GlobalDbHelper(ConfigurationHelper.Conf).GetGlobalDB(tenant).DBConnection;
             DbContextOptionsBuilder<AmitalCloudContext> optionsBuilder = new DbContextOptionsBuilder<AmitalCloudContext>();
             
 			if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
@@ -137,10 +137,19 @@ namespace AmitalCloud.Infrastructure.Data.Context
 		{
 			return this;
 		}
-        
-        void IContext.Dispose()
+
+        public void Dispose(bool disposing)
         {
-            base.Dispose();
+            if (disposing)
+            {
+                base.Dispose();
+            }
+
+        }
+
+        public override void Dispose()
+        {
+            Dispose(true);
         }
 
         public Task<int> SaveChangesAsync()

@@ -9,6 +9,8 @@ using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using System.Text;
+using Azure.Storage.Blobs.Models;
 
 namespace AmitalCloud.Infrastructure.Data.Services
 {
@@ -37,14 +39,14 @@ namespace AmitalCloud.Infrastructure.Data.Services
             }
             else
             {
-                AppendBlobClient blobfile = GetCloudAppendBlob(fileInfo);
+                BlobClient blobfile = GetCloudAppendBlob(fileInfo);
                 result = DownloadCloudBlob(blobfile);
             }
 
             return result;
         }
 
-        private byte[] DownloadCloudBlob(AppendBlobClient blobfile)
+        private byte[] DownloadCloudBlob(BlobClient blobfile)
         {
             byte[] result = null;
             if (blobfile.Exists())
@@ -80,26 +82,26 @@ namespace AmitalCloud.Infrastructure.Data.Services
             return blobfile;
         }
 
-        private AppendBlobClient GetCloudAppendBlob(BlobFileInfo fileInfo)
+        private BlobClient GetCloudAppendBlob(BlobFileInfo fileInfo)
         {
             string localPath = null;
             BlobContainerClient blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
-            AppendBlobClient blobfile = blobContainer.GetAppendBlobClient(localPath);
+            BlobClient blobfile = blobContainer.GetBlobClient(localPath);
 
             if (!blobfile.Exists())
             {
                 if (!string.IsNullOrEmpty(AmitalCloudSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     GetFileBlobContainerWithoutAzureFolder(fileInfo, out localPath, out blobContainer);
-                    blobfile = blobContainer.GetAppendBlobClient(localPath);
+                    blobfile = blobContainer.GetBlobClient(localPath);
                     if (!blobfile.Exists())
                     {
-                        blobfile = blobContainer.GetAppendBlobClient(localPath.ToLower());
+                        blobfile = blobContainer.GetBlobClient(localPath.ToLower());
                     }
                 }
                 else
-                    blobfile = blobContainer.GetAppendBlobClient(localPath.ToLower());
+                    blobfile = blobContainer.GetBlobClient(localPath.ToLower());
             }
 
             return blobfile;
@@ -179,13 +181,26 @@ namespace AmitalCloud.Infrastructure.Data.Services
             GetFileBlobContainerInfo(destinationFileInfo, out string localPath, out BlobContainerClient blobContainerDest);
             BlobClient blobDestination = blobContainerDest.GetBlobClient(localPath);
 
-            blobDestination.StartCopy(blobSource);
+            blobDestination.StartCopyFromUri(blobSource.Uri);
 
-            ICloudBlob destBlobRef = blobContainerDest.GetBlobReferenceFromServer(blobDestination.Name);
-            while (destBlobRef.CopyState.Status == CopyStatus.Pending)
+            bool isCopyComplete = false;
+            while (!isCopyComplete)
             {
-                Task.Delay(50).Wait();
-                destBlobRef = blobContainerDest.GetBlobReferenceFromServer(destBlobRef.Name);
+                var propertiesResponse = blobDestination.GetProperties();
+                var properties = propertiesResponse.Value;
+
+                if (properties.CopyStatus == CopyStatus.Success)
+                {
+                    isCopyComplete = true;
+                }
+                else if (properties.CopyStatus == CopyStatus.Failed)
+                {
+                    throw new InvalidOperationException("Blob copy failed.");
+                }
+                else
+                {
+                    Thread.Sleep(50);
+                }
             }
 
             blobSource.Delete();
@@ -210,8 +225,10 @@ namespace AmitalCloud.Infrastructure.Data.Services
                         DocumentsFiling documentsFiling = GetDocumentInfo(fileInfo, context);
                         if (documentsFiling != null)
                         {
-                            KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
-                            blobfile.Metadata.Add(metadata);
+                            blobfile.SetMetadata(new Dictionary<string, string>
+                            {
+                                { "Code", documentsFiling.Code }
+                            });
                         }
                         AesFunction aesFunction = new AesFunction();
                         data = aesFunction.EncryptData(data, fileInfo.Tenant, fileInfo.AesKey);
@@ -238,12 +255,12 @@ namespace AmitalCloud.Infrastructure.Data.Services
             string localPath = null;
             BlobContainerClient blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
-            var tempcloudBlockBlob = blobContainer.GetBlobClient(StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName, ""));
+            var tempcloudBlockBlob = blobContainer.GetBlockBlobClient(StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName, ""));
             if (sentBytes < fileInfo.FileSize)
             {
                 using (MemoryStream memorystream = new MemoryStream(buffer))
                 {
-                    tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
+                    tempcloudBlockBlob.StageBlock(blockIdsList[bufferNumber], memorystream);
                 }
             }
             else
@@ -251,15 +268,10 @@ namespace AmitalCloud.Infrastructure.Data.Services
                 var finalcloudBlockBlob = blobContainer.GetBlobClient(localPath);
                 using (MemoryStream memorystream = new MemoryStream(buffer))
                 {
-                    tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
+                    tempcloudBlockBlob.StageBlock(blockIdsList[bufferNumber], memorystream);
                 }
-                int numberOfBlocks = blockIdsList.Length;
-                String[] blockIds = new String[numberOfBlocks];
-                for (int i = 0; i < numberOfBlocks; i++)
-                {
-                    blockIds[i] = blockIdsList[i];
-                }
-                tempcloudBlockBlob.PutBlockList(blockIds);
+                tempcloudBlockBlob.CommitBlockList(blockIdsList);
+
                 using (MemoryStream memstream = new MemoryStream())
                 {
                     tempcloudBlockBlob.DownloadToAsync(memstream);
@@ -277,9 +289,10 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
                                 if (documentsFiling != null)
                                 {
-                                    KeyValuePair<string, string> metadata = new KeyValuePair<string, string>("Code", documentsFiling.Code);
-
-                                    finalcloudBlockBlob.Metadata.Add(metadata);
+                                    finalcloudBlockBlob.SetMetadata(new Dictionary<string, string>
+                                    {
+                                        { "Code", documentsFiling.Code }
+                                    });
                                 }
 
                                 AesFunction aesFunction = new AesFunction();
@@ -357,12 +370,17 @@ namespace AmitalCloud.Infrastructure.Data.Services
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
 
             var blobfile = blobContainer.GetAppendBlobClient(localPath);
+
             if (!blobfile.Exists())
             {
-                blobfile.CreateOrReplace();
+                blobfile.Create();
             }
 
-            blobfile.AppendText(text);
+            byte[] textBytes = Encoding.UTF8.GetBytes(text);
+            using (var stream = new MemoryStream(textBytes))
+            {
+                blobfile.AppendBlock(stream);
+            }
         }
         public void Dispose()
         {

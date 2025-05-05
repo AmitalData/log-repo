@@ -4,28 +4,21 @@ using AmitalCloud.Infrastructure.Model.Enums;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using AmitalCloud.Infrastructure.Data.BaseClasses;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using System;
-using System.Configuration;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
-using System.Transactions;
 using AmitalCloud.Infrastructure.Data.DBHelpers;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace AmitalCloud.Infrastructure.Data.Context
-
 {
     public class SystemLogContext : DbContextBase, ISystemLogContext
     {
-        private int tenant;
         private SystemLogContext()
         {
         }
-        //DbConnection dbConnection;
         private SystemLogContext(DbContextOptions options) : base(options)
         {
             InitializeContext();
-            //dbConnection = connection;
         }
         private void InitializeContext()
         {
@@ -89,7 +82,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             {
                 return base.SaveChanges();
             }
-            catch (Exception e)
+            catch
             {
             }
             return 1;
@@ -104,14 +97,22 @@ namespace AmitalCloud.Infrastructure.Data.Context
             return this;
         }
 
-        void IContext.Dispose()
-        {
-            base.Dispose();
-        }
-
         public Task<int> SaveChangesAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                base.Dispose();
+            }
+        }
+
+        public override void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

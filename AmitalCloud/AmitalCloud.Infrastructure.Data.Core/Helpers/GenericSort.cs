@@ -7,16 +7,17 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class GenericSort
     {
-
+        private readonly IObjectTablePropertyGetter _objectTablePropertyGetter;
         int tenant = 0;
-        public GenericSort(int tenant)
+        public GenericSort(IObjectTablePropertyGetter objectTablePropertyGetter, int tenant)
         {
             this.tenant = tenant;
+            _objectTablePropertyGetter = objectTablePropertyGetter;
         }
 
-        public GenericSort()
+        public GenericSort(IObjectTablePropertyGetter objectTablePropertyGetter)
         {
-
+            _objectTablePropertyGetter = objectTablePropertyGetter;
         }
 
         public IQueryable<T> GetSorterQuery<T, N>(QueryOperations queryOperations, IQueryable<T> querableData)
@@ -85,8 +86,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             string keyName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                IObjectTablePropertyGetter objectTablePropertyGetter = InjectionContainer.Container.Resolve(typeof(IObjectTablePropertyGetter), "ObjectTablePropertyGetter", new ParameterOverride("", 1)) as IObjectTablePropertyGetter;
-                keyName = objectTablePropertyGetter.GetKeyPropertyPath(queryOperations.ObjectTableName, tenant);
+                keyName = _objectTablePropertyGetter.GetKeyPropertyPath(queryOperations.ObjectTableName, tenant);
                 scope.Complete();
             }
             return keyName;

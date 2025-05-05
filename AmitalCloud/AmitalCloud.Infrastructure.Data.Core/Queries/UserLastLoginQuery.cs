@@ -28,9 +28,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 bool isDSVMobileCall = false;
                 using (TransactionScope globalScope = TransactionFactory.GetNewTransaction())
                 {
-                    string Url = HttpContext.Current.Request.UrlReferrer.ToString();
+                    string Url = HttpContextHelper.HttpContext?.Request?.Headers["Referer"].ToString();
                     string privateLabelId = new Repository<GlobalTenant>(GlobalContext.GetContext()).GetSingle(a => a.Id == entity.Tenant).PrivateLabelId;
-                    isDSVMobileCall = !string.IsNullOrEmpty(privateLabelId) && HttpContext.Current.Request.Browser.IsMobileDevice && Url.Contains("Menu=DAPP");
+                    // todo
+                    // isDSVMobileCall = !string.IsNullOrEmpty(privateLabelId) && HttpContextHelper.Request.Browser.IsMobileDevice && Url.Contains("Menu=DAPP");
+                    isDSVMobileCall = !string.IsNullOrEmpty(privateLabelId) && Url.Contains("Menu=DAPP");
                 }
                 if (!isDSVMobileCall)
                 {

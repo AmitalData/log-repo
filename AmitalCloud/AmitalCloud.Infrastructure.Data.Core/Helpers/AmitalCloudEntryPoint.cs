@@ -1,6 +1,7 @@
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {

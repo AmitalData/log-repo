@@ -727,25 +727,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             return null;
         }
 
-        public List<Card> GetCardsFromIdList(List<string> ids, int tenant)
-        {
-            IAmitalCloudContext cardViewContext = AmitalCloudContext.GetContext(tenant);
-            List<Card> cards = new List<Card>();
-            if (ids.Count() != 0)
-            {
-                StringBuilder values = new StringBuilder();
-                values.AppendFormat("{0}", "'" + ids[0] + "'");
-                for (int i = 1; i < ids.Count; i++)
-                    values.AppendFormat(", {0}", "'" + ids[i] + "'");
-
-                string sql = string.Format("SELECT * FROM CARDS WHERE ID IN ({0})", values);
-                cards = cardViewContext.GetActiveDbContext().Database.SqlQuery<Card>(sql).ToList();
-            }
-
-            return cards;
-        }
-
-
         public List<string> GetBillToCardById(string ids, int tenant)
         {
             if (string.IsNullOrWhiteSpace(ids))

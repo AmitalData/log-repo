@@ -62,9 +62,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId1(string entityId, int tenant)
         {
-
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                                                        where (a.EntityId == entityId || a.ChildEntityId == entityId) && a.Tenant == tenant
                                                        select a).ToList();
@@ -72,9 +69,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId_noInclude(string entityId, int tenant)
         {
-
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             List<DocumentsFiling> externalDocuments = (from a in context.DocumentsFilings
                                                            //.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                                                        where (a.EntityId == entityId || a.ChildEntityId == entityId) && a.Tenant == tenant
@@ -192,8 +186,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public IQueryable<DocumentsFiling> GetByEntityAndChiled(string objectTableId, string entityId, string objectTableIdChiled, string entityIdChiled, int tenant, string documentTypeId)
         {
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             var q = (from a in context.DocumentsFilings
                      where
                      a.Tenant == tenant && a.ObjectTableId == objectTableId && a.EntityId == entityId && a.ChildObjectTableId == objectTableIdChiled && a.ChildEntityId == entityIdChiled && a.DocumentTypeId == documentTypeId
@@ -205,8 +197,6 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant, out string DocumentsFilingId)
         {
-            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-
             DocumentsFilingId = null;
             bool ihabIsSureItsBetter = true;
             if (ihabIsSureItsBetter)

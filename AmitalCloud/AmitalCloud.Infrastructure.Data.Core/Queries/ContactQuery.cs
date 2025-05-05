@@ -28,7 +28,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         private ContactPM GetContactPMFromCache(int tenant, string cacheKey, Expression<Func<Contact, bool>> predicate)
         {
             ContactPM entity;
-            if (HttpContext.Current != null)
+            if (HttpContextHelper.HttpContext != null)
             {
                 entity = (ContactPM)CacheManager.CacheWrapper.Get(cacheKey);
                 if (entity == null)

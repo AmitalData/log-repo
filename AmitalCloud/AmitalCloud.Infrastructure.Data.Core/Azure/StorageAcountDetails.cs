@@ -1,181 +1,64 @@
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using Azure.Data.Tables;
+using Azure.Storage;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
+using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus;
 
 namespace AmitalCloud.Infrastructure.Data.Azure
 {
     public class StorageAcountDetails
     {
+        public static void Initialize()
+        {
+            var accountName = AmitalCloudSettings.StorageAccountName;
+            var accountKey = AmitalCloudSettings.StorageAccountKey;
 
-        private static BlobServiceClient storageaccount = null;
-        public static BlobServiceClient StorageAccount
+            var blobQueueCredential = new StorageSharedKeyCredential(accountName, accountKey);
+            var tableCredential = new TableSharedKeyCredential(accountName, accountKey);
+
+            string blobUri, queueUri, tableUri;
+
+            if (AmitalCloudSettings.StorageType.Equals("azureemulator", StringComparison.OrdinalIgnoreCase))
+            {
+                blobUri = $"http://127.0.0.1:10000/{accountName}";
+                queueUri = $"http://127.0.0.1:10001/{accountName}";
+                tableUri = $"http://127.0.0.1:10002/{accountName}";
+            }
+            else
+            {
+                var protocol = (AmitalCloudSettings.IsCostomsDeploy || accountName.Equals("amitalexporttest", StringComparison.OrdinalIgnoreCase)) ? "https" : "http";
+
+                blobUri = $"{protocol}://{accountName}.blob.core.windows.net";
+                queueUri = $"{protocol}://{accountName}.queue.core.windows.net";
+                tableUri = $"{protocol}://{accountName}.table.core.windows.net";
+            }
+
+            BlobClient = new BlobServiceClient(new Uri(blobUri), blobQueueCredential);
+            QueueClient = new QueueServiceClient(new Uri(queueUri), blobQueueCredential);
+            TableClient = new TableServiceClient(new Uri(tableUri), tableCredential);
+        }
+
+        public static BlobServiceClient BlobClient { get; private set; }
+        public static QueueServiceClient QueueClient { get; private set; }
+        public static TableServiceClient TableClient { get; private set; }
+
+        private static ServiceBusAdministrationClient _nameSpaceManager;
+        public static ServiceBusAdministrationClient NameSpaceManager
         {
             get
             {
-                if (storageaccount == null)
+                if (_nameSpaceManager == null)
                 {
-                    if (AmitalCloudSettings.StorageType.ToLower() == "azureemulator")
-                    {
-                        storageaccount = new BlobServiceClient(new StorageCredentials(AmitalCloudSettings.StorageAccountName, AmitalCloudSettings.StorageAccountKey),
-    new Uri(@"http://127.0.0.1:10000/" + AmitalCloudSettings.StorageAccountName + "/"),
-    new Uri(@"http://127.0.0.1:10001/" + AmitalCloudSettings.StorageAccountName + "/"),
-    new Uri(@"http://127.0.0.1:10002/" + AmitalCloudSettings.StorageAccountName + "/"), null);
-                    }
-                    else
-                    {
-
-                        string dProtocol = @"http://";
-                        if (AmitalCloudSettings.IsCostomsDeploy || AmitalCloudSettings.StorageAccountName.Equals("amitalexporttest", StringComparison.OrdinalIgnoreCase))
-                        {
-                            dProtocol = @"httpS://";
-                        }
-
-
-
-                        storageaccount = new BlobServiceClient(new StorageCredentials(AmitalCloudSettings.StorageAccountName, AmitalCloudSettings.StorageAccountKey),
-    new Uri(dProtocol + AmitalCloudSettings.StorageAccountName + ".blob.core.windows.net/"),
-    new Uri(dProtocol + AmitalCloudSettings.StorageAccountName + ".queue.core.windows.net/"),
-    new Uri(dProtocol + AmitalCloudSettings.StorageAccountName + ".table.core.windows.net/"), null);
-
-                    }
-                    //                switch (AmitalCloudSettings.DeploymentStage)
-                    //                {
-                    //                    case "Dev":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="),
-                    //new Uri(@"http://127.0.0.1:10000/devstoreaccount1/"),
-                    //new Uri(@"http://127.0.0.1:10001/devstoreaccount1/"),
-                    //new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
-                    //                        break;
-
-
-
-                    //                    case "LogitudeTest":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("logitudetest", "mLXeQ+QjE4BW7Eb3RLcWFKj/PvE6gTIKpwluMjU/TWdFj15Dm76qWhJ/nLz099kRgaqUV2RMIt5B083SXvhhpQ=="),
-                    //new Uri(@"http://logitudetest.blob.core.windows.net/"),
-                    //new Uri(@"http://logitudetest.queue.core.windows.net/"),
-                    //new Uri(@"http://logitudetest.table.core.windows.net/"));
-                    //                        break;
-
-                    //                    case "LocalStorage":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw=="),
-                    //new Uri(@"http://127.0.0.1:10000/devstoreaccount1/"),
-                    //new Uri(@"http://127.0.0.1:10001/devstoreaccount1/"),
-                    //new Uri(@"http://127.0.0.1:10002/devstoreaccount1/"));
-                    //                        break;
-
-                    //                    case "logitudeeu1":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("logitudeeu1", "Uhk6O+aGeORy1Twv6FMbq1vXj0D691Jwaj+/hDTXzDm8bqvVrs+26zTBahLuTNH/UYTWV+tJouf6EyP9Y7jS/A=="),
-                    //new Uri(@"http://logitudeeu1.blob.core.windows.net/"),
-                    //new Uri(@"http://logitudeeu1.queue.core.windows.net/"),
-                    //new Uri(@"http://logitudeeu1.table.core.windows.net/"));
-                    //                        break;
-
-                    //                    case "customs":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("customs", "u9o4h/6RCuGJpzUVc+meEqj8fJLbCHZQ4//rQvHp6Jid5KU/mhRJszSmtpyU+l4xfF3RAPfkYyScRmM8+JUZ7A=="),
-                    //new Uri(@"http://customs.blob.core.windows.net/"),
-                    //new Uri(@"http://customs.queue.core.windows.net/"),
-                    //new Uri(@"http://customs.table.core.windows.net/"));
-                    //                        break;
-
-                    //                    case "amital":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("amital", "n8X8wzZBrYbjMWCpNw/JyreZRrjeQ6fqTGCGwuSj5mGSBOfIyAO1SElkMEqK2i7CrDPK4kJajHjxa/ZNxxTtwg=="),
-                    //new Uri(@"http://amital.blob.core.windows.net/"),
-                    //new Uri(@"http://amital.queue.core.windows.net/"),
-                    //new Uri(@"http://amital.table.core.windows.net/"));
-                    //                        break;
-
-                    //                    case "amitalcloud":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("amitalcloud", "czvnH30OagkI4VLkkjJiaPp1n6XwMgfy6qurGxwGT7AxfPE9ns+KLOp87lrEQoRKCx6jeJIRx2cTxytUiFK4pA=="),
-                    //new Uri(@"http://amitalcloud.blob.core.windows.net/"),
-                    //new Uri(@"http://amitalcloud.queue.core.windows.net/"),
-                    //new Uri(@"http://amitalcloud.table.core.windows.net/"));
-                    //                        break;
-
-                    //                    case "logitudetest2":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("logitudetest2", "6SJt9T1pUn8upIAw5A2J6svg72fW67VQWyEryTCT1GPYw1qm4/dL9GG0PwBOrL3Tv3RmO+az5J8z2TEH2wRItg=="),
-                    //new Uri(@"http://logitudetest2.blob.core.windows.net/"),
-                    //new Uri(@"http://logitudetest2.queue.core.windows.net/"),
-                    //new Uri(@"http://logitudetest2.table.core.windows.net/"));
-                    //                        break;
-
-                    //                    case "logitudetest3":
-                    //                        storageaccount = new BlobServiceClient (new StorageCredentials("logitudetest3", "yadxhgB9xB8BtdNThidHCtXcXxMe0447emamP0JNJORajR++sGs2x/UnbwcKQ7p3512lFcggVpSoiJ9bLUHlhA=="),
-                    //new Uri(@"http://logitudetest3.blob.core.windows.net/"),
-                    //new Uri(@"http://logitudetest3.queue.core.windows.net/"),
-                    //new Uri(@"http://logitudetest3.table.core.windows.net/"));
-                    //                        break;
-                    //                }
-
-                    //storageAccount = storageaccount;
-
-                    return storageaccount;
+                    var connectionString = GetSettingByName(AmitalCloudSettings.DeploymentStage);
+                    _nameSpaceManager = new ServiceBusAdministrationClient(connectionString);
                 }
-                return storageaccount;
-            }
 
-        }
-        private static BlobServiceClient blobClient;
-
-        public static BlobServiceClient BlobClient
-        {
-            get
-            {
-                if (StorageAccount != null)
-                {
-                    blobClient = StorageAccount.CreateCloudBlobClient();
-                }
-                return blobClient;
+                return _nameSpaceManager;
             }
         }
-
-        private static QueueServiceClient queueClient;
-        public static QueueServiceClient QueueClient
-        {
-            get
-            {
-                if (StorageAccount != null)
-                {
-                    queueClient = StorageAccount.CreateCloudQueueClient();
-                }
-                return queueClient;
-            }
-        }
-
-        private static TableServiceClient tableClient;
-        public static TableServiceClient TableClient
-        {
-            get
-            {
-                if (StorageAccount != null)
-                {
-                    tableClient = StorageAccount.CreateCloudTableClient();
-                }
-                return tableClient;
-            }
-        }
-
-
-
-        private static NamespaceManager nameSpaceManager;
-
-        public static NamespaceManager NameSpaceManager
-        {
-            get
-            {
-                if (StorageAccount != null)
-                {
-                    if (nameSpaceManager == null)
-                        nameSpaceManager = NamespaceManager.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage));
-                }
-                return nameSpaceManager;
-            }
-
-        }
-
 
         private static string dataCacheTopicName;
 
@@ -211,37 +94,32 @@ namespace AmitalCloud.Infrastructure.Data.Azure
             }
 
         }
-        //   private static  NamespaceManager CreateNamespaceManager()
-        //{
-        //    // Create the namespace manager which gives you access to
-        //    // management operations
-        //    Uri uri=null;
-        //    TokenProvider tP=null;
-        //    switch (WebFreightEntryPoint.DeploymentStage)
-        //    {
-        //        default:
-        //            uri = ServiceBusEnvironment.CreateServiceUri("sb", "logitudetest1", String.Empty);
-        //            tP = TokenProvider.CreateSharedSecretTokenProvider("owner", "5iKNFIINnT+5u3Zj5SFkaRou/0QYxx7OWzZL/Wlh7us=");
-        //            break;
-        //    }
 
+        private static ServiceBusClient _busClient;
 
-        //    return new NamespaceManager(uri, tP);
-        //}
-
-
-        public static QueueClient CreateServiceBusQueueClient(string QueueName)
+        public static ServiceBusSender CreateServiceBusQueueClient(string queueName)
         {
-            //var messagingFactory = MessagingFactory.Create(NameSpaceManager.Address,NameSpaceManager.Settings.TokenProvider);
+            if (_busClient == null)
+            {
+                var connectionString = GetSettingByName(AmitalCloudSettings.DeploymentStage);
+                _busClient = new ServiceBusClient(connectionString);
+            }
 
-            return Microsoft.ServiceBus.Messaging.QueueClient.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage), QueueName);
+            return _busClient.CreateSender(queueName);
         }
 
-        public static QueueClient CreateServiceBusQueueClient(string QueueName, ReceiveMode receivemode)
+        public static ServiceBusReceiver CreateServiceBusQueueClient(string queueName, ServiceBusReceiveMode receiveMode)
         {
-            //var messagingFactory = MessagingFactory.Create(NameSpaceManager.Address,NameSpaceManager.Settings.TokenProvider);
+            if (_busClient == null)
+            {
+                var connectionString = GetSettingByName(AmitalCloudSettings.DeploymentStage);
+                _busClient = new ServiceBusClient(connectionString);
+            }
 
-            return Microsoft.ServiceBus.Messaging.QueueClient.CreateFromConnectionString(GetSettingByName(AmitalCloudSettings.DeploymentStage), QueueName, receivemode);
+            return _busClient.CreateReceiver(queueName, new ServiceBusReceiverOptions
+            {
+                ReceiveMode = receiveMode
+            });
         }
 
         /// <summary>
@@ -252,9 +130,14 @@ namespace AmitalCloud.Infrastructure.Data.Azure
         /// <returns></returns>
         public static BlobContainerClient GetCurrentContainer(int tenant)
         {
+            if (BlobClient == null)
+            {
+                Initialize();
+            }
 
             string containername = "tenant" + tenant.ToString();
-            BlobContainerClient blobContainer = BlobClient.GetContainerReference(containername);
+            BlobContainerClient blobContainer = BlobClient.GetBlobContainerClient(containername);
+
             if (!AmitalCloudSettings.IsCostomsDeploy)
             {
                 blobContainer.CreateIfNotExists();
@@ -263,33 +146,11 @@ namespace AmitalCloud.Infrastructure.Data.Azure
             return blobContainer;
         }
 
-
         public static BlobContainerClient GetCurrentContainer(string containername)
         {
-
-
-            BlobContainerClient blobContainer = BlobClient.GetContainerReference(containername);
-
-            {
-                blobContainer.CreateIfNotExists();
-            }
-
+            BlobContainerClient blobContainer = BlobClient.GetBlobContainerClient(containername);
+            blobContainer.CreateIfNotExists();
             return blobContainer;
-        }
-
-        public enum ContainersTypes
-        {
-            Tenant,
-        }
-
-        public enum Locations
-        {
-            DocsIn,
-            DocsOut,
-            Logos,
-            Dlls,
-            Others,
-            TenantBackup,
         }
 
         public static string GetBlobNameByLocation(string blobname, string location)

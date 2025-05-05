@@ -18,6 +18,7 @@ using System.Xml.Serialization;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using AmitalCloud.Infrastructure.Model.Enums;
 using Azure.Storage.Queues;
+using Azure.Messaging.ServiceBus;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -87,8 +88,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 Tenant = myCommLog.Document.Tenant,
                 FileSize = myCommLog.Document.FileSize,
             };
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            byte[] dataByte = storageservice.Read(fileInfo);
+            //todo
+            //IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            //byte[] dataByte = storageservice.Read(fileInfo);
+            byte[] dataByte = null;
 
             Encoding encoding = Encoding.UTF8;
             xmlfile = encoding.GetString(dataByte);
@@ -134,8 +137,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 FileSize = byteData.Length,
 
             };
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            storageservice.Write(byteData, fileInfo);
+            //todo
+            //IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            //storageservice.Write(byteData, fileInfo);
 
         }
 
@@ -238,9 +242,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     FileSize = communicationParams.ByteData.Length,
 
                 };
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                storageservice.Write(communicationParams.ByteData, fileInfo);
-
+                //todo
+                //IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                //storageservice.Write(communicationParams.ByteData, fileInfo);
 
                 stopwatch.Stop();
                 LogMessagingUtil.Instance.AppendLine("SetBolb:" + filePath + ":Took:" + stopwatch.Elapsed.ToString());
@@ -381,11 +385,13 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
 
 
-        public static QueueClient GetQueueClient(string queuename)
+        public static ServiceBusReceiver GetQueueClient(string queuename)
         {
             queuename = AmitalCloudEntryPoint.GetQueueByEnviroment(queuename);
 
-            if (!StorageAcountDetails.NameSpaceManager.QueueExists(queuename))
+            //todo
+            /*
+            if (!StorageAcountDetails.NameSpaceManager.QueueExistsAsync(queuename))
             {
                 QueueDescription queueDescription = new QueueDescription(queuename);
                 queueDescription.MaxSizeInMegabytes = 5120;
@@ -395,10 +401,10 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 //queueDescription.LockDuration
                 //queueDescription.DefaultMessageTimeToLive = new TimeSpan(3, 1, 0);
 
-                StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
-            }
+                StorageAcountDetails.NameSpaceManager.CreateQueueAsync(queueDescription);
+            }*/
 
-            QueueClient client = StorageAcountDetails.CreateServiceBusQueueClient(queuename, ReceiveMode.PeekLock);
+            ServiceBusReceiver client = StorageAcountDetails.CreateServiceBusQueueClient(queuename, ServiceBusReceiveMode.PeekLock);
 
             return client;
         }
@@ -437,8 +443,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 //GlobalDBRep = new GlobalDBRepository();
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
-
+                currentDb = new GlobalDBRepository(ConfigurationHelper.Conf).GetGlobalDBByTenant(tenant);
             }
             string dbConnectionInfo = currentDb.DBConnection;
 
@@ -588,7 +593,8 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
             string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(document.Id + ".html", document.Folder);
 
-            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            //todo
+            //IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = document.Id,
@@ -599,7 +605,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 
             };
 
-            storageservice.Write(htmlByteData, fileInfo);
+            //storageservice.Write(htmlByteData, fileInfo);
             User loggedUser = null;
             if (!string.IsNullOrEmpty(communicationParams.LoggingUserId))
             {

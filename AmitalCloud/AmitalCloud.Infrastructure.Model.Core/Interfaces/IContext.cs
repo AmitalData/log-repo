@@ -12,7 +12,6 @@ namespace AmitalCloud.Infrastructure.Model.Interfaces
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         Task<int> SaveChangesAsync();
         int SaveChanges();
-        void Dispose();
         int Tenant { get; }
         DatabaseFacade Database { get; }
     }

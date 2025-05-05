@@ -116,21 +116,15 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
         }
 
-
-
-        public IDisposable GetProcessLockTableDisposable(int tenant, bool lockit, string key, string requestLog,
-            bool? forceAsMultiProcess = null)
+        public IDisposable GetProcessLockTableDisposable(int tenant, bool lockit, string key, string requestLog, bool? forceAsMultiProcess = null)
         {
-            bool multiProcess = forceAsMultiProcess ?? !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MultiProcess"));
-
             if (lockit)
             {
-                if (multiProcess)
+                if (forceAsMultiProcess ?? !string.IsNullOrWhiteSpace(ConfigurationHelper.GetConnectionString("MultiProcess")))
                 {
-                    var multiProcessLockTableUtil = new MultiProcessLockTableUtil();
-                    return multiProcessLockTableUtil.LockItAndGetReleaseToken(tenant, key, requestLog);
+                    return new MultiProcessLockTableUtil().LockItAndGetReleaseToken(tenant, key, requestLog);
                 }
-                return ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, requestLog);
+                return Instance.LockItAndGetReleaseToken(key, requestLog);
             }
             return new LockTableDisposable();
         }

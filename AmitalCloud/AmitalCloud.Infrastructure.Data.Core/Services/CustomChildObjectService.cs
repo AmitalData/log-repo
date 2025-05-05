@@ -110,9 +110,9 @@ namespace AmitalCloud.Infrastructure.Data.Services
 
         private void GetLoggedContact()
         {
-            if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            if (!string.IsNullOrEmpty(HttpContextHelper.User?.Identity?.Name))
             {
-                this.loggedContact = new Repository<Contact>(this.ObjectContext).GetMulti(d => d.Tenant == tenant && d.Email == HttpContext.Current.User.Identity.Name).FirstOrDefault();   //GetSingleContactByEmail((HttpContext.Current.User.Identity.Name), tenant, true);
+                this.loggedContact = new Repository<Contact>(this.ObjectContext).GetMulti(d => d.Tenant == tenant && d.Email == HttpContextHelper.User.Identity.Name).FirstOrDefault();   //GetSingleContactByEmail((HttpContext.Current.User.Identity.Name), tenant, true);
                 return;
             }
 

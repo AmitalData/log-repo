@@ -1,36 +1,27 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.Enums;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Model.Enums;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Oracle.ManagedDataAccess.Client;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-
 
 namespace AmitalCloud.Infrastructure.Data.Counters
 {
     public class TenantCounter
     {
-        public static int GetNumber()
+        private readonly string _dbConnectionInfo;
+        public TenantCounter(string dbConnectionInfo)
+        {
+            _dbConnectionInfo = dbConnectionInfo;
+        }
+
+        public int GetNumber()
         {
             int number = 0;
 
-            string dbConnectionInfo = "";
-            if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
-            {
-                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Oracle_Globalstr"].ConnectionString;
-
-            }
-            else
-            {
-                dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
-            }
-
-            string strConnString = GetConnection(dbConnectionInfo);
+            string strConnString = GetConnection(_dbConnectionInfo);
 
             if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
             {

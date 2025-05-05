@@ -1,25 +1,18 @@
-﻿using AmitalCloud.Infrastructure.Data.Security;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
+﻿using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class LoggedContactResolver
     {
-        public LoggedContactResolver()
+        private readonly ILoggedContactUtil _loggedContactUtil;
+        public LoggedContactResolver(ILoggedContactUtil loggedContactUtil)
         {
-
+            _loggedContactUtil = loggedContactUtil;
         }
-        public static ContactPM GetLoggedContact(int tenant)
+        public ContactPM GetLoggedContact(int tenant)
         {
-            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
-            return loggedcontact;
-        }
-
-        public static void RegisterLoggedContactUtil()
-        {
-            ContainerAccessor.Container.RegisterType<ILoggedContactUtil, LoggedContactUtil>("LoggedContactUtil", new InjectionFactory(c => new LoggedContactUtil()));
+            return _loggedContactUtil.GetLoggedContact(tenant);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Unity;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
@@ -17,6 +17,5 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 return _container;
             }
         }
-
     }
 }
