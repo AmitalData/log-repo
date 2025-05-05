@@ -412,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 case GLAccountTotalDateTypeValues.DueDate:
                 case GLAccountTotalDateTypeValues.DocumentDate:
-                case GLAccountTotalDateTypeValues.Accountingdate:
+                case GLAccountTotalDateTypeValues.AccountingDate:
                 case GLAccountTotalDateTypeValues.Tax:
                     {
                         _Param.SearchFields = _SearchByFilter;
@@ -807,10 +807,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             if (string.IsNullOrWhiteSpace(_Param.DateTypeCode))
             {
-                _Param.DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate;
+                _Param.DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate;
             }
             var myDateTypeCodeList = new List<string>() {
-            GLAccountTotalDateTypeValues.Accountingdate,
+            GLAccountTotalDateTypeValues.AccountingDate,
             GLAccountTotalDateTypeValues.DueDate,
             GLAccountTotalDateTypeValues.DocumentDate
             };

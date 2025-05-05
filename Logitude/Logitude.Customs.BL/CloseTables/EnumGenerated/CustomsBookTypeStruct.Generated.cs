@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- 
+
 namespace Logitude.Customs.BL.CloseTables
 {
     public struct CustomsBookTypeValues
-    {   
-       public const string Import = "1";  
-       public const string Export = "2";  
-       public const string Autonomy = "3";  
+    {
+        public const string Import = "1";
+        public const string Export = "2";
+        public const string Autonomy = "3";
     }
-}
-
+ }
+ 

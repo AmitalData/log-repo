@@ -71,7 +71,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             {
                 switch (dateTypeValue)
                 {
-                    case GLAccountTotalDateTypeValues.Accountingdate:
+                    case GLAccountTotalDateTypeValues.AccountingDate:
                         firstDate = query.Select(rec => rec.AccountingDate).Min(); // AccountingDate is not nullable
                         break;
                     case GLAccountTotalDateTypeValues.DueDate:

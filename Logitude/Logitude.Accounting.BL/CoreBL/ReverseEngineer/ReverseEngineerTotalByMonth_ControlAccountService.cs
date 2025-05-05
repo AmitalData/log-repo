@@ -76,7 +76,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
                 var listOfDateTypeValues = new List<string>() {
-                    GLAccountTotalDateTypeValues.Accountingdate,
+                    GLAccountTotalDateTypeValues.AccountingDate,
                     GLAccountTotalDateTypeValues.DueDate,
                     GLAccountTotalDateTypeValues.DocumentDate,
                 };

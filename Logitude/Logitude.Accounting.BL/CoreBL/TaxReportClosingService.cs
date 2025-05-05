@@ -286,7 +286,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Tenant = tenant,
                 TaxReportId = taxReportId,
-                TaxReportTransmitStatusCode = TaxReportLineTransmitStatusValues.Fortransmit,
+                TaxReportTransmitStatusCode = TaxReportLineTransmitStatusValues.ForTransmit,
                 JournalId = journalPM.Id,
                 JournalLineNumber = 4
             };
@@ -300,14 +300,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 ChangeSetOp = ChangeSetOperation.Insert,
                 Tenant = tenant,
                 TaxReportId = taxReportId,
-                TaxReportTransmitStatusCode = TaxReportLineTransmitStatusValues.Fortransmit,
+                TaxReportTransmitStatusCode = TaxReportLineTransmitStatusValues.ForTransmit,
                 JournalId = journalPM.Id,
                 JournalLineNumber = 2
             };
         }
         private void SetTaxReportAsTransmittedAndClosingJournal()
         {
-            taxReportPM.StatusCode = VatReportStatusValues.Transmittedandaclosingjournalwascreated;
+            taxReportPM.StatusCode = VatReportStatusValues.TransmittedAndAClosingJournalWasCreated;
 
             DateTime stopLogAt = new DateTime(2023, 06, 01);
             string text = "TaxReportClosingservice.SetTaxReportAsTransmittedAndClosingJournal(*1*): " + taxReportPM.Id + " taxReportPM.StatusCode : " + taxReportPM.StatusCode;
@@ -559,7 +559,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
             return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType 
-            && (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)).ToList();
+            && (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.ForTransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)).ToList();
         }
 
         private List<LedgerTransaction> GetLedgerTransactionsForOutputTaxReportLines(List<TaxReportLine> taxReportLines)

@@ -82,7 +82,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         private static void SetReportAsFailedToCancel(TaxReportPM taxReportPM)
         {
             taxReportPM.IsCancelled = false;
-            taxReportPM.StatusCode = VatReportStatusValues.Cancelationfailed;
+            taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
 
             DateTime stopLogAt = new DateTime(2023, 06, 01);
             string text = "BatchCancelTaxReportTask.SetReportAsFailedToCancel(*1*): " + taxReportPM.Id + " taxReportPM.StatusCode : " + taxReportPM.StatusCode;

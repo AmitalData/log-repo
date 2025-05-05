@@ -69,7 +69,7 @@ namespace Logitude.Accounting.BL.CoreBL
             _DateTypeCode = DateTypeCode;
             if (string.IsNullOrWhiteSpace(_DateTypeCode))
             {
-                _DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate;
+                _DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate;
             }
             var swFull = Stopwatch.StartNew();
             try
@@ -146,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (openBalancePlease_ReCalcYearTransfer)
                     {
                         var openBalanceDate = DateUntillNotInclude;
-                        if (DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate
+                        if (DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate
                             && openBalanceDate.Month == 1 && openBalanceDate.Day == 1)
                         {
 

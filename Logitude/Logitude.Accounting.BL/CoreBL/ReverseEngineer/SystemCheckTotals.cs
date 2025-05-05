@@ -54,7 +54,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             //    dateTypeCode++)
                             {
                                 var q = (from tot in repoGLAccountTotalByMonth
-                                     .GetQuaryableMonthTotals(year, month, tenant, GLAccountTotalDateTypeValues.Accountingdate)
+                                     .GetQuaryableMonthTotals(year, month, tenant, GLAccountTotalDateTypeValues.AccountingDate)
                                          join glAcc in qAllCardsAndDetialsAccType
                                          on tot.AccountId equals glAcc.Id
                                          group tot by 1 into g
@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 if (res != 0)
                                 {
                                     var accIdList = qAllCardsAndDetialsAccType.Select(r => r.Id);
-                                    throw new Exception($"not equal to zero for year:{year} month:{month} dateTypeCode:{GLAccountTotalDateTypeValues.Accountingdate} controlAccountLevel:{controlAccountLevel}");
+                                    throw new Exception($"not equal to zero for year:{year} month:{month} dateTypeCode:{GLAccountTotalDateTypeValues.AccountingDate} controlAccountLevel:{controlAccountLevel}");
                                 }
                             }
                         }
@@ -117,7 +117,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 var gAccountingdate =
                     repoGLAccountTotalByMonth.GetAll(tenant)
-                    .Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                    .Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
                     .GroupBy(gBy => new { gBy.AccountId })
                     .Select(g => new TotSumPerAccount()
                     {

@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- 
+
 namespace Logitude.Accounting.BL.CloseTables
 {
     public struct VatReportStatusValues
-    {   
-       public const string Draft = "D";  
-       public const string Approved = "A";  
-       public const string Cancelled = "C";  
-       public const string Transmitted = "T";  
-       public const string Error = "E";  
-       public const string InProgress = "P";  
-       public const string CancelationinProgress = "CP";  
-       public const string Cancelationfailed = "CF";  
-       public const string Transmittedandaclosingjournalwascreated = "J";  
+    {
+        public const string Draft = "D";
+        public const string Approved = "A";
+        public const string Cancelled = "C";
+        public const string Transmitted = "T";
+        public const string Error = "E";
+        public const string InProgress = "P";
+        public const string CancelationInProgress = "CP";
+        public const string CancelationFailed = "CF";
+        public const string TransmittedAndAClosingJournalWasCreated = "J";
     }
-}
-
+ }
+ 
