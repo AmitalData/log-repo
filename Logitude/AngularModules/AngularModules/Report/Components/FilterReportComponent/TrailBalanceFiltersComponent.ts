@@ -41,7 +41,6 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     queryFilterItems: QueryFilterItem[];
     public ValidationErrorsList: string[] = [];
     public IsEditable: boolean = false;
-    // IsCategoryDisabled: boolean = false;
     queryFilterItem: QueryFilterItem;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     Name: string;
@@ -261,7 +260,6 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item=>item.Checked == true);
         const haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
         this.DisableChartOfAccountField(haveSelectedItems);
-        this.DisableCategoryFields(haveSelectedItems);
 
 
     }
@@ -276,7 +274,6 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
         const haveSelectedItems = this.selectedChartOfAccounts.length > 0;
         this.DisableChartOfAccountsTypesField(haveSelectedItems);
-        this.DisableCategoryFields(haveSelectedItems);
 
     }
     SetChartOfAccountsFilterProperties(){
@@ -284,12 +281,10 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item=>item.Checked == true);
         let haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
         this.DisableChartOfAccountField(haveSelectedItems);
-        this.DisableCategoryFields(haveSelectedItems);
 
         this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
         haveSelectedItems = this.selectedChartOfAccounts.length > 0;
         this.DisableChartOfAccountsTypesField(haveSelectedItems);
-        this.DisableCategoryFields(haveSelectedItems);
     }
     private DisableChartOfAccountsTypesField(haveSelectedItems: boolean)
     {
@@ -297,18 +292,6 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.selectedChartOfAccountsTypes = null;
     }
 
-    private DisableCategoryFields(haveSelectedItems: boolean)
-    {
-        this.IsCategoryDisabled = haveSelectedItems;
-        if (haveSelectedItems) {
-            this.SelectedCategory = null;
-            this.Category1 = null;
-            this.Category2 = null;
-            this.Category3 = null;
-            this.Category4 = null;
-            this.Category5 = null;
-        }
-    }
 
     handleSetStyle(idName: string) {
         document.getElementById(idName).style.width = "250px";
@@ -563,12 +546,6 @@ export class TrailBalanceFiltersComponent extends BaseComponent
     {
         if (this.chartOfAccountId != value) {
             this.chartOfAccountId = value;
-            if (value != null) {
-                this.IsCategoryDisabled = true;
-            }
-            else {
-                this.IsCategoryDisabled = false;
-            }
         }
     }
 
