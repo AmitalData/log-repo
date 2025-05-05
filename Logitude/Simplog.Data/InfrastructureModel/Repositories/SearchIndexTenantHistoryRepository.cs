@@ -2,31 +2,29 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
     public class SearchIndexTenantHistoryRepository : IRepository<SearchIndexTenantHistory>
     {
-        public readonly IWebFreightContext webFreightContext;
+        public readonly IWebFreightContext context;
         
         public SearchIndexTenantHistoryRepository(int tenant)
         {
-            webFreightContext = WebFreightContext.GetContext(tenant);
+            context = WebFreightContext.GetContext(tenant);
         }
 
         public SearchIndexTenantHistoryRepository(IWebFreightContext context)
         {
-            webFreightContext = context;
+            this.context = context;
         }
         public void Add(SearchIndexTenantHistory entity)
         {
             throw new NotImplementedException();
         }
 
-        public List<SearchIndexTenantHistory> All()
-        {
-            throw new NotImplementedException();
-        }
+        public List<SearchIndexTenantHistory> All() => context.SearchIndexTenantHistories.ToList();
 
         public List<SearchIndexTenantHistory> GetMulti(EntityKeyFields entityKeys)
         {
@@ -43,14 +41,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new NotImplementedException();
         }
 
-        public void SubmitChanges()
-        {
-            throw new NotImplementedException();
-        }
-
+        public void SubmitChanges() => context.SaveChanges();        
         public void Update(SearchIndexTenantHistory entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            context.SetAsModified(entity);
+            context.SearchIndexTenantHistories.Attach(entity);
+            SubmitChanges();
         }
     }
 }

@@ -74,5 +74,31 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 .Distinct()
                 .Take(size)
                 .ToList();
+
+        public void RemoveOldSearchData(int tenant, string screen, DateTime toDateTime)
+        {
+            Context.SearchIndexEditHistories
+                .Where(x => x.Tenant == tenant && x.Screen == screen && x.CreateDate < toDateTime)
+                .ToList()
+                .ForEach(x => Context.SearchIndexEditHistories.Remove(x));
+            SubmitChanges();
+
+            List<SearchIndexEditHistory> duplicateEntries = Context.SearchIndexEditHistories
+              .Where(x => x.Tenant == tenant && x.Screen == screen)
+              .GroupBy(x => x.KeyVal)
+              .Where(g => g.Count() > 1)
+              .SelectMany(g => g.OrderByDescending(e => e.CreateDate).Skip(1))
+              .ToList();
+            duplicateEntries.ForEach(x => Context.SearchIndexEditHistories.Remove(x));
+            SubmitChanges();
+
+            Context.SearchIndexEditHistories
+                .Where(x => x.Tenant == tenant && x.Screen == screen)
+                .OrderByDescending(x => x.CreateDate)
+                .Skip(50)
+                .ToList()
+                .ForEach(x => Context.SearchIndexEditHistories.Remove(x));
+            SubmitChanges();
+        }
     }
 }

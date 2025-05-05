@@ -17,6 +17,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             Property(x => x.TtlField).HasColumnName("TtlField").IsOptional().HasMaxLength(20);
             Property(x => x.BuildIntervalMin).HasColumnName("BuildIntervalMin").IsRequired();
             Property(x => x.LastUpdate).HasColumnName("LastUpdate");
+            Property(x => x.LastRemove).HasColumnName("LastRemove");
         }
     }
 }

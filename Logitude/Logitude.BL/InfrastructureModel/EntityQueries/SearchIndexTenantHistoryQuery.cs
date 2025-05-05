@@ -1,9 +1,11 @@
 ﻿using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using System.Collections.Generic;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
-    class SearchIndexTenantHistoryQuery
+    public class SearchIndexTenantHistoryQuery
     {
         SearchIndexTenantHistoryRepository repository;
 
@@ -16,5 +18,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             repository = new SearchIndexTenantHistoryRepository(tenant);
         }
+
+        public List<SearchIndexTenantHistory> GetAll() => repository.All();
+
+        public void Update(SearchIndexTenantHistory entity) => repository.Update(entity);
     }
 }

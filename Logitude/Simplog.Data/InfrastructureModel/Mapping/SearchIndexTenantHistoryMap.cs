@@ -8,8 +8,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         public SearchIndexTenantHistoryMap()
         {
             ToTable("SearchIndexTenantHistory");
-            HasKey(t => new { t.Index, t.Tenant });
-            Property(t => t.Index).HasColumnName("Index").IsRequired().HasMaxLength(50);
+            HasKey(t => new { t.Screen, t.Tenant });
+            Property(t => t.Screen).HasColumnName("Index").IsRequired().HasMaxLength(50);
             Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
             Property(t => t.TtlMonth).HasColumnName("TtlMonth").IsRequired();
             Property(t => t.LastUpdate).HasColumnName("LastUpdate");

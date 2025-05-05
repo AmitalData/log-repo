@@ -57,4 +57,10 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="LastRemove"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>

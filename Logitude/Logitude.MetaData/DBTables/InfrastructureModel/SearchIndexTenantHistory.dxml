@@ -5,7 +5,8 @@
   DBType="Main"
   Module="Infrastructure">
   <Column
-    Name="Index"
+    Name="Screen"
+    OldNames="Index"
     Type="varchar"
     Size="50">
     <Constraints

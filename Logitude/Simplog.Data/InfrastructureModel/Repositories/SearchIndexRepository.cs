@@ -2,21 +2,22 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
     public class SearchIndexRepository : IRepository<SearchIndex>
     {
-        public readonly IWebFreightContext webFreightContext;
+        public readonly IWebFreightContext context;
 
         public SearchIndexRepository(int tenant)
         {
-            webFreightContext = WebFreightContext.GetContext(tenant);
+            context = WebFreightContext.GetContext(tenant);
         }
 
         public SearchIndexRepository(IWebFreightContext context)
         {
-            webFreightContext = context;
+            this.context = context;
         }
 
         public void Add(SearchIndex entity)
@@ -24,10 +25,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new NotImplementedException();
         }
 
-        public List<SearchIndex> All()
-        {
-            throw new NotImplementedException();
-        }
+        public List<SearchIndex> All() => context.SearchIndexes.ToList();
 
         public List<SearchIndex> GetMulti(EntityKeyFields entityKeys)
         {
@@ -46,12 +44,17 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void SubmitChanges()
         {
-            throw new NotImplementedException();
+            context.SaveChanges();            
         }
 
         public void Update(SearchIndex entity)
         {
-            throw new NotImplementedException();
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            context.SetAsModified(entity);
+            context.SearchIndexes.Attach(entity);
+            SubmitChanges();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -22,5 +23,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = new SearchIndexRepository(tenant);
         }
 
+        public List<SearchIndex> GetAll() => repository.All();
+
+        public void Update(SearchIndex entity) => repository.Update(entity);
     }
 }

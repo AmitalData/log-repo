@@ -69,5 +69,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 Tenant = x.Tenant,
                 CreateDate = x.CreateDate,
             });
+
+        public void RemoveOldSearchData(int tenant, string screen, DateTime toDateTime)
+        {
+            if (tenant == null)
+                throw new ArgumentNullException("tenant", "tenant cannot be null");
+            if (string.IsNullOrEmpty(screen))
+                throw new ArgumentNullException("screen", "screen cannot be null or empty");
+
+            repository.RemoveOldSearchData(tenant, screen, toDateTime);
+        }
     }
 }
