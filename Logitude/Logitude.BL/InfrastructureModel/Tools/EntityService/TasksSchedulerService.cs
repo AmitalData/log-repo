@@ -161,8 +161,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
         private void FillNextRunDateFields()
         {
-            var utcOffsetHours = (int)TimeZoneInfo.Local.GetUtcOffset(DateTime.Now).TotalHours;
-            this.entityPM.StartDateTimeUTC = this.entityPM.StartDateTime?.AddHours(-utcOffsetHours);
+
             this.entityPM.NextRunTime = this.entityPM.NextRunTime == null ? this.entityPM.StartDateTime : this.entityPM.NextRunTime;
             this.entityPM.NextRunTimeUTC = this.entityPM.NextRunTimeUTC == null ? this.entityPM.StartDateTimeUTC : this.entityPM.NextRunTimeUTC;
         }
@@ -184,7 +183,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 theEntityPm.Version = theEntityPm.Version + 1;
                 theEntityPm.NextRunTime = theEntityPm.StartDateTime;
-                theEntityPm.StartDateTimeUTC = this.entityPM.StartDateTimeUTC;
                 theEntityPm.NextRunTimeUTC = theEntityPm.StartDateTimeUTC;
                 if (!FeatureToggleHelper.HasFeatureToggle("STQ", entityPM.Tenant)) 
                 {

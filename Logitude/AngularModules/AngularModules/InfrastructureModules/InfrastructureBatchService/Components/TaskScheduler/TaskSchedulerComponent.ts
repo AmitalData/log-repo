@@ -8,7 +8,7 @@ import { TaskSchedulerHistoryList } from '../../../../Infrastructure/EntityLists
 import { TasksSchedulerPM } from '../../../../Infrastructure/EntityPMs/TasksSchedulerPM';
 import { SchedulerDetails, FTPSchedulerDetails } from '../../../../Infrastructure/DataContracts/SchedulerDetails';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool } from '../../../../Infrastructure/Tools';
+import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
@@ -121,7 +121,7 @@ export class TaskSchedulerComponent implements OnInit {
     public ShowArrow = false;
     public SelectedRow: any;
     onRowSelected(item: any) {
-        this.SelectedRow = item.rowData;
+        this.SelectedRow = item.rowData;//new TaskSchedulerItemClass(item.rowData, this, true);//item;
         this.SelectedRowChanged.emit(this.SelectedRow);
     }
 
@@ -314,14 +314,32 @@ export class TaskSchedulerComponent implements OnInit {
 
     geTaskstRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-        filters = new ApiQueryFilters();        
+        filters = new ApiQueryFilters();
+        //filters.SortBy = "StatusDate";
+        // filters.SortDirection = "Desc";
         if (!sortingCol) {
             sortingCol = "NextRunTime";
             sortingDir = "descending";
         }
-        
+        //if (!this.SelectedRow) {
+        //    //if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+        //    //    filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+        //    //}
+        //    filters.addAdditionalFilter("TaskId", "0-0", null, null, "Equals", false, false, false, "String");
+
+        //}
+        //else {
+        //    if (!AppTool.IsNullOrEmpty(this.SelectedRow.Id)) {
+        //        if (filters.AdditionalFilters.filter(a => a.FieldName == "TaskId").length > 0) {
+        //            filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "TaskId");
+        //        }
+        //        filters.addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Equals", false, false, false, "String");
+        //    }
+
+        //return
+        //}
         if (this.filterTypeCode == "AL") {
-            filters.AdditionalFilters = [];
+            filters.AdditionalFilters = [];//addAdditionalFilter("TaskId", this.SelectedRow.Id, null, null, "Contains", true, false, false, "String");
         }
         else if (this.filterTypeCode == "IN") {
             if (filters.AdditionalFilters.filter(a => a.FieldName == "InActive").length > 0) {
@@ -406,7 +424,15 @@ export class TaskSchedulerComponent implements OnInit {
         if (this.filterTypeCode != value) {
             this.filterTypeCode = value;
             this.LoadTaskSchedulers();
-            
+            //if (value == "AC") {
+            //    this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == false);
+            //}
+            //else if (value == "IN") {
+            //    this.ItemsSource = this.FixedItemsSource.filter(a => a.InActive == true);
+            //}
+            //else {
+            //    this.ItemsSource = this.FixedItemsSource;
+            //}
         }
     }
 
@@ -493,7 +519,20 @@ export class TaskSchedulerItemClass extends BaseComponent {
 
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
+            this.EntityPM.StartDateTimeUTC = this.GetUtcTenantDateValueFromDate(newValue);
+
         }
+    }
+
+    private GetUtcTenantDateValueFromDate(newValue: Date) {
+        let utcDateValue = new Date(newValue);
+        if (SessionLocator.TenantPM.TimeZoneOffset && SessionLocator.TenantPM.TimeZoneOffset != 0) {
+            utcDateValue.setHours(utcDateValue.getHours() - SessionLocator.TenantPM.TimeZoneOffset);
+        }
+        //if (SessionLocator.TenantPM.DayLightOffset && SessionLocator.TenantPM.DayLightOffset != 0) {
+        //    utcDateValue.setHours(utcDateValue.getHours() + SessionLocator.TenantPM.DayLightOffset);
+        //}
+        return utcDateValue;
     }
 
     get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
