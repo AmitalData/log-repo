@@ -128,10 +128,10 @@ namespace Unifreight.BL.EntityQueryServices
 
         public string GetRecordOfRowNeedSync(SyncRecord syncRecord)
         {
-            if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal))
+            if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal) || syncRecord.TrigAction == "D")
             {
-                DevLog.Instance.WriteInfo($"GetRecordOfRowNeedSync, keyVal is empty or null, id: " + syncRecord?.Id);
-                return null;
+                DevLog.Instance.WriteInfo($"GetRecordOfRowNeedSync, keyVal is empty or null or is delete, id: {syncRecord?.Id}, trigAction: {syncRecord?.TrigAction}");
+                return "[]";
             }
 
             string query = $"SELECT * FROM {syncRecord.Entname}";
