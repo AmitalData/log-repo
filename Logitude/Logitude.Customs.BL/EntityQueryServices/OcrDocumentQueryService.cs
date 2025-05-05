@@ -56,8 +56,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         tenant = tenantFromUrl ,
                         UpdateTypingQueue = "UnsetTyping",
                         RequestFileId = OcrId,
-
-
                      }
                     );
                 return res;
