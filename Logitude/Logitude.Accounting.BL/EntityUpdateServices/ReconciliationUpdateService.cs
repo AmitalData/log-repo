@@ -688,6 +688,35 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         invoice.IsClosed = false;
                         invoice.StatusCode = "AD";
                     }
+
+                 var invoice = invoiceQuery.GetSinglePM(ledgerTransactionPM.SourceId, ledgerTransactionPM.Tenant);
+                string relevantGLAccountId = isAPInvoice ? invoice.VendorGLAccountId : invoice.BillToGLAccountId;
+
+               
+                var updatedLedgerTransactions = ledgerTransactionGroup.Where(t => t.AccountId == relevantGLAccountId).ToList();
+
+                var ledgerTransactionQueryService = new LedgerTransactionQueryService(ledgerTransactionPM.Tenant);
+                var dbTransactions = ledgerTransactionQueryService.GetByJournalAndAccountId(
+                    ledgerTransactionPM.JournalId, relevantGLAccountId, ledgerTransactionPM.Tenant);
+
+                var transactionIds = updatedLedgerTransactions.Select(t => t.Id).ToList();
+                var unmatchedTransactions = dbTransactions.Where(x => !transactionIds.Contains(x.Id)).ToList();
+
+                if (!unmatchedTransactions.Any() && !updatedLedgerTransactions.Any())
+                    continue;
+
+                decimal totalOpenAmount = unmatchedTransactions.Sum(x => x.OpenAmount) + updatedLedgerTransactions.Sum(x => x.OpenAmount);
+
+                var glAccountQueryService = new GLAccountQueryService(entityPM.Tenant);
+                var reconcileMethodCode = glAccountQueryService.GetSingle(entityPM.AccountId, false, false).ReconcileMethodCode;
+
+                decimal totalAmount = reconcileMethodCode == ReconcileMethodValues.LocalCurrency
+                    ? unmatchedTransactions.Sum(x => x.LocalAmountCredit) + updatedLedgerTransactions.Sum(x => x.LocalAmountCredit)
+                    : unmatchedTransactions.Sum(x => x.ForeignAmountCredit) + updatedLedgerTransactions.Sum(x => x.ForeignAmountCredit);
+
+                invoice.IsClosed = totalOpenAmount == 0;
+                if (invoice.StatusCode != "VD" && invoice.StatusCode !="AC" && invoice.StatusCode != "AR") invoice.StatusCode = totalOpenAmount == 0 ? "PD"
+                    : Math.Abs(ledgerTransactionPM.OpenAmount) < totalAmount ? "PP" : "AD";
                     SecurityUtility.IsWorkerRoleCall = true;
                     APInvoiceService aPInvoiceService = new APInvoiceService(invoiceContext, ledgerTransactionPM.Tenant);
                     aPInvoiceService.Update(invoice, true);
