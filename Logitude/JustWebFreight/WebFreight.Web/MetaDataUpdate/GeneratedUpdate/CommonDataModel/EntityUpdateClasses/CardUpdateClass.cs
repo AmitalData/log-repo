@@ -91,7 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
    public class CardUpdateClass
    {  		
  
-		public const string HashString = "853033ee8bc0b99bd07529c38ac9c7d1";
+		public const string HashString = "e5d26554d070f75f0002713cd167a0b7";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6153,7 +6153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Card",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -6162,13 +6162,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAutonomy",
 					  						DefaultText =  "IsAutonomy",
-					  						FullLocalDefaultText =  "IsAutonomy",
+					  						FullLocalDefaultText =  "Is Palestinian ",
 					  						ListFieldLable =  "IsAutonomyListLable",
-					  						ListLableDefaultText =  "IsAutonomy",
-					  						ListLocalDefaultText =  "IsAutonomy",
+					  						ListLableDefaultText =  "Is Palestinian ",
+					  						ListLocalDefaultText =  "Is Palestinian ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
-					  						NoMetaDataField =  true,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -10023,6 +10023,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExternalSystem",
 					  						ListPropertyPath =  "ExternalSystem",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

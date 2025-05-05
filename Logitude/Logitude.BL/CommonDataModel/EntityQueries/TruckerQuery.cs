@@ -103,6 +103,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Code = a.Card.Code,
                                     GLAccountId = a.Card.GLAccountId,
                                     ExternalSystem = a.Card.ExternalSystem,
+                                    IsAutonomy = a.Card.IsAutonomy
+
                                 },
                            }).FirstOrDefault();
 
@@ -430,6 +432,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         PartnerTypeId = a.Card.PartnerTypeId,
                                         Code = a.Card.Code,
                                         ExternalSystem = a.Card.ExternalSystem,
+                                        IsAutonomy = a.Card.IsAutonomy
+
                                     },
                                 }).FirstOrDefault();
 

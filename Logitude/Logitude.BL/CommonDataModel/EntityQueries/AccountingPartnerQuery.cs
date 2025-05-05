@@ -104,6 +104,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              SendingInterestReport=a.Card.SendingInterestReport,
                                                              GLAccountId   =a.Card.GLAccountId,
                                                              ExternalSystem = a.Card.ExternalSystem,
+                                                             IsAutonomy = a.Card.IsAutonomy
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
