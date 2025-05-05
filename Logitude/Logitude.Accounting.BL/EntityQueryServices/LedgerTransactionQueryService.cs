@@ -1550,6 +1550,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms;
         }
 
+        public bool ExistsLedgerTransactionByReferenceGLAccountId(string reference1, string gLAccountId, int tenant)
+        {
+            return repository.ExistsLedgerTransactionByReferenceGLAccountId(reference1, gLAccountId, tenant);
+        }
     }
     public class JournalLineLedgerDTO
     {

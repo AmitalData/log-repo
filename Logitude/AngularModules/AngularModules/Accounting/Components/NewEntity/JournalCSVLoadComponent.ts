@@ -5,7 +5,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { JournalPM } from '../../EntityPMs/JournalPM';
-import { JournalLinePM } from '../../EntityPMs/JournalLinePM';
+import { JournalAnalyseResult } from '../../EntityPMs/JournalAnalyseResult';
 import { BankAccountPM } from '../../EntityPMs/BankAccountPM';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
@@ -85,6 +85,8 @@ export class JournalCSVLoadComponent extends BaseComponent {
     HasError: boolean;
     _LabelLog: string;
     public _NewJournalPM: JournalPM;
+    public _DuplicateLinesSkippedNumber: number = 0;
+
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -132,7 +134,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
     //#endregion
 
     SendJournal(): any {
-        //throw new Error("Method not implemented.");
+
         this.CurrentSession.StartBusyIndicatorCreating();
         if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {
             this._JournalExtendedPMService.PostJournalAsCSV(this.fileUploadParamerter)
@@ -149,13 +151,13 @@ export class JournalCSVLoadComponent extends BaseComponent {
                     } else {
 
                         if (!AppTool.IsNullOrEmpty(response)) {
-                            //this.ShowMessage(JSON.stringify(response.Result));
-                            var journalPM: JournalPM;
-                            journalPM = myServiceResponse.Result;
-                            console.log(journalPM);
-                            this._NewJournalPM = journalPM;
 
-                            //this.CancelButtonClicked();
+                            var journalAnalyseResult: JournalAnalyseResult;
+                            journalAnalyseResult = myServiceResponse.Result;
+                            console.log(journalAnalyseResult);
+                            this._NewJournalPM = journalAnalyseResult.JournalPM;
+                            this._DuplicateLinesSkippedNumber = journalAnalyseResult.DuplicatesSkipped;
+
                         }
 
                     }
@@ -278,6 +280,9 @@ export class JournalCSVLoadComponent extends BaseComponent {
 
     }
 
+    public GetDuplicateLinesSkippedMessage() {
+        return TextCodeTranslator.Translate('Journal.O.DuplicateLinesSkipped') + " " + this._DuplicateLinesSkippedNumber;
+    }
 
     //#endregion upload
 
