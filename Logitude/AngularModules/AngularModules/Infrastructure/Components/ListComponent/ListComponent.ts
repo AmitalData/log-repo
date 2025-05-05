@@ -118,7 +118,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             actionTranslationPrefix: "Customs.Declaration.O."
         }
     };
-    private MaxAdditionalCurrencyRate = 4;
  
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
@@ -3126,9 +3125,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         isEnabled = false;
                     }
                 }
-                else if (this.ObjectTableName == "AdditionalCurrencyRate") {
-                    isEnabled = this.CheckNewAdditionalCurrencyRateButton();
-                }
+                
 
                 if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
                     isEnabled = false;
@@ -3143,18 +3140,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
 
-    private CheckNewAdditionalCurrencyRateButton() {
-        if (this.dataSource.rowCount !== null) {
-            return this.dataSource.rowCount < this.MaxAdditionalCurrencyRate;
-        }
-        const interval = setInterval(() => {
-            if (this.dataSource.rowCount !== null) {
-                clearInterval(interval);
-                this.SetNewEntityButtonDisabled();
-            }
-          }, 1000);
-        return false;
-    }
+   
 
     private SetNewEntityButtonVisibility() {
         
