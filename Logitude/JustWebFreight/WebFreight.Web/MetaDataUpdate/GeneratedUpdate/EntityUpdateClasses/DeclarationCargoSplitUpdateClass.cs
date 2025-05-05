@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCargoSplitUpdateClass
    {  		
- 		public const string HashString = "f58cce16ad4bbd33a220afa0cc872d7f";
+		public const string HashString = "d079d8af023b0765137a1324bc06932d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -266,10 +266,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestDate",
 					  						DefaultText =  "Request Date",
-					  						FullLocalDefaultText =  "תםריך בקשת פיצול",
+					  						FullLocalDefaultText =  "תאריך בקשת פיצול",
 					  						ListFieldLable =  "RequestDateListLable",
 					  						ListLableDefaultText =  "Request Date",
-					  						ListLocalDefaultText =  "תםריך בקשת פיצול",
+					  						ListLocalDefaultText =  "תאריך בקשת פיצול",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -932,10 +932,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestNumber",
 					  						DefaultText =  "Manifest Number",
-					  						FullLocalDefaultText =  "מזהה מטען רםשון",
+					  						FullLocalDefaultText =  "מזהה מטען ראשון",
 					  						ListFieldLable =  "ManifestNumberListLable",
 					  						ListLableDefaultText =  "Manifest Number",
-					  						ListLocalDefaultText =  "מזהה מטען רםשון",
+					  						ListLocalDefaultText =  "מזהה מטען ראשון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1931,7 +1931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable DeclarationCargoSplitObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCargoSplit" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DeclarationCargoSplitTextCode_CustomsDeclarationCargoSplitOScreenDeleteIsContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCargoSplit.O.ScreenDeleteIsContinue", DefaultText = "The data entered on the screen will be deleted! to proceed ?",LocalDefaultText = @"הנתונים שהוזנו במסך יימחקו ! הםם להמשיך ?", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode DeclarationCargoSplitTextCode_CustomsDeclarationCargoSplitOScreenDeleteIsContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCargoSplit.O.ScreenDeleteIsContinue", DefaultText = "The data entered on the screen will be deleted! to proceed ?",LocalDefaultText = @"הנתונים שהוזנו במסך יימחקו ! האם להמשיך ?", ObjectTableId = DeclarationCargoSplitObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

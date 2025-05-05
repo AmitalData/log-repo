@@ -1315,27 +1315,27 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
-		private string email;
-
-		[CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	  private string email ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Email
-		{
+       public string Email  
+	   {
 	    
 	     get
 		{
 		   return email;
-	    }
+		 }
 		 set
 		 {
 		   if(email != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName= "Email", OldValue=email, NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Email",OldValue=email,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-			email = value;
+		   email=value;
 		   }
-
+			
 		 }
 	   }
 	    }

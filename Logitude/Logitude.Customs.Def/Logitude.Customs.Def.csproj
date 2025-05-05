@@ -172,6 +172,7 @@
     <Compile Include="EntityPMs\Generated\ComputationMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConditionalExemptionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsEntityStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsGeneralPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemCategoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemGroupPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemHierarchicLocationPM.Generated.cs" />

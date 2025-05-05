@@ -3136,7 +3136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankAccount.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
- 			 QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.FactoringBank" , ColumnWidth = 100 }, addedQueryColumns);
+ 			// QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.FactoringBank" , ColumnWidth = 100 }, addedQueryColumns);
  
 			 QueryColumn AllBankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.AccountNumber" , ColumnWidth = 120 }, addedQueryColumns);
 

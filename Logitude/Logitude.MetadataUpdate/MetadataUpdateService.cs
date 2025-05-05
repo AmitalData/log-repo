@@ -37,28 +37,13 @@ namespace Logitude.MetadataUpdate
                 bool multiDB = false;
                 string firstDifferentDB = null;
 
+                if (_globalDBs.Count > 1)
+                    multiDB = true;
+               
+ 
                 foreach (var db in _globalDBs)
                 {
-                    var dbConnection = GlobalDbHelper.GetGlobalDB(db.Key);
-                    if (dbConnection == null || !dbConnection.IsActive)
-                    {
-                        continue;
-                    }
-
-                    if (firstDifferentDB == null)
-                    {
-                        firstDifferentDB = dbConnection.DBConnection;
-                    }
-                    else if (firstDifferentDB != dbConnection.DBConnection)
-                    {
-                        multiDB = true;
-                        break;
-                    }
-                }
-
-                foreach (var db in _globalDBs)
-                {
-                    int currentTenantId = db.Key;
+                    int currentTenantId =   db.Key;
                     string globalDbId = db.Value;
 
                     if (tenantId.HasValue && currentTenantId != tenantId.Value)
@@ -71,36 +56,36 @@ namespace Logitude.MetadataUpdate
                         continue;
                     }
 
-                    var dbConnection = GlobalDbHelper.GetGlobalDB(currentTenantId);
-                    if (dbConnection == null)
-                    {
-                        Console.WriteLine($"DB {globalDbId} not found for tenant {currentTenantId}");
-                        continue;
-                    }
-                    if (!dbConnection.IsActive)
-                    {
-                        Console.WriteLine($"DB {globalDbId} is not active for tenant {currentTenantId}");
-                        continue;
-                    }
-                    if (processedDBConnections.ContainsValue(dbConnection.DBConnection))
+                    var dbConnection = db.Value;// GlobalDbHelper.GetGlobalDB(currentTenantId);
+                    //if (dbConnection == null)
+                    //{
+                    //    Console.WriteLine($"DB {globalDbId} not found for tenant {currentTenantId}");
+                    //    continue;
+                    //}
+                    //if (!dbConnection.IsActive)
+                    //{
+                    //    Console.WriteLine($"DB {globalDbId} is not active for tenant {currentTenantId}");
+                    //    continue;
+                    //}
+                    if (processedDBConnections.ContainsValue(dbConnection))
                     {
                         continue;
                     }
 
-                    var moduleToIncule = GetIncludeModules(GetConnection(dbConnection));
+                    var moduleToIncule = GetIncludeModules(DatabaseInitializer.GetConnection(dbConnection, dbConnection).ConnectionString);
                     if (moduleToIncule.Modules.Contains("customs") && !moduleToIncule.Modules.Contains("shipment"))
                     {
-                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection.DBConnection}");
+                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection}");
                         TenantsUpdateClass.UpdateDataForTenant(currentTenantId, "Customs", false, multiDB);
                     }
                     if (moduleToIncule.Modules.Contains("shipment") && moduleToIncule.Modules.Contains("customs"))
                     {
-                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection.DBConnection}");
+                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection}");
                         TenantsUpdateClass.UpdateDataForTenant(currentTenantId, moduleName, false, multiDB);
                     }
                     if (moduleToIncule.Modules.Contains("shipment") && !moduleToIncule.Modules.Contains("customs"))
                     {
-                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection.DBConnection}");
+                        Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection}");
                         TenantsUpdateClass.UpdateDataForTenant(currentTenantId, "UpdateTenantZeroNew", false, multiDB);
                     }
 
@@ -114,7 +99,7 @@ namespace Logitude.MetadataUpdate
                     TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, currentTenantId);
                     Console.WriteLine($"Building zip files finished for DB Connection: {dbConnection} ...");
 
-                    processedDBConnections.Add(currentTenantId, dbConnection.DBConnection);
+                    processedDBConnections.Add(currentTenantId, dbConnection);
                 }
 
                 Console.WriteLine("Updating all modules and building zip files finished successfully");
@@ -174,10 +159,10 @@ namespace Logitude.MetadataUpdate
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
             InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
-            List<GlobalTenant> globalTenants = new GlobalDomainService().GetAllTenants();
+           var globalTenants = new GlobalDomainService().GetGlobalDBs().Where(x=>x.IsActive && !string.IsNullOrEmpty(x.DBConnection));
             foreach (var item in globalTenants)
             {
-                _globalDBs.Add(item.Id, item.GlobalDBId);
+                _globalDBs.Add(Convert.ToInt32(item.Id), item.DBConnection);
             }
 
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache, _globalDBs);

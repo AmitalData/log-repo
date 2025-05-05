@@ -14,6 +14,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AppTool } from 'Infrastructure/Tools';
+
 
 export class ClaimsRelatedEntsExpDeclarPM {
       
@@ -65,10 +67,12 @@ export class ClaimsRelatedEntsExpDeclarPM {
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
+ 	
         this.IsDirty = true;
 		  if (this.EntityParentPM) {
             this.EntityParentPM.MarkAsDirty();
         }	
+		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.ClaimsRelatedEntsExpDeclar");

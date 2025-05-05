@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsItemDetailsHistoryUpdateClass
    {  		
- 		public const string HashString = "09d4125de65fdfd5e145804d2f6af2d4";
+		public const string HashString = "abe4d04d88a32a0d7d8168c05bfc0df3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -332,10 +332,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StartDate",
 					  						DefaultText =  "Start Date",
-					  						FullLocalDefaultText =  "תםריך התחלה",
+					  						FullLocalDefaultText =  "תאריך התחלה",
 					  						ListFieldLable =  "StartDateListLable",
 					  						ListLableDefaultText =  "Start Date",
-					  						ListLocalDefaultText =  "תםריך התחלה",
+					  						ListLocalDefaultText =  "תאריך התחלה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -397,10 +397,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EndDate",
 					  						DefaultText =  "End Date",
-					  						FullLocalDefaultText =  "תםריך סיום ",
+					  						FullLocalDefaultText =  "תאריך סיום ",
 					  						ListFieldLable =  "EndDateListLable",
 					  						ListLableDefaultText =  "End Date",
-					  						ListLocalDefaultText =  "תםריך סיום ",
+					  						ListLocalDefaultText =  "תאריך סיום ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

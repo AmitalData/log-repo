@@ -141,4 +141,4 @@ export class SupplierInvoiceItemsReqListPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

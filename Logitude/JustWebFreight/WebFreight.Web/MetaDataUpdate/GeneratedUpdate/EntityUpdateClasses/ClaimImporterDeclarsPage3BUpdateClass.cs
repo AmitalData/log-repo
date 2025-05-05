@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimImporterDeclarsPage3BUpdateClass
    {  		
- 		public const string HashString = "7c1eb67a119409d6cd41b3664b25bdb8";
+		public const string HashString = "4861fece898a1846bd1687a669ab966a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -330,10 +330,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SaleAmountAfter",
 					  						DefaultText =  "Sale Amount After",
-					  						FullLocalDefaultText =  "מחיר מכירה םחרי משלוח",
+					  						FullLocalDefaultText =  "מחיר מכירה אחרי משלוח",
 					  						ListFieldLable =  "SaleAmountAfterListLable",
 					  						ListLableDefaultText =  "Sale Amount After",
-					  						ListLocalDefaultText =  "מחיר מכירה םחרי משלוח",
+					  						ListLocalDefaultText =  "מחיר מכירה אחרי משלוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -532,10 +532,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DescriptionOfGoods",
 					  						DefaultText =  "Description Of Goods",
-					  						FullLocalDefaultText =  "תיםור טובין",
+					  						FullLocalDefaultText =  "תיאור טובין",
 					  						ListFieldLable =  "DescriptionOfGoodsListLable",
 					  						ListLableDefaultText =  "Description Of Goods",
-					  						ListLocalDefaultText =  "תיםור טובין",
+					  						ListLocalDefaultText =  "תיאור טובין",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -599,10 +599,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InventoryAmount",
 					  						DefaultText =  "Inventory Amount",
-					  						FullLocalDefaultText =  "כמות המלםי",
+					  						FullLocalDefaultText =  "כמות המלאי",
 					  						ListFieldLable =  "InventoryAmountListLable",
 					  						ListLableDefaultText =  "Inventory Amount",
-					  						ListLocalDefaultText =  "כמות המלםי",
+					  						ListLocalDefaultText =  "כמות המלאי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

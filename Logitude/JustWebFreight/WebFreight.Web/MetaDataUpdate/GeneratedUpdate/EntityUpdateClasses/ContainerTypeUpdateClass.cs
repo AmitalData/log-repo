@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ContainerTypeUpdateClass
    {  		
- 		public const string HashString = "ca11c39abf1e16da85215af0d17f13cf";
+		public const string HashString = "ab200818d366d048b3ceb1f9456845dd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -271,10 +271,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם םנגלית",
+					  						FullLocalDefaultText =  "שם אנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם םנגלית",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -405,10 +405,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultText =  "לם פּעיל",
+					  						FullLocalDefaultText =  "לא פּעיל",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לם פּעיל",
+					  						ListLocalDefaultText =  "לא פּעיל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -603,10 +603,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAerial",
 					  						DefaultText =  "IsAerial",
-					  						FullLocalDefaultText =  "םווירי",
+					  						FullLocalDefaultText =  "אווירי",
 					  						ListFieldLable =  "IsAerialListLable",
 					  						ListLableDefaultText =  "IsAerial",
-					  						ListLocalDefaultText =  "םווירי",
+					  						ListLocalDefaultText =  "אווירי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

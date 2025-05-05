@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomDocumentTypeMetaDataUpdateClass
    {  		
-		public const string HashString = "698c76a1ce8da3a56fac579830f41fad";
+		public const string HashString = "a9b3ddef2adf08ebff4acb36367e0543";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -38,6 +38,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -45,7 +48,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Format",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  true,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
@@ -64,7 +67,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Custom Document Type MetaData",
-			      				    Code =  "0ac5",
+			      				    Code =  "e290",
 			      				    Name =  "Customs.CustomDocumentTypeMetaData Query Group",
 			      				    CloseTableCode =  "MetaDataTypeCode",
 			      				    CloseTableName =  "MetaDataTypeName",
@@ -146,6 +149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -209,6 +213,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -260,10 +265,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Format",
 					  						DefaultText =  "Format",
-					  						FullLocalDefaultText =  "פורמט",
+					  						FullLocalDefaultTextBack_up =  "פורמט",
+					  						FullLocalDefaultText =  "BS64:Itek15XXqNee15gi",
 					  						ListFieldLable =  "FormatListLable",
 					  						ListLableDefaultText =  "Format",
-					  						ListLocalDefaultText =  "פורמט",
+					  						ListLocalDefaultTextBack_up =  "פורמט",
+					  						ListLocalDefaultText =  "BS64:Itek15XXqNee15gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -274,6 +281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -326,10 +334,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentTypeCode",
 					  						DefaultText =  "Document Type",
-					  						FullLocalDefaultText =  "סוג מסמך",
+					  						FullLocalDefaultTextBack_up =  "סוג מסמך",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXnteh157XmiI=",
 					  						ListFieldLable =  "DocumentTypeCodeListLable",
 					  						ListLableDefaultText =  "Document Type",
-					  						ListLocalDefaultText =  "סוג מסמך",
+					  						ListLocalDefaultTextBack_up =  "סוג מסמך",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXnteh157XmiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomDocumentType",
 					  						NavigationPropertyName =  "CustomDocumentType",
@@ -342,6 +352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -405,6 +416,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -467,6 +479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -529,6 +542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -591,6 +605,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -640,7 +655,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "חסום",
+					  						FullLocalDefaultTextBack_up =  "חסום",
+					  						FullLocalDefaultText =  "BS64:IteX16HXldedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -651,6 +667,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -688,6 +705,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CustomDocumentTypeMetaDataObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomDocumentTypeMetaData" && d.Tenant == 0).FirstOrDefault(); 
 
+		   Feature CustomDocumentTypeMetaDataFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeMetaDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeMetaData.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeMetaDataObjectTable,contextTenant);
+		   Feature CustomDocumentTypeMetaDataFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeMetaDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeMetaData.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeMetaDataObjectTable,contextTenant);
+		   Feature CustomDocumentTypeMetaDataFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeMetaDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeMetaData.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeMetaDataObjectTable,contextTenant);
+		   Feature CustomDocumentTypeMetaDataFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CustomDocumentTypeMetaDataObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomDocumentTypeMetaData.Features.PackageFeature", NameTextCodeDefaultText = "CustomDocumentTypeMetaData Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomDocumentTypeMetaDataObjectTable,contextTenant); 
 
 		   		   //--------------> Additional Features <--------------\\
 

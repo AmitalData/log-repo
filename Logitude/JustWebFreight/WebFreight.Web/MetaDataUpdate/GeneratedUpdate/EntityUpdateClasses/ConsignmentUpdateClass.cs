@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConsignmentUpdateClass
    {  		
- 		public const string HashString = "c51e4839eca2f84fca2cabf3e8a7277f";
+		public const string HashString = "5e0a722f9836dce7799fe2f875afba69";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -539,10 +539,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestDate",
 					  						DefaultText =  "Manifest Date",
-					  						FullLocalDefaultText =  "תםריך מזהה מטען ",
+					  						FullLocalDefaultText =  "תאריך מזהה מטען ",
 					  						ListFieldLable =  "ManifestDateListLable",
 					  						ListLableDefaultText =  "Manifest Date",
-					  						ListLocalDefaultText =  "תםריך מזהה מטען ",
+					  						ListLocalDefaultText =  "תאריך מזהה מטען ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -606,10 +606,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManifestNumber",
 					  						DefaultText =  "Manifest Number",
-					  						FullLocalDefaultText =  "מזהה מטען רםשון",
+					  						FullLocalDefaultText =  "מזהה מטען ראשון",
 					  						ListFieldLable =  "ManifestNumberListLable",
 					  						ListLableDefaultText =  "Manifest Number",
-					  						ListLocalDefaultText =  "מזהה מטען רםשון",
+					  						ListLocalDefaultText =  "מזהה מטען ראשון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -807,10 +807,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UnloadDate",
 					  						DefaultText =  "Unload Date",
-					  						FullLocalDefaultText =  "תםריך גמר פריקה",
+					  						FullLocalDefaultText =  "תאריך גמר פריקה",
 					  						ListFieldLable =  "UnloadDateListLable",
 					  						ListLableDefaultText =  "Unload Date",
-					  						ListLocalDefaultText =  "תםריך גמר פריקה",
+					  						ListLocalDefaultText =  "תאריך גמר פריקה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -875,10 +875,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UnloadPortCode",
 					  						DefaultText =  "Unload Port",
-					  						FullLocalDefaultText =  "קוד םתר פריקה",
+					  						FullLocalDefaultText =  "קוד אתר פריקה",
 					  						ListFieldLable =  "UnloadPortCodeListLable",
 					  						ListLableDefaultText =  "UnloadPortCode",
-					  						ListLocalDefaultText =  "קוד םתר פריקה",
+					  						ListLocalDefaultText =  "קוד אתר פריקה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "UnloadingSiteType",
 					  						NavigationPropertyName =  "UnloadPort",
@@ -1011,10 +1011,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoDescription",
 					  						DefaultText =  "Cargo Description",
-					  						FullLocalDefaultText =  "תםור טובין",
+					  						FullLocalDefaultText =  "תאור טובין",
 					  						ListFieldLable =  "CargoDescriptionListLable",
 					  						ListLableDefaultText =  "CargoDescription",
-					  						ListLocalDefaultText =  "תםור טובין",
+					  						ListLocalDefaultText =  "תאור טובין",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1079,10 +1079,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsLastReleaseFromWarehous",
 					  						DefaultText =  "Is Last Release From Warehous",
-					  						FullLocalDefaultText =  "םינדיקציית שחרור םחרון",
+					  						FullLocalDefaultText =  "אינדיקציית שחרור אחרון",
 					  						ListFieldLable =  "IsLastReleaseFromWarehousListLable",
 					  						ListLableDefaultText =  "Is Last Release From Warehous",
-					  						ListLocalDefaultText =  "םינדיקציית שחרור םחרון",
+					  						ListLocalDefaultText =  "אינדיקציית שחרור אחרון",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "LastReleaseFromWarehouse",
 					  						NavigationPropertyName =  "LastReleaseFromWarehouse",
@@ -1219,10 +1219,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OriginCountryCode",
 					  						DefaultText =  "Origin Country",
-					  						FullLocalDefaultText =  "םרץ מוצם",
+					  						FullLocalDefaultText =  "ארץ מוצא",
 					  						ListFieldLable =  "OriginCountryCodeListLable",
 					  						ListLableDefaultText =  "OriginCountryCode",
-					  						ListLocalDefaultText =  "םרץ מוצם",
+					  						ListLocalDefaultText =  "ארץ מוצא",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "OriginCountry",
@@ -1356,10 +1356,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteCode",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "םתר םחסון",
+					  						FullLocalDefaultText =  "אתר אחסון",
 					  						ListFieldLable =  "StorageSiteCodeListLable",
 					  						ListLableDefaultText =  "StorageSiteCode",
-					  						ListLocalDefaultText =  "םתר םחסון",
+					  						ListLocalDefaultText =  "אתר אחסון",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DeliverySiteType",
 					  						NavigationPropertyName =  "DeliverySiteType",
@@ -1425,10 +1425,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteName",
 					  						DefaultText =  "Storage Site Name",
-					  						FullLocalDefaultText =  "שם םתר םחסון",
+					  						FullLocalDefaultText =  "שם אתר אחסון",
 					  						ListFieldLable =  "StorageSiteNameListLable",
 					  						ListLableDefaultText =  "Storage Site",
-					  						ListLocalDefaultText =  "םתר םחסון",
+					  						ListLocalDefaultText =  "אתר אחסון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2083,10 +2083,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportRecieverWareHouseCode",
 					  						DefaultText =  "Reciever WareHouse",
-					  						FullLocalDefaultText =  "קוד םתר המכלה",
+					  						FullLocalDefaultText =  "קוד אתר המכלה",
 					  						ListFieldLable =  "ExportRecieverWareHouseCodeListLable",
 					  						ListLableDefaultText =  "Reciever WareHouse",
-					  						ListLocalDefaultText =  "קוד םתר המכלה",
+					  						ListLocalDefaultText =  "קוד אתר המכלה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DeliverySiteType",
 					  						NavigationPropertyName =  "RecieverWareHouse",
@@ -2150,10 +2150,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportRecieverWareHouseName",
 					  						DefaultText =  "Reciever WareHouse Name",
-					  						FullLocalDefaultText =  "םתר המכלה",
+					  						FullLocalDefaultText =  "אתר המכלה",
 					  						ListFieldLable =  "ExportRecieverWareHouseNameListLable",
 					  						ListLableDefaultText =  "Reciever WareHouse",
-					  						ListLocalDefaultText =  "םתר המכלה",
+					  						ListLocalDefaultText =  "אתר המכלה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2487,7 +2487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeliverySiteCode",
 					  						DefaultText =  "Delivery Site",
-					  						FullLocalDefaultText =  "םתר מסירה",
+					  						FullLocalDefaultText =  "אתר מסירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2549,10 +2549,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExportStoragesId",
 					  						DefaultText =  "Export Storages Id",
-					  						FullLocalDefaultText =  "מזהה םחסנה",
+					  						FullLocalDefaultText =  "מזהה אחסנה",
 					  						ListFieldLable =  "ExportStoragesIdListLable",
 					  						ListLableDefaultText =  "Export Storages Id",
-					  						ListLocalDefaultText =  "מזהה םחסנה",
+					  						ListLocalDefaultText =  "מזהה אחסנה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2676,7 +2676,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteCodeExport",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "םתר מסירה",
+					  						FullLocalDefaultText =  "אתר מסירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2841,7 +2841,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable ConsignmentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Consignment" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOComprehensiveUpdateCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ComprehensiveUpdateCon", DefaultText = "Comprehensive Update Consignment",LocalDefaultText = @"עדכון גורף של שדות זהים במשגורי יצום", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOComprehensiveUpdateCon = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ComprehensiveUpdateCon", DefaultText = "Comprehensive Update Consignment",LocalDefaultText = @"עדכון גורף של שדות זהים במשגורי יצוא", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOComprehensiveUpdate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ComprehensiveUpdate", DefaultText = "Comprehensive Update",LocalDefaultText = @"עדכון גורף", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2849,21 +2849,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOPortOfDischargeFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.PortOfDischargeFieldIsMandatory", DefaultText = "Port Of Discharge Field Is Mandatory",LocalDefaultText = @"נמל פריקה שדה חובה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentODeliverySiteFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.DeliverySiteFieldIsMandatory", DefaultText = "Delivery Site Field Is Mandatory",LocalDefaultText = @"םתר מסירה שדה חובה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentODeliverySiteFieldIsMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.DeliverySiteFieldIsMandatory", DefaultText = "Delivery Site Field Is Mandatory",LocalDefaultText = @"אתר מסירה שדה חובה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.Import", DefaultText = "Import",LocalDefaultText = @"יבום", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOImport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.Import", DefaultText = "Import",LocalDefaultText = @"יבוא", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.Export", DefaultText = "Export",LocalDefaultText = @"יצום", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.Export", DefaultText = "Export",LocalDefaultText = @"יצוא", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOShahamDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.ShahamDeclaration", DefaultText = "Shaham Declaration",LocalDefaultText = "הצהרת שח''מ", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentONoDeclarationFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.NoDeclarationFound", DefaultText = "No Declaration Found",LocalDefaultText = @"לם נמצםה הצהרה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentONoDeclarationFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.NoDeclarationFound", DefaultText = "No Declaration Found",LocalDefaultText = @"לא נמצאה הצהרה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOAdditionalDataForExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.AdditionalDataForExport", DefaultText = "Additional Data For Export",LocalDefaultText = @"נתונים נוספים ליצום - חטיבת משגור", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOAdditionalDataForExport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.AdditionalDataForExport", DefaultText = "Additional Data For Export",LocalDefaultText = @"נתונים נוספים ליצוא - חטיבת משגור", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterFlightYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterFlightYear", DefaultText = "Enter Flight Year",LocalDefaultText = @"הזן שנת טיסה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterMainManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterMainManifest", DefaultText = "Enter Main Manifest",LocalDefaultText = @"הזן שט”מ רםשי", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterMainManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterMainManifest", DefaultText = "Enter Main Manifest",LocalDefaultText = @"הזן שט”מ ראשי", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterInternalManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterInternalManifest", DefaultText = "Enter Internal Manifest",LocalDefaultText = @"הזן שט”מ פנימי", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2871,7 +2871,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterYearCargoCreation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterYearCargoCreation", DefaultText = "Enter Year Cargo Creation",LocalDefaultText = @"הזן שנת יצירת מטען", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterStorageDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterStorageDeclaration", DefaultText = "Enter Storage Declaration",LocalDefaultText = @"הזן הצהרת םחסנה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterStorageDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterStorageDeclaration", DefaultText = "Enter Storage Declaration",LocalDefaultText = @"הזן הצהרת אחסנה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterManifest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterManifest", DefaultText = "Enter Manifest",LocalDefaultText = @"הזן מצהר", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2881,7 +2881,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterVatBaldar = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterVatBaldar", DefaultText = "Enter Vat Baldar",LocalDefaultText = @"הזן ח.פ בלדר", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterEstablishmentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterEstablishmentDate", DefaultText = "Ente rEstablishment Date",LocalDefaultText = @"הזן תםריך הקמה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterEstablishmentDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterEstablishmentDate", DefaultText = "Ente rEstablishment Date",LocalDefaultText = @"הזן תאריך הקמה", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterTransactionIDMlm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterTransactionIDMlm", DefaultText = "Enter Transaction ID Mlm",LocalDefaultText = @"הזן מזהה עסקה מלם", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -2891,7 +2891,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterAirLineAShipper = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterAirLineAShipper", DefaultText = "Enter Air Line And Shipper",LocalDefaultText = @"הזן ח.תעופה/משלח", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode ConsignmentTextCode_CustomsConsignmentOLockedDecCantDelete = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.LockedDecCantDelete", DefaultText = "Locked Decliration Cant Delete",LocalDefaultText = @"ההצהרה נעולה. לם ניתן למחוק נתוני סידורי במטען", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode ConsignmentTextCode_CustomsConsignmentOLockedDecCantDelete = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.LockedDecCantDelete", DefaultText = "Locked Decliration Cant Delete",LocalDefaultText = @"ההצהרה נעולה. לא ניתן למחוק נתוני סידורי במטען", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode ConsignmentTextCode_CustomsConsignmentOEnterNineDigitOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Consignment.O.EnterNineDigitOnly", DefaultText = "Enter Nine Digit Only",LocalDefaultText = @"יש להזין מספר בעל 9 ספרות בלבד בשדה מזהה מטען שני", ObjectTableId = ConsignmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

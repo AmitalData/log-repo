@@ -8,6 +8,7 @@
 
 export class SignStationList {
    
+	CustomsAgentId: string;
 	SearchFields: string;
 	Tenant: number;
 	
