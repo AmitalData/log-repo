@@ -34,7 +34,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         {
             accountingContext = AccountingContext.GetContext(tenant);
             gLAccountTotalByMonthQuery = new GLAccountTotalByMonthQueryService(accountingContext);
-            GLAccountTotalByMonthPM gLAccountTotalByMonthPM = gLAccountTotalByMonthQuery.GetSingle(code,GLAccountTotalDateTypeValues.Accountingdate, year, month, currencyId, true, false);
+            GLAccountTotalByMonthPM gLAccountTotalByMonthPM = gLAccountTotalByMonthQuery.GetSingle(code,GLAccountTotalDateTypeValues.AccountingDate, year, month, currencyId, true, false);
             return gLAccountTotalByMonthPM;
         }
 
@@ -60,7 +60,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             }
             accountingContext = AccountingContext.GetContext(tenant);
             GLAccountTotalByMonthListQueryService listService = new GLAccountTotalByMonthListQueryService(accountingContext);
-            return listService.GetSingle(code,GLAccountTotalDateTypeValues.Accountingdate,year, month, currencyId );
+            return listService.GetSingle(code,GLAccountTotalDateTypeValues.AccountingDate,year, month, currencyId );
         }
 
         public List<GLAccountTotalByMonthList> GetGLAccountTotalByMonthLists(int tenant)
