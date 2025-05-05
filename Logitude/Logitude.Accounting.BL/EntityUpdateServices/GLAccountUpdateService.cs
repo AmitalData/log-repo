@@ -603,7 +603,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     BatchIt = 1,
                 };
 
-
                 var accountingContext = AccountingContext.GetContext(tenant);
 
                 var myBatchGLAccountInterestActivationBalanceTask = new BatchGLAccountInterestActivationBalanceTask(null);
