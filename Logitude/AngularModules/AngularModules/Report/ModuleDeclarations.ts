@@ -106,6 +106,7 @@ import { ExportDeclarationReportFilterComponent } from './Components/FiltersComp
  import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
  import { CertificateOfOriginReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent';
 import { CertificateOfOriginCountReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent';
+import { NewAgingFilterComponent } from './Components/FiltersComponent/Accounting/NewAgingFilterComponent';
  
 
 export const Components =
@@ -157,6 +158,7 @@ export const Components =
         ShipmentProfitVSQuoteEstimateComponent,
         ArchivoExportadoComponent,
         AgingFilterComponent,
+        NewAgingFilterComponent,
         CustomerStatusReportFilterComponent,
         LedgerTransactionsFilterControl,
         InventoryReportFilterConmponent,
@@ -295,6 +297,7 @@ export class ModuleDeclarations {
  
              case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
             case "CertificateOfOriginCountReportFilterComponent": { myResult = CertificateOfOriginCountReportFilterComponent; break; }
+            case "NewAgingFilterComponent": { myResult = NewAgingFilterComponent; break; }
 
          }
 

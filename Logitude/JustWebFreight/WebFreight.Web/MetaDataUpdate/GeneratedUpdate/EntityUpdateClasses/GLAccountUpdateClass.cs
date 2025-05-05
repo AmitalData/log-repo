@@ -88,8 +88,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
- 		public const string HashString = "a9f3b7d8c2e40156bd8e34ac97f02db1";
-
+ 		public const string HashString = "3d07d4d08f6f8b21a0e63585b979fe57";
+ 
    	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
          {                     
             
@@ -14646,10 +14646,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsOMarkedByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MarkedByAnother ", DefaultText = "There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.",LocalDefaultText = @"ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+  		   TextCode GLAccountTextCode_GLAccountsOMarkedByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MarkedByAnother ", DefaultText = "There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.",LocalDefaultText = @"ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionInProgress", DefaultText = "There are Ledger Transaction in the process.",LocalDefaultText = @"יש התאמות בתהליך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
+  		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"יתרה שונה מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 
    
 	    
 }

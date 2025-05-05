@@ -10003,7 +10003,20 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
+        public byte[] LoadAccountingNewAgingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            NewAccountingAgingDataProvider dataprovider=BuildDataProvider(xmlFilters,tenant);
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(NewAccountingAgingDataProvider), tenant);
+        }
 
+        private NewAccountingAgingDataProvider BuildDataProvider(byte[] xmlFilters, int tenant)
+        {
+
+            NewAgingReportDataProviderLoader agingReportLoader = new NewAgingReportDataProviderLoader(xmlFilters,tenant);
+
+            return agingReportLoader.BuildDataProvider();
+
+        }
         public byte[] LoadCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
         {
             CustomerStatusDataProvider dataprovider = GetCustomerStatusDataProvider(xmlFilters, tenant);
