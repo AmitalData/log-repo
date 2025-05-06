@@ -68,8 +68,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             IQueryable<TaxReportLine> lines = linesRepo.GetByReportId(taxReportId, tenant);
 
-            int count = lines.Where(d => d.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference 
-            && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit
+            int count = lines.Where(d => d.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference 
+            && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.ForTransmit
             && _InputsTaxReportLineTypes.Contains(d.LineTypeCode)).Count(); 
 
             return count;
