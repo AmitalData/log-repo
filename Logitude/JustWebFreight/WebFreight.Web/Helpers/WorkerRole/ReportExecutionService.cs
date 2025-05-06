@@ -70,6 +70,8 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 catch (Exception exception)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError($"failed to handle report execution exception: {exception.Message}");
+                    UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = exception });
+
                 }
             }
         }
