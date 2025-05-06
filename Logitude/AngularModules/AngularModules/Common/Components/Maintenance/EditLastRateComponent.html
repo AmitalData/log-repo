@@ -1,5 +1,9 @@
-﻿
+﻿<style>
+.InvalidRate {
+    border: 1px solid red; 
+}
 
+</style>
 <table>
     <tr *ngIf="!IsEditingEnabled" style="height:1px;">
         <td>
@@ -127,8 +131,9 @@
                                                 <LogLabel [ObjectFieldName]="'Rate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                             </td>
             
-                                            <td>
-                                                <LogTextBox [ObjectFieldName]="'Rate'" [Text]="Rate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
+                                            <td >
+                                                <input [ngClass]="{'InvalidRate': RateFieldIsInValid}" type="text" [(ngModel)]="Rate" (blur)="OnRateBlur($event)" /> 
+
                                             </td>
             
                                             <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;">
@@ -146,11 +151,11 @@
             
                                         <tr class="FormFieldRow" *ngFor="let item of AdditionalCurrencyRateTypes">
                                             <td>
-                                                <LogLabel [Text]="item.Name" [ObjectFieldName]="'RateCoefficient'" [ObjectTableName]="'AdditionalCurrencyRate'" [DataContext]="DataContext"></LogLabel>
+                                                <LogLabel [ShowTitle]="true" [Text]="item.Name" [ObjectFieldName]="'RateCoefficient'" [ObjectTableName]="'AdditionalCurrencyRate'" [DataContext]="DataContext"></LogLabel>
                                             </td>
             
                                             <td>
-                                                <input type="text" [ngModel]="CurrencyRates[item.Id].Rate" (ngModelChange)="SetAdditionalRate(item.Id, $event)"  />
+                                                <input   [ngClass]="{'InvalidRate': InvalidRates[item.Id]}" type="text" [ngModel]="CurrencyRates[item.Id].Rate" (blur)="SetAdditionalRate(item.Id, $event)"  />
                                             </td>
             
                                             <td style="width:75px; font-size: 12px; text-align:center;margin-left:10px;">

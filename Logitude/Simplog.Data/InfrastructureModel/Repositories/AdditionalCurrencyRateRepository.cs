@@ -28,7 +28,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             return webFreightContext.AdditionalCurrencyRates.Where(a => a.Id == id && a.Tenant == tenant).FirstOrDefault();
         }
-
+        public int GetCountByTenant(int tenant)
+        {
+            return webFreightContext.AdditionalCurrencyRates.Where(a =>  a.Tenant == tenant).Count();
+        }
         public IQueryable<AdditionalCurrencyRate> GetAdditionalCurrencyRate(int tenant)
         {
             return webFreightContext.AdditionalCurrencyRates.Where(a => a.Tenant == tenant);

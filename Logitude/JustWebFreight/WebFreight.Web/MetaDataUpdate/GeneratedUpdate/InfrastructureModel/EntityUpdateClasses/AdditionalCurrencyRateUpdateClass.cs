@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class AdditionalCurrencyRateUpdateClass
    {  		
-		public const string HashString = "5a00a92885cce6c4781cc9899c04055e";
+		public const string HashString = "264e2b55ca940fa08d5f37f7b128ecba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -910,6 +910,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRequired", DefaultText = "Rate is required",LocalDefaultText = @"מכפלה הוא שדה חובה", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateORateRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.RateRange", DefaultText = "The rate must be within the allowed range of {min} to {max}",LocalDefaultText = @"ערך המכפלה חייב להיות בין {min} ל {max}", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode AdditionalCurrencyRateTextCode_AdditionalCurrencyRateOMaxRateCount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AdditionalCurrencyRate.O.MaxRateCount", DefaultText = "Cannot add more than 4 gate types.",LocalDefaultText = @"לא ניתן להוסיף יותר מ-4 סוגי שערים.", ObjectTableId = AdditionalCurrencyRateObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

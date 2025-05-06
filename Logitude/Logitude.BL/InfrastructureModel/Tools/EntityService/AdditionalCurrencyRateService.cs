@@ -50,7 +50,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             this.SetUpdatedByUser();
 
-            AdditionalCurrencyRateValidating.Validate(theEntityPm);
+            AdditionalCurrencyRateValidating.Validate(theEntityPm, entityRepository);
             AdditionalCurrencyRateTracing.Trace(theEntityPm, Poco, isNewEntity);
             AdditionalCurrencyRateMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -60,12 +60,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Update(AdditionalCurrencyRatePM theEntityPm)
         {
+
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingle(theEntityPm.Id, theEntityPm.Tenant);
             this.SetUpdatedByUser();
 
-            AdditionalCurrencyRateValidating.Validate(theEntityPm);
+            AdditionalCurrencyRateValidating.Validate(theEntityPm, null);
             AdditionalCurrencyRateTracing.Trace(theEntityPm, Poco, isNewEntity);
             AdditionalCurrencyRateMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
