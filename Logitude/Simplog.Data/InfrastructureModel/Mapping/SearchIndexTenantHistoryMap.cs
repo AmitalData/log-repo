@@ -9,7 +9,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
         {
             ToTable("SearchIndexTenantHistories");
             HasKey(t => new { t.Screen, t.Tenant });
-            Property(t => t.Screen).HasColumnName("Index").IsRequired().HasMaxLength(50);
+            Property(t => t.Screen).HasColumnName("Screen").IsRequired().HasMaxLength(50);
             Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
             Property(t => t.TtlMonth).HasColumnName("TtlMonth").IsRequired();
             Property(t => t.LastUpdate).HasColumnName("LastUpdate");

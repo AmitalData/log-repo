@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Models;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -11,13 +12,15 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Net;
+using System.ServiceModel.Description;
 using System.Threading.Tasks;
 using System.Timers;
 
 namespace CommunicationWorkerRole
 {
-    class IndexSearchWorkerRole : WorkerEntryPoint
+    public class IndexSearchWorkerRole : WorkerEntryPoint
     {
         private const string AzureSearchAISetKey = "AzureSearchAI";
         private static readonly DevLog logger = DevLog.Instance;
@@ -73,14 +76,14 @@ namespace CommunicationWorkerRole
             if (double.TryParse(ConfigurationManager.AppSettings[nameof(removeOldIndexDataInterval)], out configuredInterval))
                 removeOldIndexDataInterval = configuredInterval;
 
-            Scheduler(RemoveOldnIndexData, removeOldIndexDataInterval, nameof(RemoveOldnIndexData));
+            Scheduler(RemoveOldIndexData, removeOldIndexDataInterval, nameof(RemoveOldIndexData));
             logger.WriteTrace($"removeOldnIndexeDataInterval interval: {removeOldIndexDataInterval}");
 
             
             if (double.TryParse(ConfigurationManager.AppSettings[nameof(removeOldSearchDataInterval)], out configuredInterval))
                 removeOldSearchDataInterval = configuredInterval;
 
-            Scheduler(RemoveOldDSearchDataAsync, removeOldSearchDataInterval, nameof(RemoveOldDSearchData));
+            Scheduler(RemoveOldSearchDataAsync, removeOldSearchDataInterval, nameof(RemoveOldSearchData));
             logger.WriteTrace($"SchedulerRemoveOldDSearchDataFromDB interval: {removeOldSearchDataInterval}");
         }
 
@@ -94,7 +97,7 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-                    if (index.LastUpdate.AddMinutes(index.BuildIntervalMin) > DateTime.Now)
+                    if (index.LastUpdate?.AddMinutes(index.BuildIntervalMin) > DateTime.Now)
                     {
                         logger.WriteTrace($"it is not time for update index {index.Index}, last time: {index.LastUpdate}, skipping index");
                         continue;
@@ -116,7 +119,7 @@ namespace CommunicationWorkerRole
             Unlock(runIndexerLockKey);
         }
 
-        private async Task RemoveOldnIndexData()
+        public async Task RemoveOldIndexData()
         {
             SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTennat);
             List<SearchIndex> allSearchIndexes = searchIndexQuery.GetAll();
@@ -126,7 +129,7 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-                    if (index.LastRemove.AddHours(removeOldIndexDataInterval) > DateTime.Now)
+                    if (index.LastRemove?.AddHours(removeOldIndexDataInterval) > DateTime.Now)
                     {
                         logger.WriteTrace($"it is not time for remove old data from index {index.Index}, last time: {index.LastRemove}, skipping index");
                         continue;
@@ -148,9 +151,9 @@ namespace CommunicationWorkerRole
             Unlock(removeOldIndexDataLockKey);
         }
 
-        private async Task RemoveOldDSearchDataAsync() => await Task.Run(() => RemoveOldDSearchData());
+        private async Task RemoveOldSearchDataAsync() => await Task.Run(() => RemoveOldSearchData());
         
-        private void RemoveOldDSearchData()
+        public void RemoveOldSearchData()
         {
             SearchIndexTenantHistoryQuery searchIndexTenantHistoryQuery = new SearchIndexTenantHistoryQuery(mainTennat);
             SearchIndexEditHistoryQuery searchIndexEditHistoryQuery = new SearchIndexEditHistoryQuery(mainTennat);
@@ -161,7 +164,7 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-                    if (tenantHistory.LastUpdate.AddHours(removeOldSearchDataInterval) > DateTime.Now)
+                    if (tenantHistory.LastUpdate?.AddHours(removeOldSearchDataInterval) > DateTime.Now)
                     {
                         logger.WriteTrace($"it is not time for remove search data {tenantHistory.Screen}, last time: {tenantHistory.LastUpdate}, skipping index");
                         continue;
@@ -226,7 +229,7 @@ namespace CommunicationWorkerRole
             {
                 logger.WriteTrace($"Starting indexer for index {index.Index}...");
 
-                SearchIndexerClient indexerClient = InitializeIndexerClient(index.ObjectName);
+                SearchIndexerClient indexerClient = InitializeIndexerClient();
                 Response response = await indexerClient.RunIndexerAsync(index.Indexer);
 
                 if (response.Status == (int)HttpStatusCode.Accepted)
@@ -247,36 +250,60 @@ namespace CommunicationWorkerRole
                 return false;
             }
         }
+
         private async Task<bool> RomoveFromIndex(SearchIndex index)
         {
             try
             {
-                logger.WriteTrace($"Starting remove old data from index {index.Index}...");
+                logger.WriteInfo($"Starting remove old data from index {index.Index}...");
 
                 DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, index.Index);
                 string searchServiceEndpoint = ConnectionDetails.Value1;
                 string apiKey = ConnectionDetails.Value2;
-                AzureSearchRepoBase<object> azureSearchRepo = new AzureSearchRepoBase<object>(searchServiceEndpoint, apiKey, index.Index, new string[] { });
+                AzureSearchRepoBase<SearchDocument> azureSearchRepo = new AzureSearchRepoBase<SearchDocument>(searchServiceEndpoint, apiKey, index.Index, new string[] { });
 
-                List<object> results = await azureSearchRepo.SearchAsync("*", new SearchOptions
+                Response<Azure.Search.Documents.Indexes.Models.SearchIndex> searchIndexResponse = await azureSearchRepo.GetSearchIndexClient().GetIndexAsync(azureSearchRepo.indexName);
+                string keyFieldName = searchIndexResponse.Value.Fields.FirstOrDefault(f => f.IsKey == true)?.Name;
+                logger.WriteDebug($"Key field name: {keyFieldName}");
+
+                SearchClient searchClient = azureSearchRepo.GetSearchClient();
+                SearchOptions searchOptions = new SearchOptions
                 {
                     Filter = $"{index.TtlField} lt {DateTime.Now.AddMonths(-index.TtlMonth):O}",
-                    Select = { "id" }
-                });
+                    Select = { keyFieldName },
+                    Size = 10000,
+                };
+                int rowDeleted = 0;
 
-                Response response = (await azureSearchRepo.DeleteAsync(results)).GetRawResponse();
+                for (int i = 0; i < 10; i++)
+                {
+                    Response<SearchResults<SearchDocument>> searchResponse = await searchClient.SearchAsync<SearchDocument>("*", searchOptions);
+                    Pageable<SearchResult<SearchDocument>> searchResults = searchResponse.Value.GetResults();
+                    List<SearchDocument> keysToDelete = searchResults.Select(res => res.Document).ToList();
 
-                if (response.Status == (int)HttpStatusCode.OK)
-                {
-                    logger.WriteTrace(message: $"Successfully removed old data from index {index.Index}.");
-                    return true;
+                    logger.WriteTrace($"Found {keysToDelete.Count} records to delete from index {index.Index}.");
+
+                    if (keysToDelete.Count == 0)
+                        break;
+
+                    Response response = (await azureSearchRepo.DeleteAsync(keysToDelete)).GetRawResponse();
+
+                    if (response.Status == (int)HttpStatusCode.OK)
+                    {
+                        logger.WriteTrace(message: $"Successfully removed old data from index {index.Index}, wait 1 seconds");
+                        await Task.Delay(1000);
+                    }
+                    else
+                    {
+                        string content = response?.Content?.ToString();
+                        logger.WriteError($"Failed to remove old data from index {index.Index}. Status: {response.Status}, response: {content}");
+                        return false;
+                    }
                 }
-                else
-                {
-                    string content = response?.Content?.ToString();
-                    logger.WriteError($"Failed to remove old data from index {index.Index}. Status: {response.Status}, response: {content}");
-                    return false;
-                }
+
+                logger.WriteInfo($"Successfully removed {rowDeleted} rows old data from index {index.Index}.");
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -285,13 +312,13 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private static SearchIndexerClient InitializeIndexerClient(string indexName)
+        private static SearchIndexerClient InitializeIndexerClient()
         {
-            DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, indexName);
+            DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, "Customs");
             string searchServiceEndpoint = ConnectionDetails.Value1;
             string apiKey = ConnectionDetails.Value2;
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-            SearchIndexerClient indexerClient = new SearchIndexerClient(new Uri(searchServiceEndpoint), credential);
+            SearchIndexerClient indexerClient = new SearchIndexerClient(new Uri($"https://{searchServiceEndpoint}.search.windows.net/"), credential);
             return indexerClient;
         }
     }

@@ -73,6 +73,12 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Azure.Core, Version=1.33.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Core.1.33.0\lib\net461\Azure.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Search.Documents, Version=11.4.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Search.Documents.11.4.0\lib\netstandard2.0\Azure.Search.Documents.dll</HintPath>
+    </Reference>
     <Reference Include="Confluent.Kafka, Version=1.8.2.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
       <HintPath>..\packages\Confluent.Kafka.1.8.2\lib\net46\Confluent.Kafka.dll</HintPath>
     </Reference>
@@ -433,6 +439,7 @@
     <Compile Include="ImporterEventTypesWorkerRole.cs" />
     <Compile Include="ImporterPortsWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
+    <Compile Include="IndexSearchWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />

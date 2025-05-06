@@ -9,6 +9,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Screen { get; set; }
         public int Tenant { get; set; }
         public int TtlMonth { get; set; }
-        public DateTime LastUpdate { get; set; }
+        public DateTime? LastUpdate { get; set; }
     }
 }

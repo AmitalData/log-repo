@@ -13,7 +13,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public int TtlMonth { get; set; }
         public string TtlField { get; set; }
         public int BuildIntervalMin { get; set; }
-        public DateTime LastUpdate { get; set; }
-        public DateTime LastRemove { get; set; }
+        public DateTime? LastUpdate { get; set; }
+        public DateTime? LastRemove { get; set; }
     }
 }

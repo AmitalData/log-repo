@@ -35,6 +35,10 @@ namespace Simplog.Data.AzureSearch.Repo
             this.serviceName = serviceName;
         }
 
+        public SearchClient GetSearchClient() => new SearchClient(serviceEndpoint, indexName, credential);
+
+        public SearchIndexClient GetSearchIndexClient() => new SearchIndexClient(serviceEndpoint, credential);
+
         public async Task<Response<IndexDocumentsResult>> DeleteAsync(List<T> records) =>
             await adminClient.GetSearchClient(indexName).DeleteDocumentsAsync(records);
 

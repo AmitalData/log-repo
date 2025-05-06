@@ -10,7 +10,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class SearchIndexEditHistoryRepository : IRepository<SearchIndexEditHistory>
     {
         readonly ICommonDataContext iContext;
-
         public SearchIndexEditHistoryRepository(int tenant)
         {
             iContext = CommonDataContext.GetContext(tenant);
@@ -77,28 +76,29 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void RemoveOldSearchData(int tenant, string screen, DateTime toDateTime)
         {
-            Context.SearchIndexEditHistories
+            List<SearchIndexEditHistory> oldSearches = Context.SearchIndexEditHistories
                 .Where(x => x.Tenant == tenant && x.Screen == screen && x.CreateDate < toDateTime)
-                .ToList()
-                .ForEach(x => Context.SearchIndexEditHistories.Remove(x));
+                .ToList();
+            oldSearches.ForEach(x => Context.SearchIndexEditHistories.Remove(x));
             SubmitChanges();
 
-            List<SearchIndexEditHistory> duplicateEntries = Context.SearchIndexEditHistories
+            List <SearchIndexEditHistory> duplicateSearches = Context.SearchIndexEditHistories
               .Where(x => x.Tenant == tenant && x.Screen == screen)
               .GroupBy(x => x.KeyVal)
               .Where(g => g.Count() > 1)
               .SelectMany(g => g.OrderByDescending(e => e.CreateDate).Skip(1))
               .ToList();
-            duplicateEntries.ForEach(x => Context.SearchIndexEditHistories.Remove(x));
+            duplicateSearches.ForEach(x => Context.SearchIndexEditHistories.Remove(x));
             SubmitChanges();
 
-            Context.SearchIndexEditHistories
+            List<SearchIndexEditHistory> not50Recents = Context.SearchIndexEditHistories
                 .Where(x => x.Tenant == tenant && x.Screen == screen)
                 .OrderByDescending(x => x.CreateDate)
                 .Skip(50)
-                .ToList()
-                .ForEach(x => Context.SearchIndexEditHistories.Remove(x));
+                .ToList();
+            not50Recents.ForEach(x => Context.SearchIndexEditHistories.Remove(x));
             SubmitChanges();
         }
     }
 }
+
