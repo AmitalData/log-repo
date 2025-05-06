@@ -136,13 +136,13 @@ namespace Logitude.Accounting.Data.Repositories
 
 
         string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant);
-                string textCodeAlreadyExist = msg.Replace("%ChequeNumber", existingCheque.ChequeNumber)
-                    .Replace("%PaymentNumber", paymentNumber)
-                    .Replace("%LocalAmount", existingCheque.LocalAmount.ToString(AmountFormat));
+                string textCodeAlreadyExist = msg.Replace("ChequeNumber", existingCheque.ChequeNumber)
+                    .Replace("PaymentNumber", paymentNumber)
+                    .Replace("LocalAmount", existingCheque.LocalAmount.ToString(AmountFormat));
 
                 if (existingCheque.ValueDate != null)
                 {
-                    textCodeAlreadyExist = textCodeAlreadyExist.Replace("%ValueDate", existingCheque.ValueDate.ToString(DateFormat) ?? " " );
+                    textCodeAlreadyExist = textCodeAlreadyExist.Replace("ValueDate", existingCheque.ValueDate.ToString(DateFormat) ?? " " );
                 }
 
                 existingCheques.AppendLine(textCodeAlreadyExist);

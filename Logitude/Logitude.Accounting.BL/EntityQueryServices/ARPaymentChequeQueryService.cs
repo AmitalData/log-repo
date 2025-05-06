@@ -224,7 +224,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
            return aRPaymentChequeRepository.GetOpenChequesByBankAccount(bankId, tenant).Where(a=>a.ValueDate> DateTime.Now).Count();
          
         }
-        public string CheckARPaymentChequeAlreadyExists(string bank, string bankBranch, string bankAccount, string chequeOrPaymentRef, int tenant)
+        public string CheckARPaymentChequeAlreadyExists(string chequeOrPaymentRef,  string bank, string bankBranch, string bankAccount, int tenant)
         {
 
             ARPaymentChequeRepository arPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
