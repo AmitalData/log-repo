@@ -132,7 +132,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
       SIIRequest: SiiRequestMode.IsEdit === siiRequestMode ? this.selectedSIIRequest : newSIIRequestPM,
       IsNewOrEdit: siiRequestMode
     };
-    
+
     if (siiRequestMode === SiiRequestMode.IsNew) 
       this.openLogWindow(siiRequestMode, args);
     else 
@@ -161,10 +161,9 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     args.isAllowChange = this.IsAllowChange;
     logWindow.WindowArgs = args;
     logWindow.ShowCloseButton = true;
-    logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestTabsComponent');
+    logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestComponent');
     args.logWindow = logWindow;
-    if (isNewOrEditMode === SiiRequestMode.IsNew)
-      this.SelectedRow = null
+    if (isNewOrEditMode === SiiRequestMode.IsNew) this.SelectedRow = null
 
     logWindow.WindowClosed.subscribe(($event: any) => {
       this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
