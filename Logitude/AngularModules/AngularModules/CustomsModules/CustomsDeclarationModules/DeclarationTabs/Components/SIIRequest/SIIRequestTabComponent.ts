@@ -41,7 +41,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public IsLoaded: boolean = false;
   public selectedSIIRequest = new SIIRequestPM();
   public isOpen: boolean;
-  public isCloseRequests: SiiRequestIsClosed = SiiRequestIsClosed.All;
+  public isCloseRequests: SiiRequestIsClosed = SiiRequestIsClosed.IsOpen;
   public querySelectionList: QueryOption[] = [];
   @Output() MenuHeaderchangeevent = new EventEmitter();
 
@@ -70,9 +70,9 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
 
   initQuerySelectionList() {
     this.querySelectionList = [
-      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.AllRequest'), SiiRequestIsClosed.All),
       new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.OpenRequest'), SiiRequestIsClosed.IsOpen),
-      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.ClosedRequest'), SiiRequestIsClosed.IsClosed)
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.ClosedRequest'), SiiRequestIsClosed.IsClosed),
+      new QueryOption(TextCodeTranslator.Translate('Customs.SIIRequest.O.AllRequest'), SiiRequestIsClosed.All)
     ];
   }
 
@@ -130,12 +130,13 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     let args: any = {
       Decalaration: this.EntityPM,
       SIIRequest: SiiRequestMode.IsEdit === siiRequestMode ? this.selectedSIIRequest : newSIIRequestPM,
-      IsNewOrEdit: siiRequestMode
+      IsNewOrEdit: siiRequestMode,
+      filterAgrs: this.initFilterArgs()
     };
 
-    if (siiRequestMode === SiiRequestMode.IsNew) 
+    if (siiRequestMode === SiiRequestMode.IsNew)
       this.openLogWindow(siiRequestMode, args);
-    else 
+    else
       this.getSIIRequestByIDAndopenLogWindow(args.SIIRequest.Id, this.EntityPM.Id, siiRequestMode, args);
   }
 
