@@ -100,7 +100,7 @@ export class SearchCustomsItemAutocomplateComponent {
 
   private async getClassifications() {
     return await this.cacheService.getByPromise('classifications', async () => {
-      const respnse = await this.aPI_MainService.GetClassifications().toPromise();
+      const respnse = await this.aPI_MainService.GetClassifications()?.toPromise();
       const allClassifications: AllClassification = (respnse as HttpResponse<any>).body;
       delete allClassifications["$id"];
 
