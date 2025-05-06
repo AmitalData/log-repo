@@ -33,6 +33,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "1,מכולת יבוא", 
                 Inactive = false, 
                 LocalName = "מכולת יבוא", 
+                EnglishName = "Import Container", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -41,6 +42,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "10,משאית TIR", 
                 Inactive = false, 
                 LocalName = "משאית TIR", 
+                EnglishName = "TIR truck", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -49,6 +51,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "11,מחסן", 
                 Inactive = false, 
                 LocalName = "מחסן", 
+                EnglishName = "warehouse", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -57,6 +60,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "12,גוש במחסן", 
                 Inactive = false, 
                 LocalName = "גוש במחסן", 
+                EnglishName = "Block in warehouse", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -65,6 +69,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "13,תפיסה", 
                 Inactive = false, 
                 LocalName = "תפיסה", 
+                EnglishName = "perception", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -73,6 +78,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "14,בדיקת טיסה", 
                 Inactive = false, 
                 LocalName = "בדיקת טיסה", 
+                EnglishName = "Flight check", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -81,6 +87,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "15,מטען ליווי לנוסע", 
                 Inactive = false, 
                 LocalName = "מטען ליווי לנוסע", 
+                EnglishName = "Passenger escort charge", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -89,6 +96,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "16,אוניה", 
                 Inactive = false, 
                 LocalName = "אוניה", 
+                EnglishName = "Ship", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -97,6 +105,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "17,אספקה צידה לאוניה", 
                 Inactive = false, 
                 LocalName = "אספקה צידה לאוניה", 
+                EnglishName = "Shipside supplies", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -105,6 +114,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "18,יאכטה", 
                 Inactive = false, 
                 LocalName = "יאכטה", 
+                EnglishName = "yacht", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -113,6 +123,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "19,אדם", 
                 Inactive = false, 
                 LocalName = "אדם", 
+                EnglishName = "person", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -121,6 +132,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "2,מכולת יצוא", 
                 Inactive = false, 
                 LocalName = "מכולת יצוא", 
+                EnglishName = "Export Container", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -129,6 +141,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "20,מטען בלדר יבוא", 
                 Inactive = false, 
                 LocalName = "מטען בלדר יבוא", 
+                EnglishName = "Import Courier Cargo", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -137,6 +150,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "21,מטען בלדר יצוא", 
                 Inactive = false, 
                 LocalName = "מטען בלדר יצוא", 
+                EnglishName = "Export Courier Cargo", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -145,6 +159,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "22,מטען לא מזוהה מהסבות", 
                 Inactive = false, 
                 LocalName = "מטען לא מזוהה מהסבות", 
+                EnglishName = "Unidentified cargo from the causes", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -153,6 +168,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "23,יבואן/סוכן/מחסן מהסבה", 
                 Inactive = false, 
                 LocalName = "יבואן/סוכן/מחסן מהסבה", 
+                EnglishName = "Importer_agent_cause warehouse", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -161,6 +177,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "24,אספקה למטוס מהסבה", 
                 Inactive = false, 
                 LocalName = "אספקה למטוס מהסבה", 
+                EnglishName = "Supply to the aircraft from the cause", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -169,6 +186,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "3,מטען יבוא", 
                 Inactive = false, 
                 LocalName = "מטען יבוא", 
+                EnglishName = "import cargo", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -177,6 +195,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "4,מטען יצוא", 
                 Inactive = false, 
                 LocalName = "מטען יצוא", 
+                EnglishName = "Export Cargo", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -185,6 +204,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "5,מטען אווירי יבוא", 
                 Inactive = false, 
                 LocalName = "מטען אווירי יבוא", 
+                EnglishName = "import air cargo", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -193,6 +213,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "6,מטען אווירי יצוא", 
                 Inactive = false, 
                 LocalName = "מטען אווירי יצוא", 
+                EnglishName = "Export air cargo", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -201,6 +222,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "7,רכב", 
                 Inactive = false, 
                 LocalName = "רכב", 
+                EnglishName = "vehicle", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -209,6 +231,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "8,רכב זמני", 
                 Inactive = false, 
                 LocalName = "רכב זמני", 
+                EnglishName = "temporary vehicle", 
 			});
 			 
             all.Add(new CheckEntityTypeDetails()
@@ -217,6 +240,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "9,משאית", 
                 Inactive = false, 
                 LocalName = "משאית", 
+                EnglishName = "truck", 
 			});
 			
             return all;
@@ -227,12 +251,13 @@ namespace Logitude.Customs.BL
 		    newPoco.Code = this.Code;  
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Inactive = this.Inactive;  
-		    newPoco.LocalName = this.LocalName;   
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(CheckEntityType rec)
         {   
-           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

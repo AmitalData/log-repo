@@ -433,7 +433,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             List<PeriodMExtended> namedPeriods = MapExtended(reportList, periodMExtendeds, currencies);
             //
 
-            var allAccountingDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.Accountingdate);
+            var allAccountingDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.AccountingDate);
             var allDueDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.DueDate);
 
 
@@ -628,7 +628,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                 /// Fetch Data Of Main GLAccount
-                var myDateTypeCode = _Param.GroupByDate == AgingReportParam.DateEnum.AccountingDate ? GLAccountTotalDateTypeValues.Accountingdate : GLAccountTotalDateTypeValues.DueDate;
+                var myDateTypeCode = _Param.GroupByDate == AgingReportParam.DateEnum.AccountingDate ? GLAccountTotalDateTypeValues.AccountingDate : GLAccountTotalDateTypeValues.DueDate;
 
                 qTotalByMonthAcc = repoGLAccountTotalByMonth.GetAll(_Param.Tenant).Where(tot => tot.DateTypeCode == myDateTypeCode)
                  .Where(rec => _MainAccountIdList_ToFetchThenAggragrate.Contains(rec.AccountId))

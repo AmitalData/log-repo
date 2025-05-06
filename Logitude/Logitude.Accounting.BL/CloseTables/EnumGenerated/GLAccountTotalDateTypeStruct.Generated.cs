@@ -10,10 +10,10 @@ namespace Logitude.Accounting.BL.CloseTables
 {
     public struct GLAccountTotalDateTypeValues
     {
-        public const string Accountingdate = "1";
+        public const string AccountingDate = "1";
         public const string DueDate = "2";
         public const string DocumentDate = "3";
         public const string Tax = "4";
     }
-}
-
+ }
+ 

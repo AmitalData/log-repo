@@ -46,17 +46,19 @@ namespace Logitude.Accounting.BL
             all.Add(new AutomaticExternalRconcilMthodDetails()
             {    
                 Code = "3", 
-                Name = "Reference Date + Reference", 
+                Name = "Reference Date And Reference", 
                 SearchFields = "3,Reference Date + Reference,תאריך + אסמכתא", 
                 LocalName = "תאריך + אסמכתא", 
+                Inactive = false, 
 			});
 			 
             all.Add(new AutomaticExternalRconcilMthodDetails()
             {    
                 Code = "4", 
-                Name = "Amount + Reference + Reference Date", 
+                Name = "Amount And Reference And Reference Date", 
                 SearchFields = "4,Amount + Reference + Reference Date,תאריך + סכום + אסמכתא", 
                 LocalName = "תאריך + סכום + אסמכתא", 
+                Inactive = false, 
 			});
 			
             return all;

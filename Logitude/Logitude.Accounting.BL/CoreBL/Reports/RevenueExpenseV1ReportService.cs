@@ -103,7 +103,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
             QBaseTotalsFromBirthTilStartOfMonthTo =
-               (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+               (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
 
                 where tot.Tenant == _RevenueExpenseReportParam.Tenant
 

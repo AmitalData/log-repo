@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- 
+
 namespace Logitude.Customs.BL.CloseTables
 {
     public struct VehiclePriceListTypeValues
-    {   
-       public const string price1 = "1";  
+    {
+        public const string price1 = "1";
     }
-}
-
+ }
+ 

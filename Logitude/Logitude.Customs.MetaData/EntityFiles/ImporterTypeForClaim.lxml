@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -58,6 +61,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;f8f8&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -133,6 +137,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -208,6 +213,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -284,6 +290,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -359,6 +366,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -429,6 +437,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -512,53 +521,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;1&quot;"
-      LocalName="&quot;עולה חדש&quot;"
-      Inactive="false"
-      SearchFields="&quot;1,עולה חדש&quot;" />
-    <Record
-      Code="&quot;2&quot;"
-      LocalName="&quot;תושב חוזר&quot;"
-      Inactive="false"
-      SearchFields="&quot;2,תושב חוזר&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      LocalName="&quot;תייר&quot;"
-      Inactive="false"
-      SearchFields="&quot;3,תייר&quot;" />
-    <Record
-      Code="&quot;4&quot;"
-      LocalName="&quot;שגרירות&quot;"
-      Inactive="false"
-      SearchFields="&quot;4,שגרירות&quot;" />
-    <Record
-      Code="&quot;5&quot;"
-      LocalName="&quot;חייל&quot;"
-      Inactive="false"
-      SearchFields="&quot;5,חייל&quot;" />
-    <Record
-      Code="&quot;6&quot;"
-      LocalName="&quot;יבוא אישי&quot;"
-      Inactive="false"
-      SearchFields="&quot;6,יבוא אישי&quot;" />
-    <Record
-      Code="&quot;7&quot;"
-      LocalName="&quot;סוכן מכס&quot;"
-      Inactive="false"
-      SearchFields="&quot;7,סוכן מכס&quot;" />
-    <Record
-      Code="&quot;8&quot;"
-      LocalName="&quot;יבואן מסחרי&quot;"
-      Inactive="false"
-      SearchFields="&quot;8,יבואן מסחרי&quot;" />
-    <Record
-      Code="&quot;9&quot;"
-      LocalName="&quot;מלכ&quot;ר&quot;"
-      Inactive="false"
-      SearchFields="&quot;9,מלכ&quot;ר&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

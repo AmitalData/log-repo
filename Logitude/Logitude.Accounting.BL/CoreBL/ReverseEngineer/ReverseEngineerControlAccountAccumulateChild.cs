@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 var qChildsAsContol =
                     (from acc in myGLAccountRepo.GetAll(_Tenant).Where(r => r.ControlAccountId != null)
-                     join tot in myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                     join tot in myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
                      on acc.Id equals tot.AccountId
                      select new { acc.ControlAccountId,tot.Year,tot.Month, tot.LocalAmountDebit,tot.LocalAmountCredit }
                      
@@ -83,7 +83,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 (
                 //from acc in myGLAccountRepo.GetAll(_Tenant).Where(r => r.ControlAccountId != null)
                 from tot in myGLAccountTotalByMonthRepo
-                .GetAll(_Tenant).Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                .GetAll(_Tenant).Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
                  //on acc.ControlAccountId equals tot.AccountId
                  .Where(r=> qControlIds.Contains(r.AccountId))
                  select new { tot.AccountId, tot.Year, tot.Month, tot.LocalAmountDebit, tot.LocalAmountCredit }

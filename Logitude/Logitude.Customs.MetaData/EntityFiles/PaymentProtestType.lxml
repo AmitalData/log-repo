@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;471b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -213,6 +218,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -290,6 +296,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -364,6 +371,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -440,6 +448,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -527,43 +536,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;1&quot;"
-      SearchFields="&quot;1,שינוי סיווג&quot;"
-      Inactive="false"
-      LocalName="&quot;שינוי סיווג&quot;" />
-    <Record
-      Code="&quot;2&quot;"
-      SearchFields="&quot;2,פסילת ערך עיסקה&quot;"
-      Inactive="false"
-      LocalName="&quot;פסילת ערך עיסקה&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      SearchFields="&quot;3,פסילת מסמכי העדפה&quot;"
-      Inactive="false"
-      LocalName="&quot;פסילת מסמכי העדפה&quot;" />
-    <Record
-      Code="&quot;4&quot;"
-      SearchFields="&quot;4,תשלום היטל/ הפקדת ערובה&quot;"
-      Inactive="false"
-      LocalName="&quot;תשלום היטל/ הפקדת ערובה&quot;" />
-    <Record
-      Code="&quot;5&quot;"
-      SearchFields="&quot;5,טיפול ממושך במחלוקת&quot;"
-      Inactive="false"
-      LocalName="&quot;טיפול ממושך במחלוקת&quot;" />
-    <Record
-      Code="&quot;6&quot;"
-      SearchFields="&quot;6,עד למתן החלטה בבית משפט&quot;"
-      Inactive="false"
-      LocalName="&quot;עד למתן החלטה בבית משפט&quot;" />
-    <Record
-      Code="&quot;7&quot;"
-      SearchFields="&quot;7,אחר&quot;"
-      Inactive="false"
-      LocalName="&quot;אחר&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

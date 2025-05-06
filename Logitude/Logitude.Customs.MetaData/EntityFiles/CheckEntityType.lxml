@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -42,7 +45,7 @@
   Code="&quot;CHET&quot;"
   Name="&quot;Customs.CheckEntityType&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;9796&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -213,6 +218,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -290,6 +296,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -368,6 +375,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -444,6 +452,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -536,122 +545,146 @@
       Code="&quot;1&quot;"
       SearchFields="&quot;1,מכולת יבוא&quot;"
       Inactive="false"
-      LocalName="&quot;מכולת יבוא&quot;" />
+      LocalName="&quot;מכולת יבוא&quot;"
+      EnglishName="&quot;Import Container&quot;" />
     <Record
       Code="&quot;10&quot;"
       SearchFields="&quot;10,משאית TIR&quot;"
       Inactive="false"
-      LocalName="&quot;משאית TIR&quot;" />
+      LocalName="&quot;משאית TIR&quot;"
+      EnglishName="&quot;TIR truck&quot;" />
     <Record
       Code="&quot;11&quot;"
       SearchFields="&quot;11,מחסן&quot;"
       Inactive="false"
-      LocalName="&quot;מחסן&quot;" />
+      LocalName="&quot;מחסן&quot;"
+      EnglishName="&quot;warehouse&quot;" />
     <Record
       Code="&quot;12&quot;"
       SearchFields="&quot;12,גוש במחסן&quot;"
       Inactive="false"
-      LocalName="&quot;גוש במחסן&quot;" />
+      LocalName="&quot;גוש במחסן&quot;"
+      EnglishName="&quot;Block in warehouse&quot;" />
     <Record
       Code="&quot;13&quot;"
       SearchFields="&quot;13,תפיסה&quot;"
       Inactive="false"
-      LocalName="&quot;תפיסה&quot;" />
+      LocalName="&quot;תפיסה&quot;"
+      EnglishName="&quot;perception&quot;" />
     <Record
       Code="&quot;14&quot;"
       SearchFields="&quot;14,בדיקת טיסה&quot;"
       Inactive="false"
-      LocalName="&quot;בדיקת טיסה&quot;" />
+      LocalName="&quot;בדיקת טיסה&quot;"
+      EnglishName="&quot;Flight check&quot;" />
     <Record
       Code="&quot;15&quot;"
       SearchFields="&quot;15,מטען ליווי לנוסע&quot;"
       Inactive="false"
-      LocalName="&quot;מטען ליווי לנוסע&quot;" />
+      LocalName="&quot;מטען ליווי לנוסע&quot;"
+      EnglishName="&quot;Passenger escort charge&quot;" />
     <Record
       Code="&quot;16&quot;"
       SearchFields="&quot;16,אוניה&quot;"
       Inactive="false"
-      LocalName="&quot;אוניה&quot;" />
+      LocalName="&quot;אוניה&quot;"
+      EnglishName="&quot;Ship&quot;" />
     <Record
       Code="&quot;17&quot;"
       SearchFields="&quot;17,אספקה צידה לאוניה&quot;"
       Inactive="false"
-      LocalName="&quot;אספקה צידה לאוניה&quot;" />
+      LocalName="&quot;אספקה צידה לאוניה&quot;"
+      EnglishName="&quot;Shipside supplies&quot;" />
     <Record
       Code="&quot;18&quot;"
       SearchFields="&quot;18,יאכטה&quot;"
       Inactive="false"
-      LocalName="&quot;יאכטה&quot;" />
+      LocalName="&quot;יאכטה&quot;"
+      EnglishName="&quot;yacht&quot;" />
     <Record
       Code="&quot;19&quot;"
       SearchFields="&quot;19,אדם&quot;"
       Inactive="false"
-      LocalName="&quot;אדם&quot;" />
+      LocalName="&quot;אדם&quot;"
+      EnglishName="&quot;person&quot;" />
     <Record
       Code="&quot;2&quot;"
       SearchFields="&quot;2,מכולת יצוא&quot;"
       Inactive="false"
-      LocalName="&quot;מכולת יצוא&quot;" />
+      LocalName="&quot;מכולת יצוא&quot;"
+      EnglishName="&quot;Export Container&quot;" />
     <Record
       Code="&quot;20&quot;"
       SearchFields="&quot;20,מטען בלדר יבוא&quot;"
       Inactive="false"
-      LocalName="&quot;מטען בלדר יבוא&quot;" />
+      LocalName="&quot;מטען בלדר יבוא&quot;"
+      EnglishName="&quot;Import Courier Cargo&quot;" />
     <Record
       Code="&quot;21&quot;"
       SearchFields="&quot;21,מטען בלדר יצוא&quot;"
       Inactive="false"
-      LocalName="&quot;מטען בלדר יצוא&quot;" />
+      LocalName="&quot;מטען בלדר יצוא&quot;"
+      EnglishName="&quot;Export Courier Cargo&quot;" />
     <Record
       Code="&quot;22&quot;"
       SearchFields="&quot;22,מטען לא מזוהה מהסבות&quot;"
       Inactive="false"
-      LocalName="&quot;מטען לא מזוהה מהסבות&quot;" />
+      LocalName="&quot;מטען לא מזוהה מהסבות&quot;"
+      EnglishName="&quot;Unidentified cargo from the causes&quot;" />
     <Record
       Code="&quot;23&quot;"
       SearchFields="&quot;23,יבואן/סוכן/מחסן מהסבה&quot;"
       Inactive="false"
-      LocalName="&quot;יבואן/סוכן/מחסן מהסבה&quot;" />
+      LocalName="&quot;יבואן/סוכן/מחסן מהסבה&quot;"
+      EnglishName="&quot;Importer_agent_cause warehouse&quot;" />
     <Record
       Code="&quot;24&quot;"
       SearchFields="&quot;24,אספקה למטוס מהסבה&quot;"
       Inactive="false"
-      LocalName="&quot;אספקה למטוס מהסבה&quot;" />
+      LocalName="&quot;אספקה למטוס מהסבה&quot;"
+      EnglishName="&quot;Supply to the aircraft from the cause&quot;" />
     <Record
       Code="&quot;3&quot;"
       SearchFields="&quot;3,מטען יבוא&quot;"
       Inactive="false"
-      LocalName="&quot;מטען יבוא&quot;" />
+      LocalName="&quot;מטען יבוא&quot;"
+      EnglishName="&quot;import cargo&quot;" />
     <Record
       Code="&quot;4&quot;"
       SearchFields="&quot;4,מטען יצוא&quot;"
       Inactive="false"
-      LocalName="&quot;מטען יצוא&quot;" />
+      LocalName="&quot;מטען יצוא&quot;"
+      EnglishName="&quot;Export Cargo&quot;" />
     <Record
       Code="&quot;5&quot;"
       SearchFields="&quot;5,מטען אווירי יבוא&quot;"
       Inactive="false"
-      LocalName="&quot;מטען אווירי יבוא&quot;" />
+      LocalName="&quot;מטען אווירי יבוא&quot;"
+      EnglishName="&quot;import air cargo&quot;" />
     <Record
       Code="&quot;6&quot;"
       SearchFields="&quot;6,מטען אווירי יצוא&quot;"
       Inactive="false"
-      LocalName="&quot;מטען אווירי יצוא&quot;" />
+      LocalName="&quot;מטען אווירי יצוא&quot;"
+      EnglishName="&quot;Export air cargo&quot;" />
     <Record
       Code="&quot;7&quot;"
       SearchFields="&quot;7,רכב&quot;"
       Inactive="false"
-      LocalName="&quot;רכב&quot;" />
+      LocalName="&quot;רכב&quot;"
+      EnglishName="&quot;vehicle&quot;" />
     <Record
       Code="&quot;8&quot;"
       SearchFields="&quot;8,רכב זמני&quot;"
       Inactive="false"
-      LocalName="&quot;רכב זמני&quot;" />
+      LocalName="&quot;רכב זמני&quot;"
+      EnglishName="&quot;temporary vehicle&quot;" />
     <Record
       Code="&quot;9&quot;"
       SearchFields="&quot;9,משאית&quot;"
       Inactive="false"
-      LocalName="&quot;משאית&quot;" />
+      LocalName="&quot;משאית&quot;"
+      EnglishName="&quot;truck&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

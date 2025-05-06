@@ -21,7 +21,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PackingTypeUpdateClass
    {  		
-		public const string HashString = "7230b770e3d51b53747f61ee9080a0ec";
+
+		public const string HashString = "3e811a2fce7046c7614e61c9684210cd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -273,11 +274,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultTextBack_up =  "שם אנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם םנגלית",
 					  						FullLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultTextBack_up =  "שם אנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם םנגלית",
 					  						ListLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -476,11 +477,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackageTypeId",
 					  						DefaultText =  "Package Type Id",
-					  						FullLocalDefaultTextBack_up =  "סוג אריזה הובלה",
+					  						FullLocalDefaultTextBack_up =  "סוג םריזה הובלה",
 					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUINeU15XXkdec15Qi",
 					  						ListFieldLable =  "PackageTypeIdListLable",
 					  						ListLableDefaultText =  "Package Type Id",
-					  						ListLocalDefaultTextBack_up =  "סוג אריזה הובלה",
+					  						ListLocalDefaultTextBack_up =  "סוג םריזה הובלה",
 					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUINeU15XXkdec15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PackageType",

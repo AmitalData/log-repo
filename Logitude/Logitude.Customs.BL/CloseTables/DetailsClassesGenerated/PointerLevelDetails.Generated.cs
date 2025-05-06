@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL
                 Code = "I", 
                 LocalName = "חשבון ספק", 
                 SearchFields = "I, חשבון ספק", 
-                EnglishName = "null", 
+                EnglishName = "Supplier invoice", 
 			});
 			 
             all.Add(new PointerLevelDetails()
@@ -40,7 +40,7 @@ namespace Logitude.Customs.BL
                 Code = "P", 
                 LocalName = "פרט מכס", 
                 SearchFields = "P, פרט מכס", 
-                EnglishName = "null", 
+                EnglishName = "Classifaication code", 
 			});
 			 
             all.Add(new PointerLevelDetails()
@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL
                 Code = "D", 
                 LocalName = "הצהרה", 
                 SearchFields = "D,הצהרה", 
-                EnglishName = "Declaration, הצהרה ", 
+                EnglishName = "Declaration", 
 			});
 			
             return all;

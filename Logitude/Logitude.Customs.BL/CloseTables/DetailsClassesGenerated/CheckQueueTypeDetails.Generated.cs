@@ -33,6 +33,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "1,משקף", 
                 Inactive = false, 
                 LocalName = "משקף", 
+                EnglishName = "Reflect", 
 			});
 			 
             all.Add(new CheckQueueTypeDetails()
@@ -41,6 +42,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "2,מכסי", 
                 Inactive = false, 
                 LocalName = "מכסי", 
+                EnglishName = "Customs", 
 			});
 			 
             all.Add(new CheckQueueTypeDetails()
@@ -49,6 +51,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "3,משקף + מכסי", 
                 Inactive = false, 
                 LocalName = "משקף + מכסי", 
+                EnglishName = "Reflect AND Customs", 
 			});
 			
             return all;
@@ -59,12 +62,13 @@ namespace Logitude.Customs.BL
 		    newPoco.Code = this.Code;  
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Inactive = this.Inactive;  
-		    newPoco.LocalName = this.LocalName;   
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(CheckQueueType rec)
         {   
-           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

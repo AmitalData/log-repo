@@ -33,6 +33,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "1,יבוא", 
                 Inactive = false, 
                 LocalName = "יבוא", 
+                EnglishName = "Import", 
 			});
 			 
             all.Add(new CustomsBookTypeDetails()
@@ -41,6 +42,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "2,יצוא", 
                 Inactive = false, 
                 LocalName = "יצוא", 
+                EnglishName = "Export", 
 			});
 			 
             all.Add(new CustomsBookTypeDetails()
@@ -49,6 +51,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "3,אוטונומיה", 
                 Inactive = false, 
                 LocalName = "אוטונומיה", 
+                EnglishName = "Autonomy", 
 			});
 			
             return all;
@@ -59,12 +62,13 @@ namespace Logitude.Customs.BL
 		    newPoco.Code = this.Code;  
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Inactive = this.Inactive;  
-		    newPoco.LocalName = this.LocalName;   
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(CustomsBookType rec)
         {   
-           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }
