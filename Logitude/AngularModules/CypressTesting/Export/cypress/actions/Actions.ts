@@ -8,7 +8,7 @@ import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
 import { URLs } from '../constants/URLs';
 import { Constants } from '../constants/Constants';
 
-export function NavigatesCurrencyRatesWizerd() {
+export function NavigatesCustomsRequestsWizerd() {
 
     cy.Click(BaseExportSelectors.CustomsRequest, null)
 }

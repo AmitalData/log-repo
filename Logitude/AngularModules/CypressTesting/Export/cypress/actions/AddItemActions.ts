@@ -31,9 +31,9 @@ export function CreateNewItem(addItemDetails: AddItemDetails) {
  export function FillItem(addItemDetails: AddItemDetails) {
     
     cy.get(AddItemSelectors.ItemNo).type(addItemDetails.ItemNo);
-    cy.get(AddItemSelectors.ItemDescription).type(addItemDetails.ItemDescription);
-    //cy.get(AddItemSelectors.Item).type(addItemDetails.Item);
-    FillMatchingDDL(AddItemSelectors.TradeAgreementCode, addItemDetails.TradeAgreementCode);  
+     cy.get(AddItemSelectors.ItemDescription).type(addItemDetails.ItemDescription);
+    // cy.get(AddItemSelectors.Item).type(addItemDetails.Item);
+     FillMatchingDDL('div[index="6"]', addItemDetails.TradeAgreementCode);  
     FillMatchingDDL(AddItemSelectors.ProtocolCode, addItemDetails.ProtocolCode); 
     cy.get(AddItemSelectors.UnitsQuantity).type(addItemDetails.UnitsQuantity);
     FillMatchingDDL(AddItemSelectors.UnitType, addItemDetails.UnitType); 

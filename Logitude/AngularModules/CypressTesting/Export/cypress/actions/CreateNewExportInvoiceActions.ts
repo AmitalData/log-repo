@@ -30,7 +30,7 @@ export function CreateaAndFillNewExporterInvoice(createNewExportInvoiceDetails: 
    cy.get(CreateNewExportInvoiceSelectors.BuyerName).type(createNewExportInvoiceDetails.BuyerName);
    cy.get(CreateNewExportInvoiceSelectors.BuyerAddress).type(createNewExportInvoiceDetails.BuyerAddress);
    cy.get(CreateNewExportInvoiceSelectors.PartyRelationshipCode).type(createNewExportInvoiceDetails.PartyRelationshipCode);
-   cy.FillLogLov(CreateNewExportInvoiceSelectors.BuyerCountryCode,createNewExportInvoiceDetails.BuyerCountryCode,true);
+  // cy.FillLogLov(CreateNewExportInvoiceSelectors.BuyerCountryCode,createNewExportInvoiceDetails.BuyerCountryCode,true);
    cy.FillLogLov(CreateNewExportInvoiceSelectors.BuyerRoleCode,createNewExportInvoiceDetails.BuyerRoleCode,true);
    cy.FillLogTextBox(CreateNewExportInvoiceSelectors.InvoiceNumber,createNewExportInvoiceDetails.InvoiceNumber,true);
    cy.get(CreateNewExportInvoiceSelectors.InvoiceAmount).type(createNewExportInvoiceDetails.InvoiceAmount);
@@ -38,20 +38,21 @@ export function CreateaAndFillNewExporterInvoice(createNewExportInvoiceDetails: 
    //cy.get('td:nth-child(5) .CheckBox > label').click();
    //cy.get(CreateNewExportInvoiceSelectors.CheckBox).click({force:true});
    cy.FillLogLov(CreateNewExportInvoiceSelectors.DutyRegimeProtocolCode,createNewExportInvoiceDetails.DutyRegimeProtocolCode,true);
+  // cy.FillLogLov("#Customs.SupplierInvoiceModification_CurrencyTypeCode",createNewExportInvoiceDetails.BuyerRoleCode,true);
 
  }
     
 
  export function Matching(createNewExportInvoiceDetails: CreateNewExportInvoiceDetails)
  {
-  FillMatchingDDL(CreateNewExportInvoiceSelectors.ExportModificationCurrency, createNewExportInvoiceDetails.ExportModificationCurrency);  
-  FillMatchingDDL(CreateNewExportInvoiceSelectors.PreferenceDocumentTypeCode, createNewExportInvoiceDetails.PreferenceDocumentTypeCode);
-  FillMatchingDDL('#edit-log-grid_0_30_1_0', createNewExportInvoiceDetails.InsuranceCurrencyTypeCode);
-  FillMatching('#edit-log-grid_0_30_2_0', createNewExportInvoiceDetails.InsuranceAmount);
-  FillMatchingDDL('#edit-log-grid_0_30_1_1', createNewExportInvoiceDetails.TransportCurrencyTypeCode);
-  FillMatching('#edit-log-grid_0_30_2_1', createNewExportInvoiceDetails.TransportAmount);
-  FillMatchingDDL('#edit-log-grid_0_30_1_2', createNewExportInvoiceDetails.ExpenseCurrencyTypeCode);
-  FillMatching('#edit-log-grid_0_30_2_2', createNewExportInvoiceDetails.ExpenseAmount);
+//   FillMatchingDDL(CreateNewExportInvoiceSelectors.ExportModificationCurrency, createNewExportInvoiceDetails.ExportModificationCurrency);  
+//   FillMatchingDDL(CreateNewExportInvoiceSelectors.PreferenceDocumentTypeCode, createNewExportInvoiceDetails.PreferenceDocumentTypeCode);
+//   FillMatchingDDL('#edit-log-grid_0_30_1_0', createNewExportInvoiceDetails.InsuranceCurrencyTypeCode);
+//   FillMatching('#edit-log-grid_0_30_2_0', createNewExportInvoiceDetails.InsuranceAmount);
+//   FillMatchingDDL('#edit-log-grid_0_30_1_1', createNewExportInvoiceDetails.TransportCurrencyTypeCode);
+//   FillMatching('#edit-log-grid_0_30_2_1', createNewExportInvoiceDetails.TransportAmount);
+//   FillMatchingDDL('#edit-log-grid_0_30_1_2', createNewExportInvoiceDetails.ExpenseCurrencyTypeCode);
+//   FillMatching('#edit-log-grid_0_30_2_2', createNewExportInvoiceDetails.ExpenseAmount);
   cy.get(CreateNewExportInvoiceSelectors.ButtonSaveSupplierInvoice).focus();
    
  }
