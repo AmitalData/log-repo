@@ -194,7 +194,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(authToken.Tenant);
-                var error = arPaymentChequeQueryService.CheckARPaymentChequeAlreadyExists(chequeOrPaymentRef, bank, bankAccount, bankBranch, authToken.Tenant);
+                var error = arPaymentChequeQueryService.CheckARPaymentChequeAlreadyExists(chequeOrPaymentRef, bank, bankBranch, bankAccount, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, error);
               
