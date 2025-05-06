@@ -1148,7 +1148,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
-                            "GLAccountPMId": this.GLAccountPM.Id,
+                            "SourceGLAccountPM": this.GLAccountPM,
                             TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
                             TotalDebit: this.TotalDebit,
