@@ -76,8 +76,8 @@ namespace Logitude.Accounting.BL.CoreBL
         const string RecalculateEventCode = "IREC";
         private static HashSet<string> BlockedStatuses = new HashSet<string> 
         {
-            TaxReportLineTransmitStatusValues.Notfortransmitatall,
-            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
+            TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
+            TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
         };
 
 
@@ -629,12 +629,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference)
                         {
 ;
-                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
+                            oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
                         }
 
                         else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
-                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit; 
+                            oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit; 
                         }
 
                         if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
@@ -651,11 +651,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference)
                         {
 
-                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
+                            linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
                         }
                         else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
-                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;   
+                            linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;   
                         }
                     }
 
