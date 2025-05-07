@@ -92,7 +92,7 @@
         <td style="width:200px;">
             <div style="width:200px;">
 
-                <LogLov [ObjectFieldName]="'CustomerId'"
+                <LogLov [ShowInActive]="true" [ObjectFieldName]="'CustomerId'"
                         [DataContext]="DataContext"
                         [LookUpTableName]="'Card'"
                         [DependencyFilter1IsList]="'true'"
@@ -248,7 +248,7 @@
 
                                 <td style="width:200px">
 
-                                    <LogLov [ObjectFieldName]="'CurrencyId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'CurrencyId'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Currency'"
                                             [SelectedValue]="CurrencyId">
