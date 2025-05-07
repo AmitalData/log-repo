@@ -76,7 +76,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 			objectTable.RelatedEntity = objectTablePM.RelatedEntity;
 			objectTable.ThisKey = objectTablePM.ThisKey;
 			objectTable.RelatedKey = objectTablePM.RelatedKey;
-
-		}
+            objectTable.ShowFastSearch = objectTablePM.ShowFastSearch;
+        }
 	}
 }

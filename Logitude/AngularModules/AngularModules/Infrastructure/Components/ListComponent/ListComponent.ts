@@ -4,7 +4,7 @@ declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
 import { SessionLocator } from '../../Utilities/SessionLocator';
@@ -39,13 +39,12 @@ import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { VariableAst } from '@angular/compiler';
 import { EditComponent } from '../EditComponent/EditComponent';
 import { AWBWizardLoadComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent';
 import { AWBWizardComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent';
@@ -68,7 +67,9 @@ import { CustomizationPermissionService } from '../../../InfrastructureModules/I
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-
+import { FastSearchResult, FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
+import { FastSearchService } from './FastSearchService';
+ 
 @Component({
 
     templateUrl: './ListComponent.html',
@@ -144,11 +145,15 @@ export class ListComponent implements OnInit, AfterViewInit {
     public BackBtnTitle: string;
     public AddButtonTitle: string = "";
     public serviceArgs: ServiceArgs;
-    CurrentQueryFilters: ApiQueryFilters;
+    CurrentQueryFilters: ApiQueryFilters;    
     AdvanceFilters: ApiQueryFilters;
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() onRefershQueryEvent = new EventEmitter();
     @Output() onSelectedQueryChangeEvent = new EventEmitter();
+    searchDropdownOptions: FastSearchResult[] = [];    
+    fastSearchSettings: FastSearchSettings = null;
+    $fastSearchEnable: BehaviorSubject<boolean> = null;
+
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
     }
@@ -180,43 +185,55 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onSearchTextChangeEvent(searchtext) {
+        const timer: number = this.$fastSearchEnable.value ? this.fastSearchService.Settings.idleSearchTimeMs : 400;
+
         console.log("Search");
         if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {
             this.searchFields = searchtext;
             if (this.timerToken) {
                 clearTimeout(this.timerToken);
             }
-            this.timerToken = setTimeout(() => this.SearchMethod(), 400);
-
+            this.timerToken = setTimeout(() => this.SearchMethod(), timer);
         }
-        //this.searchFields = searchtext;
-
-        //this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
-    SearchMethod() {
-        //this.ApplyPreDefinedFilters();
-
-        var searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
-
-
+    async SearchMethod() {        
+        const searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
-        //if (this.searchFields && this.searchFields != "") {
-        //    this.searchFields = this.searchFields.replace(/"/g, '');
-        //    //this.searchFields = this.searchFields.replace(/\//g, '');//("\\", "\\");
-        //    this.searchFields = this.searchFields.replace(/\\/g, "\\\\");
-        //    //this.searchFields = this.searchFields.replace('"', '');
-        //    //this.searchFields = this.searchFields.trim();
-        //}
-        //if (this.ClearMySearch == false) {
+        
+        if (this.fastSearchService.$fastSearchEnable.value) {
+            this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
+            if (this.searchDropdownOptions) {
+                this.CD.detectChanges();
+                return;
+            }            
+        }
+            
         this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
-        //}
-        //else {
-        //    this.ClearMySearch = false;
-        //}
+        this.CD.detectChanges();            
     }
 
+    searchDropdownSelected(optionSelected: FastSearchResult | string) {
+        this.fastSearchService.searchDropdownSelected(optionSelected, this.CurrentQueryFilters, this.SelectedQueryCode, this.searchDropdownOptions, this.MethodName, this.onRowSelected.bind(this), this.onQueryChangeEvent);
+    }
+   
+    fastSearchCheckbox(check: boolean) {
+        this.fastSearchService.$fastSearchEnable.next(check);
+        if(!check && this.fastSearchService.orginalCurrentAdditionalFilters != null) {
+            this.CurrentQueryFilters.AdditionalFilters = [...this.fastSearchService.orginalCurrentAdditionalFilters];
+            this.fastSearchService.orginalCurrentAdditionalFilters = null;
+        }
+
+        this.SearchMethod();
+    }
+
+    async showRecentSearches() {        
+        this.fastSearchService.$RecentSearches.pipe(take(1)).subscribe(recentSearches => {
+            this.searchDropdownOptions = [...recentSearches];
+            this.CD.detectChanges();
+        });
+    }
 
     GetMethodName() {
         if (this.MenuTableQuerySection) return this.ObjectTableName;
@@ -522,7 +539,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef, private fastSearchService: FastSearchService) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
 
@@ -778,6 +795,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.EnglishView = true;
         }
 
+        this.fastSearchService.subscribeMenuHeaderchangeevent(this.MenuHeaderchangeevent);
     }
     public ReloadAllListEvent: any = null;
     Listen() {
@@ -910,7 +928,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     private isLoaderReady: boolean;
     DeclarationsTable = false;
     View: string;
-    RunComponent() {
+    async RunComponent() {
 
 
         if (window.Tips) {
@@ -1051,8 +1069,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.RunComponentTimer();
             }
         }
+        
+        await this.fastSearchService.initFastSearch(this.ObjectTable, this.ObjectTableName, this.MenuTableQuerySection);
+        this.$fastSearchEnable = this.fastSearchService.$fastSearchEnable;
+        if (this.fastSearchService.$fastSearchEnable.value)
+            this.fastSearchSettings = this.fastSearchService.Settings;
     }
-
+  
     private Retries: number = 0;
     private timerToken: any;
     private RunComponentTimer() {

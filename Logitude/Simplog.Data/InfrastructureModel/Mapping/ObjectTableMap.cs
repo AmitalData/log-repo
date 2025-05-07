@@ -134,6 +134,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
 			this.Property(t => t.RelatedEntity).HasColumnName("RelatedEntity");
 			this.Property(t => t.ThisKey).HasColumnName("ThisKey");
 			this.Property(t => t.RelatedKey).HasColumnName("RelatedKey");
+            this.Property(t => t.ShowFastSearch).HasColumnName("ShowFastSearch");
 
 			// Relationships
 			this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);

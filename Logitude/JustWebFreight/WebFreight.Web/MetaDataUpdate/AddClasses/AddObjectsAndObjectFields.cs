@@ -172,6 +172,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 				objectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
 				objectTable.ThisKey = objectTablesDetails.ThisKey;
 				objectTable.RelatedKey = objectTablesDetails.RelatedKey;
+                objectTable.ShowFastSearch = objectTablesDetails.ShowFastSearch;
 
 				return objectTable;
                 #endregion
@@ -336,6 +337,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 				updatedObjectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
 				updatedObjectTable.ThisKey = objectTablesDetails.ThisKey;
 				updatedObjectTable.RelatedKey = objectTablesDetails.RelatedKey;
+                updatedObjectTable.ShowFastSearch = objectTablesDetails.ShowFastSearch;
 
 				objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;

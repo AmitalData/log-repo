@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "728f2bc9dc241d76954830326905d08f";
+		public const string HashString = "3c28c17efd76ff3514f8d6ab54944c18";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -89,7 +89,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
 			      				    HashString =  DeclarationUpdateClass.HashString,
-			                    
+									ShowFastSearch = true,
+
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
 	

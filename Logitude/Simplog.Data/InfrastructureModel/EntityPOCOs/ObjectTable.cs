@@ -117,5 +117,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 		public string ThisKey { get; set; }
 		public string RelatedKey { get; set; }
 
-	}
+        public bool? ShowFastSearch { get; set; }
+    }
 }

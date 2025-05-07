@@ -540,6 +540,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ShowFastSearch"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
     ReferencedTable="Screens"

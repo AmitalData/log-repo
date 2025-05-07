@@ -1076,6 +1076,7 @@ namespace MeatadataGeneratorTool.Helpers
 				{
 					objectTable.IsLock = false;
 				}
+                objectTable.ShowFastSearch = GetAttributeBoolValue(entity.Attributes["ShowFastSearch"]);
 
 				if (entity.Attributes["NoViewController"] != null)
                 {

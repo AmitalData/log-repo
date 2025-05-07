@@ -128,6 +128,8 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions { get; }
         IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
         IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs { get; }
+        IDbSet<SearchIndex> SearchIndexes { get; }
+        IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories { get; }
         DbContextTransaction GetSnapshotTransaction();
 
         void SetAsModified(object entity);
