@@ -33,7 +33,7 @@
   </Column>
   <Column
     Name="CreateDate"
-    Type="datetime2">
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
