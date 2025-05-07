@@ -24,7 +24,7 @@ export class FastSearchService implements OnDestroy {
     public get $RecentSearches(): Observable<FastSearchResult[]> {
         return this.$recentSearches.asObservable();
     }
-    private settings: FastSearchSettings = null;
+    private settings: FastSearchSettings | null = null;
     public get Settings() {
         return this.settings;
     }

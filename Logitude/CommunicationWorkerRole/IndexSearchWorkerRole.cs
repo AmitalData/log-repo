@@ -262,8 +262,8 @@ namespace CommunicationWorkerRole
                 string apiKey = ConnectionDetails.Value2;
                 AzureSearchRepoBase<SearchDocument> azureSearchRepo = new AzureSearchRepoBase<SearchDocument>(searchServiceEndpoint, apiKey, index.Index, new string[] { });
 
-                Response<Azure.Search.Documents.Indexes.Models.SearchIndex> searchIndexResponse = await azureSearchRepo.GetSearchIndexClient().GetIndexAsync(azureSearchRepo.indexName);
-                string keyFieldName = searchIndexResponse.Value.Fields.FirstOrDefault(f => f.IsKey == true)?.Name;
+                Azure.Search.Documents.Indexes.Models.SearchField searchField = await azureSearchRepo.GetKeyFieldAsync();
+                string keyFieldName = searchField?.Name;
                 logger.WriteDebug($"Key field name: {keyFieldName}");
 
                 SearchClient searchClient = azureSearchRepo.GetSearchClient();

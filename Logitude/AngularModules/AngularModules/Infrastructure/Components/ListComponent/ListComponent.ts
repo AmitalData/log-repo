@@ -183,7 +183,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onSearchTextChangeEvent(searchtext) {
-        const timer: number = this.fastSearchService.Settings.idleSearchTimeMs || 400;
+        const timer: number = this.$fastSearchEnable.value ? this.fastSearchService.Settings.idleSearchTimeMs : 400;
 
         console.log("Search");
         if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {

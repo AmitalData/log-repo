@@ -11,9 +11,6 @@ namespace Logitude.Customs.BL.AzureSearch
     {
         private static readonly DevLog logger = DevLog.Instance;
         private static CustomFieldClass customFilterClass = new CustomFieldClass();
-        private static DefaultAndConfiguration_Ext ConnectionDetails => DefaultService.Instance.Get(0, "AzureSearchAI", "Customs");
-        public static string serviceName => ConnectionDetails.Value1;
-        public static string apiKey => ConnectionDetails.Value2;
 
         public static string ConvertQueryFilter(List<QueryFilterItem> additionalFilters)
         {
@@ -94,7 +91,7 @@ namespace Logitude.Customs.BL.AzureSearch
             return allFilters;
         }
 
-        public static string ConvertQueryable<T>(IQueryable<T> queryable)
+        public static string ConvertQueryable(IQueryable queryable)
         {
             if (queryable == null)
                 return string.Empty;
@@ -149,7 +146,7 @@ namespace Logitude.Customs.BL.AzureSearch
             }
         }
 
-        public static List<QueryFilterItem> PrintQueryClauses<T>(IQueryable<T> query)
+        public static List<QueryFilterItem> PrintQueryClauses(IQueryable query)
         {
             ClauseVisitor visitor = new ClauseVisitor();
             visitor.Visit(query.Expression);

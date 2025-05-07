@@ -9,7 +9,7 @@ import { SearchListDDLComponent } from './SearchListDDLComponent';
 })
 export class SearchListDDLDirective implements OnInit {
   @Input() set appSearchListDDL(options: any[]) {
-    if (this.componentRef) {
+    if (this.componentRef && options) {
       this.componentRef.instance.dropdownOptions = options;
       this.componentRef.instance.showDropdown = options.length > 0;
     }
@@ -18,14 +18,14 @@ export class SearchListDDLDirective implements OnInit {
   private _maxResults: number = null;
   @Input() set maxResults(max: number) {
     this._maxResults = max;
-    if (this.componentRef)
+    if (this.componentRef && max)
       this.componentRef.instance.maxResults = max;
   }
 
   private _displayPattern: string = '';
   @Input() set displayPattern(pattern: string) {
     this._displayPattern = pattern;
-    if (this.componentRef)
+    if (this.componentRef && pattern)
       this.componentRef.instance.displayPattern = this._displayPattern;
   }
 

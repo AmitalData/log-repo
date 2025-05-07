@@ -24,7 +24,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 if (string.IsNullOrEmpty(index))
                     throw new ArgumentNullException("index", "index cannot be null or empty");
 
-                dynamic settings = await ASHelper.GetIndexSettingsAsync(tenant, index);
+                dynamic settings = await FastSearchService.GetIndexSettingsAsync(tenant, index);
                 return Request.CreateResponse(HttpStatusCode.OK, (object)settings);
             }
             catch (Exception ex)
@@ -39,16 +39,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
             try
             {
-                object result = null;
-                switch (index)
-                {
-                    case "declarations":
-                        result = await DeclarationAzureSearchService.Search(filters, tenant, searchText);
-                        break;
-
-                    default:
-                        throw new Exception($"Index {index} not found");
-                }
+                List<dynamic> result = await FastSearchService.Search(filters, searchText, index, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
