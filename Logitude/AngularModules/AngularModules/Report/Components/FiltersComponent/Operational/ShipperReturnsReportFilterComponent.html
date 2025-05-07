@@ -41,7 +41,7 @@
 
                                 <td style="width:70px;">Shipper:</td>
                                 <td style="width:170px;">
-                                    <LogLov [ObjectFieldName]="'ShipperId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'ShipperId'"
                                             [SelectedValue]="ShipperId"
                                             [ObjectTableName]="'Shipment'"
                                             [DataContext]="DataContext"
@@ -78,7 +78,7 @@
                                 </td>
                                 <td style="width:110px;">Origin:</td>
                                 <td style="width:170px;">
-                                    <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFromPortId'"
                                             [SelectedValue]="MainCarriageFromPortId"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Port'" [NoObjectField]="true" 
@@ -92,7 +92,7 @@
 
                                 <td style="width:70px;">Destination:</td>
                                 <td style="width:170px;">
-                                    <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
                                             [SelectedValue]="MainCarriageFinalDestinationPortId"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Port'" [NoObjectField]="true" 

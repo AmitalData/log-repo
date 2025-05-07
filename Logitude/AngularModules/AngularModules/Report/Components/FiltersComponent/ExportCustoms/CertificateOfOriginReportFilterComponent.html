@@ -81,7 +81,7 @@
                                   [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width: 150px;">
-                        <LogLov [ObjectFieldName]="'CooTypeCode'"
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'CooTypeCode'"
                             [ObjectTableName]="ObjectTableName"
                             [DataContext]="DataContext"
                             [HideColumns]="true"
@@ -116,7 +116,7 @@
                    </td>
                 
                     <td style="width:150px">
-                        <LogLov [ObjectFieldName]="'CustomerId'"
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'CustomerId'"
                                 [ObjectTableName]="'Customs.Declaration'"
                                 [DataContext]="DataContext"
                                 [SelectedValue]="CustomerId"
