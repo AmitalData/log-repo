@@ -5002,7 +5002,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 					scope.Complete();
 				}
  
-				QuoteGroupSectionUpdateClass.FillQuoteGroupSection(contextTenant);
+				//QuoteGroupSectionUpdateClass.FillQuoteGroupSection(contextTenant);
 
  
 			}

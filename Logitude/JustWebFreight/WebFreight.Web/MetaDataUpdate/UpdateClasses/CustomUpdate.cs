@@ -15093,6 +15093,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             MenusTablesRepository = new MenusTableRepository(ObjectContext);
             FeatureRepository featureRepository = new FeatureRepository(tenant);
             Dictionary<string, MenusTable> tenantMenusTables = MenusTablesRepository.GetMenusTablesByTenant(0).ToDictionary(d => d.Code, a => a);
+            ObjectTableRepository = new ObjectTableRepository(ObjectContext);
 
             List<ObjectTable> tenantObjectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
             List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();

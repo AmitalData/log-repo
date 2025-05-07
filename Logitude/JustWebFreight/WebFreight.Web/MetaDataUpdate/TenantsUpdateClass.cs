@@ -769,6 +769,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
 
             AzureLog.SaveLogsInStorage(message, "L", DateTime.Now, "", "", 0, null, null, null);
+            CustomUpdate updateClass = new CustomUpdate();
 
             try
             {
@@ -804,13 +805,18 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
                 else
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Infrastructure Module ...");
+                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Infrastructure Module ...");
                     inframodelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating System Logs Module ...");
                     systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
+
+
+                    //NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables ...");
+                  //  metaDataUpdateClass.LoadUpdateTenantZero(context,false, tenant: tenant);
+
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Common Module ...");
                     commonmodelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
@@ -838,11 +844,11 @@ namespace WebFreight.Web.MetaDataUpdate
                 ForCourier(tenant);
 
 
-                CustomUpdate updateClass = new CustomUpdate();
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading closed tables ...");
                 updateClass.UpgradeClosedTablesForTenantZero();
-
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables ...");
+
+
                 updateClass.LoadUpdateTenantZero(context, tenant);
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading menus tables ...");
@@ -899,7 +905,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Exiting function with Exception");
+                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Exiting function with Exception");
                 throw ex;
             }
 

@@ -56,17 +56,8 @@ namespace Logitude.MetadataUpdate
                         continue;
                     }
 
-                    var dbConnection = db.Value;// GlobalDbHelper.GetGlobalDB(currentTenantId);
-                    //if (dbConnection == null)
-                    //{
-                    //    Console.WriteLine($"DB {globalDbId} not found for tenant {currentTenantId}");
-                    //    continue;
-                    //}
-                    //if (!dbConnection.IsActive)
-                    //{
-                    //    Console.WriteLine($"DB {globalDbId} is not active for tenant {currentTenantId}");
-                    //    continue;
-                    //}
+                    var dbConnection = db.Value;
+              
                     if (processedDBConnections.ContainsValue(dbConnection))
                     {
                         continue;

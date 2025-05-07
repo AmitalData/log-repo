@@ -1410,7 +1410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					Name = "BatchTaskExecutionEditButtonsGroup",
 					ObjectTableId = BatchTaskExecutionObjectTable.Id,
 					Tenant = 0
-				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+           }, menuButtonGroupRepository, tenantMenuButtonGroups,contextTenant);        
    
 			   MenuButton BatchTaskExecutionMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
