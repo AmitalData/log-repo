@@ -55,6 +55,9 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.APIDataContract;
 using GLAccountPM = Logitude.Accounting.Def.EntityPMs.GLAccountPM;
 using Logitude.BL.InvoiceModel.Enums;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.APIDataContract;
+using GLAccountPM = Logitude.Accounting.Def.EntityPMs.GLAccountPM;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {

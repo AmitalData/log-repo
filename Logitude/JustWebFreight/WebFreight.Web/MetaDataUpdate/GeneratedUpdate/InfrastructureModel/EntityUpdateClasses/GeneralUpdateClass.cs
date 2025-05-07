@@ -23,8 +23,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "4c11a0b621658c2b02ebea8540e6d72a";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 		public const string HashString = "3116ad46736bdeb595db27b5904d8ac0";
+   	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -67,8 +67,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "6063",
-			      				    Name =  "General",
+ 			      				    Code =  "6049",
+ 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
 			      				    ServerModuleName =  "Generals",
@@ -2847,6 +2847,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 
  		   TextCode GeneralTextCode_GeneralOSendParameters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SendParameters", DefaultText = "Send Parameters",LocalDefaultText = @"פרמטרים לשליחה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+  		   TextCode GeneralTextCode_AccountingOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 }
    }

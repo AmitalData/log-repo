@@ -32,6 +32,7 @@ using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.Data.Enums;
 using Logitude.BL.InvoiceModel.CloseTables;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
+using Logitude.BL.InvoiceModel.CloseTables;
 
 namespace Logitude.Accounting.BL.DataContract
 {
@@ -807,6 +808,7 @@ namespace Logitude.Accounting.BL.DataContract
                 byVendorList.Add(emptyVendor);
             }
 
+ 
             var byVendorsGroups = byVendorList
                 .GroupBy(x => new { x.DeductionFileNumber, x.VATNumber, x.TaxDeductionPercentage });
 
@@ -843,7 +845,7 @@ namespace Logitude.Accounting.BL.DataContract
                 }
             }
             return combined;
-        }
+         }
 
         private List<CardList> GetMainAccountsCards()
         {
