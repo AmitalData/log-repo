@@ -28,6 +28,7 @@ using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.Resolvers;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated 
 {
@@ -193,8 +194,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(authToken.Tenant);
+
                 ARPaymentChequeQueryService arPaymentChequeQueryService = new ARPaymentChequeQueryService(authToken.Tenant);
-                var error = arPaymentChequeQueryService.CheckARPaymentChequeAlreadyExists(chequeOrPaymentRef, bank, bankBranch, bankAccount, authToken.Tenant);
+                var error = arPaymentChequeQueryService.CheckARPaymentChequeAlreadyExists(chequeOrPaymentRef, bank, bankBranch, bankAccount, authToken.Tenant, showLocal);
 
                 return Request.CreateResponse(HttpStatusCode.OK, error);
               
