@@ -114,16 +114,17 @@ namespace Logitude.Accounting.Data.Repositories
                 .ToList();
         }
 
-        public string CheckARPaymentChequeAlreadyExists(string ChequeNumber, string BankId, string BankAccount, string BankBranch, int tenant)
+        public string CheckARPaymentChequeAlreadyExists(string ChequeNumber, string BankId, string BankAccount, string BankBranch, int tenant ,bool useLocal, string arPaymentId = null)
         {
             var existingCheques = new StringBuilder();
-
+          
             var existingCheque = context.ARPaymentCheques
                 .FirstOrDefault(a => a.Tenant == tenant &&
                                      a.ChequeNumber == ChequeNumber &&
                                      a.BankId == BankId &&
                                      a.BankAccount == BankAccount &&
-                                     a.BankBranch == BankBranch);
+                                     a.BankBranch == BankBranch   &&
+                                     (arPaymentId == null || a.PaymentId != arPaymentId));
 
             if (existingCheque != null)
             {
@@ -135,7 +136,7 @@ namespace Logitude.Accounting.Data.Repositories
                    .FirstOrDefault();
 
 
-        string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant);
+        string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant, useLocal);
                 string textCodeAlreadyExist = msg.Replace("ChequeNumber", existingCheque.ChequeNumber)
                     .Replace("PaymentNumber", paymentNumber)
                     .Replace("LocalAmount", existingCheque.LocalAmount.ToString(AmountFormat));
