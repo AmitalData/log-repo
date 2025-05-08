@@ -1573,6 +1573,38 @@ namespace WebFreight.Web.Helpers
 
 				if (!table.Columns.Contains(key))
 					table.Columns.Add(key, systemType);
+				else
+				{
+					var columnType = table.Columns[key].DataType;
+					if (table.Columns[key].DataType != systemType && systemType != typeof(Nullable))
+					{
+						if (table.Columns[key].DataType != typeof(Nullable))
+						{
+							systemType = typeof(string);
+
+						}
+						int colOrdinal = table.Columns[key].Ordinal;
+
+						string newColumnName = table.Columns[key].ColumnName + "_temp";
+						DataColumn newCol = new DataColumn(newColumnName, systemType);
+						table.Columns.Add(newCol);
+						newCol.SetOrdinal(colOrdinal);
+						foreach (DataRow row in table.Rows)
+						{
+							var value = row[table.Columns[key]];
+							row[newCol] = value;
+						}
+						string oldColumnName = table.Columns[key].ColumnName;
+						
+						table.Columns.Remove(table.Columns[key]);
+
+						newCol.ColumnName = oldColumnName;
+						newCol.SetOrdinal(colOrdinal); 
+
+					}
+					
+
+				}
 			}
 			var dr = table.NewRow();
 			foreach (var kv in rowData)
@@ -1606,9 +1638,8 @@ namespace WebFreight.Web.Helpers
 					return typeof(Uri);
 				case JTokenType.Null:
 				case JTokenType.Undefined:
+					return typeof(Nullable);
 				case JTokenType.Bytes:
-				
-					return typeof(string);
 				case JTokenType.Object:
 				case JTokenType.Array:
 				case JTokenType.Constructor:
