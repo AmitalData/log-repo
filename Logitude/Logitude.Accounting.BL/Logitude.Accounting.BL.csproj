@@ -367,6 +367,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\WithholdingTaxDeductionTypeDetails.cs" />
     <Compile Include="CloseTables\EnumGenerated\AccountingEntityStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ARPaymentChequeStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AutomaticExternalReconcileMethodStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AutomaticReconcileStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\BankPageEntryTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CalculatedChartsLineTypeStruct.Generated.cs" />
@@ -374,16 +375,21 @@
     <Compile Include="CloseTables\EnumGenerated\GLAccountTotalDateTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GLAccountTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\IntegrityCheckStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InterestEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\InterestReportStatuseStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\OpenFormatReportStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PaymentChequeStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PeriodTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileExternalPageStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RevaluationStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\RevenueExpenseTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxDeductionReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxReportLineStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxReportLineTransmitStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TaxReportLineTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\VatReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
@@ -727,7 +733,8 @@
     <Compile Include="EntityDataMappings\Generated\TaxReportLineTransmitStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaxReportLineTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaxReportStatusDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\TaxWithholdingAssessingOfficeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxWithholdingAssessOfficeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantIdleStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TestEntityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UserDefinedReportDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VatReportStatusDataMapping.Generated.cs" />
@@ -791,6 +798,7 @@
     <Compile Include="EntityDataMappings\TaxReportLineTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaxReportStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaxWithholdingAssessOfficeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantIdleStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\TestEntityDataMapping.cs" />
     <Compile Include="CoreBL\AccountingValidationContextServiceProvider.cs" />
     <Compile Include="EntityDataMappings\UserDefinedReportDataMapping.cs" />
@@ -890,6 +898,7 @@
     <Compile Include="EntityQueryServices\Generated\TaxReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaxReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaxWithholdingAssessOfficeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TenantIdleStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UserDefinedReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
@@ -952,6 +961,7 @@
     <Compile Include="EntityUpdateServices\Generated\Aur_PaymentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\Aur_TimesheetUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TenantIdleStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />

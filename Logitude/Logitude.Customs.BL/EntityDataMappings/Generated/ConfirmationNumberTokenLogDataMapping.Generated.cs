@@ -19,7 +19,6 @@ using Simplog.Server.Infrastructure.DataContracts;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -250,16 +249,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             entityPM.SearchFields += mySearchFields;
             entityPOCO.SearchFields += mySearchFields;
         }
-
-        public void CustomPMToPOCO(ConfirmationNumberTokenLogPM entityPM, ConfirmationNumberTokenLog entityPOCO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CustomPOCOToPM(ConfirmationNumberTokenLogPM entityPM, ConfirmationNumberTokenLog entityPOCO)
-        {
-            throw new NotImplementedException();
-        }
-    }
+			  
+   }
 }
 	 

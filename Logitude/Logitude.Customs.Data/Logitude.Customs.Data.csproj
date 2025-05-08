@@ -1803,6 +1803,7 @@
     <Compile Include="Repsitories\CustomsItemGroupRepository.cs" />
     <Compile Include="Repsitories\CustomsItemHierarchicLocationRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
+    <Compile Include="Repsitories\CustomsPaymentTermRepository.cs" />
     <Compile Include="Repsitories\CustomsShipRepository.cs" />
     <Compile Include="Repsitories\DBMigrationLineRepository.cs" />
     <Compile Include="Repsitories\DBMigrationRepository.cs" />

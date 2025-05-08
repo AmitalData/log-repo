@@ -23,10 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PackingTypeUpdateClass
    {  		
-
- 		public const string HashString = "7230b770e3d51b53747f61ee9080a0ec";
+		public const string HashString = "e4e45d8b028766bb6ab5d5db98c24fb2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -276,11 +275,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultTextBack_up =  "שם םנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם אנגלית",
 					  						FullLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultTextBack_up =  "שם םנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם אנגלית",
 					  						ListLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -479,11 +478,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PackageTypeId",
 					  						DefaultText =  "Package Type Id",
-					  						FullLocalDefaultTextBack_up =  "סוג םריזה הובלה",
+					  						FullLocalDefaultTextBack_up =  "סוג אריזה הובלה",
 					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUINeU15XXkdec15Qi",
 					  						ListFieldLable =  "PackageTypeIdListLable",
 					  						ListLableDefaultText =  "Package Type Id",
-					  						ListLocalDefaultTextBack_up =  "סוג םריזה הובלה",
+					  						ListLocalDefaultTextBack_up =  "סוג אריזה הובלה",
 					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXkNeo15nXlteUINeU15XXkdec15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PackageType",
