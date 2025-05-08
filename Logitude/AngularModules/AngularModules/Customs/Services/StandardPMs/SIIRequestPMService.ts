@@ -22,6 +22,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {SIIRequestPM} from '../../EntityPMs/SIIRequestPM';
 
 import {SupplierInvoiceItemsReqListPM} from '../../EntityPMs/SupplierInvoiceItemsReqListPM';
+import {SIIRequestValidator} from '../../Validators/SIIRequestValidator';
 
 @Injectable()
 
@@ -72,6 +73,12 @@ export class SIIRequestPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("Customs.SIIRequest", entityPM);
 
+			var customValidator :SIIRequestValidator = new SIIRequestValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 
@@ -114,6 +121,12 @@ export class SIIRequestPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("Customs.SIIRequest", entityPM);
 
+			var customValidator :SIIRequestValidator = new SIIRequestValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
 
 			if (errorsArray.length == 0) {
 
