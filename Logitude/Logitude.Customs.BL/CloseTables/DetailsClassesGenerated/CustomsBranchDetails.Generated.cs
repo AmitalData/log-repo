@@ -1097,7 +1097,7 @@ namespace Logitude.Customs.BL
                 Code = "219", 
                 SearchFields = "219,''ירושלים-גאולה", 
                 Inactive = false, 
-                LocalName = "ירושלים-גאולה", 
+                LocalName = "גאולה ירושלים", 
 			});
 			 
             all.Add(new CustomsBranchDetails()

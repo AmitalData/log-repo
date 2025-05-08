@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ImporterTypeForClaimUpdateClass
    {  		
- 		public const string HashString = "4a29cca68d826e6fff63eb7ac4b7ddff";
+		public const string HashString = "094a67db3b94cd0d27547aec22b7f9fa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -68,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "סוג יבוםן לתביעה",
+			      				    LocalDefaultText =  "סוג יבואן לתביעה",
 			      				    DefaultText =  "Importer Type For Claim ",
 			      				    Code =  "4b8d",
 			      				    Name =  "Customs.ImporterTypeForClaim Query Group",
@@ -265,10 +265,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם םנגלית",
+					  						FullLocalDefaultText =  "שם אנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם םנגלית",
+					  						ListLocalDefaultText =  "שם אנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

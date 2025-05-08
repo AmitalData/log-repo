@@ -19,7 +19,6 @@ using Simplog.Server.Infrastructure.DataContracts;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -99,16 +98,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
-
-        public void CustomPMToPOCO(CustomsGeneralPM entityPM, CustomsGeneral entityPOCO)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CustomPOCOToPM(CustomsGeneralPM entityPM, CustomsGeneral entityPOCO)
-        {
-            throw new NotImplementedException();
-        }
-    }
+			  
+   }
 }
 	 

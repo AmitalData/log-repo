@@ -26,8 +26,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "12b6ddc530439c24bd8030de291b8a5e";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "12f0486203da68d09ce5fc29d1597e8a";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -85,10 +85,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsTabsHidden =  false,
 			      				    HashString =  LedgerTransactionUpdateClass.HashString,
 			                    
-            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes,contextTenant);
 		}
 	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes,int contextTenant)
 	    {
 	         
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -155,7 +155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -222,7 +222,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -292,7 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -362,7 +362,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -409,11 +409,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך יצירה",
+					  						FullLocalDefaultTextBack_up =  "תאריך יצירה",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך יצירה",
+					  						ListLocalDefaultTextBack_up =  "תאריך יצירה",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -430,7 +430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -501,7 +501,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -572,7 +572,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -619,11 +619,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך חשבונםי",
+					  						FullLocalDefaultTextBack_up =  "תאריך חשבונאי",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך חשבונםי",
+					  						ListLocalDefaultTextBack_up =  "תאריך חשבונאי",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -640,7 +640,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -687,11 +687,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentDate",
 					  						DefaultText =  "Document Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך םסמכתם",
+					  						FullLocalDefaultTextBack_up =  "תאריך אסמכתא",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXodee15vXqteQIg==",
 					  						ListFieldLable =  "DocumentDateListLable",
 					  						ListLableDefaultText =  "Document Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך םסמכתם",
+					  						ListLocalDefaultTextBack_up =  "תאריך אסמכתא",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXodee15vXqteQIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -708,7 +708,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -755,11 +755,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
 					  						DefaultText =  "Due Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך פרעון",
+					  						FullLocalDefaultTextBack_up =  "תאריך פרעון",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqNei15XXnyI=",
 					  						ListFieldLable =  "DueDateListLable",
 					  						ListLableDefaultText =  "Due Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך פרעון",
+					  						ListLocalDefaultTextBack_up =  "תאריך פרעון",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqNei15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -776,7 +776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -846,7 +846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -916,7 +916,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -987,7 +987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1057,7 +1057,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1127,7 +1127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1197,7 +1197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1244,11 +1244,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference1",
 					  						DefaultText =  "Reference1",
-					  						FullLocalDefaultTextBack_up =  "םסמכתם 1",
+					  						FullLocalDefaultTextBack_up =  "אסמכתא 1",
 					  						FullLocalDefaultText =  "BS64:IteQ16HXnteb16rXkCAxIg==",
 					  						ListFieldLable =  "Reference1ListLable",
 					  						ListLableDefaultText =  "Reference1",
-					  						ListLocalDefaultTextBack_up =  "םסמכתם 1",
+					  						ListLocalDefaultTextBack_up =  "אסמכתא 1",
 					  						ListLocalDefaultText =  "BS64:IteQ16HXnteb16rXkCAxIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1265,7 +1265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1312,11 +1312,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference2",
 					  						DefaultText =  "Reference2",
-					  						FullLocalDefaultTextBack_up =  "םסמכתם 2",
+					  						FullLocalDefaultTextBack_up =  "אסמכתא 2",
 					  						FullLocalDefaultText =  "BS64:IteQ16HXnteb16rXkCAyIg==",
 					  						ListFieldLable =  "Reference2ListLable",
 					  						ListLableDefaultText =  "Reference2",
-					  						ListLocalDefaultTextBack_up =  "םסמכתם 2",
+					  						ListLocalDefaultTextBack_up =  "אסמכתא 2",
 					  						ListLocalDefaultText =  "BS64:IteQ16HXnteb16rXkCAyIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1333,7 +1333,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1380,11 +1380,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference3",
 					  						DefaultText =  "Reference3",
-					  						FullLocalDefaultTextBack_up =  "םסמכתם 3",
+					  						FullLocalDefaultTextBack_up =  "אסמכתא 3",
 					  						FullLocalDefaultText =  "BS64:IteQ16HXnteb16rXkCAzIg==",
 					  						ListFieldLable =  "Reference3ListLable",
 					  						ListLableDefaultText =  "Reference3",
-					  						ListLocalDefaultTextBack_up =  "םסמכתם 3",
+					  						ListLocalDefaultTextBack_up =  "אסמכתא 3",
 					  						ListLocalDefaultText =  "BS64:IteQ16HXnteb16rXkCAzIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1401,7 +1401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1471,7 +1471,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1542,7 +1542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1588,11 +1588,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Journal No. / Reference / Amount",
-					  						FullLocalDefaultTextBack_up =  "מס פקודת יומן/ םסמכתם/ סכום",
+					  						FullLocalDefaultTextBack_up =  "מס פקודת יומן/ אסמכתא/ סכום",
 					  						FullLocalDefaultText =  "BS64:Itee16Eg16TXp9eV15PXqiDXmdeV157Xny8g15DXodee15vXqteQLyDXodeb15XXnSI=",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Journal No. / Reference / Amount",
-					  						ListLocalDefaultTextBack_up =  "מס פקודת יומן/ םסמכתם/ סכום",
+					  						ListLocalDefaultTextBack_up =  "מס פקודת יומן/ אסמכתא/ סכום",
 					  						ListLocalDefaultText =  "BS64:Itee16Eg16TXp9eV15PXqiDXmdeV157Xny8g15DXodee15vXqteQLyDXodeb15XXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1609,7 +1609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1677,7 +1677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1745,7 +1745,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1813,7 +1813,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1881,7 +1881,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -1952,7 +1952,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2020,7 +2020,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2090,7 +2090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2160,7 +2160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2209,11 +2209,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmountToReconcile",
 					  						DefaultText =  "Amount to Reconcile",
-					  						FullLocalDefaultTextBack_up =  "סכום להתםמה",
+					  						FullLocalDefaultTextBack_up =  "סכום להתאמה",
 					  						FullLocalDefaultText =  "BS64:Iteh15vXldedINec15TXqteQ157XlCI=",
 					  						ListFieldLable =  "AmountToReconcileListLable",
 					  						ListLableDefaultText =  "Amount to Reconcile",
-					  						ListLocalDefaultTextBack_up =  "סכום להתםמה",
+					  						ListLocalDefaultTextBack_up =  "סכום להתאמה",
 					  						ListLocalDefaultText =  "BS64:Iteh15vXldedINec15TXqteQ157XlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -2230,7 +2230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2298,7 +2298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2366,7 +2366,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2413,11 +2413,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsReconciled",
 					  						DefaultText =  "Is Reconciled",
-					  						FullLocalDefaultTextBack_up =  "בוצעה התםמה",
+					  						FullLocalDefaultTextBack_up =  "בוצעה התאמה",
 					  						FullLocalDefaultText =  "BS64:IteR15XXptei15Qg15TXqteQ157XlCI=",
 					  						ListFieldLable =  "IsReconciledListLable",
 					  						ListLableDefaultText =  "Is Reconciled",
-					  						ListLocalDefaultTextBack_up =  "בוצעה התםמה",
+					  						ListLocalDefaultTextBack_up =  "בוצעה התאמה",
 					  						ListLocalDefaultText =  "BS64:IteR15XXptei15Qg15TXqteQ157XlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -2434,7 +2434,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2496,7 +2496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2563,7 +2563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2629,7 +2629,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2695,7 +2695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2762,7 +2762,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2829,7 +2829,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2895,7 +2895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -2941,11 +2941,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExternalReconcile",
 					  						DefaultText =  "Is External Reconcile",
-					  						FullLocalDefaultTextBack_up =  "מותםם חיצונית",
+					  						FullLocalDefaultTextBack_up =  "מותאם חיצונית",
 					  						FullLocalDefaultText =  "BS64:Itee15XXqteQ150g15fXmdem15XXoNeZ16oi",
 					  						ListFieldLable =  "IsExternalReconcileListLable",
 					  						ListLableDefaultText =  "Is External Reconcile",
-					  						ListLocalDefaultTextBack_up =  "מותםם חיצונית",
+					  						ListLocalDefaultTextBack_up =  "מותאם חיצונית",
 					  						ListLocalDefaultText =  "BS64:Itee15XXqteQ150g15fXmdem15XXoNeZ16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -2962,7 +2962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3008,11 +3008,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InReconcileProgress",
 					  						DefaultText =  "In Reconcile Progress",
-					  						FullLocalDefaultTextBack_up =  "התםמה בתהליך",
+					  						FullLocalDefaultTextBack_up =  "התאמה בתהליך",
 					  						FullLocalDefaultText =  "BS64:IteU16rXkNee15Qg15HXqteU15zXmdeaIg==",
 					  						ListFieldLable =  "InReconcileProgressListLable",
 					  						ListLableDefaultText =  "In Reconcile Progress",
-					  						ListLocalDefaultTextBack_up =  "התםמה בתהליך",
+					  						ListLocalDefaultTextBack_up =  "התאמה בתהליך",
 					  						ListLocalDefaultText =  "BS64:IteU16rXkNee15Qg15HXqteU15zXmdeaIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3029,7 +3029,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3099,7 +3099,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3145,11 +3145,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcileRemarks",
 					  						DefaultText =  "Reconcile Remarks",
-					  						FullLocalDefaultTextBack_up =  "הערות להםתמה",
+					  						FullLocalDefaultTextBack_up =  "הערות להאתמה",
 					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXlNeQ16rXnteUIg==",
 					  						ListFieldLable =  "ReconcileRemarksListLable",
 					  						ListLableDefaultText =  "Reconcile Remarks",
-					  						ListLocalDefaultTextBack_up =  "הערות להםתמה",
+					  						ListLocalDefaultTextBack_up =  "הערות להאתמה",
 					  						ListLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXlNeQ16rXnteUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3166,7 +3166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3228,7 +3228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3295,7 +3295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3363,7 +3363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3431,7 +3431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3491,7 +3491,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3551,7 +3551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3598,11 +3598,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentReconciledAmount",
 					  						DefaultText =  "16",
-					  						FullLocalDefaultTextBack_up =  "סכום תוםם תשלום",
+					  						FullLocalDefaultTextBack_up =  "סכום תואם תשלום",
 					  						FullLocalDefaultText =  "BS64:Iteh15vXldedINeq15XXkNedINeq16nXnNeV150i",
 					  						ListFieldLable =  "PaymentReconciledAmountListLable",
 					  						ListLableDefaultText =  "Payment Reconciled Amount",
-					  						ListLocalDefaultTextBack_up =  "סכום תוםם תשלום",
+					  						ListLocalDefaultTextBack_up =  "סכום תואם תשלום",
 					  						ListLocalDefaultText =  "BS64:Iteh15vXldedINeq15XXkNedINeq16nXnNeV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3619,7 +3619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3665,11 +3665,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InProgressExternalReconcile",
 					  						DefaultText =  "In External Reconcile Progress",
-					  						FullLocalDefaultTextBack_up =  "התםמה חצונית בתהליך",
+					  						FullLocalDefaultTextBack_up =  "התאמה חצונית בתהליך",
 					  						FullLocalDefaultText =  "BS64:IteU16rXkNee15Qg15fXpteV16DXmdeqINeR16rXlNec15nXmiI=",
 					  						ListFieldLable =  "InProgressExternalReconcileListLable",
 					  						ListLableDefaultText =  "In External Reconcile Progress",
-					  						ListLocalDefaultTextBack_up =  "התםמה חצונית בתהליך",
+					  						ListLocalDefaultTextBack_up =  "התאמה חצונית בתהליך",
 					  						ListLocalDefaultText =  "BS64:IteU16rXkNee15Qg15fXpteV16DXmdeqINeR16rXlNec15nXmiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3686,7 +3686,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3755,7 +3755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3815,7 +3815,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3881,7 +3881,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -3926,11 +3926,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsForeignAmountCreditPos",
 					  						DefaultText =  "IsForeignAmountCreditPos",
-					  						FullLocalDefaultTextBack_up =  "םשרםי בסכום זר חיובי",
+					  						FullLocalDefaultTextBack_up =  "אשראי בסכום זר חיובי",
 					  						FullLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg15HXodeb15XXnSDXlteoINeX15nXldeR15ki",
 					  						ListFieldLable =  "IsForeignAmountCreditPosListLable",
 					  						ListLableDefaultText =  "IsForeignAmountCreditPos",
-					  						ListLocalDefaultTextBack_up =  "םשרםי בסכום זר חיובי",
+					  						ListLocalDefaultTextBack_up =  "אשראי בסכום זר חיובי",
 					  						ListLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg15HXodeb15XXnSDXlteoINeX15nXldeR15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3947,7 +3947,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4013,7 +4013,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4058,11 +4058,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsLocalAmountCreditPos",
 					  						DefaultText =  "IsLocalAmountCreditPos",
-					  						FullLocalDefaultTextBack_up =  "םשרםי סכום מקומי חיובי",
+					  						FullLocalDefaultTextBack_up =  "אשראי סכום מקומי חיובי",
 					  						FullLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg16HXm9eV150g157Xp9eV157XmSDXl9eZ15XXkdeZIg==",
 					  						ListFieldLable =  "IsLocalAmountCreditPosListLable",
 					  						ListLableDefaultText =  "IsLocalAmountCreditPos",
-					  						ListLocalDefaultTextBack_up =  "םשרםי סכום מקומי חיובי",
+					  						ListLocalDefaultTextBack_up =  "אשראי סכום מקומי חיובי",
 					  						ListLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg16HXm9eV150g157Xp9eV157XmSDXl9eZ15XXkdeZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4079,7 +4079,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4145,7 +4145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4211,7 +4211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4256,11 +4256,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IconCode",
 					  						DefaultText =  "IconCode",
-					  						FullLocalDefaultTextBack_up =  "קוד םייקון",
+					  						FullLocalDefaultTextBack_up =  "קוד אייקון",
 					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXkNeZ15nXp9eV158i",
 					  						ListFieldLable =  "IconCodeListLable",
 					  						ListLableDefaultText =  "IconCode",
-					  						ListLocalDefaultTextBack_up =  "קוד םייקון",
+					  						ListLocalDefaultTextBack_up =  "קוד אייקון",
 					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeZ15nXp9eV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4277,7 +4277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4322,11 +4322,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmountCreditWithSign",
 					  						DefaultText =  "ForeignAmountCreditWithSign",
-					  						FullLocalDefaultTextBack_up =  "םשרםי בסכום זר",
+					  						FullLocalDefaultTextBack_up =  "אשראי בסכום זר",
 					  						FullLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg15HXodeb15XXnSDXlteoIg==",
 					  						ListFieldLable =  "ForeignAmountCreditWithSignListLable",
 					  						ListLableDefaultText =  "ForeignAmountCreditWithSign",
-					  						ListLocalDefaultTextBack_up =  "םשרםי בסכום זר",
+					  						ListLocalDefaultTextBack_up =  "אשראי בסכום זר",
 					  						ListLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg15HXodeb15XXnSDXlteoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4343,7 +4343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4409,7 +4409,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4479,7 +4479,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4549,7 +4549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4617,7 +4617,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4662,11 +4662,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentValueDate",
 					  						DefaultText =  "PaymentValueDate",
-					  						FullLocalDefaultTextBack_up =  "תםריך ערך תשלום",
+					  						FullLocalDefaultTextBack_up =  "תאריך ערך תשלום",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXqNeaINeq16nXnNeV150i",
 					  						ListFieldLable =  "PaymentValueDateListLable",
 					  						ListLableDefaultText =  "PaymentValueDate",
-					  						ListLocalDefaultTextBack_up =  "תםריך ערך תשלום",
+					  						ListLocalDefaultTextBack_up =  "תאריך ערך תשלום",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXqNeaINeq16nXnNeV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4683,7 +4683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4749,7 +4749,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4816,7 +4816,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4884,7 +4884,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -4951,7 +4951,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5018,7 +5018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5085,7 +5085,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5134,11 +5134,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecurityLevelFiltering",
 					  						DefaultText =  "Security Level Filtering",
-					  						FullLocalDefaultTextBack_up =  "סינון ברמת םבטחה",
+					  						FullLocalDefaultTextBack_up =  "סינון ברמת אבטחה",
 					  						FullLocalDefaultText =  "BS64:Iteh15nXoNeV158g15HXqNee16og15DXkdeY15fXlCI=",
 					  						ListFieldLable =  "SecurityLevelFilteringListLable",
 					  						ListLableDefaultText =  "Security Level Filtering",
-					  						ListLocalDefaultTextBack_up =  "סינון ברמת םבטחה",
+					  						ListLocalDefaultTextBack_up =  "סינון ברמת אבטחה",
 					  						ListLocalDefaultText =  "BS64:Iteh15nXoNeV158g15HXqNee16og15DXkdeY15fXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -5155,7 +5155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5223,7 +5223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5291,7 +5291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5360,7 +5360,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5388,7 +5388,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsExternalEntity",
 					  						ListPropertyPath =  "IsExternalEntity",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -5428,7 +5427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5495,7 +5494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -5543,7 +5542,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Process Start Date",
 					  						ListFieldLable =  "ProcessStartDateListLable",
 					  						ListLableDefaultText =  "Process Start Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך תחילת התהליך",
+					  						ListLocalDefaultTextBack_up =  "תאריך תחילת התהליך",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16rXl9eZ15zXqiDXlNeq15TXnNeZ15oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -5560,88 +5559,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "BankName",
-					  						ObjectTableName =  "LedgerTransaction",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  60,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  60,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BankName",
-					  						ListPropertyPath =  "BankName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "LedgerTransaction",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BankName",
-					  						DefaultText =  "Bank Name",
-					  						FullLocalDefaultTextBack_up =  "הופקד ל",
-					  						FullLocalDefaultText =  "BS64:IteU15XXpNen15Mg15wi",
-					  						ListFieldLable =  "BankNameListLable",
-					  						ListLableDefaultText =  "Bank Name",
-					  						ListLocalDefaultTextBack_up =  "הופקד ל",
-					  						ListLocalDefaultText =  "BS64:IteU15XXpNen15Mg15wi",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 	    }
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
 	    {  
-	        //FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        //FeatureRepository featureRepository = new FeatureRepository(contextTenant); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(contextTenant).ToList();
 	        QueryGroup LedgerTransactionQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "20b2", Name = "LedgerTransaction Query Group" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup LedgerTransactionQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "bbc9", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
 	        ObjectTable LedgerTransactionObjectTable = objectTables.ContainsKey("LedgerTransaction") ? objectTables["LedgerTransaction"] : null;
             if (LedgerTransactionObjectTable == null)
             {
-                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+                IWebFreightContext objectContext = WebFreightContext.GetContext(contextTenant);  
 
                 LedgerTransactionObjectTable = objectContext.ObjectTables.Where(d => d.Name == "LedgerTransaction" && d.Tenant == 0).FirstOrDefault();
             }
@@ -5654,109 +5586,109 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode LedgerTransactionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.Q.LedgerTransactions", DefaultText = @"Ledger Transactions",LocalDefaultText = "BS64:Iteq16DXldei15XXqiI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature LedgerTransactionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LedgerTransaction.Q.LedgerTransactions", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransactionFeatures.LedgerTransactions", NameTextCodeDefaultText = "LedgerTransactions", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LedgerTransactionObjectTable, addedFeatures, addedTextCodes);
+			   TextCode LedgerTransactionTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.Q.LedgerTransactions", DefaultText = @"Ledger Transactions",LocalDefaultText = "BS64:Iteq16DXldei15XXqiI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   Feature LedgerTransactionFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "LedgerTransaction.Q.LedgerTransactions", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransactionFeatures.LedgerTransactions", NameTextCodeDefaultText = "LedgerTransactions", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,LedgerTransactionObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query LedgerTransactionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LedgerTransactionTextCode_0.Id, NameTextCodeCode = LedgerTransactionTextCode_0.Code, ObjectTableName = "LedgerTransaction", Code = "LedgerTransactions",  QueryGroupCode = "20b2", IndexOrder = 0, Tenant = 0, ObjectTableId = LedgerTransactionObjectTable.Id, QuerySection = "LedgerTransaction", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LedgerTransactionFeature_0.Id,FeatureUniqeCode= LedgerTransactionFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query LedgerTransactionsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = LedgerTransactionTextCode_0.Id, NameTextCodeCode = LedgerTransactionTextCode_0.Code, ObjectTableName = "LedgerTransaction", Code = "LedgerTransactions",  QueryGroupCode = "20b2", IndexOrder = 0, Tenant = 0, ObjectTableId = LedgerTransactionObjectTable.Id, QuerySection = "LedgerTransaction", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = LedgerTransactionFeature_0.Id,FeatureUniqeCode= LedgerTransactionFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn LedgerTransactionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LedgerTransaction.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LedgerTransaction.CreateDate" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LedgerTransaction.JournalCreatedByUser" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LedgerTransaction.JournalCreatedByUser" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LedgerTransaction.AccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LedgerTransaction.AccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LedgerTransaction.AccountingDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LedgerTransaction.AccountingDate" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LedgerTransaction.DocumentDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LedgerTransaction.DocumentDate" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LedgerTransaction.DueDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LedgerTransaction.DueDate" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LedgerTransaction.LocalAmountDebit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LedgerTransaction.LocalAmountDebit" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LedgerTransaction.LocalAmountCredit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LedgerTransaction.LocalAmountCredit" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LedgerTransaction.ForeignAmountDebit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LedgerTransaction.ForeignAmountDebit" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LedgerTransaction.ForeignAmountCredit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LedgerTransaction.ForeignAmountCredit" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LedgerTransaction.ExchangeRate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LedgerTransaction.ExchangeRate" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "LedgerTransaction.Reference1" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "LedgerTransaction.Reference1" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "LedgerTransaction.Reference2" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "LedgerTransaction.Reference2" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "LedgerTransaction.Reference3" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "LedgerTransaction.Reference3" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "LedgerTransaction.OpenAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "LedgerTransaction.OpenAmount" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "LedgerTransaction.JournalNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "LedgerTransaction.JournalNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "LedgerTransaction.CurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "LedgerTransaction.CurrencyCode" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "LedgerTransaction.Source" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "LedgerTransaction.Source" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "LedgerTransaction.SourceType" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "LedgerTransaction.SourceType" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "LedgerTransaction.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "LedgerTransaction.Notes" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "LedgerTransaction.AmountToReconcile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "LedgerTransaction.AmountToReconcile" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "LedgerTransaction.Mark" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "LedgerTransaction.Mark" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencyCode" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "LedgerTransaction.IsReconciled" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "LedgerTransaction.IsReconciled" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_24 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 24, ObjectFieldCode = "LedgerTransaction.SourceNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_24 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 24, ObjectFieldCode = "LedgerTransaction.SourceNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_25 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 25, ObjectFieldCode = "LedgerTransaction.CurrencySign" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_25 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 25, ObjectFieldCode = "LedgerTransaction.CurrencySign" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_26 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 26, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencySign" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_26 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 26, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencySign" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_27 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 27, ObjectFieldCode = "LedgerTransaction.IsExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_27 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 27, ObjectFieldCode = "LedgerTransaction.IsExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_28 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 28, ObjectFieldCode = "LedgerTransaction.InReconcileProgress" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_28 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 28, ObjectFieldCode = "LedgerTransaction.InReconcileProgress" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_29 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 29, ObjectFieldCode = "LedgerTransaction.ForeignAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_29 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 29, ObjectFieldCode = "LedgerTransaction.ForeignAmount" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_30 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 30, ObjectFieldCode = "LedgerTransaction.ReconcileRemarks" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_30 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 30, ObjectFieldCode = "LedgerTransaction.ReconcileRemarks" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_31 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 31, ObjectFieldCode = "LedgerTransaction.OppositeAccountEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_31 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 31, ObjectFieldCode = "LedgerTransaction.OppositeAccountEnglishName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_32 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 32, ObjectFieldCode = "LedgerTransaction.OppositeAccountLocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_32 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 32, ObjectFieldCode = "LedgerTransaction.OppositeAccountLocalName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_33 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 33, ObjectFieldCode = "LedgerTransaction.OppositeAccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_33 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 33, ObjectFieldCode = "LedgerTransaction.OppositeAccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_34 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 34, ObjectFieldCode = "LedgerTransaction.InProgressExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_34 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 34, ObjectFieldCode = "LedgerTransaction.InProgressExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_35 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 35, ObjectFieldCode = "LedgerTransaction.CalculatedLocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_35 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 35, ObjectFieldCode = "LedgerTransaction.CalculatedLocalAmount" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn LedgerTransactionsQueryColumn_36 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 36, ObjectFieldCode = "LedgerTransaction.CalculatedForeignAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_36 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 36, ObjectFieldCode = "LedgerTransaction.CalculatedForeignAmount" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-             AdvancedQueryFilter LedgerTransactionsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.AccountingDate", PredefinedValue = "",PredefinedValue2 = null, CustomPredefined = true, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
-
-
-             AdvancedQueryFilter LedgerTransactionsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.LocalAmountDebit", PredefinedValue = "",PredefinedValue2 = null, CustomPredefined = true, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter LedgerTransactionsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.AccountingDate", PredefinedValue = "",PredefinedValue2 = null, CustomPredefined = true, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0}, addedQueryFilters,contextTenant);
 
 
-             AdvancedQueryFilter LedgerTransactionsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.LocalAmountCredit", PredefinedValue = "",PredefinedValue2 = null, CustomPredefined = true, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter LedgerTransactionsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.LocalAmountDebit", PredefinedValue = "",PredefinedValue2 = null, CustomPredefined = true, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0}, addedQueryFilters,contextTenant);
 
 
-             AdvancedQueryFilter LedgerTransactionsQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.SecurityLevelFiltering", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter LedgerTransactionsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.LocalAmountCredit", PredefinedValue = "",PredefinedValue2 = null, CustomPredefined = true, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0}, addedQueryFilters,contextTenant);
 
-			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
-			SqlBulkInsert.BulkInsert("Features", addedFeatures);
-			SqlBulkInsert.BulkInsert("Queries", addedQueries);
-			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
-			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+
+             AdvancedQueryFilter LedgerTransactionsQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.SecurityLevelFiltering", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters,contextTenant);
+
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns,contextTenant);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters,contextTenant);	 
   
 	    }
 
-	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
+	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext,int contextTenant)
 	    {   
 
 		   ObjectTable LedgerTransactionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LedgerTransaction" && d.Tenant == 0).FirstOrDefault();
@@ -5764,7 +5696,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen LedgerTransactionLedgerTransactionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LedgerTransaction.HeaderScreen", Name = "LedgerTransactionHeaderScreen", ObjectTableId = LedgerTransactionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen LedgerTransactionLedgerTransactionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LedgerTransaction.HeaderScreen", Name = "LedgerTransactionHeaderScreen", ObjectTableId = LedgerTransactionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    LedgerTransactionObjectTable.HeaderScreenId = LedgerTransactionLedgerTransactionHeaderScreenScreen0.Id;
 		    LedgerTransactionObjectTable.HeaderScreenCode = LedgerTransactionLedgerTransactionHeaderScreenScreen0.Code;
@@ -5773,28 +5705,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    }
 
-	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext,int contextTenant)
 	    {      
 	    } 
 	
-	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
 	    {  
 		   ObjectTable LedgerTransactionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LedgerTransaction" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature LedgerTransactionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable);
-		   Feature LedgerTransactionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable);
-		   Feature LedgerTransactionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable);
-		   Feature LedgerTransactionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.PackageFeature", NameTextCodeDefaultText = "LedgerTransaction Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable); 
+		   Feature LedgerTransactionFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable,contextTenant);
+		   Feature LedgerTransactionFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable,contextTenant);
+		   Feature LedgerTransactionFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable,contextTenant);
+		   Feature LedgerTransactionFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.PackageFeature", NameTextCodeDefaultText = "LedgerTransaction Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable,contextTenant); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature LedgerTransactionFeature_SalesmanLTRP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SalesmanLTRP", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.SalesmanLTRP", NameTextCodeDefaultText = @"Ledger Transaction Report Salesman Restrictions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable);
+		   Feature LedgerTransactionFeature_SalesmanLTRP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SalesmanLTRP", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, NameTextCodeCode = "LedgerTransaction.Features.SalesmanLTRP", NameTextCodeDefaultText = @"Ledger Transaction Report Salesman Restrictions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LedgerTransactionObjectTable,contextTenant);
 
    
 	    
 		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses,int contextTenant)
 	    {   
 			ObjectTable LedgerTransactionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LedgerTransaction" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
@@ -5812,7 +5744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = LedgerTransactionObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
@@ -5830,73 +5762,73 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = LedgerTransactionObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
 	    }
 	
-	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext,int contextTenant)
 	    {  
 	    }
 
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
 	    {  
 
 		   		   //--------------> Additional TextCodes <--------------\\
 
  		   ObjectTable LedgerTransactionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LedgerTransaction" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludeRelatedCurrenciesAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludeRelatedCurrenciesAccount", DefaultText = "Include Related Currencies Account",LocalDefaultText = @"BS64:Itec15vXnNeV15wg15vXqNeY15nXodeZINek15nXpteV15wg15zXpNeZINee15jXkdeiIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludeRelatedCurrenciesAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludeRelatedCurrenciesAccount", DefaultText = "Include Related Currencies Account",LocalDefaultText = @"BS64:Itec15vXnNeV15wg15vXqNeY15nXodeZINek15nXpteV15wg15zXpNeZINee15jXkdeiIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludeChildAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludeChildAccounts", DefaultText = "Include Child Accounts",LocalDefaultText = @"BS64:Itec15vXnNeV15wg15vXqNeY15nXodeZ150g157Xp9eV16nXqNeZ150i", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludeChildAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludeChildAccounts", DefaultText = "Include Child Accounts",LocalDefaultText = @"BS64:Itec15vXnNeV15wg15vXqNeY15nXodeZ150g157Xp9eV16nXqNeZ150i", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAgingMonthNotSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.AgingMonthNotSet", DefaultText = "Number of aging months is not set in Full Accounting Settings",LocalDefaultText = @"BS64:IteZ16kg15zXlNeS15PXmdeoINee16HXpNeoINeX15XXk9ep15kg15LXmdeV15wg15HXlNeS15PXqNeV16og157Xoteo15vXqiI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAgingMonthNotSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.AgingMonthNotSet", DefaultText = "Number of aging months is not set in Full Accounting Settings",LocalDefaultText = @"BS64:IteZ16kg15zXlNeS15PXmdeoINee16HXpNeoINeX15XXk9ep15kg15LXmdeV15wg15HXlNeS15PXqNeV16og157Xoteo15vXqiI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "From Ref. Date",LocalDefaultText = @"BS64:Itee16rXkNeo15nXmiDXkNeh157Xm9eq15Ai", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "From Ref. Date",LocalDefaultText = @"BS64:Itee16rXkNeo15nXmiDXkNeh157Xm9eq15Ai", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "To Ref. date",LocalDefaultText = @"BS64:Itei15Mg16rXkNeo15nXmiDXkNeh157Xm9eq15Ai", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "To Ref. date",LocalDefaultText = @"BS64:Itei15Mg16rXkNeo15nXmiDXkNeh157Xm9eq15Ai", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Bank", DefaultText = "Bank",LocalDefaultText = @"BS64:IteR16DXpyI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Bank", DefaultText = "Bank",LocalDefaultText = @"BS64:IteR16DXpyI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.All", DefaultText = "All",LocalDefaultText = @"BS64:IteU15vXnCI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.All", DefaultText = "All",LocalDefaultText = @"BS64:IteU15vXnCI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Open", DefaultText = "Open",LocalDefaultText = @"BS64:Itek16rXldeX15XXqiI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Open", DefaultText = "Open",LocalDefaultText = @"BS64:Itek16rXldeX15XXqiI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOClose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Close", DefaultText = "Close",LocalDefaultText = @"BS64:Iteh15LXldeo15XXqiAi", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOClose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Close", DefaultText = "Close",LocalDefaultText = @"BS64:Iteh15LXldeo15XXqiAi", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOBankOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.BankOnly", DefaultText = "Bank",LocalDefaultText = @"BS64:IteT16TXmSDXkdeg16ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOBankOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.BankOnly", DefaultText = "Bank",LocalDefaultText = @"BS64:IteT16TXmSDXkdeg16ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOGlaccountOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.GlaccountOnly", DefaultText = "Glaccount",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg16LXldepIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOGlaccountOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.GlaccountOnly", DefaultText = "Glaccount",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg16LXldepIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciliationNo", DefaultText = "Reconciliation Number",LocalDefaultText = @"BS64:Itee16HXpNeoINeU16rXkNee15Qi", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciliationNo", DefaultText = "Reconciliation Number",LocalDefaultText = @"BS64:Itee16HXpNeoINeU16rXkNee15Qi", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15DXodee15vXqteQIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15DXodee15vXqteQIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Amount", DefaultText = "Amount",LocalDefaultText = @"BS64:Iteh15vXldedIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Amount", DefaultText = "Amount",LocalDefaultText = @"BS64:Iteh15vXldedIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Type", DefaultText = "Type",LocalDefaultText = @"BS64:Iteh15XWvNeSIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Type", DefaultText = "Type",LocalDefaultText = @"BS64:Iteh15XWvNeSIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"BS64:Itee15nXldefINec16TXmSI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"BS64:Itee15nXldefINec16TXmSI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludesTransferGlaccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludesTransferGlaccount", DefaultText = "Include Transfer Glaccount",LocalDefaultText = @"BS64:Iteb15XXnNecINeb16jXmNeZ16Eg15PXl9eV15nXmdedIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOIncludesTransferGlaccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.IncludesTransferGlaccount", DefaultText = "Include Transfer Glaccount",LocalDefaultText = @"BS64:Iteb15XXnNecINeb16jXmNeZ16Eg15PXl9eV15nXmdedIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_GLAccount_LedgerTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount_LedgerTransaction", DefaultText = "Ledger Transaction",LocalDefaultText = @"Ledger Transaction", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_GLAccount_LedgerTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount_LedgerTransaction", DefaultText = "Ledger Transaction",LocalDefaultText = @"Ledger Transaction", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOneYearValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.OneYearValidation", DefaultText = "Can not be filtered for more than 365 days",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkdem16Ig15fXmdeq15XXmiDXqdecINeZ15XXqteoINeeIDM2NSDXmdee15nXnSI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOneYearValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.OneYearValidation", DefaultText = "Can not be filtered for more than 365 days",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkdem16Ig15fXmdeq15XXmiDXqdecINeZ15XXqteoINeeIDM2NSDXmdee15nXnSI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.LocalAmount", DefaultText = "Local Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeR16ki15ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.LocalAmount", DefaultText = "Local Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeR16ki15ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ForeignAmount", DefaultText = "Foreign Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeR157XmCLXliI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOForeignAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ForeignAmount", DefaultText = "Foreign Amount",LocalDefaultText = @"BS64:Iteh15vXldedINeR157XmCLXliI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Currency", DefaultText = "Currency",LocalDefaultText = @"BS64:Itee15jXkdeiIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Currency", DefaultText = "Currency",LocalDefaultText = @"BS64:Itee15jXkdeiIg==", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Only", DefaultText = "Only",LocalDefaultText = @"BS64:Iteo16ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Only", DefaultText = "Only",LocalDefaultText = @"BS64:Iteo16ci", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOWithOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.WithOut", DefaultText = "WithOut",LocalDefaultText = @"BS64:Itec15zXkCI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOWithOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.WithOut", DefaultText = "WithOut",LocalDefaultText = @"BS64:Itec15zXkCI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOVatRreporting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.VatRreporting", DefaultText = "VAT Reporting",LocalDefaultText = @"BS64:IteT15XXldeXINeU157XoiLXniI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOVatRreporting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.VatRreporting", DefaultText = "VAT Reporting",LocalDefaultText = @"BS64:IteT15XXldeXINeU157XoiLXniI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciledInDraft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciledInDraft", DefaultText = "There are lines that have been reconciled, the references must be disconnected from the draft: ",LocalDefaultText = @"BS64:IteZ16nXoNedINep15XXqNeV16og16nXlNeV16rXkNee15UgLNeZ16kg15zXoNeq16cg15DXqiDXlNeQ16HXnteb16rXkNeV16og157XlNeY15nXldeY15Q6ICI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciledInDraft = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciledInDraft", DefaultText = "There are lines that have been reconciled, the references must be disconnected from the draft: ",LocalDefaultText = @"BS64:IteZ16nXoNedINep15XXqNeV16og16nXlNeV16rXkNee15UgLNeZ16kg15zXoNeq16cg15DXqiDXlNeQ16HXnteb16rXkNeV16og157XlNeY15nXldeY15Q6ICI=", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

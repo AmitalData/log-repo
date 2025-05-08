@@ -648,7 +648,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
 			 CreateAllObjectTablesMetadata(contextTenant);
 			 
- 		 
+ 
 			 this.ObjectContext.SaveChanges();
 			 this.CommonContext.SaveChanges();
 			 if(runPostDeleteProcedure)
