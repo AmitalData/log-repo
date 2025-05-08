@@ -1391,7 +1391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen InterestReportLinesByDateInterestReportLinesByDateHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReportLinesByDate.HeaderScreen", Name = "InterestReportLinesByDateHeaderScreen", ObjectTableId = InterestReportLinesByDateObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen InterestReportLinesByDateInterestReportLinesByDateHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestReportLinesByDate.HeaderScreen", Name = "InterestReportLinesByDateHeaderScreen", ObjectTableId = InterestReportLinesByDateObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    InterestReportLinesByDateObjectTable.HeaderScreenId = InterestReportLinesByDateInterestReportLinesByDateHeaderScreenScreen0.Id;
 		    InterestReportLinesByDateObjectTable.HeaderScreenCode = InterestReportLinesByDateInterestReportLinesByDateHeaderScreenScreen0.Code;

@@ -817,7 +817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TariffSettingTariffSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffSetting.HeaderScreen", Name = "TariffSettingHeaderScreen", ObjectTableId = TariffSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TariffSettingTariffSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffSetting.HeaderScreen", Name = "TariffSettingHeaderScreen", ObjectTableId = TariffSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    TariffSettingObjectTable.HeaderScreenId = TariffSettingTariffSettingHeaderScreenScreen0.Id;
 		    TariffSettingObjectTable.HeaderScreenCode = TariffSettingTariffSettingHeaderScreenScreen0.Code;
@@ -834,10 +834,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TariffSettingObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TariffSetting" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TariffSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable);
-		   Feature TariffSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable);
-		   Feature TariffSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable);
-		   Feature TariffSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.PackageFeature", NameTextCodeDefaultText = "TariffSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable);    
+		   Feature TariffSettingFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable,contextTenant);
+		   Feature TariffSettingFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable,contextTenant);
+		   Feature TariffSettingFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable,contextTenant);
+		   Feature TariffSettingFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TariffSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "TariffSetting.Features.PackageFeature", NameTextCodeDefaultText = "TariffSetting Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TariffSettingObjectTable,contextTenant);    
 	    
 		}
 

@@ -231,7 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen IntegrityCheckStatusIntegrityCheckStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "IntegrityCheckStatus.HeaderScreen", Name = "IntegrityCheckStatusHeaderScreen", ObjectTableId = IntegrityCheckStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen IntegrityCheckStatusIntegrityCheckStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "IntegrityCheckStatus.HeaderScreen", Name = "IntegrityCheckStatusHeaderScreen", ObjectTableId = IntegrityCheckStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    IntegrityCheckStatusObjectTable.HeaderScreenId = IntegrityCheckStatusIntegrityCheckStatusHeaderScreenScreen0.Id;
 		    IntegrityCheckStatusObjectTable.HeaderScreenCode = IntegrityCheckStatusIntegrityCheckStatusHeaderScreenScreen0.Code;

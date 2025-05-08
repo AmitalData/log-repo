@@ -349,7 +349,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BIFoldersPermissionBIFoldersPermissionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BIFoldersPermission.HeaderScreen", Name = "BIFoldersPermissionHeaderScreen", ObjectTableId = BIFoldersPermissionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen BIFoldersPermissionBIFoldersPermissionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BIFoldersPermission.HeaderScreen", Name = "BIFoldersPermissionHeaderScreen", ObjectTableId = BIFoldersPermissionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    BIFoldersPermissionObjectTable.HeaderScreenId = BIFoldersPermissionBIFoldersPermissionHeaderScreenScreen0.Id;
 		    BIFoldersPermissionObjectTable.HeaderScreenCode = BIFoldersPermissionBIFoldersPermissionHeaderScreenScreen0.Code;

@@ -427,7 +427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen PeriodTypePeriodTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PeriodType.HeaderScreen", Name = "PeriodTypeHeaderScreen", ObjectTableId = PeriodTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen PeriodTypePeriodTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PeriodType.HeaderScreen", Name = "PeriodTypeHeaderScreen", ObjectTableId = PeriodTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    PeriodTypeObjectTable.HeaderScreenId = PeriodTypePeriodTypeHeaderScreenScreen0.Id;
 		    PeriodTypeObjectTable.HeaderScreenCode = PeriodTypePeriodTypeHeaderScreenScreen0.Code;

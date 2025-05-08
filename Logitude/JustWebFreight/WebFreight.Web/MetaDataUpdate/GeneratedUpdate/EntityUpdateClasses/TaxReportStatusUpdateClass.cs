@@ -403,7 +403,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TaxReportStatusTaxReportStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxReportStatus.HeaderScreen", Name = "TaxReportStatusHeaderScreen", ObjectTableId = TaxReportStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TaxReportStatusTaxReportStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TaxReportStatus.HeaderScreen", Name = "TaxReportStatusHeaderScreen", ObjectTableId = TaxReportStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    TaxReportStatusObjectTable.HeaderScreenId = TaxReportStatusTaxReportStatusHeaderScreenScreen0.Id;
 		    TaxReportStatusObjectTable.HeaderScreenCode = TaxReportStatusTaxReportStatusHeaderScreenScreen0.Code;

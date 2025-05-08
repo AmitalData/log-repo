@@ -391,7 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					Name = "EmployeeGroupLineEditButtonsGroup",
 					ObjectTableId = EmployeeGroupLineObjectTable.Id,
 					Tenant = 0
-				}, menuButtonGroupRepository, tenantMenuButtonGroups); 
+				}, menuButtonGroupRepository, tenantMenuButtonGroups,contextTenant); 
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)

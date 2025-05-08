@@ -292,7 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TMDayOffTypeTMDayOffTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMDayOffType.HeaderScreen", Name = "TMDayOffTypeHeaderScreen", ObjectTableId = TMDayOffTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TMDayOffTypeTMDayOffTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMDayOffType.HeaderScreen", Name = "TMDayOffTypeHeaderScreen", ObjectTableId = TMDayOffTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    TMDayOffTypeObjectTable.HeaderScreenId = TMDayOffTypeTMDayOffTypeHeaderScreenScreen0.Id;
 		    TMDayOffTypeObjectTable.HeaderScreenCode = TMDayOffTypeTMDayOffTypeHeaderScreenScreen0.Code;

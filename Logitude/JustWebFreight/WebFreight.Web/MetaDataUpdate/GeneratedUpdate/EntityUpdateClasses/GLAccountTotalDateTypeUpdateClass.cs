@@ -235,7 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen GLAccountTotalDateTypeGLAccountTotalDateTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccountTotalDateType.HeaderScreen", Name = "GLAccountTotalDateTypeHeaderScreen", ObjectTableId = GLAccountTotalDateTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen GLAccountTotalDateTypeGLAccountTotalDateTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "GLAccountTotalDateType.HeaderScreen", Name = "GLAccountTotalDateTypeHeaderScreen", ObjectTableId = GLAccountTotalDateTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    GLAccountTotalDateTypeObjectTable.HeaderScreenId = GLAccountTotalDateTypeGLAccountTotalDateTypeHeaderScreenScreen0.Id;
 		    GLAccountTotalDateTypeObjectTable.HeaderScreenCode = GLAccountTotalDateTypeGLAccountTotalDateTypeHeaderScreenScreen0.Code;

@@ -539,17 +539,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode TicketSeverityTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketSeverity.Q.AllTicketSeverities", DefaultText = @"Ticket Severities",LocalDefaultText = null, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TicketSeverityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTICKETSEVERITIES", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.AllTicketSeverities", NameTextCodeDefaultText = "All Ticket Severities", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,TicketSeverityObjectTable, addedFeatures, addedTextCodes);
+			   Feature TicketSeverityFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLTICKETSEVERITIES", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.AllTicketSeverities", NameTextCodeDefaultText = "All Ticket Severities", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,TicketSeverityObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTicketSeveritiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketSeverityTextCode_0.Id, NameTextCodeCode = TicketSeverityTextCode_0.Code, ObjectTableName = "TicketSeverity", Code = "All Ticket Severities",  QueryGroupCode = "TSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketSeverityObjectTable.Id, QuerySection = "TicketSeverity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketSeverityFeature_0.Id,FeatureUniqeCode= TicketSeverityFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AllTicketSeveritiesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TicketSeverityTextCode_0.Id, NameTextCodeCode = TicketSeverityTextCode_0.Code, ObjectTableName = "TicketSeverity", Code = "All Ticket Severities",  QueryGroupCode = "TSQG", IndexOrder = 0, Tenant = 0, ObjectTableId = TicketSeverityObjectTable.Id, QuerySection = "TicketSeverity", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TicketSeverityFeature_0.Id,FeatureUniqeCode= TicketSeverityFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn AllTicketSeveritiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketSeveritiesQuery.Id,QueryCode = AllTicketSeveritiesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TicketSeverity.Name" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllTicketSeveritiesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketSeveritiesQuery.Id,QueryCode = AllTicketSeveritiesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TicketSeverity.Name" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllTicketSeveritiesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketSeveritiesQuery.Id,QueryCode = AllTicketSeveritiesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TicketSeverity.Inactive" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllTicketSeveritiesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTicketSeveritiesQuery.Id,QueryCode = AllTicketSeveritiesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TicketSeverity.Inactive" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
@@ -566,9 +566,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TicketSeverityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketSeverity.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketSeverityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TicketSeverityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketSeverity.HeaderScreen", Name = "Header Screen", ObjectTableId = TicketSeverityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField TicketSeverityTicketSeverityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityHeaderScreenScreen0.Id,ScreenCode = TicketSeverityHeaderScreenScreen0.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TicketSeverityTicketSeverityHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityHeaderScreenScreen0.Id,ScreenCode = TicketSeverityHeaderScreenScreen0.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    TicketSeverityObjectTable.HeaderScreenId = TicketSeverityHeaderScreenScreen0.Id;
 		    TicketSeverityObjectTable.HeaderScreenCode = TicketSeverityHeaderScreenScreen0.Code;
@@ -576,11 +576,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen TicketSeverityGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketSeverity.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TicketSeverityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen TicketSeverityGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TicketSeverity.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TicketSeverityObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TicketSeverityTicketSeverityGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TicketSeverityGeneralTabScreenScreen1.Id,ScreenCode = TicketSeverityGeneralTabScreenScreen1.Code, ObjectFieldCode = "TicketSeverity.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	            
 
 	    }
@@ -591,19 +591,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TicketSeverityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketSeverity" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TicketSeverityGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketSeverity.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TicketSeverityGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketSeverity.Tab.General", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketSeverityObjectTable);
+			   Feature TicketSeverityGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketSeverity.Tab.General", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketSeverityObjectTable,contextTenant);
  
                  
 			   TextCode TicketSeverityEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TicketSeverity.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TicketSeverityEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketSeverity.Tab.Events", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketSeverityObjectTable);
+			   Feature TicketSeverityEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TicketSeverity.Tab.Events", ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TicketSeverityObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TSGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketSeverityGeneralFeature_TH0.Id,FeatureUniqeCode = TicketSeverityGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TicketSeverityObjectTable.Id, TabNameTextCodeId = TicketSeverityGeneralTextCode_TH0.Id, TabNameTextCodeCode = TicketSeverityGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TSGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketSeverityGeneralFeature_TH0.Id,FeatureUniqeCode = TicketSeverityGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TicketSeverityObjectTable.Id, TabNameTextCodeId = TicketSeverityGeneralTextCode_TH0.Id, TabNameTextCodeCode = TicketSeverityGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketSeverityEventsFeature_TH1.Id,FeatureUniqeCode = TicketSeverityEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketSeverityObjectTable.Id, TabNameTextCodeId = TicketSeverityEventsTextCode_TH1.Id, TabNameTextCodeCode = TicketSeverityEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TSEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TicketSeverityEventsFeature_TH1.Id,FeatureUniqeCode = TicketSeverityEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TicketSeverityObjectTable.Id, TabNameTextCodeId = TicketSeverityEventsTextCode_TH1.Id, TabNameTextCodeCode = TicketSeverityEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -611,10 +611,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TicketSeverityObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TicketSeverity" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TicketSeverityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable);
-		   Feature TicketSeverityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable);
-		   Feature TicketSeverityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable);
-		   Feature TicketSeverityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.PackageFeature", NameTextCodeDefaultText = "TicketSeverity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable);    
+		   Feature TicketSeverityFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable,contextTenant);
+		   Feature TicketSeverityFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable,contextTenant);
+		   Feature TicketSeverityFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable,contextTenant);
+		   Feature TicketSeverityFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TicketSeverityObjectTable.Id, Tenant = 0, NameTextCodeCode = "TicketSeverity.Features.PackageFeature", NameTextCodeDefaultText = "TicketSeverity Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TicketSeverityObjectTable,contextTenant);    
 	    
 		}
 

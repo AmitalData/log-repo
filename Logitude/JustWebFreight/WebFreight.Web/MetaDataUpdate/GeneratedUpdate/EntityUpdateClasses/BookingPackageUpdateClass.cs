@@ -1994,7 +1994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BookingPackageBookingPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BookingPackage.HeaderScreen", Name = "BookingPackageHeaderScreen", ObjectTableId = BookingPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen BookingPackageBookingPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BookingPackage.HeaderScreen", Name = "BookingPackageHeaderScreen", ObjectTableId = BookingPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    BookingPackageObjectTable.HeaderScreenId = BookingPackageBookingPackageHeaderScreenScreen0.Id;
 		    BookingPackageObjectTable.HeaderScreenCode = BookingPackageBookingPackageHeaderScreenScreen0.Code;

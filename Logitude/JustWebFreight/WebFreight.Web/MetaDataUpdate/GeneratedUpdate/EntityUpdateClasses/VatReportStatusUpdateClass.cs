@@ -404,7 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen VatReportStatusVatReportStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "VatReportStatus.HeaderScreen", Name = "VatReportStatusHeaderScreen", ObjectTableId = VatReportStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen VatReportStatusVatReportStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "VatReportStatus.HeaderScreen", Name = "VatReportStatusHeaderScreen", ObjectTableId = VatReportStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    VatReportStatusObjectTable.HeaderScreenId = VatReportStatusVatReportStatusHeaderScreenScreen0.Id;
 		    VatReportStatusObjectTable.HeaderScreenCode = VatReportStatusVatReportStatusHeaderScreenScreen0.Code;

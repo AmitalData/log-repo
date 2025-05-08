@@ -489,7 +489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChequeCounterSerial.HeaderScreen", Name = "ChequeCounterSerialHeaderScreen", ObjectTableId = ChequeCounterSerialObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChequeCounterSerial.HeaderScreen", Name = "ChequeCounterSerialHeaderScreen", ObjectTableId = ChequeCounterSerialObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    ChequeCounterSerialObjectTable.HeaderScreenId = ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0.Id;
 		    ChequeCounterSerialObjectTable.HeaderScreenCode = ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0.Code;

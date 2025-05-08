@@ -832,7 +832,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen SupportMailboxSupportMailboxHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SupportMailbox.HeaderScreen", Name = "SupportMailboxHeaderScreen", ObjectTableId = SupportMailboxObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen SupportMailboxSupportMailboxHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SupportMailbox.HeaderScreen", Name = "SupportMailboxHeaderScreen", ObjectTableId = SupportMailboxObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    SupportMailboxObjectTable.HeaderScreenId = SupportMailboxSupportMailboxHeaderScreenScreen0.Id;
 		    SupportMailboxObjectTable.HeaderScreenCode = SupportMailboxSupportMailboxHeaderScreenScreen0.Code;
@@ -849,10 +849,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable SupportMailboxObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SupportMailbox" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature SupportMailboxFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable);
-		   Feature SupportMailboxFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable);
-		   Feature SupportMailboxFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable);
-		   Feature SupportMailboxFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.PackageFeature", NameTextCodeDefaultText = "SupportMailbox Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable);    
+		   Feature SupportMailboxFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable,contextTenant);
+		   Feature SupportMailboxFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable,contextTenant);
+		   Feature SupportMailboxFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable,contextTenant);
+		   Feature SupportMailboxFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SupportMailboxObjectTable.Id, Tenant = 0, NameTextCodeCode = "SupportMailbox.Features.PackageFeature", NameTextCodeDefaultText = "SupportMailbox Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SupportMailboxObjectTable,contextTenant);    
 	    
 		}
 

@@ -433,7 +433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ARPaymentChequeStatusARPaymentChequeStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARPaymentChequeStatus.HeaderScreen", Name = "ARPaymentChequeStatusHeaderScreen", ObjectTableId = ARPaymentChequeStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ARPaymentChequeStatusARPaymentChequeStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARPaymentChequeStatus.HeaderScreen", Name = "ARPaymentChequeStatusHeaderScreen", ObjectTableId = ARPaymentChequeStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    ARPaymentChequeStatusObjectTable.HeaderScreenId = ARPaymentChequeStatusARPaymentChequeStatusHeaderScreenScreen0.Id;
 		    ARPaymentChequeStatusObjectTable.HeaderScreenCode = ARPaymentChequeStatusARPaymentChequeStatusHeaderScreenScreen0.Code;

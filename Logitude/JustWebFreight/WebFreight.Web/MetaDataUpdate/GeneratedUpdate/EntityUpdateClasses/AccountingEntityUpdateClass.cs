@@ -295,7 +295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen AccountingEntityAccountingEntityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingEntity.HeaderScreen", Name = "AccountingEntityHeaderScreen", ObjectTableId = AccountingEntityObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen AccountingEntityAccountingEntityHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AccountingEntity.HeaderScreen", Name = "AccountingEntityHeaderScreen", ObjectTableId = AccountingEntityObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    AccountingEntityObjectTable.HeaderScreenId = AccountingEntityAccountingEntityHeaderScreenScreen0.Id;
 		    AccountingEntityObjectTable.HeaderScreenCode = AccountingEntityAccountingEntityHeaderScreenScreen0.Code;

@@ -26,9 +26,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
- 		public const string HashString = "fe53092851e9f5ed86172418507d6e13";
+		public const string HashString = "805ea8519f01eb19528c30a61d4eead8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -2439,7 +2439,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyCode",
-					  						DefaultText = "Currency Code",
+					  						DefaultText =  "Currency Code",
 					  						FullLocalDefaultText =  "מטבע",
 					  						ListFieldLable =  "CurrencyCodeListLable",
 					  						ListLableDefaultText =  "Currency Code",
@@ -3098,7 +3098,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 	    }
 
@@ -3126,41 +3126,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode BankAccountTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.Q.AllBankAccounts", DefaultText = @"All bank accounts",LocalDefaultText = "כל חשבונות הבנק", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature BankAccountFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Q.AllBankAccounts", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.AllBankAccounts", NameTextCodeDefaultText = "AllBankAccounts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,BankAccountObjectTable, addedFeatures, addedTextCodes);
+			   Feature BankAccountFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Q.AllBankAccounts", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.AllBankAccounts", NameTextCodeDefaultText = "AllBankAccounts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,BankAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBankAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankAccountTextCode_0.Id, NameTextCodeCode = BankAccountTextCode_0.Code, ObjectTableName = "BankAccount", Code = "AllBankAccounts",  QueryGroupCode = "9b17", IndexOrder = 0, Tenant = 0, ObjectTableId = BankAccountObjectTable.Id, QuerySection = "BankAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankAccountFeature_0.Id,FeatureUniqeCode= BankAccountFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllBankAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = BankAccountTextCode_0.Id, NameTextCodeCode = BankAccountTextCode_0.Code, ObjectTableName = "BankAccount", Code = "AllBankAccounts",  QueryGroupCode = "9b17", IndexOrder = 0, Tenant = 0, ObjectTableId = BankAccountObjectTable.Id, QuerySection = "BankAccount", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = BankAccountFeature_0.Id,FeatureUniqeCode= BankAccountFeature_0.FeatureUniqeCode, DefaultSortName = "EnglishName", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankAccount.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "BankAccount.EnglishName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
- 			// QueryColumn AllBankAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.FactoringBank" , ColumnWidth = 100 }, addedQueryColumns);
- 
-			 QueryColumn AllBankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.AccountNumber" , ColumnWidth = 120 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "BankAccount.FactoringBank" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankAccount.BankId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "BankAccount.AccountNumber" , ColumnWidth = 120 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankAccount.GLAccountNumber" , ColumnWidth = 142 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "BankAccount.BankId" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber" , ColumnWidth = 174 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "BankAccount.GLAccountNumber" , ColumnWidth = 142 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankAccount.BankCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber" , ColumnWidth = 174 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankAccount.BranchNumber" , ColumnWidth = 136 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "BankAccount.BankCode" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BankAccount.DeferredGLAccountId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "BankAccount.BranchNumber" , ColumnWidth = 136 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "BankAccount.BranchAddress" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "BankAccount.DeferredGLAccountId" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBankAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "BankAccount.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBankAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "BankAccount.BranchAddress" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn AllBankAccountsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBankAccountsQuery.Id,QueryCode = AllBankAccountsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "BankAccount.Inactive" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
 			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters,contextTenant);	 
-   
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext,int contextTenant)
@@ -3171,41 +3171,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BankAccountGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen BankAccountGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.GLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.DeferredGLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.DeferredGLAccountId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BankId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BankId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BranchNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BranchNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.ChequeCounter", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.ChequeCounter", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.IBAN", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.IBAN", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.SwiftCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.SwiftCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BranchAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 3, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.BranchAddress", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 4, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountBankAccountGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.FactoringBank", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountBankAccountGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 5, ScreenId = BankAccountGeneralTabScreenScreen0.Id,ScreenCode = BankAccountGeneralTabScreenScreen0.Code, ObjectFieldCode = "BankAccount.FactoringBank", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	            
 	      
 
-	         Screen BankAccountHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.HeaderScreen", Name = "HeaderScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen BankAccountHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankAccount.HeaderScreen", Name = "HeaderScreen", ObjectTableId = BankAccountObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField BankAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.AccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.BankId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.BankId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.GLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.GLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField BankAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField BankAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = BankAccountHeaderScreenScreen1.Id,ScreenCode = BankAccountHeaderScreenScreen1.Code, ObjectFieldCode = "BankAccount.DeferedGLAccountNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    BankAccountObjectTable.HeaderScreenId = BankAccountHeaderScreenScreen1.Id;
 		    BankAccountObjectTable.HeaderScreenCode = BankAccountHeaderScreenScreen1.Code;
@@ -3220,31 +3220,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable BankAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccount" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode BankAccountGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature BankAccountGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.General", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable);
+			   Feature BankAccountGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.General", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable,contextTenant);
  
                  
 			   TextCode BankAccountBankPagesTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.TH.BankPages", DefaultText = "Bank Pages",LocalDefaultText = "דף בנק", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature BankAccountBankPagesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.BankPages", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.BankPages", NameTextCodeDefaultText = "Bank Pages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable);
+			   Feature BankAccountBankPagesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.BankPages", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.BankPages", NameTextCodeDefaultText = "Bank Pages", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable,contextTenant);
  
                  
 			   TextCode BankAccountManageRecoTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.TH.ManageReco", DefaultText = "Manage Reco",LocalDefaultText = "ניהול התאמות ", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature BankAccountManageRecoFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.ManageReco", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.ManageReco", NameTextCodeDefaultText = "Manage Reco", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable);
+			   Feature BankAccountManageRecoFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.ManageReco", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.ManageReco", NameTextCodeDefaultText = "Manage Reco", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable,contextTenant);
  
                  
 			   TextCode BankAccountEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccount.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature BankAccountEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.Event", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Event", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable);
+			   Feature BankAccountEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccount.Tab.Event", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Event", NameTextCodeDefaultText = "Event", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAGN",HtmlComponentName = "BankAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent", FeatureId = BankAccountGeneralFeature_TH0.Id,FeatureUniqeCode = BankAccountGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountGeneralTextCode_TH0.Id, TabNameTextCodeCode = BankAccountGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAGN",HtmlComponentName = "BankAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent", FeatureId = BankAccountGeneralFeature_TH0.Id,FeatureUniqeCode = BankAccountGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/BankAccount/BankAccountGeneralTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountGeneralTextCode_TH0.Id, TabNameTextCodeCode = BankAccountGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BABP",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = BankAccountBankPagesFeature_TH1.Id,FeatureUniqeCode = BankAccountBankPagesFeature_TH1.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountBankPagesTextCode_TH1.Id, TabNameTextCodeCode = BankAccountBankPagesTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BABP",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = BankAccountBankPagesFeature_TH1.Id,FeatureUniqeCode = BankAccountBankPagesFeature_TH1.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountBankPagesTextCode_TH1.Id, TabNameTextCodeCode = BankAccountBankPagesTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAMR",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = BankAccountManageRecoFeature_TH2.Id,FeatureUniqeCode = BankAccountManageRecoFeature_TH2.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountManageRecoTextCode_TH2.Id, TabNameTextCodeCode = BankAccountManageRecoTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAMR",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = BankAccountManageRecoFeature_TH2.Id,FeatureUniqeCode = BankAccountManageRecoFeature_TH2.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountManageRecoTextCode_TH2.Id, TabNameTextCodeCode = BankAccountManageRecoTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BankAccountEventsFeature_TH3.Id,FeatureUniqeCode = BankAccountEventsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountEventsTextCode_TH3.Id, TabNameTextCodeCode = BankAccountEventsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "BAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = BankAccountEventsFeature_TH3.Id,FeatureUniqeCode = BankAccountEventsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = BankAccountObjectTable.Id, TabNameTextCodeId = BankAccountEventsTextCode_TH3.Id, TabNameTextCodeCode = BankAccountEventsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -3252,14 +3252,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable BankAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccount" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BankAccountFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable);
-		   Feature BankAccountFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable);
-		   Feature BankAccountFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable);
-		   Feature BankAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.PackageFeature", NameTextCodeDefaultText = "BankAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable); 
+		   Feature BankAccountFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable,contextTenant);
+		   Feature BankAccountFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable,contextTenant);
+		   Feature BankAccountFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable,contextTenant);
+		   Feature BankAccountFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.PackageFeature", NameTextCodeDefaultText = "BankAccount Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable,contextTenant); 
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature BankAccountFeature_BANKACCOUNTMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKACCOUNTMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.BankAccountMenu", NameTextCodeDefaultText = @"Bank Accounts" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable);
+		   Feature BankAccountFeature_BANKACCOUNTMENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BANKACCOUNTMENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.BankAccountMenu", NameTextCodeDefaultText = @"Bank Accounts" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BankAccountObjectTable,contextTenant);
 
    
 	    
@@ -3359,7 +3359,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = BankAccountObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
@@ -3377,7 +3377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = BankAccountObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
 	    }
@@ -3388,7 +3388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable BankAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BankAccount" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature BankAccountFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccountReconcileMenuButton", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.ReconcileMenuButton", NameTextCodeDefaultText = "Reconcile Button", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable);
+			   Feature BankAccountFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "BankAccountReconcileMenuButton", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "BankAccount.Features.ReconcileMenuButton", NameTextCodeDefaultText = "Reconcile Button", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BankAccountObjectTable,contextTenant);
 
  
 
@@ -3400,7 +3400,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					Name = "BankAccountEditButtonsGroup",
 					ObjectTableId = BankAccountObjectTable.Id,
 					Tenant = 0
-				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+				}, menuButtonGroupRepository, tenantMenuButtonGroups,contextTenant);        
    
 			   MenuButton BankAccountMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
@@ -3419,7 +3419,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureUniqeCode = BankAccountFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes,contextTenant);
 
 	    }
 
@@ -3448,11 +3448,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode BankAccountTextCode_BankAccountsOPreventChangingToIsMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.PreventChangingToIsMultiCurrency", DefaultText = "The GLAccount is connected to a Bank Account or CashBook , you can't change the currency to is multi",LocalDefaultText = @"לא ניתן לשנות כרטיס זה לכרטיס רב מטבעי מכיוון שהוא מחובר לחשבון בנק/קופה", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankAccountTextCode_BankAccountsOCountFutureChecks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CountFutureChecks", DefaultText = "The bank has %X future checks",LocalDefaultText = @"לבנק קיימות X% המחאות עתידיות", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode BankAccountTextCode_BankAccountsOCountFutureChecks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.CountFutureChecks", DefaultText = "The bank has %X future checks",LocalDefaultText = @"לבנק קיימות X% המחאות עתידיות", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankAccountTextCode_BankAccountsOAutoRedeemed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.AutoRedeemed", DefaultText = "When the check's due date arrives, it will automatically be marked with the status ''Repaid.''",LocalDefaultText = "בהגיע תאריך ההמחאה היא תסומן אוטומטית בסטטוס ''נפרע''", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode BankAccountTextCode_BankAccountsOAutoRedeemed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.AutoRedeemed", DefaultText = "When the check's due date arrives, it will automatically be marked with the status ''Repaid.",LocalDefaultText = "בהגיע תאריך ההמחאה היא תסומן אוטומטית בסטטוס ''נפרע", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode BankAccountTextCode_BankAccountsONotAutoRedeemed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.NotAutoRedeemed", DefaultText = "These checks will not automatically be transferred to a ''paid'' status.",LocalDefaultText = "המחאות אלו לא יועברו אוטומטית לסטטוס ''נפרע''", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode BankAccountTextCode_BankAccountsONotAutoRedeemed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "BankAccounts.O.NotAutoRedeemed", DefaultText = "These checks will not automatically be transferred to a ''paid'' status.",LocalDefaultText = "המחאות אלו לא יועברו אוטומטית לסטטוס ''נפרע", ObjectTableId = BankAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

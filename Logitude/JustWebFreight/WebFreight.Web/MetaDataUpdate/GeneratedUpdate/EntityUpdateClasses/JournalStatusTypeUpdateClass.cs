@@ -427,7 +427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen JournalStatusTypeJournalStatusTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "JournalStatusType.HeaderScreen", Name = "JournalStatusTypeHeaderScreen", ObjectTableId = JournalStatusTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen JournalStatusTypeJournalStatusTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "JournalStatusType.HeaderScreen", Name = "JournalStatusTypeHeaderScreen", ObjectTableId = JournalStatusTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    JournalStatusTypeObjectTable.HeaderScreenId = JournalStatusTypeJournalStatusTypeHeaderScreenScreen0.Id;
 		    JournalStatusTypeObjectTable.HeaderScreenCode = JournalStatusTypeJournalStatusTypeHeaderScreenScreen0.Code;

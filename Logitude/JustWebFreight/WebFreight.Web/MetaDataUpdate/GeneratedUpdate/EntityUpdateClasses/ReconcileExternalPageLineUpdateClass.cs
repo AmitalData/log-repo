@@ -1244,7 +1244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ReconcileExternalPageLineReconcileExternalPageLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReconcileExternalPageLine.HeaderScreen", Name = "ReconcileExternalPageLineHeaderScreen", ObjectTableId = ReconcileExternalPageLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ReconcileExternalPageLineReconcileExternalPageLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReconcileExternalPageLine.HeaderScreen", Name = "ReconcileExternalPageLineHeaderScreen", ObjectTableId = ReconcileExternalPageLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    ReconcileExternalPageLineObjectTable.HeaderScreenId = ReconcileExternalPageLineReconcileExternalPageLineHeaderScreenScreen0.Id;
 		    ReconcileExternalPageLineObjectTable.HeaderScreenCode = ReconcileExternalPageLineReconcileExternalPageLineHeaderScreenScreen0.Code;

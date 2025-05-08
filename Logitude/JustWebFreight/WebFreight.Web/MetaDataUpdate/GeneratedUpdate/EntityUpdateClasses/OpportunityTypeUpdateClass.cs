@@ -483,17 +483,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode OpportunityTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityType.Q.AllOpportunityTypes", DefaultText = @"Opportunity Types",LocalDefaultText = null, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature OpportunityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLOPPORTUNITYTYPES", ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.AllOpportunityTypes", NameTextCodeDefaultText = "All Opportunity Types", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,OpportunityTypeObjectTable, addedFeatures, addedTextCodes);
+			   Feature OpportunityTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLOPPORTUNITYTYPES", ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.AllOpportunityTypes", NameTextCodeDefaultText = "All Opportunity Types", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,OpportunityTypeObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllOpportunityTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTypeTextCode_0.Id, NameTextCodeCode = OpportunityTypeTextCode_0.Code, ObjectTableName = "OpportunityType", Code = "All Opportunity Types",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityTypeObjectTable.Id, QuerySection = "OpportunityType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityTypeFeature_0.Id,FeatureUniqeCode= OpportunityTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AllOpportunityTypesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OpportunityTypeTextCode_0.Id, NameTextCodeCode = OpportunityTypeTextCode_0.Code, ObjectTableName = "OpportunityType", Code = "All Opportunity Types",  QueryGroupCode = "OTQG", IndexOrder = 0, Tenant = 0, ObjectTableId = OpportunityTypeObjectTable.Id, QuerySection = "OpportunityType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OpportunityTypeFeature_0.Id,FeatureUniqeCode= OpportunityTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn AllOpportunityTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpportunityTypesQuery.Id,QueryCode = AllOpportunityTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OpportunityType.Name" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllOpportunityTypesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpportunityTypesQuery.Id,QueryCode = AllOpportunityTypesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OpportunityType.Name" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllOpportunityTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpportunityTypesQuery.Id,QueryCode = AllOpportunityTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OpportunityType.InActive" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllOpportunityTypesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllOpportunityTypesQuery.Id,QueryCode = AllOpportunityTypesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OpportunityType.InActive" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
@@ -510,9 +510,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen OpportunityTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityType.HeaderScreen", Name = "Header Screen", ObjectTableId = OpportunityTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen OpportunityTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityType.HeaderScreen", Name = "Header Screen", ObjectTableId = OpportunityTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField OpportunityTypeOpportunityTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityTypeHeaderScreenScreen0.Id,ScreenCode = OpportunityTypeHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField OpportunityTypeOpportunityTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityTypeHeaderScreenScreen0.Id,ScreenCode = OpportunityTypeHeaderScreenScreen0.Code, ObjectFieldCode = "OpportunityType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    OpportunityTypeObjectTable.HeaderScreenId = OpportunityTypeHeaderScreenScreen0.Id;
 		    OpportunityTypeObjectTable.HeaderScreenCode = OpportunityTypeHeaderScreenScreen0.Code;
@@ -520,11 +520,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen OpportunityTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = OpportunityTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen OpportunityTypeGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OpportunityType.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = OpportunityTypeObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField OpportunityTypeOpportunityTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityTypeGeneralTabScreenScreen1.Id,ScreenCode = OpportunityTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField OpportunityTypeOpportunityTypeGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = OpportunityTypeGeneralTabScreenScreen1.Id,ScreenCode = OpportunityTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityType.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField OpportunityTypeOpportunityTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityTypeGeneralTabScreenScreen1.Id,ScreenCode = OpportunityTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField OpportunityTypeOpportunityTypeGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = OpportunityTypeGeneralTabScreenScreen1.Id,ScreenCode = OpportunityTypeGeneralTabScreenScreen1.Code, ObjectFieldCode = "OpportunityType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	            
 
 	    }
@@ -535,19 +535,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable OpportunityTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode OpportunityTypeGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityType.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature OpportunityTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityType.Tab.General", ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpportunityTypeObjectTable);
+			   Feature OpportunityTypeGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityType.Tab.General", ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpportunityTypeObjectTable,contextTenant);
  
                  
 			   TextCode OpportunityTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpportunityType.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature OpportunityTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityType.Tab.Events", ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpportunityTypeObjectTable);
+			   Feature OpportunityTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OpportunityType.Tab.Events", ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,OpportunityTypeObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OTGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityTypeGeneralFeature_TH0.Id,FeatureUniqeCode = OpportunityTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = OpportunityTypeObjectTable.Id, TabNameTextCodeId = OpportunityTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = OpportunityTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OTGE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityTypeGeneralFeature_TH0.Id,FeatureUniqeCode = OpportunityTypeGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = OpportunityTypeObjectTable.Id, TabNameTextCodeId = OpportunityTypeGeneralTextCode_TH0.Id, TabNameTextCodeCode = OpportunityTypeGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityTypeEventsFeature_TH1.Id,FeatureUniqeCode = OpportunityTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityTypeObjectTable.Id, TabNameTextCodeId = OpportunityTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = OpportunityTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "OTEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = OpportunityTypeEventsFeature_TH1.Id,FeatureUniqeCode = OpportunityTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = OpportunityTypeObjectTable.Id, TabNameTextCodeId = OpportunityTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = OpportunityTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -555,10 +555,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable OpportunityTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpportunityType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature OpportunityTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable);
-		   Feature OpportunityTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable);
-		   Feature OpportunityTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable);
-		   Feature OpportunityTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.PackageFeature", NameTextCodeDefaultText = "OpportunityType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable);    
+		   Feature OpportunityTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable,contextTenant);
+		   Feature OpportunityTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable,contextTenant);
+		   Feature OpportunityTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable,contextTenant);
+		   Feature OpportunityTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = OpportunityTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "OpportunityType.Features.PackageFeature", NameTextCodeDefaultText = "OpportunityType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OpportunityTypeObjectTable,contextTenant);    
 	    
 		}
 

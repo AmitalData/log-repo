@@ -26,9 +26,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentChequeStatusUpdateClass
    {  		
- 		public const string HashString = "9ce920072d21100e7679cb4e6f947012";
+		public const string HashString = "2b7a0d6acaf828daedb6e1275e2d5690";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -355,7 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen PaymentChequeStatusPaymentChequeStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentChequeStatus.HeaderScreen", Name = "PaymentChequeStatusHeaderScreen", ObjectTableId = PaymentChequeStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen PaymentChequeStatusPaymentChequeStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "PaymentChequeStatus.HeaderScreen", Name = "PaymentChequeStatusHeaderScreen", ObjectTableId = PaymentChequeStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    PaymentChequeStatusObjectTable.HeaderScreenId = PaymentChequeStatusPaymentChequeStatusHeaderScreenScreen0.Id;
 		    PaymentChequeStatusObjectTable.HeaderScreenCode = PaymentChequeStatusPaymentChequeStatusHeaderScreenScreen0.Code;

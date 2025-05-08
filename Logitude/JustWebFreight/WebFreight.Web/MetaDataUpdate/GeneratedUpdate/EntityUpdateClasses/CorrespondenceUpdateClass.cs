@@ -1693,7 +1693,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CorrespondenceCorrespondenceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Correspondence.HeaderScreen", Name = "CorrespondenceHeaderScreen", ObjectTableId = CorrespondenceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CorrespondenceCorrespondenceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Correspondence.HeaderScreen", Name = "CorrespondenceHeaderScreen", ObjectTableId = CorrespondenceObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    CorrespondenceObjectTable.HeaderScreenId = CorrespondenceCorrespondenceHeaderScreenScreen0.Id;
 		    CorrespondenceObjectTable.HeaderScreenCode = CorrespondenceCorrespondenceHeaderScreenScreen0.Code;
@@ -1710,10 +1710,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable CorrespondenceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Correspondence" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature CorrespondenceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable);
-		   Feature CorrespondenceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable);
-		   Feature CorrespondenceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable);
-		   Feature CorrespondenceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.PackageFeature", NameTextCodeDefaultText = "Correspondence Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable);    
+		   Feature CorrespondenceFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable,contextTenant);
+		   Feature CorrespondenceFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable,contextTenant);
+		   Feature CorrespondenceFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable,contextTenant);
+		   Feature CorrespondenceFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CorrespondenceObjectTable.Id, Tenant = 0, NameTextCodeCode = "Correspondence.Features.PackageFeature", NameTextCodeDefaultText = "Correspondence Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CorrespondenceObjectTable,contextTenant);    
 	    
 		}
 

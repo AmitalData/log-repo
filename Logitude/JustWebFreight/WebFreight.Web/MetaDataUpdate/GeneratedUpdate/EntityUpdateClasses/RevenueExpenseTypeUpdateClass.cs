@@ -367,7 +367,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen RevenueExpenseTypeRevenueExpenseTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RevenueExpenseType.HeaderScreen", Name = "RevenueExpenseTypeHeaderScreen", ObjectTableId = RevenueExpenseTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen RevenueExpenseTypeRevenueExpenseTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RevenueExpenseType.HeaderScreen", Name = "RevenueExpenseTypeHeaderScreen", ObjectTableId = RevenueExpenseTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    RevenueExpenseTypeObjectTable.HeaderScreenId = RevenueExpenseTypeRevenueExpenseTypeHeaderScreenScreen0.Id;
 		    RevenueExpenseTypeObjectTable.HeaderScreenCode = RevenueExpenseTypeRevenueExpenseTypeHeaderScreenScreen0.Code;

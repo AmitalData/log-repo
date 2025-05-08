@@ -803,7 +803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen InterestBasesPeriodInterestBasesPeriodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestBasesPeriod.HeaderScreen", Name = "InterestBasesPeriodHeaderScreen", ObjectTableId = InterestBasesPeriodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen InterestBasesPeriodInterestBasesPeriodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestBasesPeriod.HeaderScreen", Name = "InterestBasesPeriodHeaderScreen", ObjectTableId = InterestBasesPeriodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    InterestBasesPeriodObjectTable.HeaderScreenId = InterestBasesPeriodInterestBasesPeriodHeaderScreenScreen0.Id;
 		    InterestBasesPeriodObjectTable.HeaderScreenCode = InterestBasesPeriodInterestBasesPeriodHeaderScreenScreen0.Code;

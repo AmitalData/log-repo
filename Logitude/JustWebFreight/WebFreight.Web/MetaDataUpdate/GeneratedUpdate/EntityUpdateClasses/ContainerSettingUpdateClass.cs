@@ -751,7 +751,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ContainerSettingContainerSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerSetting.HeaderScreen", Name = "ContainerSettingHeaderScreen", ObjectTableId = ContainerSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ContainerSettingContainerSettingHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ContainerSetting.HeaderScreen", Name = "ContainerSettingHeaderScreen", ObjectTableId = ContainerSettingObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    ContainerSettingObjectTable.HeaderScreenId = ContainerSettingContainerSettingHeaderScreenScreen0.Id;
 		    ContainerSettingObjectTable.HeaderScreenCode = ContainerSettingContainerSettingHeaderScreenScreen0.Code;

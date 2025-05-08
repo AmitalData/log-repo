@@ -1819,81 +1819,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode TMProjectTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProject.Q.AllProjects", DefaultText = @"All Projects",LocalDefaultText = "All Projects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TMProjectFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.AllProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.AllProjects", NameTextCodeDefaultText = "All Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes);
+			   Feature TMProjectFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.AllProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.AllProjects", NameTextCodeDefaultText = "All Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
 			   TextCode TMProjectTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProject.Q.MyProjects", DefaultText = @"My Projects",LocalDefaultText = "My Projects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TMProjectFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.MyProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.MyProjects", NameTextCodeDefaultText = "My Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes);
+			   Feature TMProjectFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.MyProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.MyProjects", NameTextCodeDefaultText = "My Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
 			   TextCode TMProjectTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProject.Q.ActiveProjects", DefaultText = @"Active Projects",LocalDefaultText = "Active Projects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TMProjectFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.ActiveProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectFeatures.ActiveProjects", NameTextCodeDefaultText = "Active Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes);
+			   Feature TMProjectFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.ActiveProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectFeatures.ActiveProjects", NameTextCodeDefaultText = "Active Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
 			   TextCode TMProjectTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProject.Q.InactiveProjects", DefaultText = @"Inactive Projects",LocalDefaultText = "Inactive Projects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TMProjectFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.InactiveProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectFeatures.InactiveProjects", NameTextCodeDefaultText = "Inactive Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes);
+			   Feature TMProjectFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Q.InactiveProjects", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProjectFeatures.InactiveProjects", NameTextCodeDefaultText = "Inactive Projects", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMProjectObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_0.Id, NameTextCodeCode = TMProjectTextCode_0.Code, ObjectTableName = "TMProject", Code = "All Projects",  QueryGroupCode = "bb65", IndexOrder = 0, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_0.Id,FeatureUniqeCode= TMProjectFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query AllProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_0.Id, NameTextCodeCode = TMProjectTextCode_0.Code, ObjectTableName = "TMProject", Code = "All Projects",  QueryGroupCode = "bb65", IndexOrder = 0, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_0.Id,FeatureUniqeCode= TMProjectFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn AllProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Inactive" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllProjectsQuery.Id,QueryCode = AllProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
   
 	      
 
-			  Query MyProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_1.Id, NameTextCodeCode = TMProjectTextCode_1.Code, ObjectTableName = "TMProject", Code = "My Projects",  QueryGroupCode = "bb65", IndexOrder = 1, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_1.Id,FeatureUniqeCode= TMProjectFeature_1.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query MyProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_1.Id, NameTextCodeCode = TMProjectTextCode_1.Code, ObjectTableName = "TMProject", Code = "My Projects",  QueryGroupCode = "bb65", IndexOrder = 1, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_1.Id,FeatureUniqeCode= TMProjectFeature_1.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn MyProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn MyProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn MyProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn MyProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn MyProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn MyProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Inactive" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn MyProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn MyProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-             AdvancedQueryFilter MyProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TMProject.MyAllOpenProjects", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
-
-  
-	      
-
-			  Query ActiveProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_2.Id, NameTextCodeCode = TMProjectTextCode_2.Code, ObjectTableName = "TMProject", Code = "Active Projects",  QueryGroupCode = "bb65", IndexOrder = 2, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_2.Id,FeatureUniqeCode= TMProjectFeature_2.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-	
-			 QueryColumn ActiveProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn ActiveProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.ProjectNumber" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn ActiveProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 150 }, addedQueryColumns);
-
-			 QueryColumn ActiveProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn ActiveProjectsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TMProject.IsInnerProject" , ColumnWidth = 100 }, addedQueryColumns);
-
-             AdvancedQueryFilter ActiveProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TMProject.Inactive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter MyProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TMProject.MyAllOpenProjects", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyProjectsQuery.Id,QueryCode = MyProjectsQuery.UniqueCode, Tenant = 0}, addedQueryFilters,contextTenant);
 
   
 	      
 
-			  Query InactiveProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_3.Id, NameTextCodeCode = TMProjectTextCode_3.Code, ObjectTableName = "TMProject", Code = "Inactive Projects",  QueryGroupCode = "bb65", IndexOrder = 3, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_3.Id,FeatureUniqeCode= TMProjectFeature_3.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query ActiveProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_2.Id, NameTextCodeCode = TMProjectTextCode_2.Code, ObjectTableName = "TMProject", Code = "Active Projects",  QueryGroupCode = "bb65", IndexOrder = 2, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_2.Id,FeatureUniqeCode= TMProjectFeature_2.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn InactiveProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActiveProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn InactiveProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.ProjectNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActiveProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.ProjectNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn InactiveProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn ActiveProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn InactiveProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActiveProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn InactiveProjectsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TMProject.IsInnerProject" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ActiveProjectsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TMProject.IsInnerProject" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-             AdvancedQueryFilter InactiveProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TMProject.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter ActiveProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TMProject.Inactive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveProjectsQuery.Id,QueryCode = ActiveProjectsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters,contextTenant);
+
+  
+	      
+
+			  Query InactiveProjectsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMProjectTextCode_3.Id, NameTextCodeCode = TMProjectTextCode_3.Code, ObjectTableName = "TMProject", Code = "Inactive Projects",  QueryGroupCode = "bb65", IndexOrder = 3, Tenant = 0, ObjectTableId = TMProjectObjectTable.Id, QuerySection = "TMProject", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMProjectFeature_3.Id,FeatureUniqeCode= TMProjectFeature_3.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
+	
+			 QueryColumn InactiveProjectsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMProject.Name" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn InactiveProjectsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMProject.ProjectNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn InactiveProjectsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "TMProject.Description" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn InactiveProjectsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "TMProject.CategoryName" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+			 QueryColumn InactiveProjectsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "TMProject.IsInnerProject" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
+
+             AdvancedQueryFilter InactiveProjectsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "TMProject.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveProjectsQuery.Id,QueryCode = InactiveProjectsQuery.UniqueCode, Tenant = 0}, addedQueryFilters,contextTenant);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
@@ -1911,11 +1911,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TMProjectTMProjectHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProject.TMProjectHeaderScreen", Name = "TMProjectHeaderScreen", ObjectTableId = TMProjectObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TMProjectTMProjectHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProject.TMProjectHeaderScreen", Name = "TMProjectHeaderScreen", ObjectTableId = TMProjectObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField TMProjectTMProjectTMProjectHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMProjectTMProjectHeaderScreenScreen0.Id,ScreenCode = TMProjectTMProjectHeaderScreenScreen0.Code, ObjectFieldCode = "TMProject.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectTMProjectHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMProjectTMProjectHeaderScreenScreen0.Id,ScreenCode = TMProjectTMProjectHeaderScreenScreen0.Code, ObjectFieldCode = "TMProject.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectTMProjectHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TMProjectTMProjectHeaderScreenScreen0.Id,ScreenCode = TMProjectTMProjectHeaderScreenScreen0.Code, ObjectFieldCode = "TMProject.ProjectNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectTMProjectHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TMProjectTMProjectHeaderScreenScreen0.Id,ScreenCode = TMProjectTMProjectHeaderScreenScreen0.Code, ObjectFieldCode = "TMProject.ProjectNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    TMProjectObjectTable.HeaderScreenId = TMProjectTMProjectHeaderScreenScreen0.Id;
 		    TMProjectObjectTable.HeaderScreenCode = TMProjectTMProjectHeaderScreenScreen0.Code;
@@ -1923,31 +1923,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   		  
 	      
 
-	         Screen TMProjectGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProject.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMProjectObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 12, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen TMProjectGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMProject.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMProjectObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 12, IsReadOnly = false }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.OwnerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.OwnerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.CustomerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.CustomerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.BudgetId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.BudgetId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.CategoryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.CategoryId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.ExternalProjectNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.ExternalProjectNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.DayOffTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 6, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.DayOffTypeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.IsProrated", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 7, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.IsProrated", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField8 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 8, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.ExcludeFromProrating", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField9 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 9, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.ExcludeFromProrating", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 10, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.BlockedForDataEntry", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField10 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 10, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.BlockedForDataEntry", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMProjectTMProjectGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 11, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMProjectTMProjectGeneralTabScreenScreenField11 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 11, ScreenId = TMProjectGeneralTabScreenScreen1.Id,ScreenCode = TMProjectGeneralTabScreenScreen1.Code, ObjectFieldCode = "TMProject.Description", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	            
 
 	    }
@@ -1958,19 +1958,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TMProjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProject" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TMProjectGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProject.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TMProjectGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Tab.General", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMProjectObjectTable);
+			   Feature TMProjectGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Tab.General", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMProjectObjectTable,contextTenant);
  
                  
 			   TextCode TMProjectEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMProject.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TMProjectEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Tab.Events", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMProjectObjectTable);
+			   Feature TMProjectEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMProject.Tab.Events", ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMProjectObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GETM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMProjectGeneralFeature_TH0.Id,FeatureUniqeCode = TMProjectGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TMProjectObjectTable.Id, TabNameTextCodeId = TMProjectGeneralTextCode_TH0.Id, TabNameTextCodeCode = TMProjectGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GETM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMProjectGeneralFeature_TH0.Id,FeatureUniqeCode = TMProjectGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TMProjectObjectTable.Id, TabNameTextCodeId = TMProjectGeneralTextCode_TH0.Id, TabNameTextCodeCode = TMProjectGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVTM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMProjectEventsFeature_TH1.Id,FeatureUniqeCode = TMProjectEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TMProjectObjectTable.Id, TabNameTextCodeId = TMProjectEventsTextCode_TH1.Id, TabNameTextCodeCode = TMProjectEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVTM",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMProjectEventsFeature_TH1.Id,FeatureUniqeCode = TMProjectEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TMProjectObjectTable.Id, TabNameTextCodeId = TMProjectEventsTextCode_TH1.Id, TabNameTextCodeCode = TMProjectEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -1978,10 +1978,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TMProjectObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMProject" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TMProjectFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable);
-		   Feature TMProjectFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable);
-		   Feature TMProjectFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable);
-		   Feature TMProjectFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.PackageFeature", NameTextCodeDefaultText = "TMProject Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable);    
+		   Feature TMProjectFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable,contextTenant);
+		   Feature TMProjectFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable,contextTenant);
+		   Feature TMProjectFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable,contextTenant);
+		   Feature TMProjectFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TMProjectObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMProject.Features.PackageFeature", NameTextCodeDefaultText = "TMProject Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMProjectObjectTable,contextTenant);    
 	    
 		}
 

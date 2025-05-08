@@ -205,10 +205,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם בםנגלית",
+					  						FullLocalDefaultText =  "שם באנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם בםנגלית",
+					  						ListLocalDefaultText =  "שם באנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -558,7 +558,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ChartOfAccountsTypeChartOfAccountsTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChartOfAccountsType.HeaderScreen", Name = "ChartOfAccountsTypeHeaderScreen", ObjectTableId = ChartOfAccountsTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ChartOfAccountsTypeChartOfAccountsTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChartOfAccountsType.HeaderScreen", Name = "ChartOfAccountsTypeHeaderScreen", ObjectTableId = ChartOfAccountsTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    ChartOfAccountsTypeObjectTable.HeaderScreenId = ChartOfAccountsTypeChartOfAccountsTypeHeaderScreenScreen0.Id;
 		    ChartOfAccountsTypeObjectTable.HeaderScreenCode = ChartOfAccountsTypeChartOfAccountsTypeHeaderScreenScreen0.Code;

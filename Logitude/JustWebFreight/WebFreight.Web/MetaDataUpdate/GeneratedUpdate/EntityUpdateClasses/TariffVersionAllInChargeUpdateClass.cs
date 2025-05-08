@@ -576,7 +576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TariffVersionAllInChargeTariffVersionAllInChargeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffVersionAllInCharge.HeaderScreen", Name = "TariffVersionAllInChargeHeaderScreen", ObjectTableId = TariffVersionAllInChargeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TariffVersionAllInChargeTariffVersionAllInChargeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TariffVersionAllInCharge.HeaderScreen", Name = "TariffVersionAllInChargeHeaderScreen", ObjectTableId = TariffVersionAllInChargeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    TariffVersionAllInChargeObjectTable.HeaderScreenId = TariffVersionAllInChargeTariffVersionAllInChargeHeaderScreenScreen0.Id;
 		    TariffVersionAllInChargeObjectTable.HeaderScreenCode = TariffVersionAllInChargeTariffVersionAllInChargeHeaderScreenScreen0.Code;

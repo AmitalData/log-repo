@@ -285,7 +285,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen WarehouseEntryStatusWarehouseEntryStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WarehouseEntryStatus.HeaderScreen", Name = "WarehouseEntryStatusHeaderScreen", ObjectTableId = WarehouseEntryStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen WarehouseEntryStatusWarehouseEntryStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WarehouseEntryStatus.HeaderScreen", Name = "WarehouseEntryStatusHeaderScreen", ObjectTableId = WarehouseEntryStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    WarehouseEntryStatusObjectTable.HeaderScreenId = WarehouseEntryStatusWarehouseEntryStatusHeaderScreenScreen0.Id;
 		    WarehouseEntryStatusObjectTable.HeaderScreenCode = WarehouseEntryStatusWarehouseEntryStatusHeaderScreenScreen0.Code;

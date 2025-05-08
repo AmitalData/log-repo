@@ -1015,7 +1015,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BIReportFolderBIReportFolderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BIReportFolder.HeaderScreen", Name = "BIReportFolderHeaderScreen", ObjectTableId = BIReportFolderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen BIReportFolderBIReportFolderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BIReportFolder.HeaderScreen", Name = "BIReportFolderHeaderScreen", ObjectTableId = BIReportFolderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    BIReportFolderObjectTable.HeaderScreenId = BIReportFolderBIReportFolderHeaderScreenScreen0.Id;
 		    BIReportFolderObjectTable.HeaderScreenCode = BIReportFolderBIReportFolderHeaderScreenScreen0.Code;
@@ -1032,10 +1032,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable BIReportFolderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BIReportFolder" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature BIReportFolderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable);
-		   Feature BIReportFolderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable);
-		   Feature BIReportFolderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable);
-		   Feature BIReportFolderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.PackageFeature", NameTextCodeDefaultText = "BIReportFolder Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable);    
+		   Feature BIReportFolderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable,contextTenant);
+		   Feature BIReportFolderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable,contextTenant);
+		   Feature BIReportFolderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable,contextTenant);
+		   Feature BIReportFolderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = BIReportFolderObjectTable.Id, Tenant = 0, NameTextCodeCode = "BIReportFolder.Features.PackageFeature", NameTextCodeDefaultText = "BIReportFolder Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,BIReportFolderObjectTable,contextTenant);    
 	    
 		}
 

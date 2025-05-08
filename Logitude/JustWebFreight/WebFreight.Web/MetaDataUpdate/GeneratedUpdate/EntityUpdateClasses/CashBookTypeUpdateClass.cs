@@ -427,7 +427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CashBookTypeCashBookTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CashBookType.HeaderScreen", Name = "CashBookTypeHeaderScreen", ObjectTableId = CashBookTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CashBookTypeCashBookTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CashBookType.HeaderScreen", Name = "CashBookTypeHeaderScreen", ObjectTableId = CashBookTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    CashBookTypeObjectTable.HeaderScreenId = CashBookTypeCashBookTypeHeaderScreenScreen0.Id;
 		    CashBookTypeObjectTable.HeaderScreenCode = CashBookTypeCashBookTypeHeaderScreenScreen0.Code;

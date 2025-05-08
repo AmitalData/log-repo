@@ -1272,7 +1272,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CalculatedChartsOfAccountCalculatedChartsOfAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CalculatedChartsOfAccount.HeaderScreen", Name = "CalculatedChartsOfAccountHeaderScreen", ObjectTableId = CalculatedChartsOfAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CalculatedChartsOfAccountCalculatedChartsOfAccountHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CalculatedChartsOfAccount.HeaderScreen", Name = "CalculatedChartsOfAccountHeaderScreen", ObjectTableId = CalculatedChartsOfAccountObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    CalculatedChartsOfAccountObjectTable.HeaderScreenId = CalculatedChartsOfAccountCalculatedChartsOfAccountHeaderScreenScreen0.Id;
 		    CalculatedChartsOfAccountObjectTable.HeaderScreenCode = CalculatedChartsOfAccountCalculatedChartsOfAccountHeaderScreenScreen0.Code;

@@ -1506,7 +1506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen BankDepositLineBankDepositLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankDepositLine.HeaderScreen", Name = "BankDepositLineHeaderScreen", ObjectTableId = BankDepositLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen BankDepositLineBankDepositLineHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "BankDepositLine.HeaderScreen", Name = "BankDepositLineHeaderScreen", ObjectTableId = BankDepositLineObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    BankDepositLineObjectTable.HeaderScreenId = BankDepositLineBankDepositLineHeaderScreenScreen0.Id;
 		    BankDepositLineObjectTable.HeaderScreenCode = BankDepositLineBankDepositLineHeaderScreenScreen0.Code;

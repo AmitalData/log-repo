@@ -612,7 +612,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen JournalExternalReconcileJournalExternalReconcileHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "JournalExternalReconcile.HeaderScreen", Name = "JournalExternalReconcileHeaderScreen", ObjectTableId = JournalExternalReconcileObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen JournalExternalReconcileJournalExternalReconcileHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "JournalExternalReconcile.HeaderScreen", Name = "JournalExternalReconcileHeaderScreen", ObjectTableId = JournalExternalReconcileObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    JournalExternalReconcileObjectTable.HeaderScreenId = JournalExternalReconcileJournalExternalReconcileHeaderScreenScreen0.Id;
 		    JournalExternalReconcileObjectTable.HeaderScreenCode = JournalExternalReconcileJournalExternalReconcileHeaderScreenScreen0.Code;

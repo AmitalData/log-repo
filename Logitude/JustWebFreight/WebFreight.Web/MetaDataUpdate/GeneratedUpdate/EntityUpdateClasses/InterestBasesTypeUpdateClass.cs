@@ -958,19 +958,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode InterestBasesTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.Q.InterestBases", DefaultText = @"Interest Bases",LocalDefaultText = "בסיסי ריבית", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature InterestBasesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Q.InterestBases", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.InterestBases", NameTextCodeDefaultText = "Interest Bases", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestBasesTypeObjectTable, addedFeatures, addedTextCodes);
+			   Feature InterestBasesTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Q.InterestBases", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.InterestBases", NameTextCodeDefaultText = "Interest Bases", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,InterestBasesTypeObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, ObjectTableName = "InterestBasesType", Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id,FeatureUniqeCode= InterestBasesTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query InterestBasesQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InterestBasesTypeTextCode_0.Id, NameTextCodeCode = InterestBasesTypeTextCode_0.Code, ObjectTableName = "InterestBasesType", Code = "Interest Bases",  QueryGroupCode = "a37b", IndexOrder = 0, Tenant = 0, ObjectTableId = InterestBasesTypeObjectTable.Id, QuerySection = "InterestBasesType", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = InterestBasesTypeFeature_0.Id,FeatureUniqeCode= InterestBasesTypeFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestBasesType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InterestBasesType.Code" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestBasesType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InterestBasesType.LocalName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestBasesType.InActive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn InterestBasesQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InterestBasesQuery.Id,QueryCode = InterestBasesQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InterestBasesType.InActive" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
@@ -987,13 +987,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen InterestBasesTypeInterestBasesTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestBasesType.HeaderScreen", Name = "InterestBasesTypeHeaderScreen", ObjectTableId = InterestBasesTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen InterestBasesTypeInterestBasesTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "InterestBasesType.HeaderScreen", Name = "InterestBasesTypeHeaderScreen", ObjectTableId = InterestBasesTypeObjectTable.Id, NumberOfColumns = 3, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField InterestBasesTypeInterestBasesTypeHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id,ScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code, ObjectFieldCode = "InterestBasesType.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    InterestBasesTypeObjectTable.HeaderScreenId = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Id;
 		    InterestBasesTypeObjectTable.HeaderScreenCode = InterestBasesTypeInterestBasesTypeHeaderScreenScreen0.Code;
@@ -1008,19 +1008,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode InterestBasesTypeDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature InterestBasesTypeDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Details", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBTD", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable);
+			   Feature InterestBasesTypeDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Details", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBTD", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable,contextTenant);
  
                  
 			   TextCode InterestBasesTypeEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestBasesType.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature InterestBasesTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Events", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable);
+			   Feature InterestBasesTypeEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesType.Tab.Events", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesTypeFeatures.IBEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBTD",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent", FeatureId = InterestBasesTypeDetailsFeature_TH0.Id,FeatureUniqeCode = InterestBasesTypeDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.InterestBasesTypesTabs.InterestBasesTypesDetailsTabControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeDetailsTextCode_TH0.Id, TabNameTextCodeCode = InterestBasesTypeDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBTD",HtmlComponentName = "",HtmlComponentUrl = "./Accounting/Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent", FeatureId = InterestBasesTypeDetailsFeature_TH0.Id,FeatureUniqeCode = InterestBasesTypeDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.InvoiceLib.Views.Tabs.InterestBasesTypesTabs.InterestBasesTypesDetailsTabControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeDetailsTextCode_TH0.Id, TabNameTextCodeCode = InterestBasesTypeDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InterestBasesTypeEventsFeature_TH1.Id,FeatureUniqeCode = InterestBasesTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InterestBasesTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "IBEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InterestBasesTypeEventsFeature_TH1.Id,FeatureUniqeCode = InterestBasesTypeEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InterestBasesTypeObjectTable.Id, TabNameTextCodeId = InterestBasesTypeEventsTextCode_TH1.Id, TabNameTextCodeCode = InterestBasesTypeEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -1028,10 +1028,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature InterestBasesTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);
-		   Feature InterestBasesTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);
-		   Feature InterestBasesTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);
-		   Feature InterestBasesTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.PackageFeature", NameTextCodeDefaultText = "InterestBasesType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable);    
+		   Feature InterestBasesTypeFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable,contextTenant);
+		   Feature InterestBasesTypeFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable,contextTenant);
+		   Feature InterestBasesTypeFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable,contextTenant);
+		   Feature InterestBasesTypeFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.PackageFeature", NameTextCodeDefaultText = "InterestBasesType Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InterestBasesTypeObjectTable,contextTenant);    
 	    
 		}
 
@@ -1134,7 +1134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   //FeatureRepository featureRepository = new FeatureRepository(0); 
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
-		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 			   Feature InterestBasesTypeFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesTypeInactive", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable);
+		   ObjectTable InterestBasesTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InterestBasesType" && d.Tenant == 0).FirstOrDefault(); 			   Feature InterestBasesTypeFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InterestBasesTypeInactive", ObjectTableId = InterestBasesTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "InterestBasesType.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InterestBasesTypeObjectTable,contextTenant);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -1145,7 +1145,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					Name = "InterestBasesTypeEditButtonsGroup",
 					ObjectTableId = InterestBasesTypeObjectTable.Id,
 					Tenant = 0
-				}, menuButtonGroupRepository, tenantMenuButtonGroups);        
+				}, menuButtonGroupRepository, tenantMenuButtonGroups,contextTenant);        
    
 			   MenuButton InterestBasesTypeMenuButton0 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
@@ -1164,7 +1164,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes,contextTenant);
 
 			   MenuButton InterestBasesTypeMenuButton00 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{

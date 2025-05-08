@@ -427,7 +427,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen AutomaticReconcileAutomaticReconcileHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AutomaticReconcile.HeaderScreen", Name = "AutomaticReconcileHeaderScreen", ObjectTableId = AutomaticReconcileObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen AutomaticReconcileAutomaticReconcileHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "AutomaticReconcile.HeaderScreen", Name = "AutomaticReconcileHeaderScreen", ObjectTableId = AutomaticReconcileObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    AutomaticReconcileObjectTable.HeaderScreenId = AutomaticReconcileAutomaticReconcileHeaderScreenScreen0.Id;
 		    AutomaticReconcileObjectTable.HeaderScreenCode = AutomaticReconcileAutomaticReconcileHeaderScreenScreen0.Code;

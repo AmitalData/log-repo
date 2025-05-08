@@ -26,9 +26,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevaluationStatusUpdateClass
    {  		
- 		public const string HashString = "ce70373ec0a2f4b1fba3a724e2fd38ca";
+		public const string HashString = "7938c65ee9bdf06744ec4af2e1aac51c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -357,7 +357,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen RevaluationStatusRevaluationStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RevaluationStatus.HeaderScreen", Name = "RevaluationStatusHeaderScreen", ObjectTableId = RevaluationStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen RevaluationStatusRevaluationStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RevaluationStatus.HeaderScreen", Name = "RevaluationStatusHeaderScreen", ObjectTableId = RevaluationStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    RevaluationStatusObjectTable.HeaderScreenId = RevaluationStatusRevaluationStatusHeaderScreenScreen0.Id;
 		    RevaluationStatusObjectTable.HeaderScreenCode = RevaluationStatusRevaluationStatusHeaderScreenScreen0.Code;

@@ -859,31 +859,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode OccasionContactTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OccasionContact.Q.OCCASIONCONTACTS", DefaultText = @"Occasion Contacts",LocalDefaultText = null, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature OccasionContactFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OccasionContact.Q.OCCASIONCONTACTS", ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContactFeatures.OCCASIONCONTACTS", NameTextCodeDefaultText = "OCCASIONCONTACTS", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,OccasionContactObjectTable, addedFeatures, addedTextCodes);
+			   Feature OccasionContactFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OccasionContact.Q.OCCASIONCONTACTS", ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContactFeatures.OCCASIONCONTACTS", NameTextCodeDefaultText = "OCCASIONCONTACTS", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,OccasionContactObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OCCASIONCONTACTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OccasionContactTextCode_0.Id, NameTextCodeCode = OccasionContactTextCode_0.Code, ObjectTableName = "OccasionContact", Code = "OCCASIONCONTACTS",  QueryGroupCode = "e511", IndexOrder = 0, Tenant = 0, ObjectTableId = OccasionContactObjectTable.Id, QuerySection = "OccasionContact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OccasionContactFeature_0.Id,FeatureUniqeCode= OccasionContactFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query OCCASIONCONTACTSQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OccasionContactTextCode_0.Id, NameTextCodeCode = OccasionContactTextCode_0.Code, ObjectTableName = "OccasionContact", Code = "OCCASIONCONTACTS",  QueryGroupCode = "e511", IndexOrder = 0, Tenant = 0, ObjectTableId = OccasionContactObjectTable.Id, QuerySection = "OccasionContact", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = OccasionContactFeature_0.Id,FeatureUniqeCode= OccasionContactFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn OCCASIONCONTACTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OccasionContact.Name" , ColumnWidth = 250 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "OccasionContact.Name" , ColumnWidth = 250 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OccasionContact.Email" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "OccasionContact.Email" , ColumnWidth = 200 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "OccasionContact.BusinessPhone" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "OccasionContact.BusinessPhone" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "OccasionContact.Mobile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "OccasionContact.Mobile" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "OccasionContact.Position" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "OccasionContact.Position" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "OccasionContact.Customers" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "OccasionContact.Customers" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "OccasionContact.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "OccasionContact.Notes" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "OccasionContact.Invited" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "OccasionContact.Invited" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn OCCASIONCONTACTSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "OccasionContact.Participated" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OCCASIONCONTACTSQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OCCASIONCONTACTSQuery.Id,QueryCode = OCCASIONCONTACTSQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "OccasionContact.Participated" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
@@ -900,7 +900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen OccasionContactOccasionContactHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OccasionContact.HeaderScreen", Name = "OccasionContactHeaderScreen", ObjectTableId = OccasionContactObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen OccasionContactOccasionContactHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "OccasionContact.HeaderScreen", Name = "OccasionContactHeaderScreen", ObjectTableId = OccasionContactObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    OccasionContactObjectTable.HeaderScreenId = OccasionContactOccasionContactHeaderScreenScreen0.Id;
 		    OccasionContactObjectTable.HeaderScreenCode = OccasionContactOccasionContactHeaderScreenScreen0.Code;
@@ -917,10 +917,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable OccasionContactObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OccasionContact" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature OccasionContactFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable);
-		   Feature OccasionContactFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable);
-		   Feature OccasionContactFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable);
-		   Feature OccasionContactFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.PackageFeature", NameTextCodeDefaultText = "OccasionContact Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable);    
+		   Feature OccasionContactFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable,contextTenant);
+		   Feature OccasionContactFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable,contextTenant);
+		   Feature OccasionContactFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable,contextTenant);
+		   Feature OccasionContactFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = OccasionContactObjectTable.Id, Tenant = 0, NameTextCodeCode = "OccasionContact.Features.PackageFeature", NameTextCodeDefaultText = "OccasionContact Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,OccasionContactObjectTable,contextTenant);    
 	    
 		}
 
