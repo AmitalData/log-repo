@@ -39,9 +39,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-    Code="&quot;6bb1&quot;"
-      Name="&quot;General&quot;"
-   GenerateDomainService="false"
+   Code="&quot;6049&quot;"
+  Name="&quot;General&quot;"
+  GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
   NoViewController="true"
@@ -5980,7 +5980,7 @@
       LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
-    <TextCode
+     <TextCode
       Code="&quot;General.O.Mine&quot;"
       DefaultText="&quot;Mine&quot;"
       LocalDefaultText="&quot;שלי&quot;"
@@ -5992,26 +5992,26 @@
       LocalDefaultText="&quot;עבור חשבונית ספק נדרש מספר הקצאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;General.MH.Cards&quot;"
       DefaultText="&quot;Cards&quot;"
       LocalDefaultText="&quot;כרטיסים&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
-      <TextCode
+    <TextCode
       Code="&quot;General.O.DollarRateUpdated&quot;"
       DefaultText="&quot;The dollar exchange rate was last updated on&quot;"
       LocalDefaultText="&quot;שער מטבע הדולר עודכן לאחרונה בתאריך &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;General.O.NewReport&quot;"
       DefaultText="&quot;דוח חדש&quot;"
       LocalDefaultText="&quot;דוח חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-   </AdditionalTextCodes>
-     <TextCode
+         </AdditionalTextCodes>
+    <TextCode
       Code="&quot;Accounting.General.O.NoReportsDisplay&quot;"
       DefaultText="&quot;No reports to display&quot;"
       LocalDefaultText="&quot;אין דוחות להצגה&quot;"
@@ -6023,14 +6023,27 @@
       LocalDefaultText="&quot;הדוח נוצר בהצלחה ויבנה בתהליך רקע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;Accounting.O.AlreadyRedeemed&quot;"
       DefaultText="&quot;A check has already been cashed and adjusted by bank reconciliation. Should I mark it as &amp;quot;check returned from bank&quot;"
       LocalDefaultText="&quot;צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור &quot;צ'ק חזר מהבנק&quot;?&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
    </AdditionalTextCodes>
-  <AdditionalFeatures>
+     <TextCode
+      Code="&quot;Accounting.O.Year&quot;"
+      DefaultText="&quot;Year&quot;"
+      LocalDefaultText="&quot;שנה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.SendParameters&quot;"
+      DefaultText="&quot;Send Parameters&quot;"
+      LocalDefaultText="&quot;פרמטרים לשליחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+   <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"

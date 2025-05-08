@@ -75,8 +75,8 @@ namespace Logitude.Accounting.BL.Utils
 
                     int tenant = gLAccountRecalculateArg.Tenant;
                     string myGLAccountId = gLAccountRecalculateArg.AccountId;
-                    string myUserId = gLAccountRecalculateArg.UserId;
-                    if (gLAccountRecalculateArg.BatchTask != null)
+                     string myUserId = gLAccountRecalculateArg.UserId;
+                     if (gLAccountRecalculateArg.BatchTask != null)
                     {
                         BatchTaskExecutionPM batchTaskExecutionPM = gLAccountRecalculateArg.BatchTask;
                         BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = null;
@@ -105,14 +105,24 @@ namespace Logitude.Accounting.BL.Utils
                     }
                     catch (Exception ex)
                     {
-                    }
+                     }
+
+                    string userid = "";
+                    if (gLAccountRecalculateArg.BatchTask != null && !String.IsNullOrEmpty(gLAccountRecalculateArg.BatchTask.CreatedByUserId))
+                        userid = gLAccountRecalculateArg.BatchTask.CreatedByUserId;
+                    else
+                    {
+                        ContactRepository contactRep = new ContactRepository(tenant);
+                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                        Simplog.Data.CommonDataModel.EntityPOCOs.Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, tenant);
+                     }
 
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
                         EntityId = myGLAccountId,
                         Tenant = tenant,
-                        UserId = myUserId,
-                        ObjectTableName = "GLAccount",
+                         UserId = userid,
+                         ObjectTableName = "GLAccount",
                         IsAddedManually = false,
                         EventTypeCode = "RCLC",
                         Notes = "",
@@ -147,6 +157,6 @@ namespace Logitude.Accounting.BL.Utils
         public string AccountId { get; set; }
         public bool Batch { get; set; }
         public BatchTaskExecutionPM BatchTask { get; set; }
-        public string UserId { get; set; }
-    }
+         public string UserId { get; set; }
+     }
 }

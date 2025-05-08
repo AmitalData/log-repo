@@ -43,6 +43,11 @@ using System.IO;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using System.Globalization;
 using System.Net;
+using Logitude.Accounting.BL.CloseTables;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Data.SqlClient;
+using System.Data;
+using Logitude.BL.DataContracts;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -571,6 +576,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
+
             if (entityPOCO.ChartOfAccountsTypeCode != entityPM.ChartOfAccountsTypeCode)
             {
                 List<LedgerTransactionList> transactions = GetAccountTransactions(entityPM);
@@ -602,7 +608,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ActionDate = DateTime.Today,
                     BatchIt = 1,
                 };
-
 
                 var accountingContext = AccountingContext.GetContext(tenant);
 
@@ -1298,6 +1303,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         Notes = notes,
 
                     });
+
                 }
                 if (entityPM.LocalName != entityPOCO.LocalName && (!String.IsNullOrEmpty(entityPM.LocalName) || !String.IsNullOrEmpty(entityPOCO.LocalName)))
                 {
@@ -1681,6 +1687,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     string oldValue = gLAccountFollowUp.FollowUpDate.ToString();
                     string newValue = accountPM.GLAccountFollowUpDate.ToString();
+            
                 }
 
                 if (gLAccountFollowUp.FollowUpRemarks != accountPM.GLAccountFollowUpRemarks)
@@ -1696,7 +1703,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
             base.AfterUpdating(entityPM, entityParentPM);
-            // Update Card GLAccountId 
+
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
             SendHybridTask(entityPM);
         }
@@ -2147,20 +2154,89 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ContactPM contact = GetLoggedContact(entityPOCO.Tenant);
             bool showLocals = !contact.DontShowLocal;
 
-
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            if (!string.Equals(entityPM.ReconcileMethodCode, entityPOCO.ReconcileMethodCode, StringComparison.OrdinalIgnoreCase))
             {
-                if (entityPM.ReconcileMethodCode != entityPOCO.ReconcileMethodCode)
+                if (entityPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
-                    //check glaccount transactions
-                    LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(accountingContext);
-                    LedgerTransactionPM trans = transQuery.GetFirstLedgerTransaction(entityPM.Id, entityPM.Tenant);
-                    if (trans != null)
-                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodcantUpdated", 0, showLocals));
+
+                    //check glaccount non-cancelled reconciliations
+                    ReconciliationQueryService recoQuery = new ReconciliationQueryService(accountingContext);
+                    var reco = recoQuery.GetNotCancelledByAccountId(entityPM.Id, entityPM.Tenant);
+                    if (reco.Any() == true)
+                    {
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.ReconcileMethodCannotBeUpdated", 0, showLocals));
+                    }
+
+                    try
+                    {
+                        int transactionsMade = RecalculateLTOpenAmounts(entityPOCO.Tenant, entityPM.Id, null, null, entityPM.ReconcileMethodCode);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Updated {transactionsMade} transactions for AccountId: {entityPM.Id}, Tenant: {entityPM.Tenant}");
+                    }
+                    catch (Exception ex)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"Error updating reconcile method for AccountId: {entityPM.Id}, Tenant: {entityPM.Tenant}. {ex.Message}");
+                        throw;
+                    }
+
                 }
             }
 
         }
+
+        private string GetTenantCurrency(int tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+
+
+            if (tPM == null || string.IsNullOrEmpty(tPM.CurrencyId))
+            {
+                throw new ApplicationException("Accounting currency is not set for the tenant.");
+            }
+
+            return tPM.CurrencyId;
+        }
+
+        public int RecalculateLTOpenAmounts(int tenant, string accountId, string accountingCurrencyId, string connectionString, string reconcileMethod)
+        {
+            int transactionsMade = 0;
+
+            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(reconcileMethod))
+                    {
+                        throw new ArgumentException("Reconcile method cannot be null or empty.", nameof(reconcileMethod));
+                    }
+
+                    if (reconcileMethod == ReconcileMethodValues.LocalCurrency)
+                    {
+                        if (String.IsNullOrEmpty(accountingCurrencyId))
+                        {
+                            accountingCurrencyId = GetTenantCurrency(tenant);
+                        }
+     
+                        
+                        // Open Transactions - Local
+                        transactionsMade = RunStoredProcedureClass.Update_LT_Local(tenant, accountId, accountingCurrencyId);
+                    }
+                    else // ReconcileMethodValues.ForeignCurrency
+                    {
+                        // Open Transactions - Foreign
+                        transactionsMade = RunStoredProcedureClass.Update_LT_Foreign(tenant, accountId);
+                    }
+                    scope.Complete();
+                }
+                catch
+                {
+                    throw;
+                }
+            }
+
+            return transactionsMade;
+        }
+
 
 
         public virtual void AddAcitivityLog(GLAccountPM entityPM, string activityTypeCode)
@@ -2643,9 +2719,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException(messnoprivtochangeBalanceInLocalCurrency);
             }
 #endif
+
         }
         public override void AddAcitivityLog(GLAccountPM entityPM, string activityTypeCode)
         {
+
         }
 
 

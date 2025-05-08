@@ -82,7 +82,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public ARPaymentChequeStatusColor = "black";
     BankFieldsVisibile: boolean;
     isMultipleCheques: boolean = false;
-    isMultipleBankTransfers: boolean = false;
     public OpenAmountCurrency: string;
     ARPaymentValidator: ARPaymentValidator;
     public chequeAmount: number;
@@ -137,9 +136,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM.ARPaymentChequeReplicas.length > 1) {
             this.isMultipleCheques = true;
         }
-        if (this.EntityPM.ARPaymentBankTranfers.length > 1) {
-            this.isMultipleBankTransfers = true;
-        }
+        
 
         this.isFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.originalPaymentOpenAmount = this.EntityPM.OpenAmount;
@@ -2603,9 +2600,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     UpdateBankTransfersSection(event: any) {
         if (event == 'ok') {
-            this.isMultipleBankTransfers = false;
             if (this.EntityPM.ARPaymentBankTranfers.length > 1) {
-                this.isMultipleBankTransfers = true;
                 this.GetData();
             }
             if (this.EntityPM.ARPaymentBankTranfers.length >= 0) {
