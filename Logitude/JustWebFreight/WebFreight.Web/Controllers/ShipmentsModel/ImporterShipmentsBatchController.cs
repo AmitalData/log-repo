@@ -861,9 +861,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel
                 entityPM.ShipmentCustomerTypeCode = entityAM.ShipmentCustomerTypeCode;
             }
 
-            entityPM.IsCancelled = entityAM.IsCancelled;
+			entityPM.IsCancelled = entityAM.IsCancelled ? true : false;
 
-            if (!string.IsNullOrEmpty(entityAM.ShipperName))
+			if (!string.IsNullOrEmpty(entityAM.ShipperName))
             {
                 entityPM.ShipperName = entityAM.ShipperName;
             }
