@@ -20,6 +20,15 @@ export class SIIRequestList {
 	WareHouseCityName: string;
 	Remarks: string;
 	ListCounter: number;
+	ImporterId: string;
+	ContactName: string;
+	UnloadDate: Date;
+	ManifestNumber: string;
+	VesselName: string;
+	ContactEmail: string;
+	ContactTel: string;
+	ContactCellPhone: string;
+	ContactFax: string;
 	
 }
  

@@ -331,6 +331,213 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string importerId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ImporterId  
+	   {
+	    
+	     get
+		{
+		   return importerId;
+		 }
+		 set
+		 {
+		   if(importerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ImporterId",OldValue=importerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   importerId=value;
+		   }
+			
+		 }
+	   }
+	  private string contactName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactName  
+	   {
+	    
+	     get
+		{
+		   return contactName;
+		 }
+		 set
+		 {
+		   if(contactName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactName",OldValue=contactName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactName=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime unloadDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime UnloadDate  
+	   {
+	    
+	     get
+		{
+		   return unloadDate;
+		 }
+		 set
+		 {
+		   if(unloadDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnloadDate",OldValue=unloadDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   unloadDate=value;
+		   }
+			
+		 }
+	   }
+	  private string manifestNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ManifestNumber  
+	   {
+	    
+	     get
+		{
+		   return manifestNumber;
+		 }
+		 set
+		 {
+		   if(manifestNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManifestNumber",OldValue=manifestNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   manifestNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string vesselName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VesselName  
+	   {
+	    
+	     get
+		{
+		   return vesselName;
+		 }
+		 set
+		 {
+		   if(vesselName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VesselName",OldValue=vesselName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vesselName=value;
+		   }
+			
+		 }
+	   }
+	  private string contactEmail ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactEmail  
+	   {
+	    
+	     get
+		{
+		   return contactEmail;
+		 }
+		 set
+		 {
+		   if(contactEmail != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactEmail",OldValue=contactEmail,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactEmail=value;
+		   }
+			
+		 }
+	   }
+	  private string contactTel ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactTel  
+	   {
+	    
+	     get
+		{
+		   return contactTel;
+		 }
+		 set
+		 {
+		   if(contactTel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactTel",OldValue=contactTel,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactTel=value;
+		   }
+			
+		 }
+	   }
+	  private string contactCellPhone ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactCellPhone  
+	   {
+	    
+	     get
+		{
+		   return contactCellPhone;
+		 }
+		 set
+		 {
+		   if(contactCellPhone != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactCellPhone",OldValue=contactCellPhone,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactCellPhone=value;
+		   }
+			
+		 }
+	   }
+	  private string contactFax ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactFax  
+	   {
+	    
+	     get
+		{
+		   return contactFax;
+		 }
+		 set
+		 {
+		   if(contactFax != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactFax",OldValue=contactFax,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactFax=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

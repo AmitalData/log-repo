@@ -38,6 +38,24 @@ namespace Logitude.Customs.Data.EntityLists
        public string Remarks  { get; set; }
        [DataMember]
        public int ListCounter  { get; set; }
+       [DataMember]
+       public string ImporterId  { get; set; }
+       [DataMember]
+       public string ContactName  { get; set; }
+       [DataMember]
+       public DateTime UnloadDate  { get; set; }
+       [DataMember]
+       public string ManifestNumber  { get; set; }
+       [DataMember]
+       public string VesselName  { get; set; }
+       [DataMember]
+       public string ContactEmail  { get; set; }
+       [DataMember]
+       public string ContactTel  { get; set; }
+       [DataMember]
+       public string ContactCellPhone  { get; set; }
+       [DataMember]
+       public string ContactFax  { get; set; }
    }
 
 }
