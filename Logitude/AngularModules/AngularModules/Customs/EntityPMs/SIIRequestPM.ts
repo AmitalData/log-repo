@@ -121,6 +121,51 @@ export class SIIRequestPM {
     public set ListCounter(newValue: number) { if (this.listCounter != newValue) { this.listCounter = newValue; this.MarkAsDirty("ListCounter"); } }
        
 	 
+    private importerId: string;
+    public get ImporterId() { return this.importerId; }
+    public set ImporterId(newValue: string) { if (this.importerId != newValue) { this.importerId = newValue; this.MarkAsDirty("ImporterId"); } }
+       
+	 
+    private contactName: string;
+    public get ContactName() { return this.contactName; }
+    public set ContactName(newValue: string) { if (this.contactName != newValue) { this.contactName = newValue; this.MarkAsDirty("ContactName"); } }
+       
+	 
+    private unloadDate: Date;
+    public get UnloadDate() { return this.unloadDate; }
+    public set UnloadDate(newValue: Date) { if (this.unloadDate != newValue) { this.unloadDate = newValue; this.MarkAsDirty("UnloadDate"); } }
+       
+	 
+    private manifestNumber: string;
+    public get ManifestNumber() { return this.manifestNumber; }
+    public set ManifestNumber(newValue: string) { if (this.manifestNumber != newValue) { this.manifestNumber = newValue; this.MarkAsDirty("ManifestNumber"); } }
+       
+	 
+    private vesselName: string;
+    public get VesselName() { return this.vesselName; }
+    public set VesselName(newValue: string) { if (this.vesselName != newValue) { this.vesselName = newValue; this.MarkAsDirty("VesselName"); } }
+       
+	 
+    private contactEmail: string;
+    public get ContactEmail() { return this.contactEmail; }
+    public set ContactEmail(newValue: string) { if (this.contactEmail != newValue) { this.contactEmail = newValue; this.MarkAsDirty("ContactEmail"); } }
+       
+	 
+    private contactTel: string;
+    public get ContactTel() { return this.contactTel; }
+    public set ContactTel(newValue: string) { if (this.contactTel != newValue) { this.contactTel = newValue; this.MarkAsDirty("ContactTel"); } }
+       
+	 
+    private contactCellPhone: string;
+    public get ContactCellPhone() { return this.contactCellPhone; }
+    public set ContactCellPhone(newValue: string) { if (this.contactCellPhone != newValue) { this.contactCellPhone = newValue; this.MarkAsDirty("ContactCellPhone"); } }
+       
+	 
+    private contactFax: string;
+    public get ContactFax() { return this.contactFax; }
+    public set ContactFax(newValue: string) { if (this.contactFax != newValue) { this.contactFax = newValue; this.MarkAsDirty("ContactFax"); } }
+       
+	 
 
     public OldEntityPM: SIIRequestPM;
 		
