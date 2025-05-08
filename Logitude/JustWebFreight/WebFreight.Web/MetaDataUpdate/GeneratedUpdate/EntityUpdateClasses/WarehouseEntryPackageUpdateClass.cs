@@ -3290,7 +3290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen WarehouseEntryPackageWarehouseEntryPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WarehouseEntryPackage.HeaderScreen", Name = "WarehouseEntryPackageHeaderScreen", ObjectTableId = WarehouseEntryPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen WarehouseEntryPackageWarehouseEntryPackageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "WarehouseEntryPackage.HeaderScreen", Name = "WarehouseEntryPackageHeaderScreen", ObjectTableId = WarehouseEntryPackageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    WarehouseEntryPackageObjectTable.HeaderScreenId = WarehouseEntryPackageWarehouseEntryPackageHeaderScreenScreen0.Id;
 		    WarehouseEntryPackageObjectTable.HeaderScreenCode = WarehouseEntryPackageWarehouseEntryPackageHeaderScreenScreen0.Code;

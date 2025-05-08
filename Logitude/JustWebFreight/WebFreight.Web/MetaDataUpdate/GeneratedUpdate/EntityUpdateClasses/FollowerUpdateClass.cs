@@ -472,7 +472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen FollowerFollowerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Follower.HeaderScreen", Name = "FollowerHeaderScreen", ObjectTableId = FollowerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen FollowerFollowerHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Follower.HeaderScreen", Name = "FollowerHeaderScreen", ObjectTableId = FollowerObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    FollowerObjectTable.HeaderScreenId = FollowerFollowerHeaderScreenScreen0.Id;
 		    FollowerObjectTable.HeaderScreenCode = FollowerFollowerHeaderScreenScreen0.Code;
@@ -489,10 +489,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable FollowerObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Follower" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature FollowerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable);
-		   Feature FollowerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable);
-		   Feature FollowerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable);
-		   Feature FollowerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.PackageFeature", NameTextCodeDefaultText = "Follower Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable);    
+		   Feature FollowerFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable,contextTenant);
+		   Feature FollowerFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable,contextTenant);
+		   Feature FollowerFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable,contextTenant);
+		   Feature FollowerFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = FollowerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Follower.Features.PackageFeature", NameTextCodeDefaultText = "Follower Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,FollowerObjectTable,contextTenant);    
 	    
 		}
 

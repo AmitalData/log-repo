@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			 this.CommonContext.SaveChanges();
 			 if(runPostDeleteProcedure)
 			 {
-				MetadataUpdateUtility.RunPostDeleteProcedure();
+				MetadataUpdateUtility.RunPostDeleteProcedure(contextTenant);
 			 }
 			//CreateAllObjectTables();
 		    //this.ObjectContext.SaveChanges();

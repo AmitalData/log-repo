@@ -946,7 +946,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen SLAHeaderSLAHeaderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SLAHeader.HeaderScreen", Name = "SLAHeaderHeaderScreen", ObjectTableId = SLAHeaderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen SLAHeaderSLAHeaderHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "SLAHeader.HeaderScreen", Name = "SLAHeaderHeaderScreen", ObjectTableId = SLAHeaderObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    SLAHeaderObjectTable.HeaderScreenId = SLAHeaderSLAHeaderHeaderScreenScreen0.Id;
 		    SLAHeaderObjectTable.HeaderScreenCode = SLAHeaderSLAHeaderHeaderScreenScreen0.Code;
@@ -963,10 +963,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable SLAHeaderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SLAHeader" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature SLAHeaderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable);
-		   Feature SLAHeaderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable);
-		   Feature SLAHeaderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable);
-		   Feature SLAHeaderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.PackageFeature", NameTextCodeDefaultText = "SLAHeader Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable);    
+		   Feature SLAHeaderFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable,contextTenant);
+		   Feature SLAHeaderFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable,contextTenant);
+		   Feature SLAHeaderFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable,contextTenant);
+		   Feature SLAHeaderFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = SLAHeaderObjectTable.Id, Tenant = 0, NameTextCodeCode = "SLAHeader.Features.PackageFeature", NameTextCodeDefaultText = "SLAHeader Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,SLAHeaderObjectTable,contextTenant);    
 	    
 		}
 

@@ -534,7 +534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen GroupGroupHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Group.HeaderScreen", Name = "GroupHeaderScreen", ObjectTableId = GroupObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen GroupGroupHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Group.HeaderScreen", Name = "GroupHeaderScreen", ObjectTableId = GroupObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    GroupObjectTable.HeaderScreenId = GroupGroupHeaderScreenScreen0.Id;
 		    GroupObjectTable.HeaderScreenCode = GroupGroupHeaderScreenScreen0.Code;
@@ -551,10 +551,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable GroupObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Group" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature GroupFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable);
-		   Feature GroupFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable);
-		   Feature GroupFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable);
-		   Feature GroupFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.PackageFeature", NameTextCodeDefaultText = "Group Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable);    
+		   Feature GroupFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable,contextTenant);
+		   Feature GroupFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable,contextTenant);
+		   Feature GroupFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable,contextTenant);
+		   Feature GroupFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = GroupObjectTable.Id, Tenant = 0, NameTextCodeCode = "Group.Features.PackageFeature", NameTextCodeDefaultText = "Group Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GroupObjectTable,contextTenant);    
 	    
 		}
 

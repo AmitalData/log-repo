@@ -410,7 +410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TMReleaseTMReleaseHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMRelease.HeaderScreen", Name = "TMReleaseHeaderScreen", ObjectTableId = TMReleaseObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TMReleaseTMReleaseHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMRelease.HeaderScreen", Name = "TMReleaseHeaderScreen", ObjectTableId = TMReleaseObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    TMReleaseObjectTable.HeaderScreenId = TMReleaseTMReleaseHeaderScreenScreen0.Id;
 		    TMReleaseObjectTable.HeaderScreenCode = TMReleaseTMReleaseHeaderScreenScreen0.Code;
@@ -427,10 +427,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TMReleaseObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMRelease" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TMReleaseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable);
-		   Feature TMReleaseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable);
-		   Feature TMReleaseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable);
-		   Feature TMReleaseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.PackageFeature", NameTextCodeDefaultText = "TMRelease Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable);    
+		   Feature TMReleaseFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable,contextTenant);
+		   Feature TMReleaseFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable,contextTenant);
+		   Feature TMReleaseFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable,contextTenant);
+		   Feature TMReleaseFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TMReleaseObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMRelease.Features.PackageFeature", NameTextCodeDefaultText = "TMRelease Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMReleaseObjectTable,contextTenant);    
 	    
 		}
 

@@ -427,17 +427,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode TMBudgetTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMBudget.Q.AllBudgets", DefaultText = @"All Budgets",LocalDefaultText = "All Budgets", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TMBudgetFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Q.AllBudgets", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.AllBudgets", NameTextCodeDefaultText = "All Budgets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMBudgetObjectTable, addedFeatures, addedTextCodes);
+			   Feature TMBudgetFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Q.AllBudgets", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.AllBudgets", NameTextCodeDefaultText = "All Budgets", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TMBudgetObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllBudgetsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMBudgetTextCode_0.Id, NameTextCodeCode = TMBudgetTextCode_0.Code, ObjectTableName = "TMBudget", Code = "All Budgets",  QueryGroupCode = "17f3", IndexOrder = 0, Tenant = 0, ObjectTableId = TMBudgetObjectTable.Id, QuerySection = "TMBudget", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMBudgetFeature_0.Id,FeatureUniqeCode= TMBudgetFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query AllBudgetsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TMBudgetTextCode_0.Id, NameTextCodeCode = TMBudgetTextCode_0.Code, ObjectTableName = "TMBudget", Code = "All Budgets",  QueryGroupCode = "17f3", IndexOrder = 0, Tenant = 0, ObjectTableId = TMBudgetObjectTable.Id, QuerySection = "TMBudget", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TMBudgetFeature_0.Id,FeatureUniqeCode= TMBudgetFeature_0.FeatureUniqeCode, DefaultSortName = "Name", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn AllBudgetsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBudgetsQuery.Id,QueryCode = AllBudgetsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMBudget.Name" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBudgetsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBudgetsQuery.Id,QueryCode = AllBudgetsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "TMBudget.Name" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllBudgetsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBudgetsQuery.Id,QueryCode = AllBudgetsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMBudget.Inactive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllBudgetsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllBudgetsQuery.Id,QueryCode = AllBudgetsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "TMBudget.Inactive" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
@@ -454,19 +454,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TMBudgetGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen TMBudgetGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField TMBudgetGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMBudgetGeneralTabScreenScreen0.Id,ScreenCode = TMBudgetGeneralTabScreenScreen0.Code, ObjectFieldCode = "TMBudget.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMBudgetGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMBudgetGeneralTabScreenScreen0.Id,ScreenCode = TMBudgetGeneralTabScreenScreen0.Code, ObjectFieldCode = "TMBudget.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMBudgetGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TMBudgetGeneralTabScreenScreen0.Id,ScreenCode = TMBudgetGeneralTabScreenScreen0.Code, ObjectFieldCode = "TMBudget.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMBudgetGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = TMBudgetGeneralTabScreenScreen0.Id,ScreenCode = TMBudgetGeneralTabScreenScreen0.Code, ObjectFieldCode = "TMBudget.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	            
 	      
 
-	         Screen TMBudgetTMBudgetHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.HeaderScreen", Name = "TMBudgetHeaderScreen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TMBudgetTMBudgetHeaderScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "TMBudget.HeaderScreen", Name = "TMBudgetHeaderScreen", ObjectTableId = TMBudgetObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField TMBudgetTMBudgetHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id,ScreenCode = TMBudgetTMBudgetHeaderScreenScreen1.Code, ObjectFieldCode = "TMBudget.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMBudgetTMBudgetHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id,ScreenCode = TMBudgetTMBudgetHeaderScreenScreen1.Code, ObjectFieldCode = "TMBudget.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          
-             ScreenField TMBudgetTMBudgetHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id,ScreenCode = TMBudgetTMBudgetHeaderScreenScreen1.Code, ObjectFieldCode = "TMBudget.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TMBudgetTMBudgetHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id,ScreenCode = TMBudgetTMBudgetHeaderScreenScreen1.Code, ObjectFieldCode = "TMBudget.Inactive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    TMBudgetObjectTable.HeaderScreenId = TMBudgetTMBudgetHeaderScreenScreen1.Id;
 		    TMBudgetObjectTable.HeaderScreenCode = TMBudgetTMBudgetHeaderScreenScreen1.Code;
@@ -481,19 +481,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TMBudgetObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMBudget" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TMBudgetGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMBudget.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TMBudgetGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Tab.General", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.GEBG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMBudgetObjectTable);
+			   Feature TMBudgetGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Tab.General", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.GEBG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMBudgetObjectTable,contextTenant);
  
                  
 			   TextCode TMBudgetEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TMBudget.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TMBudgetEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Tab.Events", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.EVBG", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMBudgetObjectTable);
+			   Feature TMBudgetEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TMBudget.Tab.Events", ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudgetFeatures.EVBG", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TMBudgetObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GEBG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMBudgetGeneralFeature_TH0.Id,FeatureUniqeCode = TMBudgetGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TMBudgetObjectTable.Id, TabNameTextCodeId = TMBudgetGeneralTextCode_TH0.Id, TabNameTextCodeCode = TMBudgetGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GEBG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMBudgetGeneralFeature_TH0.Id,FeatureUniqeCode = TMBudgetGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = TMBudgetObjectTable.Id, TabNameTextCodeId = TMBudgetGeneralTextCode_TH0.Id, TabNameTextCodeCode = TMBudgetGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVBG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMBudgetEventsFeature_TH1.Id,FeatureUniqeCode = TMBudgetEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TMBudgetObjectTable.Id, TabNameTextCodeId = TMBudgetEventsTextCode_TH1.Id, TabNameTextCodeCode = TMBudgetEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EVBG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TMBudgetEventsFeature_TH1.Id,FeatureUniqeCode = TMBudgetEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TMBudgetObjectTable.Id, TabNameTextCodeId = TMBudgetEventsTextCode_TH1.Id, TabNameTextCodeCode = TMBudgetEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -501,10 +501,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TMBudgetObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TMBudget" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TMBudgetFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable);
-		   Feature TMBudgetFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable);
-		   Feature TMBudgetFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable);
-		   Feature TMBudgetFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.PackageFeature", NameTextCodeDefaultText = "TMBudget Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable);    
+		   Feature TMBudgetFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable,contextTenant);
+		   Feature TMBudgetFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable,contextTenant);
+		   Feature TMBudgetFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable,contextTenant);
+		   Feature TMBudgetFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TMBudgetObjectTable.Id, Tenant = 0, NameTextCodeCode = "TMBudget.Features.PackageFeature", NameTextCodeDefaultText = "TMBudget Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TMBudgetObjectTable,contextTenant);    
 	    
 		}
 

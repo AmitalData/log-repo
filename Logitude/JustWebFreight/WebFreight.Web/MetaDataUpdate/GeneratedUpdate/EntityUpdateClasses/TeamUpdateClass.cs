@@ -1026,21 +1026,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
 
 			   TextCode TeamTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Team.Q.AllTeams", DefaultText = @"Teams",LocalDefaultText = "Teams", ObjectTableId = TeamObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
-			   Feature TeamFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Team.Q.AllTeams", ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "TeamFeatures.AllTeams", NameTextCodeDefaultText = "All Teams", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TeamObjectTable, addedFeatures, addedTextCodes);
+			   Feature TeamFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Team.Q.AllTeams", ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "TeamFeatures.AllTeams", NameTextCodeDefaultText = "All Teams", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TeamObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllTeamsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TeamTextCode_0.Id, NameTextCodeCode = TeamTextCode_0.Code, ObjectTableName = "Team", Code = "All Teams",  QueryGroupCode = "72bf", IndexOrder = 0, Tenant = 0, ObjectTableId = TeamObjectTable.Id, QuerySection = "Team", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TeamFeature_0.Id,FeatureUniqeCode= TeamFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllTeamsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TeamTextCode_0.Id, NameTextCodeCode = TeamTextCode_0.Code, ObjectTableName = "Team", Code = "All Teams",  QueryGroupCode = "72bf", IndexOrder = 0, Tenant = 0, ObjectTableId = TeamObjectTable.Id, QuerySection = "Team", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = TeamFeature_0.Id,FeatureUniqeCode= TeamFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn AllTeamsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Team.Name" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllTeamsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Team.Name" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllTeamsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Team.LocalName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllTeamsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Team.LocalName" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllTeamsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Team.ManagerUserName" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllTeamsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Team.ManagerUserName" , ColumnWidth = 150 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllTeamsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Team.InActive" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllTeamsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllTeamsQuery.Id,QueryCode = AllTeamsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Team.InActive" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
@@ -1057,9 +1057,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen TeamTeamHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Team.HeaderScreen", Name = "TeamHeaderScreen", ObjectTableId = TeamObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen TeamTeamHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Team.HeaderScreen", Name = "TeamHeaderScreen", ObjectTableId = TeamObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       
-             ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TeamTeamHeaderScreenScreen0.Id,ScreenCode = TeamTeamHeaderScreenScreen0.Code, ObjectFieldCode = "Team.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField TeamTeamHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = TeamTeamHeaderScreenScreen0.Id,ScreenCode = TeamTeamHeaderScreenScreen0.Code, ObjectFieldCode = "Team.Name", Tenant = 0, }, screenFieldsRepository, tenantScreenFields,contextTenant);
 	          	
 		    TeamObjectTable.HeaderScreenId = TeamTeamHeaderScreenScreen0.Id;
 		    TeamObjectTable.HeaderScreenCode = TeamTeamHeaderScreenScreen0.Code;
@@ -1074,19 +1074,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable TeamObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Team" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode TeamGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Team.TH.General", DefaultText = "General",LocalDefaultText = "General", ObjectTableId = TeamObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TeamGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Team.Tab.General", ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "TeamFeatures.TEGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TeamObjectTable);
+			   Feature TeamGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Team.Tab.General", ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "TeamFeatures.TEGE", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TeamObjectTable,contextTenant);
  
                  
 			   TextCode TeamEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Team.TH.Events", DefaultText = "Events",LocalDefaultText = "Events", ObjectTableId = TeamObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature TeamEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Team.Tab.Events", ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "TeamFeatures.TEEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TeamObjectTable);
+			   Feature TeamEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Team.Tab.Events", ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "TeamFeatures.TEEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,TeamObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEGE",HtmlComponentName = "TeamGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", FeatureId = TeamGeneralFeature_TH0.Id,FeatureUniqeCode = TeamGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamGeneralTextCode_TH0.Id, TabNameTextCodeCode = TeamGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEGE",HtmlComponentName = "TeamGeneralTabComponent",HtmlComponentUrl = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", FeatureId = TeamGeneralFeature_TH0.Id,FeatureUniqeCode = TeamGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Team/TeamGeneralTabComponent", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamGeneralTextCode_TH0.Id, TabNameTextCodeCode = TeamGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TeamEventsFeature_TH1.Id,FeatureUniqeCode = TeamEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamEventsTextCode_TH1.Id, TabNameTextCodeCode = TeamEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "TEEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = TeamEventsFeature_TH1.Id,FeatureUniqeCode = TeamEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = TeamObjectTable.Id, TabNameTextCodeId = TeamEventsTextCode_TH1.Id, TabNameTextCodeCode = TeamEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -1094,10 +1094,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable TeamObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Team" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature TeamFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable);
-		   Feature TeamFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable);
-		   Feature TeamFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable);
-		   Feature TeamFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.PackageFeature", NameTextCodeDefaultText = "Team Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable);    
+		   Feature TeamFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable,contextTenant);
+		   Feature TeamFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable,contextTenant);
+		   Feature TeamFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable,contextTenant);
+		   Feature TeamFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = TeamObjectTable.Id, Tenant = 0, NameTextCodeCode = "Team.Features.PackageFeature", NameTextCodeDefaultText = "Team Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TeamObjectTable,contextTenant);    
 	    
 		}
 

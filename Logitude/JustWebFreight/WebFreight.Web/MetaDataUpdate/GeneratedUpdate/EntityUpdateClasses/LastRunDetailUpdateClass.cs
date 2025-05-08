@@ -410,7 +410,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen LastRunDetailLastRunDetailHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LastRunDetail.HeaderScreen", Name = "LastRunDetailHeaderScreen", ObjectTableId = LastRunDetailObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen LastRunDetailLastRunDetailHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "LastRunDetail.HeaderScreen", Name = "LastRunDetailHeaderScreen", ObjectTableId = LastRunDetailObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    LastRunDetailObjectTable.HeaderScreenId = LastRunDetailLastRunDetailHeaderScreenScreen0.Id;
 		    LastRunDetailObjectTable.HeaderScreenCode = LastRunDetailLastRunDetailHeaderScreenScreen0.Code;
@@ -427,10 +427,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable LastRunDetailObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "LastRunDetail" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature LastRunDetailFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable);
-		   Feature LastRunDetailFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable);
-		   Feature LastRunDetailFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable);
-		   Feature LastRunDetailFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.PackageFeature", NameTextCodeDefaultText = "LastRunDetail Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable);    
+		   Feature LastRunDetailFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable,contextTenant);
+		   Feature LastRunDetailFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable,contextTenant);
+		   Feature LastRunDetailFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable,contextTenant);
+		   Feature LastRunDetailFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = LastRunDetailObjectTable.Id, Tenant = 0, NameTextCodeCode = "LastRunDetail.Features.PackageFeature", NameTextCodeDefaultText = "LastRunDetail Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,LastRunDetailObjectTable,contextTenant);    
 	    
 		}
 

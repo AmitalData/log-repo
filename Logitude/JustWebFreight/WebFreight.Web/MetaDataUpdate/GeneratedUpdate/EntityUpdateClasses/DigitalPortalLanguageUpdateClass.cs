@@ -351,7 +351,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen DigitalPortalLanguageDigitalPortalLanguageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DigitalPortalLanguage.HeaderScreen", Name = "DigitalPortalLanguageHeaderScreen", ObjectTableId = DigitalPortalLanguageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen DigitalPortalLanguageDigitalPortalLanguageHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DigitalPortalLanguage.HeaderScreen", Name = "DigitalPortalLanguageHeaderScreen", ObjectTableId = DigitalPortalLanguageObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    DigitalPortalLanguageObjectTable.HeaderScreenId = DigitalPortalLanguageDigitalPortalLanguageHeaderScreenScreen0.Id;
 		    DigitalPortalLanguageObjectTable.HeaderScreenCode = DigitalPortalLanguageDigitalPortalLanguageHeaderScreenScreen0.Code;

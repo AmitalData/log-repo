@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ToggleUpdateClass
    {  		
-		public const string HashString = "0828b81d3a9e3f6196a7b3ee5dfada90";
+		public const string HashString = "02922b6940ae25fc704b1ea259f8e594";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -361,7 +361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen ToggleToggleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Toggle.HeaderScreen", Name = "ToggleHeaderScreen", ObjectTableId = ToggleObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ToggleToggleHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Toggle.HeaderScreen", Name = "ToggleHeaderScreen", ObjectTableId = ToggleObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    ToggleObjectTable.HeaderScreenId = ToggleToggleHeaderScreenScreen0.Id;
 		    ToggleObjectTable.HeaderScreenCode = ToggleToggleHeaderScreenScreen0.Code;

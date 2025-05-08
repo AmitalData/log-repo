@@ -469,7 +469,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen DigitalProfileDigitalProfileHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DigitalProfile.HeaderScreen", Name = "DigitalProfileHeaderScreen", ObjectTableId = DigitalProfileObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen DigitalProfileDigitalProfileHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "DigitalProfile.HeaderScreen", Name = "DigitalProfileHeaderScreen", ObjectTableId = DigitalProfileObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    DigitalProfileObjectTable.HeaderScreenId = DigitalProfileDigitalProfileHeaderScreenScreen0.Id;
 		    DigitalProfileObjectTable.HeaderScreenCode = DigitalProfileDigitalProfileHeaderScreenScreen0.Code;
@@ -486,10 +486,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 		   ObjectTable DigitalProfileObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "DigitalProfile" && d.Tenant == 0).FirstOrDefault(); 
 
-		   Feature DigitalProfileFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable);
-		   Feature DigitalProfileFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable);
-		   Feature DigitalProfileFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable);
-		   Feature DigitalProfileFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.PackageFeature", NameTextCodeDefaultText = "DigitalProfile Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable);    
+		   Feature DigitalProfileFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable,contextTenant);
+		   Feature DigitalProfileFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable,contextTenant);
+		   Feature DigitalProfileFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable,contextTenant);
+		   Feature DigitalProfileFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = DigitalProfileObjectTable.Id, Tenant = 0, NameTextCodeCode = "DigitalProfile.Features.PackageFeature", NameTextCodeDefaultText = "DigitalProfile Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DigitalProfileObjectTable,contextTenant);    
 	    
 		}
 
