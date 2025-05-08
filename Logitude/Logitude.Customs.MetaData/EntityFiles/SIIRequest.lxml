@@ -17,7 +17,7 @@
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
-  HasCustomValidator="true"
+  HasCustomValidator="false"
   IsEditable="false"
   IsNewWizard="false"
   KeyPropertyPath="&quot;Id&quot;"
