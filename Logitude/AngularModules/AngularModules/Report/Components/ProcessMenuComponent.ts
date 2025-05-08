@@ -30,7 +30,6 @@ export class ProcessMenuComponent implements OnDestroy {
     @Output() NumberCompletedProcesses = new EventEmitter<number>();
     @Output() CloseMenu = new EventEmitter<MenuItemClass>();
 
-    public MenuItems: MenuItemClass[];
     SelectedMenuItem: MenuItemClass;
     private menuItemsSubject = new BehaviorSubject<MenuItemClass[]>([]);
     MenuItems$ = this.menuItemsSubject.asObservable();
@@ -88,7 +87,6 @@ export class ProcessMenuComponent implements OnDestroy {
 
     get CurrentProcessId() { return this.currentProcessId; }
     set CurrentProcessId(newValue: string) {
-
         if (this.currentProcessId != newValue) {
             this.currentProcessId = newValue;
         }
@@ -123,25 +121,16 @@ export class ProcessMenuComponent implements OnDestroy {
     }
 
     DeleteMenuItem(relatedRep: MenuItemClass) {
-        this.CurrentSession.StartBusyIndicator("Deleting....");
-
 
         this.processMenuService.DeleteFromMenu(relatedRep.Id,relatedRep.ItemType).subscribe((res: any) => {
-            if (!res.HasError) {
-                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
-
-            }
-            this.CurrentSession.StopBusyIndicator();
-        });
+                   });
     }
 
     CancelMenuItem(relatedRep: MenuItemClass) {
 
-        this.CurrentSession.StartBusyIndicator("Canceling...");
         this.ReportExecutionLogPMService.Cancel(relatedRep.Id).subscribe((res: any) => {
             if (!res.HasError) {
                 this.processMenuService.LoadMenuItems();
-                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
             }
             this.CurrentSession.StopBusyIndicator();
         });
