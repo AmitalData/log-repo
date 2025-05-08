@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 cacheWrapper = value;
             }
         }
+
         public static int ClearCacheItems(Func<string, bool> pattrenFunc = null)
         {
             int clearItem = 0;

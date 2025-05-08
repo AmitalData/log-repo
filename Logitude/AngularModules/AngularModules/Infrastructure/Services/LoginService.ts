@@ -100,7 +100,7 @@ export class LoginService {
     }
 
     GetLoggedUser() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&useremail=' + this.LoggedUserEmail + '&getloggeduser=true';
+        var url = this.baseMetaUrlApi + '/GetLoggedUserPM?tenant=' + this.CurrentTenant + '&useremail=' + this.LoggedUserEmail + '&getloggeduser=true';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var result = response;
@@ -144,7 +144,7 @@ export class LoginService {
 
     GetQueries() {
 
-        var url = this.logitudeURL + "api/ngMetaData?tenant=" + this.CurrentTenant + "&userid=" + this.LoggedUserId + "&objecttableid=dummy";
+        var url = this.baseMetaUrlApi + "/GetQueryPMs?tenant=" + this.CurrentTenant + "&userid=" + this.LoggedUserId + "&objecttableid=dummy";
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -153,7 +153,7 @@ export class LoginService {
 
     GetStatuses() {
 
-        var url = this.baseMetaUrlApi + "?tenant=" + this.CurrentTenant + "&inActive=false&dumb2=dumb";
+        var url = this.baseMetaUrlApi + "/GetAllStatusesByTenant?tenant=" + this.CurrentTenant + "&inActive=false&dumb2=dumb";
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -169,7 +169,7 @@ export class LoginService {
     }
 
     GetTenantTranslations() {
-        var url = this.baseMetaUrlApi + "?translationTenant=" + this.CurrentTenant;
+        var url = this.baseMetaUrlApi + "/GetTranslations?translationTenant=" + this.CurrentTenant;
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -185,7 +185,7 @@ export class LoginService {
     }
 
     GetTransportModes() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&dummy=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllTransportModes?tenant=' + this.CurrentTenant + '&dummy=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -193,7 +193,7 @@ export class LoginService {
     }
 
     GetDirections() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&dummy2=dummy2';
+        var url = this.baseMetaUrlApi + '/GetAllDirections?tenant=' + this.CurrentTenant + '&dummy2=dummy2';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -201,7 +201,7 @@ export class LoginService {
     }
 
     GetMenusTables() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&menustables=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllMenusTablesByTenant?tenant=' + this.CurrentTenant + '&menustables=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -209,7 +209,7 @@ export class LoginService {
     }
 
     GetObjectTables() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&objecttables=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllObjectTables?tenant=' + this.CurrentTenant + '&objecttables=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -217,7 +217,7 @@ export class LoginService {
     }
 
     GetScreens() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&screens=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllScreensByTenant?tenant=' + this.CurrentTenant + '&screens=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -225,7 +225,7 @@ export class LoginService {
     }
 
     GetScreenFields() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&screenfields=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllScreenFieldsByTenant?tenant=' + this.CurrentTenant + '&screenfields=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -233,7 +233,7 @@ export class LoginService {
     }
 
     GetObjectTableTabs() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&objecttabletabs=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllObjectTableTabsByTenant?tenant=' + this.CurrentTenant + '&objecttabletabs=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -265,7 +265,7 @@ export class LoginService {
     }
 
     GetAccountingSetting() {
-        var url = this.baseMetaUrlApi + '?id=' + this.CurrentTenant + '&textcodetranslations=dummy';
+        var url = this.baseMetaUrlApi + '/GetAccountingSettingPM?id=' + this.CurrentTenant + '&textcodetranslations=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -273,14 +273,14 @@ export class LoginService {
     }   
 
     GetCustomsInterfaceSetting() {
-        var url = this.baseMetaUrlApi + '?InterfaceId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
+        var url = this.baseMetaUrlApi + '/GetCustomsInterfaceSettingPM?InterfaceId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
     }
 
     GetSharedLogisticsSetting() {
-        var url = this.baseMetaUrlApi + '?settingId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
+        var url = this.baseMetaUrlApi + '/GetSharedLogisticsSettingM?settingId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));

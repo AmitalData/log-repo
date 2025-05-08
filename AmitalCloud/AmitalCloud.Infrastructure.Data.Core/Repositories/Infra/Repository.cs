@@ -178,15 +178,14 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
         }
         public List<TEntity> GetAll<TKey>(int tenant, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending) => ApplyOrderedBy<TKey>(orderBy, orderByDirection, GetQuery(tenant)).ToList();
         public List<TEntity> GetMulti<TKeyType>(IEntityKeyFields<TEntity, TKeyType> entityKeys) => GetMulti(entityKeys.Predicate);
-        // FYI temp solution to pass Func<TEntity, TResult> without Expression to prevent an error when doing select with a cstr on query, that causes to execute the select after the data is fetched from db
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
-        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select) => _dbSet.Where(predicate).Select(select).ToList();
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include) => ApplyInclude(predicate, include).Select(select).ToList();
+        public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select) => _dbSet.Where(predicate).Select(select).ToList();
 
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
 
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, string include) => ApplyInclude(predicate, include).ToList().AsEnumerable().Select(a => NewObject<TResult>(a)).ToList();
 
-        public List<TResult> GetMultiFromCache<TResult>(string cacheKey, Expression<Func<TEntity, bool>> predicate, string include = null, Func<TEntity, TResult> select = null)
+        public List<TResult> GetMultiFromCache<TResult>(string cacheKey, Expression<Func<TEntity, bool>> predicate, string include = null, Expression<Func<TEntity, TResult>> select = null)
         {
             List<TResult> entityPMs;
 
@@ -386,7 +385,15 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
 
         private void Save()
         {
-            _dbContext.GetType().GetMethod("SaveChanges").Invoke(_dbContext, null);
+            var method = _dbContext.GetType().GetMethods().FirstOrDefault(m => m.Name == "SaveChanges" && m.GetParameters().Length == 0);
+            if (method != null)
+            {
+                method.Invoke(_dbContext, null);
+            }
+            else
+            {
+                throw new InvalidOperationException("No matching SaveChanges() method found.");
+            }
         }
         private async Task SaveAsync()
         {

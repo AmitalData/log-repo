@@ -31,9 +31,9 @@ namespace AmitalCloud.Infrastructure.Domain.Interfaces
 
 
         List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate);
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select);
-        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Func<TEntity, TResult> select, string include);
-        List<TResult> GetMultiFromCache<TResult>(string cacheKey, Expression<Func<TEntity, bool>> predicate, string include = null, Func<TEntity, TResult> select = null);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select);
+        List<TResult> GetMulti<TResult>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select, string include);
+        List<TResult> GetMultiFromCache<TResult>(string cacheKey, Expression<Func<TEntity, bool>> predicate, string include = null, Expression<Func<TEntity, TResult>> select = null);
 
         List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TKey>> orderBy, int skip, int take);
         List<TResult> GetMulti<TResult, TKey>(Expression<Func<TEntity, bool>> predicate, string include, Expression<Func<TEntity, TKey>> orderBy, OrderByDirection orderByDirection = OrderByDirection.Ascending);

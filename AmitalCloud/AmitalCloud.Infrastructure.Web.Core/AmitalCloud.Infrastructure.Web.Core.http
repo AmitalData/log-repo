@@ -1,0 +1,6 @@
+@AmitalCloud.Infrastructure.Web.Core_HostAddress = http://localhost:5036
+
+GET {{AmitalCloud.Infrastructure.Web.Core_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

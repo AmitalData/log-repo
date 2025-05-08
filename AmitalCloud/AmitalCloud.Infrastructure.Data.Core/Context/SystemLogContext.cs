@@ -27,7 +27,8 @@ namespace AmitalCloud.Infrastructure.Data.Context
         }
         public static ISystemLogContext GetContext(int tenant)
         {
-            string dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(DbContextBaseUtil.SystemLogsConnectionString);
+            string dbConnectionInfo = ConfigurationHelper.GetConnectionString(DbContextBaseUtil.SystemLogsConnectionString);
+            dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
 
             DbContextOptionsBuilder<SystemLogContext> optionsBuilder = new DbContextOptionsBuilder<SystemLogContext>();
 

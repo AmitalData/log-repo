@@ -14,6 +14,7 @@ using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using AmitalCloud.Infrastructure.Data.DBHelpers;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AmitalCloud.Infrastructure.Data.Context
 {
@@ -47,8 +48,12 @@ namespace AmitalCloud.Infrastructure.Data.Context
             else 
 			{
                 dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo);
-                optionsBuilder.UseSqlServer(dbConnectionInfo);
-			}
+                optionsBuilder.UseSqlServer(dbConnectionInfo)
+					.ConfigureWarnings(warnings =>
+					{
+						warnings.Ignore(CoreEventId.InvalidIncludePathError);
+					});
+            }
 
             if (DbContextBaseUtil.ToLog.GetValueOrDefault())
             {
@@ -108,6 +113,13 @@ namespace AmitalCloud.Infrastructure.Data.Context
             modelBuilder.Entity<Card>().HasOne(t => t.SharedLogisticsInvitationStatus).WithMany().HasForeignKey(d => d.SharedLogisticsInvitationStatusCode);
             modelBuilder.Entity<ARInvoice>().HasOne(t => t.CreditedByARInvoice).WithMany().HasForeignKey(d => d.CreditedByARInvoiceId);
             modelBuilder.Entity<DeploymentPackage>().HasOne(t => t.DeploymentPackagesVersion).WithMany().HasForeignKey(d => d.VersionId);
+
+
+            modelBuilder.Entity<Card>().HasOne(card => card.ClassifierUser).WithMany().HasForeignKey(card => card.ClassifierId);
+            modelBuilder.Entity<Card>().HasOne(card => card.CollectorUser).WithMany().HasForeignKey(card => card.CollectorId);
+            modelBuilder.Entity<Card>().HasOne(card => card.CreatedByUser).WithMany().HasForeignKey(card => card.CreatedByUserId);
+            modelBuilder.Entity<Card>().HasOne(card => card.Customer).WithOne().HasForeignKey<Card>(card => card.Id).HasPrincipalKey<Customer>(cust => cust.Id);
+            modelBuilder.Entity<Card>().HasOne(card => card.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
         }
 
         public void SetAsModified(object entity)

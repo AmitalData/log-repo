@@ -122,10 +122,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                     #endregion
 
                     string myNotes = args.Notes;
-                    string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
                     if (myNotes != null)
                     {
-                        if (dbms == "oracle")
+                        if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
                         {
                             if (myNotes.Length > 2000)
                             {

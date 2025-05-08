@@ -34,14 +34,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain.Core\AmitalCloud.Infrastructure.Domain.Core.csproj" />
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Model.Core\AmitalCloud.Infrastructure.Model.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Amital.UpDown.Common">
       <HintPath>..\packages\Amital.1.0.0\lib\Net40\Amital.UpDown.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="AmitalCloud.Infrastructure.Domain">
-      <HintPath>..\AmitalCloud.Infrastructure.Domain.Core\bin\Debug\net8.0\AmitalCloud.Infrastructure.Domain.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="AmitalCloud.Infrastructure.Model.Core">
-      <HintPath>..\AmitalCloud.Infrastructure.Model.Core\bin\Debug\net8.0\AmitalCloud.Infrastructure.Model.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime">
       <HintPath>..\..\..\Program Files\Microsoft SDKs\Azure\.NET SDK\v2.9\ref\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>

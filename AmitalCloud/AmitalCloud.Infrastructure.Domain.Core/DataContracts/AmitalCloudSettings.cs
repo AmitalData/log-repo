@@ -55,7 +55,7 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
         public static bool ReportsRunUsingWR { get; set; }
         public static string QueueServiceMode { get; set; }
         public static string StorageServiceMode { get; set; }
-        public static string DebugKey { get; set; } //Add new Virtual Dir with JustAppSetting.config with key (iis + AmitalCustomsWindowsService)
+        public static string? DebugKey { get; set; } //Add new Virtual Dir with JustAppSetting.config with key (iis + AmitalCustomsWindowsService)
         public static string DropboxAppKey { get; set; }
         public static string DropboxAppSecret { get; set; }
         public static string OceanInsightsToken { get; set; }

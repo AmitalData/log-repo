@@ -19,13 +19,15 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             _objectTablePropertyGetter = objectTablePropertyGetter;
         }
+        public GenericSort() { }
 
         public IQueryable<T> GetSorterQuery<T, N>(QueryOperations queryOperations, IQueryable<T> querableData)
         {
             string keyName = null;
             if (!string.IsNullOrEmpty(queryOperations.ObjectTableName))
             {
-                keyName = GetObjectTableKeyName(queryOperations);
+                throw new NotImplementedException("GetObjectTableKeyName is not implemented");
+                // keyName = GetObjectTableKeyName(queryOperations);
             }
             SortParams<T, N> sortParams = new SortParams<T, N>();
             sortParams.QuerableData = querableData;

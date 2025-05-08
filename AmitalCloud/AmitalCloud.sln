@@ -99,6 +99,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmitalCloud.Infrastructure.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.MetaData.Core", "AmitalCloud.Infrastructure.MetaData.Core\AmitalCloud.Infrastructure.MetaData.Core.csproj", "{B8B388F7-1A6A-40C6-8B34-C91434FE8BA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.Application.Core", "AmitalCloud.Infrastructure.Application.Core\AmitalCloud.Infrastructure.Application.Core.csproj", "{27B44109-6817-4708-87A2-4882AFB5A2A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalCloud.Infrastructure.Web.Core", "AmitalCloud.Infrastructure.Web.Core\AmitalCloud.Infrastructure.Web.Core.csproj", "{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU
@@ -312,6 +316,22 @@ Global
 		{B8B388F7-1A6A-40C6-8B34-C91434FE8BA9}.None|Any CPU.Build.0 = Debug|Any CPU
 		{B8B388F7-1A6A-40C6-8B34-C91434FE8BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8B388F7-1A6A-40C6-8B34-C91434FE8BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.None|Any CPU.Build.0 = Debug|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27B44109-6817-4708-87A2-4882AFB5A2A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.None|Any CPU.Build.0 = Debug|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -345,6 +365,8 @@ Global
 		{D4EF9158-DC26-47E5-91C9-299449AAC2DD} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
 		{6FC95BE2-1BAA-49FC-944F-7B3859044124} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
 		{B8B388F7-1A6A-40C6-8B34-C91434FE8BA9} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
+		{27B44109-6817-4708-87A2-4882AFB5A2A6} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
+		{9EAD361F-0666-4C7B-97C8-08FFCE4092C6} = {69B9B197-F47F-421C-8BBA-636A42002B9D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA00D447-9E1A-43C0-9284-15DB58AED53D}

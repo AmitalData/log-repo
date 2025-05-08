@@ -35,8 +35,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             var options = new MemoryCacheEntryOptions
             {
-                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30),
-                SlidingExpiration = TimeSpan.Zero
+                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30)
             };
             cache.Set(GetCacheKey(key, tenant), value, options);
         }
@@ -45,8 +44,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             var options = new MemoryCacheEntryOptions
             {
-                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30),
-                SlidingExpiration = TimeSpan.Zero
+                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30)
             };
             cache.Set(GetCacheKey(key, tenant), value, options);
         }
@@ -55,9 +53,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             var options = new MemoryCacheEntryOptions
             {
-                AbsoluteExpiration = absoluteExpiration,
-                SlidingExpiration = slidingExpiration
+                AbsoluteExpiration = absoluteExpiration
             };
+            if (slidingExpiration > TimeSpan.Zero)
+            {
+                options.SlidingExpiration = slidingExpiration;
+            }
             cache.Set(GetCacheKey(key, tenant), value, options);
         }
 
@@ -65,8 +66,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             var options = new MemoryCacheEntryOptions
             {
-                AbsoluteExpiration = absoluteExpiration,
-                SlidingExpiration = TimeSpan.Zero
+                AbsoluteExpiration = absoluteExpiration
             };
             options.RegisterPostEvictionCallback((key, value, reason, state) =>
             {
@@ -83,9 +83,12 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             var options = new MemoryCacheEntryOptions
             {
                 AbsoluteExpiration = absoluteExpiration,
-                SlidingExpiration = slidingExpiration,
                 Priority = priority
             };
+            if (slidingExpiration > TimeSpan.Zero)
+            {
+                options.SlidingExpiration = slidingExpiration;
+            }
 
             if (onRemoveCallback != null)
             {
@@ -105,8 +108,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             var options = new MemoryCacheEntryOptions
             {
-                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30),
-                SlidingExpiration = TimeSpan.Zero
+                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(30)
             };
             if (onRemoveCallback != null)
             {
@@ -122,8 +124,11 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             var options = new MemoryCacheEntryOptions
             {
                 AbsoluteExpiration = absoluteExpiration,
-                SlidingExpiration = slidingExpiration,
             };
+            if (slidingExpiration > TimeSpan.Zero)
+            {
+                options.SlidingExpiration = slidingExpiration;
+            }
 
             options.RegisterPostEvictionCallback((key, value, reason, state) =>
             {
@@ -184,17 +189,17 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             if (tenant == -1)
             {
-                if (HttpContextHelper.HttpContext.Items.ContainsKey("Tenant"))
+                if (HttpContextHelper.HttpContext?.Items?.ContainsKey("Tenant") == true)
                 {
                     tenant = Convert.ToInt32(HttpContextHelper.HttpContext.Items["Tenant"]);
                 }
-                else if (HttpContextHelper.HttpContext.Items.ContainsKey("authToken"))
+                else if (HttpContextHelper.HttpContext?.Items?.ContainsKey("authToken") == true)
                 {
                     tenant = (HttpContextHelper.HttpContext.Items["authToken"] as AuthenticationToken).Tenant;
                 }
                 else
                 {
-                    string token = HttpContextHelper.HttpContext.Request.Headers["Token"];
+                    string? token = HttpContextHelper.HttpContext?.Request?.Headers["Token"];
                     if (!string.IsNullOrEmpty(token))
                     {
                         string cacheKey = $"Token_({token})";

@@ -13,8 +13,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace AmitalCloud.Infrastructure.Model.EntityClasses
 {
-	[DataBase(AmitalCloudDBSchema.AMITAL_MAIN)]
-	[Table("ImageDetails")]
+	[NotMapped]
+	//[DataBase(AmitalCloudDBSchema.AMITAL_MAIN)]
+	//[Table("ImageDetails")]
     public class ImageDetail : BaseEntity
 	{
 		

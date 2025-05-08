@@ -260,9 +260,7 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            //return 'http://localhost:9996/';
-            // for amitalcloud: 
-            return 'http://localhost:44346/';
+            return 'http://localhost:9996/';
         }
 
         else {

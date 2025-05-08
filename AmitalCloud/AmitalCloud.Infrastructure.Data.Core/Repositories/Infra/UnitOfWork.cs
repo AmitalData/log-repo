@@ -83,7 +83,8 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             try
             {
                 //Calling DbContext Class SaveChanges method 
-                typeof(TContext).GetMethod("SaveChanges").Invoke(Context, null);
+                typeof(TContext).GetMethod("SaveChanges", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly, null, Type.EmptyTypes, null).Invoke(Context, null);
+
                 //Context.SaveChanges();
             }
             catch (DbUpdateException dbEx)
