@@ -240,7 +240,7 @@ namespace Simplog.Server.Infrastructure
         }
         private void InitLog()
         {
-#if DEBUG
+/*#if DEBUG
             if (System.Diagnostics.Debugger.IsAttached) // Double-check that a debugger is active
             {
                 base.Database.Log = delegate (string s)
@@ -256,7 +256,7 @@ namespace Simplog.Server.Infrastructure
                     Debug.WriteLine(s);
                 };
             }
-#endif
+#endif*/
 
             //this.Database.Log += EnqueueLog;
             if (LogitudeSettings.DatabaseManagementSystem != "oracle")

@@ -16,6 +16,7 @@ using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -91,7 +92,11 @@ namespace Logitude.Customs.Data.Repsitories
         {
             context.SaveChanges();
         }
-	 
-   }
+
+        public List<CustomsPaymentTerm> GetMulti(EntityKeyFields entityKeys)
+        {
+            throw new NotImplementedException();
+        }
+    }
    }
 	 

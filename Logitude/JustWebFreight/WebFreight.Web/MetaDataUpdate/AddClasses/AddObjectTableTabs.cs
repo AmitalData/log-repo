@@ -11,7 +11,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddObjectTableTabs
     {
-        public static void AddObjectTableTab(ObjectTableTabDetails objectTableTabDetails,ObjectTableTabRepository objectTableTabRepository,Dictionary<string, ObjectTableTab> tenantObjectTableTab)
+        public static void AddObjectTableTab(ObjectTableTabDetails objectTableTabDetails,ObjectTableTabRepository objectTableTabRepository,Dictionary<string, ObjectTableTab> tenantObjectTableTab, int contextTenant = 0)
         {
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -49,7 +49,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IndexOrder = objectTableTabDetails.IndexOrder,
                     ControlPath = objectTableTabDetails.ControlPath,
                     Code = objectTableTabDetails.Code,
-                    Id = IdCounter.GetNumber("ObjectTableTab", objectTableTabDetails.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("ObjectTableTab", contextTenant).ToString(),
                     TabNameTextCodeId = objectTableTabDetails.TabNameTextCodeId,
                     TabNameTextCodeCode = objectTableTabDetails.TabNameTextCodeCode,
                     Tenant = objectTableTabDetails.Tenant,

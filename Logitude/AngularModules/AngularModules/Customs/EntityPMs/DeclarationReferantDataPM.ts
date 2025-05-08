@@ -13,6 +13,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AppTool } from 'Infrastructure/Tools';
+
 
 export class DeclarationReferantDataPM {
       
@@ -304,6 +306,11 @@ export class DeclarationReferantDataPM {
     public set VesselName(newValue: string) { if (this.vesselName != newValue) { this.vesselName = newValue; this.MarkAsDirty("VesselName"); } }
        
 	 
+    private email: string;
+    public get Email() { return this.email; }
+    public set Email(newValue: string) { if (this.email != newValue) { this.email = newValue; this.MarkAsDirty("Email"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
@@ -312,8 +319,10 @@ export class DeclarationReferantDataPM {
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
+ 	
         this.IsDirty = true;
 		  	
+		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.DeclarationReferantData");

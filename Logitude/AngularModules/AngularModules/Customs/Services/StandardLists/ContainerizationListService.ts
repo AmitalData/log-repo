@@ -10,53 +10,53 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { InfraGenericFilter } from '../../../Infrastructure/Utilities/InfraGenericFilter';
-import { CachedDataManager } from '../../../Infrastructure/Utilities/CachedDataManager';
-import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
-import { LocalStorageManager } from '../../../Infrastructure/Utilities/LocalStorageManager';
-import { ContainerizationList } from '../../EntityLists/ContainerizationList';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGenericFilter';
+import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
+import {ContainerizationList} from '../../EntityLists/ContainerizationList';
 
 @Injectable()
 
 export class ContainerizationListService {
 	private _http: HttpClient;
-	private _apiUrl: string;
+    private _apiUrl: string;   
 	public static CachedData: Array<ContainerizationList> = [];
-	constructor() {
-		this._http = ServiceHelper.HttpClient;
-		this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerizationviews';
-	}
+    constructor() {
+        this._http = ServiceHelper.HttpClient;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/containerizationviews';  
+    }
 
 	getSingle(id: string) {
-
+	   
 		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
+				.pipe(			
 					map((response: HttpResponse<any>) => {
 
-						var list = response.body;
+						var list = response.body;                   
 						var entity: ContainerizationList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
-						}
+						}   
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = entity;
+						var serviceResponse: ServiceResponse = new ServiceResponse(); 
+						serviceResponse.Result = entity;  
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "GetSingleList", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
-
+			
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -73,29 +73,29 @@ export class ContainerizationListService {
 						var allLists = response.body;
 						var _mappedListsArray: Array<ContainerizationList> = [];
 						if (allLists) {
-							for (var key in allLists) {
+							for (var key in allLists) {				
 								var entity: ContainerizationList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
+						var serviceResponse: ServiceResponse = new ServiceResponse(); 
 						serviceResponse.Result = _mappedListsArray;
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "GetAllLists", "");
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
-
+			
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
-
+	
 	getByFilters(filters: ApiQueryFilters) {
 
-		var callTime = new Date();
+		var callTime = new Date();		                        
 		var urlparameters = '/getbyfilters?';
 		var mykeys = Object.keys(filters);
 		var addtionalFiltersValues = null;
@@ -103,36 +103,36 @@ export class ContainerizationListService {
 		for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters" || propName == "ParentEntity");
+			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
 
-			if (urlparameters != "?") {
+            if (urlparameters != "?") {
 				urlparameters = urlparameters.concat('&');
-			}
+            }
 
-			if (!ignoreFilter) {
+            if (!ignoreFilter) {
 				propValue = encodeURIComponent(propValue);
 				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
 
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
-				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-			}
-
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+			
 			if (propName == "ParentEntity" && propValue) {
-				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
-			}
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
 
 			if (propName == "AdditionalFilters" && propValue.length > 0) {
 				addtionalFiltersValues = JSON.stringify(propValue);
 			}
-		}
+        }
 
 		if (addtionalFiltersValues) {
 			urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
 		}
 
 		var callUrl = this._apiUrl.concat(urlparameters);
-
+        		
 		return defer(() => {
 			return this._http.get(callUrl, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
@@ -142,40 +142,40 @@ export class ContainerizationListService {
 						var _mappedListsArray: Array<ContainerizationList> = [];
 
 						if (serviceResponse.Result) {
-							for (var key in serviceResponse.Result) {
+							for (var key in serviceResponse.Result) {				
 								var entity: ContainerizationList = this.MapJsonToEntityList(serviceResponse.Result[key]);
 								_mappedListsArray.push(entity);
 							}
-						}
+						}   
 
-						serviceResponse.Result = _mappedListsArray;
+						serviceResponse.Result = _mappedListsArray;       
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "GetByFilters", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll);
-
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Containerization", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+				           
 						return serviceResponse;
 					}),
-
+			
 					catchError(ServiceHelper.HandleServiceError));
-		});
+		});        
 	}
 
+	
+	    MapJsonToEntityList(jsonList: any) {
+       
+            var entityList: ContainerizationList;
+            entityList = new ContainerizationList();
+            var jsonListKeys = Object.keys(jsonList);
 
-	MapJsonToEntityList(jsonList: any) {
+            for (var key in jsonListKeys) {
+                var property = jsonListKeys[key];
+                entityList[property] = jsonList[property];
+            }
+			
 
-		var entityList: ContainerizationList;
-		entityList = new ContainerizationList();
-		var jsonListKeys = Object.keys(jsonList);
-
-		for (var key in jsonListKeys) {
-			var property = jsonListKeys[key];
-			entityList[property] = jsonList[property];
-		}
-
-
-		return entityList;
-	}
+        return entityList;
+    }
 
 }
 

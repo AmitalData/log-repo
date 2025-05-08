@@ -11,6 +11,7 @@ namespace WebFreight.Web.Helpers
 {
     public class MetadataUpdateUtility
     {
+        public static int tenant = 0;
 
         public static bool IsChangedMetadataTable(string tableName, Dictionary<string, ObjectTable> ObjectTables, string generatedHashString)
         {
@@ -24,7 +25,7 @@ namespace WebFreight.Web.Helpers
 
                         };
 
-            ExecuteStoredProcedures.Execute("dbo.usp_DeleteObjectTableMetadata", 0, paramList);
+            ExecuteStoredProcedures.Execute("dbo.usp_DeleteObjectTableMetadata", tenant, paramList);
         }
 
         public static void RunPreDeleteProcedure()
@@ -35,7 +36,7 @@ namespace WebFreight.Web.Helpers
 
                         };
 
-            ExecuteStoredProcedures.Execute("dbo.usp_PreDeleteMetadata", 0, paramList);
+            ExecuteStoredProcedures.Execute("dbo.usp_PreDeleteMetadata", tenant, paramList);
 
 
         }
@@ -47,7 +48,7 @@ namespace WebFreight.Web.Helpers
 
                         };
 
-            ExecuteStoredProcedures.Execute("dbo.usp_ReconnectObjectTableMetadata", 0, paramList);
+            ExecuteStoredProcedures.Execute("dbo.usp_ReconnectObjectTableMetadata", tenant, paramList);
 
 
         }

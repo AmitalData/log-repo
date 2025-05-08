@@ -314,10 +314,10 @@ return 0;
             IWebFreightContext context = WebFreightContext.GetContext(tenant);
             ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
-            ContactRepository contactRepository = new ContactRepository(0);
+            ContactRepository contactRepository = new ContactRepository(tenant);
 
             List<ObjectTable> objectTablesList = objectTabelRepository.GetObjectsByTenant(0).Where(t=>t.IsClosed).ToList();
-            Contact loggedContact = contactRepository.GetSingleContactByEmail("system@tenant0.com", 0);
+            Contact loggedContact = contactRepository.GetSingleContactByEmailMultiDB("system@tenant0.com", 0,true, tenant);
 
             foreach (ObjectTable table in objectTablesList)
             {
@@ -335,7 +335,7 @@ return 0;
 
                     tableLastUpdate = new ObjectTableLastUpdate()
                     {
-                        Id = IdCounter.GetNumber("ObjectTableLastUpdate", 0),
+                        Id = IdCounter.GetNumber("ObjectTableLastUpdate", tenant),
                         Tenant = 0,
                         LastUpdateDate = DateTime.UtcNow,
                         ObjectTableId = table.Id,

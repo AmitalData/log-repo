@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated> CustomClassesGenerator.tt
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;

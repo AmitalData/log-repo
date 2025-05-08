@@ -19,7 +19,11 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class SignStationList
    {
-          [DataMember]
+   
+       [Key]
+       [DataMember]
+       public string CustomsAgentId  { get; set; }
+       [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
        public int Tenant  { get; set; }

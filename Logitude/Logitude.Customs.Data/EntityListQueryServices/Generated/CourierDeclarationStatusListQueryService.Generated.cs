@@ -92,6 +92,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
 						case "date":
                         case "datetime":
+						case "datetime2": 
                             {
                                 query2 = sortClass.GetSorterQuery<CourierDeclarationStatusList, DateTime>(queryOperations, query2);
                                 break;

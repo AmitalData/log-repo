@@ -2,6 +2,7 @@
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -20,9 +21,8 @@ namespace Logitude.Server.Tools.SQL
 {
     public class ExecuteStoredProcedures
     {
-        public static object Execute(string procedureName, int tenant, List<StoredProcedureParam> storedProcedureParams)
+        public static object Execute(string procedureName, int contextTenant, List<StoredProcedureParam> storedProcedureParams)
         {
-
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 //throw new Exception("to do ExecuteStoredProcedures.ExecuteOracle meanwhile there is only 1 ()real  Call"); 
@@ -30,11 +30,11 @@ namespace Logitude.Server.Tools.SQL
                 {
                     procedureName = procedureName.Split('.')[1];
                 }
-                return ExecuteOracle(procedureName, tenant, storedProcedureParams);
+                return ExecuteOracle(procedureName, contextTenant, storedProcedureParams);
             }
             else
             {
-                return ExecuteMMSQL(procedureName, tenant, storedProcedureParams);
+                return ExecuteMMSQL(procedureName, contextTenant, storedProcedureParams);
             }
 
 
@@ -43,10 +43,16 @@ namespace Logitude.Server.Tools.SQL
         public static string GetConnection(int tenant)
         {
             GlobalDB currentDb;
-
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                if (tenant > 0)
+                {
+                    currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+                }
+                else
+                {
+                    currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                }
             }
 
             string dbConnectionInfo = currentDb.DBConnection;

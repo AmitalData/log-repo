@@ -42,6 +42,11 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return (from a in context.TransportModes where a.Id == id select a).FirstOrDefault();
         }
 
+        public IQueryable<TransportMode> GetAll()
+        {
+            return context.TransportModes;
+        }
+
         public IQueryable<TransportMode> GetTransportModes()
         {
             return context.TransportModes;

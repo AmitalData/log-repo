@@ -13,7 +13,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddEventTypes
     {
-        public static void AddEventType(EventTypeDetails eventTypeDetails, EventTypeRepository eventTypeRepository, Dictionary<string, EventType> tenantEventTypes)
+        public static void AddEventType(EventTypeDetails eventTypeDetails, EventTypeRepository eventTypeRepository, Dictionary<string, EventType> tenantEventTypes,int contextTenant=0)
         {
             if (tenantEventTypes.Keys.Contains(eventTypeDetails.Code+eventTypeDetails.ObjectTableId))
             {
@@ -46,7 +46,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             {
                 EventType newEventType = new EventType()
                 {
-                    Id = IdCounter.GetNumber("EventType", eventTypeDetails.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("EventType", contextTenant).ToString(),
                     Tenant = eventTypeDetails.Tenant,
                     ShortView = eventTypeDetails.ShortView,
                     ObjectTableId = eventTypeDetails.ObjectTableId,
