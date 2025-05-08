@@ -118,8 +118,8 @@ namespace AmitalCloud.Infrastructure.Data.Context
             modelBuilder.Entity<Card>().HasOne(card => card.ClassifierUser).WithMany().HasForeignKey(card => card.ClassifierId);
             modelBuilder.Entity<Card>().HasOne(card => card.CollectorUser).WithMany().HasForeignKey(card => card.CollectorId);
             modelBuilder.Entity<Card>().HasOne(card => card.CreatedByUser).WithMany().HasForeignKey(card => card.CreatedByUserId);
-            modelBuilder.Entity<Card>().HasOne(card => card.Customer).WithOne().HasForeignKey<Card>(card => card.Id).HasPrincipalKey<Customer>(cust => cust.Id);
             modelBuilder.Entity<Card>().HasOne(card => card.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
+            modelBuilder.Entity<Card>().HasOne(card => card.Customer).WithOne().HasForeignKey<Card>(card => card.Id).HasPrincipalKey<Customer>(cust => cust.Id);
         }
 
         public void SetAsModified(object entity)
