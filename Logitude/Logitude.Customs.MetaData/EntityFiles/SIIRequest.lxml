@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;בקשות למכון תקנים&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;3b2f&quot;"
+  Code="&quot;e514&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1834,6 +1834,108 @@
       Code="&quot;Customs.SIIRequest.O.RequiredStatus&quot;"
       DefaultText="&quot;Required Status&quot;"
       LocalDefaultText="&quot;סטטוס דרישה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Level&quot;"
+      DefaultText="&quot;Level&quot;"
+      LocalDefaultText="&quot;רמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Declaration&quot;"
+      DefaultText="&quot;Declaration&quot;"
+      LocalDefaultText="&quot;הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.SupplierInvoice&quot;"
+      DefaultText="&quot;SupplierInvoice&quot;"
+      LocalDefaultText="&quot;חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.SivugSearchFields&quot;"
+      DefaultText="&quot;SearchFields&quot;"
+      LocalDefaultText="&quot;פרט מכס/מספר פריט&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.InvoiceNumber&quot;"
+      DefaultText="&quot;Invoice Number&quot;"
+      LocalDefaultText="&quot;מספר חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.LineNumber&quot;"
+      DefaultText="&quot;LineNumber&quot;"
+      LocalDefaultText="&quot;שורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.ItemCode&quot;"
+      DefaultText="&quot;ItemCode &quot;"
+      LocalDefaultText="&quot;קוד פריט&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.ItemDescription&quot;"
+      DefaultText="&quot;Item Description&quot;"
+      LocalDefaultText="&quot;תאור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.ClassificationCode&quot;"
+      DefaultText="&quot;Classification Code&quot;"
+      LocalDefaultText="&quot;פרט מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.TradeAgreementCode&quot;"
+      DefaultText="&quot;Trade Agreement Code&quot;"
+      LocalDefaultText="&quot;קוד הסכם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.InvoiceQuantityType&quot;"
+      DefaultText="&quot;Quantity Type&quot;"
+      LocalDefaultText="&quot;יח' מידה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.InvoiceQuantity&quot;"
+      DefaultText="&quot;Quantity&quot;"
+      LocalDefaultText="&quot;כמות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.ItemPrice&quot;"
+      DefaultText="&quot;Item Price&quot;"
+      LocalDefaultText="&quot;ערך סחורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.ItemPriceCurrencyCode&quot;"
+      DefaultText="&quot;Item Price Currency Code&quot;"
+      LocalDefaultText="&quot;מטבע&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.OriginCountryCode&quot;"
+      DefaultText="&quot;Origin Country&quot;"
+      LocalDefaultText="&quot;ארץ מקור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Confirm&quot;"
+      DefaultText="&quot;Confirm&quot;"
+      LocalDefaultText="&quot;אישור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Cancel&quot;"
+      DefaultText="&quot;Cancel&quot;"
+      LocalDefaultText="&quot;ביטול&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

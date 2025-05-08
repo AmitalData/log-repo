@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "78019e4b2bb368bf8ea7c7954d5932e9";
+		public const string HashString = "0003ae29a503e53e16c3c3437aad890e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "בקשות למכון תקנים",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "3b2f",
+			      				    Code =  "e514",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1686,6 +1686,40 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestORequiredCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.RequiredCertificates", DefaultText = "Required Certificates",LocalDefaultText = @"אישורים נדרשים", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestORequiredStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.RequiredStatus", DefaultText = "Required Status",LocalDefaultText = @"סטטוס דרישה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOLevel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Level", DefaultText = "Level",LocalDefaultText = @"רמה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestODeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Declaration", DefaultText = "Declaration",LocalDefaultText = @"הצהרה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOSupplierInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.SupplierInvoice", DefaultText = "SupplierInvoice",LocalDefaultText = @"חשבון", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOSivugSearchFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.SivugSearchFields", DefaultText = "SearchFields",LocalDefaultText = @"פרט מכס/מספר פריט", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.InvoiceNumber", DefaultText = "Invoice Number",LocalDefaultText = @"מספר חשבון", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOLineNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.LineNumber", DefaultText = "LineNumber",LocalDefaultText = @"שורה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOItemCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ItemCode", DefaultText = "ItemCode ",LocalDefaultText = @"קוד פריט", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOItemDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ItemDescription", DefaultText = "Item Description",LocalDefaultText = @"תאור", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ClassificationCode", DefaultText = "Classification Code",LocalDefaultText = @"פרט מכס", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOTradeAgreementCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.TradeAgreementCode", DefaultText = "Trade Agreement Code",LocalDefaultText = @"קוד הסכם", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOInvoiceQuantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.InvoiceQuantityType", DefaultText = "Quantity Type",LocalDefaultText = @"יח' מידה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOInvoiceQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.InvoiceQuantity", DefaultText = "Quantity",LocalDefaultText = @"כמות", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOItemPrice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ItemPrice", DefaultText = "Item Price",LocalDefaultText = @"ערך סחורה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOItemPriceCurrencyCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.ItemPriceCurrencyCode", DefaultText = "Item Price Currency Code",LocalDefaultText = @"מטבע", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOOriginCountryCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.OriginCountryCode", DefaultText = "Origin Country",LocalDefaultText = @"ארץ מקור", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Confirm", DefaultText = "Confirm",LocalDefaultText = @"אישור", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"ביטול", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
