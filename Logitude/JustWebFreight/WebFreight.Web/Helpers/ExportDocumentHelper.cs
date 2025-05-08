@@ -841,10 +841,13 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     {
                         theT1 = System.DateTime.Now.Ticks;
                         InvoiceWebService invoiceWebService = new InvoiceWebService();
-                       
-                        InvoiceDataProvider invoicedataprovider = invoiceWebService.GetInvoiceDataProvider(childEntityId, documentTypeCopyId, tenant);
+                        //byte[] byteArray = invoiceWebService.GetInvoiceData(childEntityId, documentTypeCopyId, tenant);
+                        //MemoryStream memorystream = new MemoryStream(byteArray);
+                        //XmlSerializer serializer = new XmlSerializer(typeof(InvoiceDataProvider));
+                        InvoiceDataProvider invoicedataprovider = invoiceWebService.GetInvoiceDataProvider(childEntityId, documentTypeCopyId, tenant);//(InvoiceDataProvider)serializer.Deserialize(memorystream);
 
                         theT2 = System.DateTime.Now.Ticks;
+                        //AzureLog.SaveLogsInStorage("Data provider :" + Convert.ToString((t2 - t1) / TimeSpan.TicksPerMillisecond), "P");
                         BaseDataProviderService.FillBaseVariableFields(invoicedataprovider, tenant);
                         DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = invoiceWebService.invoicePM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = invoicedataprovider }).Create(true);
 
