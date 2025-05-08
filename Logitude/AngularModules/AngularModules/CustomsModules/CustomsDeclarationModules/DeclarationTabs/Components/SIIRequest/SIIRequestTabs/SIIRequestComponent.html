@@ -1,75 +1,346 @@
 <style>
-    .FieldRow {
-        height: 22px;
-        line-height: 35px;
-    }
 
-    .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        padding: 4px 10px;
-        color: gray;
-        font-family: sans-serif;
-        max-width: 660px;
-        white-space: normal;
-    }
-
-    tr {
-        height: 5px;
-    }
 </style>
-<table>
-
+<table *ngIf="DecalarationData != null">
     <tr style="height:300px;">
         <td style="vertical-align:top">
             <div style="vertical-align:top; margin:5px">
+                <!-- Section One -->
                 <table style="width:850px">
                     <tr class="FieldRow">
                         <td class="TabTitleRow" style="width:130px">
-                            נתונים כלליים:
-                            <!-- {{'Customs.CertificateOfOrigin.O.TransitCertificate'| TextCodeTranslationPipe}} -->
+                            {{'Customs.General.O.DeclarationFilterGeneralDetails' | TextCodeTranslationPipe}}
                         </td>
                     </tr>
-
+                    <!-- First Row -->
                     <tr class="FieldRow">
-
+                        <td style="width:100px">
+                        </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                            <LogLabel [ObjectFieldName]="'ImporterId'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                            <LogTextBox [ObjectFieldName]="'ImporterId'" [DataContext]="DataContext"
                                 [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
                                 [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
-                           
                         </td>
-
                         <td style="width:180px">
-                            
                         </td>
-
-
                     </tr>
+                    <!-- Second Row -->
+                    <tr class="FieldRow">
+                        <td style="width:100px">
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                        </td>
+                        <td style="width:180px">
+                        </td>
+                    </tr>
+                    <!-- Third Row -->
+                    <tr class="FieldRow">
+                        <td style="width:100px">
+                        </td>
+                        <td style="width:130px">
+                            <!-- <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel> -->
+                        </td>
+                        <td style="width:180px">
+                            <!-- <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox> -->
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="'Customs.SIIRequests'"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'Remarks'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.SIIRequests'" [HideColumns]="true"></LogTextBox>
+                        </td>
 
+                        <td style="width:130px">
+                        </td>
+                        <td style="width:180px">
+                        </td>
+                    </tr>
+                    <!-- Fourth Row -->
+                    <tr class="FieldRow">
+                        <td style="width:100px">
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                        </td>
+                        <td style="width:180px">
+                        </td>
+                    </tr>
+                    <!-- Fifth Row -->
+                    <tr class="FieldRow">
+                        <td style="width:100px">
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                        </td>
+                        <td style="width:180px">
+                        </td>
+                    </tr>
+                    <!-- Sixth Row -->
+                    <tr class="FieldRow">
+                        <td style="width:100px">
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                        </td>
+                        <td style="width:180px">
+                        </td>
+                    </tr>
+                    <tr class="FieldRow"></tr>
+                </table>
+                <!-- Section Two -->
+                <table style="width:1000px">
+                    <tr class="FieldRow">
+                        <td class="TabTitleRow" style="width:130px">
+                            סיווגים:
+                            <!-- TODO: change to Textcode -->
+                        </td>
+                        <td class="TabTitleRow" style="width:180px">
+                            אישורים נדרשים:
+                            <!-- TODO: change to Textcode -->
+                        </td>
+                        <td style="width:130px">
+                        </td>
+                        <td style="width:180px">
+                        </td>
+                    </tr>
+                </table>
+                <table style="width:1000px">
+                    <tr class="FieldRow" style="width:100%">
+                        <td style="width:100%">
+                            <div class="GrayBox">
+                                <table>
+                                    <tr>
+                                        <!-- DemandState Filter Methods -->
+                                        <td style="width: 240px;">
+                                            <ul class="FiltersMenu">
+                                                <li id="withResponse"
+                                                    (click)="DemandStateFilterItemClicked('withResponse')"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === 'withResponse'"
+                                                    class="noselect">
+                                                    {{'Customs.Declaration.O.DemandState' | TextCodeTranslationPipe}}
+                                                </li>
+                                                <li id="All" (click)="DemandStateFilterItemClicked('All')"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === 'All'"
+                                                    class="noselect">
+                                                    {{'Customs.General.O.All' | TextCodeTranslationPipe}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td style="width: 10px;"></td>
+                                        <td style="width: 30px;">
+                                            {{'Customs.Declaration.O.Level' | TextCodeTranslationPipe}}
+                                        </td>
+                                        <!-- LevelSelection Filter Methods -->
+                                        <td style="width: 160px;">
+                                            <ul class="FiltersMenu">
+                                                <li id="LevelSelectionDeclarationConect"
+                                                    (click)="LevelSelectionFilterItemClicked('DeclarationConect')"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === 'DeclarationConect'"
+                                                    class="noselect">
+                                                    {{'Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration'  | TextCodeTranslationPipe}}
+                                                </li>
+                                                <li id="Invoice" (click)="LevelSelectionFilterItemClicked('Invoice')"
+                                                    style="width: 80px; height: 22px;"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === 'Invoice'"
+                                                    class="noselect">
+                                                    {{'Customs.Declaration.O.Invoice' | TextCodeTranslationPipe}}
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td style="width:5px"></td>
+                                        <td style="width: 160px;"
+                                            *ngIf="LevelSelectionFilterSelectedValue ==='Invoice'">
+                                            <ComboBox style="width:150px;" [ItemsSource]="InvoicesNumbersList"
+                                                (SelectedItemChanged)="InvoicesSelectionChanged($event)"
+                                                [Binding]="'InvoiceNumber'"></ComboBox>
+                                        </td>
+                                        <td style="width:80px"></td>
+                                        <td style="width:80px">
+                                        </td>
+                                    
+                                        <td style="width:130px">
+                                            <!-- TODO: change from HARDCODE TEXT -->
+                                            <SearchTextBox [PlaceHolder]="'פרט מכס/מספר פריט'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                                        </td>
+                                        <td style="width: 30px;">
+                                            <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
+                                        </td>
+                                    </tr>
+                                    <tr style="height:5px"></tr>
+
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width:1000px">
+                    <td style="border-right: 1px solid #cecece;border-radius:4px; vertical-align: top;" >
+                        <table>
+                            <tr style="height:25px">
+                                <td>
+                                    <table>
+                                        <tr style="height:35px">
+                                            <td style="width:5px"></td>
+                                            <td style="height:25px;width:35px; ">
+                                                <div *ngIf="IsCheckBoxVisible">
+                                                    <div class="Button" style="width: 29px;height:25px;">
+                                                        <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected" [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event "></CheckBox>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width:5px"></td>
+                                            <td style="width:75px;">
+                                                <!-- <button *ngIf="IsVisible && dataCount>0" (click)="CreateMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button> -->
+                                            </td>
+                                            <td style="width:75px;">
+                                                <!-- <button *ngIf="IsVisible && dataCount>0" (click)="MoveMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button> -->
+                                            </td>
+                                            <td style="width:90px">
+                                                <!-- <div *ngIf="IsVisible && dataCount>0" style="width: 100%;text-align:center;  height:30px;">
+                                                    <div class="DisbleBox">
+                                                        {{SelectedItemsCountText}}
+                                                    </div>
+                                                </div> -->
+                                            </td>
+                                            <td></td>
+                                            <td style="width:130px">
+                                                <!-- TODO: change from HARDCODE TEXT -->
+                                                <!-- <SearchTextBox [PlaceHolder]="'פרט מכס/מספר פריט'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox> -->
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr class="ClassificationListContainter">
+                                <td >
+                                    <div class="CellContent">
+                                        <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
+                                            <logitude-grid GridWidth="100%" GridHeight="100%"
+                                                           [ObjectTable]="'Customs.SupplierInvoiceItems'"
+                                                           [dataSource]="DataSource"
+                                                           (AfterViewInitCompleted)="ViewInitCompleted($event)"
+                                                           (rowSelectedEvent)="OnRowSelected($event)"
+                                                           [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                           [columns]="columns"
+                                                           [SelectedRow]="SelectedRow"
+                                                           [IsCustomTemplate]="true"
+                                                           [IsGradiantSelectedColor]="false"
+                                                           (CheckBoxChecked)="onCheckBoxChecked($event)"
+                                                           [IsAllRecordsChecked]="IsSelected"
+                                                           [IsCheckBoxEnabled]="!IsDisplayOnly">
+                                            </logitude-grid>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                       
+                    </td>
                 </table>
             </div>
-
         </td>
         <td></td>
     </tr>
-
+    <tr style="height:10px"></tr>
+    <tr style="height: 30px; display: flex; justify-content: flex-end; align-items: flex-end;">
+        <td style="width: 235px; ">
+            <div style="display: flex; align-items: flex-end; justify-content: space-around;">                
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="Button"
+                    (click)="CancelSaveSiiRequest()">{{'Customs.General.B.Cancel'  |TextCodeTranslationPipe}}</button>
+                </div>
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="RedButton" (click)="SaveSiiRequest()"  [disabled]="IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                </div>
+                
+                <div style="width: 110px;vertical-align: bottom;">
+                    <custom-send-options [IsDisabled]="IsDisplayOnly" [AvoidDoubleClick]="true" #MyCustomSendOptionsComponent (SendButtonClicked)="SendSiiRequest($event)">
+                    </custom-send-options>
+                </div>
+                
+            </div>
+        </td>
+    </tr>
     <tr style="height:50%"></tr>
 </table>

@@ -57,10 +57,14 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
       this.entityResourceService.getEntityResourceByTableName("Customs.SIIRequest").subscribe((response: any) => {
         this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsReqList").subscribe((response: any) => {
-          this.siiRequestPMService = new SIIRequestPMService();
-          this.ObjectTableName = this.entityArgs.ObjectTableName;
-          this.IsLoaded = true;
-          this.initQuerySelectionList();
+          this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoice").subscribe((response: any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
+              this.siiRequestPMService = new SIIRequestPMService();
+              this.ObjectTableName = this.entityArgs.ObjectTableName;
+              this.IsLoaded = true;
+              this.initQuerySelectionList();
+            });
+          });
         });
       });
     });
@@ -102,6 +106,20 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.siiRequestList.forEach(item => {
           item.ListCounter = ++counter;
           this.ItemsSource.Insert(item, true);
+
+          // TODO delete this section when finish debugging
+          const newSIIRequestPM = new SIIRequestPM();
+          newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
+          newSIIRequestPM.Tenant = this.EntityPM.Tenant;
+          let args: any = {
+            Decalaration: this.EntityPM,
+            SiiRequest: newSIIRequestPM,
+            IsNewOrEdit: SiiRequestMode.IsNew,
+            filterAgrs: this.initFilterArgs()
+          };
+          this.openLogWindow(SiiRequestMode.IsNew, args);
+          // debugging section end
+
         });
       }
       else this.ItemsSource.Clear();
