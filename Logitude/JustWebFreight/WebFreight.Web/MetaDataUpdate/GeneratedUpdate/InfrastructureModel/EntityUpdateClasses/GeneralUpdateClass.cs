@@ -2848,7 +2848,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralOSendParameters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SendParameters", DefaultText = "Send Parameters",LocalDefaultText = @"פרמטרים לשליחה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-  		   TextCode GeneralTextCode_AccountingOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
 }
    }
