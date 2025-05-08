@@ -20,12 +20,14 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
-
+import { SupplierInvoiceItemPM } from 'Customs/EntityPMs/SupplierInvoiceItemPM';
 @Component({
     selector: 'SIIRequestComponent',
     templateUrl: './SIIRequestComponent.html',
     styleUrls: ['./SIIRequestComponent.scss'],
     providers: [EntityArgs],
+
+
 })
 
 
@@ -33,7 +35,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     private declarationWebService: DeclarationWebService = new DeclarationWebService; // TODO: Delete after test
     @Output() MenuHeaderchangeevent = new EventEmitter();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-
     public DataContext = this;
     public ObjectTableName: string = "Customs.Declaration";
     siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
@@ -58,29 +59,36 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     initiallizeComponent() {
-
         this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
             this.BuildColumns();
             this.userData = SessionLocator.LoggedUserPM;
             this.getAllSupplierinvoiceItemsByDeclarationId(this.DecalarationData.Id, this.DecalarationData.Tenant);
             this.FillInvoiceNumbersList();
         });
-
     }
+    public supplierInvoiceItemsCollection: ObservableCollection;
 
     getAllSupplierinvoiceItemsByDeclarationId(declarationId: string, tenant: number) {
-        debugger
         let filterAgrs: ApiQueryFilters = this.filterAgrs;
         filterAgrs.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string", false);
         filterAgrs.addAdditionalFilter("Tenant", tenant, null, null, "Equals", true, false, false, "string");
         this.supplierinvoiceitemsWebService.getByFilters(this.filterAgrs).subscribe((response: ServiceResponse) => {
             if (response?.Result) {
-
-                debugger
                 this.supplierInvoiceItemsList = response?.Result;
-                console.log(this.supplierInvoiceItemsList);
+                this.supplierInvoiceItemsCollection = new ObservableCollection([]);
+                this.buildSupplierInvoiceItemsCollection();
             }
         });
+    }
+    buildSupplierInvoiceItemsCollection(): void {
+        this.supplierInvoiceItemsCollection.Clear();
+        this.supplierInvoiceItemsList.forEach((item) => {
+            let siiRequestComponent: SIIRequestComponent;
+            const supplierInvoiceItemLine = new SiiRequestSupplierInvoiceItemsLine(item, siiRequestComponent);
+            this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
+        });
+     
+
     }
 
     RefreshEntity() {
@@ -188,8 +196,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     SearchText: string = "";
     Search(SearchText: string) {
         this.SearchText = !AppTool.IsNullOrEmpty(SearchText) ? SearchText.toLowerCase() : SearchText;
-        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+        //TODO: add search filter to LIST
     }
+
     public SearchFilterChangedEvent: any;
 
     dataCount: number;
@@ -231,7 +240,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestCopmleteDataItemComponent');
     }
 
-    ViewInitCompleted($event) { }
     public preventSelect: boolean = false;
     public SelectedRow: any = null;
     OnRowSelected(CurrentRow) {
@@ -306,7 +314,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     SelectedInvoiceReqConfirmation: string;
     InvoicesSelectionChanged(selectedItem) {
         if (selectedItem != null) {
-            debugger
             this.SelectedInvoiceNumber = selectedItem.InvoiceNumber;
             this.SelectedCounterKey = selectedItem.InvoiceCounterKey;
             this.SelectedInvoiceReqConfirmation = selectedItem.ReqConfirmationTypeCode;
@@ -561,9 +568,66 @@ export class SupplierInvoiceItemsReqListLine extends BaseComponent {
     public set Remarks(newValue: string) {
         this.entityPM.Remarks = newValue;
     }
+}
 
-    // updateIsDirty() {
-    //     this.entityPM.IsDirty = true;
-    //     this.Parent.entityPM.IsDirty = true;
-    // }
+//#region SiiRequestSupplierInvoiceItemsLine properties:
+export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
+    public entityPM: SupplierInvoiceItemList;
+    public ObjectTableName: string = "Customs.CertificateOfOriginItem";
+    public DataContext = this;
+    Parent: SIIRequestComponent;
+    constructor(EntityPM: SupplierInvoiceItemList, parent: SIIRequestComponent) {
+        super();
+        this.entityPM = EntityPM;
+        this.Parent = parent;
+    }
+
+    public get InvoiceNumber(): string { 
+        return this.entityPM.InvoiceNumber;
+    }
+    public set InvoiceNumber(newValue: string) {
+        this.entityPM.InvoiceNumber = newValue;
+    }
+
+    public get ClassificationCode(): string {
+        return this.entityPM.ClassificationCode;
+    }
+    public set ClassificationCode(newValue: string) {
+        this.entityPM.ClassificationCode = newValue;
+    }
+
+    public get ItemCode(): string {
+        return this.entityPM.ItemCode;
+    }
+    public set ItemCode(newValue: string) {
+        this.entityPM.ItemCode = newValue;
+    }
+
+    public get OriginCountryCode(): string {
+        return this.entityPM.OriginCountryCode;
+    }
+    public set OriginCountryCode(newValue: string) {
+        this.entityPM.OriginCountryCode = newValue;
+    }
+
+    public get OriginCountryName(): string {
+        return this.entityPM.OriginCountryName;
+    }
+    public set OriginCountryName(newValue: string) {
+        this.entityPM.OriginCountryName = newValue;
+    }
+
+    public get TradeAgreementCode(): string {
+        return this.entityPM.TradeAgreementCode;
+    }
+    public set TradeAgreementCode(newValue: string) {
+        this.entityPM.TradeAgreementCode = newValue;
+    }
+
+    public get TradeAgreementName(): string {
+        return this.entityPM.TradeAgreementName;
+    }
+    public set TradeAgreementName(newValue: string) {
+        this.entityPM.TradeAgreementName = newValue;
+    }
 }
