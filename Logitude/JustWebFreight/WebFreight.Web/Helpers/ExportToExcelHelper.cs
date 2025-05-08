@@ -1491,7 +1491,7 @@ namespace WebFreight.Web.Helpers
 		public NPOI.SS.UserModel.IWorkbook ExportToExcel(object data)
 		{
 		    DataTable dataTable = FlattenToDataTable(data);
-			return ConvertDataTableToWorkbook(dataTable);
+			return ConvertDataTableToWorkbook(dataTable, "Report");
 		}
 
 	
@@ -1577,7 +1577,7 @@ namespace WebFreight.Web.Helpers
 			var dr = table.NewRow();
 			foreach (var kv in rowData)
 			{
-				dr[kv.Key] = kv.Value ?? null;
+				dr[kv.Key] = kv.Value ?? DBNull.Value;
 			}
 
 			table.Rows.Add(dr);
@@ -1619,7 +1619,7 @@ namespace WebFreight.Web.Helpers
 				return typeof(string);
 			}
 		}
-		public static NPOI.SS.UserModel.IWorkbook ConvertDataTableToWorkbook(DataTable dataTable, string sheetName = "Sheet1", bool isXlsx = true)
+		public static NPOI.SS.UserModel.IWorkbook ConvertDataTableToWorkbook(DataTable dataTable, string sheetName = "Sheet1")
 		{
 			NPOI.SS.UserModel.IWorkbook workbook = new XSSFWorkbook();
 
@@ -1649,11 +1649,11 @@ namespace WebFreight.Web.Helpers
 
 			ICellStyle intStyle = workbook.CreateCellStyle();
 			intStyle.CloneStyleFrom(defaultStyle);
-			intStyle.DataFormat = workbook.CreateDataFormat().GetFormat("0");
+			intStyle.DataFormat = workbook.CreateDataFormat().GetFormat("#,##0");
 
 			ICellStyle dateStyle = workbook.CreateCellStyle();
 			dateStyle.CloneStyleFrom(defaultStyle);
-			dateStyle.DataFormat = workbook.CreateDataFormat().GetFormat("dd/MM/yyyy HH:mm:ss");
+			dateStyle.DataFormat = workbook.CreateDataFormat().GetFormat("MM/dd/yyyy");
 
 			ICellStyle boolStyle = workbook.CreateCellStyle();
 			boolStyle.CloneStyleFrom(defaultStyle);
@@ -1696,8 +1696,8 @@ namespace WebFreight.Web.Helpers
 						}
 						else if (cellValue is DateTime date)
 						{
-							ICell cell = dataRow.CreateCell(c, CellType.String); // ניתן להשתמש גם ב-CellType.Numeric עם פורמט תאריך
-							cell.SetCellValue(date); // פורמט לדוגמה, ניתן לשנות			
+							ICell cell = dataRow.CreateCell(c, CellType.Numeric); 
+							cell.SetCellValue(date);
 							cell.CellStyle = dateStyle;
 						}
 						else if (cellValue is bool boolean)
