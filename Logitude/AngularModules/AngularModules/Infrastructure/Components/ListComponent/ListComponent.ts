@@ -38,7 +38,7 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
@@ -200,11 +200,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
         
         if (this.fastSearchService.$fastSearchEnable.value) {
-            this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
-            if (this.searchDropdownOptions) {
-                this.CD.detectChanges();
-                return;
-            }            
+            try {
+                this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
+                if (this.searchDropdownOptions) {
+                    this.CD.detectChanges();
+                    return;
+                }    
+            } catch (error) {
+                if(error instanceof HttpErrorResponse && error.error.ErrorType === "FieldsNotExistsInIndexException")
+                    this.fastSearchCheckbox(false);
+            }
         }
             
         this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");

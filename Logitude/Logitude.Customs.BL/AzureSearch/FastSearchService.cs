@@ -1,8 +1,8 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.Customs.BL.AzureSearch.Objects;
-using Logitude.Customs.Data.AzureSearch.Repo;
 using NetCommonHelper.Logger;
 using Newtonsoft.Json;
+using Simplog.Data.AzureSearch.Repo;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -15,11 +15,11 @@ namespace Logitude.Customs.BL.AzureSearch
     public class FastSearchService
     {
         private static DefaultAndConfiguration_Ext ConnectionDetails => DefaultService.Instance.Get(0, "AzureSearchAI", "Customs");
-        public static string serviceName => ConnectionDetails.Value1;
-        public static string apiKey => ConnectionDetails.Value2;
+        private static string serviceName => ConnectionDetails.Value1;
+        private static string apiKey => ConnectionDetails.Value2;
         private static readonly DevLog logger = DevLog.Instance;
 
-        public async Task<List<dynamic>> Search(ApiQueryFilters apiQueryFilters, int tenant, string searchText, string tableName)
+        private async Task<List<dynamic>> Search(ApiQueryFilters apiQueryFilters, int tenant, string searchText, string tableName)
         {
             logger.WriteDebug($"Search {tableName} ASAI: {apiQueryFilters?.AdditionalFilters}, tenant: {tenant}, searchText: {searchText}");
 
@@ -51,11 +51,16 @@ namespace Logitude.Customs.BL.AzureSearch
 
             filters = MenipulateFilters(additionalFilters, filters, tenant);
 
+            FastSearchAzureSearchRepo fastSearchAzureSearchRepo = new FastSearchAzureSearchRepo(serviceName, apiKey, tableName);
+            List<string> fieldsNotExistsInIndex = await FieldsNotExistsInIndex(filters, fastSearchAzureSearchRepo);
+            if (fieldsNotExistsInIndex.Count > 0)
+                throw new FieldsNotExistsInIndexException(fieldsNotExistsInIndex);
+
             string indexSettingsName = GetSettingsName(additionalFilters, filters, tenant) ?? tableName;
             FastSearchSettings settings = await GetIndexSettingsAsync(tenant, indexSettingsName);
             List<string> selectedFields = GetSelectedFields(settings);
 
-            return await new FastSearchAzureSearchRepo(serviceName, apiKey, tableName).SearchAsync(filters, searchText, settings.maxResults, selectedFields);
+            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields);
         }
 
         protected virtual void MenipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant) { }
@@ -82,6 +87,28 @@ namespace Logitude.Customs.BL.AzureSearch
                                .Cast<Match>()
                                .Select(m => m.Groups[1].Value)
                                .ToList();
+
+        private static async Task<List<string>> FieldsNotExistsInIndex(string filter, FastSearchAzureSearchRepo fastSearchAzureSearchRepo)
+        {
+            List<string> filtersFields = ExtractFieldsNameFromFilter(filter);
+            List<string> indexFields = await fastSearchAzureSearchRepo.GetFieldsNameAsync();
+            return filtersFields.Where(x => !indexFields.Contains(x, StringComparer.OrdinalIgnoreCase)).ToList();
+        }
+
+        private static List<string> ExtractFieldsNameFromFilter(string filter)
+        {
+            Regex fieldPattern = new Regex(@"\(?\s*(\w+)\s+(eq|ne|gt|lt|ge|le)\s+[^()]+\)?", RegexOptions.IgnoreCase);
+            MatchCollection matches = fieldPattern.Matches(filter);
+
+            HashSet<string> fieldList = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (Match match in matches)
+                if (match.Groups.Count > 1)
+                    fieldList.Add(match.Groups[1].Value);
+
+            string[] fields = new string[fieldList.Count];
+            fieldList.CopyTo(fields);
+            return fields.ToList();
+        }
 
         public static async Task<List<dynamic>> Search(ApiQueryFilters filters, string searchText, string index, int tenant)
         {

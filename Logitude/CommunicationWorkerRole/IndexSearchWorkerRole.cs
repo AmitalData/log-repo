@@ -1,20 +1,15 @@
-﻿using Azure;
-using Azure.Search.Documents;
-using Azure.Search.Documents.Indexes;
-using Azure.Search.Documents.Models;
-using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Utils;
 using NetCommonHelper.Logger;
+using Simplog.Data.AzureSearch;
 using Simplog.Data.AzureSearch.Repo;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net;
-using System.ServiceModel.Description;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -28,9 +23,10 @@ namespace CommunicationWorkerRole
         private static readonly string removeOldIndexDataLockKey = "REMOVE_OLD_INDEX_DATA";
         private static readonly string removeOldSearchDataLockKey = "REMOVE_OLD_SEARCH_DATA";
         private int mainTennat = 0;
-        private double runIndexerInterval = TimeSpan.FromMinutes(1).TotalMilliseconds;
-        private double removeOldIndexDataInterval = TimeSpan.FromHours(1).TotalMilliseconds;
-        private double removeOldSearchDataInterval = TimeSpan.FromHours(1).TotalMilliseconds;
+        private double runIndexerInterval = 1;
+        private double removeOldIndexDataInterval = 1;
+        private double removeOldSearchDataInterval = 1;
+
         public override void Run()
         {
             logger.WriteTrace("IndexSearchWorkerRole Run");
@@ -229,8 +225,8 @@ namespace CommunicationWorkerRole
             {
                 logger.WriteTrace($"Starting indexer for index {index.Index}...");
 
-                SearchIndexerClient indexerClient = InitializeIndexerClient();
-                Response response = await indexerClient.RunIndexerAsync(index.Indexer);
+                FastSearchAzureSearchRepo fastSearchAzureSearchRepo = InitializeFastSearchAzureSearchRepo(index.Index);
+                AzureSerchResponse response = await fastSearchAzureSearchRepo.RunIndexerAsync(index.Indexer);                                
 
                 if (response.Status == (int)HttpStatusCode.Accepted)
                 {
@@ -257,36 +253,15 @@ namespace CommunicationWorkerRole
             {
                 logger.WriteInfo($"Starting remove old data from index {index.Index}...");
 
-                DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, index.Index);
-                string searchServiceEndpoint = ConnectionDetails.Value1;
-                string apiKey = ConnectionDetails.Value2;
-                AzureSearchRepoBase<SearchDocument> azureSearchRepo = new AzureSearchRepoBase<SearchDocument>(searchServiceEndpoint, apiKey, index.Index, new string[] { });
-
-                Azure.Search.Documents.Indexes.Models.SearchField searchField = await azureSearchRepo.GetKeyFieldAsync();
-                string keyFieldName = searchField?.Name;
-                logger.WriteDebug($"Key field name: {keyFieldName}");
-
-                SearchClient searchClient = azureSearchRepo.GetSearchClient();
-                SearchOptions searchOptions = new SearchOptions
-                {
-                    Filter = $"{index.TtlField} lt {DateTime.Now.AddMonths(-index.TtlMonth):O}",
-                    Select = { keyFieldName },
-                    Size = 10000,
-                };
+                string filter = $"{index.TtlField} lt {DateTime.Now.AddMonths(-index.TtlMonth):O}";
+                int size = 10;
                 int rowDeleted = 0;
+                FastSearchAzureSearchRepo fastSearchAzureSearchRepo = InitializeFastSearchAzureSearchRepo(index.Index);
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Response<SearchResults<SearchDocument>> searchResponse = await searchClient.SearchAsync<SearchDocument>("*", searchOptions);
-                    Pageable<SearchResult<SearchDocument>> searchResults = searchResponse.Value.GetResults();
-                    List<SearchDocument> keysToDelete = searchResults.Select(res => res.Document).ToList();
-
-                    logger.WriteTrace($"Found {keysToDelete.Count} records to delete from index {index.Index}.");
-
-                    if (keysToDelete.Count == 0)
-                        break;
-
-                    Response response = (await azureSearchRepo.DeleteAsync(keysToDelete)).GetRawResponse();
+                    AzureSerchResponse response = await fastSearchAzureSearchRepo.DeleteAsync(filter, size);
+                    if (response == null) break;
 
                     if (response.Status == (int)HttpStatusCode.OK)
                     {
@@ -312,14 +287,13 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private static SearchIndexerClient InitializeIndexerClient()
+        private static FastSearchAzureSearchRepo InitializeFastSearchAzureSearchRepo(string indexName)
         {
             DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, "Customs");
             string searchServiceEndpoint = ConnectionDetails.Value1;
             string apiKey = ConnectionDetails.Value2;
-            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-            SearchIndexerClient indexerClient = new SearchIndexerClient(new Uri($"https://{searchServiceEndpoint}.search.windows.net/"), credential);
-            return indexerClient;
+
+            return new FastSearchAzureSearchRepo(searchServiceEndpoint, apiKey, indexName); ;
         }
     }
 }

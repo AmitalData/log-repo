@@ -37,11 +37,10 @@ namespace Simplog.Data.AzureSearch.Repo
 
         public SearchClient GetSearchClient() => new SearchClient(serviceEndpoint, indexName, credential);        
 
-        public async Task<SearchField> GetKeyFieldAsync()
+        public async Task<IList<SearchField>> GetFieldsAsync()
         {
             Response<SearchIndex> searchIndexResponse = await new SearchIndexClient(serviceEndpoint, credential).GetIndexAsync(indexName);
-            SearchField keyField = searchIndexResponse.Value.Fields.FirstOrDefault(f => f.IsKey == true);
-            return keyField;
+            return searchIndexResponse.Value.Fields;
         }
 
         public async Task<Response<IndexDocumentsResult>> DeleteAsync(List<T> records) =>
