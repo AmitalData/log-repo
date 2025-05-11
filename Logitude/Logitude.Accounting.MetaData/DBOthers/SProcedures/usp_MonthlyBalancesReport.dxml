@@ -9,6 +9,22 @@
 @Tenant INT
 AS
 BEGIN
+;WITH YearlyTransfers AS (
+    SELECT
+        lt.AccountId,
+        SUM(lt.LocalAmountDebit - lt.LocalAmountCredit) AS TransferSum
+    FROM
+        Journals j
+    INNER JOIN
+        LedgerTransactions lt ON j.Id = lt.JournalId 
+    WHERE
+        j.AccountingEntityCode = 11
+		AND J.AccountingDate =DATEFROMPARTS(@Year, 1, 1)
+		AND J.Tenant =@Tenant
+		AND LT.Tenant =@Tenant
+    GROUP BY
+        lt.AccountId
+)
 SELECT
 MAX(gt.MONTH),
 AccountId AS ACCOUNTID,
@@ -17,7 +33,9 @@ max(g.ChartOfAccountsId) as chartOfAccount,
 max(g.LocalName) as LocalName,
 max(g.EnglishName) as EnglishName,
 max(g.DisplayNumber) as DisplayNumber,
-SUM(CASE WHEN (gt.Month = 1  and gt.Year  = @Year )THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH1,
+SUM(CASE WHEN (gt.Month = 1  and gt.Year  = @Year )THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) 
+  - ISNULL(MAX(yt.TransferSum), 0) AS MONTH1,
+
 SUM(CASE WHEN (gt.Month = 2  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH2,
 SUM(CASE WHEN (gt.Month = 3  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH3,
 SUM(CASE WHEN (gt.Month = 4  and gt.Year  = @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH4,
@@ -30,12 +48,17 @@ SUM(CASE WHEN (gt.Month = 10 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - 
 SUM(CASE WHEN (gt.Month = 11 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH11,
 SUM(CASE WHEN (gt.Month = 12 and  gt.Year =  @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS MONTH12,
 SUM(CASE WHEN (GT.Year <= @Year )THEN  gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS TOTAL_MONTHS ,
-SUM(CASE WHEN (GT.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) AS LocalOpenBalance
+SUM(CASE WHEN (GT.Year < @Year ) THEN gt.LocalAmountDebit - gt.LocalAmountCredit ELSE 0 END) 
+ + ISNULL(MAX(yt.TransferSum), 0)
+   AS LocalOpenBalance
 
 FROM
 GLAccounts g
 INNER JOIN
 GLAccountTotalByMonths gt ON g.Id = gt.AccountId
+LEFT JOIN
+    YearlyTransfers yt ON g.Id = yt.AccountId
+
 WHERE
 g.Tenant = @Tenant
 AND gt.Year <= @Year
