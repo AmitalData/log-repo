@@ -26,7 +26,7 @@ namespace WebFreight.Web
        
         protected void Page_Load(object sender, EventArgs e)
         {
-            helpMe();
+            //helpMe();
            // LoadFromFolder();
 
             try
