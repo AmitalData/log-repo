@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Security;
 using Logitude.Customs.BL.AzureSearch;
+using Logitude.Customs.BL.AzureSearch.Objects;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,8 @@ namespace WebFreight.Web.Controllers.WebServices
                 if (string.IsNullOrEmpty(index))
                     throw new ArgumentNullException("index", "index cannot be null or empty");
 
-                dynamic settings = await FastSearchService.GetIndexSettingsAsync(tenant, index);
-                return Request.CreateResponse(HttpStatusCode.OK, (object)settings);
+                FastSearchSettings settings = await FastSearchService.GetIndexSettingsAsync(tenant, index);
+                return Request.CreateResponse(HttpStatusCode.OK, settings);
             }
             catch (Exception ex)
             {

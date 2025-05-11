@@ -3,6 +3,7 @@ import {
   ComponentFactory, ComponentRef, Output, EventEmitter, HostListener, ElementRef
 } from '@angular/core';
 import { SearchListDDLComponent } from './SearchListDDLComponent';
+import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
 
 @Directive({
   selector: '[appSearchListDDL]'
@@ -15,20 +16,12 @@ export class SearchListDDLDirective implements OnInit {
     }
   }
 
-  private _maxResults: number = null;
-  @Input() set maxResults(max: number) {
-    this._maxResults = max;
-    if (this.componentRef && max)
-      this.componentRef.instance.maxResults = max;
+  private _settings: FastSearchSettings = null;
+  @Input() set DDLsettings(val: FastSearchSettings) {
+    this._settings = val;
+    if (this.componentRef && val)
+      this.componentRef.instance.settings = this._settings;
   }
-
-  private _displayPattern: string = '';
-  @Input() set displayPattern(pattern: string) {
-    this._displayPattern = pattern;
-    if (this.componentRef && pattern)
-      this.componentRef.instance.displayPattern = this._displayPattern;
-  }
-
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
   componentRef!: ComponentRef<SearchListDDLComponent>;
@@ -43,8 +36,7 @@ export class SearchListDDLDirective implements OnInit {
     const factory: ComponentFactory<SearchListDDLComponent> = this.componentFactoryResolver.resolveComponentFactory(SearchListDDLComponent);
     this.componentRef = this.viewContainerRef.createComponent(factory);
     this.componentRef.instance.dropdownOptions = this.appSearchListDDL;
-    this.componentRef.instance.maxResults = this._maxResults;
-    this.componentRef.instance.displayPattern = this._displayPattern;
+    this.componentRef.instance.settings = this._settings;
     this.componentRef.instance.optionSelected.subscribe((option: any) => this.optionSelected.emit(option));
   }
 

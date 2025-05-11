@@ -151,6 +151,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     searchDropdownOptions: FastSearchResult[] = [];    
     fastSearchSettings: FastSearchSettings = null;
     $fastSearchEnable: BehaviorSubject<boolean> = null;
+    fastSearchAllow: boolean = false;
 
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -1072,7 +1073,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         
         await this.fastSearchService.initFastSearch(this.ObjectTable, this.ObjectTableName, this.MenuTableQuerySection);
         this.$fastSearchEnable = this.fastSearchService.$fastSearchEnable;
-        if (this.fastSearchService.$fastSearchEnable.value)
+        this.fastSearchAllow = this.$fastSearchEnable.value;        
+        if (this.fastSearchAllow)
             this.fastSearchSettings = this.fastSearchService.Settings;
     }
   
