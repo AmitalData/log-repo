@@ -33,7 +33,6 @@ import { SupplierInvoiceItemPM } from 'Customs/EntityPMs/SupplierInvoiceItemPM';
 
 export class SIIRequestComponent extends BaseComponent implements OnInit {
     private declarationWebService: DeclarationWebService = new DeclarationWebService; // TODO: Delete after test
-    @Output() MenuHeaderchangeevent = new EventEmitter();
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public DataContext = this;
     public ObjectTableName: string = "Customs.Declaration";
@@ -60,7 +59,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     initiallizeComponent() {
         this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-            this.BuildColumns();
             this.userData = SessionLocator.LoggedUserPM;
             this.getAllSupplierinvoiceItemsByDeclarationId(this.DecalarationData.Id, this.DecalarationData.Tenant);
             this.FillInvoiceNumbersList();
@@ -87,12 +85,13 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             const supplierInvoiceItemLine = new SiiRequestSupplierInvoiceItemsLine(item, siiRequestComponent);
             this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
         });
-     
+
 
     }
 
     RefreshEntity() {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
+        // this.initiallizeComponent();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
 
@@ -118,80 +117,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
-
-
-
-    // #region table row mangment:   
-    public columns: any[] = null;
-    BuildColumns() {
-        this.columns = [];
-        this.columns.push({
-            FieldName: 'InvoiceNumber',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.InvoiceNumber"),
-            Styles: { width: '70px' },
-            IsCustomTemplate: true
-        });
-        this.columns.push({
-            FieldName: 'ClassificationCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.ClassificationCode"),
-            Styles: { width: '70px' },
-            IsCustomTemplate: true
-        });
-        this.columns.push({
-            FieldName: 'ItemCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.ItemCode"),
-            Styles: { width: '70px' },
-            IsCustomTemplate: true
-        });
-        this.columns.push({
-            FieldName: 'OriginCountryCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.OriginCountryCode"),
-            Styles: { width: '70px' },
-            IsCustomTemplate: true
-        });
-        this.columns.push({
-            FieldName: 'OriginCountryName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.OriginCountryName"),
-            Styles: { width: '70px' },
-            IsCustomTemplate: true
-        });
-        this.columns.push({
-            FieldName: 'TradeAgreementCode',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.TradeAgreementCode"),
-            Styles: { width: '70px' },
-            IsCustomTemplate: true
-        });
-        this.columns.push({
-            FieldName: 'TradeAgreementName',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("Customs.SupplierInvoiceItem.F.TradeAgreementName"),
-            Styles: { width: '70px' },
-            IsCustomTemplate: true
-        });
-    }
-
-    DataSource = {
-        pageSize: 10,
-        rowCount: null,
-        sortingCol: "InvoiceNumber",
-        sortingDir: "Ascending",
-        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            return this.supplierInvoiceItemsList;
-        },
-    };
-
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        return new Promise((resolve, reject) => {
-            resolve(this.supplierInvoiceItemsList);
-        });
-    }
-    // # endregion table row mangment:
 
     SearchText: string = "";
     Search(SearchText: string) {
@@ -275,21 +200,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             this.CurrentSession.StopBusyIndicator();
         }
     }
-
-    public connectedItems: ObservableCollection;
-    public ExcludedItems: ObservableCollection;
-    ignoreCount: boolean = false;
-    IsCheckBoxVisible: boolean = false;
-    private isSelected: boolean;
-    public get IsSelected() { return this.isSelected };
-    public set IsSelected(value: boolean) {
-        this.isSelected = value;
-        if (this.isSelected) {
-            this.dataCount = this.DataSource.rowCount;
-        }
-    }
-
-    onCheckBoxChecked($event) { }
 
     //#region Properties Filter Methods
     private SelectedCounterKey: number = null;
@@ -582,7 +492,7 @@ export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
         this.Parent = parent;
     }
 
-    public get InvoiceNumber(): string { 
+    public get InvoiceNumber(): string {
         return this.entityPM.InvoiceNumber;
     }
     public set InvoiceNumber(newValue: string) {

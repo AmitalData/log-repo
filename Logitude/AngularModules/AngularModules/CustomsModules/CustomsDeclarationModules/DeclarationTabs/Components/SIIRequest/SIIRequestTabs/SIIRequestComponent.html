@@ -246,7 +246,7 @@
                                                 (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
                                         </td>
                                         <td style="width: 30px;">
-                                            <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
+                                            <!-- <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton> -->
                                         </td>
                                     </tr>
                                     <tr style="height:5px"></tr>
@@ -257,7 +257,7 @@
                     </tr>
                 </table>
                 <table style="width:1000px">
-                    <td style="border-right: 1px solid #cecece;border-radius:4px; vertical-align: top;">
+                    <td style="border-radius:4px; vertical-align: top;">
                         <table>
                             <tr style="height:25px">
                                 <td>
@@ -274,48 +274,17 @@
                                                 </div>
                                             </td>
                                             <td style="width:5px"></td>
-                                            <td style="width:75px;">
-                                                <!-- <button *ngIf="IsVisible && dataCount>0" (click)="CreateMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Create' | TextCodeTranslationPipe}}</button> -->
-                                            </td>
-                                            <td style="width:75px;">
-                                                <!-- <button *ngIf="IsVisible && dataCount>0" (click)="MoveMethod()" [disabled]="IsDisplayOnly" class="Button" style="width:70px; height:25px;padding-right:5px">{{'Customs.Declaration.O.Move' | TextCodeTranslationPipe}}</button> -->
-                                            </td>
-                                            <td style="width:90px">
-                                                <!-- <div *ngIf="IsVisible && dataCount>0" style="width: 100%;text-align:center;  height:30px;">
-                                                    <div class="DisbleBox">
-                                                        {{SelectedItemsCountText}}
-                                                    </div>
-                                                </div> -->
-                                            </td>
+                                            <td style="width:75px;"></td>
+                                            <td style="width:75px;"></td>
+                                            <td style="width:90px"></td>
                                             <td></td>
-                                            <td style="width:130px">
-                                                <!-- TODO: change from HARDCODE TEXT -->
-                                                <!-- <SearchTextBox [PlaceHolder]="'פרט מכס/מספר פריט'" (SearchTextChangeEvent)="Search($event)"></SearchTextBox> -->
-                                            </td>
+                                            <td style="width:130px"></td>
                                         </tr>
                                     </table>
                                 </td>
                             </tr>
                             <tr class="ClassificationListContainter">
                                 <td>
-                                    <!-- TODO: check if this can reaplace the table invoice  items- or delete this with this functions -->
-                                    <!-- <div class="CellContent">
-                                        <div class="GeneratedGridContainer" style="padding:5px;vertical-align:top;top:0;position:absolute">
-                                            <logitude-grid GridWidth="100%" GridHeight="100%"
-                                                           [ObjectTable]="'Customs.SupplierInvoiceItems'"
-                                                           [dataSource]="DataSource"
-                                                           (rowSelectedEvent)="OnRowSelected($event)"
-                                                           [MenuHeaderchangeevent]="MenuHeaderchangeevent"
-                                                           [columns]="columns"
-                                                           [SelectedRow]="SelectedRow"
-                                                           [IsCustomTemplate]="true"
-                                                           [IsGradiantSelectedColor]="false"
-                                                           (CheckBoxChecked)="onCheckBoxChecked($event)"
-                                                           [IsAllRecordsChecked]="IsSelected"
-                                                           [IsCheckBoxEnabled]="!IsDisplayOnly">
-                                            </logitude-grid>
-                                        </div>
-                                    </div> -->
                                     <div class="CellContent">
                                         <div class="GeneratedGridContainer"
                                             style="padding:5px;vertical-align:top;top:0;position:absolute">
@@ -326,7 +295,6 @@
                                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                                                 [ItemSource]="supplierInvoiceItemsCollection"
                                                                 [EnableMultiSelection]="true">
-
                                                                 <log-column
                                                                     [header]="'Customs.SupplierInvoiceItem.F.InvoiceNumber' | TextCodeTranslationPipe"
                                                                     [binding]="'InvoiceNumber'" [width]="'70'"
@@ -340,7 +308,6 @@
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-
                                                                 <log-column
                                                                     [header]="'Customs.SupplierInvoiceItem.F.ClassificationCode' | TextCodeTranslationPipe"
                                                                     [binding]="'ClassificationCode'" [width]="'70'"
@@ -354,7 +321,6 @@
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-
                                                                 <log-column
                                                                     [header]="'Customs.SupplierInvoiceItem.F.ItemCode' | TextCodeTranslationPipe"
                                                                     [binding]="'ItemCode'" [width]="'70'"
@@ -368,9 +334,6 @@
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-
-
-
                                                                 <log-column
                                                                     [header]="'Customs.SupplierInvoiceItem.F.OriginCountryName' | TextCodeTranslationPipe"
                                                                     [binding]="'OriginCountryName'" [width]="'70'"
@@ -384,9 +347,6 @@
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-
-
-
                                                                 <log-column
                                                                     [header]="'Customs.SupplierInvoiceItem.F.TradeAgreementName' | TextCodeTranslationPipe"
                                                                     [binding]="'TradeAgreementName'" [width]="'70'"
@@ -405,7 +365,6 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-
                                             </table>
                                         </div>
                                     </div>

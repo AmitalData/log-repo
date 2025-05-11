@@ -106,20 +106,6 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.siiRequestList.forEach(item => {
           item.ListCounter = ++counter;
           this.ItemsSource.Insert(item, true);
-
-          // TODO delete this section when finish debugging
-          const newSIIRequestPM = new SIIRequestPM();
-          newSIIRequestPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.Id : this.EntityPM.AmendmentOriginalDeclartation;
-          newSIIRequestPM.Tenant = this.EntityPM.Tenant;
-          let args: any = {
-            Decalaration: this.EntityPM,
-            SiiRequest: newSIIRequestPM,
-            IsNewOrEdit: SiiRequestMode.IsNew,
-            filterAgrs: this.initFilterArgs()
-          };
-          this.openLogWindow(SiiRequestMode.IsNew, args);
-          // debugging section end
-
         });
       }
       else this.ItemsSource.Clear();
