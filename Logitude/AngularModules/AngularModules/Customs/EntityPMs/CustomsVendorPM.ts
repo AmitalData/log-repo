@@ -169,7 +169,6 @@ export class CustomsVendorPM {
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
-       
 	 
     private concurrencyGUID: string;
     public get ConcurrencyGUID() { return this.concurrencyGUID; }
@@ -211,4 +210,4 @@ export class CustomsVendorPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
