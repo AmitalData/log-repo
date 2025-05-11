@@ -10,6 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity;
+using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -54,6 +55,37 @@ namespace Logitude.Customs.Data.Repsitories
                     .AsNoTracking()
                     .FirstOrDefault();
         }
+
+        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, int tenant)
+        {
+            var list =
+        from itm in context.SupplierInvoiceItems
+        where itm.DeclarationId == declarationId
+              && itm.Tenant == tenant
+              && !itm.IsParent                     
+        join inv in context.SupplierInvoices
+             on new { itm.DeclarationId, CounterKey = itm.CounterKey }
+             equals new { inv.DeclarationId, CounterKey = inv.InvoiceCounterKey }
+             into invJoin
+        from si in invJoin.DefaultIfEmpty()         
+        select new SupplieInvoiceItemsForSIIRequest
+        {
+            InvoiceNumber = si.InvoiceNumber,
+            LineNumber = itm.LineNumber,
+            ItemCode = itm.ItemCode,
+            ItemDescription = itm.ItemDescription,
+            ClassificationCode = itm.ClassificationCode,
+            TradeAgreementCode = itm.TradeAgreementCode,
+            InvoiceQuantityType = itm.InvoiceQuantityType,
+            InvoiceQuantity = itm.InvoiceQuantity.ToString(),
+            ItemPrice = itm.ItemPrice.ToString(),
+            ItemPriceCurrencyCode = itm.ItemPriceCurrencyCode,
+            OriginCountryCode = itm.OriginCountryCode
+        };
+
+            return list.ToList();
+        }
+
         public class SiiAgg
         {
             public string ImporterInternalId { get; set; }   // can be null

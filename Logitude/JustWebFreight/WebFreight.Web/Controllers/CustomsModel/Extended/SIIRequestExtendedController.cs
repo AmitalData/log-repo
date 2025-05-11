@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
                 else
                 {
-                    pm = qs.GetSinglePM( null, declarationId,authToken.Tenant);
+                    pm = qs.GetSinglePM(null, declarationId, authToken.Tenant);
                 }
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -61,6 +61,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                        HttpStatusCode.BadRequest,
                        ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage GetSupplierInvoiceItemsForSIIRequest(string declarationId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(auth.Tenant);
+
+                var ctx = CustomContext.GetContext(auth.Tenant);
+                var svc = new SIIRequestQueryService(ctx);
+                svc.InitializeSettings();
+                var list = svc.GetSupplierInvoiceItems(declarationId, auth.Tenant);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                return Request.CreateResponse(HttpStatusCode.OK, list);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(
+                        HttpStatusCode.BadRequest,
+                        ApiExceptionBuilder.BuildException(ex));
+            }
+
         }
     }
 }
