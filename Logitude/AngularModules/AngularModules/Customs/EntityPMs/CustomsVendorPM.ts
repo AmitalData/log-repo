@@ -167,12 +167,7 @@ export class CustomsVendorPM {
     private statusName: string;
     public get StatusName() { return this.statusName; }
     public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
-       
-	 
-    private externalSystem: string;
-    public get ExternalSystem() { return this.externalSystem; }
-    public set ExternalSystem(newValue: string) { if (this.externalSystem != newValue) { this.externalSystem = newValue; this.MarkAsDirty("ExternalSystem"); } }
-
+       	   
 
     private concurrencyGUID: string;
     public get ConcurrencyGUID() { return this.concurrencyGUID; }
