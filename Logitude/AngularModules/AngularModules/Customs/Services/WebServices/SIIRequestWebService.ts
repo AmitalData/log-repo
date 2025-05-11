@@ -13,17 +13,34 @@ export class SIIRequestWebService {
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CertificateOfOrigin';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SIIRequestExtended';
     }
 
-    GetRequestsByDeclarationIdIncludeChildrens(requestId: number, declarationId: string, tenant: number) {
+    getByDeclarationId(declarationId: string,id: string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetRequestsByDeclarationIdIncludeChildrens/?Id=" + requestId + "&declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSingle/?declarationId=" + declarationId + "&id=" + id , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                let serviceResponse: ServiceResponse = new ServiceResponse();
+                let mappedResult: SIIRequestPM = new SIIRequestPM();
+                serviceResponse.Result = mappedResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+
+    getSupplierInvoiceItemsForSIIRequest(declarationId: string) {
+        return defer(() => {
+            let authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            let serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            return this._http.get(this._apiUrl + "/GetSupplierInvoiceItemsForSIIRequest/?declarationId=" + declarationId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 let serviceResponse: ServiceResponse = new ServiceResponse();
                 let mappedResult: SIIRequestPM = new SIIRequestPM();
                 serviceResponse.Result = mappedResult;

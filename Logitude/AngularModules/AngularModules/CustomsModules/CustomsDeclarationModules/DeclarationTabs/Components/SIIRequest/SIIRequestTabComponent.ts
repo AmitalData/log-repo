@@ -31,7 +31,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public IsDisplayMessage: string = '';
   public IsDisplayOnly: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
-  public siiRequestWebService: SIIRequestWebService
+  public siiRequestWebService: SIIRequestWebService;
   public filterAgrs: ApiQueryFilters;
   public SelectedRow: SIIRequestPM = null;
   public entityResourceService: EntityResourceService = new EntityResourceService();
@@ -139,15 +139,17 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     };
 
     if (siiRequestMode === SiiRequestMode.IsNew)
-      this.openLogWindow(siiRequestMode, args);
+      this.getSIIRequestByIDAndopenLogWindow(this.currentDeclaration.Id, null, siiRequestMode, args);
     else
-      this.getSIIRequestByIDAndopenLogWindow(args.SIIRequest.Id, this.EntityPM.Id, siiRequestMode, args);
+      this.getSIIRequestByIDAndopenLogWindow(this.currentDeclaration.Id, this.SelectedRow.Id, siiRequestMode, args);
   }
 
-  getSIIRequestByIDAndopenLogWindow(requestId: number, declarationId: string, siiRequestMode: SiiRequestMode, args: any) {
+  getSIIRequestByIDAndopenLogWindow(declarationId: string, id: string, siiRequestMode: SiiRequestMode, args: any) {
     // TODO: build the logic in GetRequestsByDeclarationIdIncludeChildrens
-    this.siiRequestWebService.GetRequestsByDeclarationIdIncludeChildrens(requestId, declarationId, this.EntityPM.Tenant).subscribe(myResult => {
+    this.siiRequestWebService.getByDeclarationId(declarationId, id).subscribe(myResult => {
       let myResponse: ServiceResponse = myResult;
+      console.log(myResponse);
+
       if (!myResponse.HasError && myResponse.Result) {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
