@@ -13,7 +13,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string Hatara = "1";
         public const string NoStatus = "0";
         public const string Suspended = "2";
-        public const string Suspended = "3";
+        public const string Suspended_3 = "3";
     }
  }
  

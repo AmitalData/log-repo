@@ -96,7 +96,7 @@ namespace Logitude.Customs.BL
             all.Add(new CustomsRequestsSheetStatusDetails()
             {    
                 Code = "3", 
-                EnglishName = "In Process", 
+                EnglishName = "In Process_3", 
                 SearchFields = "3,In Process,אמצע טיפול", 
                 Inactive = false, 
                 LocalName = "אמצע טיפול", 
@@ -114,7 +114,7 @@ namespace Logitude.Customs.BL
             all.Add(new CustomsRequestsSheetStatusDetails()
             {    
                 Code = "4", 
-                EnglishName = "Analyze Failed", 
+                EnglishName = "Analyze Failed_4", 
                 SearchFields = "4,Analyze Failed,טיפול שגוי", 
                 Inactive = false, 
                 LocalName = "טיפול שגוי", 
@@ -132,7 +132,7 @@ namespace Logitude.Customs.BL
             all.Add(new CustomsRequestsSheetStatusDetails()
             {    
                 Code = "6", 
-                EnglishName = "Cancelled", 
+                EnglishName = "Cancelled_6", 
                 SearchFields = "6,Cancelled,מבוטלת", 
                 Inactive = false, 
                 LocalName = "מבוטלת", 

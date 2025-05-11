@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL
             all.Add(new CourierCustomStatusDetails()
             {    
                 Code = "3", 
-                Name = "Suspended", 
+                Name = "Suspended_3", 
                 SearchFields = "3,suspended", 
                 LocalName = "null", 
 			});
