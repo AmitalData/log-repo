@@ -48,6 +48,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public supplierInvoiceItemsList: SupplierInvoiceItemList[] = [];
     public filterAgrs: ApiQueryFilters;
     private userData: UserPM = new UserPM();
+    public IsLoaded: boolean = false;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -56,12 +57,16 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     ngOnInit(): void {
         this.initiallizeComponent();
     }
-
     initiallizeComponent() {
-        this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-            this.userData = SessionLocator.LoggedUserPM;
-            this.getAllSupplierinvoiceItemsByDeclarationId(this.DecalarationData.Id, this.DecalarationData.Tenant);
-            this.FillInvoiceNumbersList();
+        this.entityResourceService.getEntityResourceByTableName("Customs.SIIRequest").subscribe((response: any) => {
+            this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsReqList").subscribe((response: any) => {
+                this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
+                    this.IsLoaded = true;
+                    this.userData = SessionLocator.LoggedUserPM;
+                    this.getAllSupplierinvoiceItemsByDeclarationId(this.DecalarationData.Id, this.DecalarationData.Tenant);
+                    this.FillInvoiceNumbersList();
+                });
+            });
         });
     }
     public supplierInvoiceItemsCollection: ObservableCollection;

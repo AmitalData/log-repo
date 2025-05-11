@@ -1,7 +1,7 @@
 <style>
 
 </style>
-<table *ngIf="DecalarationData != null">
+<table *ngIf="DecalarationData != null && IsLoaded">
     <tr style="height:300px;">
         <td style="vertical-align:top">
             <div style="vertical-align:top; margin:5px">
@@ -73,9 +73,9 @@
                         <td style="width:180px">
                             <!-- <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
                                 [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox> -->
-                        </td>
+                        </td> 
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'Remarks'" [ObjectTableName]="'Customs.SIIRequests'"
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'" [ObjectTableName]="'Customs.SIIRequests'"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
@@ -166,27 +166,22 @@
                     <tr class="FieldRow"></tr>
                 </table>
                 <!-- Section Two -->
+
                 <table style="width:1000px">
-                    <tr class="FieldRow">
+                    <tr>
                         <td class="TabTitleRow" style="width:130px">
-                            סיווגים:
-                            <!-- TODO: change to Textcode -->
-                        </td>
-                        <td class="TabTitleRow" style="width:180px">
-                            אישורים נדרשים:
-                            <!-- TODO: change to Textcode -->
-                        </td>
-                        <td style="width:130px">
-                        </td>
-                        <td style="width:180px">
+                            {{'Customs.SIIRequest.O.Sivug' | TextCodeTranslationPipe}}
                         </td>
                     </tr>
-                </table>
-                <table style="width:1000px">
                     <tr class="FieldRow" style="width:100%">
                         <td style="width:100%">
                             <div class="GrayBox">
                                 <table>
+                                    <tr>
+                                        <td class="headerRow" style="width:180px">
+                                            {{'Customs.SIIRequest.O.RequiredCertificates' | TextCodeTranslationPipe}}
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <!-- DemandState Filter Methods -->
                                         <td style="width: 240px;">
@@ -207,10 +202,10 @@
                                             </ul>
                                         </td>
                                         <td style="width: 10px;"></td>
+                                        <!-- LevelSelection Filter Methods -->
                                         <td style="width: 30px;">
                                             {{'Customs.Declaration.O.Level' | TextCodeTranslationPipe}}
                                         </td>
-                                        <!-- LevelSelection Filter Methods -->
                                         <td style="width: 160px;">
                                             <ul class="FiltersMenu">
                                                 <li id="LevelSelectionDeclarationConect"
@@ -230,9 +225,9 @@
                                             </ul>
                                         </td>
                                         <td style="width:5px"></td>
-                                        <td style="width: 160px;"
-                                            *ngIf="LevelSelectionFilterSelectedValue ==='Invoice'">
-                                            <ComboBox style="width:150px;" [ItemsSource]="InvoicesNumbersList"
+                                        <td style="width: 160px;">
+                                            <ComboBox *ngIf="LevelSelectionFilterSelectedValue ==='Invoice'"
+                                                style="width:150px;" [ItemsSource]="InvoicesNumbersList"
                                                 (SelectedItemChanged)="InvoicesSelectionChanged($event)"
                                                 [Binding]="'InvoiceNumber'"></ComboBox>
                                         </td>
@@ -241,13 +236,13 @@
                                         </td>
 
                                         <td style="width:130px">
-                                            <!-- TODO: change from HARDCODE TEXT -->
-                                            <SearchTextBox [PlaceHolder]="'פרט מכס/מספר פריט'"
+                                            <SearchTextBox
+                                                [PlaceHolder]="'Customs.SIIRequest.O.SivugSearchFields' | TextCodeTranslationPipe"
                                                 (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
                                         </td>
-                                        <td style="width: 30px;">
-                                            <!-- <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton> -->
-                                        </td>
+                                        <!-- <td style="width: 30px;">
+                                            <IconButton [Name]="'Refresh'" (click)="RefreshEntity()"></IconButton>
+                                        </td> -->
                                     </tr>
                                     <tr style="height:5px"></tr>
 
@@ -255,32 +250,19 @@
                             </div>
                         </td>
                     </tr>
-                </table>
-                <table style="width:1000px">
-                    <td style="border-radius:4px; vertical-align: top;">
+
+                    <!-- Section Classification items -->
+                    <tr style="border-radius:4px; vertical-align: top;">
                         <table>
-                            <tr style="height:25px">
-                                <td>
-                                    <table>
-                                        <tr style="height:35px">
-                                            <td style="width:5px"></td>
-                                            <td style="height:25px;width:35px; ">
-                                                <div *ngIf="IsCheckBoxVisible">
-                                                    <div class="Button" style="width: 29px;height:25px;">
-                                                        <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"
-                                                            [IsEnabled]="!IsDisplayOnly"
-                                                            (Checked)="IsSelected = $event "></CheckBox>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td style="width:5px"></td>
-                                            <td style="width:75px;"></td>
-                                            <td style="width:75px;"></td>
-                                            <td style="width:90px"></td>
-                                            <td></td>
-                                            <td style="width:130px"></td>
-                                        </tr>
-                                    </table>
+                            <tr>
+                                <td style="height:25px;width:35px; ">
+                                    <div *ngIf="IsCheckBoxVisible">
+                                        <div class="Button" style="width: 29px;height:25px;">
+                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"
+                                                [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event ">
+                                            </CheckBox>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr class="ClassificationListContainter">
@@ -372,7 +354,7 @@
                             </tr>
                         </table>
 
-                    </td>
+                    </tr>
                 </table>
             </div>
         </td>
