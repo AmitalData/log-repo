@@ -4,7 +4,7 @@ import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { SIIRequestWebService } from 'Customs/Services/WebServices/SIIRequestWebService';
+import { SIIRequestWebService, SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
@@ -40,10 +40,10 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public siiRequestListService: SIIRequestListService;
   public IsLoaded: boolean = false;
   public selectedSIIRequest = new SIIRequestPM();
+  public supplierInvoiceItemsForSIIRequest: SupplierInvoiceItemsForSIIRequest[] = [];
   public isOpen: boolean;
   public isCloseRequests: SiiRequestIsClosed = SiiRequestIsClosed.IsOpen;
   public querySelectionList: QueryOption[] = [];
-  @Output() MenuHeaderchangeevent = new EventEmitter();
 
   constructor(public entityArgs: EntityArgs) {
     super();
@@ -139,22 +139,28 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     };
 
     if (siiRequestMode === SiiRequestMode.IsNew)
-      this.getSIIRequestByIDAndopenLogWindow(this.currentDeclaration.Id, null, siiRequestMode, args);
+      this.getSIIRequestDataAndopenLogWindow(this.currentDeclaration.Id, null, siiRequestMode, args);
     else
-      this.getSIIRequestByIDAndopenLogWindow(this.currentDeclaration.Id, this.SelectedRow.Id, siiRequestMode, args);
+      this.getSIIRequestDataAndopenLogWindow(this.currentDeclaration.Id, this.SelectedRow.Id, siiRequestMode, args);
   }
 
-  getSIIRequestByIDAndopenLogWindow(declarationId: string, id: string, siiRequestMode: SiiRequestMode, args: any) {
-    // TODO: build the logic in GetRequestsByDeclarationIdIncludeChildrens
+  getSIIRequestDataAndopenLogWindow(declarationId: string, id: string, siiRequestMode: SiiRequestMode, args: any) {
     this.siiRequestWebService.getByDeclarationId(declarationId, id).subscribe(myResult => {
       let myResponse: ServiceResponse = myResult;
-      console.log(myResponse);
-
-      if (!myResponse.HasError && myResponse.Result) {
+      if (!myResponse?.HasError && myResponse?.Result) {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
-        this.openLogWindow(siiRequestMode, args);
       }
+
+      this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId).subscribe(myResult => {
+
+        let myResponse: ServiceResponse = myResult;
+        if (!myResponse?.HasError && myResponse?.Result) {
+          this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
+          args.supplierInvoiceItemsForSIIRequest = myResponse.Result;
+          this.openLogWindow(siiRequestMode, args);
+        }
+      });
     });
   }
 
@@ -163,7 +169,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.isOpen = true;
     let logWindow = new LogitudeWindow();
     logWindow.Width = 1030;
-    logWindow.Height = 735;
+    logWindow.Height = 745;
     logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
     args.isAllowChange = this.IsAllowChange;
     logWindow.WindowArgs = args;
@@ -181,15 +187,14 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
 
   ReloadMyScreen() {
     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-    // TODO: Create getSiiRequest method getSiiRequest()
     this.DisplayOnlyCheck();
+    // TODO: add getSiiRequest method getSiiRequest()
   }
 
   OnRowSelected(itemComponent: SIIRequestPM) {
     this.SelectedRow = itemComponent;
-    this.filterAgrs = new ApiQueryFilters();
-
-    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    this.selectedSIIRequest = this.SelectedRow;
+    this.filterAgrs = this.initFilterArgs();
   }
 
   RefreshEntity() {

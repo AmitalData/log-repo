@@ -20,7 +20,8 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
-import { SupplierInvoiceItemPM } from 'Customs/EntityPMs/SupplierInvoiceItemPM';
+import { SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
+
 @Component({
     selector: 'SIIRequestComponent',
     templateUrl: './SIIRequestComponent.html',
@@ -45,10 +46,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public IsDisplayOnly: boolean = false;
     public isAllowChange: boolean = false;
     public entityPM: SIIRequestPM = new SIIRequestPM();
-    public supplierInvoiceItemsList: SupplierInvoiceItemList[] = [];
     public filterAgrs: ApiQueryFilters;
     private userData: UserPM = new UserPM();
     public IsLoaded: boolean = false;
+    public supplierInvoiceItemsForSIIRequest: SupplierInvoiceItemsForSIIRequest[] = [];
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -63,7 +64,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
                     this.IsLoaded = true;
                     this.userData = SessionLocator.LoggedUserPM;
-                    this.getAllSupplierinvoiceItemsByDeclarationId(this.DecalarationData.Id, this.DecalarationData.Tenant);
                     this.FillInvoiceNumbersList();
                 });
             });
@@ -71,32 +71,17 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public supplierInvoiceItemsCollection: ObservableCollection;
 
-    getAllSupplierinvoiceItemsByDeclarationId(declarationId: string, tenant: number) {
-        let filterAgrs: ApiQueryFilters = this.filterAgrs;
-        filterAgrs.addAdditionalFilter("DeclarationId", declarationId, null, null, "Equals", false, false, false, "string", false);
-        filterAgrs.addAdditionalFilter("Tenant", tenant, null, null, "Equals", true, false, false, "string");
-        this.supplierinvoiceitemsWebService.getByFilters(this.filterAgrs).subscribe((response: ServiceResponse) => {
-            if (response?.Result) {
-                this.supplierInvoiceItemsList = response?.Result;
-                this.supplierInvoiceItemsCollection = new ObservableCollection([]);
-                this.buildSupplierInvoiceItemsCollection();
-            }
-        });
-    }
     buildSupplierInvoiceItemsCollection(): void {
         this.supplierInvoiceItemsCollection.Clear();
-        this.supplierInvoiceItemsList.forEach((item) => {
+        this.supplierInvoiceItemsForSIIRequest.forEach((item) => {
             let siiRequestComponent: SIIRequestComponent;
             const supplierInvoiceItemLine = new SiiRequestSupplierInvoiceItemsLine(item, siiRequestComponent);
             this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
         });
-
-
     }
 
     RefreshEntity() {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
-        // this.initiallizeComponent();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
 
@@ -108,6 +93,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.filterAgrs = args.filterAgrs;
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.SIIRequest";
+        this.supplierInvoiceItemsForSIIRequest = args.supplierInvoiceItemsForSIIRequest;
+        this.supplierInvoiceItemsCollection = new ObservableCollection([]);
+        this.buildSupplierInvoiceItemsCollection();
+        if (args.SiiRequest != null) this.entityPM = args.SiiRequest;
     }
 
     CancelSaveSiiRequest() {
@@ -176,7 +165,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         if (this.preventSelect == false) {
             this.SelectedRow = CurrentRow.rowData;
             this.CurrentSession.StartBusyIndicatorLoading();
-            if (!AppTool.IsNullOrEmpty(this.supplierInvoiceItemsList)) {
+            if (!AppTool.IsNullOrEmpty(this.supplierInvoiceItemsForSIIRequest)) {
                 this.CurrentSession.StartBusyIndicatorLoading();
                 var windowArgs: any = {};
                 windowArgs.EntityPM = this.entityPM;
@@ -484,14 +473,13 @@ export class SupplierInvoiceItemsReqListLine extends BaseComponent {
         this.entityPM.Remarks = newValue;
     }
 }
-
 //#region SiiRequestSupplierInvoiceItemsLine properties:
 export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
-    public entityPM: SupplierInvoiceItemList;
+    public entityPM: SupplierInvoiceItemsForSIIRequest;
     public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     Parent: SIIRequestComponent;
-    constructor(EntityPM: SupplierInvoiceItemList, parent: SIIRequestComponent) {
+    constructor(EntityPM: SupplierInvoiceItemsForSIIRequest, parent: SIIRequestComponent) {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
@@ -504,11 +492,11 @@ export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
         this.entityPM.InvoiceNumber = newValue;
     }
 
-    public get ClassificationCode(): string {
-        return this.entityPM.ClassificationCode;
+    public get LineNumber(): number {
+        return this.entityPM.LineNumber;
     }
-    public set ClassificationCode(newValue: string) {
-        this.entityPM.ClassificationCode = newValue;
+    public set LineNumber(newValue: number) {
+        this.entityPM.LineNumber = newValue;
     }
 
     public get ItemCode(): string {
@@ -518,18 +506,25 @@ export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
         this.entityPM.ItemCode = newValue;
     }
 
-    public get OriginCountryCode(): string {
-        return this.entityPM.OriginCountryCode;
+    public get ItemName(): string {
+        return this.entityPM.ItemName;
     }
-    public set OriginCountryCode(newValue: string) {
-        this.entityPM.OriginCountryCode = newValue;
+    public set ItemName(newValue: string) {
+        this.entityPM.ItemName = newValue;
     }
 
-    public get OriginCountryName(): string {
-        return this.entityPM.OriginCountryName;
+    public get ItemDescription(): string {
+        return this.entityPM.ItemDescription;
     }
-    public set OriginCountryName(newValue: string) {
-        this.entityPM.OriginCountryName = newValue;
+    public set ItemDescription(newValue: string) {
+        this.entityPM.ItemDescription = newValue;
+    }
+
+    public get ClassificationCode(): string {
+        return this.entityPM.ClassificationCode;
+    }
+    public set ClassificationCode(newValue: string) {
+        this.entityPM.ClassificationCode = newValue;
     }
 
     public get TradeAgreementCode(): string {
@@ -544,5 +539,54 @@ export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
     }
     public set TradeAgreementName(newValue: string) {
         this.entityPM.TradeAgreementName = newValue;
+    }
+
+    public get InvoiceQuantityType(): string {
+        return this.entityPM.InvoiceQuantityType;
+    }
+    public set InvoiceQuantityType(newValue: string) {
+        this.entityPM.InvoiceQuantityType = newValue;
+    }
+
+    public get InvoiceQuantity(): string {
+        return this.entityPM.InvoiceQuantity;
+    }
+    public set InvoiceQuantity(newValue: string) {
+        this.entityPM.InvoiceQuantity = newValue;
+    }
+
+    public get ItemPrice(): string {
+        return this.entityPM.ItemPrice;
+    }
+    public set ItemPrice(newValue: string) {
+        this.entityPM.ItemPrice = newValue;
+    }
+
+    public get ItemPriceCurrencyCode(): string {
+        return this.entityPM.ItemPriceCurrencyCode;
+    }
+    public set ItemPriceCurrencyCode(newValue: string) {
+        this.entityPM.ItemPriceCurrencyCode = newValue;
+    }
+
+    public get ItemPriceCurrencyName(): string {
+        return this.entityPM.ItemPriceCurrencyName;
+    }
+    public set ItemPriceCurrencyName(newValue: string) {
+        this.entityPM.ItemPriceCurrencyName = newValue;
+    }
+
+    public get OriginCountryCode(): string {
+        return this.entityPM.OriginCountryCode;
+    }
+    public set OriginCountryCode(newValue: string) {
+        this.entityPM.OriginCountryCode = newValue;
+    }
+
+    public get OriginCountryName(): string {
+        return this.entityPM.OriginCountryName;
+    }
+    public set OriginCountryName(newValue: string) {
+        this.entityPM.OriginCountryName = newValue;
     }
 }

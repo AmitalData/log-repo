@@ -16,23 +16,22 @@ export class SIIRequestWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SIIRequestExtended';
     }
 
-    getByDeclarationId(declarationId: string,id: string) {
+
+    getByDeclarationId(declarationId: string, id: string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetSingle/?declarationId=" + declarationId + "&id=" + id , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSingle/?declarationId=" + declarationId + "&id=" + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 let serviceResponse: ServiceResponse = new ServiceResponse();
-                let mappedResult: SIIRequestPM = new SIIRequestPM();
-                serviceResponse.Result = mappedResult;
+                serviceResponse.Result = response;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
-
     getSupplierInvoiceItemsForSIIRequest(declarationId: string) {
         return defer(() => {
             let authHeader = new Headers();
@@ -40,13 +39,29 @@ export class SIIRequestWebService {
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetSupplierInvoiceItemsForSIIRequest/?declarationId=" + declarationId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSupplierInvoiceItemsForSIIRequest/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 let serviceResponse: ServiceResponse = new ServiceResponse();
-                let mappedResult: SIIRequestPM = new SIIRequestPM();
-                serviceResponse.Result = mappedResult;
+                serviceResponse.Result = response;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
+}
+export class SupplierInvoiceItemsForSIIRequest {
+    InvoiceNumber: string;
+    LineNumber: number;
+    ItemCode: string;
+    ItemName: string;
+    ItemDescription: string;
+    ClassificationCode: string;
+    TradeAgreementCode: string;
+    TradeAgreementName: string;
+    InvoiceQuantityType: string;
+    InvoiceQuantity: string;
+    ItemPrice: string;
+    ItemPriceCurrencyCode: string;
+    ItemPriceCurrencyName: string;
+    OriginCountryCode: string;
+    OriginCountryName: string;
 }
