@@ -379,13 +379,18 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
     }
     PushStatus(status) {
+        
         this.SelectedStatusItems.push(status.Code);
+        this.GetDuplicateInputs();
         this.FilterLines();
+        
     }
     PopStatus(status) {
+        
         var itemIndex = this.SelectedStatusItems.indexOf(status.Code);
         if (itemIndex > -1)
             this.SelectedStatusItems.splice(itemIndex, 1);
+        this.GetDuplicateInputs();
         this.FilterLines();
     }
     GetLinesWithErrorsCount() {
@@ -406,6 +411,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                 this.IsFixDupButtonVisible = __duplicateInputsCount >= 1;
             });
         }
+        else {
+            this.IsFixDupButtonVisible = false;
+        }
     }
 
     GetTransmitStatuses() {
@@ -419,7 +427,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.FilterLines();
     }
     PopTransmitStatus(status) {
-        
+
         var itemIndex = this.SelectedTransmitStatusItems.indexOf(status.Code);
         if (itemIndex > -1)
             this.SelectedTransmitStatusItems.splice(itemIndex, 1);
