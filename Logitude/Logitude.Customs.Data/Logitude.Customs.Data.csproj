@@ -4102,6 +4102,7 @@
     <Compile Include="Repsitories\VendorStatusRepository.cs" />
     <Compile Include="Repsitories\VendorTransactionTypeRepository.cs" />
     <Compile Include="Repsitories\VendorTypeRepository.cs" />
+    <Compile Include="DataContracts\SupplieInvoiceItemsForSIIRequest.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

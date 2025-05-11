@@ -11,6 +11,7 @@ using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityDataMappings;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
+using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -33,5 +34,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping.POCOToPM(newPm, newPo);
             return newPm;
         }
+
+
+        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, int tenant)
+        {
+            List<SupplieInvoiceItemsForSIIRequest> items= repository.GetSupplierInvoiceItems(declarationId, tenant);
+            return items;
+
+        }
+
     }
 }
