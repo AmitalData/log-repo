@@ -204,6 +204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 		ResponsibilityUpdateClass  ResponsibilityUpdateClass = new ResponsibilityUpdateClass();
 		RestrictionUpdateClass  RestrictionUpdateClass = new RestrictionUpdateClass();
 		RoleUpdateClass  RoleUpdateClass = new RoleUpdateClass();
+		SearchIndexEditHistoryUpdateClass  SearchIndexEditHistoryUpdateClass = new SearchIndexEditHistoryUpdateClass();
 		SharedLogisticsUpdateClass  SharedLogisticsUpdateClass = new SharedLogisticsUpdateClass();
 		ShippingAgentUpdateClass  ShippingAgentUpdateClass = new ShippingAgentUpdateClass();
 		ShippingLineUpdateClass  ShippingLineUpdateClass = new ShippingLineUpdateClass();
@@ -547,6 +548,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 			TablesHashStrings.Add("Responsibility",  ResponsibilityUpdateClass.HashString);
 			TablesHashStrings.Add("Restriction",  RestrictionUpdateClass.HashString);
 			TablesHashStrings.Add("Role",  RoleUpdateClass.HashString);
+			TablesHashStrings.Add("SearchIndexEditHistory",  SearchIndexEditHistoryUpdateClass.HashString);
 			TablesHashStrings.Add("SharedLogistics",  SharedLogisticsUpdateClass.HashString);
 			TablesHashStrings.Add("ShippingAgent",  ShippingAgentUpdateClass.HashString);
 			TablesHashStrings.Add("ShippingLine",  ShippingLineUpdateClass.HashString);
@@ -5524,6 +5526,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 				}
 			}
 
+			if(MetadataUpdateUtility.IsChangedMetadataTable("SearchIndexEditHistory", ObjectTables, SearchIndexEditHistoryUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("SearchIndexEditHistory",contextTenant);
+					SearchIndexEditHistoryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					SearchIndexEditHistoryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes,contextTenant);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields,contextTenant);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					SearchIndexEditHistoryUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups,contextTenant);
+					//this.ObjectContext.SaveChanges();
+					SearchIndexEditHistoryUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext,contextTenant);
+					//this.ObjectContext.SaveChanges();
+					SearchIndexEditHistoryUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext,contextTenant);
+					//this.ObjectContext.SaveChanges();
+					SearchIndexEditHistoryUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses,contextTenant);
+					//this.ObjectContext.SaveChanges();
+					SearchIndexEditHistoryUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
+					//this.ObjectContext.SaveChanges();
+					SearchIndexEditHistoryUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext,contextTenant);
+					//this.ObjectContext.SaveChanges();
+					SearchIndexEditHistoryUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext,contextTenant);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
 			if(MetadataUpdateUtility.IsChangedMetadataTable("SharedLogistics", ObjectTables, SharedLogisticsUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -7260,6 +7295,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	
 	   	   RoleUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
+	   	   SearchIndexEditHistoryUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
+	
 	   	   SharedLogisticsUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
 	   	   ShippingAgentUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
@@ -7642,6 +7679,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	
 	   	   //RoleUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
 	
+	   	   //SearchIndexEditHistoryUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
+	
 	   	   //SharedLogisticsUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
 	
 	   	   //ShippingAgentUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository,contextTenant);
@@ -8022,6 +8061,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	   	   RestrictionUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
 	   	   RoleUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
+	
+	   	   SearchIndexEditHistoryUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
 	   	   SharedLogisticsUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
@@ -8404,6 +8445,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	
 	   	   RoleUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
+	   	   SearchIndexEditHistoryUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
+	
 	   	   SharedLogisticsUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
 	   	   ShippingAgentUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
@@ -8784,6 +8827,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	   	   RestrictionUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
 	   	   RoleUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
+	
+	   	   SearchIndexEditHistoryUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
 	   	   SharedLogisticsUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
@@ -9166,6 +9211,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	
 	   	   RoleUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
+	   	   SearchIndexEditHistoryUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
+	
 	   	   SharedLogisticsUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
 	   	   ShippingAgentUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
@@ -9547,6 +9594,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	
 	   	   RoleUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
+	   	   SearchIndexEditHistoryUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
+	
 	   	   SharedLogisticsUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   ShippingAgentUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
@@ -9926,6 +9975,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	   	   RestrictionUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   RoleUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
+	
+	   	   SearchIndexEditHistoryUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   SharedLogisticsUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
@@ -10307,6 +10358,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	
 	   	   RoleUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
+	   	   SearchIndexEditHistoryUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
+	
 	   	   SharedLogisticsUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
 	   	   ShippingAgentUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
@@ -10568,6 +10621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel
 	   
 	   	   ResponsibilityUpdateClass.FillResponsibility(contextTenant);
 	
+	   
 	   
 	   
 	   
