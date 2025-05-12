@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.Repsitories
                              .Where(c => c.Tenant == tenant && c.Code == d.ImporterId)
                              .DefaultIfEmpty()
 
-                    from rd in context.DeclarationReferantDatas.Include("Vessel")
+                    from rd in context.DeclarationReferantDatas
                              .Where(r => r.Tenant == tenant && r.DeclarationId == d.Id)
                              .DefaultIfEmpty()
                     from con in context.Consignments
