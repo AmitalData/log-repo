@@ -37,6 +37,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public DataContext = this;
     public ObjectTableName: string = "Customs.Declaration";
+    public ObjectTableNameSiiRequest: string = "Customs.SIIRequests";
     siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
     supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
     public entityResourceService: EntityResourceService = new EntityResourceService();
@@ -491,35 +492,30 @@ export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
     public set InvoiceNumber(newValue: string) {
         this.entityPM.InvoiceNumber = newValue;
     }
-
     public get LineNumber(): number {
         return this.entityPM.LineNumber;
     }
     public set LineNumber(newValue: number) {
         this.entityPM.LineNumber = newValue;
     }
-
     public get ItemCode(): string {
         return this.entityPM.ItemCode;
     }
     public set ItemCode(newValue: string) {
         this.entityPM.ItemCode = newValue;
     }
-
     public get ItemName(): string {
         return this.entityPM.ItemName;
     }
     public set ItemName(newValue: string) {
         this.entityPM.ItemName = newValue;
     }
-
     public get ItemDescription(): string {
         return this.entityPM.ItemDescription;
     }
     public set ItemDescription(newValue: string) {
         this.entityPM.ItemDescription = newValue;
     }
-
     public get ClassificationCode(): string {
         return this.entityPM.ClassificationCode;
     }
@@ -547,35 +543,30 @@ export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
     public set InvoiceQuantityType(newValue: string) {
         this.entityPM.InvoiceQuantityType = newValue;
     }
-
+    public get InvoiceQuantityTypeName(): string {
+        return this.entityPM.InvoiceQuantityType;
+    }
+    public set InvoiceQuantityTypeName(newValue: string) {
+        this.entityPM.InvoiceQuantityType = newValue;
+    }
     public get InvoiceQuantity(): string {
         return this.entityPM.InvoiceQuantity;
     }
     public set InvoiceQuantity(newValue: string) {
         this.entityPM.InvoiceQuantity = newValue;
     }
-
     public get ItemPrice(): string {
         return this.entityPM.ItemPrice;
     }
     public set ItemPrice(newValue: string) {
         this.entityPM.ItemPrice = newValue;
     }
-
     public get ItemPriceCurrencyCode(): string {
         return this.entityPM.ItemPriceCurrencyCode;
     }
     public set ItemPriceCurrencyCode(newValue: string) {
         this.entityPM.ItemPriceCurrencyCode = newValue;
     }
-
-    public get ItemPriceCurrencyName(): string {
-        return this.entityPM.ItemPriceCurrencyName;
-    }
-    public set ItemPriceCurrencyName(newValue: string) {
-        this.entityPM.ItemPriceCurrencyName = newValue;
-    }
-
     public get OriginCountryCode(): string {
         return this.entityPM.OriginCountryCode;
     }

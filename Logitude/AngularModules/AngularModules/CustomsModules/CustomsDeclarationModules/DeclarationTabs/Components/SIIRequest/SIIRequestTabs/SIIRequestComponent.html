@@ -17,12 +17,12 @@
                         <td style="width:100px">
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'ImporterId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ImporterId'" [ObjectFieldName]="'ImporterId'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ImporterId'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
@@ -42,45 +42,71 @@
                         <td style="width:100px">
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                            <!-- TODO: change to english- users table -->
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactName'" [ObjectFieldName]="'Code'"
+                                [ObjectTableName]="'Customs.SIIRequests'" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                            <LogLov [ObjectFieldName]="'Code'" [ObjectTableName]="'Customs.SIIRequests'"
+                                [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="contact"
+                                [HideColumns]="true" [CustomizedWidth]="180">
+                            </LogLov>
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                         </td>
                         <td style="width:180px">
                         </td>
                     </tr>
-                    <!-- Third Row -->
+                    <!-- Third Row 1 -->
+
                     <tr class="FieldRow">
                         <td style="width:100px">
                         </td>
                         <td style="width:130px">
-                            <!-- <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel> -->
-                        </td>
-                        <td style="width:180px">
-                            <!-- <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox> -->
-                        </td> 
-                        <td style="width:130px">
-                            <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'" [ObjectTableName]="'Customs.SIIRequests'"
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactEmail'"
+                                [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ContactEmail'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.UnloadDate'" [ObjectFieldName]="'UnloadDate'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'UnloadDate'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                        </td>
+                        <td style="width:180px">
+                        </td>
+                    </tr>
+                    <!-- Third Row 2-->
+                    <tr class="FieldRow">
+                        <td style="width:100px">
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactTel'" [ObjectFieldName]="'ContactTel'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ContactTel'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px">
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'Remarks'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.SIIRequests'" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
 
                         <td style="width:130px">
@@ -93,20 +119,21 @@
                         <td style="width:100px">
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactCellPhone'"
+                                [ObjectFieldName]="'ContactCellPhone'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'ContactCellPhone'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.VesselName'" [ObjectFieldName]="'VesselName'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'VesselName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                         </td>
@@ -118,20 +145,21 @@
                         <td style="width:100px">
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactFax'" [ObjectFieldName]="'ContactFax'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'ContactFax'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ManifestNumber'"
+                                [ObjectFieldName]="'ManifestNumber'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                         </td>
@@ -143,20 +171,22 @@
                         <td style="width:100px">
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseAddress'"
+                                [ObjectFieldName]="'WareHouseAddress'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'WareHouseAddress'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseCityName'"
+                                [ObjectFieldName]="'WareHouseCityName'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'CustomFileNo'" [DataContext]="DataContext"
-                                [ObjectTableName]="'Customs.Declarations'" [HideColumns]="true"></LogTextBox>
+                            <LogTextBox [ObjectFieldName]="'WareHouseCityName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                         </td>
@@ -270,7 +300,8 @@
                                     <div class="CellContent">
                                         <div class="GeneratedGridContainer"
                                             style="padding:5px;vertical-align:top;top:0;position:absolute">
-                                            <table style="width:600px" *ngIf="supplierInvoiceItemsForSIIRequest?.length > 0">
+                                            <table style="width:600px"
+                                                *ngIf="supplierInvoiceItemsForSIIRequest?.length > 0">
                                                 <tr class="FieldRow" style="height : 120px">
                                                     <td colspan="6">
                                                         <div class="GeneratedGridContainer" style="height : 100%;">

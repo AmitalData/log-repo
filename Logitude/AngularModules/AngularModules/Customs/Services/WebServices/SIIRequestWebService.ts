@@ -58,10 +58,10 @@ export class SupplierInvoiceItemsForSIIRequest {
     TradeAgreementCode: string;
     TradeAgreementName: string;
     InvoiceQuantityType: string;
+    InvoiceQuantityTypeName: string;
     InvoiceQuantity: string;
     ItemPrice: string;
     ItemPriceCurrencyCode: string;
-    ItemPriceCurrencyName: string;
     OriginCountryCode: string;
     OriginCountryName: string;
 }
