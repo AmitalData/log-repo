@@ -258,9 +258,9 @@ export class AppTool {
     }
     public static GetLogitudeURL(url: string = null) {
 
-       let current_URL = !AppTool.IsNullOrEmpty(url) ? url : !AppTool.IsNullOrEmpty(environment.url) ? environment.url : location.href;
+        let current_URL = !AppTool.IsNullOrEmpty(url) ? url : !AppTool.IsNullOrEmpty(environment.url) ? environment.url : location.href;
 
-        var logitude_url = current_URL.replace('index.html', '');
+        let base_url = current_URL.replace('index.html', '');
 
         if (current_URL.indexOf('localhost') > -1) {
             return 'http://localhost:9996/';
@@ -269,13 +269,13 @@ export class AppTool {
         }
 
         else {
-            var urlArr = current_URL.split("/index.html");
-            var url = urlArr[0];
+            let urlArr = current_URL.split("/index.html");
+            let url = urlArr[0];
             url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
-            logitude_url = url + "/";
+            base_url = url + "/";
         }
 
-        return logitude_url;
+        return base_url;
     }
 
 
