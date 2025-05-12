@@ -260,22 +260,17 @@ export class AppTool {
 
         let current_URL = !AppTool.IsNullOrEmpty(url) ? url : !AppTool.IsNullOrEmpty(environment.url) ? environment.url : location.href;
 
-        let base_url = current_URL.replace('index.html', '');
-
         if (current_URL.indexOf('localhost') > -1) {
             return 'http://localhost:9996/';
             // for amitalcloud: 
             // return 'http://localhost:44346/';
         }
-
         else {
-            let urlArr = current_URL.split("/index.html");
-            let url = urlArr[0];
+            let url = current_URL.split("/index.html")[0];
             url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
-            base_url = url + "/";
+            return url + "/";
         }
 
-        return base_url;
     }
 
 
