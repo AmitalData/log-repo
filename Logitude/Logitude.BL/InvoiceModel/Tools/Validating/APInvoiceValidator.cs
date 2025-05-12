@@ -233,7 +233,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
 
 
-                List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
+                List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete && d.ExcludeFromTaxReport != true).ToList();
                 if (activeLines != null && activeLines.Count > 0 && activeTotalVats != null && activeTotalVats.Count > 0)
                 {
                     List<string> expenses = new List<string>();
