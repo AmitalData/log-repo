@@ -87,8 +87,8 @@ namespace Logitude.Customs.BL.BL
                 {
                     hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant, "A");
                 }
-                bool importerOk =string.IsNullOrEmpty(declaration.ImporterCode) &&        
-                    (string.IsNullOrEmpty(declaration.ImporterId) || !string.IsNullOrEmpty(declaration.ImporterId));
+                bool importerOk =(string.IsNullOrEmpty(declaration.ImporterCode) && (string.IsNullOrEmpty(declaration.ImporterId))
+                    || !string.IsNullOrEmpty(declaration.ImporterId));
 
                 if (declaration != null && !hasActivePending && importerOk )
                 {
