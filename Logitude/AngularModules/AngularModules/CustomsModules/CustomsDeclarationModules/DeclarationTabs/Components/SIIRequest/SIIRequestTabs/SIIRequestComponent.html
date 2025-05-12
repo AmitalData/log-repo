@@ -42,15 +42,19 @@
                         <td style="width:100px">
                         </td>
                         <td style="width:130px">
-                            <!-- TODO: change to english- users table -->
-                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactName'" [ObjectFieldName]="'Code'"
-                                [ObjectTableName]="'Customs.SIIRequests'" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactName'" [ObjectFieldName]="'ContactId'"
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
+                            <!-- TODO- DELETE AFTER DB-migration -->
                             <LogLov [ObjectFieldName]="'Code'" [ObjectTableName]="'Customs.SIIRequests'"
                                 [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="contact"
-                                [HideColumns]="true" [CustomizedWidth]="180">
+                                [HideColumns]="true" [CustomizedWidth]="300">
                             </LogLov>
+                            <!-- <LogLov [ObjectFieldName]="'ContactId'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                                [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="ContactId"
+                                [HideColumns]="true" [CustomizedWidth]="300">
+                            </LogLov> -->
                         </td>
                         <td style="width:130px">
                         </td>
@@ -61,8 +65,7 @@
                         <td style="width:180px">
                         </td>
                     </tr>
-                    <!-- Third Row 1 -->
-
+                    <!-- Third Row -->
                     <tr class="FieldRow">
                         <td style="width:100px">
                         </td>
@@ -88,7 +91,7 @@
                         <td style="width:180px">
                         </td>
                     </tr>
-                    <!-- Third Row 2-->
+                    <!-- Fourth Row -->
                     <tr class="FieldRow">
                         <td style="width:100px">
                         </td>
@@ -114,7 +117,7 @@
                         <td style="width:180px">
                         </td>
                     </tr>
-                    <!-- Fourth Row -->
+                    <!-- Fifth Row -->
                     <tr class="FieldRow">
                         <td style="width:100px">
                         </td>
@@ -140,7 +143,7 @@
                         <td style="width:180px">
                         </td>
                     </tr>
-                    <!-- Fifth Row -->
+                    <!-- Sixth Row -->
                     <tr class="FieldRow">
                         <td style="width:100px">
                         </td>
@@ -166,7 +169,7 @@
                         <td style="width:180px">
                         </td>
                     </tr>
-                    <!-- Sixth Row -->
+                    <!-- Seventh Row -->
                     <tr class="FieldRow">
                         <td style="width:100px">
                         </td>
@@ -193,10 +196,9 @@
                         <td style="width:180px">
                         </td>
                     </tr>
-                    <tr class="FieldRow"></tr>
                 </table>
-                <!-- Section Two -->
 
+                <!-- Section Two -->
                 <table style="width:1000px">
                     <tr>
                         <td class="TabTitleRow" style="width:130px">
@@ -288,7 +290,8 @@
                                 <td style="height:25px;width:35px; ">
                                     <div *ngIf="IsCheckBoxVisible">
                                         <div class="Button" style="width: 29px;height:25px;">
-                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"
+                                            <CheckBox style="right:3px; top:1.5px"
+                                                [IsChecked]="supplierInvoiceItemsForSIIRequest?.length === SelectedInvoiceItemsReqList?.Collection?.length"
                                                 [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event ">
                                             </CheckBox>
                                         </div>
@@ -306,8 +309,12 @@
                                                     <td colspan="6">
                                                         <div class="GeneratedGridContainer" style="height : 100%;">
                                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                                [EnableMultiSelection]="true"
+                                                                (SelectedItemChanged)="OnRowSelected($event)"
+                                                                [SelectedRow]="SelectedRow"
                                                                 [ItemSource]="supplierInvoiceItemsCollection"
-                                                                [EnableMultiSelection]="true">
+                                                                [SelectedRows]="SelectedInvoiceItemsReqList.Collection"
+                                                                [Disabled]="IsDisplayOnly">
                                                                 <log-column
                                                                     [header]="'Customs.SupplierInvoiceItem.F.InvoiceNumber' | TextCodeTranslationPipe"
                                                                     [binding]="'InvoiceNumber'" [width]="'70'"

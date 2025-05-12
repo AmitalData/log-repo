@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { defer } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 @Injectable()
 
 export class SIIRequestWebService {
     private _http: HttpClient
     private _apiUrl: string;
+    private _apiUrlUser: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SIIRequestExtended';
+        this._apiUrlUser = ServiceHelper.GetLogitudeURL() + 'api/Users';
     }
 
 
@@ -32,6 +33,7 @@ export class SIIRequestWebService {
         }
         );
     }
+
     getSupplierInvoiceItemsForSIIRequest(declarationId: string) {
         return defer(() => {
             let authHeader = new Headers();
@@ -48,6 +50,7 @@ export class SIIRequestWebService {
         );
     }
 }
+
 export class SupplierInvoiceItemsForSIIRequest {
     InvoiceNumber: string;
     LineNumber: number;
