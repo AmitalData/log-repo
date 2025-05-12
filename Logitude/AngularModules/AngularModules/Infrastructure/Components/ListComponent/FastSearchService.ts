@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, OnDestroy } from "@angular/core";
+import { EventEmitter, Injectable, isDevMode, OnDestroy } from "@angular/core";
 import { SearchIndexEditHistoryPM } from "Common/EntityPMs/SearchIndexEditHistoryPM";
 import { SearchIndexEditHistoryPMService } from "Common/Services/StandardPMs/SearchIndexEditHistoryPMService";
 import { AzureSearchWebService, FastSearchResult, FastSearchSettings } from "Customs/Services/WebServices/AzureSearchWebService";
@@ -21,6 +21,8 @@ export class FastSearchService implements OnDestroy {
     private subscriptions: any[] = [];
     public $fastSearchEnable: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private $recentSearches: BehaviorSubject<FastSearchResult[]> = new BehaviorSubject<FastSearchResult[]>([]);
+    private readonly azureSearchService = new AzureSearchWebService();
+
     public get $RecentSearches(): Observable<FastSearchResult[]> {
         return this.$recentSearches.asObservable();
     }
@@ -41,8 +43,7 @@ export class FastSearchService implements OnDestroy {
     public async search(currentQueryFilters: ApiQueryFilters, searchText: string): Promise<FastSearchResult[]> {
         if (searchText?.length > 0) {
             this.orginalCurrentAdditionalFilters = [...currentQueryFilters.AdditionalFilters];
-            const result: FastSearchResult[] = await this.azureSearchWebService.fastSearch(currentQueryFilters, searchText, this.indexName)
-            return result;
+            return await this.azureSearchWebService.fastSearch(currentQueryFilters, searchText, this.indexName)
 
         } else if (this.orginalCurrentAdditionalFilters != null)
             currentQueryFilters.AdditionalFilters = this.orginalCurrentAdditionalFilters;
@@ -61,7 +62,7 @@ export class FastSearchService implements OnDestroy {
     public async initFastSearch(objectTable: ObjectTablePM, objectTableName: string, menuTableQuerySection: string): Promise<void> {
         this.resetData();
         
-        const havePermission = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH");
+        const havePermission = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH") || isDevMode();
         const enabled = objectTable.ShowFastSearch;
         if (!havePermission || !enabled) return;
 
@@ -76,7 +77,7 @@ export class FastSearchService implements OnDestroy {
             indexName = 'exportDeclarations';
         else return; // Disabled fase search for import declaration
 
-        const settings: FastSearchSettings = await this.azureSearchWebService.GetSettings(indexName);
+        const settings: FastSearchSettings = await this.azureSearchWebService.getSettings(indexName);
         this.settings = settings;
 
         this.getRecentSearches();
@@ -113,7 +114,7 @@ export class FastSearchService implements OnDestroy {
 
     async getRecentSearches() {
         const Entname = this.getEntname();
-        const recentSearches: FastSearchResult[] = await new AzureSearchWebService().getRecentSearches<FastSearchResult>(this.settings.recentEditScreen, Entname, this.settings.recentShowTopResults);
+        const recentSearches: FastSearchResult[] = await this.azureSearchService.getRecentSearches<FastSearchResult>(this.settings.recentEditScreen, Entname, this.settings.recentShowTopResults);
         this.$recentSearches.next(recentSearches);
     }
 

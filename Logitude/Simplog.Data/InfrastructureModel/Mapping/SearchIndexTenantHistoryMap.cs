@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
-    class SearchIndexTenantHistoryMap : EntityTypeConfiguration<SearchIndexTenantHistory>
+    public class SearchIndexTenantHistoryMap : EntityTypeConfiguration<SearchIndexTenantHistory>
     {
         public SearchIndexTenantHistoryMap()
         {
@@ -12,7 +12,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             Property(t => t.Screen).HasColumnName("Screen").IsRequired().HasMaxLength(50);
             Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
             Property(t => t.TtlMonth).HasColumnName("TtlMonth").IsRequired();
-            Property(t => t.LastUpdate).HasColumnName("LastUpdate");
+            Property(t => t.LastUpdate).HasColumnName("LastUpdate").IsOptional();
         }
     }
 }

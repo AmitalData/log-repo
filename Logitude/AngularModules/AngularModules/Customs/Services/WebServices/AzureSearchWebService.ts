@@ -10,25 +10,22 @@ import { Observable } from "rxjs";
 
 export class AzureSearchWebService {
     private _http: HttpClient = ServiceHelper.HttpClient;
-    private _apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/AzureSearch';
+    private readonly _apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/AzureSearch';
     private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
     
     constructor() {}
 
-    fastSearch(filters: ApiQueryFilters, searchText: string, index: string): Promise<FastSearchResult[]> {
-        const ajax: Observable<any> = this._http.get(
+    async fastSearch(filters: ApiQueryFilters, searchText: string, index: string): Promise<FastSearchResult[]> {
+        return this._http.get(
             this._apiUrl + '/GetFastSearch?' + this.logtuideTableDataService.apiQueryFilterToQueryString(filters),
             {
                 headers: ServiceHelper.GetHttpHeaders().headers,
                 params: { searchText, index }
             }
-        );
-
-        const res: Observable<ServiceResponse> = this.logtuideTableDataService.standartSendAjax(ajax);
-        return this.logtuideTableDataService.getDataFromService(res)
+        ).toPromise<any>();
     }
 
-    GetSettings(index: string): Promise<FastSearchSettings> {
+    getSettings(index: string): Promise<FastSearchSettings> {
         const ajax: Observable<any> = this._http.get(
             this._apiUrl + '/GetSettings',
             {
@@ -95,4 +92,5 @@ export interface FastSearchResult {
     recentEditScreen: string;
     recentEditScreenParam: string;
     addAsteriskToNumberSearch: string;
+    DDLWidth: string;
 }

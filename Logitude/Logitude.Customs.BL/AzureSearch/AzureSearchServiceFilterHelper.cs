@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.AzureSearch
                     default:
                         if ((_operator == "eq" || _operator == "ne") &&
                         (filter.FieldDataType == "Text" || filter.FieldDataType == "nText" || filter.FieldDataType == "LookUp" || filter.FieldDataType == "PickList" || filter.FieldDataType?.ToLower() == "string"))
-                            value1 = "'" + value1 + "'";
+                            value1 = "'" + value1.Replace("'", "''") + "'";
 
                         filterParts.Add($"{filter.FieldName} {_operator} {value1}");
                         break;
@@ -111,7 +111,7 @@ namespace Logitude.Customs.BL.AzureSearch
 
         private static void LogFilterError(QueryFilterItem filter)
         {
-            logger.WriteInfo($"Invalid value for filter {filter?.FieldName} in DeclarationAzureSearchService.Search, value1: {filter?.FieldValue}, value2: {filter?.FieldValue2}, value3: {filter?.FieldValue3}, type: {filter?.FieldDataType}, type: {filter?.FieldDataType}");
+            logger.WriteInfo($"Invalid value for filter {filter?.FieldName} in DeclarationAzureSearchService.Search, value1: {filter?.FieldValue}, value2: {filter?.FieldValue2}, value3: {filter?.FieldValue3}, type: {filter?.FieldDataType},");
         }
 
         public static string ConvertLogitudeOperatorToAzureSearchOperator(string logitudeOperator)
@@ -136,7 +136,7 @@ namespace Logitude.Customs.BL.AzureSearch
                 case QueryFilterOperatorTypes.NotEqual:
                     return "ne";
                 case QueryFilterOperatorTypes.Exclude:
-                    return "not in";
+                    return QueryFilterOperatorTypes.Exclude;
                 case QueryFilterOperatorTypes.IsNotNull:
                     return "ne null";
                 case QueryFilterOperatorTypes.IsNull:

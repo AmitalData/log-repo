@@ -9,11 +9,15 @@ namespace Logitude.Customs.BL.AzureSearch
 {
     public class DeclarationAzureSearchService : FastSearchService
     {
-        protected override void MenipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant)
+        protected override void ManipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant)
         {
             QueryFilterItem transportModeFilter = additionalFilters.Find(x => x.FieldName == "TransportModeForExport");
             if (transportModeFilter != null)
                 transportModeFilter.FieldName = "TransportModeId";
+
+            foreach (QueryFilterItem filter in additionalFilters)
+                if (FieldNameMappings.TryGetValue(filter.FieldName, out string mappedName))
+                    filter.FieldName = mappedName;
         }
 
         protected override IQueryable GetCustomFilterQueryable(QueryOperations queryOperations, int tenant)
@@ -24,21 +28,21 @@ namespace Logitude.Customs.BL.AzureSearch
             return iQueryable;
         }
 
-        protected override string MenipulateFilters(List<QueryFilterItem> additionalFilters, string filters, int tenant)
+        protected override string ManipulateFilters(List<QueryFilterItem> additionalFilters, string filters, int tenant)
         {
-            if (additionalFilters == null)
-                filters = "tenant eq " + tenant;
-            else if (additionalFilters.All(x => x.FieldName != "Tenant"))
-            {
-                if (filters != "")
-                    filters += " and ";
-                filters += "tenant eq " + tenant;
-            }
+            if (string.IsNullOrEmpty(filters))
+                filters = $"tenant eq {tenant}";
+            else if (!filters.Contains("tenant eq"))
+                filters += $" and tenant eq {tenant}";
 
             return filters;
         }
 
         protected override string GetSettingsName(List<QueryFilterItem> additionalFilters, string filters, int tenant) =>
             filters.Contains("(direction eq 'E')") ? "exportDeclarations" : "declarations";
+
+        private static readonly Dictionary<string, string> FieldNameMappings = new Dictionary<string, string>() { 
+            { "TransportModeForExport", "TransportModeId" } 
+        };
     }
 }

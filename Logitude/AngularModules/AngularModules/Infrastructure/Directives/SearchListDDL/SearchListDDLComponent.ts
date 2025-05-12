@@ -1,49 +1,44 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
 
 @Component({
     selector: 'app-SearchListDDL',
     template: `
         <div class="dropdown-container">
-            <ul *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-list">
-                <li *ngFor="let option of dropdownOptions" (click)="optionSelected.emit(option)" class="dropdown-item">
+            <table *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-list" [style.width]="DDLWidth">
+                <tr *ngFor="let option of dropdownOptions" (click)="optionSelected.emit(option)" class="dropdown-item">
                     <ng-container *ngIf="option == 'all'; else notAll">
                         <a href="#" (click)="$event.preventDefault()">{{ 'General.O.ViewAll' | TextCodeTranslationPipe }}</a>
                     </ng-container>
                     <ng-template #notAll>
-                        <!-- <span>{{ option['declarationNumber'] }} {{ option['declarationNumber'] == null }} {{ option['declarationNumber'] == '' }} {{ option['declarationNumber'] == undefined }}</span> -->
-                        <span *ngFor="let label of labels; let first = first;" [ngSwitch]="label.name">
-                            <span *ngIf="!first && label.lengthTemp !== 0" >&nbsp;|&nbsp;</span>
-                            <img *ngSwitchCase="'transportModeId'"  [src]="'./Images/' + (option[label.name] === 'O' ? 'Vessel' : option[label.name] === 'A' ? 'Airline' : 'Trucker') + '.png'" alt="{{ option[label.name] }}" />
-                            <span *ngSwitchCase="'createDateTime'">{{ option[label.name] | DateTimePipe:'D' }}</span>
-                            <span *ngSwitchDefault [style.width]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'">{{ option[label.name] }}</span>
-                        </span>
+                        <ng-container *ngFor="let label of labels; let first = first;" [ngSwitch]="label.name">
+                            <td *ngIf="!first && label.lengthTemp !== 0" >&nbsp;|&nbsp;</td>
+                            <td><img *ngSwitchCase="'transportModeId'"  [src]="'./Images/' + (option[label.name] === 'O' ? 'Vessel' : option[label.name] === 'A' ? 'Airline' : 'Trucker') + '.png'" alt="{{ option[label.name] }}" /></td>
+                            <td *ngSwitchCase="'createDateTime'">{{ option[label.name] | DateTimePipe:'D' }}</td>
+                            <td *ngSwitchDefault [style.width]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'"
+                            [style.maxWidth]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'">{{ option[label.name] }}</td>
+                        </ng-container>
                     </ng-template>
-                </li>
-            </ul>
+                </tr>
+            </table>
         </div>
     `,
     styles: [`
         .dropdown-container {
-            position: relative;
+            position: absolute;
+            left: 0;
             z-index: 1;
         }
 
         .dropdown-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
             border: 1px solid #ccc;
             background: #fff;
-            margin: 0;
-            padding: 0;
-            list-style-type: none;            
-            min-width: 100%;
-            width: auto;
+            border-collapse: separate;
+            border-spacing: 0px 4px;
+            padding: 0px 4px;
         }
 
         .dropdown-item {
-            padding: 4px;
             cursor: pointer;
         }
 
@@ -60,9 +55,8 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
             vertical-align: baseline;
         }
 
-        .dropdown-item a, .dropdown-item span {
+        .dropdown-item td {
             font-size: 14px;
-            display: inline-block;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -92,8 +86,15 @@ export class SearchListDDLComponent implements OnInit {
     @Input() showDropdown: boolean = true;
     @Input() maxResults: number = null;
     labels: DDLLable[] = [];
+    DDLWidth = '250px';
+    public set settings(settings: FastSearchSettings) {
+        if (!settings) return;
+        this.displayPattern = settings.ddlHtmlLine;
+        this.maxResults = settings.maxResults;
+        if (settings.DDLWidth) 
+            this.DDLWidth = settings.DDLWidth;        
+    }
     public set displayPattern(pattern: string) {
-        if (!pattern) return;
         this.labels = [];
         const matches = pattern.match(/{(.*?)}/g);
         if (!matches) return;
@@ -109,14 +110,13 @@ export class SearchListDDLComponent implements OnInit {
         this.initLabelLength();
     }
     @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-    public defaultLabelLength: number = 20;
 
     ngOnInit() {
         this.optionSelected.subscribe((option: any) => this.showDropdown = false);
     }
 
-    onDestroy() {
-        this.optionSelected.unsubscribe();
+    ngOnDestroy() {
+        this.optionSelected.complete();
     }
 
     initLabelLength(): void {
@@ -125,8 +125,7 @@ export class SearchListDDLComponent implements OnInit {
                 const value: any = this.dropdownOptions.find(x => x[l.name] != null && x[l.name] != '' && x[l.name] != undefined)
                 l.lengthTemp = value == undefined ? 0 : l.length || 'auto';
             });
-    }
-    
+    }    
 }
 
 export interface DDLLable {

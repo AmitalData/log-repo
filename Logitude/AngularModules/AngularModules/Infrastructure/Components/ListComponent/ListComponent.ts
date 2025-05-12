@@ -1,10 +1,8 @@
-
-declare var System: any;
 declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
-import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
 import { ServiceArgs } from '../../DataContracts/ServiceArgs';
 import { SessionLocator } from '../../Utilities/SessionLocator';
@@ -38,7 +36,7 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
@@ -153,6 +151,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     searchDropdownOptions: FastSearchResult[] = [];    
     fastSearchSettings: FastSearchSettings = null;
     $fastSearchEnable: BehaviorSubject<boolean> = null;
+    fastSearchAllow: boolean = false;
 
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -193,20 +192,25 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.timerToken) {
                 clearTimeout(this.timerToken);
             }
-            this.timerToken = setTimeout(() => this.SearchMethod(), timer);
+            this.timerToken = setTimeout(() => this.searchMethod(), timer);
         }
     }
 
-    async SearchMethod() {        
+    async searchMethod() {        
         const searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
         
         if (this.fastSearchService.$fastSearchEnable.value) {
-            this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
-            if (this.searchDropdownOptions) {
-                this.CD.detectChanges();
-                return;
-            }            
+            try {
+                this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
+                if (this.searchDropdownOptions) {
+                    this.CD.detectChanges();
+                    return;
+                }    
+            } catch (error) {
+                if(error instanceof HttpErrorResponse && error.error.ErrorType === "FieldsNotExistsInIndexException")
+                    this.fastSearchCheckbox(false);
+            }
         }
             
         this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");
@@ -225,7 +229,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.fastSearchService.orginalCurrentAdditionalFilters = null;
         }
 
-        this.SearchMethod();
+        this.searchMethod();
     }
 
     async showRecentSearches() {        
@@ -263,8 +267,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.dataSource.sortingDir = this.SelectedQuery.DefaultSortDirection;
             }
-
-            //this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
         }
         this.CurrentQueryFilters = new ApiQueryFilters();
         if (window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode) != null) {
@@ -1072,7 +1074,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         
         await this.fastSearchService.initFastSearch(this.ObjectTable, this.ObjectTableName, this.MenuTableQuerySection);
         this.$fastSearchEnable = this.fastSearchService.$fastSearchEnable;
-        if (this.fastSearchService.$fastSearchEnable.value)
+        this.fastSearchAllow = this.$fastSearchEnable.value;        
+        if (this.fastSearchAllow)
             this.fastSearchSettings = this.fastSearchService.Settings;
     }
   
@@ -1184,13 +1187,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     ViewInitCompleted(event) {
-        //this.afterViewGridInitCompleted.emit(event);
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
-            //this.Title = this.listArgs.DisplayTitle;
             this.ResourcesLoaded = true;
             this.ViewQuery(this.listArgs.Filters, this.listArgs.DisplayTitle, this.listArgs.BackButtonTitle, this.listArgs.IsReadOnlyList, this.listArgs.IsBackToCurrentListView);
-            //this.CD.detectChanges();
         });
     }
 
@@ -1205,15 +1205,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     TipVisibilityChanged(event) {
-
         if (event == "true") this.IsShowTipArea = true;
         else this.IsShowTipArea = false;
 
         this.IsFirstTipLoad = false;
-        //this.HideLogGrid = true;
-        //this.HideLogGrid = false;
         this.RefreshBtnClick();
-
     }
 
 
@@ -1617,16 +1613,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
         }
-        //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
-        //    this.EnableSpotLight = true;
-        //    //this.CD.detectChanges();
-        //}
 
-        //console.log("QueryValueChanged()", queryId);
-        //var userId = JSON.parse(sessionStorage.getItem("userData")).Id;
-        //this.GetQueryColumns(queryId, this.UserId);
         this.SelectedQueryCode = Args.QueryCode;
-        //this.SelectedQueryId = Args.QueryId;
 
         this.dataSource = {
             pageSize: 30,
@@ -1651,7 +1639,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                         Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
                     }
                     Args.Filters.AdditionalFilters.push(filter);
-                    //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
                 }
             });
 
@@ -1668,21 +1655,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.onSelectedQueryChangeEvent.emit(new QueryPM());
             return;
         }
-        //alert("Hi");
         this.AdvanceFilters = new ApiQueryFilters();
         this.QueryCode = Args.UniqueCode;
-        //this.GetQueries();
-        //var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
 
-        //this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId));
-        //this.Queries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId == null);
         this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant && x.QuerySection == this.MenuTableQuerySection);
         this.QueryListSourceChanged.emit(this.UserQueries);
         var SelectedQuery: any = {};
-        //if (this.listArgs.Perspective != null) {
-        //    this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
-        //    this.Queries = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective);
-        //}
         if (this.QueryCode) {
             SelectedQuery = this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] != null ? this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] : this.UserQueries.filter(x => x.UniqueCode === this.QueryCode)[0];
         }
@@ -1711,19 +1689,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.QueryCode)[0];
 
-        //if (!AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
-        //    this.EnableSpotLight = true;
-        //    this.CD.detectChanges();
-        //}
         if (query != null) {
             this.temp1 = query;
-            //if (!AppTool.IsNullOrEmpty(queryDisplayName)) {
-            //    this.Title = queryDisplayName;
-            //}
-            //else {
-            //    this.Title = TextCodeTranslator.Translate(query.NameTextCodeCode);
-            //    //this.CD.detectChanges();
-            //}
             if (window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode) != null) {
                 var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode);
                 predefinedFilters.forEach((filter, key) => {
@@ -1905,22 +1872,14 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (filter.FieldName == "DirectionId") {
                 this.listArgs.SelectedDirection = filter.FieldValue;
             }
-            //if (filter.FieldName == "ShipmentLevelCode") {
-            //    this.listArgs.select = filter.FieldValue;
-            //}
         });
     }
     HasFilters: boolean = false;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentQueryFilters = new ApiQueryFilters();
         if (filters.AdditionalFilters.length > 0) {
-            //this.HasFilters = true;
-            //this.CD.detectChanges();
         }
         var MyFilters = new ApiQueryFilters();
-        //if (filters == null) {
-        //    filters = new ApiQueryFilters();
-        //}
 
         if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
             this.listArgs.DefaultFilterItems.forEach((filter) => {
@@ -1936,19 +1895,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
         });
-        //console.log(searchfields);
         if (searchfields && !this.IsUseCardSearchMechanism()) {
-            //filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", null, null, null, "Text");
             MyFilters.Filter1Name = "SearchFields";
             MyFilters.Filter1Operator = "Contains";
             MyFilters.Filter1Value = searchfields;
-            //console.log(filters.AdditionalFilters);
         }
-        //if (this.firstCall == true) {
-        //filters.GetCount = true;
         MyFilters.GetCount = getCount;
-        //this.firstCall = false;
-        //}
         MyFilters.PageIndex = skip;
 
         if (this.IsUseCardSearchMechanism()) {
@@ -3916,7 +3868,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         logWindow.Title = windowTitle;
         logWindow.Show('./Common/Components/Maintenance/TenantImportComponent');
         this.ShowIt = false;
-        //this.CD.detectChanges();
         logWindow.WindowClosed.subscribe(($event: any) => {
 
             this.CD.detectChanges();

@@ -2846,6 +2846,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOCancelTaxReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.CancelTaxReport", DefaultText = "Cancel Tax Report",LocalDefaultText = @"ביטול דוח מעמ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GeneralTextCode_GeneralOFastSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FastSearch", DefaultText = "Fast Search",LocalDefaultText = @"חיפוש מהיר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+}
 
  		   TextCode GeneralTextCode_GeneralOSendParameters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SendParameters", DefaultText = "Send Parameters",LocalDefaultText = @"פרמטרים לשליחה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

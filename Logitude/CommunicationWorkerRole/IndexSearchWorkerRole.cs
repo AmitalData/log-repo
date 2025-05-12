@@ -1,36 +1,34 @@
-﻿using Azure;
-using Azure.Search.Documents;
-using Azure.Search.Documents.Indexes;
-using Azure.Search.Documents.Models;
-using Logitude.BL.CommonDataModel.EntityQueries;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Utils;
 using NetCommonHelper.Logger;
+using Simplog.Data.AzureSearch;
 using Simplog.Data.AzureSearch.Repo;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Net;
-using System.ServiceModel.Description;
 using System.Threading.Tasks;
 using System.Timers;
+using CancellationToken = System.Threading.CancellationToken;
 
 namespace CommunicationWorkerRole
 {
     public class IndexSearchWorkerRole : WorkerEntryPoint
     {
         private const string AzureSearchAISetKey = "AzureSearchAI";
+        private const string AzureSearchAIAdditionalKey = "Customs";
         private static readonly DevLog logger = DevLog.Instance;
         private static readonly string runIndexerLockKey = "RUN_INDEXER";
         private static readonly string removeOldIndexDataLockKey = "REMOVE_OLD_INDEX_DATA";
         private static readonly string removeOldSearchDataLockKey = "REMOVE_OLD_SEARCH_DATA";
-        private int mainTennat = 0;
-        private double runIndexerInterval = TimeSpan.FromMinutes(1).TotalMilliseconds;
-        private double removeOldIndexDataInterval = TimeSpan.FromHours(1).TotalMilliseconds;
-        private double removeOldSearchDataInterval = TimeSpan.FromHours(1).TotalMilliseconds;
+        private int mainTenant = 0;
+        private double runIndexerIntervalMinutes = 1;
+        private double removeOldIndexDataIntervalHours = 1;
+        private double removeOldSearchDataIntervalHours = 1;
+
         public override void Run()
         {
             logger.WriteTrace("IndexSearchWorkerRole Run");
@@ -38,7 +36,7 @@ namespace CommunicationWorkerRole
         public override bool OnStart()
         {
             logger.WriteTrace("IndexSearchWorkerRole OnStart");
-            
+
             try
             {
                 InitTenants();
@@ -60,177 +58,198 @@ namespace CommunicationWorkerRole
             logger.WriteTrace($"haveTenantDB: {haveTenantDB}, TenantDB: {TenantDB}");
 
             if (haveTenantDB)
-                mainTennat = TenantDB;
+                mainTenant = TenantDB;
 
-            logger.WriteTrace($"TenantDB: {mainTennat}");
+            logger.WriteTrace($"TenantDB: {mainTenant}");
         }
 
         private void InitScheduler()
-        {             
-            if (double.TryParse(ConfigurationManager.AppSettings[nameof(runIndexerInterval)], out double configuredInterval))
-                runIndexerInterval = configuredInterval;
+        {
+            runIndexerIntervalMinutes = GetValueFromConfig(nameof(runIndexerIntervalMinutes), runIndexerIntervalMinutes);
+            Scheduler(() => RunIndexerAsync(CancellationToken.None), runIndexerIntervalMinutes, nameof(RunIndexerAsync));
+            logger.WriteTrace($"Scheduler {nameof(RunIndexerAsync)} interval: {runIndexerIntervalMinutes}");
 
-            Scheduler(RunIndexer, runIndexerInterval, nameof(RunIndexer));
-            logger.WriteTrace($"SchedulerRunIndexerFromDB interval: {runIndexerInterval}");
-            
-            if (double.TryParse(ConfigurationManager.AppSettings[nameof(removeOldIndexDataInterval)], out configuredInterval))
-                removeOldIndexDataInterval = configuredInterval;
+            removeOldIndexDataIntervalHours = GetValueFromConfig(nameof(removeOldIndexDataIntervalHours), removeOldIndexDataIntervalHours);
+            Scheduler(() => RemoveOldIndexDataAsync(CancellationToken.None), removeOldIndexDataIntervalHours, nameof(RemoveOldIndexDataAsync));
+            logger.WriteTrace($"Scheduler {nameof(RemoveOldIndexDataAsync)} interval: {removeOldIndexDataIntervalHours}");
 
-            Scheduler(RemoveOldIndexData, removeOldIndexDataInterval, nameof(RemoveOldIndexData));
-            logger.WriteTrace($"removeOldnIndexeDataInterval interval: {removeOldIndexDataInterval}");
-
-            
-            if (double.TryParse(ConfigurationManager.AppSettings[nameof(removeOldSearchDataInterval)], out configuredInterval))
-                removeOldSearchDataInterval = configuredInterval;
-
-            Scheduler(RemoveOldSearchDataAsync, removeOldSearchDataInterval, nameof(RemoveOldSearchData));
-            logger.WriteTrace($"SchedulerRemoveOldDSearchDataFromDB interval: {removeOldSearchDataInterval}");
+            removeOldSearchDataIntervalHours = GetValueFromConfig(nameof(removeOldSearchDataIntervalHours), removeOldSearchDataIntervalHours);
+            Scheduler(() => RemoveOldSearchDataAsync(CancellationToken.None), removeOldSearchDataIntervalHours, nameof(RemoveOldSearchData));
+            logger.WriteTrace($"Scheduler {nameof(RemoveOldSearchDataAsync)} interval: {removeOldSearchDataIntervalHours}");
         }
 
-        public async Task RunIndexer()
+        private double GetValueFromConfig(string configKey, double defaultValue)
         {
-            SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTennat);
+            string value = ConfigurationManager.AppSettings[configKey];
+            return double.TryParse(value, out double result) ? result : defaultValue;
+        }
+
+        public async Task RunIndexerAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTenant);
             List<SearchIndex> allSearchIndexes = searchIndexQuery.GetAll();
 
-            Lock(runIndexerLockKey);
-            foreach (SearchIndex index in allSearchIndexes)
+            try
             {
-                try
-                {
-                    if (index.LastUpdate?.AddMinutes(index.BuildIntervalMin) > DateTime.Now)
-                    {
-                        logger.WriteTrace($"it is not time for update index {index.Index}, last time: {index.LastUpdate}, skipping index");
-                        continue;
-                    }
+                Lock(runIndexerLockKey);
 
-                    bool success = await RunIndexer(index);
-                    if (success)
-                    {
-                        index.LastUpdate = DateTime.Now;
-                        searchIndexQuery.Update(index);
-                    }
-                }
-                catch (Exception e)
+                foreach (SearchIndex index in allSearchIndexes)
                 {
-                    logger.WriteFatal(e, $"Error processing index {index.Index}");
+                    try
+                    {
+                        if (index.LastUpdate?.AddMinutes(index.BuildIntervalMin) > DateTime.Now)
+                        {
+                            logger.WriteTrace($"it is not time for update index {index.Index}, last time: {index.LastUpdate}, skipping index");
+                            continue;
+                        }
+
+                        bool success = await RunIndexerAsync(index, cancellationToken).ConfigureAwait(false);
+                        if (success)
+                        {
+                            index.LastUpdate = DateTime.Now;
+                            searchIndexQuery.Update(index);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger.WriteFatal(e, $"Error processing index {index.Index}");
+                    }
                 }
             }
 
-            Unlock(runIndexerLockKey);
+            finally
+            {
+                Unlock(runIndexerLockKey);
+            }
         }
 
-        public async Task RemoveOldIndexData()
+        public async Task RemoveOldIndexDataAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTennat);
+            SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTenant);
             List<SearchIndex> allSearchIndexes = searchIndexQuery.GetAll();
 
-            Lock(removeOldIndexDataLockKey);
-            foreach (SearchIndex index in allSearchIndexes)
+            try
             {
-                try
-                {
-                    if (index.LastRemove?.AddHours(removeOldIndexDataInterval) > DateTime.Now)
-                    {
-                        logger.WriteTrace($"it is not time for remove old data from index {index.Index}, last time: {index.LastRemove}, skipping index");
-                        continue;
-                    }
+                Lock(removeOldIndexDataLockKey);
 
-                    bool success = await RomoveFromIndex(index);
-                    if (success)
-                    {
-                        index.LastRemove = DateTime.Now;
-                        searchIndexQuery.Update(index);
-                    }
-                }
-                catch (Exception e)
+                foreach (SearchIndex index in allSearchIndexes)
                 {
-                    logger.WriteFatal(e, $"Error when remove old data from index {index.Index}");
+                    try
+                    {
+                        if (index.LastRemove?.AddHours(removeOldIndexDataIntervalHours) > DateTime.Now)
+                        {
+                            logger.WriteTrace($"it is not time for remove old data from index {index.Index}, last time: {index.LastRemove}, skipping index");
+                            continue;
+                        }
+
+                        bool success = await RemoveFromIndexAsync(index, cancellationToken).ConfigureAwait(false);
+                        if (success)
+                        {
+                            index.LastRemove = DateTime.Now;
+                            searchIndexQuery.Update(index);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger.WriteFatal(e, $"Error when remove old data from index {index.Index}");
+                    }
                 }
             }
-
-            Unlock(removeOldIndexDataLockKey);
+            finally
+            {
+                Unlock(removeOldIndexDataLockKey);
+            }
         }
 
-        private async Task RemoveOldSearchDataAsync() => await Task.Run(() => RemoveOldSearchData());
-        
+        private async Task RemoveOldSearchDataAsync(CancellationToken cancellationToken = default(CancellationToken)) => await Task.Run(() => RemoveOldSearchData(), cancellationToken).ConfigureAwait(false);
+
         public void RemoveOldSearchData()
         {
-            SearchIndexTenantHistoryQuery searchIndexTenantHistoryQuery = new SearchIndexTenantHistoryQuery(mainTennat);
-            SearchIndexEditHistoryQuery searchIndexEditHistoryQuery = new SearchIndexEditHistoryQuery(mainTennat);
+            SearchIndexTenantHistoryQuery searchIndexTenantHistoryQuery = new SearchIndexTenantHistoryQuery(mainTenant);
+            SearchIndexEditHistoryQuery searchIndexEditHistoryQuery = new SearchIndexEditHistoryQuery(mainTenant);
             List<SearchIndexTenantHistory> allTenantHistories = searchIndexTenantHistoryQuery.GetAll();
 
-            Lock(removeOldSearchDataLockKey);
-            foreach (SearchIndexTenantHistory tenantHistory in allTenantHistories)
+            try
             {
-                try
+                Lock(removeOldSearchDataLockKey);
+
+                foreach (SearchIndexTenantHistory tenantHistory in allTenantHistories)
                 {
-                    if (tenantHistory.LastUpdate?.AddHours(removeOldSearchDataInterval) > DateTime.Now)
+                    try
                     {
-                        logger.WriteTrace($"it is not time for remove search data {tenantHistory.Screen}, last time: {tenantHistory.LastUpdate}, skipping index");
-                        continue;
+                        if (tenantHistory.LastUpdate?.AddHours(removeOldSearchDataIntervalHours) > DateTime.Now)
+                        {
+                            logger.WriteTrace($"it is not time for remove search data {tenantHistory.Screen}, last time: {tenantHistory.LastUpdate}, skipping index");
+                            continue;
+                        }
+
+                        logger.WriteTrace($"Removing old search data for tenant {tenantHistory.Tenant}, from month {tenantHistory.TtlMonth}, for screen {tenantHistory.Screen}");
+
+                        DateTime toDateTime = DateTime.Now.AddMonths(-tenantHistory.TtlMonth);
+                        searchIndexEditHistoryQuery.RemoveOldSearchData(tenantHistory.Tenant, tenantHistory.Screen, toDateTime);
+
+                        logger.WriteTrace($"Removing old search screen {tenantHistory.Screen}");
+
+                        tenantHistory.LastUpdate = DateTime.Now;
+                        searchIndexTenantHistoryQuery.Update(tenantHistory);
                     }
-
-                    logger.WriteTrace($"Removing old search data for tenant {tenantHistory.Tenant}, from month {tenantHistory.TtlMonth}, for screen {tenantHistory.Screen}");
-
-                    DateTime toDateTime = DateTime.Now.AddMonths(-tenantHistory.TtlMonth);
-                    searchIndexEditHistoryQuery.RemoveOldSearchData(tenantHistory.Tenant, tenantHistory.Screen, toDateTime);
-                    
-                    logger.WriteTrace($"Removing old search screen {tenantHistory.Screen}");
-
-                    tenantHistory.LastUpdate = DateTime.Now;
-                    searchIndexTenantHistoryQuery.Update(tenantHistory);
-                }
-                catch (Exception e)
-                {
-                    logger.WriteFatal(e, $"Error processing index {tenantHistory.Screen}");
+                    catch (Exception e)
+                    {
+                        logger.WriteFatal(e, $"Error processing index {tenantHistory.Screen}");
+                    }
                 }
             }
-
-            Unlock(removeOldSearchDataLockKey);
+            finally
+            {
+                Unlock(removeOldSearchDataLockKey);
+            }
         }
 
         private void Lock(string key)
         {
             ConcurrentKiller concurrentKiller = new ConcurrentKiller();
-            concurrentKiller.FreeLockIfCreated15MinOld(key, mainTennat);
-            concurrentKiller.LockOrCrashOnCommitDueUnique(key, mainTennat);
+            concurrentKiller.FreeLockIfCreated15MinOld(key, mainTenant);
+            concurrentKiller.LockOrCrashOnCommitDueUnique(key, mainTenant);
         }
 
-        private void Unlock(string key) => new ConcurrentKiller().FreeLock(key, mainTennat);
+        private void Unlock(string key) => new ConcurrentKiller().FreeLock(key, mainTenant);
 
-        private Timer Scheduler(Func<Task> actionAsync, double time, string actionName = null)
+        private Timer Scheduler(Func<Task> actionAsync, double intervalMiliseconds, string actionName = null)
         {
+            if (actionAsync == null)
+                throw new ArgumentNullException(nameof(actionAsync), "actionAsync cannot be null");
+
             Timer aTimer = new Timer();
-            aTimer.Interval = time;
-            aTimer.Elapsed += async (o, eea) =>
+            aTimer.Interval = intervalMiliseconds;
+            aTimer.Elapsed += async (timer, eea) =>
             {
                 try
                 {
-                    await actionAsync();
+                    await actionAsync().ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {
                     logger.WriteFatal(e, "error on Schdule action " + actionName);
                 }
-                finally
-                {
-                    aTimer.Start();
-                }
             };
             aTimer.AutoReset = false;
             aTimer.Enabled = true;
+            aTimer.Start();
 
             return aTimer;
         }
 
-        private async Task<bool> RunIndexer(SearchIndex index)
+        private async Task<bool> RunIndexerAsync(SearchIndex index, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
+                if (index == null)
+                    throw new ArgumentNullException(nameof(index), "index cannot be null");
+
                 logger.WriteTrace($"Starting indexer for index {index.Index}...");
 
-                SearchIndexerClient indexerClient = InitializeIndexerClient();
-                Response response = await indexerClient.RunIndexerAsync(index.Indexer);
+                FastSearchAzureSearchRepo fastSearchAzureSearchRepo = InitializeFastSearchAzureSearchRepo(index.Index);
+                AzureSerchResponse response = await fastSearchAzureSearchRepo.RunIndexerAsync(index.Indexer, cancellationToken).ConfigureAwait(false);
 
                 if (response.Status == (int)HttpStatusCode.Accepted)
                 {
@@ -240,7 +259,7 @@ namespace CommunicationWorkerRole
                 else
                 {
                     logger.WriteError($"Failed to start indexer '{index.Indexer}'. Status: {response.Status}");
-                    logger.WriteError("Error message: " + response.Content.ToString());
+                    logger.WriteError("Error message: " + response.Content);
                     return false;
                 }
             }
@@ -251,51 +270,34 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private async Task<bool> RomoveFromIndex(SearchIndex index)
+        private async Task<bool> RemoveFromIndexAsync(SearchIndex index, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (index == null)
+                throw new ArgumentNullException(nameof(index), "index cannot be null");
+
             try
             {
                 logger.WriteInfo($"Starting remove old data from index {index.Index}...");
 
-                DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, index.Index);
-                string searchServiceEndpoint = ConnectionDetails.Value1;
-                string apiKey = ConnectionDetails.Value2;
-                AzureSearchRepoBase<SearchDocument> azureSearchRepo = new AzureSearchRepoBase<SearchDocument>(searchServiceEndpoint, apiKey, index.Index, new string[] { });
-
-                Azure.Search.Documents.Indexes.Models.SearchField searchField = await azureSearchRepo.GetKeyFieldAsync();
-                string keyFieldName = searchField?.Name;
-                logger.WriteDebug($"Key field name: {keyFieldName}");
-
-                SearchClient searchClient = azureSearchRepo.GetSearchClient();
-                SearchOptions searchOptions = new SearchOptions
-                {
-                    Filter = $"{index.TtlField} lt {DateTime.Now.AddMonths(-index.TtlMonth):O}",
-                    Select = { keyFieldName },
-                    Size = 10000,
-                };
+                string filter = $"{index.TtlField} lt {DateTime.Now.AddMonths(-index.TtlMonth):O}";
+                int size = 10;
                 int rowDeleted = 0;
+                FastSearchAzureSearchRepo fastSearchAzureSearchRepo = InitializeFastSearchAzureSearchRepo(index.Index);
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Response<SearchResults<SearchDocument>> searchResponse = await searchClient.SearchAsync<SearchDocument>("*", searchOptions);
-                    Pageable<SearchResult<SearchDocument>> searchResults = searchResponse.Value.GetResults();
-                    List<SearchDocument> keysToDelete = searchResults.Select(res => res.Document).ToList();
-
-                    logger.WriteTrace($"Found {keysToDelete.Count} records to delete from index {index.Index}.");
-
-                    if (keysToDelete.Count == 0)
-                        break;
-
-                    Response response = (await azureSearchRepo.DeleteAsync(keysToDelete)).GetRawResponse();
+                    AzureSerchResponse response = await fastSearchAzureSearchRepo.DeleteAsync(filter, size, cancellationToken).ConfigureAwait(false);
+                    if (response == null) break;
 
                     if (response.Status == (int)HttpStatusCode.OK)
                     {
-                        logger.WriteTrace(message: $"Successfully removed old data from index {index.Index}, wait 1 seconds");
-                        await Task.Delay(1000);
+                        logger.WriteTrace(message: $"Successfully removed old data from index {index.Index}, wait 1 seconds, deleted rows: {response.Content}");
+                        rowDeleted += response.Count;
+                        await Task.Delay(1000).ConfigureAwait(false);
                     }
                     else
                     {
-                        string content = response?.Content?.ToString();
+                        string content = response?.Content;
                         logger.WriteError($"Failed to remove old data from index {index.Index}. Status: {response.Status}, response: {content}");
                         return false;
                     }
@@ -312,14 +314,13 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private static SearchIndexerClient InitializeIndexerClient()
+        private static FastSearchAzureSearchRepo InitializeFastSearchAzureSearchRepo(string indexName)
         {
-            DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, "Customs");
+            DefaultAndConfiguration_Ext ConnectionDetails = DefaultService.Instance.Get(0, AzureSearchAISetKey, AzureSearchAIAdditionalKey);
             string searchServiceEndpoint = ConnectionDetails.Value1;
             string apiKey = ConnectionDetails.Value2;
-            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-            SearchIndexerClient indexerClient = new SearchIndexerClient(new Uri($"https://{searchServiceEndpoint}.search.windows.net/"), credential);
-            return indexerClient;
+
+            return new FastSearchAzureSearchRepo(searchServiceEndpoint, apiKey, indexName); ;
         }
     }
 }

@@ -6744,6 +6744,12 @@
       LocalDefaultText="&quot;פרמטרים לשליחה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.FastSearch&quot;"
+      DefaultText="&quot;Fast Search&quot;"
+      LocalDefaultText="&quot;חיפוש מהיר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
 
   <AdditionalFeatures>

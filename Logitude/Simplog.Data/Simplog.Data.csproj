@@ -261,6 +261,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureSearch\AzureSearchRepoBase.cs" />
+    <Compile Include="AzureSearch\AzureSerchResponse.cs" />
+    <Compile Include="AzureSearch\FastSearchAzureSearchRepo.cs" />
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AllActiveGLAccountsView.cs" />

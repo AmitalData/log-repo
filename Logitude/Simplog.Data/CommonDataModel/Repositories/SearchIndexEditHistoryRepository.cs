@@ -12,29 +12,37 @@ namespace Simplog.Data.CommonDataModel.Repositories
         readonly ICommonDataContext iContext;
         public SearchIndexEditHistoryRepository(int tenant)
         {
+            if (tenant <= 0)
+                throw new ArgumentOutOfRangeException(nameof(tenant), "tenant must be greater than 0");
             iContext = CommonDataContext.GetContext(tenant);
         }
 
         public SearchIndexEditHistoryRepository(ICommonDataContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context), "context cannot be null");
             iContext = context;
         }
 
-        public IQueryable<SearchIndexEditHistory> GetAll() => Context.SearchIndexEditHistories.AsQueryable();
-
         public void Add(SearchIndexEditHistory entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity), "entity cannot be null");
             Context.SearchIndexEditHistories.Add(entity);
         }
 
         public void Remove(SearchIndexEditHistory entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity), "entity cannot be null");
             Context.SearchIndexEditHistories.Attach(entity);
             Context.SearchIndexEditHistories.Remove(entity);
         }
 
         public void Update(SearchIndexEditHistory entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity), "entity cannot be null");
             Context.SearchIndexEditHistories.Attach(entity);
             Context.SetAsModified(entity);
         }

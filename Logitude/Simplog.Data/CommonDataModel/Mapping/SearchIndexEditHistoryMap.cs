@@ -3,7 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
-    class SearchIndexEditHistoryMap : EntityTypeConfiguration<SearchIndexEditHistory>
+    public class SearchIndexEditHistoryMap : EntityTypeConfiguration<SearchIndexEditHistory>
     {
         public SearchIndexEditHistoryMap()
         {

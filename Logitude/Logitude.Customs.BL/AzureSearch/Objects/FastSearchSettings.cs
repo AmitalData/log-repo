@@ -13,5 +13,6 @@
         public string recentEditScreen { get; set; }
         public string recentEditScreenParam { get; set; }
         public string addAsteriskToNumberSearch { get; set; }
+        public string DDLWidth { get; set; }
     }
 }

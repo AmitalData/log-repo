@@ -389,6 +389,7 @@
     <Compile Include="AzureSearch\DeclarationAzureSearchService.cs" />
     <Compile Include="AzureSearch\FastSearchService.cs" />
     <Compile Include="AzureSearch\Objects\FastSearchSettings.cs" />
+    <Compile Include="AzureSearch\Objects\FieldsNotExistsInIndexException.cs" />
     <Compile Include="BL\AutoPaymentService.cs" />
     <Compile Include="BL\CalculateDeclarationCourierStatus.cs" />
     <Compile Include="BL\CheckHealthService.cs" />
