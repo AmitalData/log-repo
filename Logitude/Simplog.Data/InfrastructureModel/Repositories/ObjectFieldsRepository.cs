@@ -13,6 +13,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
     public class ObjectFieldRepository : IRepository<ObjectField>
     {
         IWebFreightContext webFreightContext;
+        public static int tenantId = 0;
+
         public ObjectFieldRepository(IWebFreightContext context)
         {
             webFreightContext = context;
@@ -26,6 +28,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public ObjectFieldRepository(int tenant)
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
+            tenantId = tenant;
         }
         public IQueryable<ObjectField> GetObjectFields()
         {

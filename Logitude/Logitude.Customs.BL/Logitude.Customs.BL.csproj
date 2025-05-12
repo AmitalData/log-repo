@@ -85,7 +85,7 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-     <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+    <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Core.1.44.1\lib\net472\Azure.Core.dll</HintPath>
     </Reference>
     <Reference Include="Azure.Identity, Version=1.13.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
@@ -275,24 +275,23 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
-     <Reference Include="RtfPipe, Version=2.0.7677.4303, Culture=neutral, PublicKeyToken=5f6ab4ce530296d2, processorArchitecture=MSIL">
+    <Reference Include="RtfPipe, Version=2.0.7677.4303, Culture=neutral, PublicKeyToken=5f6ab4ce530296d2, processorArchitecture=MSIL">
       <HintPath>..\packages\RtfPipe.2.0.7677.4303\lib\net45\RtfPipe.dll</HintPath>
     </Reference>
-     <Reference Include="System.ClientModel, Version=1.1.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+    <Reference Include="System.ClientModel, Version=1.1.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ClientModel.1.1.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
     </Reference>
- 
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-     <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
     </Reference>
-     <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.1\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
-     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.FileSystem.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -314,15 +313,15 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-     <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
     </Reference>
-     <Reference Include="System.Runtime" />
-     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-     <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -332,11 +331,9 @@
     <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
- 
     <Reference Include="System.Security.Cryptography.ProtectedData, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.ProtectedData.4.5.0\lib\net461\System.Security.Cryptography.ProtectedData.dll</HintPath>
     </Reference>
-   
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -406,95 +403,405 @@
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AccumalationStateDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AddressContactStateDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AddressPurposeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AgentTalkBackTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmedmentTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendCancellRequestInitiatorDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentFieldReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentFieldStatusTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentRequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendmentStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmendRequestRejectReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AmountTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AssigneeNotificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AttachmentTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AuthorityDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\AuthorizedSignerPermitDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\BankDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\BuyerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationReasonRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CancellationRequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CarEngineVolumeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CargoIdentityQualifierDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CargoTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CarWeightDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CertificateExemptionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CertificateOfOriginMandatoryFieldsDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CertificateOfOriginStatusCodeEnumDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CertificateOfOriginTypeCodeEnumDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CertificatesStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ChangeTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CheckEssenceLookupDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CheckTypeLookupDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CityDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClaimReasonTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ClassificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ClosedTableStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CollateralAnswerStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CollateralAnswerTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CollateralRequestStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CollateralTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ComputationMethodDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ConditionalExemptionTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ConfirmationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ConstraintApprovalDecisionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ConstraintProcessTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ConstraintStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ContactRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerizationHataraStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerizationStatusCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ContainerTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ConverterTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CoolingReportingMethodDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CourierDeclarationStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CourierManifestStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CourierPaymentStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CourierStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomDocumentTypeMetaDataDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerClassificationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIdentificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIdentifyTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIndicationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomerTypeGeneralDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomMetaDataTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsAddressTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsBookTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsBranchDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsDocumentStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsDocumentUploadDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsEntityStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsEnvoirmentTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsInsuranceCompanyDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsItemCategoryDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsItemGroupDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsItemHierarchicLocationDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsPaymentTermDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsRequestsSheetStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsTransportModeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsVerificationStatusTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DangerousGoodsPackingReqDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DebtNotificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DeclarationStatementTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DeclarationStatusTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DeliverySiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DeliveryTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DemanderTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DepositCustomerActivityDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DepositEssenceTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\DepositFileTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DiscountTypeRegulationDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DocumentRejectTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\EntityTypeLookupDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\EntryExitTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExportDeliveryDocumentMessageDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExporterRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ExportLogisticPermitActionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\FaultInspectionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FclLclCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\FuelTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\FullnessCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\GenderDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GTBFUSTATUDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\GuaranteeCertificateTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\GuaranteeCustomerActivityDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\HandingCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ImporterPeriodicDeclarStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\InceptionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\IncotemrsFileValidationDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\InterConditionsRelationshipDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InterfaceSendOptionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InvoiceTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ItemGovernmentProcedureTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\LastReleaseFromWarehouseDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\LeadDocumentExceptionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LevyTrustDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionResponseReqSDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ManifestCargoStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\MAWBTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\MeasureQualifierDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ModificationAndDiscountTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\MorningMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\NotificationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NUnicloudDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OcrStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\OrganizationUnitTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OriginCriterionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PackageMeasureQualifierDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ParagraphTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PassportTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PayerActivityTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PayerTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PaymentOrderStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PaymentOrderTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PaymentProcessDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PaymentTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PerYearFrequencyDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckOperationDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckStatusMessageDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckSearchResultTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaStatusTypeLookUpDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ProceduralFaultInProcessTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ProceduralFaultInSourceTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ProceduralFaultStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ProceduralFaultTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ProductIdentificationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ProductNameTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\QuotaComputationBasisDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\QuotaIncrementDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\RansomViolationTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\RegisteredWarehouseSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RegularityPublicationDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RegularityRequirementWarningDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RegularitySourceDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RenewalMethodDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestHandlingAuthorityDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\RequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestToAdvanceAQueueDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestReasonCodeEnumDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ReturnConditionDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SalesTaxExemptionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SignatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SIIRequestStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SiteLookupDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SpecialActionDescriptionTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SpecializationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StatusFieldTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\StorageMessageTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\StorageStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StorageStatusTableDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\StuffingSiteTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SubCountryDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SupplierPartyTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TapagTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TarifRelatedToQuotaDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TradeAgreementDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TradeAgreementProtocolDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TradeLevyExamptTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TradeLevyStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\ValidCustomsItemDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehicleManufacturerDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehiclePoolTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehiclePriceListTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehicleReductionTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehicleSafeAccessoryInstlTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehicleSafetyAccessoryTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehicleStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehicleTecnologyTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VehicleTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VendorStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\VendorTransactionTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AccumalationStateStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AddressContactStateStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AddressPurposeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AgentTalkBackTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AmedmentTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AmendCancellRequestInitiatorStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AmendmentFieldReasonTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AmendmentFieldStatusTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AmendmentRequestStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AmendRequestRejectReasonTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AssigneeNotificationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AttachmentTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AuthorityStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AuthorizedSignerPermitStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\BankStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CancellationReasonRequestTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CancellationRequestStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CarEngineVolumeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CargoIdentityQualifierStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CargoStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CargoTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CarWeightStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CertificateExemptionTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CertificateOfOriginStatusCodeEnumStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CertificateOfOriginTypeCodeEnumStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CertificatesStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ChangeTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CheckEssenceLookupStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CheckTypeLookupStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CityStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ClosedTableStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CollateralAnswerStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CollateralAnswerTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CollateralRequestStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CollateralTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ComputationMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ConditionalExemptionTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ConfirmationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ConstraintApprovalDecisionStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ConstraintProcessTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ConstraintStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ContactRoleTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ContainerizationHataraStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ContainerizationStatusCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ContainerTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ConverterTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CoolingReportingMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CourierCustomStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CourierDeclarationStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CourierManifestStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CourierPaymentStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CourierStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomerClassificationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomerIdentificationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomerIdentifyTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomerIndicationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomerTypeGeneralStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomMetaDataTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsAddressTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsBranchStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsDocumentStatusTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsDocumentUploadStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsEntityStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsEnvoirmentTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsInsuranceCompanyStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsItemCategoryStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsItemGroupStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsItemHierarchicLocationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsPaymentTermStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsRequestsSheetStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsShipStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsTransportModeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CustomsVerificationStatusTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DangerousGoodsPackingReqStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DebtNotificationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DeclarationStatementTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DeclarationStatusTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DeliverySiteTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DeliveryTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DemanderTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DepositCustomerActivityStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DepositEssenceTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DepositFileTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DiscountTypeRegulationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\DocumentRejectTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\EntityTypeLookupStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\EntryExitTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ExportDeliveryDocumentMessageStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ExporterRoleTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ExportLogisticPermitActionStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\FacilitationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\FaultInspectionTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\FclLclCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\FuelTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\FullnessCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\GenderStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\GuaranteeCertificateTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\GuaranteeCustomerActivityStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\HandingCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ImporterPeriodicDeclarStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InceptionCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\IncotemrsFileValidationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InterConditionsRelationshipStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InterfaceSendOptionStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InvoiceTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ItemGovernmentProcedureTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\LastReleaseFromWarehouseStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\LeadDocumentExceptionTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\LevyTrustStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\LoadingSiteTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\LogisticActionRequestTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\LogisticActionResponseReqSStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ManifestCargoStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\MAWBTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\MeasureQualifierStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ModificationAndDiscountTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\MorningMessageTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\NDMessageActionCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\NotificationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\NUnicloudStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\OcrStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\OrganizationUnitTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\OriginCriterionStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PackageMeasureQualifierStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ParagraphTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PassportTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PayerActivityTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PayerTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PaymentOrderStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PaymentOrderTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PaymentProcessStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PaymentTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PerYearFrequencyStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PhysicalCheckCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PhysicalCheckOperationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PhysicalCheckSearchResultTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PhysicalCheckStatusMessageStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PoaAuthorizationTypeLookupStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PoaStatusTypeLookUpStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ProceduralFaultInProcessTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ProceduralFaultInSourceTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ProceduralFaultStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ProceduralFaultTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ProductIdentificationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ProductNameTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\QuotaComputationBasisStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\QuotaIncrementStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RansomViolationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RegisteredWarehouseSiteTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RegularityPublicationStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RegularityRequirementWarningStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RegularitySourceStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ReleaseMessageTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RenewalMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RequestHandlingAuthorityStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RequestReasonCodeEnumStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RequestStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RequestToAdvanceAQueueStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ReturnConditionStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SalesTaxExemptionTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SealUpdateReasonTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SecurityClearenceTypeCodeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SignatureTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SIIRequestStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SiteLookupStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SpecialActionDescriptionTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SpecializationTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\StatusFieldTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\StorageMessageTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\StorageStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\StorageStatusTableStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\StuffingSiteTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SubCountryStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\SupplierPartyTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TapagTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TarifRelatedToQuotaStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TradeAgreementProtocolStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TradeAgreementStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TradeLevyExamptTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TradeLevyStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TransportMeansTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\UnloadingSiteTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\ValidCustomsItemStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehicleManufacturerStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehiclePoolTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehiclePriceListTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehicleReductionTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehicleSafeAccessoryInstlTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehicleSafetyAccessoryTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehicleStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehicleTecnologyTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VehicleTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VendorStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\VendorTransactionTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\SincroTestCaseDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\AcceptanceStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ActionCodeDetails.Generated.cs" />
@@ -734,6 +1041,7 @@
     <Compile Include="EntityDataMappings\CommunicationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ComputationMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\ConditionalExemptionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ConfirmationNumberTokenLogDataMapping.cs" />
     <Compile Include="EntityDataMappings\ConfirmationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ConsignmentDataMapping.cs" />
     <Compile Include="EntityDataMappings\ConsignmentInternalTransitionDataMapping.cs" />
@@ -803,6 +1111,7 @@
     <Compile Include="EntityDataMappings\CustomsEnvironmentSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsEnvoirmentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsExchangeRateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsGeneralDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsHouseTypeAdditionalDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsHouseTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsHouseTypeTenantDataMapping.cs" />
@@ -814,7 +1123,7 @@
     <Compile Include="EntityDataMappings\CustomsItemHierarchicLocationDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsPartnerFtpDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsPartnersItemDataMapping.cs" />
-    <Compile Include="EntityDataMappings\CustomsPaymentTermsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsPaymentTermDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsRequestsSheetDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsRequestsSheetStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsRequiredFieldDataMapping.cs" />
@@ -857,7 +1166,7 @@
     <Compile Include="EntityDataMappings\DefaultValueDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeficitConnFileParagraphTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeficitDecisionDataMapping.cs" />
-    <Compile Include="EntityDataMappings\DeficitsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeficitDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeliverySiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DeliveryTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\DemanderTypeDataMapping.cs" />
@@ -1008,6 +1317,7 @@
     <Compile Include="EntityDataMappings\Generated\CommunicationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ComputationMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ConditionalExemptionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ConfirmationNumberTokenLogDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ConfirmationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ConsignmentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ConsignmentInternalTransitionDataMapping.Generated.cs" />
@@ -1077,6 +1387,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsEnvironmentSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsEnvoirmentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsExchangeRateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsGeneralDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeAdditionalDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeTenantDataMapping.Generated.cs" />
@@ -1088,7 +1399,7 @@
     <Compile Include="EntityDataMappings\Generated\CustomsItemHierarchicLocationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsPartnerFtpDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsPartnersItemDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\CustomsPaymentTermsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsPaymentTermDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsRequestsSheetDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsRequestsSheetStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsRequiredFieldDataMapping.Generated.cs" />
@@ -1131,7 +1442,7 @@
     <Compile Include="EntityDataMappings\Generated\DefaultValueDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeficitConnFileParagraphTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeficitDecisionDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\DeficitsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeficitDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeliverySiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DeliveryTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\DemanderTypeDataMapping.Generated.cs" />
@@ -1464,7 +1775,7 @@
     <Compile Include="EntityDataMappings\ProceduralFaultInProcessTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultInSourceTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultsConnEntityDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ProceduralFaultsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ProceduralFaultDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProceduralFaultTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProcessingReasonDataMapping.cs" />
@@ -1590,17 +1901,21 @@
     <Compile Include="EntityQueryServices\CB_PreferenceQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleDetailsHistoryQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\ConfirmationNumberTokenLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsGeneralQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsPaymentTermQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DeficitQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ExportReferenceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ProceduralFaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
-
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginConnectionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestHandlingAuthorityQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SIIRequestQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SIIRequestStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SupplierInvoiceItemsReqListQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
-
     <Compile Include="EntityQueryServices\CB_CustomsItemComputedDataQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RequirementComputedDataQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_TariffQueryService.cs" />
@@ -1977,7 +2292,6 @@
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultInProcessTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultInSourceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultsConnEntityQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\ProceduralFaultsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProcessingReasonQueryService.Generated.cs" />
@@ -2104,7 +2418,6 @@
     <Compile Include="EntityQueryServices\Generated\CustomsDocumentStatusTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsExchangeRateQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\CustomsPaymentTermsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsRequestsSheetQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsRequestsSheetStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsRequiredFieldQueryService.Generated.cs" />
@@ -2121,7 +2434,6 @@
     <Compile Include="EntityQueryServices\Generated\DeclarationStatusTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationTaxQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeficitConnFileParagraphTypeQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\DeficitsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeliverySiteTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DepositConditionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DepositEssenceTypeQueryService.Generated.cs" />
@@ -2234,7 +2546,12 @@
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CB_PreferenceUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AutonomyRegionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_PreferenceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ConfirmationNumberTokenLogUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsGeneralUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsPaymentTermUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\ProceduralFaultUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestHandlingAuthorityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestUpdateService.Generated.cs" />
@@ -2686,7 +3003,6 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsItemDetailsHistoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsPartnersItemUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\CustomsPaymentTermsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsRequestsSheetStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsRequestsSheetUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsRequiredFieldUpdateService.Generated.cs" />
@@ -2738,7 +3054,6 @@
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultInSourceTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultsConnEntityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultStatusUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\ProceduralFaultsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProcessingReasonUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PropertiesDetailsHistoryUpdateService.Generated.cs" />

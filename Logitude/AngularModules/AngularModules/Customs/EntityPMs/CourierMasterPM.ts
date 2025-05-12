@@ -13,6 +13,8 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { AppTool } from 'Infrastructure/Tools';
+
 
 export class CourierMasterPM {
       
@@ -382,7 +384,8 @@ export class CourierMasterPM {
     private sentDeclarationStatus: boolean;
     public get SentDeclarationStatus() { return this.sentDeclarationStatus; }
     public set SentDeclarationStatus(newValue: boolean) { if (this.sentDeclarationStatus != newValue) { this.sentDeclarationStatus = newValue; this.MarkAsDirty("SentDeclarationStatus"); } }
-
+       
+	 
     private courierMasterPaymentStatusCd: string;
     public get CourierMasterPaymentStatusCd() { return this.courierMasterPaymentStatusCd; }
     public set CourierMasterPaymentStatusCd(newValue: string) { if (this.courierMasterPaymentStatusCd != newValue) { this.courierMasterPaymentStatusCd = newValue; this.MarkAsDirty("CourierMasterPaymentStatusCd"); } }
@@ -396,8 +399,10 @@ export class CourierMasterPM {
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
+ 	
         this.IsDirty = true;
 		  	
+		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CourierMaster");
@@ -416,4 +421,4 @@ export class CourierMasterPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

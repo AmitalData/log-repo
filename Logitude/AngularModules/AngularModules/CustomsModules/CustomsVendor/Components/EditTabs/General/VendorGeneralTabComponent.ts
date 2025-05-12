@@ -42,7 +42,6 @@ export class VendorGeneralTabComponent extends BaseComponent {
     public ValdationErrorList: any[];
     public SubCountryCodeEnabled: boolean = false;
     public isEntityChange: boolean = false;
-    public IsBlockMessageVisible: boolean = false;
     IsDelete: boolean = false;
     CommunicationsList: ObservableCollection;
     RequestParams: VendorInsertUpdateDeleteMessageRequestParams;
@@ -80,15 +79,6 @@ export class VendorGeneralTabComponent extends BaseComponent {
 
     SetFieldsEditability() {
 
-
-
-        var enabled: boolean = true;
-        if (this.EntityPM.ExternalSystem == "UNIFREIGHT") {
-            enabled = false;
-            this.IsBlockMessageVisible = true;
-        }
-    
-    
 
 
         this.UIProperties.SetEnabled("VendorTypeCode", this.ObjectTableName, this.IsNewEntity);

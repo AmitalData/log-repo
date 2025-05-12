@@ -55,7 +55,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsClosed, 
 	         WareHouseCityName, 
 	         Remarks, 
-	         ListCounter,
+	         ListCounter, 
+	         ImporterId, 
+	         ContactName, 
+	         UnloadDate, 
+	         ManifestNumber, 
+	         VesselName, 
+	         ContactEmail, 
+	         ContactTel, 
+	         ContactCellPhone, 
+	         ContactFax,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

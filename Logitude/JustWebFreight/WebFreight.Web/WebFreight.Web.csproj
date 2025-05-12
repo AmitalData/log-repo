@@ -41,7 +41,7 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
- <Use64BitIISExpress>
+    <Use64BitIISExpress>
     </Use64BitIISExpress>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -1054,25 +1054,79 @@
     <Content Include="AmitalSSOAngular2.html" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.ARPaymentCheque.cs" />
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransactionCheque.cs" />
+    <Compile Include="AccountingModel\DomainServices\Generated\FullAccountingSettingDomainService.Generated.cs" />
+    <Compile Include="AccountingModel\DomainServices\Generated\ReconcileExternalPageStatusDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxDeductionReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.Responsibility.cs" />
     <Compile Include="Controllers\AccountingModel\Aur_PaymentController.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\AccountingEntityJournalViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ARPaymentsJournalViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_ItemViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_PaymentItemViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_PaymentViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_TimesheetViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CashBookTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountAgingDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountCardsDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountCurrencyViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountRecocileDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InterestEntityTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalAdditionalDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalExternalReconcileViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalReconcileViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\RevaluationStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\TenantIdleStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingEntityJournalController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\ARPaymentsJournalController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountAgingDataController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountRecocileDataController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\JournalAdditionalDataController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TenantIdleStatusController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarEngineVolumeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_CustomsItemComputedDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_QuotaComputedDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RequirementComputedDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TariffComputedDataViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConsignmentPackDangerViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierDeclarationStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierManifestStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierPaymentStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\FullnessCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\HandingCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ManifestCargoStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\MAWBTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NDMessageActionCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SecurityClearenceTypeCodeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SignStationViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\StuffingSiteTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierInvioceItemCertificatDefaultViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierPartyTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TransportMeansTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\AmountTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\BuyerRoleTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_CustomsItemComputedDataController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_QuotaComputedDataController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RequirementComputedDataController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_TariffComputedDataController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClaimReasonTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClassificationTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientsTapagController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomDocumentTypeMetaDataController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomerRoleTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PartyRelationshipTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TransactionNatureTypeController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AdditionalCurrencyRateViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
-     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_ItemController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_ItemController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_PaymentController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_TimesheetController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\AdditionalCurrencyRateController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
-     <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentsMetaDataTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ResponsibilityViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TruckerSettingViewsController.Generated.cs" />
@@ -2082,7 +2136,14 @@
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="Controllers\WebServices\SyncCCUTablesController.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.LoadingSiteType.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CB_CustomsItemComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_CustomsItemDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CB_QuotaComputedDataDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CB_RequirementComputedDataDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CB_TariffComputedDataDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CourtInstanceDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CustomsAirlineDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\DeclarationCargoSplitDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsDocumentUpload.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\RemarksClassificationDomainService.Generated.cs" />
@@ -5511,7 +5572,6 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.RevenueExpenseType.CS" />
     <Compile Include="AccountingModel\DomainServices\BankDepositDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\CashBookDomainService.cs" />
-    <Compile Include="AccountingModel\DomainServices\FullAccountingSettingDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\ARPaymentChequeDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\BankAccountDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\BankCodeDomainService.Generated.cs" />
@@ -5608,7 +5668,6 @@
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.PaymentTermDateType.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.AmendmentFieldReasonType.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.AmendmentRequestStatus.cs" />
-    <Compile Include="CustomModel\DomainServices\ClaimDomainService.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.AmitalContext.GTBITEMS.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.Authority.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.FeaturePackageType.cs" />
@@ -8529,8 +8588,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-     <OutputPath>..\Library\Bin\</OutputPath>
-   </PropertyGroup>
+    <OutputPath>..\Library\Bin\</OutputPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\</OutputPath>
@@ -8559,7 +8618,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
     <OutputPath>bin\</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
-   </PropertyGroup>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

@@ -17,7 +17,7 @@ namespace Logitude.Server.Tools.Helpers
 {
     public class SqlBulkInsert
     {
-        public static void BulkInsert<T>(string tableName, IList<T> list)
+        public static void BulkInsert<T>(string tableName, IList<T> list,int contextTenant)
         {
             if (list == null || list.Count() == 0)
                 return;
@@ -40,14 +40,14 @@ namespace Logitude.Server.Tools.Helpers
                 RunOracleSqlInsert(tableName, list);
             }
             else
-                RunSqlInsert(tableName, list);
+                RunSqlInsert(tableName, list, contextTenant);
         }
 
-        private static void RunSqlInsert<T>(string tableName, IList<T> list)
+        private static void RunSqlInsert<T>(string tableName, IList<T> list, int contextTenant)
         {
 
             PropertyDescriptor[] entityProperties = GetEntitySystemProperties<T>();
-            string strConnString = TenantServerConfigration.GetDbConnection(0);
+            string strConnString = TenantServerConfigration.GetDbConnection(contextTenant);
             StringBuilder sqlStringBuilder = new StringBuilder();
             string insertCommand = "insert into " + BuildInsertCommandColumnsString(tableName, entityProperties) + " values";
             sqlStringBuilder.AppendLine(insertCommand);

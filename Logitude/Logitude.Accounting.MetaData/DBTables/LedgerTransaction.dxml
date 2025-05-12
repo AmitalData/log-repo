@@ -238,12 +238,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ProcessStartDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="JournalId,JournalLineNumber"
     ReferencedTable="JournalLines"
