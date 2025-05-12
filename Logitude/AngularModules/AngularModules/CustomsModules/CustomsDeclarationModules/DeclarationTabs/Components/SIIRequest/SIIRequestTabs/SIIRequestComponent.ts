@@ -166,7 +166,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     public SelectedInvoiceItemsReqList: ObservableCollection;
     OnRowSelected(items: SupplierInvoiceItemsReqListLine[]) {
-        debugger
         this.SelectedRows = items;
         if (items.length === 0) this.SelectedInvoiceItemsReqList.Clear();
         else this.SelectedInvoiceItemsReqList.Collection = items;
@@ -241,7 +240,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM.Id;
     }
     public set ContactId(newValue: string) {
-        debugger
         this.entityPM.Id = newValue;
     }
     public get Tenant(): number {
