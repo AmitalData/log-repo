@@ -10,6 +10,7 @@ import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import {PartnersDomainService} from '../../../../Common/Services/PartnersDomainService';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
     
@@ -32,28 +33,35 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    private entityResourceService: EntityResourceService = new EntityResourceService();
+
     constructor(public entityArgs: EntityArgs) {
         super();
-        this.EntityPM = entityArgs.EntityPM;
+        this.entityResourceService.getEntityResourceByTableName("Card").subscribe((response: any) => {
+
+
+            this.EntityPM = entityArgs.EntityPM;
      
 
-        this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
-
-        this.HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
-        this.HasEditCreditAmountFeature = FeatureLocator.HasFeaturePermession("Customer", "EDITCREDITAMOUNT");
-
-        if (this.HasCreditLimitFeature) {
-            this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
-            this.SetLabels();
-        }
-
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
-            this.DisplaySATSettings = true;
-            this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
-            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
-        }
-
-        this.Listen();
+            this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+    
+            this.HasCreditLimitFeature = FeatureLocator.HasFeaturePermession("CreditLimitSetting", "Module");
+            this.HasEditCreditAmountFeature = FeatureLocator.HasFeaturePermession("Customer", "EDITCREDITAMOUNT");
+    
+            if (this.HasCreditLimitFeature) {
+                this.IsCreditLimitActivated = ObjectsLocator.CreditLimitSettingPM.IsCreditLimitEnabled;
+                this.SetLabels();
+            }
+    
+            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
+                this.DisplaySATSettings = true;
+                this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
+                this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
+            }
+    
+            this.Listen();
+        })
+      
     }
 
     ngAfterViewInit(): void {
@@ -64,10 +72,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     }
 
     ngOnInit() {
-        // this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-        // this.SetUIProperties();
-        // this.RunComponent();
-        // this.LoadCreditLimitData();
+      
     }
 
     LoadGeneratedComponents() {
@@ -219,6 +224,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     
     private SessionEvent: any = null;
     private Listen() {
+      
         if (this.entityArgs.EditComponent) {
 
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
