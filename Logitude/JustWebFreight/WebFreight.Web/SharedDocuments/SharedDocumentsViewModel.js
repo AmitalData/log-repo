@@ -46,7 +46,7 @@
             contentType: 'application/json',
 
             success: function (result) {
-                var img = new Image();
+                let img = new Image();
                 img.onload = function () {
                     var width = this.width > 200 ? "200px" : (this.width + "px");
                     jQuery("#companyLogo").attr('src', result);
