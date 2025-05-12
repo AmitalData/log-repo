@@ -19,5 +19,9 @@ namespace Logitude.Customs.Data.DataContracts
 		public string ItemPrice { get; set; }
 		public string ItemPriceCurrencyCode { get; set; }
 		public string OriginCountryCode { get; set; }
-	}
+		public string InvoiceQuantityTypeName { get; set; }
+		public string TradeAgreementName { get; set; }
+		public string OriginCountryName { get; set; }
+
+    }
 }

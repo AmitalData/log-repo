@@ -67,7 +67,23 @@ namespace Logitude.Customs.Data.Repsitories
              on new { itm.DeclarationId, CounterKey = itm.CounterKey }
              equals new { inv.DeclarationId, CounterKey = inv.InvoiceCounterKey }
              into invJoin
-        from si in invJoin.DefaultIfEmpty()         
+        from si in invJoin.DefaultIfEmpty()
+
+        join ta in context.TradeAgreements
+            on itm.TradeAgreementCode equals ta.Code
+            into taJoin
+        from trade in taJoin.DefaultIfEmpty()
+
+        join mu in context.MeasurmentUnits           // unit-of-measure table
+             on itm.InvoiceQuantityType equals mu.Code
+             into muJoin
+        from unit in muJoin.DefaultIfEmpty()
+
+        join cc in context.CustomsCountries          // countries table
+             on itm.OriginCountryCode equals cc.Code
+             into ccJoin
+        from country in ccJoin.DefaultIfEmpty()
+
         select new SupplieInvoiceItemsForSIIRequest
         {
             InvoiceNumber = si.InvoiceNumber,
@@ -75,12 +91,20 @@ namespace Logitude.Customs.Data.Repsitories
             ItemCode = itm.ItemCode,
             ItemDescription = itm.ItemDescription,
             ClassificationCode = itm.ClassificationCode,
+
             TradeAgreementCode = itm.TradeAgreementCode,
+            TradeAgreementName = trade.LocalName,
+
             InvoiceQuantityType = itm.InvoiceQuantityType,
+            InvoiceQuantityTypeName = unit.LocalName,
+
             InvoiceQuantity = itm.InvoiceQuantity.ToString(),
             ItemPrice = itm.ItemPrice.ToString(),
             ItemPriceCurrencyCode = itm.ItemPriceCurrencyCode,
-            OriginCountryCode = itm.OriginCountryCode
+
+            OriginCountryCode = itm.OriginCountryCode,
+            OriginCountryName = country.LocalName
+
         };
 
             return list.ToList();

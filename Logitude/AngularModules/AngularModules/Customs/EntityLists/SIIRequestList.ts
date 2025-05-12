@@ -29,6 +29,7 @@ export class SIIRequestList {
 	ContactTel: string;
 	ContactCellPhone: string;
 	ContactFax: string;
+	ContactId: string;
 	
 }
  

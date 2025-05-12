@@ -538,6 +538,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string contactId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactId  
+	   {
+	    
+	     get
+		{
+		   return contactId;
+		 }
+		 set
+		 {
+		   if(contactId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=contactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactId=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
 
             this.Property(t => t.Remarks).HasColumnName("Remarks").HasMaxLength(200).IsUnicode(true);
+
+            this.Property(t => t.ContactId).HasColumnName("ContactId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
