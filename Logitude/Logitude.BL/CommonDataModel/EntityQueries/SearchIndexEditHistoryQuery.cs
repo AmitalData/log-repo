@@ -19,6 +19,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public SearchIndexEditHistoryQuery(SearchIndexEditHistoryRepository roleRepository)
         {
+            if (roleRepository == null)
+                throw new ArgumentNullException(nameof(roleRepository), "roleRepository cannot be null");
+
             repository = roleRepository;
         }
 
@@ -26,12 +29,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             if (string.IsNullOrEmpty(id))
                 throw new ArgumentNullException("id", "id cannot be null or empty");
-            if (tenant == null)
-                throw new ArgumentNullException("tenant", "tenant cannot be null");
 
             SearchIndexEditHistory searchIndexEditHistory = repository.GetSingleSearchIndexEditHistory(id, tenant);
             if (searchIndexEditHistory == null)
-                throw new Exception($"searchIndexEditHistory cannot be found for id: {id}, tenatn: {tenant},");
+                throw new Exception($"searchIndexEditHistory not found for id: {id}, tenatn: {tenant},");
 
             return new SearchIndexEditHistoryPM()
             {
@@ -48,8 +49,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public List<dynamic> GetRecent(int tenant, string screen, string entname, string userId, int size = 50)
         {
-            if (tenant == null)
-                throw new ArgumentNullException("tenant", "tenant cannot be null");
             if (string.IsNullOrEmpty(screen))
                 throw new ArgumentNullException("screen", "screen cannot be null or empty");
             if (string.IsNullOrEmpty(entname))
@@ -72,8 +71,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public void RemoveOldSearchData(int tenant, string screen, DateTime toDateTime)
         {
-            if (tenant == null)
-                throw new ArgumentNullException("tenant", "tenant cannot be null");
             if (string.IsNullOrEmpty(screen))
                 throw new ArgumentNullException("screen", "screen cannot be null or empty");
 

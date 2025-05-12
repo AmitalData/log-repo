@@ -110,14 +110,13 @@ export class SearchListDDLComponent implements OnInit {
         this.initLabelLength();
     }
     @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-    public defaultLabelLength: number = 20;
 
     ngOnInit() {
         this.optionSelected.subscribe((option: any) => this.showDropdown = false);
     }
 
-    onDestroy() {
-        this.optionSelected.unsubscribe();
+    ngOnDestroy() {
+        this.optionSelected.complete();
     }
 
     initLabelLength(): void {

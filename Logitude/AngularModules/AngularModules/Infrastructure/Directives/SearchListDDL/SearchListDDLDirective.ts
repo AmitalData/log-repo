@@ -32,9 +32,11 @@ export class SearchListDDLDirective implements OnInit {
     private elRef: ElementRef
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     const factory: ComponentFactory<SearchListDDLComponent> = this.componentFactoryResolver.resolveComponentFactory(SearchListDDLComponent);
     this.componentRef = this.viewContainerRef.createComponent(factory);
+    
+    if (!this.componentRef) return;
     this.componentRef.instance.dropdownOptions = this.appSearchListDDL;
     this.componentRef.instance.settings = this._settings;
     this.componentRef.instance.optionSelected.subscribe((option: any) => this.optionSelected.emit(option));
@@ -42,7 +44,7 @@ export class SearchListDDLDirective implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
-    if (!this.elRef.nativeElement.contains(event.target))
+    if (!this.elRef.nativeElement.contains(event.target) && this.componentRef?.instance)
       this.componentRef.instance.showDropdown = false;
   }
 }

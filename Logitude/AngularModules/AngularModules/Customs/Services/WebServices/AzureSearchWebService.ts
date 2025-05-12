@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
 
 export class AzureSearchWebService {
     private _http: HttpClient = ServiceHelper.HttpClient;
-    private _apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/AzureSearch';
+    private readonly _apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/AzureSearch';
     private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
     
     constructor() {}
@@ -25,7 +25,7 @@ export class AzureSearchWebService {
         ).toPromise<any>();
     }
 
-    GetSettings(index: string): Promise<FastSearchSettings> {
+    getSettings(index: string): Promise<FastSearchSettings> {
         const ajax: Observable<any> = this._http.get(
             this._apiUrl + '/GetSettings',
             {

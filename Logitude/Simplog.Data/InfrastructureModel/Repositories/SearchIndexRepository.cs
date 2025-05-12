@@ -2,6 +2,7 @@
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
@@ -53,7 +54,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 throw new ArgumentNullException(nameof(entity));
 
             context.SetAsModified(entity);
-            context.SearchIndexes.Attach(entity);
+
+            if (context.GetActiveDbContext().Entry(entity).State == EntityState.Detached)
+                context.SearchIndexes.Attach(entity);
             SubmitChanges();
         }
     }

@@ -111,7 +111,6 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<SharedUserQuery> SharedUserQueries { get; }
         IDbSet<DWCategories> DWCategories { get; }
         IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
-        //IDbSet<SchedulerLogs> SchedulerLogs { get; }
         IDbSet<SchedulerProcedure> SchedulerProcedures { get; }
         IDbSet<WorkerRoleName> WorkerRoleNames { get; }
 

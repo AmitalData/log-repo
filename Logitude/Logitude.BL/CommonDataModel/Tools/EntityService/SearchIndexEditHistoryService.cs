@@ -48,8 +48,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityPM.KeyVal = RemoveDollarIdProperty(entityPM.KeyVal);
 
             Poco = new SearchIndexEditHistory();
-            Poco.Id = this.entityPM.Id;
-
             SearchIndexEditHistoryMapping.MapEntity(theEntityPm, Poco, isNewEntity);
 
             entityRepository.Add(Poco);
@@ -60,6 +58,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (theEntityPm == null)
                 throw new ArgumentNullException("theEntityPm", "theEntityPm cannot be null");
+            if (string.IsNullOrEmpty(theEntityPm.Id))
+                throw new ArgumentNullException("Id", "theEntityPm.Id cannot be null or empty");
 
             isNewEntity = false;
             entityPM = theEntityPm;
@@ -77,9 +77,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             if (string.IsNullOrEmpty(json)) return json;
 
-            JObject jsonObject = JObject.Parse(json);
-            jsonObject.Property("$id")?.Remove();
-            return jsonObject.ToString(Newtonsoft.Json.Formatting.None);
-        }
+            try
+            {
+                JObject jsonObject = JObject.Parse(json);
+                jsonObject.Property("$id")?.Remove();
+                return jsonObject.ToString(Newtonsoft.Json.Formatting.None);
+            }
+            catch
+            {
+                return json;
+            }
+        }    
     }
 }

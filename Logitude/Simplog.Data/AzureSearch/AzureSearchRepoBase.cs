@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Net;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Threading;
 
 namespace Simplog.Data.AzureSearch.Repo
 {
@@ -42,14 +43,14 @@ namespace Simplog.Data.AzureSearch.Repo
         {
             string key = "indexSearchFields;" + indexName;
 
-            Func<Task<Response<SearchIndex>>> fun = () => new SearchIndexClient(serviceEndpoint, credential).GetIndexAsync(indexName);
+            Func<Task<Response<SearchIndex>>> fun = () => adminClient.GetIndexAsync(indexName);
 
             Task<Response<SearchIndex>> val = useCache ? CacheManager.GetOrInsertNewObject(key, fun) : fun();
             return (await val).Value.Fields;
         }
 
-        public async Task<Response<IndexDocumentsResult>> DeleteAsync(List<T> records) =>
-            await adminClient.GetSearchClient(indexName).DeleteDocumentsAsync(records);
+        public async Task<Response<IndexDocumentsResult>> DeleteAsync(List<T> records, CancellationToken cancellationToken = default) =>
+            await adminClient.GetSearchClient(indexName).DeleteDocumentsAsync(records, null, cancellationToken);
 
         public async Task DropAsync()
         {

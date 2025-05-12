@@ -16,6 +16,8 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class AzureSearchController : ApiController
     {
+        [HttpGet]
+        [Route(template: "api/AzureSearch/GetSettings")]
         public async Task<HttpResponseMessage> GetSettings(string index)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
@@ -23,7 +25,7 @@ namespace WebFreight.Web.Controllers.WebServices
             try
             {
                 if (string.IsNullOrEmpty(index))
-                    throw new ArgumentNullException("index", "index cannot be null or empty");
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "index is required");
 
                 FastSearchSettings settings = await FastSearchService.GetIndexSettingsAsync(tenant, index);
                 return Request.CreateResponse(HttpStatusCode.OK, settings);
@@ -34,6 +36,8 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
+        [HttpGet]
+        [Route(template: "api/AzureSearch/GetIndex")]
         public async Task<HttpResponseMessage> GetFastSearch([FromUri] ApiQueryFilters filters, string searchText, string index)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
@@ -50,14 +54,17 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
+        [HttpGet]
+        [Route(template: "api/AzureSearch/GetIndexCount")]
         public HttpResponseMessage GetRecentSearches(string screen, string entname, int size = 20)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
 
             if (string.IsNullOrEmpty(screen))
-                throw new ArgumentNullException("screen", "screen cannot be null or empty");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "screen cannot be null or empty");
+
             if (string.IsNullOrEmpty(entname))
-                throw new ArgumentNullException("entname", "entname cannot be null or empty");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "entname cannot be null or empty");
 
             try
             {

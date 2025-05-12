@@ -14,26 +14,39 @@ namespace Logitude.Customs.BL.AzureSearch
 {
     public class FastSearchService
     {
-        private static DefaultAndConfiguration_Ext ConnectionDetails => DefaultService.Instance.Get(0, "AzureSearchAI", "Customs");
+        private const string AzureSearchAISetKey = "AzureSearchAI";
+        private static DefaultAndConfiguration_Ext ConnectionDetails => DefaultService.Instance.Get(0, AzureSearchAISetKey, "Customs");
         private static string serviceName => ConnectionDetails.Value1;
         private static string apiKey => ConnectionDetails.Value2;
+
         private static readonly DevLog logger = DevLog.Instance;
+
+        private static readonly Dictionary<string, Func<FastSearchService>> _indexRegistry = new Dictionary<string, Func<FastSearchService>>()
+        {
+            { "declarations", () => new DeclarationAzureSearchService() }
+        };
+
+        public static async Task<List<dynamic>> Search(ApiQueryFilters filters, string searchText, string index, int tenant)
+        {
+            if (!_indexRegistry.TryGetValue(index, out Func<FastSearchService> serviceFactory))
+                throw new Exception($"Index {index} not found");
+
+            FastSearchService fastSearchService = serviceFactory();
+            return await fastSearchService.Search(filters, tenant, searchText, index);
+        }
 
         private async Task<List<dynamic>> Search(ApiQueryFilters apiQueryFilters, int tenant, string searchText, string tableName)
         {
-            logger.WriteDebug($"Search {tableName} ASAI: {apiQueryFilters?.AdditionalFilters}, tenant: {tenant}, searchText: {searchText}");
+            logger.WriteDebug($"[FastSearch] Starting search, Index: {tableName}, tenant: {tenant}, searchText: {searchText} filters: {apiQueryFilters?.AdditionalFilters}");
 
             string filters = "";
             List<QueryFilterItem> additionalFilters = null;
-
-            if (tenant == null)
-                throw new ArgumentNullException(nameof(tenant), "tenant is null");
 
             if (apiQueryFilters?.AdditionalFilters != null)
             {
                 additionalFilters = JsonConvert.DeserializeObject<List<QueryFilterItem>>(apiQueryFilters.AdditionalFilters);
 
-                MenipulateAdditionalFilters(additionalFilters, tenant);
+                ManipulateAdditionalFilters(additionalFilters, tenant);
 
                 List<QueryFilterItem> simpleFilters = additionalFilters.Where(x => x.IsCustom == false).ToList();
                 filters = FilterHelper.ConvertQueryFilter(simpleFilters);
@@ -49,7 +62,7 @@ namespace Logitude.Customs.BL.AzureSearch
                 }
             }
 
-            filters = MenipulateFilters(additionalFilters, filters, tenant);
+            filters = ManipulateFilters(additionalFilters, filters, tenant);
 
             FastSearchAzureSearchRepo fastSearchAzureSearchRepo = new FastSearchAzureSearchRepo(serviceName, apiKey, tableName);
             List<string> fieldsNotExistsInIndex = await FieldsNotExistsInIndex(filters, fastSearchAzureSearchRepo);
@@ -63,19 +76,19 @@ namespace Logitude.Customs.BL.AzureSearch
             return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields);
         }
 
-        protected virtual void MenipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant) { }
+        protected virtual void ManipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant) { }
 
         protected virtual IQueryable GetCustomFilterQueryable(QueryOperations queryOperations, int tenant) => null;
 
-        protected virtual string MenipulateFilters(List<QueryFilterItem> additionalFilters, string filters, int tenant) => filters;
+        protected virtual string ManipulateFilters(List<QueryFilterItem> additionalFilters, string filters, int tenant) => filters;
 
         protected virtual string GetSettingsName(List<QueryFilterItem> additionalFilters, string filters, int tenant) => null;
 
-        public static Task<FastSearchSettings> GetIndexSettingsAsync(int tenant, string index) => Task.Run(() => GetIndexSettings(tenant, index));
+        public static Task<FastSearchSettings> GetIndexSettingsAsync(int tenant, string index) => Task.FromResult(GetIndexSettings(tenant, index));
 
         private static FastSearchSettings GetIndexSettings(int tenant, string index)
         {
-            string settings = DefaultService.Instance.Get(tenant, "AzureSearchAI", index)?.Value1;
+            string settings = DefaultService.Instance.Get(tenant, AzureSearchAISetKey, index)?.Value1;
             if (string.IsNullOrEmpty(settings))
                 throw new ArgumentNullException(nameof(settings), "AzureSearch settings default not found");
 
@@ -108,25 +121,6 @@ namespace Logitude.Customs.BL.AzureSearch
             string[] fields = new string[fieldList.Count];
             fieldList.CopyTo(fields);
             return fields.ToList();
-        }
-
-        public static async Task<List<dynamic>> Search(ApiQueryFilters filters, string searchText, string index, int tenant)
-        {
-            FastSearchService fastSearchService = new FastSearchService();
-
-            switch (index)
-            {
-                case "declarations":
-                    fastSearchService = new DeclarationAzureSearchService();
-                    break;
-
-                default:
-                    throw new Exception(message: $"Index {index} not found");
-            }
-
-            List<dynamic> result = await fastSearchService.Search(filters, tenant, searchText, index);
-
-            return result;
         }
     }
 }
