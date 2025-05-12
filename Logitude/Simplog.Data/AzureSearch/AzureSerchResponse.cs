@@ -9,14 +9,14 @@ namespace Simplog.Data.AzureSearch
         {
             Response = response;
             Status = response.Status;
-            Content = response.Content;
+            Content = response.Content?.ToString();
             Count = count;
         }
 
         public Response Response { get; set; }
         public int Status { get; set; }
         public int Count { get; set; }
-        public BinaryData Content { get; set; }
+        public string Content { get; set; }
         
     }
 }

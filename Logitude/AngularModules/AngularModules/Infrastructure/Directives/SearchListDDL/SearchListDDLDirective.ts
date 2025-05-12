@@ -1,6 +1,7 @@
 import {
-  Directive, Input, OnInit, ViewContainerRef, ComponentFactoryResolver,
-  ComponentFactory, ComponentRef, Output, EventEmitter, HostListener, ElementRef
+  Directive, Input, ViewContainerRef, ComponentFactoryResolver,
+  ComponentFactory, ComponentRef, Output, EventEmitter, HostListener, ElementRef,
+  AfterViewInit
 } from '@angular/core';
 import { SearchListDDLComponent } from './SearchListDDLComponent';
 import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
@@ -8,7 +9,7 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
 @Directive({
   selector: '[appSearchListDDL]'
 })
-export class SearchListDDLDirective implements OnInit {
+export class SearchListDDLDirective implements  AfterViewInit {
   @Input() set appSearchListDDL(options: any[]) {
     if (this.componentRef && options) {
       this.componentRef.instance.dropdownOptions = options;

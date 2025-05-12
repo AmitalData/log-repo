@@ -84,7 +84,7 @@ namespace CommunicationWorkerRole
             return double.TryParse(value, out double result) ? result : defaultValue;
         }
 
-        public async Task RunIndexerAsync(CancellationToken cancellationToken = default)
+        public async Task RunIndexerAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTenant);
             List<SearchIndex> allSearchIndexes = searchIndexQuery.GetAll();
@@ -123,7 +123,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        public async Task RemoveOldIndexDataAsync(CancellationToken cancellationToken = default)
+        public async Task RemoveOldIndexDataAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             SearchIndexQuery searchIndexQuery = new SearchIndexQuery(mainTenant);
             List<SearchIndex> allSearchIndexes = searchIndexQuery.GetAll();
@@ -161,7 +161,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private async Task RemoveOldSearchDataAsync(CancellationToken cancellationToken = default) => await Task.Run(() => RemoveOldSearchData(), cancellationToken).ConfigureAwait(false);
+        private async Task RemoveOldSearchDataAsync(CancellationToken cancellationToken = default(CancellationToken)) => await Task.Run(() => RemoveOldSearchData(), cancellationToken).ConfigureAwait(false);
 
         public void RemoveOldSearchData()
         {
@@ -239,7 +239,7 @@ namespace CommunicationWorkerRole
             return aTimer;
         }
 
-        private async Task<bool> RunIndexerAsync(SearchIndex index, CancellationToken cancellationToken = default)
+        private async Task<bool> RunIndexerAsync(SearchIndex index, CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -259,7 +259,7 @@ namespace CommunicationWorkerRole
                 else
                 {
                     logger.WriteError($"Failed to start indexer '{index.Indexer}'. Status: {response.Status}");
-                    logger.WriteError("Error message: " + response.Content.ToString());
+                    logger.WriteError("Error message: " + response.Content);
                     return false;
                 }
             }
@@ -270,7 +270,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private async Task<bool> RemoveFromIndexAsync(SearchIndex index, CancellationToken cancellationToken = default)
+        private async Task<bool> RemoveFromIndexAsync(SearchIndex index, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (index == null)
                 throw new ArgumentNullException(nameof(index), "index cannot be null");
@@ -291,13 +291,13 @@ namespace CommunicationWorkerRole
 
                     if (response.Status == (int)HttpStatusCode.OK)
                     {
-                        logger.WriteTrace(message: $"Successfully removed old data from index {index.Index}, wait 1 seconds");
+                        logger.WriteTrace(message: $"Successfully removed old data from index {index.Index}, wait 1 seconds, deleted rows: {response.Content}");
                         rowDeleted += response.Count;
                         await Task.Delay(1000).ConfigureAwait(false);
                     }
                     else
                     {
-                        string content = response?.Content?.ToString();
+                        string content = response?.Content;
                         logger.WriteError($"Failed to remove old data from index {index.Index}. Status: {response.Status}, response: {content}");
                         return false;
                     }
