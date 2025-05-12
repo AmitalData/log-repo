@@ -150,17 +150,15 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
       if (!myResponse?.HasError && myResponse?.Result) {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
+        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId).subscribe(myResult => {
+          let myResponse: ServiceResponse = myResult;
+          if (!myResponse?.HasError && myResponse?.Result) {
+            this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
+            args.supplierInvoiceItemsForSIIRequest = myResponse.Result;
+            this.openLogWindow(siiRequestMode, args);
+          }
+        });
       }
-
-      this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId).subscribe(myResult => {
-
-        let myResponse: ServiceResponse = myResult;
-        if (!myResponse?.HasError && myResponse?.Result) {
-          this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
-          args.supplierInvoiceItemsForSIIRequest = myResponse.Result;
-          this.openLogWindow(siiRequestMode, args);
-        }
-      });
     });
   }
 

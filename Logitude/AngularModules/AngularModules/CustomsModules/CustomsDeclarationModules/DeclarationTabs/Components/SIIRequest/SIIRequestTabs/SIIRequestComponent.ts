@@ -89,7 +89,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     SetWindowArgs(args: any) {
-        this.entityPM = args.SiiRequest;
+        this.entityPM = args.SIIRequest;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
@@ -99,7 +99,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.supplierInvoiceItemsForSIIRequest = args.supplierInvoiceItemsForSIIRequest;
         this.supplierInvoiceItemsCollection = new ObservableCollection([]);
         this.buildSupplierInvoiceItemsCollection();
-        if (args.SiiRequest != null) this.entityPM = args.SiiRequest;
     }
 
     CancelSaveSiiRequest() {
@@ -236,75 +235,145 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public set Id(newValue: string) {
         this.entityPM.Id = newValue;
     }
-    public get ContactId(): string {
-        return this.entityPM.Id;
-    }
-    public set ContactId(newValue: string) {
-        this.entityPM.Id = newValue;
-    }
-    public get Tenant(): number {
-        return this.entityPM.Tenant;
-    }
-    public set Tenant(newValue: number) {
-        this.entityPM.Tenant = newValue;
-    }
 
     public get RequestNo(): string {
-        return this.entityPM.RequestNo;
+        return this.entityPM.RequestNo ?? null;
     }
     public set RequestNo(newValue: string) {
         this.entityPM.RequestNo = newValue;
     }
 
     public get DeclarationId(): string {
-        return this.entityPM.DeclarationId;
+        return this.entityPM.DeclarationId ?? "";
     }
     public set DeclarationId(newValue: string) {
         this.entityPM.DeclarationId = newValue;
     }
 
     public get Status(): string {
-        return this.entityPM.Status;
+        return this.entityPM.Status ?? null;
     }
     public set Status(newValue: string) {
         this.entityPM.Status = newValue;
     }
 
     public get WareHouseAddress(): string {
-        return this.entityPM.WareHouseAddress;
+        return this.entityPM.WareHouseAddress ?? null;
     }
     public set WareHouseAddress(newValue: string) {
         this.entityPM.WareHouseAddress = newValue;
     }
 
     public get WareHouseCity(): string {
-        return this.entityPM.WareHouseCity;
+        return this.entityPM.WareHouseCity ?? null;
     }
     public set WareHouseCity(newValue: string) {
         this.entityPM.WareHouseCity = newValue;
     }
 
     public get IsClosed(): boolean {
-        return this.entityPM.IsClosed;
+        return this.entityPM.IsClosed ?? false;
     }
     public set IsClosed(newValue: boolean) {
         this.entityPM.IsClosed = newValue;
     }
 
+    public get WareHouseCityName(): string {
+        return this.entityPM.WareHouseCityName ?? null;
+    }
+    public set WareHouseCityName(newValue: string) {
+        this.entityPM.WareHouseCityName = newValue;
+    }
+
+    public get SupplierInvoiceItemsReqLists(): SupplierInvoiceItemsReqListPM[] {
+        return this.entityPM.SupplierInvoiceItemsReqLists ?? [];
+    }
+    public set SupplierInvoiceItemsReqLists(newValue: SupplierInvoiceItemsReqListPM[]) {
+        this.entityPM.SupplierInvoiceItemsReqLists = newValue;
+    }
+
     public get Remarks(): string {
-        return this.entityPM?.Remarks ? this.entityPM?.Remarks : "";
+        return this.entityPM.Remarks ?? null;
     }
     public set Remarks(newValue: string) {
         this.entityPM.Remarks = newValue;
     }
-    // TODO: change to Real data map
-    public get ShipName(): string {
-        // return this.entityPM.ShipName;
-        return this.ShipName;
+
+    public get ListCounter(): number {
+        return this.entityPM.ListCounter ?? 0;
     }
-    public set ShipName(newValue: string) {
-        // this.entityPM.ShipName = newValue;
-        this.ShipName = newValue;
+    public set ListCounter(newValue: number) {
+        this.entityPM.ListCounter = newValue;
+    }
+
+    public get ImporterId(): string {
+        return this.entityPM.ImporterId ?? "";
+    }
+    public set ImporterId(newValue: string) {
+        this.entityPM.ImporterId = newValue;
+    }
+
+    public get ContactName(): string {
+        return this.entityPM.ContactName ?? null;
+    }
+    public set ContactName(newValue: string) {
+        this.entityPM.ContactName = newValue;
+    }
+
+    public get UnloadDate(): Date {
+        return this.entityPM.UnloadDate ?? new Date();
+    }
+    public set UnloadDate(newValue: Date) {
+        this.entityPM.UnloadDate = newValue;
+    }
+
+    public get ManifestNumber(): string {
+        return this.entityPM.ManifestNumber ?? "";
+    }
+    public set ManifestNumber(newValue: string) {
+        this.entityPM.ManifestNumber = newValue;
+    }
+
+    public get VesselName(): string {
+        return this.entityPM.VesselName ?? "";
+    }
+    public set VesselName(newValue: string) {
+        this.entityPM.VesselName = newValue;
+    }
+
+    public get ContactEmail(): string {
+        return this.entityPM.ContactEmail ?? null;
+    }
+    public set ContactEmail(newValue: string) {
+        this.entityPM.ContactEmail = newValue;
+    }
+
+    public get ContactTel(): string {
+        return this.entityPM.ContactTel ?? null;
+    }
+    public set ContactTel(newValue: string) {
+        this.entityPM.ContactTel = newValue;
+    }
+
+    public get ContactCellPhone(): string {
+        return this.entityPM.ContactCellPhone ?? null;
+    }
+    public set ContactCellPhone(newValue: string) {
+        this.entityPM.ContactCellPhone = newValue;
+    }
+
+    public get ContactFax(): string {
+        return this.entityPM.ContactFax ?? null;
+    }
+    public set ContactFax(newValue: string) {
+        this.entityPM.ContactFax = newValue;
+    }
+
+    public get ContactId(): string {
+        return this.entityPM.ContactId ?? null;
+    }
+    public set ContactId(newValue: string) {
+        this.entityPM.ContactId = newValue;
     }
     //#endregion SiiRequest properties
 
@@ -314,27 +383,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set CustomFileNo(newValue: string) {
         this.DecalarationData.CustomFileNo = newValue;
-    }
-
-    public get ImporterId(): string {
-        return !AppTool.IsNullOrEmpty(this.DecalarationData.ImporterId) ? this.DecalarationData.ImporterId : this.ImporterCode;
-    }
-    public set ImporterId(newValue: string) {
-        this.DecalarationData.ImporterId = newValue;
-    }
-    public get ImporterCode(): string {
-        return this.DecalarationData.ImporterCode;
-    }
-    public set ImporterCode(newValue: string) {
-        this.DecalarationData.ImporterCode = newValue;
-    }
-
-    // TODO: change to Real data (from apa date decalration referantdata) 
-    public get ArrivelDate(): string {
-        return this.DecalarationData.ImporterCode;
-    }
-    public set ArrivelDate(newValue: string) {
-        this.DecalarationData.ImporterCode = newValue;
     }
     //#endregion declaration properties
 
