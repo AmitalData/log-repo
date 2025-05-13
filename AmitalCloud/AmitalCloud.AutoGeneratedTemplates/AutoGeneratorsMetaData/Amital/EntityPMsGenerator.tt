@@ -241,7 +241,7 @@ namespace <#= pmnamespacestring #>
 if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyName.GetType() == typeof(string))
 { 
 	
-	string keyvalue = field.NavigationPropertyName + field.ObjectTableName;
+	string keyvalue = field.NavigationPropertyName + "_" + field.ObjectTableName;
 	if(field.IsForeignKey == "true" && !addedProperties.Keys.Contains(keyvalue))
 	{
 	#>
@@ -445,7 +445,7 @@ else
 if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyName.GetType() == typeof(string))
 { 
 	
-	string keyvalue = field.NavigationPropertyName + field.ObjectTableName;;
+	string keyvalue = field.NavigationPropertyName + "_" + field.ObjectTableName;;
 	if(field.IsForeignKey == "true" && !addedProperties.Keys.Contains(keyvalue))
 	{
 	      
