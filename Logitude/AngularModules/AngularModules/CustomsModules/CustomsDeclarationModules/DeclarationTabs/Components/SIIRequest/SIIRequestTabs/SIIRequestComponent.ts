@@ -75,8 +75,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     buildSupplierInvoiceItemsCollection(): void {
         this.supplierInvoiceItemsCollection.Clear();
         this.supplierInvoiceItemsForSIIRequest.forEach((item) => {
-            let siiRequestComponent: SIIRequestComponent;
-            const supplierInvoiceItemLine = new SiiRequestSupplierInvoiceItemsLine(item, siiRequestComponent);
+            const supplierInvoiceItemLine = new SupplierInvoiceItemsForSIIRequestLine(item, this);
             this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
         });
 
@@ -158,13 +157,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
 
-    SelectedRow: SupplierInvoiceItemsReqListLine;
-    SelectedRows: SupplierInvoiceItemsReqListLine[];
-    preventSelect: boolean;
-    deletedInvItems: string = "";
-
+    SelectedRow: SupplierInvoiceItemsForSIIRequestLine = new SupplierInvoiceItemsForSIIRequestLine(new SupplierInvoiceItemsForSIIRequest(), this);
+    SelectedRows: SupplierInvoiceItemsForSIIRequestLine[] = [];
     public SelectedInvoiceItemsReqList: ObservableCollection;
-    OnRowSelected(items: SupplierInvoiceItemsReqListLine[]) {
+
+    OnRowSelected(items: SupplierInvoiceItemsForSIIRequestLine[]) {
         this.SelectedRows = items;
         if (items.length === 0) this.SelectedInvoiceItemsReqList.Clear();
         else this.SelectedInvoiceItemsReqList.Collection = items;
@@ -499,8 +496,10 @@ export class SupplierInvoiceItemsReqListLine extends BaseComponent {
         this.entityPM.Remarks = newValue;
     }
 }
-//#region SiiRequestSupplierInvoiceItemsLine properties:
-export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
+//#endregion SupplierInvoiceItemsReqListLine properties
+
+//#region SupplierInvoiceItemsForSIIRequestLine properties:
+export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public entityPM: SupplierInvoiceItemsForSIIRequest;
     public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
@@ -509,6 +508,21 @@ export class SiiRequestSupplierInvoiceItemsLine extends BaseComponent {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
+    }
+    private isSelected: boolean;
+    public get IsSelected() { return this.isSelected };
+    public set IsSelected(value: boolean) {
+        this.isSelected = value;
+    }
+
+    OnRowSelected(item: SupplierInvoiceItemsForSIIRequestLine, isSelected: boolean) {
+        item.IsSelected = isSelected;
+        if (item.IsSelected) {
+            this.Parent?.SelectedInvoiceItemsReqList.Insert(item);
+        }
+        else {
+            this.Parent.SelectedInvoiceItemsReqList.Remove(item);
+        }
     }
 
     public get InvoiceNumber(): string {

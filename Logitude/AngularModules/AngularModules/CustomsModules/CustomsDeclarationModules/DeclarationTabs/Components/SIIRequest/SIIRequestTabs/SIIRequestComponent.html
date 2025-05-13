@@ -207,6 +207,7 @@
                     </tr>
                     <tr class="FieldRow" style="width:100%">
                         <td style="width:100%">
+                            <!-- Filters Area -->
                             <div class="GrayBox">
                                 <table>
                                     <tr>
@@ -315,6 +316,21 @@
                                                                 [ItemSource]="supplierInvoiceItemsCollection"
                                                                 [SelectedRows]="SelectedInvoiceItemsReqList.Collection"
                                                                 [Disabled]="IsDisplayOnly">
+                                                                <log-column
+                                                                    [header]=""
+                                                                    [binding]="" [width]="'30'"
+                                                                    [Alignment]="'right'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            [IsEnabled]="!IsDisplayOnly">
+                                                                            <CheckBox style="right:3px; top:1.5px"
+                                                                                [IsChecked]="item.IsSelected"
+                                                                                [IsEnabled]="!IsDisplayOnly"
+                                                                                (Checked)="item.OnRowSelected(item, $event)">
+                                                                            </CheckBox>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
                                                                 <log-column
                                                                     [header]="'Customs.SupplierInvoiceItem.F.InvoiceNumber' | TextCodeTranslationPipe"
                                                                     [binding]="'InvoiceNumber'" [width]="'70'"
