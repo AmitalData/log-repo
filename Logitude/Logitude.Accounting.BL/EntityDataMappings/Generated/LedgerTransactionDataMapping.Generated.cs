@@ -62,7 +62,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdateDateTime, 
 	         UpdatedByUserName, 
 	         InternalNote, 
-	         ProcessStartDate, 
 	         ProcessStartDate,
 	      }
 
@@ -147,7 +146,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AmountInNIS, 
 	         IsExternalEntity, 
 	         BankName, 
-	         ProcessStartDate, 
 	         ProcessStartDate,
 	      }
 
@@ -320,11 +318,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalNote))
             {
 				entityPOCO.InternalNote = entityPM.InternalNote;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessStartDate))
-            {
-				entityPOCO.ProcessStartDate = entityPM.ProcessStartDate;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessStartDate))
@@ -513,11 +506,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ProcessStartDate = entityPOCO.ProcessStartDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProcessStartDate))
-            {
-					entityPM.ProcessStartDate = entityPOCO.ProcessStartDate;
-            }
-
 		}
 
 		public void PMToOldPM(LedgerTransactionPM entityPM, LedgerTransactionPM oldEntityPM)
@@ -687,11 +675,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalNote))
             {
                 oldEntityPM.InternalNote = entityPM.InternalNote;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessStartDate))
-            {
-                oldEntityPM.ProcessStartDate = entityPM.ProcessStartDate;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessStartDate))

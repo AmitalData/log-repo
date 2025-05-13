@@ -181,8 +181,6 @@ namespace Logitude.Accounting.Data.EntityLists
        public string BankName  { get; set; }
        [DataMember]
        public DateTime? ProcessStartDate  { get; set; }
-       [DataMember]
-       public DateTime? ProcessStartDate  { get; set; }
    }
 
 }

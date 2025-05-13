@@ -115,8 +115,6 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string InternalNote { get; set; }
         [Column("ProcessStartDate")]
 	    public DateTime? ProcessStartDate { get; set; }
-        [Column("ProcessStartDate")]
-	    public DateTime? ProcessStartDate { get; set; }
     }
 }
 	 

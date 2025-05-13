@@ -88,7 +88,6 @@ export class LedgerTransactionList {
 	IsExternalEntity: boolean;
 	BankName: string;
 	ProcessStartDate: Date;
-	ProcessStartDate: Date;
 	
 }
  
