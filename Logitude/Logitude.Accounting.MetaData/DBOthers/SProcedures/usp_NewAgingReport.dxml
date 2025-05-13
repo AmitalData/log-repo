@@ -205,24 +205,17 @@ INNER JOIN
     TENANTS TEN ON GL.tenant = TEN.Id
 	LEFT JOIN
 	 (
-   SELECT 
-        jl.CreditAccountId,
-        COALESCE(SUM(DISTINCT CASE WHEN jl.DueDate <= @InputDate THEN jl.LocalAmount ELSE 0 END), 0) AS TotPastOpenChequesInLocalCur,
-        COALESCE(SUM(DISTINCT CASE WHEN jl.DueDate > @InputDate THEN jl.LocalAmount ELSE 0 END), 0) AS TotFutureOpenChequesInLocalCur
-    FROM JournalLines jl
+ SELECT max(a.AccountId) as AccountId,
+SUM( CASE WHEN a.ValueDate <= @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotPastOpenChequesInLocalCur,
+SUM( CASE WHEN a.ValueDate > @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotFutureOpenChequesInLocalCur
 
-    JOIN Journals j 
-        ON jl.JournalId = j.Id
-    JOIN ARPaymentCheques arpch 
-        ON j.AccountingEntityId = arpch.PaymentId
-    WHERE 
-	  j.Tenant = @Tenant  and
-	  j.AccountingEntityCode = '3'
-      AND jl.ActionCode = '1'
-      AND j.IsLedgerCreated = 1
-	  AND (@AccountID IS NULL OR jl.CreditAccountId = @AccountID) 
-
-    GROUP BY jl.CreditAccountId
+FROM AllARPaymentChequesViews a
+LEFT JOIN BankDepositLines l ON a.ChequeId = l.ARPaymentChequeId
+LEFT JOIN BankDeposits b ON l.DepositId = b.Id
+LEFT JOIN BankAccounts ba ON b.DepositBankAccountId = ba.Id
+WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)
+ AND a.Tenant = @tenant
+ group by  a.AccountId
 )  FUTQ ON FUTQ.CreditAccountId = GL.ID
 LEFT JOIN 
     (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
