@@ -19,7 +19,7 @@ namespace AmitalCloud.Infrastructure.Model.EntityClasses
 	{
 		
            [Column("MessageBody")]
-	    public string MessageBody { get; set; }
+	    public byte[] MessageBody { get; set; }
         [Column("StackTrace")]
 	    public string StackTrace { get; set; }
      [Key]
