@@ -11,11 +11,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class ObjectTableRuleFieldsController : ControllerBase
     {
         [HttpGet("GetObjectTableRuleFieldPMsByTenant")]
-        public IActionResult GetObjectTableRuleFieldPMsByTenant(int tenant)
+        public IActionResult GetObjectTableRuleFieldPMsByTenant()
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var queryService = new ObjectTableRuleFieldQueryService(tenant);
                 var result = queryService.GetMulti(a => a.Tenant == tenant || a.Tenant == 0, a => new ObjectTableRuleFieldPM(a)
                 {

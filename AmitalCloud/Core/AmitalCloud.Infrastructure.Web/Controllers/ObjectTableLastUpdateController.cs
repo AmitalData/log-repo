@@ -11,11 +11,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class ObjectTableLastUpdateController : ControllerBase
     {
         [HttpGet("GetLastUpdatedTables")]
-        public IActionResult GetLastUpdatedTables(int tenant, DateTime sinceDate, string clientEmail)
+        public IActionResult GetLastUpdatedTables(DateTime sinceDate, string clientEmail)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 List<ObjectTableLastUpdatePM> list = new ObjectTableLastUpdateQueryService(tenant).GetMulti(a => a.LastUpdateDate > sinceDate && (a.Tenant == tenant || a.Tenant == 0) && a.ObjectTable.CacheOnClient && !a.ObjectTable.IsClosed, a => new ObjectTableLastUpdatePM(a)
                 {
                     ObjectTableName = a.ObjectTable.Name,

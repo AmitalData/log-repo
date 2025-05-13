@@ -20,10 +20,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             _loggedContactResolver = loggedContactResolver;
         }
 
-        [HttpGet("GetAdvanceQueryFiltersPMs/{tenant?}")]
-        public ActionResult<List<AdvancedQueryFilterPM>> GetAdvanceQueryFiltersPMs(int tenant)
+        [HttpGet("GetAdvanceQueryFiltersPMs")]
+        public ActionResult<List<AdvancedQueryFilterPM>> GetAdvanceQueryFiltersPMs()
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+			int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var advanceQueryFilters = new AdvancedQueryFilterQueryService(tenant).GetMultiFromCache($"GetAdvanceQueryFiltersPMs{tenant}IsPredefined", a => (a.Tenant == tenant || a.Tenant == 0) && a.IsPredefined == true, "ObjectField,Query,Query.ObjectTable", a => new AdvancedQueryFilterPM(a)
             {
                 DisplayInList = a.ObjectField.DisplayInList,
@@ -37,10 +37,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             return advanceQueryFilters;
         }
 
-        [HttpGet("GetTenantLanguageTranslations/{tenant?}")]
-        public ActionResult<List<Translation>> GetTenantLanguageTranslations(int tenant)
+        [HttpGet("GetTenantLanguageTranslations")]
+        public ActionResult<List<Translation>> GetTenantLanguageTranslations()
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             List<Translation> AllTranslations = new List<Translation>();
             TenantPM tenantPM = new TenantQueryService(tenant).GetSingle(tenant, false, true);
             if (tenantPM != null && !string.IsNullOrEmpty(tenantPM.Language) && tenantPM.Language.ToLower() != "en" && tenantPM.Language != "english")
@@ -51,19 +51,19 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             return AllTranslations;
         }
 
-        [HttpGet("GetTranslations/{translationTenant?}")]
-        public ActionResult<List<Translation>> GetTranslations(int translationTenant)
+        [HttpGet("GetTranslations")]
+        public ActionResult<List<Translation>> GetTranslations()
         {
-            translationTenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int translationTenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var url = AmitalCloudSecurityUtility.getLoggedDomain();
             List<Translation> AllTranslations = new TranslationQuery(translationTenant).GetTenantTranslations(url);
             return AllTranslations;
         }
 
-        [HttpGet("GetTenantObjectFields/{loggedTenant?}")]
-        public ActionResult<List<ObjectFieldPM>>? GetTenantObjectFields(int loggedTenant)
+        [HttpGet("GetTenantObjectFields")]
+        public ActionResult<List<ObjectFieldPM>>? GetTenantObjectFields()
         {
-            loggedTenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int loggedTenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             if (loggedTenant == 0)
             {
                 return null;
@@ -82,9 +82,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         }
 
         [HttpGet("GetTenantTextCodes")]
-        public ActionResult<List<TextCodePM>> GetTenantTextCodes(int tenant)
+        public ActionResult<List<TextCodePM>> GetTenantTextCodes()
         {
-            var textCodes = new TextCodeQueryService(tenant).GetMultiFromCache($"textCode{tenant}", a => a.Tenant == tenant, "ObjectTable,SpellCheckedByUser.Contact", a => new TextCodePM(a)
+			int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+
+			var textCodes = new TextCodeQueryService(tenant).GetMultiFromCache($"textCode{tenant}", a => a.Tenant == tenant, "ObjectTable,SpellCheckedByUser.Contact", a => new TextCodePM(a)
             {
                 ObjectTableName = a.ObjectTable.Name,
                 SpellCheckedByUserName = a.SpellCheckedByUser == null ? null : a.SpellCheckedByUser.Contact.EnglishName,
@@ -92,10 +94,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             return textCodes;
         }
 
-        [HttpGet("GetLoggedUserPM/{tenant?}/{useremail?}/{getloggeduser?}")]
-        public ActionResult<UserPM?>? GetLoggedUserPM(int tenant, [FromQuery] string useremail, bool getloggeduser)
+        [HttpGet("GetLoggedUserPM/{useremail?}/{getloggeduser?}")]
+        public ActionResult<UserPM?>? GetLoggedUserPM([FromQuery] string useremail, bool getloggeduser)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             ContactPM contact = _loggedContactResolver.GetLoggedContact(tenant);
             if (contact == null)
             {
@@ -110,42 +112,42 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         }
 
         [HttpGet("GetAllScreenFieldsByTenant")]
-        public ActionResult<List<ScreenFieldPM>> GetAllScreenFieldsByTenant(int tenant, string screenfields)
+        public ActionResult<List<ScreenFieldPM>> GetAllScreenFieldsByTenant(string screenfields)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var screenFields = new ScreenFieldQuery(tenant).GetScreenFieldPMsByTenant();
             return screenFields;
         }
 
         [HttpGet("GetAllScreensByTenant")]
-        public ActionResult<List<ScreenPM>> GetAllScreensByTenant(int tenant, string screens)
+        public ActionResult<List<ScreenPM>> GetAllScreensByTenant(string screens)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var allScreens = new ScreenQuery(tenant).GetScreenPMsByTenant();
             return allScreens;
         }
 
         [HttpGet("GetAllObjectTableTabsByTenant")]
-        public ActionResult<List<ObjectTableTabPM>> GetAllObjectTableTabsByTenant(int tenant, [FromQuery] string objecttabletabs)
+        public ActionResult<List<ObjectTableTabPM>> GetAllObjectTableTabsByTenant([FromQuery] string objecttabletabs)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var objectTableTabs = new ObjectTableTabQuery(tenant).GetObjectTableTabPMsByTenant();
             return objectTableTabs;
         }
 
         [HttpGet("GetAllObjectTables")]
-        public ActionResult<List<ObjectTablePM>> GetAllObjectTables(int tenant, [FromQuery] string objecttables)
+        public ActionResult<List<ObjectTablePM>> GetAllObjectTables([FromQuery] string objecttables)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             ObjectTableQuery query = new ObjectTableQuery(tenant);
             var objectTables = query.GetObjectPMsByTenant(tenant).ToList();
             return objectTables;
         }
 
         [HttpGet("GetAllMenusTablesByTenant"), HttpGet("menustables")]
-        public ActionResult<List<MenusTablePM>> GetAllMenusTablesByTenant(int tenant, [FromQuery] string menustables)
+        public ActionResult<List<MenusTablePM>> GetAllMenusTablesByTenant([FromQuery] string menustables)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var menuTables = new MenusTableQueryService(tenant).GetMultiFromCache($"GetAllMenusTablesByTenant{tenant}", a => a.Tenant == tenant || a.Tenant == 0, "ObjectTable,Feature", a => new MenusTablePM(a)
             {
                 ObjectTableName = a.ObjectTable.Name,
@@ -154,12 +156,12 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             return menuTables;
         }
 
-        [HttpGet("GetAllStatusesByTenant"), HttpGet("getallstatuses/{tenant?}/{inActive?}/{dumb2?}")]
-        public IActionResult GetAllStatusesByTenant(int tenant, bool inActive, [FromQuery] string dumb2)
+        [HttpGet("GetAllStatusesByTenant"), HttpGet("getallstatuses/{inActive?}/{dumb2?}")]
+        public IActionResult GetAllStatusesByTenant(bool inActive, [FromQuery] string dumb2)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var statuses = new EntityStatusQueryService(tenant).GetMultiFromCache($"entityStatus{tenant}-{inActive}", a => a.Tenant == tenant && a.InActive == inActive, "ObjectTable", a => new EntityStatusPM(a)
                 {
                     ObjectTableName = a.ObjectTable.Name,
@@ -172,34 +174,34 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
         }
 
-        [HttpGet("GetAllDirections/{tenant?}/{dummy2?}")]
-        public ActionResult<List<DirectionPM>> GetAllDirections(int tenant, [FromQuery] string dummy2)
+        [HttpGet("GetAllDirections/{dummy2?}")]
+        public ActionResult<List<DirectionPM>> GetAllDirections([FromQuery] string dummy2)
         {
             var directions = new DirectionQueryService(AmitalCloudSecurityUtility.AuthenticateTenant()).GetMulti(a => true).ToList();
             return directions;
         }
 
-        [HttpGet("GetAllTransportModes/{tenant?}/{dummy?}")]
-        public ActionResult<List<TransportModePM>> GetAllTransportModes(int tenant, [FromQuery] string dummy)
+        [HttpGet("GetAllTransportModes/{dummy?}")]
+        public ActionResult<List<TransportModePM>> GetAllTransportModes([FromQuery] string dummy)
         {
             var transportModes = new TransportModeQueryService(AmitalCloudSecurityUtility.AuthenticateTenant()).GetMulti(a => true).ToList();
             return transportModes;
         }
 
-        [HttpGet("GetAccountingSettingPM"), HttpGet("accountingsettingpm/{id}")]
-        public ActionResult<AccountingSettingPM?> GetAccountingSettingPM(int id)
+        [HttpGet("GetAccountingSettingPM"), HttpGet("accountingsettingpm")]
+        public ActionResult<AccountingSettingPM?> GetAccountingSettingPM()
         {
-            id = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int id = AmitalCloudSecurityUtility.AuthenticateTenant();
             return new AccountingSettingQueryService(id).GetMulti(a => a.Id == id, a => new AccountingSettingPM(a)
             {
                 TransferFTPDetailHost = a.TransferFTPDetail == null ? null : a.TransferFTPDetail.Host,
             }, "TransferFTPDetail").FirstOrDefault();
         }
 
-        [HttpGet("GetCustomsInterfaceSettingPM"), HttpGet("customsinterfacesettingpm/{InterfaceId}")]
-        public ActionResult<CustomsInterfaceSettingPM?> GetCustomsInterfaceSettingPM(int InterfaceId)
+        [HttpGet("GetCustomsInterfaceSettingPM"), HttpGet("customsinterfacesettingpm")]
+        public ActionResult<CustomsInterfaceSettingPM?> GetCustomsInterfaceSettingPM()
         {
-            InterfaceId = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int InterfaceId = AmitalCloudSecurityUtility.AuthenticateTenant();
             return new CustomsInterfaceSettingQueryService(InterfaceId).GetMulti(a => a.Tenant == InterfaceId, a => new CustomsInterfaceSettingPM(a)
             {
                 ArtemusOutSettingsHost = a.ArtemusOutSettings == null ? null : a.ArtemusOutSettings.Host,
@@ -208,26 +210,26 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }, "ArtemusOutSettings,ArtemusInSettings,LocalCustomsInterface").FirstOrDefault();
         }
 
-        [HttpGet("GetSharedLogisticsSettingM"), HttpGet("shaerdlogisticssettingpm/{settingId}")]
-        public ActionResult<SharedLogisticsSettingPM> GetSharedLogisticsSettingM(int settingId)
+        [HttpGet("GetSharedLogisticsSettingM"), HttpGet("shaerdlogisticssettingpm")]
+        public ActionResult<SharedLogisticsSettingPM> GetSharedLogisticsSettingM()
         {
-            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
-            var sharedLogisticsSetting = new SharedLogisticsSettingQueryService(tenant).GetSingle(settingId.ToString(), false, true);
+            int settingId = AmitalCloudSecurityUtility.AuthenticateTenant();
+            var sharedLogisticsSetting = new SharedLogisticsSettingQueryService(settingId).GetSingle(settingId.ToString(), false, true);
             return sharedLogisticsSetting;
         }
-
-        [HttpGet("GetAllSpecialServicesTypesByTenant"), HttpGet("getallmenubuttonssbyobjecttable/{tenant}/{objecttableid}/{menubuttons}")]
-        public ActionResult<List<MenuButtonPM>> GetAllSpecialServicesTypesByTenant(int tenant, string objecttableid, bool menubuttons)
+        //ךא בשימוש באנגולר
+        [HttpGet("GetAllSpecialServicesTypesByTenant"), HttpGet("getallmenubuttonssbyobjecttable/{objecttableid}/{menubuttons}")]
+        public ActionResult<List<MenuButtonPM>> GetAllSpecialServicesTypesByTenant(string objecttableid, bool menubuttons)
         {
-            tenant =  AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
             var service = new MenuButtonQueryService(tenant);
             return service.GetMulti(a => a.MenuButtonGroupId == objecttableid);
         }
 
-        [HttpGet("GetQueryPMs/{tenant?}/{userid?}/{objecttableid?}")]
-        public ActionResult<List<QueryPM>> GetQueryPMs(int tenant, [FromQuery] string UserId, [FromQuery] string objecttableid)
+        [HttpGet("GetQueryPMs/{userid?}/{objecttableid?}")]
+        public ActionResult<List<QueryPM>> GetQueryPMs( [FromQuery] string UserId, [FromQuery] string objecttableid)
         {
-            tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+            int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
 
             QueryQueryService queryQueryService = new QueryQueryService(tenant);
             List<QueryPM> queries = queryQueryService.GetMultiFromCache($"GetQueryPMs{tenant}-{UserId}", a => (a.Tenant == tenant && (a.UserId == UserId || a.UserId == null)) || a.Tenant == 0 || a.SharedWithAll || a.SharedWithSpecificUsers, "ObjectTable,QueryGroup,NameTextCode", a => new QueryPM(a) 

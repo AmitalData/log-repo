@@ -12,11 +12,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class UserLastLoginsController : ControllerBase
     {
         [HttpGet("GetUserLastLogin")]
-        public IActionResult GetUserLastLogin(string userId, int tenant)
+        public IActionResult GetUserLastLogin(string userId)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var user = new UserLastLoginQueryService(tenant).GetMulti(a => a.Tenant == tenant && a.Id == userId).FirstOrDefault();
                 return Ok(user);
             }

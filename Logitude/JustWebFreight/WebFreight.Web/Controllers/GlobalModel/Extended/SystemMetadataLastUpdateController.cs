@@ -21,7 +21,7 @@ namespace WebFreight.Web.Controllers.GlobalModel
 {
     public class SystemMetadataLastUpdateController : ApiController
     {
-        public HttpResponseMessage GetSystemMetadataLastUpdates(int tenant)
+        public HttpResponseMessage GetSystemMetadataLastUpdates()
         {
             try
             {
@@ -29,8 +29,7 @@ namespace WebFreight.Web.Controllers.GlobalModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-
+                int tenant = authToken.Tenant;
 
                 var metadatalastUpdates = GetSystemMetadataLastUpdatesCacheHandle(authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, metadatalastUpdates);

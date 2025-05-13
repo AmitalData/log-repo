@@ -293,7 +293,7 @@ export class CachedDataManager {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return defer(() => {
-            return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/SystemMetadataLastUpdate/GetSystemMetadataLastUpdates/?' + 'tenant=' + 0, ServiceHelper.GetHttpHeaders()).pipe(flatMap(response => {
+            return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/SystemMetadataLastUpdate/GetSystemMetadataLastUpdates', ServiceHelper.GetHttpHeaders()).pipe(flatMap(response => {
                 return Observable.create(observer => {
 
                     var list = response;
@@ -371,7 +371,7 @@ export class CachedDataManager {
             var storedDate = LocalStorageManager.GetItem(cacheKey);
             if (storedDate) {
 
-                return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/ObjectTableLastUpdate/GetLastUpdatedTables/?' + 'tenant=' + SessionInfo.LoggedUserTenant + '&sinceDate=' + JSON.parse(storedDate) + '&clientEmail=' + SessionInfo.LoggedUserEmail, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                return ServiceHelper.HttpClient.get(ServiceHelper.GetLogitudeURL() + 'api/ObjectTableLastUpdate/GetLastUpdatedTables/?sinceDate=' + JSON.parse(storedDate) + '&clientEmail=' + SessionInfo.LoggedUserEmail, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var list = response;
                     //CachedDataManager.needTobeUpdatedTablesList = CachedDataManager.MapJsonToEntityList<ObjectTableLastUpdatePM>(list, ObjectTableLastUpdatePM);
                     //for (var key in cachedJson) {

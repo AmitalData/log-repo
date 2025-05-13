@@ -101,33 +101,43 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return tenantPM;
         }
 
-        public List<ScreenFieldPM> GetAllScreenFieldsByTenant(int tenant, string screenfields)
+        public List<ScreenFieldPM> GetAllScreenFieldsByTenant(string screenfields)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
 
-            ScreenFieldsRepository repository = new ScreenFieldsRepository(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
+
+			ScreenFieldsRepository repository = new ScreenFieldsRepository(tenant);
             ScreenFieldsQuery query = new ScreenFieldsQuery(repository);
             var screenfieldsList = query.GetScreenFieldPMsByTenant(tenant);
 
             return screenfieldsList;
         }
 
-        public List<ScreenPM> GetAllScreensByTenant(int tenant, string screens)
+        public List<ScreenPM> GetAllScreensByTenant(string screens)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
 
-            ScreensRepository repository = new ScreensRepository(tenant);
+			ScreensRepository repository = new ScreensRepository(tenant);
             ScreensQuery query = new ScreensQuery(repository);
             var screensList = query.GetScreenPMsByTenant(tenant);
 
             return screensList;
         }
 
-        public List<ObjectTableTabPM> GetAllObjectTableTabsByTenant(int tenant, string objecttabletabs)
+        public List<ObjectTableTabPM> GetAllObjectTableTabsByTenant(string objecttabletabs)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
 
-            ObjectTableTabRepository repository = new ObjectTableTabRepository(tenant);
+			ObjectTableTabRepository repository = new ObjectTableTabRepository(tenant);
             ObjectTableTabQuery query = new ObjectTableTabQuery(repository);
             var objectTableTabs = query.GetObjectTableTabPMsByTenant(tenant).ToList();
 
@@ -136,11 +146,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
 
-        public List<ObjectTablePM> GetAllObjectTables(int tenant, string objecttables)
+        public List<ObjectTablePM> GetAllObjectTables(string objecttables)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
 
-            ObjectTableRepository repository = new ObjectTableRepository(tenant);
+			ObjectTableRepository repository = new ObjectTableRepository(tenant);
             ObjectTableQuery query = new ObjectTableQuery(repository);
             var objectTables = query.GetObjectPMsByTenant(tenant).ToList();
 
@@ -153,11 +166,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             ResponseFormat = WebMessageFormat.Json,
             Method = "GET"
         )]
-        public List<MenusTablePM> GetAllMenusTablesByTenant(int tenant, string menustables)
+        public List<MenusTablePM> GetAllMenusTablesByTenant(string menustables)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
 
-            MenusTableRepository menuRepository = new MenusTableRepository(tenant);
+			MenusTableRepository menuRepository = new MenusTableRepository(tenant);
             MenusTableQuery menuQuery = new MenusTableQuery(menuRepository);
             var menus = menuQuery.GetMenusTablePMsByTenant(tenant).ToList();
             //menus = menus.Where(x => x.MenuTypeCode == "Main").ToList();
@@ -181,11 +197,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
 
-        public List<TextCodePM> GetTenantTextCodes(int tenant)
+        public List<TextCodePM> GetTenantTextCodes()
         {
-             string token = HttpContext.Current.Request.Headers["Token"];
-            
-            GeneralDomainService service = new GeneralDomainService();
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
+
+			GeneralDomainService service = new GeneralDomainService();
             var textCodeList = service.GetTextCodesByTenant(tenant).ToList();
            
             return textCodeList;
@@ -242,30 +261,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getallstatuses/{tenant}/{inActive}/{dumb2}")]
-        public HttpResponseMessage GetAllStatusesByTenant(int tenant, bool inActive, string dumb2)
+        [WebGet(UriTemplate = "getallstatuses/{inActive}/{dumb2}")]
+        public HttpResponseMessage GetAllStatusesByTenant(bool inActive, string dumb2)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            //EntityStatusRepository statusRepository = new EntityStatusRepository(tenant);
-            //List<EntityStatusPM> statuses = (from a in statusRepository.context.EntityStatus
-            //                                 where a.Tenant == tenant
-            //                                 && a.InActive == inActive
-            //                                 select new EntityStatusPM()
-            //                                 {
-            //                                     Id = a.Id,
-            //                                     Name = a.Name,
-            //                                     Code = a.Code,
-            //                                     Tenant = a.Tenant,
-            //                                     InActive = a.InActive,
-            //                                     ObjectTableId = a.ObjectTableId,
-            //                                     ObjectTableName = a.ObjectTable.Name,
-            //                                     StatusWeight = a.StatusWeight
-            //                                 }).ToList();
-            //return statuses;
-            try
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
+           
+			try
             {
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("EmployeeGroup", "READ", tenant);
                 EntityStatusRepository statusRepository = new EntityStatusRepository(tenant);
                 List<EntityStatusPM> statuses = (from a in statusRepository.context.EntityStatus
                                                  where a.Tenant == tenant
@@ -290,10 +295,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getalltransportmodes/{tenant}/{dummy}")]
-        public List<TransportModePM> GetAllTransportModes(int tenant, string dummy)
+        [WebGet(UriTemplate = "getalltransportmodes/{dummy}")]
+        public List<TransportModePM> GetAllTransportModes(string dummy)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
+            
             TransportModeRepository transportRepository = new TransportModeRepository(tenant);
             List<TransportModePM> transportModes = (from a in transportRepository.context.TransportModes
                                                         //where a.Id == "I"
@@ -306,10 +315,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getalldirections/{tenant}/{dummy2}")]
-        public List<DirectionPM> GetAllDirections(int tenant, string dummy2)
+        [WebGet(UriTemplate = "getalldirections/{dummy2}")]
+        public List<DirectionPM> GetAllDirections(string dummy2)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
+
             DirectionRepository directionRepository = new DirectionRepository(tenant);
             List<DirectionPM> directions = (from a in directionRepository.context.Directions
                                                 //where a.Id == "E"
@@ -342,10 +355,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "GetTenantObjectFields/{loggedTenant}")]
-        public List<ObjectFieldPM> GetTenantObjectFields(int loggedTenant)
+        [WebGet(UriTemplate = "GetTenantObjectFields")]
+        public List<ObjectFieldPM> GetTenantObjectFields()
         {
-            if (loggedTenant != 0)
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int loggedTenant = authToken.Tenant;
+
+			if (loggedTenant != 0)
             {
                 ObjectFieldRepository repository = new ObjectFieldRepository(loggedTenant);
                 ObjectTableRepository tableRepository = new ObjectTableRepository(loggedTenant);
@@ -529,10 +547,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getallmenubuttonssbyobjecttable/{tenant}/{objecttableid}/{menubuttons}")]
-        public List<MenuButtonPM> GetAllSpecialServicesTypesByTenant(int tenant, string objecttableid, bool menubuttons)
+        [WebGet(UriTemplate = "getallmenubuttonssbyobjecttable/{objecttableid}/{menubuttons}")]
+        public List<MenuButtonPM> GetAllSpecialServicesTypesByTenant(string objecttableid, bool menubuttons)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant; 
+            
             MenuButtonRepository menubuttonsRepository = new MenuButtonRepository(tenant);
             MenuButtonQuery query = new MenuButtonQuery(menubuttonsRepository);
             //var buttons = query.GetSpecialServicesTypePMsByTenant(tenant).ToList();
@@ -561,11 +583,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getloggeduserpm/{tenant}/{useremail}/{getloggeduser}")]
-        public UserPM GetLoggedUserPM(int tenant, string useremail, bool getloggeduser)
+        [WebGet(UriTemplate = "getloggeduserpm/{useremail}/{getloggeduser}")]
+        public UserPM GetLoggedUserPM(string useremail, bool getloggeduser)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
-            // GetGlobalContactByEmailAndTenant2
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
+
             var objectContext = GlobalContext.GetContext();
             GlobalContactRepository globalContactsRepository = new GlobalContactRepository(objectContext);
 
@@ -628,10 +653,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getquerypms/{tenant}/{userid}/{objecttableid}")]
-        public List<QueryPM> GetQueryPMs(int tenant, string UserId, string objecttableid)
+        [WebGet(UriTemplate = "getquerypms/{userid}/{objecttableid}")]
+        public List<QueryPM> GetQueryPMs(string UserId, string objecttableid)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant; 
+            
             QueryRepository queryRepository = new QueryRepository(tenant);
             QueryQuery queryQuery = new QueryQuery(queryRepository);
             var queryFirst = queryQuery.GetQueries_Login(tenant, UserId)
@@ -690,11 +719,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getadvancequeryfilterspms/{tenant}")]
-        public List<AdvancedQueryFilterPM> GetAdvanceQueryFiltersPMs(int tenant)
+        [WebGet(UriTemplate = "getadvancequeryfilterspms")]
+        public List<AdvancedQueryFilterPM> GetAdvanceQueryFiltersPMs()
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
-            AdvancedQueryFilterRepository advancedQueryFilterRepository = new AdvancedQueryFilterRepository(tenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
+
+			AdvancedQueryFilterRepository advancedQueryFilterRepository = new AdvancedQueryFilterRepository(tenant);
             AdvancedQueryFilterQuery advancedQueryFilterQuery = new AdvancedQueryFilterQuery(advancedQueryFilterRepository);
             var Filters = advancedQueryFilterQuery.GetPredefinedQueryFilters(tenant);
 
@@ -703,10 +736,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "gettranslations/{translationTenant}")]
-        public List<Translation> GetTranslations(int translationTenant)
+        [WebGet(UriTemplate = "gettranslations")]
+        public List<Translation> GetTranslations()
         {
-            TextCodeRepository txtCodeRep = new TextCodeRepository(translationTenant);
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int translationTenant = authToken.Tenant;
+
+			TextCodeRepository txtCodeRep = new TextCodeRepository(translationTenant);
             TranslationRepository translationRep = new TranslationRepository(translationTenant);
 
             List<Translation> AllTranslations = translationRep.GetTranslationsByTenantList(translationTenant);
@@ -774,11 +812,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
         [OperationContract]
-        [WebGet(UriTemplate = "GetTenantLanguageTranslations/{tenant}")]
-        public List<Translation> GetTenantLanguageTranslations(int tenant)
+        [WebGet(UriTemplate = "GetTenantLanguageTranslations")]
+        public List<Translation> GetTenantLanguageTranslations()
         {
+			string token = HttpContext.Current.Request.Headers["Token"];
+			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+			SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+			int tenant = authToken.Tenant;
 
-            List<Translation> AllTranslations = new List<Translation>();
+			List<Translation> AllTranslations = new List<Translation>();
             TextCodeRepository txtCodeRep = new TextCodeRepository(tenant);
             TranslationRepository translationRep = new TranslationRepository(tenant);
             TenantRepository tenantRep = new TenantRepository(tenant);
@@ -848,13 +890,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "accountingsettingpm/{id}")]
-        public AccountingSettingPM GetAccountingSettingPM(int id)
+        [WebGet(UriTemplate = "accountingsettingpm")]
+        public AccountingSettingPM GetAccountingSettingPM()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             if (authToken != null)
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            int id = authToken.Tenant;
 
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(id);
             AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(accountingSettingRepository);
@@ -863,30 +906,32 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "customsinterfacesettingpm/{InterfaceId}")]
-        public CustomsInterfaceSettingPM GetCustomsInterfaceSettingPM(int InterfaceId)
+        [WebGet(UriTemplate = "customsinterfacesettingpm")]
+        public CustomsInterfaceSettingPM GetCustomsInterfaceSettingPM()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             if (authToken != null)
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            int InterfaceId = authToken.Tenant;
 
-            CustomsInterfaceSettingRepository repository = new CustomsInterfaceSettingRepository(InterfaceId);
+			CustomsInterfaceSettingRepository repository = new CustomsInterfaceSettingRepository(InterfaceId);
             CustomsInterfaceSettingQuery query = new CustomsInterfaceSettingQuery(repository);
             var setting = query.GetSinglePM(InterfaceId, 0);
             return setting;
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "shaerdlogisticssettingpm/{settingId}")]
-        public SharedLogisticsSettingPM GetSharedLogisticsSettingM(int settingId)
+        [WebGet(UriTemplate = "shaerdlogisticssettingpm")]
+        public SharedLogisticsSettingPM GetSharedLogisticsSettingM()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             if (authToken != null)
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            int settingId = authToken.Tenant;
 
-            SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
+			SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
             SharedLogisticsSettingPM setting = query.GetSingle(settingId.ToString(), false, false);
             return setting;
         }

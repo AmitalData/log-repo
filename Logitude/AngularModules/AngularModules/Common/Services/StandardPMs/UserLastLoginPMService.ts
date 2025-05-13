@@ -18,8 +18,8 @@ export class UserLastLoginPMService {
     }
 
 
-    GetUserLastLogin(userId: string, tenant: number) {
-        var url = this._apiUrl + '/GetUserLastLogin?userId=' + userId + '&tenant=' + tenant;
+    GetUserLastLogin(userId: string) {
+        var url = this._apiUrl + '/GetUserLastLogin?userId=' + userId;
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 

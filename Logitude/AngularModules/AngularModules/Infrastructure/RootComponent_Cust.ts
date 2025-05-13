@@ -261,7 +261,7 @@ export class RootComponent_Cust implements AfterViewInit {
     }
     this._FinishLogin = true;
     var termsofUseService = new TermsofUseService();
-    termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.Tenant, SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
+    termsofUseService.GetCheckIfGoToTermUseComponent(SessionLocator.LoggedUserId).subscribe((res: ServiceResponse) => {
       var pmResponse: ServiceResponse = res;
       if (!pmResponse.HasError) {
         var myResult: TermsofUseArgs = pmResponse.Result;

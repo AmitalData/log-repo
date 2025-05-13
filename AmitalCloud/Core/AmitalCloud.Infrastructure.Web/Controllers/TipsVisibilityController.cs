@@ -11,11 +11,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class TipsVisibilityController : ControllerBase
     {
         [HttpGet("GetTipsVisibilities")]
-        public IActionResult GetTipsVisibilities(int tenant, string userId)
+        public IActionResult GetTipsVisibilities(string userId)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var tipsVisibilityLists = new TipsVisibilityQuery(tenant).GetTipsVisibilities(tenant, userId);
                 return Ok(tipsVisibilityLists);
             }

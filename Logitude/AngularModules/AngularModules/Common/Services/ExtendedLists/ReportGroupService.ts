@@ -20,11 +20,11 @@ export class ReportGroupService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportGroup';
     }
 
-    getReportGroupLists(tenant: number) {
+     getReportGroupLists() {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '?tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
 
             var pmresponse: ServiceResponse;

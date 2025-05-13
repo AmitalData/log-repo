@@ -10,11 +10,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class ObjectTableRulesController : ControllerBase
     {
         [HttpGet("GetObjectTableRulePMsByTenant")]
-        public IActionResult GetObjectTableRulePMsByTenant(int tenant)
+        public IActionResult GetObjectTableRulePMsByTenant()
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var result = new ObjectTableRuleQuery(tenant).GetObjectTableRulePMsByTenant();
                 return Ok(result);
             }

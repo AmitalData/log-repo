@@ -10,12 +10,12 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class ReportGroupController : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetReportGroupLists(int tenant)
+        public IActionResult GetReportGroupLists()
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
-                var list = new ReportGroupListQueryService(tenant).GetList(tenant);
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                var list = new ReportGroupListQueryService(0).GetList(0);
                 return Ok(list);
 
             }

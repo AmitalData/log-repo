@@ -100,7 +100,7 @@ export class LoginService {
     }
 
     GetLoggedUser() {
-        var url = this.baseMetaUrlApi + '/GetLoggedUserPM?tenant=' + this.CurrentTenant + '&useremail=' + this.LoggedUserEmail + '&getloggeduser=true';
+        var url = this.baseMetaUrlApi + '/GetLoggedUserPM?useremail=' + this.LoggedUserEmail + '&getloggeduser=true';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var result = response;
@@ -144,7 +144,7 @@ export class LoginService {
 
     GetQueries() {
 
-        var url = this.baseMetaUrlApi + "/GetQueryPMs?tenant=" + this.CurrentTenant + "&userid=" + this.LoggedUserId + "&objecttableid=dummy";
+        var url = this.baseMetaUrlApi + "/GetQueryPMs?userid=" + this.LoggedUserId + "&objecttableid=dummy";
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -153,7 +153,7 @@ export class LoginService {
 
     GetStatuses() {
 
-        var url = this.baseMetaUrlApi + "/GetAllStatusesByTenant?tenant=" + this.CurrentTenant + "&inActive=false&dumb2=dumb";
+        var url = this.baseMetaUrlApi + "/GetAllStatusesByTenant?inActive=false&dumb2=dumb";
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -161,7 +161,7 @@ export class LoginService {
     }
 
     GetPreDefinedFilters() {
-        var url = this.baseMetaUrlApi + "/GetAdvanceQueryFiltersPMs?tenant=" + this.CurrentTenant;
+        var url = this.baseMetaUrlApi + "/GetAdvanceQueryFiltersPMs";
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -169,7 +169,7 @@ export class LoginService {
     }
 
     GetTenantTranslations() {
-        var url = this.baseMetaUrlApi + "/GetTranslations?translationTenant=" + this.CurrentTenant;
+        var url = this.baseMetaUrlApi + "/GetTranslations";
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -177,7 +177,7 @@ export class LoginService {
     }
 
     GetTenantLanguageTranslations() {
-        var url = this.baseMetaUrlApi + "/GetTenantLanguageTranslations?tenant=" + this.CurrentTenant;
+        var url = this.baseMetaUrlApi + "/GetTenantLanguageTranslations";
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -185,7 +185,7 @@ export class LoginService {
     }
 
     GetTransportModes() {
-        var url = this.baseMetaUrlApi + '/GetAllTransportModes?tenant=' + this.CurrentTenant + '&dummy=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllTransportModes?dummy=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -193,7 +193,7 @@ export class LoginService {
     }
 
     GetDirections() {
-        var url = this.baseMetaUrlApi + '/GetAllDirections?tenant=' + this.CurrentTenant + '&dummy2=dummy2';
+        var url = this.baseMetaUrlApi + '/GetAllDirections?dummy2=dummy2';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -201,7 +201,7 @@ export class LoginService {
     }
 
     GetMenusTables() {
-        var url = this.baseMetaUrlApi + '/GetAllMenusTablesByTenant?tenant=' + this.CurrentTenant + '&menustables=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllMenusTablesByTenant?menustables=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -209,7 +209,7 @@ export class LoginService {
     }
 
     GetObjectTables() {
-        var url = this.baseMetaUrlApi + '/GetAllObjectTables?tenant=' + this.CurrentTenant + '&objecttables=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllObjectTables?objecttables=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -217,7 +217,7 @@ export class LoginService {
     }
 
     GetScreens() {
-        var url = this.baseMetaUrlApi + '/GetAllScreensByTenant?tenant=' + this.CurrentTenant + '&screens=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllScreensByTenant?screens=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -225,7 +225,7 @@ export class LoginService {
     }
 
     GetScreenFields() {
-        var url = this.baseMetaUrlApi + '/GetAllScreenFieldsByTenant?tenant=' + this.CurrentTenant + '&screenfields=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllScreenFieldsByTenant?screenfields=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -233,7 +233,7 @@ export class LoginService {
     }
 
     GetObjectTableTabs() {
-        var url = this.baseMetaUrlApi + '/GetAllObjectTableTabsByTenant?tenant=' + this.CurrentTenant + '&objecttabletabs=dummy';
+        var url = this.baseMetaUrlApi + '/GetAllObjectTableTabsByTenant?objecttabletabs=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -249,7 +249,7 @@ export class LoginService {
     }
 
     GeLoggedTenantObjectFields() {
-        var url = this.baseMetaUrlApi + '/GetTenantObjectFields?loggedTenant=' + this.CurrentTenant;
+        var url = this.baseMetaUrlApi + '/GetTenantObjectFields';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -265,7 +265,7 @@ export class LoginService {
     }
 
     GetAccountingSetting() {
-        var url = this.baseMetaUrlApi + '/GetAccountingSettingPM?id=' + this.CurrentTenant + '&textcodetranslations=dummy';
+        var url = this.baseMetaUrlApi + '/GetAccountingSettingPM?textcodetranslations=dummy';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -273,14 +273,14 @@ export class LoginService {
     }   
 
     GetCustomsInterfaceSetting() {
-        var url = this.baseMetaUrlApi + '/GetCustomsInterfaceSettingPM?InterfaceId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
+        var url = this.baseMetaUrlApi + '/GetCustomsInterfaceSettingPM?textcodetranslations=dummy';;
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
     }
 
     GetSharedLogisticsSetting() {
-        var url = this.baseMetaUrlApi + '/GetSharedLogisticsSettingM?settingId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
+        var url = this.baseMetaUrlApi + '/GetSharedLogisticsSettingM?textcodetranslations=dummy';;
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
@@ -295,7 +295,7 @@ export class LoginService {
     }
 
     GetTenantTextCode() {
-        var url = this.baseMetaUrlApi + '/GetTenantTextCodes?tenant=' + this.CurrentTenant;
+        var url = this.baseMetaUrlApi + '/GetTenantTextCodes';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -327,7 +327,7 @@ export class LoginService {
     }
 
     GetTips() {
-        var url = this.logitudeURL + 'api/Tips/GetTipsPMs?tenant=' + this.CurrentTenant;
+        var url = this.logitudeURL + 'api/Tips/GetTipsPMs';
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
@@ -335,7 +335,7 @@ export class LoginService {
     }
 
     GetTipsVisibilities() {
-        var url = this.logitudeURL + 'api/TipsVisibility/GetTipsVisibilities?tenant=' + this.CurrentTenant + "&userid=" + this.LoggedUserId;
+        var url = this.logitudeURL + 'api/TipsVisibility/GetTipsVisibilities?userid=' + this.LoggedUserId;
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
