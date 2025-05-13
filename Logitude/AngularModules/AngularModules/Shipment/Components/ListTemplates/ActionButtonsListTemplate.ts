@@ -9,13 +9,13 @@ import {DocumentsFilingExtendedPMService} from '../../../Common/Services/Extende
 
 @Component({
 
-    template: `<table *ngIf="ShowButtons == true">
+    template: `<table>
                 <tr style="height:1px;"> 
                     <td>
                         <div style="height:30px;">
                             <button class="RedButton" (click)="CancelButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Cancel</button>
-                            <button *ngIf="!IsPrivateLabel || IsDSV" class="Button" (click)="ConnectButtonClicked()" [style.width.px]="Width" style="float: right;margin:4px;">{{ConnectBtn}}</button>
-                            <button *ngIf="ShowEditButton" class="Button" (click)="EditButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Edit</button>
+                            <button *ngIf="ShowButtons == true && (!IsPrivateLabel || IsDSV)" class="Button" (click)="ConnectButtonClicked()" [style.width.px]="Width" style="float: right;margin:4px;">{{ConnectBtn}}</button>
+                            <button *ngIf="ShowButtons == true && ShowEditButton" class="Button" (click)="EditButtonClicked()" [style.width.px]="Width1" style="float: right;margin:4px;">Edit</button>
                         </div>
                     </td>
                 </tr>
