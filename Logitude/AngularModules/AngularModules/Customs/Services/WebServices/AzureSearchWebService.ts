@@ -9,11 +9,10 @@ import { Observable } from "rxjs";
 @Injectable()
 
 export class AzureSearchWebService {
-    private _http: HttpClient = ServiceHelper.HttpClient;
     private readonly _apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/AzureSearch';
     private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
     
-    constructor() {}
+    constructor(private _http: HttpClient) {}
 
     async fastSearch(filters: ApiQueryFilters, searchText: string, index: string): Promise<FastSearchResult[]> {
         return this._http.get(
