@@ -58,9 +58,9 @@ export class ProcessMenuService {
             map(response => {
                 let serviceResponse :any= response;
                 if(!serviceResponse.HasError){
-                    this.relatedProcess = this.relatedProcess
+                 this.relatedProcess = this.relatedProcess
                     ?.filter(item => item.Id !== reportId)
-                    ?.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime());
+                     ?.sort((a, b) => new Date(b.CreateDate).getTime() - new Date(a.CreateDate).getTime());
                 this.relatedProcessSubject.next(this.relatedProcess);
                 this.processCount.next(this.relatedProcess.filter(item => item.StatusCode === 'D').length);
 
@@ -99,7 +99,7 @@ export class ProcessMenuService {
     
     public CheckStatus() {
 
-        const itemIds = this.relatedProcess?.filter(item => item.StatusCode === 'P' || item.StatusCode === 'W' || item.StatusCode === 'C')?.map(item => item.Id).join(',');
+        const itemIds = this.relatedProcess?.filter(item => item.StatusCode === 'P' || item.StatusCode === 'W' || item.StatusCode === 'C'|| item.StatusCode === 'I')?.map(item => item.Id).join(',');
         this.CheckProcessesStatus(itemIds).subscribe(statusResponse => {
             if (statusResponse && !statusResponse.HasError) {
                 statusResponse?.Result?.forEach((status: any) => {
