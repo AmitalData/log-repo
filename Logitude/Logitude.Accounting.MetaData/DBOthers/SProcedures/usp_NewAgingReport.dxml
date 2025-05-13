@@ -216,7 +216,7 @@ INNER JOIN
     JOIN ARPaymentCheques arpch 
         ON j.AccountingEntityId = arpch.PaymentId
     WHERE 
-	  j.Tenant = 74 and
+	  j.Tenant = @Tenant  and
 	  j.AccountingEntityCode = '3'
       AND jl.ActionCode = '1'
       AND j.IsLedgerCreated = 1
