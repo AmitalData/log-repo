@@ -66,6 +66,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AmitalClassesGenerator.cs</LastGenOutput>
     </Content>
+    <None Include="DBTables\AutoCreated\ObjectTableType.dxml" />
+    <None Include="DBTables\AutoCreated\Screen.dxml" />
+    <None Include="DBTables\AutoCreated\Tip.dxml" />
+    <None Include="DBTables\ObjectTable.dxml" />
     <None Include="EntityFiles\MenuButton.lxml" />
     <None Include="AutoGenerators\ContextGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -289,7 +289,12 @@ namespace ConsoleApp1
             {
                 fieldDataType = DataTypes[fieldDataType];
             }
-            if (fieldDataType == "Byte[]")
+            if(columnInfo.IsForegin)
+            {
+				fieldDataType = "LookUp";
+
+			}
+			if (fieldDataType == "Byte[]")
             {
                 isNullable = "false";
             }
