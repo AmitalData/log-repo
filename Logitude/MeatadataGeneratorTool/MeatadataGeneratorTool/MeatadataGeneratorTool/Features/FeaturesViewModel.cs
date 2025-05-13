@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -222,6 +223,10 @@ namespace MeatadataGeneratorTool.Features
             {
                 str.AppendLine("Default Text is Required");
             }
+            else if (ContainsHebrewCharacters(this.FeatureDefaultText))
+            {
+                str.AppendLine("Default Text cannot contain Hebrew characters");
+            }
 
             if (string.IsNullOrEmpty(this.FeatureTypeCode))
             {
@@ -245,8 +250,12 @@ namespace MeatadataGeneratorTool.Features
             {
                 ErrorsVisibility = Visibility.Visible;
             }
+            else
+            { 
+                this.ErrorsVisibility = Visibility.Collapsed; 
+            }
 
-            FirePropertyChanged("ErrorMessages");
+                FirePropertyChanged("ErrorMessages");
         }
 
         Visibility errorsVisibility = Visibility.Collapsed;
@@ -256,7 +265,10 @@ namespace MeatadataGeneratorTool.Features
             set { errorsVisibility = value; FirePropertyChanged("ErrorsVisibility"); }
         }
 
-
+        private bool ContainsHebrewCharacters(string text)
+        {
+            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
+        }
 
 
 
