@@ -167,7 +167,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     this.isOpen = true;
     let logWindow = new LogitudeWindow();
     logWindow.Width = 1030;
-    logWindow.Height = 745;
+    logWindow.Height = 770;
     logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
     args.isAllowChange = this.IsAllowChange;
     logWindow.WindowArgs = args;
