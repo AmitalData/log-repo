@@ -64,17 +64,17 @@ namespace Logitude.MetadataUpdate
                     }
 
                     var moduleToIncule = GetIncludeModules(DatabaseInitializer.GetConnection(dbConnection, dbConnection).ConnectionString);
-                    if (moduleToIncule.Modules.Contains("customs") && !moduleToIncule.Modules.Contains("shipment"))
+                    if ((moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include) && (!moduleToIncule.Modules.Contains("shipment") && moduleToIncule.Include))
                     {
                         Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection}");
                         TenantsUpdateClass.UpdateDataForTenant(currentTenantId, "Customs", false, multiDB);
                     }
-                    if (moduleToIncule.Modules.Contains("shipment") && moduleToIncule.Modules.Contains("customs"))
+                    if ((moduleToIncule.Modules.Contains("shipment") && moduleToIncule.Include) && (moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include) )
                     {
                         Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection}");
                         TenantsUpdateClass.UpdateDataForTenant(currentTenantId, moduleName, false, multiDB);
                     }
-                    if (moduleToIncule.Modules.Contains("shipment") && !moduleToIncule.Modules.Contains("customs"))
+                    if ((moduleToIncule.Modules.Contains("shipment") && moduleToIncule.Include) || (moduleToIncule.Modules.Contains("customs") && !moduleToIncule.Include) )
                     {
                         Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection}");
                         TenantsUpdateClass.UpdateDataForTenant(currentTenantId, "UpdateTenantZeroNew", false, multiDB);
