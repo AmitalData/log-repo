@@ -32,29 +32,6 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             {                
                 throw new Exception("Failed to save communication log", ex);
             }            
-        }
-        public void UpdateCommunicationLogStatus( string communicationLogId,
-            int tenant,
-            StatusTypeCommunication statusTypeCode,
-            string response, 
-            object exceptionMessage)
-        {
-            try
-            {
-                Communications.UpdateCommunicationLogStatus(communicationLogId,
-               tenant,
-               null,
-               ((char)statusTypeCode).ToString(),
-               response,
-               exceptionMessage);
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Failed to update communication log communicationLogId={communicationLogId} ", ex);
-            }
-             
-            
-        }
+        }        
     }
 }
