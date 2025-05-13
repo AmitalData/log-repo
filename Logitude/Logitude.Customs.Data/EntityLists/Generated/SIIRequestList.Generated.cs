@@ -63,6 +63,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string ContactCellPhone  { get; set; }
        [DataMember]
        public string ContactFax  { get; set; }
+       [DataMember]
+       public string ContactId  { get; set; }
    }
 
 }

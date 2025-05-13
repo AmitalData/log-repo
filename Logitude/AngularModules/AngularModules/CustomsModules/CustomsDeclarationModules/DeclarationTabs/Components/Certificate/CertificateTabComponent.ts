@@ -440,6 +440,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     SelectedInvoiceReqConfirmation: string;
     InvoicesSelectionChanged(selectedItem) {
         if (selectedItem != null) {
+            debugger
             this.SelectedInvoiceNumber = selectedItem.InvoiceNumber;
             this.SelectedCounterKey = selectedItem.InvoiceCounterKey;
             this.SelectedInvoiceReqConfirmation = selectedItem.ReqConfirmationTypeCode;

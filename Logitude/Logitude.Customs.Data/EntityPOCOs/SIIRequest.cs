@@ -49,6 +49,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsClosed { get; set; }
         [Column("Remarks")]
 	    public string Remarks { get; set; }
+        [ForeignKey("User")]
+        [Column("ContactId")]
+	    public string ContactId { get; set; }
+	      
+        public virtual User User { get; set; }
     }
 }
 	 

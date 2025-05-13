@@ -1071,7 +1071,6 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_TimesheetController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\AdditionalCurrencyRateController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
-    <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
      <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentsMetaDataTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ResponsibilityViewsController.Generated.cs" />
@@ -1094,6 +1093,7 @@
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ExternalLinkController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginConnectionController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\SIIRequestExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestHandlingAuthorityViewsController.Generated.cs" />

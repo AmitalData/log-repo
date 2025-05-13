@@ -1,35 +1,70 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { defer } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 @Injectable()
 
 export class SIIRequestWebService {
     private _http: HttpClient
     private _apiUrl: string;
+    private _apiUrlUser: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CertificateOfOrigin';
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SIIRequestExtended';
+        this._apiUrlUser = ServiceHelper.GetLogitudeURL() + 'api/Users';
     }
 
-    GetRequestsByDeclarationIdIncludeChildrens(requestId: number, declarationId: string, tenant: number) {
+
+    getByDeclarationId(declarationId: string, id: string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetRequestsByDeclarationIdIncludeChildrens/?Id=" + requestId + "&declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSingle/?declarationId=" + declarationId + "&id=" + id, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 let serviceResponse: ServiceResponse = new ServiceResponse();
-                let mappedResult: SIIRequestPM = new SIIRequestPM();
-                serviceResponse.Result = mappedResult;
+                serviceResponse.Result = response;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }
         );
     }
+
+    getSupplierInvoiceItemsForSIIRequest(declarationId: string) {
+        return defer(() => {
+            let authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            let serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            return this._http.get(this._apiUrl + "/GetSupplierInvoiceItemsForSIIRequest/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                let serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        }
+        );
+    }
+}
+
+export class SupplierInvoiceItemsForSIIRequest {
+    InvoiceNumber: string;
+    LineNumber: number;
+    ItemCode: string;
+    ItemName: string;
+    ItemDescription: string;
+    ClassificationCode: string;
+    TradeAgreementCode: string;
+    TradeAgreementName: string;
+    InvoiceQuantityType: string;
+    InvoiceQuantityTypeName: string;
+    InvoiceQuantity: string;
+    ItemPrice: string;
+    ItemPriceCurrencyCode: string;
+    OriginCountryCode: string;
+    OriginCountryName: string;
 }
