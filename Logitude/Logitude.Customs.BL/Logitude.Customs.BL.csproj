@@ -1903,6 +1903,7 @@
     <Compile Include="EntityQueryServices\Generated\ExportReferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
+    <Compile Include="EntityQueryServices\SIIRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginConnectionQueryService.Generated.cs" />
@@ -2547,6 +2548,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsGeneralUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsPaymentTermUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\SIIRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestHandlingAuthorityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestUpdateService.Generated.cs" />

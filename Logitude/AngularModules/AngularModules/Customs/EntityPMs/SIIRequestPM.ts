@@ -166,6 +166,11 @@ export class SIIRequestPM {
     public set ContactFax(newValue: string) { if (this.contactFax != newValue) { this.contactFax = newValue; this.MarkAsDirty("ContactFax"); } }
        
 	 
+    private contactId: string;
+    public get ContactId() { return this.contactId; }
+    public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
+       
+	 
 
     public OldEntityPM: SIIRequestPM;
 		

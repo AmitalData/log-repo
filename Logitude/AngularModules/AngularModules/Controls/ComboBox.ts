@@ -213,12 +213,12 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
 
             document.getElementById(this.DropdownId).style.width = itemRect.width + "px";
 
-            if (this.ItemsSource.length == 0) {
+            if (this.ItemsSource?.length == 0) {
                 document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
             }
 
             else {
-                var itemsHeight = ((this.ItemsSource.length * 23) + 3);
+                var itemsHeight = ((this.ItemsSource?.length * 23) + 3);
                 if (itemsHeight > this.MaxHeight) {
                     document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
                     document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
