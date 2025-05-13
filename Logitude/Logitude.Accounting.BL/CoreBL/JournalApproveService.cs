@@ -126,7 +126,34 @@ namespace Logitude.Accounting.BL.CoreBL
                     Success = true
                 };
             }
-            finally
+			catch (Exception ex)
+			{
+				NetCommonHelper.Logger.DevLog.Instance.WriteError(
+				$"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex}");
+
+				if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
+				{
+					try
+					{
+						using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
+						{
+							var updater = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
+							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+							scope.Complete();
+						}
+					}
+					catch (Exception updateEx)
+					{
+						NetCommonHelper.Logger.DevLog.Instance.WriteError(
+							$"[usp_AccountingStreaming] Failed to update journal status after primary exception. JournalId={_JournalPM?.Id} | Update Exception: {updateEx}");
+					}
+				}
+				return new ResultApproveJournalM()
+				{
+					Success = false
+				};
+			}
+			finally
             {
                 LogMessagingUtil.Instance.AppendLine("SubmitApprove(" + _SeedJournalId + ") took:" + sw.Elapsed.ToString());
             }
@@ -588,7 +615,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 catch (Exception e)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
-
+                    throw e;
 
                 }
                 finally
