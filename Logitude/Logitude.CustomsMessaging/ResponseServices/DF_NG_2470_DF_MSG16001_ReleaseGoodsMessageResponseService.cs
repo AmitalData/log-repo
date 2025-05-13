@@ -151,7 +151,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationPM.PaymentDate = customResponse.GeneralData.releaseDate;
                     }
+                    ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
+                    UserRepository userRepository = new UserRepository(commonDbContext);
+                    var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
 
+
+                    var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
                     switch (customResponse.GeneralData.ReleaseMessageCode)
                     {
                         case 1: // released
@@ -164,10 +169,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             this.CloseCustomsCollateral(declarationPM);
 
-                            ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
-                            UserRepository userRepository = new UserRepository(commonDbContext);
-                            var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
-                       
+                           
+
+                            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
+                            {
                                 if (declarationPM.Direction == "E")
                                 {
                                     RaiseEvent(declarationPM, user?.Id, status_id: "HTR", status_DateTime: statusDateTime);
@@ -232,6 +237,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
                             declarationPM.IsClose = false;
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
+                            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
+                            {
+                                if (declarationPM.Direction == "E")
+                                {
+                                    RaiseEvent(declarationPM, user?.Id,  "HTC", statusDateTime);
+                                }
+                            }
                             break;
                         case 8 when declarationPM.Direction == "E":
 
