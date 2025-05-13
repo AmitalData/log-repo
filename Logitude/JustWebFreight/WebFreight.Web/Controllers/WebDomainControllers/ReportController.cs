@@ -90,8 +90,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 reportHelper.ReportAuthentication(reportFliter, authToken.Tenant);
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
                 Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = reportHelper.GetReportDateTimeFormat(reportFliter);
-                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortTimePattern = "HH:mm";
-                if (string.IsNullOrEmpty(reportFliter.ReportKey) || reportFliter.ProcessType == "GenerateReport")
+                Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortTimePattern = "HH:mm";        
+				if (string.IsNullOrEmpty(reportFliter.ReportKey) || reportFliter.ProcessType == "GenerateReport")
                 {
                     if (reportFliter.ReportCode == "CUPA")
                     {
@@ -485,20 +485,20 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-        public HttpResponseMessage GetExcel(string reportKey, string reportName, int tenant, string reportCode)
+        [HttpPut]
+        public HttpResponseMessage GetExcel(ReportFliter reportFliter)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                MemoryStream res = new ReportHelper().CreateExcelOfReport(reportCode, reportKey, tenant);
+	
+			    MemoryStream res = new ReportHelper().CreateExcelOfReport(reportFliter);
 
                 HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(res.ToArray()) };
                 result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = $"{reportName}.xlsx" };
+                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = $"{reportFliter.ReportName}.xlsx" };
 
                 return result;
             }
