@@ -156,7 +156,7 @@ namespace AmitalCustomsWindowsService
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(prodInfo);
 
-                Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
+                Action<bool, bool,int> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null, null , () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
