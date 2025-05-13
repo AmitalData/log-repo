@@ -416,6 +416,11 @@ export class LedgerTransactionPM {
     public set ProcessStartDate(newValue: Date) { if (this.processStartDate != newValue) { this.processStartDate = newValue; this.MarkAsDirty("ProcessStartDate"); } }
        
 	 
+    private processStartDate: Date;
+    public get ProcessStartDate() { return this.processStartDate; }
+    public set ProcessStartDate(newValue: Date) { if (this.processStartDate != newValue) { this.processStartDate = newValue; this.MarkAsDirty("ProcessStartDate"); } }
+       
+	 
 
     public OldEntityPM: LedgerTransactionPM;
 		
