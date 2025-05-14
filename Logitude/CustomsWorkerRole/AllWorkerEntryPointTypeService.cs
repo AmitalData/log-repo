@@ -1,16 +1,12 @@
-﻿
-using System;
+﻿using CommunicationWorkerRole;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomsWorkerRole
 {
     public class AllWorkerEntryPointTypeService
     {
         public static List<Logitude.Server.Tools.WorkerEntryPoint> GetAllWorkerEntryPointType()
-        //where TWorker :WorkerEntryPoint,new() 
         {
 #if false
 
@@ -76,7 +72,8 @@ namespace CustomsWorkerRole
                 new   CustomsCommandSendDCAUploadStatusWR() ,
                 new   CustomsCommandSendWSReceiveCorrelationWR() ,
                 new   CustomsCommandDownloadDcaReceiveCorrelationWR() ,
-                new   CustomsCommandAnalyzeResponseWR()
+                new   CustomsCommandAnalyzeResponseWR(),
+                new IndexSearchWorkerRole()
             }.ToList();
         }
     }
