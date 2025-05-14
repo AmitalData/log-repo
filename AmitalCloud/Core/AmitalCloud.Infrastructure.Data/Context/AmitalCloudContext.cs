@@ -28,15 +28,16 @@ namespace AmitalCloud.Infrastructure.Data.Context
 			Database.SetCommandTimeout(ApplicationAppInfo.GetDataBaseTimeOut());
         }
 
-		private AmitalCloudContext(DbContextOptions options, int tenant) : base(options)
-		{
+        private AmitalCloudContext(DbContextOptions options, int tenant) : base(options)
+        {
             this.ChangeTracker.LazyLoadingEnabled = false;
 			this.ChangeTracker.AutoDetectChangesEnabled = false;
 			Database.SetCommandTimeout(ApplicationAppInfo.GetDataBaseTimeOut());
-			_tenant = tenant;
-		}
+            _tenant = tenant;
+        }
+
         public static IAmitalCloudContext GetContext(int tenant)
-        {           
+        {
             string dbConnectionInfo = new GlobalDbHelper(ConfigurationHelper.Conf).GetGlobalDB(tenant).DBConnection;
             DbContextOptionsBuilder<AmitalCloudContext> optionsBuilder = new DbContextOptionsBuilder<AmitalCloudContext>();
             
@@ -53,8 +54,8 @@ namespace AmitalCloud.Infrastructure.Data.Context
 					{
 						warnings.Ignore(CoreEventId.InvalidIncludePathError);
 					});
-            }
-
+			}
+            
             if (DbContextBaseUtil.ToLog.GetValueOrDefault())
             {
                 optionsBuilder
@@ -64,7 +65,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 
             return new AmitalCloudContext(optionsBuilder.Options, tenant);
         }
-        protected override AmitalCloudDBSchema AmitalCloudDBSchema
+		protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.AMITAL_MAIN; }
         }
@@ -79,8 +80,9 @@ namespace AmitalCloud.Infrastructure.Data.Context
                 }
             }
 
-            base.OnModelCreating(modelBuilder);
+																																																																																																																																																																																																																																																																																																																																																																				            base.OnModelCreating(modelBuilder);
 
+            // TODO: create the relationship
             // temporary fixe for tables with multiple primary keys
             modelBuilder.Entity<AutomationHistory>().HasKey(t => new { t.Version, t.AutomationsId });
             modelBuilder.Entity<AutomationLastUpdate>().HasKey(t => new { t.Tenant, t.ObjectTableId });
@@ -113,7 +115,6 @@ namespace AmitalCloud.Infrastructure.Data.Context
             modelBuilder.Entity<Card>().HasOne(t => t.SharedLogisticsInvitationStatus).WithMany().HasForeignKey(d => d.SharedLogisticsInvitationStatusCode);
             modelBuilder.Entity<ARInvoice>().HasOne(t => t.CreditedByARInvoice).WithMany().HasForeignKey(d => d.CreditedByARInvoiceId);
             modelBuilder.Entity<DeploymentPackage>().HasOne(t => t.DeploymentPackagesVersion).WithMany().HasForeignKey(d => d.VersionId);
-
 
             modelBuilder.Entity<Card>().HasOne(card => card.ClassifierUser).WithMany().HasForeignKey(card => card.ClassifierId);
             modelBuilder.Entity<Card>().HasOne(card => card.CollectorUser).WithMany().HasForeignKey(card => card.CollectorId);
@@ -149,7 +150,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
 		{
 			return this;
 		}
-
+        
         public void Dispose(bool disposing)
         {
             if (disposing)
@@ -168,8 +169,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         {
             throw new NotImplementedException();
         }
-
-        public DbSet<Account> Accounts1  {  get; set; }
+ public DbSet<Account> Accounts1  {  get; set; }
 	public DbSet<AccountingPartner> AccountingPartners  {  get; set; }
 	public DbSet<AccountingSetting> AccountingSettings  {  get; set; }
 	public DbSet<AccountingSystem> AccountingSystems  {  get; set; }
@@ -302,7 +302,6 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	public DbSet<FilingInbox> FilingInboxes  {  get; set; }
 	public DbSet<FilingInboxAttachment> FilingInboxAttachments  {  get; set; }
 	public DbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs  {  get; set; }
-	public DbSet<FollowUp> FollowUps  {  get; set; }
 	public DbSet<FTPDetail> FTPDetails  {  get; set; }
 	public DbSet<GlobalZone> GlobalZones  {  get; set; }
 	public DbSet<Horse> Horses  {  get; set; }
@@ -374,7 +373,6 @@ namespace AmitalCloud.Infrastructure.Data.Context
 	public DbSet<ReportExecutionLog> ReportExecutionLogs  {  get; set; }
 	public DbSet<ReportsTemplate> ReportsTemplates  {  get; set; }
 	public DbSet<ReportsTemplatesVersion> ReportsTemplatesVersions  {  get; set; }
-	public DbSet<Responsibility> Responsibilities  {  get; set; }
 	public DbSet<Restriction> Restrictions  {  get; set; }
 	public DbSet<Role> Roles  {  get; set; }
 	public DbSet<RuleUpdateHistory> RuleUpdateHistories  {  get; set; }

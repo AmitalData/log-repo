@@ -13,6 +13,8 @@ using AmitalCloud.Infrastructure.Model.Enums;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using AmitalCloud.Infrastructure.Data.DBHelpers;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace AmitalCloud.Infrastructure.Data.Context
 {

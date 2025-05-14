@@ -25,7 +25,7 @@ bool isPartial;
 string filename;
 public void GenerateIContext(string sourceFolder,string destinationFolder,string contextname)
 {
-    filename = contextname;
+    filename = contextname.Replace(".", "");
     isPartial = false;
     if (contextname.Contains("."))
     {
@@ -48,7 +48,7 @@ string mappingsspacestring = contextnamespacestring.ToString().Substring(0,conte
 // </auto-generated>
 //-----
 using AmitalCloud.Infrastructure.Model.EntityClasses;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 namespace <#= contextnamespacestring #>
 {
     public partial interface I<#= contextname #> : IContext
@@ -78,6 +78,7 @@ SaveContextOutput(destinationFolder+"/I"+filename+".cs");
 <#+
 void SaveContextOutput(string outputFileName)
   {
+
       string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
       string outputFilePath = Path.Combine(templateDirectory, outputFileName);
 	 // if(!File.Exists(outputFilePath))
@@ -108,7 +109,7 @@ private void GenerateIDbSet(string xmlFilePath)
     }
 
 	#>
-	 IDbSet<<#= tableName #>> <#= dBTableName #> { get; }
+	 DbSet<<#= tableName #>> <#= dBTableName #> { get; }
 	<#+
     
 }
@@ -152,7 +153,7 @@ public dynamic GetContextNameSpace(string destinationFolder)
 
 private void GenerateContext(string sourceFolder,string destinationFolder,string contextname)
 {
-    filename = contextname;
+    filename = contextname.Replace(".", "");
     isPartial = false;
     if (contextname.Contains("."))
     {
@@ -183,8 +184,10 @@ using AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Model.Enums;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Data.Common;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.EntityFrameworkCore;
+using AmitalCloud.Infrastructure.Data.DBHelpers;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+
 namespace <#= contextnamespacestring #>
 {
    public partial class <#= contextname #>: DbContextBase, I<#= contextname #>
@@ -195,48 +198,61 @@ namespace <#= contextnamespacestring #>
     	private int _tenant;
         private <#= contextname #>()
         {
-            Database.SetInitializer<<#= contextname #>>(null);     
-			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+			Database.SetCommandTimeout(ApplicationAppInfo.GetDataBaseTimeOut());
         }
 
-        private <#= contextname #>(DbConnection conn,int tenant)
-            : base(conn,true)
+        private <#= contextname #>(DbContextOptions options, int tenant) : base(options)
         {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
-            Database.SetInitializer<<#= contextname #>>(null);
-			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+            this.ChangeTracker.LazyLoadingEnabled = false;
+			this.ChangeTracker.AutoDetectChangesEnabled = false;
+			Database.SetCommandTimeout(ApplicationAppInfo.GetDataBaseTimeOut());
             _tenant = tenant;
         }
-        private <#= contextname #>(string dbConnectionInfo,int tenant): base(dbConnectionInfo)
-        {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
-            Database.SetInitializer<<#= contextname #>>(null);
-			Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-            _tenant = tenant;
-        }
+
         public static I<#= contextname #> GetContext(int tenant)
-        {           
-            string dbConnectionInfo = GlobalDbHelper.GetGlobalDB(tenant).DBConnection;
+        {
+            string dbConnectionInfo = new GlobalDbHelper(ConfigurationHelper.Conf).GetGlobalDB(tenant).DBConnection;
+            DbContextOptionsBuilder<<#= contextname #>> optionsBuilder = new DbContextOptionsBuilder<<#= contextname #>>();
+            
 			if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
 			{
 				DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
-				return new <#= contextname #>(connection, tenant);
+                optionsBuilder.UseOracle(connection);
             }
             else 
 			{
-				return new <#= contextname #>(dbConnectionInfo, tenant); ;
+                dbConnectionInfo = DatabaseInitializer.GetConnectionString(dbConnectionInfo);
+                optionsBuilder.UseSqlServer(dbConnectionInfo)
+					.ConfigureWarnings(warnings =>
+					{
+						warnings.Ignore(CoreEventId.InvalidIncludePathError);
+					});
 			}
+            
+            if (DbContextBaseUtil.ToLog.GetValueOrDefault())
+            {
+                optionsBuilder
+                    .EnableSensitiveDataLogging()
+                    .LogTo(message => System.Diagnostics.Debug.WriteLine(message), LogLevel.Debug);
+            }
+
+            return new <#= contextname #>(optionsBuilder.Options, tenant);
         }
 		protected override AmitalCloudDBSchema AmitalCloudDBSchema
         {
             get { return AmitalCloudDBSchema.AMITAL_MAIN; }
         }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Database.SetInitializer<<#= contextname #>>(null);
-            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            // Disable cascade delete globally by configuring each relationship
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var foreignKey in entityType.GetForeignKeys())
+                {
+                    foreignKey.DeleteBehavior = Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict;
+                }
+            }
+
 			<#+
 				foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 				{
@@ -253,6 +269,46 @@ namespace <#= contextnamespacestring #>
 		#><#+
 			 #>
             base.OnModelCreating(modelBuilder);
+
+            // TODO: create the relationship
+            // temporary fixe for tables with multiple primary keys
+            modelBuilder.Entity<AutomationHistory>().HasKey(t => new { t.Version, t.AutomationsId });
+            modelBuilder.Entity<AutomationLastUpdate>().HasKey(t => new { t.Tenant, t.ObjectTableId });
+            modelBuilder.Entity<CommunicationLogStep>().HasKey(t => new { t.StepNumber, t.CommunicationLogId });
+            modelBuilder.Entity<ComputingPartnerTable>().HasKey(t => new { t.Tenant, t.ObjectTableId, t.ComputingPartnerId });
+            modelBuilder.Entity<CustomerAccountManagerByProduct>().HasKey(t => new { t.ProductTypeCode, t.CustomerId });
+            modelBuilder.Entity<CustomerAdditionalService>().HasKey(t => new { t.CustomerId, t.AdditionalServiceId });
+            modelBuilder.Entity<CustomerCompetitor>().HasKey(t => new { t.CustomerId, t.CompetitorId });
+            modelBuilder.Entity<CustomerCompetitorProduct>().HasKey(t => new { t.ProductTypeCode, t.CustomerId, t.CompetitorId });
+            modelBuilder.Entity<CustomerProductActualData>().HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.Month, t.Year });
+            modelBuilder.Entity<CustomerProductLocationActualData>().HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.Month, t.Year, t.CountryId });
+            modelBuilder.Entity<CustomerProductLocation>().HasKey(t => new { t.CustomerId, t.ProductTypeCode, t.CountryId });
+            modelBuilder.Entity<CustomerProduct>().HasKey(t => new { t.CustomerId, t.ProductTypeCode });
+            modelBuilder.Entity<CustomerTenantAccessCard>().HasKey(t => new { t.CustomerId, t.CustomerTenantAccessId });
+            modelBuilder.Entity<CustomerTenantAccessCardsBatch>().HasKey(t => new { t.CustomerId, t.CustomerTenantAccessId, t.BatchNumber });
+            modelBuilder.Entity<DefaultAndConfigurationKey>().HasKey(t => new { t.Tenant, t.SetKey });
+            modelBuilder.Entity<GeneralLock>().HasKey(t => new { t.Tenant, t.GeneralKey });
+            modelBuilder.Entity<HybridPartnersPermission>().HasKey(t => new { t.HybridPartnerId, t.AllowedByHybridPartnerId });
+            modelBuilder.Entity<HybridTenantThreshold>().HasKey(t => new { t.Tenant, t.TypeCode });
+            modelBuilder.Entity<SharedLogisticsContactLastLogin>().HasKey(t => new { t.ContactId, t.CardId, t.PartnerTypeId, t.Via });
+            modelBuilder.Entity<VATTypesGroup>().HasKey(t => new { t.GroupVATTypeId, t.SingleVATTypeId });
+
+            modelBuilder.Entity<APInvoiceLine>().HasKey(x => new { x.APInvoiceId, x.LineNumber });
+
+            modelBuilder.Entity<ShipmentPackageItem>().HasKey(t => new { t.PackageId, t.LineNumber });
+
+            // temporary fixes about relationships
+            modelBuilder.Entity<ObjectTable>().HasOne(t => t.MainTip).WithMany().HasForeignKey(d => d.MainTipCode);
+            modelBuilder.Entity<ObjectTable>().HasOne(t => t.HeaderScreen).WithMany().HasForeignKey(d => d.HeaderScreenId);
+            modelBuilder.Entity<Card>().HasOne(t => t.SharedLogisticsInvitationStatus).WithMany().HasForeignKey(d => d.SharedLogisticsInvitationStatusCode);
+            modelBuilder.Entity<ARInvoice>().HasOne(t => t.CreditedByARInvoice).WithMany().HasForeignKey(d => d.CreditedByARInvoiceId);
+            modelBuilder.Entity<DeploymentPackage>().HasOne(t => t.DeploymentPackagesVersion).WithMany().HasForeignKey(d => d.VersionId);
+
+            modelBuilder.Entity<Card>().HasOne(card => card.ClassifierUser).WithMany().HasForeignKey(card => card.ClassifierId);
+            modelBuilder.Entity<Card>().HasOne(card => card.CollectorUser).WithMany().HasForeignKey(card => card.CollectorId);
+            modelBuilder.Entity<Card>().HasOne(card => card.CreatedByUser).WithMany().HasForeignKey(card => card.CreatedByUserId);
+            modelBuilder.Entity<Card>().HasOne(card => card.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
+            modelBuilder.Entity<Card>().HasOne(card => card.Customer).WithOne().HasForeignKey<Card>(card => card.Id).HasPrincipalKey<Customer>(cust => cust.Id);
         }
 
         public void SetAsModified(object entity)
@@ -275,7 +331,7 @@ namespace <#= contextnamespacestring #>
       
 		public DbConnection GetConnection()
 		{
-			return this.Database.Connection;
+			return this.Database.GetDbConnection();
 		}
 
 		public DbContext GetActiveDbContext()
@@ -283,9 +339,23 @@ namespace <#= contextnamespacestring #>
 			return this;
 		}
         
-        void IContext.Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
+            if (disposing)
+            {
+                base.Dispose();
+            }
+
+        }
+
+        public override void Dispose()
+        {
+            Dispose(true);
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            throw new NotImplementedException();
         }
  <#+ } #>
 <#+
@@ -370,7 +440,7 @@ private void GenerateIDbSetForContext(string xmlFilePath)
 		dBTableName = dBTableName.ToString().Split('.')[1];
           
     }
-	#>public IDbSet<<#= tableName #>> <#= dBTableName #>  {  get; set; }
+	#>public DbSet<<#= tableName #>> <#= dBTableName #>  {  get; set; }
 	<#+
 }
  

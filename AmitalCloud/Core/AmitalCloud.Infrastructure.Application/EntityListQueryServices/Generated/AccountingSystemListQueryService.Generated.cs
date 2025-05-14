@@ -11,7 +11,7 @@ using System.Linq;
 using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-namespace AmitalCloud.Infrastructure.Application.Core.EntityListQueryServices
+namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class AccountingSystemListQueryService  : BaseEntityListQueryService<AccountingSystemList,POCO.AccountingSystem,  AccountingSystemKeys<string>,string>
     {

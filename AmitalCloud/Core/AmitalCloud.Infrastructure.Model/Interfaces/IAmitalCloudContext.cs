@@ -144,7 +144,6 @@ namespace AmitalCloud.Infrastructure.Model.Interfaces
 		 DbSet<FilingInbox> FilingInboxes { get; }
 		 DbSet<FilingInboxAttachment> FilingInboxAttachments { get; }
 		 DbSet<FilingInboxAttachmentLog> FilingInboxAttachmentLogs { get; }
-		 DbSet<FollowUp> FollowUps { get; }
 		 DbSet<FTPDetail> FTPDetails { get; }
 		 DbSet<GlobalZone> GlobalZones { get; }
 		 DbSet<Horse> Horses { get; }
@@ -216,7 +215,6 @@ namespace AmitalCloud.Infrastructure.Model.Interfaces
 		 DbSet<ReportExecutionLog> ReportExecutionLogs { get; }
 		 DbSet<ReportsTemplate> ReportsTemplates { get; }
 		 DbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; }
-		 DbSet<Responsibility> Responsibilities { get; }
 		 DbSet<Restriction> Restrictions { get; }
 		 DbSet<Role> Roles { get; }
 		 DbSet<RuleUpdateHistory> RuleUpdateHistories { get; }
@@ -270,7 +268,7 @@ namespace AmitalCloud.Infrastructure.Model.Interfaces
 		 DbSet<Vessel> Vessels { get; }
 		 DbSet<VolumeUnit> VolumeUnits { get; }
 		 DbSet<Warehouse> Warehouses { get; }
-        DbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; }
+		 DbSet<WarehouseStoragePricing> WarehouseStoragePricings { get; }
 		 DbSet<WarehouseType> WarehouseTypes { get; }
 		 DbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; }
 		 DbSet<WarehouseWeightRounding> WarehouseWeightRoundings { get; }

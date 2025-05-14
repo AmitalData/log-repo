@@ -39,7 +39,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_bodyDocumentId = entity.BodyDocumentId;
 		_bodydocument = entity.BodyDocument !=null ? new DocumentPM(entity.BodyDocument) : null;
 			_searchFields = entity.SearchFields;
-		filingInboxAttachments = entity.FilingInboxAttachments != null ? entity.FilingInboxAttachments.Select(a=>new FilingInboxAttachmentPM(a)).ToList() : null;
+		filingInboxAttachments = null;
    }
    #endregion Constructors
    #region Properties

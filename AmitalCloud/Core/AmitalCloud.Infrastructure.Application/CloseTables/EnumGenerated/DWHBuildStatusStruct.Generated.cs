@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
  
-namespace AmitalCloud.Infrastructure.Application.Core.CloseTables
+namespace AmitalCloud.Infrastructure.Application.CloseTables
 {
     public struct DWHBuildStatusValues
     {   
