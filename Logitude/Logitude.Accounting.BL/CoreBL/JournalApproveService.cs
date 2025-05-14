@@ -1487,7 +1487,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         SqlCommand cmd = new SqlCommand("[dbo].[usp_AccountingStreaming]", myConnection);
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.CommandTimeout = 1800; 
                         SqlParameter journalIdPar = new SqlParameter("@pJournalId", SqlDbType.VarChar);
                         journalIdPar.Direction = ParameterDirection.Input;
                         journalIdPar.Value = _JournalPM.Id;
