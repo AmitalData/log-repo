@@ -46,11 +46,10 @@
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <!-- delete the comment -->
-                            <!-- <LogLov [ObjectFieldName]="'ContactId'" [ObjectTableName]="ObjectTableNameSiiRequest"
+                            <LogLov [ObjectFieldName]="'ContactId'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="ContactId"
                                 [HideColumns]="true" [CustomizedWidth]="300">
-                            </LogLov> -->
+                            </LogLov>
                         </td>
                         <td style="width:130px">
                         </td>
@@ -312,9 +311,7 @@
                                                                 [ItemSource]="supplierInvoiceItemsCollection"
                                                                 [SelectedRows]="SelectedInvoiceItemsReqList.Collection"
                                                                 [Disabled]="IsDisplayOnly">
-                                                                <log-column
-                                                                    [header]=""
-                                                                    [binding]="" [width]="'30'"
+                                                                <log-column [header]="" [binding]="" [width]="'30'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
                                                                         <log-cell-template [IgnoreMods]="true"
