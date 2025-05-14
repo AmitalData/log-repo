@@ -88,9 +88,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
- 		public const string HashString = "031f262764eb764bb880c85c41e21562";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
-        {                     
+ 		public const string HashString = "3d07d4d08f6f8b21a0e63585b979fe57";
+ 
+   	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -12305,6 +12306,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "MarkDate",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "DateTime",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "MarkDate",
+					  						ListPropertyPath =  "MarkDate",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "MarkDate",
+					  						DefaultText =  "Mark Date",
+					  						FullLocalDefaultText =  "תאריך סימון",
+					  						ListFieldLable =  "MarkDateListLable",
+					  						ListLableDefaultText =  "Mark Date",
+					  						ListLocalDefaultText =  "תאריך סימון",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -13887,19 +13953,37 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "GCC",
-                EnglishName =  "Changed to Multi iCurrency",
-                LocalName =  "הומר לרב מטבעי",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
+                Code = "GCC",
+                EnglishName = "Changed to Multi iCurrency",
+                LocalName = "הומר לרב מטבעי",
+                IsManualEntry = false,
+                ShortView = false,
+                IsAgentView = false,
+                IsCustomerView = false,
+                IsSharedLogisticsEnabled = false,
+                AllowedInAutomation = false,
+                ManualActivatedFollowUp = false,
+                IsFollowUp = false,
                 ObjectTableId = GLAccountObjectTable.Id,
-				 
+
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code = "RCLC",
+                EnglishName = "Account Recalculated",
+                LocalName = "בוצע חישוב מחדש",
+                IsManualEntry = false,
+                ShortView = false,
+                IsAgentView = false,
+                IsCustomerView = false,
+                IsSharedLogisticsEnabled = false,
+                AllowedInAutomation = false,
+                ManualActivatedFollowUp = false,
+                IsFollowUp = false,
+                ObjectTableId = GLAccountObjectTable.Id,
+
             }, EventTypeRepository, tenantEventTypes);
 
 
@@ -13936,10 +14020,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature GLAccountFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREGLACCOUNT", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.More", NameTextCodeDefaultText = "More Buttons", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
 
 			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
-             			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
-              
+            Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes, GLAccountObjectTable);
+            Feature GLAccountFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountRecalculate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Recalculate", NameTextCodeDefaultText = "Recalculate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes, GLAccountObjectTable);
 
-		   TextCodeRepository.SubmitChanges();
+
+            TextCodeRepository.SubmitChanges();
 		   FeaturesRepository.SubmitChanges();
 		   MenuButtonGroup GLAccountMenuButtonGroup = AddMenuButtonGroupAndMenuButtons.AddMenuButtonGroup(new MenuButtonGroupDetails()
 				{
@@ -14027,8 +14112,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                         Width=0,
 						FeatureUniqeCode=  GLAccountFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-	    }
+
+            MenuButton GLAccountMenuButton12 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
+					{
+						EventCode = "GLAccountRecalculate",
+						Index = 0,
+						IsActive = true,
+						LabelTextCodeCode = "GLAccount.B.Recalculate",
+						LabelTextCodeDefaultText = "Recalculate",
+						Tenant = 0,
+						MenuButtonGroupId = GLAccountMenuButtonGroup.Id,
+						ParentMenuButtonId = GLAccountMenuButton1.Id,
+						ObjectTableId = GLAccountObjectTable.Id,
+						MenuButtonType = "menuitem",
+						FeatureId = GLAccountFeature_MB12.Id,
+						Style = null,
+						LocalDefaultText = "חשב מחדש",
+						HtmlComponentPath = null,
+						Width = 0,
+						FeatureUniqeCode = GLAccountFeature_MB12.FeatureUniqeCode,
+					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
+
+        }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
@@ -14227,7 +14332,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsOReconcileMethodcantUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAccount has transations",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfilter_accounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting Date",LocalDefaultText = @"תאריך חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GLAccountTextCode_GLAccountsOReconcileMethodCannotBeUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodCannotBeUpdated", DefaultText = "The reconcile method cannot be updated, the GLAccount has reconciliations", LocalDefaultText = @"לא ניתן לעדכן את שיטת ההתאמה, נרשמו התאמות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode GLAccountTextCode_GLAccountsOfilter_accounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting Date",LocalDefaultText = @"תאריך חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOfilter_reference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document Date",LocalDefaultText = @"תאריך אסמכתא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -14253,7 +14360,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsOGLAccountReactivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountReactivated", DefaultText = "GLAccount Reactivated",LocalDefaultText = @"הכרטיס הופעל מחדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsQAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllCustomers", DefaultText = "All Customers",LocalDefaultText = @"כל הלקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GLAccountTextCode_GLAccountsOGLAccountRecalculating = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountRecalculating", DefaultText = "Recalculating; check batch or event", LocalDefaultText = @"מבצע חישוב מחדש, בדוק תור או אירוע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode GLAccountTextCode_GLAccountsQAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllCustomers", DefaultText = "All Customers",LocalDefaultText = @"כל הלקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsQAllVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllVendors", DefaultText = "All Vendors",LocalDefaultText = @"כל הספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -14537,6 +14646,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+  		   TextCode GLAccountTextCode_GLAccountsOMarkedByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MarkedByAnother ", DefaultText = "There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.",LocalDefaultText = @"ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionInProgress", DefaultText = "There are Ledger Transaction in the process.",LocalDefaultText = @"יש התאמות בתהליך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+  		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"יתרה שונה מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 
    
 	    
 }

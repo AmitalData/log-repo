@@ -3309,6 +3309,98 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private string lockerAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LockerAddress  
+	   {
+	    
+	     get
+		{
+		   return lockerAddress;
+		 }
+		 set
+		 {
+		   if(lockerAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LockerAddress",OldValue=lockerAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lockerAddress=value;
+		   }
+			
+		 }
+	   }
+	  private string lockerCity ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LockerCity  
+	   {
+	    
+	     get
+		{
+		   return lockerCity;
+		 }
+		 set
+		 {
+		   if(lockerCity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LockerCity",OldValue=lockerCity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lockerCity=value;
+		   }
+			
+		 }
+	   }
+	  private string lockerName ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LockerName  
+	   {
+	    
+	     get
+		{
+		   return lockerName;
+		 }
+		 set
+		 {
+		   if(lockerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LockerName",OldValue=lockerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lockerName=value;
+		   }
+			
+		 }
+	   }
+	  private string lockerCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LockerCode  
+	   {
+	    
+	     get
+		{
+		   return lockerCode;
+		 }
+		 set
+		 {
+		   if(lockerCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LockerCode",OldValue=lockerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lockerCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -1,8 +1,8 @@
 <div class="searchResults_filter">
 	<div class="searchResults_filterToggle">
-		<a role="button" title="סינון תוצאות" aria-expanded="true"><i role="img" (click)="clickFilterEvent()"
-				[ngClass]="openPopup ? 'icon-filter_full' : 'icon-filter'"></i><span *ngIf="numberOfFilters > 0"
-				class="numberOfFilters">{{ numberOfFilters }}</span>
+		<a role="button" title="סינון תוצאות" aria-expanded="true">
+			<i role="img" (click)="clickFilterEvent()" [ngClass]="openPopup ? 'icon-filter_full' : 'icon-filter'" *ngIf="!IsDiscountCodes"></i>
+			<span *ngIf="numberOfFilters > 0" class="numberOfFilters">{{ numberOfFilters }}</span>
 		</a>
 	</div>
 	<div id="searchResults_filterPop" class="searchResults_filterPop" [class.shown]="openPopup" aria-hidden="false">

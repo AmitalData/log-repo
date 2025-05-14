@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "756cacf0e2f4a95bc3eb8c8116d99208";
+		public const string HashString = "4c11a0b621658c2b02ebea8540e6d72a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,8 +131,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "8d12",
-			      				    Name =  "General",
+ 			      				    Code =  "6049",
+ 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
 			      				    ServerModuleName =  "Generals",
@@ -720,7 +720,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_SHLOGANDMOBILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHLOGANDMOBILE", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHLOGANDMOBILE", NameTextCodeDefaultText = @"Shared Logistics and Mobile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_invoiceConfirmationNumber = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "invoiceConfirmationNumber", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHAAMTOKEN", NameTextCodeDefaultText = @"SHAAM Token " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_General_Features_ReleaseSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ReleaseSettings", FeatureTypeCode = "MENU", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.ReleaseSettings", NameTextCodeDefaultText = @"Release Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
@@ -1852,7 +1851,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.To", DefaultText = "To",LocalDefaultText = @"עד", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOJournalNoRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.JournalNoRef", DefaultText = "Journal No. / Ref.",LocalDefaultText = @"מספר פקודת יומן/ אסמכתא", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOJournalNoRef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.JournalNoRef", DefaultText = "Journal No. / Ref./ Amount",LocalDefaultText = @"מס פקודת יומן/ אסמכתא/ סכום", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOWithAttachedAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.WithAttachedAccounts", DefaultText = "With Attached Accounts",LocalDefaultText = @"לכלול כרטיסים מקושרים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2870,6 +2869,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralODollarRateUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.DollarRateUpdated", DefaultText = "The dollar exchange rate was last updated on",LocalDefaultText = @"שער מטבע הדולר עודכן לאחרונה בתאריך ", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+            TextCode GeneralTextCode_NewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.NewReport", DefaultText = "New Report", LocalDefaultText = @"דוח חדש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode GeneralTextCode_AccountingGeneralONoReportsDisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.NoReportsDisplay", DefaultText = "No reports to display",LocalDefaultText = @"אין דוחות להצגה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOReportInProcess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ReportInProcess", DefaultText = "The report was created successfully and will be built in a background process.",LocalDefaultText = @"הדוח נוצר בהצלחה ויבנה בתהליך רקע", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingOAlreadyRedeemed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.AlreadyRedeemed", DefaultText = "A check has already been cashed and adjusted by bank reconciliation. Should I mark it as &quot;check returned from bank",LocalDefaultText = "צ'ק כבר נפרע והותאם בהתאמת בנק. האם לסמן בתור ''צ'ק חזר מהבנק''?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+  		   TextCode GeneralTextCode_AccountingOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOSendParameters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SendParameters", DefaultText = "Send Parameters",LocalDefaultText = @"פרמטרים לשליחה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode GeneralTextCode_GeneralMCOthersExternalLink = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ExternalLink", DefaultText = "External Links",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
@@ -2877,7 +2887,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 }
 
     
-
    }
     
 }

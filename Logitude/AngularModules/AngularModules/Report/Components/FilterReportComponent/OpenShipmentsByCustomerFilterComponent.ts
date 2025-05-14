@@ -51,8 +51,8 @@ export class OpenShipmentsByCustomerFilterComponent extends BaseComponent implem
         return queryFilterItems;
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Report Scheduler
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Report Scheduler
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);

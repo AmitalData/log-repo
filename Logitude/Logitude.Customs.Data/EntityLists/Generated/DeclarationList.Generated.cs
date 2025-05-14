@@ -423,6 +423,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsExportClosed  { get; set; }
        [DataMember]
+       public string DeclarationOfficeHandlerCode  { get; set; }
+       [DataMember]
        public string DeclarationTypeName  { get; set; }
        [DataMember]
        public bool? IsExportDeclarationAmendments  { get; set; }

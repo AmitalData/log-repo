@@ -48,6 +48,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AmazedSaint.Elastic">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
@@ -99,8 +132,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataV2OLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetailsOLD.dxml" />
@@ -230,6 +265,7 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
+    <None Include="DBScripts\Pre\202503091425_AddSFTPCustoms.sxml" />
     <None Include="DBScripts\Pre\202409011314_IsMandatoryDelete.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
@@ -277,6 +313,7 @@
     <None Include="DBTables\CB_CustomsItemLinkage.dxml" />
     <None Include="DBTables\CB_LevyCondition.dxml" />
     <None Include="DBTables\CB_LevyExclusion.dxml" />
+    <None Include="DBTables\CB_Preference.dxml" />
     <None Include="DBTables\CB_PropertiesDetailsHistory.dxml" />
     <None Include="DBTables\CB_Quota.dxml" />
     <None Include="DBTables\CB_QuotaComputedData.dxml" />
@@ -695,6 +732,7 @@
     <None Include="EntityFiles\CB_CustomsItemLinkage.lxml" />
     <None Include="EntityFiles\CB_LevyCondition.lxml" />
     <None Include="EntityFiles\CB_LevyExclusion.lxml" />
+    <None Include="EntityFiles\CB_Preference.lxml" />
     <None Include="EntityFiles\CB_QuotaComputedData.lxml" />
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_RequirementComputedData.lxml" />

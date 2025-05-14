@@ -269,6 +269,14 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ChargeableWeightUnitCode { get; set; }
         [Column("IncotermName")]
 	    public string IncotermName { get; set; }
+        [Column("LockerAddress")]
+	    public string LockerAddress { get; set; }
+        [Column("LockerCity")]
+	    public string LockerCity { get; set; }
+        [Column("LockerName")]
+	    public string LockerName { get; set; }
+        [Column("LockerCode")]
+	    public string LockerCode { get; set; }
     }
 }
 	 

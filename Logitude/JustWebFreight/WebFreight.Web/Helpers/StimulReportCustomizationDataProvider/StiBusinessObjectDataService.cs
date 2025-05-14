@@ -23,8 +23,19 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
             if (!FeatureToggleHelper.HasFeatureToggle("SSP", documentTypeTemplatePM.Tenant))
                 return new List<StiBusinessObjectData>();
             List<StiBusinessObjectData> businessObjects = new List<StiBusinessObjectData>();
+            DocumentDataProviderArgs documentDataProviderArgs = GetDocumentDataProviderArgs(documentTypeTemplatePM.DocumentTypeCode);
+            if (documentDataProviderArgs == null) return businessObjects;
+
+            documentDataProviderArgs.DocumentTypeTemplatePM = documentTypeTemplatePM;
+            var documentDataProvider = new DocumentDataProviderGreator(documentDataProviderArgs).Create();
+            businessObjects.Add(new StiBusinessObjectData(documentDataProviderArgs.Category, documentDataProvider.Name, documentDataProvider.Name, documentDataProvider.Type));
+            return businessObjects;
+        }
+
+        public DocumentDataProviderArgs GetDocumentDataProviderArgs(string documentTypeCode)
+        {
             DocumentDataProviderArgs documentDataProviderArgs = null;
-            switch (documentTypeTemplatePM.DocumentTypeCode)
+            switch (documentTypeCode)
             {
                 case "EXCU":
                 case "SELE":
@@ -298,16 +309,7 @@ namespace WebFreight.Web.Helpers.StimulReportCustomizationDataProvider
                     }
             }
 
-            if (documentDataProviderArgs == null) return businessObjects;
-
-            documentDataProviderArgs.DocumentTypeTemplatePM = documentTypeTemplatePM;
-            var documentDataProvider = new DocumentDataProviderGreator(documentDataProviderArgs).Create();
-            businessObjects.Add(new StiBusinessObjectData(documentDataProviderArgs.Category, documentDataProvider.Name, documentDataProvider.Name, documentDataProvider.Type));
-            return businessObjects;
-
-
+            return documentDataProviderArgs;
         }
-
-
     }
 }

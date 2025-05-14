@@ -27,7 +27,7 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     entityResourceService: EntityResourceService = new EntityResourceService();
 
     isReady: boolean = false;
-    public RunReportTitle: string;
+    public RunReportTitle: string = 'Run Report';
     public OpenDateGraterThan: Date;
     public ExpirationDate: Date;
     public CustomerId: string = null;
@@ -59,7 +59,6 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     RunReport(isloading: boolean) {
         var reportFliter = new ReportFliter();
         reportFliter.Tenant = SessionLocator.Tenant;
-        reportFliter.QueryFilterItemLists = this.queryFilterItems;
         reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
         reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
         reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -94,17 +93,17 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     }
     SetOpenDateFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName == "OpenDateGraterThan") {
-            this.OpenDateGraterThan = queryFilterItem.FieldValue;
+            this.OpenDateGraterThan =queryFilterItem.FieldValue 
         }
     }
     SetExpirationDateLessThanFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName == "ExpirationDateLessThan") {
-            this.ExpirationDate = queryFilterItem.FieldValue;
+            this.ExpirationDate = queryFilterItem.FieldValue
         }
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);

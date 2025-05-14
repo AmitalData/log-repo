@@ -46,6 +46,8 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     // ToDate: Date = new Date();
     DataContext: any = this;
     showLocal: boolean;
+    ChartOfAccountsSelectedValue:string
+    ChartOfAccountsTypeSelectedValue: string;
     constructor(private CD: ChangeDetectorRef) {
 
         super();
@@ -236,7 +238,10 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         this.chartOfAccountListService.getByFilters(apiQueryFilters)
             .subscribe((arg: any) => {
                 this.chartOfAccounts = arg.Result;
-                this.chartOfAccounts = this.chartOfAccounts.map(item => { return { ...item, Name: item.LocalName || item.EnglishName } });
+                this.chartOfAccounts = this.chartOfAccounts.map(item => { return { ...item,
+                     Name: item.LocalName || item.EnglishName,
+                     Checked: this.ChartOfAccountsSelectedValue?.split(',').some(selectedItem => this.ChartOfAccountsComboBoxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+                    } });
             });
     }
 
@@ -249,6 +254,15 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
 
                 this.chartOfAccountsTypes = arg.Result;
                 this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item => { return { ...item, Name: item.LocalName || item.EnglishName } });
+                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item => { 
+                    return { 
+                        ...item, 
+                        Name: item.LocalName || item.EnglishName,
+                        Checked: this.ChartOfAccountsTypeSelectedValue?.split(',').some(selectedItem =>this.ChartOfAccountsTypeComboboxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+                    } 
+                });
+
+                
             });
     }
 
@@ -357,51 +371,75 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
             this.category5 = value;
         }
     }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+     public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+         
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CreateDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue)
+                    break;
+                case "ChartOfAccountsTypeCodeList":{
+                    this.ChartOfAccountsTypeSelectedValue=queryFilterItem.FieldValue
+                    break;
+                }
+                case"ChartOfAccountsTypeCodeList_param":
+                     this.chartOfAccountsTypeComboboxValue=queryFilterItem.FieldValue
+                    break;
+                case "ChartOfAccountsIdList_param":
+                    this.chartOfAccountsComboBoxValue=queryFilterItem.FieldValue
+                    break;
+                case "ChartOfAccountsIdList":{
+                   this.ChartOfAccountsSelectedValue= queryFilterItem.FieldValue
+                    
+                    break;
+                }
+                case "Level":
+                    this.FilterSelectedValue = queryFilterItem.FieldValue;
+                     break;
+                 case "CardFilter":
+                 {  this.BuildFilterList();
+                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[0];
+                    this.UseBalanceFilter = queryFilterItem.FieldValue == "1" || queryFilterItem.FieldValue == "2";                            
+                    break;
+                 }
+                    
+               
+              
+              
+            }
+    
+           
+    
+        }
+    }
+    
     RunReport() {
-        this.ValidationErrorsList = this.ValidateFilters();
-        if (this.ValidationErrorsList.length == 0) {
+        
+        if (this.ValidateSelectedFilters()) {
 
-            this.queryFilterItems = new Array<QueryFilterItem>();
-
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "CreateDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "LessThanOrEqual";
-            this.queryFilterItems.push(this.queryFilterItem);
-            this.queryFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-
-
-            if (this.selectedChartOfAccountsTypes && this.selectedChartOfAccountsTypes.length > 0){
-                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.selectedChartOfAccountsTypes.map(item => item.Code).join(','), "String"));
-            }
-            else {
-                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.chartOfAccountsTypes.map(item => item.Code).join(','), "String"));
-            }
-
-            if (this.selectedChartOfAccounts && this.selectedChartOfAccounts.length > 0){
-                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item => item.Id).join(','), "String"));
-            }
-            else {
-                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.chartOfAccounts.map(item => item.Id).join(','), "String"));
-            }
-            
-            if (!this.Level) this.Level = "GLAccount";
-            this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
-            if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
-                this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
-
-            }
-
-            else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
-                this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
-            }
-            else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
-                this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
-            }
-
+           
 
 
 
@@ -409,7 +447,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
             this.reportFliter = new ReportFliter();
             // this.reportFliter.Level = this.Level;
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
 
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
@@ -423,8 +461,57 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         }
 
     }
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
 
-    ValidateFilters() {
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "CreateDate";
+        this.queryFilterItem.FieldValue = this.ToDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "LessThanOrEqual";
+        this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+
+
+        if (this.selectedChartOfAccountsTypes && this.selectedChartOfAccountsTypes.length > 0){
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.selectedChartOfAccountsTypes.map(item => item.Code).join(','), "String"));
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList_param", "NotAll", "String"));
+
+        }
+        else {
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.chartOfAccountsTypes.map(item => item.Code).join(','), "String"));
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList_param", "All", "String"));
+
+        }
+
+        if (this.selectedChartOfAccounts && this.selectedChartOfAccounts.length > 0){
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item => item.Id).join(','), "String"));
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList_param", "NotAll", "String"));
+
+        }
+        else {
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList_param", "All", "String"));
+            this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.chartOfAccounts.map(item => item.Id).join(','), "String"));
+        }
+        
+        if (!this.Level) this.Level = "GLAccount";
+        this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
+        if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+            this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
+
+        }
+
+        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+            this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
+        }
+        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
+            this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
+        }
+        return this.queryFilterItems
+    }
+    ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
         var FIELD_IS_REQUIERD: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
         if (this.ToDate > new Date()) {
@@ -442,7 +529,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
         }
 
-        return this.ValidationErrorsList;
+        return this.ValidationErrorsList.length == 0;
     }
 
 

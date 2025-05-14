@@ -88,9 +88,9 @@ export class ShipmentDetailsFilterComponent extends BaseComponent {
     PrepareContactList() {
         //for report scheduler
     }
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) {
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) {
         //For Scheduler Report
-        this.IsSchedulerReport = true;
+        this.IsSchedulerReport = isSchedulerReport;
 
         if (queryFilterItems) {
             queryFilterItems.forEach((queryFilterItem) => {

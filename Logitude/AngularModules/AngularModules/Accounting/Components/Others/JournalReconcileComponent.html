@@ -95,9 +95,34 @@
                         <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                             {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
                         </td>
-
+                    
                         <td style="width: 180px;" text-start>
                             <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" text-start>{{TotalDifference | NumbersPipe:'N2'}}</div>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow"  *ngIf="IsMultiWithReconcileMethodCodeEqualOne">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{'LedgerTransaction.O.LocalAmount' | TextCodeTranslationPipe}}
+                        </td>
+
+                        <td style="width: 180px;" text-start>
+                            <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" text-start>{{TotalLocalDifference | NumbersPipe:'N2'}}</div>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow"  *ngIf="IsMultiWithReconcileMethodCodeEqualOne">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                            {{'LedgerTransaction.F.ExchangeRate' | TextCodeTranslationPipe}}
+                        </td>
+
+                        <td style="width: 180px">
+                            <LogTextBox [NoObjectField]="true" [InputType]="'decimal'" [DataContext]="DataContext"
+                                        [Placeholder]="'LedgerTransaction.F.ExchangeRate' | TextCodeTranslationPipe"
+                                        [Text]="Rate"
+                            [ObjectFieldName]="'Rate'" 
+                            [HideColumns]="false"></LogTextBox>
                         </td>
                         <td><div></div></td>
                     </tr>

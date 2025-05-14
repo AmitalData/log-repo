@@ -965,13 +965,13 @@
       <HintPath>..\..\packages\UltimatePDF.1.0.0\lib\Net40\UltimatePdf.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -991,13 +991,16 @@
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\ExternalLinkAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ExternalLinkController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ExternalLinkViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\ExternalLinkController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_PreferenceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginConnectionController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\CB_PreferenceController.cs" />
     <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityDWHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityHybridController.cs" />
@@ -1076,7 +1079,8 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationKeyController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
-    <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
+     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
+     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
     <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
@@ -1139,6 +1143,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\ImporterEntityStatusesExtendedService.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\ImporterEventTypesExtendedService.cs" />
+    <Compile Include="Controllers\InvoiceModel\Extended\ARInvoiceExtendedController.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoicesSignedStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
@@ -2056,6 +2061,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataProviders\NewAccountingAgingDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginCountDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginDataProvider.cs" />
     <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
@@ -3741,6 +3747,7 @@
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\GenericDataProviderGreator.cs" />
     <Compile Include="Helpers\StimulReportCustomizationDataProvider\StiBusinessObjectDataService.cs" />
     <Compile Include="Helpers\StimulsoftReportFontSizeService.cs" />
+    <Compile Include="Helpers\TraceHelper.cs" />
     <Compile Include="Helpers\UpdateShipmetsBatchArgs.cs" />
     <Compile Include="Helpers\UserViewLinkLimitationService.cs" />
     <Compile Include="Helpers\DWQueryBuilderHelper.cs" />
@@ -4164,6 +4171,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_CustomsItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_LevyConditionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_LevyExclusionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_PreferenceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_PropertiesDetailsHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_QuotaComputedDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_QuotaDetailsHistoryUpdateClass.cs" />
@@ -6819,6 +6827,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\NewAgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ARinvoiceSequencesService.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\MonthlyBalancesLinesLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ControlForInvoiceLinesLoader.cs" />
@@ -8373,6 +8382,35 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

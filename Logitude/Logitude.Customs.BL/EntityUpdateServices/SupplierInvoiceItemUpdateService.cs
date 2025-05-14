@@ -165,16 +165,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
 
-            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && !string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription)) 
+            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription)))
             {
                 if(string.IsNullOrEmpty(entityPM.ClassificationCode))
                 {
                     ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
                     declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, true);
-                    
+
                     if (declarationPM != null && declarationPM?.Direction == "E" && !string.IsNullOrEmpty(declarationPM.ExporterImporterCode))
                     {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(entityPM.ItemCode, declarationPM.ExporterImporterCode, entityPM.Tenant);
+                        string itemKey = $"{(entityPM.ItemCode ?? "")}_{(entityPM.ItemDescription ?? "")}";
+
+                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenantByItemKey(itemKey, declarationPM.ExporterImporterCode, entityPM.Tenant);
                         if(clientItem != null)
                         {
                             entityPM.ClassificationCode = clientItem?.ClassificationCode;

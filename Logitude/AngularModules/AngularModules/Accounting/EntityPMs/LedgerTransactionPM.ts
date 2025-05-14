@@ -399,10 +399,13 @@ export class LedgerTransactionPM {
     public set AmountInNIS(newValue: number) { if (this.amountInNIS != newValue) { this.amountInNIS = newValue; this.MarkAsDirty("AmountInNIS"); } }
        
 	 
-    private isExternalEntity: boolean;
+     private isExternalEntity: boolean;
     public get IsExternalEntity() { return this.isExternalEntity; }
     public set IsExternalEntity(newValue: boolean) { if (this.isExternalEntity != newValue) { this.isExternalEntity = newValue; this.MarkAsDirty("IsExternalEntity"); } }
-       
+     private bankName: string;
+    public get BankName() { return this.bankName; }
+    public set BankName(newValue: string) { if (this.bankName != newValue) { this.bankName = newValue; this.MarkAsDirty("BankName"); } }
+        
 	 
 
     public OldEntityPM: LedgerTransactionPM;
@@ -432,4 +435,4 @@ export class LedgerTransactionPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

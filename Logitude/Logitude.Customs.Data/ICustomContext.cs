@@ -63,6 +63,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_CustomsItemLinkage> CB_CustomsItemLinkages { get; }
 		 IDbSet<CB_LevyCondition> CB_LevyConditions { get; }
 		 IDbSet<CB_LevyExclusion> CB_LevyExclusions { get; }
+		 IDbSet<CB_Preference> CB_Preferences { get; }
 		 IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys { get; }
 		 IDbSet<CB_Quota> CB_Quotas { get; }
 		 IDbSet<CB_QuotaComputedData> CB_QuotaComputedDatas { get; }

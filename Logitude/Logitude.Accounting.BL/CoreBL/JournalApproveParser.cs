@@ -231,7 +231,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void CreateLedger_MapByJournalActionType()
         {
-            foreach (JournalLinePM item in _JournalPM.JournalLines)
+            foreach (JournalLinePM item in _JournalPM.JournalLines?.Where(a=>a.ChangeSetOp != ChangeSetOperation.Delete))
             {
                 switch (item.EnsureSettingActionTypeCodeEnum())
                 {
@@ -717,7 +717,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CheckLedgerTransactions()
         {
             var TotalLocalAmountInJornal = _JournalPM.JournalLines
-                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != JournalActionTypeEnum.Debit) // Why credit ? credit is not vat splitded (like debit)
+                .Where(jl => jl.EnsureSettingActionTypeCodeEnum() != JournalActionTypeEnum.Debit && jl.ChangeSetOp != ChangeSetOperation.Delete) // Why credit ? credit is not vat splitded (like debit)
                  .Sum(jl => jl.LocalAmount);
 
             var totalLocalAmountCredit = LedgerTransactions.Sum(rec => rec.LocalAmountCredit);

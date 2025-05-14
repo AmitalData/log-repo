@@ -224,6 +224,9 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public string ContactId { get; set; }
 	      
         public virtual Contact Contact { get; set; }
+
+        [Column("MarkDate")]
+        public DateTime? MarkDate { get; set; }
     }
 }
 	 

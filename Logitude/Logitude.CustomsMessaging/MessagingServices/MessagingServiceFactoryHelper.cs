@@ -663,6 +663,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
            DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService>
            ((new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService()).MainInterfaceCode);
         
+              ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+           DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService>
+           ((new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService()).MainInterfaceCode);
+        
             
             ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
                 DCAInUCB8373_MsgMessagingService>
@@ -672,14 +676,6 @@ namespace Logitude.CustomsMessaging.MessagingServices
         {
             Debug.WriteLine("this method its to enshur static constractor is up ");
         }
-        //public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
-        //    CustomsCommandEnum myCustomsCommandEnum)
-        //{
-        //    MessagingServiceFactoryHelper.InitContainer();
-        //    var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
-        //    anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-
-        //}
 
         public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode, string correlationId = "")
         {

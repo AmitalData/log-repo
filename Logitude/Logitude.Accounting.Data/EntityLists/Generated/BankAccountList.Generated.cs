@@ -94,6 +94,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TotalOpenPagesLines  { get; set; }
        [DataMember]
        public int? ChequeCounterSeriesID  { get; set; }
+       [DataMember]
+       public bool? FactoringBank  { get; set; }
    }
 
 }

@@ -5,6 +5,7 @@ import { ReportFliter } from '../../../Components/Filters/ReportFliter';
 import { QueryFilterItem } from '../../../Components/Filters/QueryFilterItem';
 import { ReportsPreviewComponent } from '../../../Components/ReportsPreviewComponent';
 import { DateTool, AppTool } from '../../../../Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     
@@ -35,8 +36,8 @@ export class BluesnapPaymentsReportFilterComponent extends BaseComponent {
     public ShowAllRecurringTenants: boolean;
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
-
-    RunReport(isloading: boolean) {
+  
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
 
         if (this.FromDate != null && this.ToDate != null) {
@@ -52,34 +53,81 @@ export class BluesnapPaymentsReportFilterComponent extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.FromDate)) {
             this.ValidationErrorsList.push("From Date is required");
         }
+        return this.ValidationErrorsList.length == 0;
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+   
+      
+   
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate= new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ShowAllRecurringTenants":
+                    this.ShowAllRecurringTenants = queryFilterItem.FieldValue;
+                    break;
+                                 
+            }
+                  
+        }
+    }
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "FromDate";
+        this.queryFilterItem.FieldValue = this.FromDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FromDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ToDate";
+        this.queryFilterItem.FieldValue = this.ToDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItems.push(this.queryFilterItem);
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ToDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItems.push(this.queryFilterItem);
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ShowAllRecurringTenants";
+        this.queryFilterItem.FieldValue = this.ShowAllRecurringTenants;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+        return this.queryFilterItems;
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ShowAllRecurringTenants";
-            this.queryFilterItem.FieldValue = this.ShowAllRecurringTenants;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
+    }
+    RunReport(isloading: boolean) {
+      
+        if (this.ValidateSelectedFilters()) {
+           
             var reportFliter = new ReportFliter();
             reportFliter.Tenant = SessionLocator.Tenant;
-            reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             reportFliter.ReportCode = this.ReportsPreview.Report.Code;

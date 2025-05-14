@@ -160,6 +160,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_LevyExclusionMap());
 	
+            modelBuilder.Configurations.Add(new CB_PreferenceMap());
+	
             modelBuilder.Configurations.Add(new CB_PropertiesDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_QuotaMap());
@@ -1812,6 +1814,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_LevyExclusion> CB_LevyExclusions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_Preference> CB_Preferences 
 	 {
 	      get; set;
 	 

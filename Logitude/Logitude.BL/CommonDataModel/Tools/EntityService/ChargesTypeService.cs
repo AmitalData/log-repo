@@ -13,6 +13,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.CustomFields;
 using System.Linq;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.InvoiceModel;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -89,7 +94,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 FullChargesGroupId(entityPM);
             }
-
+            if (this.entityPm.PayableDebitGLAcountId != this.Poco.PayableDebitGLAcountId)
+            {
+                this.UpdatePayableDebitGLAccountInAPInvoiceLine();
+            }
             ChargesTypeTracing.Trace(entityPM, Poco, isNewEntity);         
             ChargesTypeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
@@ -97,6 +105,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ChargesTypePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(tenant, "ChargesType");
+            
         }
 
         private void UpdateChargeTypeAccountingsCollection()
@@ -128,6 +137,54 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         default: { break; }
                     }
                 }
+            }
+        }
+
+        private void UpdatePayableDebitGLAccountInAPInvoiceLine()
+        {
+            using (InvoiceContext invoiceContext = new InvoiceContext())
+            {
+                APInvoiceLineRepository apInvoiceLineRepository = new APInvoiceLineRepository(invoiceContext);
+                APInvoiceQuery qpInvoiceQuery = new APInvoiceQuery();
+                List<APInvoiceLine> apInvoiceLines = qpInvoiceQuery.GetAPInvoiceLinesByChargeTypeId(entityPm.Id, entityPm.Tenant).ToList();
+
+                foreach (APInvoiceLine apInvoiceLine in apInvoiceLines)
+                {
+                    APInvoiceLine newApInvoiceLine = new APInvoiceLine
+                    {
+                        APInvoiceId = apInvoiceLine.APInvoiceId,
+                        LineNumber = apInvoiceLine.LineNumber,
+                        Tenant = apInvoiceLine.Tenant,
+                        InvoiceCurrencyAmount = apInvoiceLine.InvoiceCurrencyAmount,
+                        LocalCurrencyAmount = apInvoiceLine.LocalCurrencyAmount,
+                        ProfitCurrencyAmount = apInvoiceLine.ProfitCurrencyAmount,
+                        Notes = apInvoiceLine.Notes,
+                        ChargesTypeId = apInvoiceLine.ChargesTypeId,
+                        VatTypeId = apInvoiceLine.VatTypeId,
+                        EntityId = apInvoiceLine.EntityId,
+                        EntityPayableId = apInvoiceLine.EntityPayableId,
+                        RefundAmount = apInvoiceLine.RefundAmount,
+                        VatPercentage = apInvoiceLine.VatPercentage,
+                        VatAmount = apInvoiceLine.VatAmount,
+                        ForiegnCurrencyId = apInvoiceLine.ForiegnCurrencyId,
+                        ForiegnCurrencyAmount = apInvoiceLine.ForiegnCurrencyAmount,
+                        ForiegnExchangeRate = apInvoiceLine.ForiegnExchangeRate,
+                        DebitAccount = apInvoiceLine.DebitAccount,
+                        Description = apInvoiceLine.Description,
+                        LocalDescription = apInvoiceLine.LocalDescription,
+                        ChargeTypeGLAccountId = apInvoiceLine.ChargeTypeGLAccountId,
+                        AuthorizedSignatory = apInvoiceLine.AuthorizedSignatory,
+                        PrepaidCollectId = apInvoiceLine.PrepaidCollectId,
+                        ContainerTypeId = apInvoiceLine.ContainerTypeId,
+                        Quantity = apInvoiceLine.Quantity,
+                        AutomaticLastUpdateDate = apInvoiceLine.AutomaticLastUpdateDate,
+                        PayableDebitGLAcountId = entityPm.PayableDebitGLAcountId 
+                    };
+
+                    apInvoiceLineRepository.Update(newApInvoiceLine);
+                }
+
+                invoiceContext.SaveChanges();
             }
         }
         private void CreateChargeTypeAccounting(ChargeTypeAccountingPM itemPM)

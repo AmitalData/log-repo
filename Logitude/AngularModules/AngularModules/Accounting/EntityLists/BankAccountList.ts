@@ -48,6 +48,7 @@ export class BankAccountList {
 	TotalOpenExternalTransactions: string;
 	TotalOpenPagesLines: string;
 	ChequeCounterSeriesID: number;
+	FactoringBank: boolean;
 	
 }
  
