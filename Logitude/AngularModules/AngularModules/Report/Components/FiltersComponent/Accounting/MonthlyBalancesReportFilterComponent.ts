@@ -121,7 +121,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                 this.chartOfAccounts = arg.Result;                
                 this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
                     Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
-                    Checked: this.ChartOfAccountsComboBoxValue == "NotAll" && this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id)
+                    Checked: this.ChartOfAccountsComboBoxValue === "NotAll" && this.AdditionalServiceSelectedValue.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id)
 
                 }}).sort((a, b) => a.Code - b.Code);            });
 
@@ -168,7 +168,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                     this.NumberOfYear = queryFilterItem.FieldValue;
                     break;
                 case "ChartOfAccountsIdList":
-                    {  this.ChartOfAccountsComboBoxValue =  queryFilterItem.FieldValue=="All"?"All":"NotAll"; 
+                    {  this.ChartOfAccountsComboBoxValue =  queryFilterItem.FieldValue === "All"?"All":"NotAll"; 
                        this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
                        
                        break;
