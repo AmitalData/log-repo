@@ -593,7 +593,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 
 
-        private IQueryable<Declaration> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Declaration> iQueryable, int tenant)
+        public IQueryable<Declaration> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<Declaration> iQueryable, int tenant)
         {
             DeclarationCustomFilters filters = new DeclarationCustomFilters();
 

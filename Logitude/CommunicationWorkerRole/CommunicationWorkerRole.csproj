@@ -655,6 +655,7 @@
     <Compile Include="ImporterEventTypesWorkerRole.cs" />
     <Compile Include="ImporterPortsWorkerRole.cs" />
     <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
+    <Compile Include="IndexSearchWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />

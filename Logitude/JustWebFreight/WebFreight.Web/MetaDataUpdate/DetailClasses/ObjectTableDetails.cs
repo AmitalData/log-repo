@@ -109,5 +109,6 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
 		public string RelatedEntity { get; set; }
 		public string ThisKey { get; set; }
 		public string RelatedKey { get; set; }
-	}
+        public bool ShowFastSearch { get; set; }
+    }
 }

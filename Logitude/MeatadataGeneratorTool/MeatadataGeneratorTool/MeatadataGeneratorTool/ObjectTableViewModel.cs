@@ -1345,6 +1345,13 @@ namespace MeatadataGeneratorTool
             set { tenantZeroData = value; FirePropertyChanged("TenantZeroData"); }
         }
 
+        bool showFastSearch = false;
+        public bool ShowFastSearch
+        {
+            get { return showFastSearch; }
+            set { showFastSearch = value; FirePropertyChanged("ShowFastSearch"); }
+        }
+
 
         bool hasApiHelper;
         public bool HasApiHelper

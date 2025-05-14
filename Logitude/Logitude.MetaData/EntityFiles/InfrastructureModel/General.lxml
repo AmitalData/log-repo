@@ -6771,8 +6771,15 @@
       LocalDefaultText="&quot;שנה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.FastSearch&quot;"
+      DefaultText="&quot;Fast Search&quot;"
+      LocalDefaultText="&quot;חיפוש מהיר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-   <AdditionalFeatures>
+
+  <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -9244,6 +9251,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.DOCUMENTSMETADATATYPES&quot;"
       FeatureDefaultText="&quot;Documents Metadata Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;FASTSEARCH&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.FASESEARCH&quot;"
+      FeatureDefaultText="&quot;Fast Search&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

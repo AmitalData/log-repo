@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
-//using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using MeatadataGeneratorTool.QueryModule;
 using MeatadataGeneratorTool.ScreensModule;
 using MeatadataGeneratorTool.TabsModule;
@@ -1100,6 +1099,7 @@ namespace MeatadataGeneratorTool
             SetAttribute("IsBusinessUnitEnabled", table.IsBusinessUnitEnabled.ToString().ToLower(), entityElement);
             SetAttribute("ParentObjectTableName", GetStringValue(table.ParentObjectTableName), entityElement);
             SetAttribute("TenantZeroData", table.TenantZeroData.ToString().ToLower(), entityElement);
+            SetAttribute("ShowFastSearch", table.ShowFastSearch.ToString().ToLower(), entityElement);
 
             if (table.IsMetadataOnlyTable != false)
             {

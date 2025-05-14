@@ -9,6 +9,8 @@ using Azure.Search.Documents.Models;
 using System.Threading.Tasks;
 using System.Data;
 using System.Net;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Threading;
 
 namespace Simplog.Data.AzureSearch.Repo
 {
@@ -35,10 +37,20 @@ namespace Simplog.Data.AzureSearch.Repo
             this.serviceName = serviceName;
         }
 
-        public async Task DeleteAsync(List<T> records)
+        public SearchClient GetSearchClient() => new SearchClient(serviceEndpoint, indexName, credential);        
+
+        public async Task<IList<SearchField>> GetFieldsAsync(bool useCache = true)
         {
-            await adminClient.GetSearchClient(indexName).DeleteDocumentsAsync(records);
+            string key = "indexSearchFields;" + indexName;
+
+            Func<Task<Response<SearchIndex>>> fun = () => adminClient.GetIndexAsync(indexName);
+
+            Task<Response<SearchIndex>> val = useCache ? CacheManager.GetOrInsertNewObject(key, fun) : fun();
+            return (await val).Value.Fields;
         }
+
+        public async Task<Response<IndexDocumentsResult>> DeleteAsync(List<T> records, CancellationToken cancellationToken = default) =>
+            await adminClient.GetSearchClient(indexName).DeleteDocumentsAsync(records, null, cancellationToken);
 
         public async Task DropAsync()
         {

@@ -299,6 +299,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 										   RelatedEntity = a.RelatedEntity,
 										   ThisKey = a.ThisKey,
 										   RelatedKey = a.RelatedKey,
+                                           ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
 									   }).ToList();
             }
             if (tenant != 0)
@@ -403,7 +404,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 											RelatedEntity = a.RelatedEntity,
 											ThisKey = a.ThisKey,
 											RelatedKey = a.RelatedKey,
-										}).ToList();
+                                            ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
+                                        }).ToList();
 
             CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
 
