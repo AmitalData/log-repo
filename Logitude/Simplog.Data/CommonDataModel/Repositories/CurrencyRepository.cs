@@ -133,6 +133,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entity;
         }
 
+        public Currency GetSingleCurrencyByIdOrCode(string InvoiceCurrency, int tenant)
+        {
+            return context.Currencies
+                          .FirstOrDefault(a => a.Tenant == tenant && (a.Code == InvoiceCurrency || a.Id == InvoiceCurrency));
+        }
+
         public Currency GetSingleCurrencyById(string id, int tenant, bool getFromCache)
         {
             string entityName = "Currency" + id + tenant;
