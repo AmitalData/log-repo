@@ -5,8 +5,9 @@ import {ModuleProviders} from './ModuleProviders';
 import {ModuleCustomsControls} from '../CustomsModules/CustomsControls/ModuleCustomsControls';
 import {ModuleCustomsCourier} from '../CustomsModules/CustomsCourier/ModuleCustomsCourier';
 import {ModulePhysicalCheck} from '../CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
-    imports: [InfrastructureModule, ModuleCustomsControls, ModuleCustomsCourier, ModulePhysicalCheck],
+    imports: [InfrastructureModule, ModuleCustomsControls, ModuleCustomsCourier, ModulePhysicalCheck, HttpClientModule],
     exports: [ModuleCustomsControls, ModuleCustomsCourier, ModulePhysicalCheck],
     declarations: [...Components],
     entryComponents: [...Components],
