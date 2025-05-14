@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace CommunicationWorkerRole.RestRequestExecutor
 {
@@ -32,55 +35,62 @@ namespace CommunicationWorkerRole.RestRequestExecutor
         public async Task<ApiResponse<TResponse>> ExecuteAsync<TRequest, TResponse>(ApiRequest<TRequest> request)
         {
             //Validate input
-            ValidateRequest(request);
-            string serializedRequestData = string.Empty;
-            string rawResponseContent = string.Empty;
-            string communicationLogId = string.Empty;
-
-            string exception = string.Empty;
+            ValidateRequest(request);            
+            string rawResponseContent = string.Empty;                        
             var apiCommunicationLog = new ApiCommunicationLog();
             var responseToReturn = new ApiResponse<TResponse>();
             try
-            {
-                var httpClient = new HttpClient
-                {
-                    Timeout = TimeSpan.FromMilliseconds(request.Header.Timeout)
-                };
-
-                serializedRequestData = JsonConvert.SerializeObject(request.Data);
-
+            {                              
                 //Send request   
                 var response = await _retryPolicy.ExecuteAsync(() =>
                 {
-                    var httpRequest = BuildHttpRequest(request, serializedRequestData);
+                    var httpClient = new HttpClient {Timeout = TimeSpan.FromMilliseconds(request.Header.Timeout)};
+                    var httpRequest = BuildHttpRequest(request);
                     var result = httpClient.SendAsync(httpRequest);
                     rawResponseContent = result.Result?.Content?.ReadAsStringAsync()?.Result;
                     return result;
                 });
-
-                responseToReturn = HandleResponse<TResponse>(response, rawResponseContent);
+                if (request.IsSoapRequest)
+                {
+                    rawResponseContent = JsonConvert.SerializeObject(rawResponseContent);
+                }
+                    responseToReturn = HandleResponse<TResponse>(response, rawResponseContent);
             }
             catch (Exception ex)
             {
                 var error = HandleException<TResponse>(ex);
                 responseToReturn.ErrorCode = error.ErrorCode;
                 responseToReturn.ErrorMessage = error.ErrorMessage;
-            }
-            _ = Task.Run(() => LogCommunication(apiCommunicationLog, serializedRequestData, rawResponseContent, exception, request.Tenant));
+                rawResponseContent= error.ErrorMessage;
+            }            
+            _ = Task.Run(() => LogCommunication(apiCommunicationLog,
+                JsonConvert.SerializeObject(request.Data),
+                rawResponseContent,
+                responseToReturn.Success,
+                request.Tenant));
             return responseToReturn;
         }
 
 
-        private HttpRequestMessage BuildHttpRequest<TRequest>(ApiRequest<TRequest> request, string body)
+        private HttpRequestMessage BuildHttpRequest<TRequest>(ApiRequest<TRequest> request)
         {
             var httpRequest = new HttpRequestMessage(request.Header.Method, request.Url);
 
             foreach (var header in request.Header.ToDictionary())
-                httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-
+                httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);            
             if (request.Data != null && MethodSupportsBody(request.Header.Method))
             {
-                httpRequest.Content = new StringContent(body, Encoding.UTF8, request.Header.ContentType);
+                if (request.IsSoapRequest)
+                {
+                    var xmlBody = SerializeToXml(request.Data);
+                    var soapBody = WrapWithSoapEnvelope(xmlBody);
+                    httpRequest.Content = new StringContent(soapBody, Encoding.UTF8, "text/xml");
+                }
+                else
+                {
+
+                    httpRequest.Content = new StringContent(JsonConvert.SerializeObject(request.Data), Encoding.UTF8, request.Header.ContentType);
+                }
             }
 
             return httpRequest;
@@ -125,24 +135,12 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             return ApiResponse<TResponse>.Fail(message, code);
         }
 
-        private void LogCommunication(ApiCommunicationLog logger, string request, string responseOrException, string exception, int tenant)
+        private void LogCommunication(ApiCommunicationLog logger, string request, string responseOrException,bool success,  int tenant)
         {
             try
             {
-                var status = new StatusTypeCommunication();
-                var contentToLog = string.Empty;
-                if (string.IsNullOrEmpty(exception))
-                {
-                    contentToLog = responseOrException;
-                    status = StatusTypeCommunication.Done;
-                }
-                else
-                {
-                    contentToLog = exception;
-                    status = StatusTypeCommunication.Failed;
-                }
-
-                logger.AddCommunicationLog(request, contentToLog, tenant, status);
+                var status = success==true? StatusTypeCommunication.Done: StatusTypeCommunication.Failed;                
+                logger.AddCommunicationLog(request, responseOrException, tenant, status);
             }
             catch (Exception ex)
             {
@@ -163,5 +161,28 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             if (request.Header == null)
                 throw new ArgumentException("Header must be provided.", nameof(request.Header));
         }
+
+        private string WrapWithSoapEnvelope(string innerXml)
+        {
+            return $@"<?xml version=""1.0"" encoding=""utf-8""?>
+                 <soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
+                   xmlns:xsd=""http://www.w3.org/2001/XMLSchema""
+                   xmlns:soap=""http://schemas.xmlsoap.org/soap/envelope/"">
+                   <soap:Body>
+                       {innerXml}
+                    </soap:Body>
+                </soap:Envelope>";
+        }
+
+        private string SerializeToXml<T>(T data)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(T));
+            var stringWriter = new StringWriter();
+            var xmlWriter = XmlWriter.Create(stringWriter, new XmlWriterSettings { OmitXmlDeclaration = true });
+
+            xmlSerializer.Serialize(xmlWriter, data);
+            return stringWriter.ToString();
+        }
+
     }
 }
