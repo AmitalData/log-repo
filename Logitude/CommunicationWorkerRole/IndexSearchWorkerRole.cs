@@ -18,6 +18,7 @@ namespace CommunicationWorkerRole
 {
     public class IndexSearchWorkerRole : WorkerEntryPoint
     {
+        private bool isFirstTime = true;
         private const string AzureSearchAISetKey = "AzureSearchAI";
         private const string AzureSearchAIAdditionalKey = "Customs";
         private static readonly DevLog logger = DevLog.Instance;
@@ -29,24 +30,34 @@ namespace CommunicationWorkerRole
         private double removeOldIndexDataIntervalHours = 1;
         private double removeOldSearchDataIntervalHours = 1;
 
+        public override void WorkOnce()
+        {
+            if (!isFirstTime) return;
+
+            DevLog.Instance.WriteDebug("SyncRecordsCCUTableWR start run (WorkOnce)");
+
+            try
+            {
+                isFirstTime = false;
+                OnStart();
+            }
+            catch (Exception e)
+            {
+                logger.WriteFatal(e, "Error initializing IndexSearchWorkerRole");                
+            }
+        }
+
         public override void Run()
         {
             logger.WriteTrace("IndexSearchWorkerRole Run");
         }
+
         public override bool OnStart()
         {
             logger.WriteTrace("IndexSearchWorkerRole OnStart");
-
-            try
-            {
-                InitTenants();
-                InitScheduler();
-            }
-            catch (Exception e)
-            {
-                logger.WriteFatal(e, "Error initializing IndexSearchWorkerRole");
-                throw;
-            }
+           
+            InitTenants();
+            InitScheduler();          
 
             return base.OnStart();
         }
