@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.CloseTables
 {
-    public struct SiteLookupValues { }
+    public struct SiteLookupValues
+    {
+    }
+
  }
  

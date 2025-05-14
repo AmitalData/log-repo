@@ -16,6 +16,12 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct PhysicalCheckOperationValues
     {  
+        public const string Invite = "1";
+        public const string Update = "2";
+        public const string Cancel = "3";
+        public const string CancelInvitation = "4";
+        public const string EndMovedToAnotherSite = "5";
+        public const string EndMovedToCustomer = "6";
     }
  }
  

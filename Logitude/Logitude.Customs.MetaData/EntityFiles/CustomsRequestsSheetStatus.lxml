@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,10 +42,10 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Requests Sheet Status&quot;"
-  Code="&quot;de71&quot;"
+  Code="&quot;df86&quot;"
   Name="&quot;Customs.CustomsRequestsSheetStatus Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;ceac&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -212,6 +217,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -289,6 +295,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -362,6 +369,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -438,6 +446,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -535,7 +544,7 @@
       LocalName="&quot;ניתוח נכשל&quot;" />
     <Record
       Code="&quot;3&quot;"
-      EnglishName="&quot;In Process&quot;"
+      EnglishName="&quot;In Process_3&quot;"
       SearchFields="&quot;3,In Process,אמצע טיפול&quot;"
       Inactive="false"
       LocalName="&quot;אמצע טיפול&quot;" />
@@ -547,7 +556,7 @@
       LocalName="&quot;תשובה נותחה&quot;" />
     <Record
       Code="&quot;4&quot;"
-      EnglishName="&quot;Analyze Failed&quot;"
+      EnglishName="&quot;Analyze Failed_4&quot;"
       SearchFields="&quot;4,Analyze Failed,טיפול שגוי&quot;"
       Inactive="false"
       LocalName="&quot;טיפול שגוי&quot;" />
@@ -559,7 +568,7 @@
       LocalName="&quot;ממתין לחתימה&quot;" />
     <Record
       Code="&quot;6&quot;"
-      EnglishName="&quot;Cancelled&quot;"
+      EnglishName="&quot;Cancelled_6&quot;"
       SearchFields="&quot;6,Cancelled,מבוטלת&quot;"
       Inactive="false"
       LocalName="&quot;מבוטלת&quot;" />

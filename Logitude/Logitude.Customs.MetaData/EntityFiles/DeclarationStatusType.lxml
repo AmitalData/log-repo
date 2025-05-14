@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -42,7 +45,7 @@
   Code="&quot;DEST&quot;"
   Name="&quot;Customs.DeclarationStatusType&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;4ec9&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -135,6 +139,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -211,6 +216,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -287,6 +293,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -360,6 +367,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -436,6 +444,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -523,133 +532,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;0&quot;"
-      SearchFields="&quot;0,סטטוס לא ידוע&quot;"
-      Inactive="false"
-      LocalName="&quot;סטטוס לא ידוע&quot;" />
-    <Record
-      Code="&quot;1&quot;"
-      SearchFields="&quot;1,בוטל&quot;"
-      Inactive="false"
-      LocalName="&quot;בוטל&quot;" />
-    <Record
-      Code="&quot;10&quot;"
-      SearchFields="&quot;10,טיוטה הוגשה לתאריך עתידי&quot;"
-      Inactive="false"
-      LocalName="&quot;טיוטה הוגשה לתאריך עתידי&quot;" />
-    <Record
-      Code="&quot;11&quot;"
-      SearchFields="&quot;11,טיוטה ממתינה לאישור אילוץ הגשה&quot;"
-      Inactive="false"
-      LocalName="&quot;טיוטה ממתינה לאישור אילוץ הגשה&quot;" />
-    <Record
-      Code="&quot;12&quot;"
-      SearchFields="&quot;12,טיוטה שגויה&quot;"
-      Inactive="false"
-      LocalName="&quot;טיוטה שגויה&quot;" />
-    <Record
-      Code="&quot;13&quot;"
-      SearchFields="&quot;13,טיוטה תקינה, ממתין להגשה בכפוף לחובת חתימה&quot;"
-      Inactive="false"
-      LocalName="&quot;טיוטה תקינה, ממתין להגשה בכפוף לחובת חתימה&quot;" />
-    <Record
-      Code="&quot;14&quot;"
-      SearchFields="&quot;14,יש להגיש את ההצהרה מחדש&quot;"
-      Inactive="false"
-      LocalName="&quot;יש להגיש את ההצהרה מחדש&quot;" />
-    <Record
-      Code="&quot;15&quot;"
-      SearchFields="&quot;15,ממתין לאישור פיצול&quot;"
-      Inactive="false"
-      LocalName="&quot;ממתין לאישור פיצול&quot;" />
-    <Record
-      Code="&quot;16&quot;"
-      SearchFields="&quot;16,פוצל&quot;"
-      Inactive="false"
-      LocalName="&quot;פוצל&quot;" />
-    <Record
-      Code="&quot;17&quot;"
-      SearchFields="&quot;17,אסור ביבוא&quot;"
-      Inactive="false"
-      LocalName="&quot;אסור ביבוא&quot;" />
-    <Record
-      Code="&quot;18&quot;"
-      SearchFields="&quot;18,הסחורה נתפסה&quot;"
-      Inactive="false"
-      LocalName="&quot;הסחורה נתפסה&quot;" />
-    <Record
-      Code="&quot;19&quot;"
-      SearchFields="&quot;19,הותר - הצהרה שגויה&quot;"
-      Inactive="false"
-      LocalName="&quot;הותר - הצהרה שגויה&quot;" />
-    <Record
-      Code="&quot;2&quot;"
-      SearchFields="&quot;2,הוגש, הצהרה שגויה&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש, הצהרה שגויה&quot;" />
-    <Record
-      Code="&quot;20&quot;"
-      SearchFields="&quot;20,הותר ויצא מאתר בפיקוח מכס - הצהרה שגויה&quot;"
-      Inactive="false"
-      LocalName="&quot;הותר ויצא מאתר בפיקוח מכס - הצהרה שגויה&quot;" />
-    <Record
-      Code="&quot;21&quot;"
-      SearchFields="&quot;21,ממתין לאישור בקשת אחסנה&quot;"
-      Inactive="false"
-      LocalName="&quot;ממתין לאישור בקשת אחסנה&quot;" />
-    <Record
-      Code="&quot;22&quot;"
-      SearchFields="&quot;22,הוגש - הצהרה שגויה&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש - הצהרה שגויה&quot;" />
-    <Record
-      Code="&quot;23&quot;"
-      SearchFields="&quot;23,הוגש, ממתין לתיקון הצהרה&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש, ממתין לתיקון הצהרה&quot;" />
-    <Record
-      Code="&quot;24&quot;"
-      SearchFields="&quot;24,הוגש - ממתין לדיווח קליטה במסוף&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש - ממתין לדיווח קליטה במסוף&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      SearchFields="&quot;3,הוגש, מאושר להתרה&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש, מאושר להתרה&quot;" />
-    <Record
-      Code="&quot;4&quot;"
-      SearchFields="&quot;4,הוגש, ממתין לאישור אילוץ התרה&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש, ממתין לאישור אילוץ התרה&quot;" />
-    <Record
-      Code="&quot;5&quot;"
-      SearchFields="&quot;5,הוגש, ממתין להחלטת המכס&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש, ממתין להחלטת המכס&quot;" />
-    <Record
-      Code="&quot;6&quot;"
-      SearchFields="&quot;6,הוגש, ממתין להתרה&quot;"
-      Inactive="false"
-      LocalName="&quot;הוגש, ממתין להתרה&quot;" />
-    <Record
-      Code="&quot;7&quot;"
-      SearchFields="&quot;7,הותר&quot;"
-      Inactive="false"
-      LocalName="&quot;הותר&quot;" />
-    <Record
-      Code="&quot;8&quot;"
-      SearchFields="&quot;8,הותר ויצא מאתר בפיקוח המכס&quot;"
-      Inactive="false"
-      LocalName="&quot;הותר ויצא מאתר בפיקוח המכס&quot;" />
-    <Record
-      Code="&quot;9&quot;"
-      SearchFields="&quot;9,טיוטה בוטלה&quot;"
-      Inactive="false"
-      LocalName="&quot;טיוטה בוטלה&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
