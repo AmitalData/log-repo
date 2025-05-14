@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
+using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
 namespace CommunicationWorkerRole.RestRequestExecutor
 {
@@ -35,99 +36,119 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             string serializedRequestData = string.Empty;
             string rawResponseContent = string.Empty;
             string communicationLogId = string.Empty;
-            StatusTypeCommunication statusTypeCode;
+
             string exception = string.Empty;
             var apiCommunicationLog = new ApiCommunicationLog();
-            ApiResponse<TResponse> responseToReturn;
+            var responseToReturn = new ApiResponse<TResponse>();
             try
-            {                
+            {
                 var httpClient = new HttpClient
                 {
                     Timeout = TimeSpan.FromMilliseconds(request.Header.Timeout)
                 };
 
-                serializedRequestData = JsonConvert.SerializeObject(request.Data);                
+                serializedRequestData = JsonConvert.SerializeObject(request.Data);
 
                 //Send request   
-                var response=await _retryPolicy.ExecuteAsync(() =>
+                var response = await _retryPolicy.ExecuteAsync(() =>
                 {
-                    var retryRequest = new HttpRequestMessage(request.Header.Method, request.Url);
+                    var httpRequest = BuildHttpRequest(request, serializedRequestData);
+                    var result = httpClient.SendAsync(httpRequest);
+                    rawResponseContent = result.Result?.Content?.ReadAsStringAsync()?.Result;
+                    return result;
+                });
 
-                    foreach (var header in request.Header.ToDictionary())
-                        retryRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
-
-                    if (request.Data != null && MethodSupportsBody(request.Header.Method))
-                    {
-                        retryRequest.Content = new StringContent(
-                            serializedRequestData,
-                            Encoding.UTF8,
-                            request.Header.ContentType);
-                    }
-
-                    var result=   httpClient.SendAsync(retryRequest);
-                    rawResponseContent = result.Result?.Content?.ReadAsStringAsync()?.Result;                    
-                    return result;                                       
-                });                            
-               
-                if (response.IsSuccessStatusCode)
-                {                    
-                    responseToReturn = JsonConvert.DeserializeObject<TResponse>(rawResponseContent);
-                }
-                else
-                {
-                    //Improve failure logging
-                    responseToReturn = ApiResponse<TResponse>.Fail(
-                        $"Request failed. StatusCode: {(int)response.StatusCode} Response: {rawResponseContent}",
-                        (int)response.StatusCode
-                    );
-                }                
-            }
-            catch (HttpRequestException ex)
-            {
-                exception = $"HTTP request error: {ex.Message}";
-                responseToReturn =ApiResponse<TResponse>.Fail(exception, 9001);
-            }
-            catch (TaskCanceledException ex)
-            {
-                exception = $"Request timeout or canceled: {ex.Message}";
-                responseToReturn =ApiResponse<TResponse>.Fail(exception, 9002);
-            }
-            catch (JsonSerializationException ex)
-            {
-                exception = $"Serialization error: {ex.Message}";
-                responseToReturn =ApiResponse<TResponse>.Fail(exception, 9003);
+                responseToReturn = HandleResponse<TResponse>(response, rawResponseContent);
             }
             catch (Exception ex)
             {
-                exception = $"Exception: {ex.Message}. StackTrace: {ex.StackTrace}";
-                responseToReturn =ApiResponse<TResponse>.Fail(exception, 9000);
+                var error = HandleException<TResponse>(ex);
+                responseToReturn.ErrorCode = error.ErrorCode;
+                responseToReturn.ErrorMessage = error.ErrorMessage;
             }
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    var responseForLog = rawResponseContent;
-                    if (string.IsNullOrEmpty(exception))
-                    {
-                        statusTypeCode=StatusTypeCommunication.Done;
-
-                    }
-                    else
-                    {
-                        statusTypeCode = StatusTypeCommunication.Failed;
-                        responseForLog= exception;
-                    }                                       
-
-                    apiCommunicationLog.AddCommunicationLog(serializedRequestData, responseForLog, request.Tenant, statusTypeCode);                    
-                }
-                catch 
-                {
-                    //Later, register here for the log by nlog
-                }
-            });
-
+            _ = Task.Run(() => LogCommunication(apiCommunicationLog, serializedRequestData, rawResponseContent, exception, request.Tenant));
             return responseToReturn;
-        }       
+        }
+
+
+        private HttpRequestMessage BuildHttpRequest<TRequest>(ApiRequest<TRequest> request, string body)
+        {
+            var httpRequest = new HttpRequestMessage(request.Header.Method, request.Url);
+
+            foreach (var header in request.Header.ToDictionary())
+                httpRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+
+            if (request.Data != null && MethodSupportsBody(request.Header.Method))
+            {
+                httpRequest.Content = new StringContent(body, Encoding.UTF8, request.Header.ContentType);
+            }
+
+            return httpRequest;
+        }
+
+        private ApiResponse<TResponse> HandleResponse<TResponse>(HttpResponseMessage response, string rawContent)
+        {
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<TResponse>(rawContent);
+
+            return ApiResponse<TResponse>.Fail(
+                $"Request failed. StatusCode: {(int)response.StatusCode}, Response: {rawContent}",
+                (int)response.StatusCode
+            );
+        }
+
+        private ApiResponse<TResponse> HandleException<TResponse>(Exception ex)
+        {
+            string message;
+            int code;
+
+            switch (ex)
+            {
+                case HttpRequestException httpEx:
+                    message = $"HTTP request error: {httpEx.Message}";
+                    code = 9001;
+                    break;
+                case TaskCanceledException cancelEx:
+                    message = $"Request timeout or canceled: {cancelEx.Message}";
+                    code = 9002;
+                    break;
+                case JsonSerializationException jsonEx:
+                    message = $"Serialization error: {jsonEx.Message}";
+                    code = 9003;
+                    break;
+                default:
+                    message = $"Unhandled exception: {ex.Message}. StackTrace: {ex.StackTrace}";
+                    code = 9000;
+                    break;
+            }
+
+            return ApiResponse<TResponse>.Fail(message, code);
+        }
+
+        private void LogCommunication(ApiCommunicationLog logger, string request, string responseOrException, string exception, int tenant)
+        {
+            try
+            {
+                var status = new StatusTypeCommunication();
+                var contentToLog = string.Empty;
+                if (string.IsNullOrEmpty(exception))
+                {
+                    contentToLog = responseOrException;
+                    status = StatusTypeCommunication.Done;
+                }
+                else
+                {
+                    contentToLog = exception;
+                    status = StatusTypeCommunication.Failed;
+                }
+
+                logger.AddCommunicationLog(request, contentToLog, tenant, status);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }                       
         private bool MethodSupportsBody(HttpMethod method)
         {
             return method == HttpMethod.Post || method == HttpMethod.Put;
