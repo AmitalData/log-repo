@@ -216,7 +216,7 @@ LEFT JOIN BankAccounts ba ON b.DepositBankAccountId = ba.Id
 WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)
  AND a.Tenant = @tenant
  group by  a.AccountId
-)  FUTQ ON FUTQ.CreditAccountId = GL.ID
+)  FUTQ ON FUTQ.AccountId = GL.ID
 LEFT JOIN 
     (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
 	 C ON GL.CardsDataId = C.Id
