@@ -852,17 +852,9 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     left = 40;
                 }
                 this.TotalWidth = 0;
-                //var i = 0;
                 this.customcolumns = [];
-                //var temp = this.cols.changes;
                 this.cols.toArray().forEach((value, key) => {
-                    ////HeaderTemplateDiv
-                    ////HeaderHeight
-                    //var temp = document.getElementById('HeaderTemplateDiv' + i);
-                    //var cHeight = temp.clientHeight;
-                    //if (cHeight > this.HeaderHeight) {
-                    //    this.HeaderHeight = cHeight;
-                    //}
+                    
                     if (value.hastemplate) {
                         value.index = index;
                         index++;
@@ -870,10 +862,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     if (value.Editable == undefined) {
                         value.Editable = true;
                     }
-                    //if (value.required == undefined) {
-                    //    value.required = false;
-                    //}
-
                     value.Style = {
                         width: + (value.visibility == 'hidden' ? 0 : value.width) + 'px',
                         left: (value.visibility == 'hidden' ? 0 : left) + 'px',
@@ -935,60 +923,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.cd.detectChanges();
         this.noComponent = true;
         var i = 0;
-        //if (this.ItemSource) {
-        //    if (this.groupby) {
-        //        var group = new GroupByPipe().transform(this.ItemSource, this.groupby);
-        //        group.forEach((value, key) => {
-        //            var row: IRow = { rowIndex: i, rowData: value.key, DetailsIcon: "-", IsDetailesOpened: true, Type: "Head" };
-        //            row.styles = {
-        //                'top': (row.rowIndex * this.rowHeight) + "px",
-        //                'min-width': '100%',
-        //                'width': '100%'
-        //            };
-        //            row.Groupstyles = {
-        //                'top': (row.rowIndex * this.rowHeight) + "px",
-        //                'min-width': '100%',
-        //                'width': '100%'
-        //            };
-        //            this.rows.push(row);
-        //            i++;
-        //            value.value.forEach((item, key) => {
-        //                var row: IRow = { rowIndex: i, rowData: item, DetailsIcon: "+", IsDetailesOpened: false, Type: "Body" };
-        //                row.styles = {
-        //                    'top': (row.rowIndex * this.rowHeight) + "px",
-        //                    'min-width': '100%',
-        //                    'width': '100%'
-        //                };
-        //                row.Groupstyles = {
-        //                    'top': (row.rowIndex * this.rowHeight) + "px",
-        //                    'min-width': '100%',
-        //                    'width': '100%'
-        //                };
-        //                this.rows.push(row);
-        //                i++;
-        //            });
-        //        });
-        //    }
-        //    else {
-        //        this.ItemSource.forEach((value, key) => {
-        //            //var rowData = value;
-        //            var row: IRow = { rowIndex: i, rowData: value, DetailsIcon: "+", IsDetailesOpened: false, Type: "Body" };
-        //            row.styles = {
-        //                'top': (row.rowIndex * this.rowHeight) + (this.groupby ? 27 : 0) + "px",
-        //                'min-width': '100%',
-        //                'width': '100%'
-        //            };
-        //            row.Groupstyles = {
-        //                'top': (row.rowIndex * this.rowHeight) + "px",
-        //                'min-width': '100%',
-        //                'width': '100%'
-        //            };
-        //            this.rows.push(row);
-        //            i++;
-        //        });
-        //    }
-        //}
-        i = 0;
         this.FinishLoadingSub = this.FinishLoading.subscribe((res) => {
             var grouptop = 0;
             var top = 0;
@@ -1006,21 +940,19 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                             'top': Bodytop + "px",
                             'min-width': this.TotalWidth + 'px',
                             'width': '100%'
-                            //'min-width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px',
-                            //'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
                         };
                         var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
                         var DetailsDivHeight = 0;
                         var OpenedItemsHeight = 0;
                         if (DetailsDiv) {
-                            DetailsDivHeight = DetailsDiv.clientHeight;// != 0 ? DetailsDiv.clientHeight : 100;
+                            DetailsDivHeight = DetailsDiv.clientHeight;
                             OpenedItemsHeight += DetailsDivHeight;
                         }
 
                         top += (this.rowHeight) + DetailsDivHeight;
 
 
-                        Bodytop = top + this.HeaderHeight;//27;
+                        Bodytop = top + this.HeaderHeight;
                     }
                 });
             }
@@ -1054,19 +986,13 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     Bodytop = top + this.HeaderHeight;//27;
 
                 });
-                //if (this.rowsBuffer.filter(a => a.rowIndex == value.rowIndex).length > 0) {
-                //    this.rowsBuffer.filter(a => a.rowIndex == value.rowIndex)[0] = value;
-                //} 
                 this.canvasHeight = {
-                    //'top': this.HeaderHeight + 'px',
                     height: (this.rowCount * this.rowHeight) + DetailsHeight + 'px',
-                    'width': '100%',//this.TotalWidth + 'px',
-                    'min-width': this.TotalWidth + 'px'//(this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
+                    'width': '100%',
+                    'min-width': this.TotalWidth + 'px'
                 };
                 this.BodyTop = this.HeaderHeight;
-                //this.updateDisplayList();
             }
-
         });
 
         this.FinishLoadingGroupsSub = this.FinishLoadingGroups.subscribe((res) => {
@@ -1099,14 +1025,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     height = height + this.rowHeight;
                 }
             });
-            //this.canvasHeight = {
-            //    height: height + 'px'
-            //};
             this.canvasHeight = {
-                //'top': this.HeaderHeight + 'px',
                 height: this.rowCount * this.rowHeight + 'px',
-                'width': '100%',//this.TotalWidth + 'px',
-                'min-width': this.TotalWidth + 'px'//(this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
+                'width': '100%',
+                'min-width': this.TotalWidth + 'px'
             };
             this.BodyTop = this.HeaderHeight;
         });
@@ -1126,7 +1048,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 else {
                     this.ShowCollapseAllIcon = true;
                     value.DetailsIcon = "./Images/CustomtreeIcon2.png";
-                    //value.Detailsstyles = this.getRowDetailsStylesbyIndex(value.rowIndex);
                 }
             }
         });
@@ -1175,7 +1096,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 else {
                     value.DetailsIcon = "./Images/CellIcons/Arrowup.png";
                 }
-                //this.cd.detectChanges();
             }
         });
         this.cd.detectChanges();
@@ -1220,7 +1140,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     }
 
     init() {
-
         this.RowClass = "Row ag-row";
         this.rowsBuffer = [];
         if (this.ViewHeight == null || this.ViewWidth == null || (this.ViewHeight <= 0 && this.ViewWidth <= 0)) {
@@ -1229,19 +1148,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             this.ViewWidth = RowsElement.clientWidth;
         }
         this.headerStyle = {
-            //'width': (this.ViewWidth) + 'px',
-            //'min-width': (this.ViewWidth) + 'px'
             'height': this.HeaderHeight + 'px',
             'width': '100%',
             'min-width': this.TotalWidth + 'px',
-            //(this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
         };
-        //this.canvasHeight = {
-        //    height: this.rowCount * this.rowHeight + 'px',
-        //    'width': (this.ViewWidth) + 'px',
-        //    'min-width': (this.ViewWidth) + 'px'
-        //};
-
         this.rowStyle.minWidth = this.ViewWidth + 'px';
         this.viewportSize = Math.round(this.ViewHeight / this.rowHeight);
         this.tripleViewport = this.viewportSize * 3;
@@ -1255,14 +1165,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         else {
             this.rowCount = this.ItemSource.Length;
         }
-        //this.canvasHeight = {
-        //    height: this.rowCount * this.rowHeight + 'px'
-        //};
         this.canvasHeight = {
-            //'top': this.HeaderHeight + 'px',
             height: this.rowCount * this.rowHeight + 'px',
-            'width': '100%',//this.TotalWidth + 'px',
-            'min-width': this.TotalWidth + 'px'////(this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
+            'width': '100%',
+            'min-width': this.TotalWidth + 'px'
         };
         this.BodyTop = this.HeaderHeight;
         this.height = this.rowCount * this.rowHeight;
@@ -1275,102 +1181,14 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         }
         this.SetSelectedRows();
         var i = 0;
-        //this.cols.toArray().forEach((value, key) => {
-        //    var temp = document.getElementById('HeaderTemplateDiv' + i);
-        //    var cHeight = temp.clientHeight;
-        //    if (cHeight > this.HeaderHeight) {
-        //        this.HeaderHeight = cHeight;
-        //    }
-        //});
-
     };
-
-    //renderRows(res: any[]) {
-    //    //if (this.SourceItems == null) {
-    //    //    this.SourceItems = [];
-    //    //}
-    //    if (res.length < this.viewportSize || res.length < this.rowsPerPage) {
-    //        this.ViewPortRowCount = res.length;
-    //    }
-
-    //    var firstRow = Math.floor(this.scrollTop / this.rowHeight);
-    //    var currentPage = Math.max(Math.floor(this.scrollTop / this.rowHeight / this.rowsPerPage), 0);
-
-    //    res.forEach((value, key) => {
-    //        //if (value.RowIndex >= this.rowCount) {
-    //        //    return;
-    //        //}
-    //        //console.log("RowIndex", value.RowIndex);
-    //        if (value.RowIndex >= this.rowCount) {
-    //            return;
-    //        }
-    //        //if (value.RowData) {
-    //        var buffered = this.rowsBuffer.filter(a => a.rowIndex === value.RowIndex)[0];
-    //        if (!buffered) {
-    //            ////console.log(value.RowIndex);
-    //            var rowData = value.RowData;
-    //            // //console.log(value.RowIndex);
-    //            var row: IRow = { rowIndex: value.RowIndex, rowData: value.RowData, DetailsIcon: "+", IsDetailesOpened: false };
-    //            row.styles = {
-    //                'top': (value.RowIndex * this.rowHeight) + "px",
-    //                'min-width': (this.ViewWidth) + 'px'
-    //            };
-    //            ////console.log("row.styles", row.styles);
-    //            this.inProgressRows--;
-
-    //            this.rowsBuffer.push(row);
-
-    //        }
-    //        //}
-    //    });
-    //    //if (this.inProgressRows < 0) {
-    //    //    console.log("inProgressRows", this.inProgressRows);
-    //    //}
-
-    //    this.rowsBuffer.forEach((item) => {
-    //        var existingItem = this.rows.filter(d => d.rowIndex === item.rowIndex)[0];
-    //        if (!existingItem) {
-    //            this.rows.push(item);
-    //            //this.SourceItems.push(item.rowData); 
-    //        }
-    //    });
-
-
-    //    this.rowsBuffer = [];
-
-    //    if (this.rows.length > this.tripleViewport) {
-    //        var diff = this.rows.length - this.tripleViewport;
-    //        if (this.scrollDirection == "up") {
-    //            /**
-    //            Calculate lowest index of rows and delete from there
-    //            */
-    //            this.rows.splice(diff, diff - this.viewportSize);
-    //            //console.log("roooooows.lenght up", this.rows.length);
-    //        }
-    //        else if (this.scrollDirection == "down") {
-    //            /**
-    //            Calculate lowest index of rows and delete from there
-    //            */
-    //            //console.log("roooooows.lenght down", this.rows.length);
-    //            ////console.log("rows.length", this.rows.length);
-    //            /*this.rows = */
-    //            this.rows.splice(0, diff - this.viewportSize);
-    //            ////console.log("rows.length", this.rows.length);
-    //            //////console.log("rows.length", this.rows.length);
-    //        }
-    //    }
-    //}
-
     mouseMove = (ev: MouseEvent) => {
         var ss = ev;
     }
     @ContentChildren(LogColumnComponent, { descendants: false }) cols: QueryList<LogColumnComponent>;
     @ContentChild(LogRowDetailsComponent) RowDetail;
-    //@ContentChildren(TemplateRef) contentTpl: any;
     @ViewChildren(LogColumnComponent) wrapper: QueryList<LogColumnComponent>;
-    //@ViewChildren(LogCellTemplateComponent) cellChildren;//: QueryList<LogCellTemplateComponent>; 
     TotalWidth: number = 0;
-    //HeaderHeight: number = 27;
     SetSelectedRows() {
         if (this.SelectedRows.length > 0) {
             this.SelectedRows.forEach((value, key) => {
@@ -1383,45 +1201,13 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         }
     }
     ngAfterContentInit() {
-        // get all active tabs
-        //var ss = this.cols;
-        //var xx = this.contentTpl;   
         var ss = this.cols;
         var sss = this.RowDetail;
         if (this.RowDetail) {
             this.DetailButtonVisibile = true;
         }
         this.customcolumns = [];
-        //this.contentTpl.toArray().forEach((value, key) => {
-        //    let hostComponent = this._viewManager.getComponent(value.elementref);
-        //});
-        /*
-          if (this.columns && this.columns.length > 0) {
-            var index = 0
-            var left = 0;
-            this.columns.forEach((value, key) => {
-
-                value.index = index;
-                index++;
-                if (value.Editable == undefined) {
-                    value.Editable = true;
-                }
-                //value.Style = {
-                //    width: + value.width + 'px',
-                //    'background-color': value.Editable ? 'transparent' : 'rgba(230, 231, 232, 0.5)',
-                //    'text-align': value.Alignment ? value.Alignment : 'right',
-                //    'display': value.visibility == 'hidden' ? 'none' : 'inline-block'
-                //};
-                value.Styles = {
-                    width: + (value.Styles.width.replace("px", "")) + 'px',
-                    left: left + 'px',
-                };
-                left += (+(value.Styles.width.replace("px", "")));
-                //this.customcolumns.push(value);
-            });
-            this.cd.detectChanges();
-        }
-         */
+        
         var index = 0;
         var left = 0;
         if (this.groupby) {
@@ -1448,20 +1234,11 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 left = 40;
             }
             this.TotalWidth = 0;
-            //var i = 0;
             this.customcolumns = [];
-            //var temp = this.cols.changes;
             changes.toArray().forEach((value, key) => {
                 if (value.hasFootertemplate == true) {
                     this.ShowFooter = true;
                 }
-                ////HeaderTemplateDiv
-                ////HeaderHeight
-                //var temp = document.getElementById('HeaderTemplateDiv' + i);
-                //var cHeight = temp.clientHeight;
-                //if (cHeight > this.HeaderHeight) {
-                //    this.HeaderHeight = cHeight;
-                //}
                 if (value.hastemplate) {
                     value.index = index;
                     index++;
@@ -1469,10 +1246,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 if (value.Editable == undefined) {
                     value.Editable = true;
                 }
-                //if (value.required == undefined) {
-                //    value.required = false;
-                //}
-
                 if (this.RTL) {
                     value.Style = {
                         width: + (value.visibility == 'hidden' ? 0 : value.width.replace("px", "")) + 'px',
@@ -1537,13 +1310,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 this.CurrentSession.LogitudeGridHelper.SetColumnsCount(false, this.LogGridId);
             }
             value.IsReadOnlyGrid = this.IsReadOnly;
-            ////HeaderTemplateDiv
-            ////HeaderHeight
-            //var temp = document.getElementById('HeaderTemplateDiv' + i);
-            //var cHeight = temp.clientHeight;
-            //if (cHeight > this.HeaderHeight) {
-            //    this.HeaderHeight = cHeight;
-            //}
             if (value.hastemplate) {
                 value.index = index;
                 index++;
@@ -1551,9 +1317,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             if (value.Editable == undefined) {
                 value.Editable = true;
             }
-            //if (value.required == undefined) {
-            //    value.required = false;
-            //}
             if (this.RTL) {
                 value.Style = {
                     width: + (value.visibility == 'hidden' ? 0 : value.width) + 'px',
@@ -1596,7 +1359,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     'text-align': value.Alignment ? value.Alignment : 'left',
                 };
             }
-
             if (value.visibility != 'hidden') {
                 this.TotalWidth += + (value.width);
                 value.width = value.width + 'px';
@@ -1607,13 +1369,9 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             }
             this.customcolumns.push(value);
         });
-        //console.log(this.DisableRowByFieldValue);
-        //console.log(this.DisableRowByFieldName);
-
     }
 
     ngAfterViewInit() {
-        //var ss = this.cellChildren;
         var RowsElement = document.getElementById(this.LogGridRowsId);
         var RowsToLoad = RowsElement.clientHeight / this.rowHeight;
         var elem: HTMLDivElement = <HTMLDivElement>document.getElementById(this.LogGridId);
@@ -1621,16 +1379,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.scrollPosition = RowsElement.scrollTop;
         var vscroll = elem.scrollTop;
         var hscroll = elem.scrollLeft;
-
-
         this.rowCount = this.ItemSource.Length;
-        //if (this.dataSource) {
         this.init();
-
-        //}
     }
     handleonclick(evt, rownum) {
-        //var id = "";
         this.InClick = true;
         if (this.currentrow == undefined) {
             this.currentrow = rownum;
@@ -1679,59 +1431,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     }
     handleblur(evt, rownum) {
         return;
-        //if (!this.InClick) {
-        //    if (this.currentrow == undefined) {
-        //        this.currentrow = rownum;
-        //    }
-        //    //if (rownum == this.currentrow) {
-        //    //    if (evt != undefined) {
-        //    //        var element = document.getElementById(evt);
-        //    //        element.style.border = "none";
-        //    //    }
-        //    //    this.onparentclickEvent.emit(evt);
-        //    //}
-        //    //else {
-        //        var allowtomove = true;
-        //        var keepGoing = true;
-        //        var colindex = 0;
-        //        this.columns.forEach((item, key) => {
-        //            if (keepGoing == true) {
-        //                if (item.FieldName != undefined && item.FieldName != '') {
-        //                    colindex++;
-        //                    if (item.required && (this.dataSource[this.currentrow][item.FieldName] == undefined || this.dataSource[this.currentrow][item.FieldName] == "")) {
-        //                        allowtomove = false;
-        //                        this.id = "row" + this.currentrow + "col" + colindex;
-        //                        var element = document.getElementById(this.id);
-        //                        element.focus();
-        //                        element.style.border = "thin dotted red";
-        //                        keepGoing = false;
-        //                        this.DontEnter = true;
-        //                    }
-        //                }
-        //            }
-        //        });
-        //        if (allowtomove) {
-        //            this.currentrow = rownum;
-        //            if (this.id != undefined) {
-        //                var element = document.getElementById(this.id);
-        //                element.style.border = "none";
-        //            }
-        //            //this.onparentclickEvent.emit(evt);
-        //        }
-        //    //}
-        ////}
-        ////else {
-        ////    this.InClick = false;
-        ////}
     }
     handlerowfocus(rownum) {
         this.currentrow = rownum;
     }
-    //onRowSelected(colDef: any, colIndex: number, rowData: any, rowIndex: number) {
-    //    this.rowSelectedEvent.next({ colDef, colIndex, rowData, rowIndex });
-    //}
-
-
 
     public LastHeaderColumnWidth: number;
 
@@ -1796,13 +1499,9 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 this.sortingDir = 'Ascending';
                 this.sortingCol = colDef.SortFieldName;
             }
-
-            //this.dataSource.sortingCol = colDef.FieldName;
-
             switch (this.sortingDir) {
                 case 'Ascending':
                     {
-                        //this.dataSource.sortingDir = "Descending";
                         this.sortingDir = "Descending";
                         var temp = this.ItemSource.Collection.sort((a, b) => this.CompareAscending(a[colDef.SortFieldName], b[colDef.SortFieldName]));//(a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? -1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? 1 : 0));
                         this.ItemSource = new ObservableCollection(temp);
@@ -1810,19 +1509,11 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     }
                 case "Descending":
                     {
-                        //this.dataSource.sortingDir = "Ascending";
                         this.sortingDir = "Ascending";
                         var temp = this.ItemSource.Collection.sort((a, b) => this.CompareDecending(a[colDef.SortFieldName], b[colDef.SortFieldName]));//(a[colDef.SortFieldName] < b[colDef.SortFieldName]) ? 1 : ((a[colDef.SortFieldName] > b[colDef.SortFieldName]) ? -1 : 0));
                         this.ItemSource = new ObservableCollection(temp);
                         break;
                     }
-                //case "Ascending":
-                //    {
-                //        //this.dataSource.sortingDir = '';
-                //        //this.ItemSource = new ObservableCollection(this.OrigionalSortingData);
-                //        this.sortingDir = '';
-                //        break;
-                //    }
                 default:
             }
             var allelems = document.getElementsByClassName("ag-header-cell");
@@ -1837,32 +1528,11 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 for (var j = 0; j < ColumnsElements.length; j++) {
                     if (ColumnsElements[j].attributes['LogGridId'].value == this.LogGridId) {
                         if (ColumnsElements[j].attributes['FieldName'] && ColumnsElements[j].attributes['FieldName'].value == colDef.SortFieldName) {
-                            //(<HTMLElement>ColumnsElements[j]).style.color = 'rgb(103, 103, 103)';
                             (<HTMLElement>ColumnsElements[j]).style.background = '#cfcbcb';
                         }
                     }
-                    //ColIndexes.push({ FieldName: ColumnsElements[i].attributes['colid'].value, Index: +(ColumnsElements[i].id.split(',')[1]), Width: ColumnsElements[i].clientWidth });
                 }
-                //var chosen = document.getElementById(id);//this.ColumnId + "resizable-column-," + this.ColIndex); 
-                //chosen.style.color = 'rgb(103, 103, 103)';
-                //chosen.style.background = '#cfcbcb';
             }
-            //var allelems = document.getElementsByClassName("ag-header-cell");
-            //for (var a = 0; a < allelems.length; a++) {
-            //    (<HTMLScriptElement>allelems.item(a)).style.color = 'white';
-            //    (<HTMLScriptElement>allelems.item(a)).style.background = '-moz-linear-gradient(50% 100% 90deg,rgba(112, 112, 112, 1) 0%,rgba(168, 168, 168, 1) 100%)';
-            //    (<HTMLScriptElement>allelems.item(a)).style.background = '-webkit-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%)';
-            //    (<HTMLScriptElement>allelems.item(a)).style.background = '-webkit-gradient(linear,50% 100%,50% 0%,color-stop(0,rgba(112, 112, 112, 1) ),color-stop(1,rgba(168, 168, 168, 1) ))';
-            //    (<HTMLScriptElement>allelems.item(a)).style.background = '-o-linear-gradient(90deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%)';
-            //    (<HTMLScriptElement>allelems.item(a)).style.background = 'linear-gradient(0deg, rgba(112, 112, 112, 1) 0%, rgba(168, 168, 168, 1) 100%)';
-            //}
-            //if (this.sortingDir === 'Descending' || this.sortingDir === 'Ascending') {
-
-            //    var chosen = document.getElementById('resizable-column-' + i);
-            //    chosen.style.color = 'rgb(103, 103, 103)';
-            //    chosen.style.background = '#cfcbcb';
-            //}
-
             this.rows = [];
             this.updateDisplayList(true);
 
@@ -1873,21 +1543,14 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         var ColumnsElements = document.getElementsByClassName("ag-header-cell");
         for (var j = 0; j < ColumnsElements.length; j++) {
             if (ColumnsElements[j].attributes['LogGridId']?.value == this.LogGridId) {
-                //if ((<HTMLElement>ColumnsElements[j]).style.background == '#cfcbcb') { 
                 (<HTMLElement>ColumnsElements[j]).style.background = 'transparent';
-                //}
             }
         }
     }
 
-    cellClicked(field, value, rowIndex, colIndex) {
-    }
-    rowClicked(rowIndex, row) {
-    }
-
+    cellClicked(field, value, rowIndex, colIndex) { }
+    rowClicked(rowIndex, row) { }
     rowsBuffer: IRow[] = [];
-
-
     firstRow: number = 0;
     existingFirstRow: number = -1;
     extraRows: number = 10;
@@ -1902,9 +1565,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             if (reload) {
                 this.rowsBuffer = [];
             }
-            //if (!this.rowsBuffer) {
-            //    this.rowsBuffer = [];
-            //}
             var oldRow = this.firstRow;
             var firstRow = Math.floor(this.scrollTop / (this.rowHeight));
             var RabaiaVar = Math.floor(this.GetDetailsHeight() / (this.rowHeight));
@@ -2125,10 +1785,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
             Bodytop = top + this.HeaderHeight;//27;
 
-        });
-        //if (this.rowsBuffer.filter(a => a.rowIndex == value.rowIndex).length > 0) {
-        //    this.rowsBuffer.filter(a => a.rowIndex == value.rowIndex)[0] = value;
-        //} 
+        }); 
 
         this.BodyTop = this.HeaderHeight;
         var styles = {
@@ -2137,9 +1794,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             'width': '100%'
         };
         return DetailsHeight;
-
-        //this.updateDisplayList();
-
     }
 
     getRowDetailsStyles() {
@@ -2148,17 +1802,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         var DetailsHeight = 0;
         this.StaticDetailsHeight = 0;
         this.rows.forEach((value, key) => {
-
-            //value.styles = {
-            //    'top': top + "px",
-            //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
-            //    'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
-            //};
-            //value.Detailsstyles = {
-            //    'top': Bodytop + "px",
-            //    'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
-            //    'width': (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
-            //};
             var DetailsDiv = document.getElementById(this.DetailsDivId + 'DetailsDiv' + (value.rowIndex));
             var DetailsDivHeight = 0;
             var OpenedItemsHeight = 0;
@@ -2174,9 +1817,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             Bodytop = top + this.HeaderHeight;//27;
 
         });
-        //if (this.rowsBuffer.filter(a => a.rowIndex == value.rowIndex).length > 0) {
-        //    this.rowsBuffer.filter(a => a.rowIndex == value.rowIndex)[0] = value;
-        //} 
 
         this.BodyTop = this.HeaderHeight;
         var styles = {
@@ -2185,9 +1825,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             'width': '100%'
         };
         return styles;
-
-        //this.updateDisplayList();
-
     }
 
     getRowDetailsStylesbyIndex(index: number) {
@@ -2198,9 +1835,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             'width': '100%'
         };
         return styles;
-
-        //this.updateDisplayList();
-
     }
     oldRow: number;
     updateDisplayListGrouping(reload: boolean = false) {
@@ -2210,12 +1844,10 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         if (!this.rowsBuffer) {
             this.rowsBuffer = [];
         }
-        //var oldRow = this.firstRow;
         var firstRow = Math.floor(this.scrollTop / this.rowHeight);
         if (firstRow < this.oldRow) {
             firstRow = this.oldRow + 1;
         }
-        //var oldPage; // = 0;
         var currentPage = Math.max(Math.floor(this.scrollTop / this.rowHeight / this.rowsPerPage), 0);
         var rowsToCreate = Math.min(firstRow + this.rowsPerPage, this.rowsPerPage);
 
@@ -2228,7 +1860,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             else {
                 this.ViewPortRowCount = this.viewportSize; // + this.extraRows;
             }
-            //for (var i = firstRow; i < firstRow + this.ViewPortRowCount; i++) {
             this.group.forEach((value, key) => {
                 if (value.Index >= this.rowCount) {
                     this.cd.detectChanges();
@@ -2237,25 +1868,14 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 var buffered = this.rowsBuffer.filter(a => a.rowIndex === value.Index)[0];
                 if (!buffered) {
                     var row: IRow = { rowIndex: value.Index, rowData: value.Data, DetailsIcon: (value.Type == "Head" ? "./Images/CellIcons/Arrowup.png" : "./Images/CustomTreeIcon.png"), IsDetailesOpened: (value.Type == "Head" ? true : false), Type: value.Type, IsGroupOpened: true, ChildrenFirstIndex: value.ChildrenFirstIndex, IsExpandable: false, SetExpandaple(isExpandable: boolean) { this.IsExpandable = isExpandable; }, ChildrensCount: value.Count, IsSelected: false };
-
-                    /*
-               row.styles = {
-                   'top': (value.RowIndex * this.rowHeight) + "px",
-                   'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
-                   'width:': this.TotalWidth + 'px',
-                   'max-width:': this.TotalWidth + 'px',
-               };
-               */
                     row.styles = {
                         'top': (row.rowIndex * this.rowHeight) + "px",
                         'min-width': this.TotalWidth + this.LastDefaultSpace + 'px',
                         'width': '100%'
                     };
-
-                    this.rowsBuffer.push(row); //this.rows.push(row);
+                    this.rowsBuffer.push(row);
                     this.RowDataLoaded.emit(row);
                 }
-                //} 
             });
             this.rowsBuffer.forEach((item) => {
                 var existingItem = this.rows.filter(d => d.rowIndex === item.rowIndex)[0];
@@ -2264,19 +1884,12 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
                 }
             });
-            //this.rowsBuffer = [];
             var isDestroyed: boolean = this.cd['destroyed'];
             if (!isDestroyed) {
                 this.cd.detectChanges();
             }
-            //this.cd.detectChanges();
             this.oldPage = currentPage;
-
         }
-        //else if (this.rows.length < this.group.length) {
-        //    alert(this.rows.length);
-        //}
-
     };
     oldScrollTop: number;
     headerStyle: any = { left: '0px' };
@@ -2325,61 +1938,32 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
         }
         if (vscroll != this.oldScrollTop) {
-
             this.oldScrollTop = vscroll;
-            //this.updateDisplayList();
-            //if (this.groupby) {
-            //this.updateDisplayListGrouping();
-            //}
-            //else {
             this.updateDisplayList();
-            //} 
         }
     };
 
     private onWindowResized(event: UIEvent): void {
-        //alert(this.LogGridId);
         var logGrid = document.getElementById(this.LogGridId);
         if (logGrid != null) {
             logGrid.style.display = "none";
             logGrid.style.display = "block";
             this.ViewHeight = logGrid.clientHeight;
             this.ViewWidth = logGrid.clientWidth;
-            //console.log("ViewHeight", this.ViewHeight, "ViewWidth", this.ViewWidth);
         }
-        //logGrid.style.display = "none";
-        //logGrid.style.display = "block";
-        //this.ViewHeight = logGrid.clientHeight;
-        //this.ViewWidth = logGrid.clientWidth;
-        //console.log("ViewHeight", this.ViewHeight, "ViewWidth", this.ViewWidth);
-        //if (this.ViewHeight == 0 && this.ViewWidth == 0) {
-        //    return;
-        //}
+      
         var rowsArray = document.getElementsByClassName("ag-row");
         for (var i = 0; i < rowsArray.length; i++) {
-            //rowsArray.item(i).style.width = (this.ViewWidth - 20) + 'px';
             (<HTMLScriptElement>rowsArray.item(i)).style.minWidth = (this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px';
         }
         this.rowStyle.minWidth = this.ViewWidth + 'px';
         this.viewportSize = Math.round(this.ViewHeight / this.rowHeight);
         this.tripleViewport = this.viewportSize * 3;
-        //this.rowsPerPage = this.dataSource.pageSize;
-        //var header = document.getElementById(this.LogGridId);
-        //header.style.width = this.ViewWidth + 'px';
-        //header.style.width = '1920px';
-        //header.style.minWidth = this.ViewWidth + 'px';
-        //header.style.minWidth = '1920px';
-        //this.headerStyle = {
-        //    'width': (this.ViewWidth - 20) + 'px',
-        //    'min-width': (this.ViewWidth - 20) + 'px'
-        //};
-        //this.canvasHeight = {
-        //    height: this.rowCount * this.rowHeight + 'px'
-        //};
+      
         this.headerStyle = {
             'height': this.HeaderHeight + 'px',
             'width': '100%',
-            'min-width': this.TotalWidth + 'px',//(this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
+            'min-width': this.TotalWidth + 'px',
         };
         var MinWidth = '';
         if (this.TotalWidth > this.ViewWidth && this.ViewWidth != 0) {
@@ -2399,21 +1983,15 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             });
         }
         this.canvasHeight = {
-            //'top': this.HeaderHeight + 'px',
+           
             height: (this.rowCount * this.rowHeight) + this.StaticDetailsHeight + 'px',
-            'width': '100%',//this.TotalWidth + 'px',
-            'min-width': this.TotalWidth + 'px'////(this.TotalWidth > this.ViewWidth ? this.TotalWidth : this.ViewWidth) + 'px'
+            'width': '100%',
+            'min-width': this.TotalWidth + 'px'
         };
         this.BodyTop = this.HeaderHeight;
-        //this.numberOfTotalPages = (this.rowCount / this.rowsPerPage); // + (this.rowCount % this.rowsPerPage);
-        //console.log("number of total pages:", this.numberOfTotalPages, "this.rowCount % this.rowsPerPage", this.rowCount % this.rowsPerPage);
-        //console.log("this.rowCount / this.rowsPerPage", this.rowCount / this.rowsPerPage);
-        //this.updateDisplayList();
-        //this.onScroll();
     }
 
     GridBodyResized() {
-        //console.log("GridBodyResized()");
     }
 
     ngOnDestroy() {
@@ -2441,9 +2019,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.ReRenderGridSub = null;
         this.FinishLoadingSub = null;
         this.FinishLoadingGroupsSub = null;
-        // Removes the event listener
-        //  this.func();
-
     }
     private countIsHere = true;
     private oldSearchFields: string;
@@ -2452,8 +2027,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
 
     editingCell: any = [];
     focusCell($event, rowIndex, colIndex) {
-        //////console.log($event, rowIndex, colIndex);
-        //this.editingCell[rowIndex, colIndex] = true;
     }
 
     public MouseDownX: any;
@@ -2463,42 +2036,22 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     resizeColumn($event, column) {
         $event.preventDefault();
         window.addEventListener("mousemove", this.mouseMove);
-        //////console.log($event, column);
+
         this.MouseDownX = $event.clientX;
         this.ResizableColumn = document.getElementById(column);
         this.ColumnWidth = this.ResizableColumn.clientWidth;
-        //console.log(this.ColumnWidth);
-        //elem.style.width = '250px';
-        //var rows = document.getElementsByClassName(column);
-        //if (rows) {
-        //    for (var i in rows) {
-        //        i.style.width = '250px';
-        //    }
-        //}
-        //console.log($event.clientX, $event.clientY, column);
     }
     resizeColumn2($event, column) {
         $event.preventDefault();
         window.removeEventListener("mousemove", this.mouseMove);
-        //////console.log($event, column);
         this.MouseUpX = $event.clientX;
         var diff: number = this.MouseUpX - this.MouseDownX;
-        //console.log(diff);
         if (diff < 0) {
             this.ResizableColumn.style.width = this.ColumnWidth - diff;
         }
         else {
             this.ResizableColumn.style.width = (this.ColumnWidth + diff) + 'px';
         }
-        //var elem = document.getElementById(column);
-        //elem.style.width = '250px';
-        //var rows = document.getElementsByClassName(column);
-        //if (rows) {
-        //    for (var i in rows) {
-        //        i.style.width = '250px';
-        //    }
-        //}
-        //console.log($event.clientX, $event.clientY, column);
     }
     mousemoveevent(args) {
         var ss = args;
@@ -2507,8 +2060,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     divOnFocus(rowIndex, colIndex) {
 
         var inputID = 'input-row' + rowIndex + 'col' + colIndex;
-        //////console.log(inputID);
-        //this.editingCell[rowIndex + ' ' + colIndex] = true;
         var elem: HTMLInputElement = <HTMLInputElement>document.getElementById(inputID);
         var span: HTMLSpanElement = document.getElementById('span-row' + rowIndex + 'col' + colIndex);
         if (span && elem) {
@@ -2516,29 +2067,21 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             span.style.display = 'none';
             elem.focus();
         }
-        //////console.log(elem);
-        //elem.focus();
-        //this.displayVisibility[rowIndex + '' + colIndex] = { display: 'none' };
-        //this.editVisibility[rowIndex + '' + colIndex] = { display: 'block' };
     }
     blurInput(rowIndex, colIndex) {
         var inputID = 'input-row' + rowIndex + 'col' + colIndex;
-        //////console.log(inputID);
-        //this.editingCell[rowIndex + ' ' + colIndex] = true;
         var elem: HTMLInputElement = <HTMLInputElement>document.getElementById(inputID);
         var span: HTMLSpanElement = document.getElementById('span-row' + rowIndex + 'col' + colIndex);
         if (span && elem) {
             elem.style.display = 'none';
             span.style.display = 'block';
         }
-        //elem.focus();
     }
 
     displayVisibility: any;
     editVisibility: any;
 
     inputFocus($event) {
-        //////console.log('event', $event);
     }
 
     GetRowCount(reload: boolean = false) {
