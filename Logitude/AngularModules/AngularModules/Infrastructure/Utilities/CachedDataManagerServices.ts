@@ -280,6 +280,8 @@ export class CachedDataManagerServices {
             case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
             case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
             case "PortGroupListService": { myResult = new PortGroupListService(); break; }
+            case "Customs.CustomDocumentTypeMetaDataListService" : { myResult = new CustomDocumentTypeListService(); break; }
+
 
              default: {
 
