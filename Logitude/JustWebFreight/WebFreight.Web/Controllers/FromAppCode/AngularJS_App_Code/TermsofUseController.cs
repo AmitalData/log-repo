@@ -23,11 +23,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
     public class TermsofUseController : ApiController
         // private label id
     {
-        public HttpResponseMessage GetCheckIfGoToTermUseComponent(int tenant, string userId)
+        public HttpResponseMessage GetCheckIfGoToTermUseComponent(string userId)
         {
             try
             {
-                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool isLogbox = SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.Logbox);
                 bool isLogboxUrl = SecurityUtility.getLoggedDomain().IndexOf("logbox") > -1;  
 
@@ -38,7 +37,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    TermsofUseQuery termsofUseQuery = new TermsofUseQuery(tenant);
+					int tenant = authToken.Tenant;
+
+					TermsofUseQuery termsofUseQuery = new TermsofUseQuery(tenant);
 
                     TermsofUseSignatureQuery termsofUseSignatureQuery = new TermsofUseSignatureQuery(tenant);
 

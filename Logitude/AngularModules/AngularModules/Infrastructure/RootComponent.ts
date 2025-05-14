@@ -335,8 +335,7 @@ export class RootComponent implements AfterViewInit {
         this._FinishLogin = true;
         var termsofUseService = new TermsofUseService();
         termsofUseService
-            .GetCheckIfGoToTermUseComponent(
-                SessionLocator.Tenant,
+            .GetCheckIfGoToTermUseComponent(    
                 SessionLocator.LoggedUserId
             )
             .subscribe((res: ServiceResponse) => {

@@ -10,11 +10,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class TermsofUseController : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetCheckIfGoToTermUseComponent(int tenant, string userId)
+        public IActionResult GetCheckIfGoToTermUseComponent(string userId)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 if (string.IsNullOrEmpty(userId))
                 {
                     return BadRequest("missing user id");

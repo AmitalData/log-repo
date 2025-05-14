@@ -97,8 +97,8 @@ export class TermsofUseService {
         return entityPM;
     }
 
-    GetCheckIfGoToTermUseComponent(tenant: number, userId: string) {
-        var url = this._apiUrl + '?tenant=' + tenant + '&userId=' + userId;
+    GetCheckIfGoToTermUseComponent(userId: string) {
+        var url = this._apiUrl + '?userId=' + userId;
 
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 

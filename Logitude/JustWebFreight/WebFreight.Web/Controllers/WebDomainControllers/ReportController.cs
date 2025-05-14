@@ -35,14 +35,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class ReportController : ApiController
     {
-        public HttpResponseMessage GetReportListsByGroupId(string groupId, int tenant)
+        public HttpResponseMessage GetReportListsByGroupId(string groupId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                int tenant = authToken.Tenant;
 
                 List<ReportList> result = new List<ReportList>();
                 ReportRepository reportRepository = new ReportRepository(tenant);

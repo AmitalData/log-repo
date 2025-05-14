@@ -10,11 +10,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class SystemMetadataLastUpdateController : ControllerBase
     {
         [HttpGet("GetSystemMetadataLastUpdates")]
-        public IActionResult GetSystemMetadataLastUpdates(int tenant)
+        public IActionResult GetSystemMetadataLastUpdates()
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var metadatalastUpdates = new SystemMetadataLastUpdateQuery(tenant).GetSystemMetadataLastUpdatesCacheHandle();
                 return Ok(metadatalastUpdates);
             }

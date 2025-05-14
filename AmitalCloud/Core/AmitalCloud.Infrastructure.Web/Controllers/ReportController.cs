@@ -11,11 +11,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class ReportController : ControllerBase
     {
         [HttpGet]
-        public IActionResult GetReportListsByGroupId(string groupId, int tenant)
+        public IActionResult GetReportListsByGroupId(string groupId)
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 List<ReportList> reportLists = new ReportListQueryService(tenant).GetList(tenant).Where(d => d.ReportGroupId == groupId).OrderBy(d => d.Name).ToList();
                 return Ok(reportLists);
             }

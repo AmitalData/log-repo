@@ -10,11 +10,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class TipsController : ControllerBase
     {
         [HttpGet("GetTipsPMs")]
-        public IActionResult GetTipsPMs(int tenant)
+        public IActionResult GetTipsPMs()
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 var tips = new TipQuery(tenant).GetTips();
                 return Ok(tips);
             }
