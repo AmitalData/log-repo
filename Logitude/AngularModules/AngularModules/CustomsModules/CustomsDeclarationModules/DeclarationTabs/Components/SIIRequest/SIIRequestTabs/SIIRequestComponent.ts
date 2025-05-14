@@ -103,23 +103,18 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.buildSupplierInvoiceItemsCollection();
     }
 
-    // #region Actions:
     CancelSaveSiiRequest() {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
-        this.CurrentSession.CloseCurrentWindow();
     }
     SaveSiiRequest() {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
-        this.CurrentSession.CloseCurrentWindow();
     }
-
     SendSiiRequest(event: any) {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
-    //#endregion Actions
 
     public SearchFilterChangedEvent: any;
     SearchText: string = "";
