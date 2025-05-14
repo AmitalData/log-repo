@@ -90,8 +90,14 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (myInvoice != null)
             {
-                dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
-               
+                if (myInvoice.IsConsolidationInvoice || myInvoice.IsGeneralInvoice)
+                {
+                    dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+                }
+                  else
+                {
+                    dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+                }
                 this.FillDocumentCustomFields(myInvoice, dataProvider, documentTypeCopyId, tenant);
             }
 
@@ -3201,13 +3207,18 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (!loggedcontact.DontShowLocalLabels && !string.IsNullOrEmpty(invoiceDataProvider.BillTo_LocalName))
                                 {
                                     invoiceDataProvider.BillToAddress = invoiceDataProvider.BillTo_LocalName + Environment.NewLine + DataProviders.General.GetAddress(billToAddress);
+                                    invoiceDataProvider.BillToAddress_OneLine = Environment.NewLine + DataProviders.General.GetAddress_OneLine(billToAddress);
                                     invoiceDataProvider.BillToAddressDescription = billToAddress.Description;
+                                    invoiceDataProvider.BillToAddressName = billToAddress.Name;
+
                                 }
 
                                 else
                                 {
                                     invoiceDataProvider.BillToAddress = invoiceDataProvider.BillTo + DataProviders.General.GetAddress(billToAddress);
-                                    invoiceDataProvider.BillToAddressDescription = billToAddress.Description;
+                                    invoiceDataProvider.BillToAddress_OneLine = DataProviders.General.GetAddress_OneLine(billToAddress);
+                                    invoiceDataProvider.BillToAddressName = billToAddress.Name;
+                                   invoiceDataProvider.BillToAddressDescription = billToAddress.Description;
                                 }
 
                                 invoiceDataProvider.SAT.BillToZipCode = billToAddress.ZipCode;
@@ -3239,6 +3250,11 @@ namespace WebFreight.Web.ReportsWebServices
                             invoiceDataProvider.ContactPersonEmail = billToContact.Email;
                             invoiceDataProvider.BillToPrimaryContactMobile = billToContact.Mobile;
                             invoiceDataProvider.BillToPrimaryContactBusinessPhone = billToContact.BusinessPhone;
+                        }
+                        Address billingAddress = addressRepository.GetBillingAddressByCardId(billToCard.Id, tenant);
+                        if (billingAddress != null)
+                        {
+                            invoiceDataProvider.BillToBillingAddress = General.GetAddress(billingAddress);
                         }
 
                         invoiceDataProvider.BillToBankName = billToCard.BankName;
