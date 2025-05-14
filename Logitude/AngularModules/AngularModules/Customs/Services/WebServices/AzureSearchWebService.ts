@@ -11,8 +11,9 @@ import { Observable } from "rxjs";
 export class AzureSearchWebService {
     private readonly _apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/AzureSearch';
     private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
+    private _http: HttpClient = ServiceHelper.HttpClient;
     
-    constructor(private _http: HttpClient) {}
+    constructor() {}
 
     async fastSearch(filters: ApiQueryFilters, searchText: string, index: string): Promise<FastSearchResult[]> {
         return this._http.get(
