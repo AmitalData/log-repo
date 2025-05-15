@@ -890,6 +890,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillFacilitationType();
             updateClass.FillContainerizationHataraStatus();
             updateClass.FillOcrStatusTable();
+            updateClass.FillSIIRequestStatusTable(0);
 
 
             }

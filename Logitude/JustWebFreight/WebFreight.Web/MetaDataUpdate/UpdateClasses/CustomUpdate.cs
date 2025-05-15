@@ -37,6 +37,8 @@ using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.BL;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using System.Configuration;
+using Logitude.Customs.BL;
+using Logitude.BookingLib.Data.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
@@ -18498,6 +18500,16 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddOcrStatus(new OcrStatus() { Code = "9", EnglishName = "Failed", LocalName = "נכשל" }, ocrStatusRepository);
 
             ocrStatusRepository.SubmitChanges();
+
+        }
+        public void FillSIIRequestStatusTable(int tenant)
+        {
+            SIIRequestStatusRepository sIIRequestStatusRepository = new SIIRequestStatusRepository(tenant);
+            Dictionary<string,SIIRequestStatus> tenantSIIRequestStatus = sIIRequestStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "0" ,LocalName ="תקין" }, sIIRequestStatusRepository);
+            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "100" , LocalName = "נכשל"}, sIIRequestStatusRepository);
+            sIIRequestStatusRepository.SubmitChanges();
+
 
         }
 
