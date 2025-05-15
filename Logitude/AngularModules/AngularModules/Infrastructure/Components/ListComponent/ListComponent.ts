@@ -194,6 +194,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
             this.timerToken = setTimeout(() => this.searchMethod(), timer);
         }
+
+        this.showRecentSearches() 
     }
 
     async searchMethod() {        
@@ -232,11 +234,11 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.searchMethod();
     }
 
-    async showRecentSearches() {        
-        this.fastSearchService.$RecentSearches.pipe(take(1)).subscribe(recentSearches => {
-            this.searchDropdownOptions = [...recentSearches];
-            this.CD.detectChanges();
-        });
+    async showRecentSearches() {
+        if (!this.fastSearchService.$fastSearchEnable.value || this.searchFields?.length > 0) return;
+
+        this.searchDropdownOptions = await this.fastSearchService.getRecentSearches();
+        this.CD.detectChanges();    
     }
 
     GetMethodName() {
@@ -583,11 +585,13 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     name: string;
-    processAdvanceQueryFilters(filters) {
+    processAdvanceQueryFilters(filters) {        
         if (this.IsAdvancedSearchOpened == false) {
             return;
-
         }
+
+        this.fastSearchCheckbox(false);        
+
         this.dataSource = {
             pageSize: 30,
             rowCount: null,
@@ -1050,6 +1054,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         cmpRef.instance.SetFiltersMenu(this.listArgs.Filters);
                                     }
                                     cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
+                                        if($event?.Filters.AdditionalFilters?.length > 1 || !$event?.Filters.AdditionalFilters[0]?.FieldName.includes('TransportMode')) 
+                                            this.fastSearchCheckbox(false);
+
                                         this.SelectedFilterChanged($event);
 
                                         this.FiltersMenu = new ApiQueryFilters();
@@ -2851,8 +2858,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                             });
                     }
                 }
-            }
-            //this.CurrentSession.StopBusyIndicator();
+
+                if(this.$fastSearchEnable.value)
+                    this.fastSearchService.AddHistorySearch('', selectedEntityId).then();
+            }            
         }
     }
 

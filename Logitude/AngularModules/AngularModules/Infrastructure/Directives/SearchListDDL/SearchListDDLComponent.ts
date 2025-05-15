@@ -4,23 +4,21 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
 @Component({
     selector: 'app-SearchListDDL',
     template: `
-        <div class="dropdown-container">
-            <table *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-list" [style.width]="DDLWidth">
+        <div *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-container">
+            <table class="dropdown-list" [style.width]="DDLWidth">
                 <tr *ngFor="let option of dropdownOptions" (click)="optionSelected.emit(option)" class="dropdown-item">
-                    <ng-container *ngIf="option == 'all'; else notAll">
-                        <a href="#" (click)="$event.preventDefault()">{{ 'General.O.ViewAll' | TextCodeTranslationPipe }}</a>
+                    <ng-container *ngFor="let label of labels; let first = first;" [ngSwitch]="label.name">
+                        <td *ngIf="!first && label.lengthTemp !== 0" >&nbsp;|&nbsp;</td>
+                        <td><img *ngSwitchCase="'transportModeId'"  [src]="'./Images/' + (option[label.name] === 'O' ? 'Vessel' : option[label.name] === 'A' ? 'Airline' : 'Trucker') + '.png'" alt="{{ option[label.name] }}" /></td>
+                        <td *ngSwitchCase="'createDateTime'">{{ option[label.name] | DateTimePipe:'D' }}</td>
+                        <td *ngSwitchDefault [style.width]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'"
+                        [style.maxWidth]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'">{{ option[label.name] }}</td>
                     </ng-container>
-                    <ng-template #notAll>
-                        <ng-container *ngFor="let label of labels; let first = first;" [ngSwitch]="label.name">
-                            <td *ngIf="!first && label.lengthTemp !== 0" >&nbsp;|&nbsp;</td>
-                            <td><img *ngSwitchCase="'transportModeId'"  [src]="'./Images/' + (option[label.name] === 'O' ? 'Vessel' : option[label.name] === 'A' ? 'Airline' : 'Trucker') + '.png'" alt="{{ option[label.name] }}" /></td>
-                            <td *ngSwitchCase="'createDateTime'">{{ option[label.name] | DateTimePipe:'D' }}</td>
-                            <td *ngSwitchDefault [style.width]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'"
-                            [style.maxWidth]="label.lengthTemp > 0 ? (label.lengthTemp.toString() + 'px') : 'auto'">{{ option[label.name] }}</td>
-                        </ng-container>
-                    </ng-template>
                 </tr>
             </table>
+            <div *ngIf="dropdownOptions.length > showTopResults;" class='bth-show-all'>
+                <a href="#" (click)="optionSelected.emit(showAll);$event.preventDefault()">{{ 'General.O.ViewAll' | TextCodeTranslationPipe }}</a>
+            </div>
         </div>
     `,
     styles: [`
@@ -28,14 +26,14 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
             position: absolute;
             left: 0;
             z-index: 1;
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 2px 4px;
         }
 
         .dropdown-list {
-            border: 1px solid #ccc;
-            background: #fff;
             border-collapse: separate;
             border-spacing: 0px 4px;
-            padding: 0px 4px;
         }
 
         .dropdown-item {
@@ -60,9 +58,19 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        .bth-show-all {
+            background-color: #DFECF7;
+        }
+
+        .bth-show-all a {
+            font-size: 14px;
+        }
     `]
 })
 export class SearchListDDLComponent implements OnInit {
+    public static showAll: string = 'showAll';
+    showAll = SearchListDDLComponent.showAll;
     @Input()
     private _dropdownOptions: any[] = [];
     public get dropdownOptions(): any[] {
@@ -70,27 +78,18 @@ export class SearchListDDLComponent implements OnInit {
     }
     public set dropdownOptions(options: any[]) {
         if (!options) return;
-        console.log('dropdownOptions1', new Date().toISOString().substring(14, 23))
 
-        options = [...options];
-
-        if (this.maxResults != null && options?.length > this.maxResults) {
-            options.splice(this.maxResults, options.length - this.maxResults);
-            options.push('all');
-        }
-
-        this._dropdownOptions = options;
+        this._dropdownOptions = [...options];
         this.initLabelLength();
-        console.log('dropdownOptions2', new Date().toISOString().substring(14, 23))
     }
     @Input() showDropdown: boolean = true;
-    @Input() maxResults: number = null;
+    @Input() showTopResults: number = null;
     labels: DDLLable[] = [];
-    DDLWidth = '250px';
+    DDLWidth: string = '250px';
     public set settings(settings: FastSearchSettings) {
         if (!settings) return;
         this.displayPattern = settings.ddlHtmlLine;
-        this.maxResults = settings.maxResults;
+        this.showTopResults = settings.showTopResults;
         if (settings.DDLWidth) 
             this.DDLWidth = settings.DDLWidth;        
     }

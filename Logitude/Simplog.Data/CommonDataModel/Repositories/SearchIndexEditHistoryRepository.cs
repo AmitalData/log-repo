@@ -76,9 +76,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Context.SearchIndexEditHistories
                 .AsNoTracking()
                 .Where(x => x.Tenant == tenant && x.Screen == screen && x.Entname == entname && x.CreatedByUserId == userId)
+                .GroupBy(x => x.KeyVal)
+                .Select(g => g.OrderByDescending(e => e.CreateDate).FirstOrDefault())
                 .OrderByDescending(x => x.CreateDate)
                 .Select(x => x.KeyVal)
-                .Distinct()
                 .Take(size)
                 .ToList();
 
