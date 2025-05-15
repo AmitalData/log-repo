@@ -12,7 +12,9 @@
             return new ApiResponse<T>
             {
                 Success = true,
-                Result = result,                
+                Result = result,
+                ErrorMessage = string.Empty,
+                ErrorCode = 0
             };
         }
         public static ApiResponse<T> Fail(string errorMessage,int errorCode)
@@ -24,7 +26,8 @@
                 ErrorCode = errorCode                
             };
         }
-        public override string ToString() { return Success ? $"Success: {Result}" : $"Failure: {ErrorMessage} (Code: {ErrorCode})"; }
+        public override string ToString() {
+            return Success    ? $"Success: {Result?.ToString() ?? "null"}"    : $"Failure: {ErrorMessage ?? "No message"} (Code: {ErrorCode})";}
         public static implicit operator ApiResponse<T>(T result) => Ok(result);
     }
 }

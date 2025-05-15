@@ -10,7 +10,7 @@ namespace CommunicationWorkerRole.RestRequestExecutor
         public string ContentType { get; set; } = "application/json";
         public string Accept { get; set; } = "application/json";        
         public HttpMethod Method { get; set; }
-        public int Timeout { get; set; } = 20000; 
+        public int Timeout { get; set; } = 20000;  // Default timeout in milliseconds (20s)
 
         // Custom headers
         public Dictionary<string, string> CustomHeaders { get; set; }= new Dictionary<string, string>();
@@ -32,7 +32,8 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             {
                 foreach (var custom in CustomHeaders)
                 {
-                    headers[custom.Key] = custom.Value;
+                    if (!headers.ContainsKey(custom.Key))
+                        headers[custom.Key] = custom.Value;
                 }
             }
 

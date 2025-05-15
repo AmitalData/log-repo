@@ -7,30 +7,30 @@ namespace CommunicationWorkerRole.RestRequestExecutor
 {
     public class ApiCommunicationLog
     {              
-        public string AddCommunicationLog(string request, string response, int tenant, StatusTypeCommunication statusTypeCode)
+        public async Task<string> AddCommunicationLogAsync(string request, string response, int tenant, StatusTypeCommunication statusTypeCode)
         {
             try
             {
                 CommunicationsParams logParams = new CommunicationsParams()
                 {
                     Tenant = tenant,
-                    CommunicationLogTypeCode = "Q",
+                    CommunicationLogTypeCode = CommunicationConstants.TypeQueue.ToString(),
                     Status = ((char)statusTypeCode).ToString(),
-                    QueueName = "externaltasksqueue" + tenant + 1,
+                    QueueName = $"{CommunicationConstants.DefaultFolder}{tenant}1",
                     Priority = 1,
-                    InOut = "O",
-                    Subject = "Customer ready for activation",
-                    FolderName = "ExternalTasksQueue",
+                    InOut = CommunicationConstants.InOut.ToString(),
+                    Subject = CommunicationConstants.SubjectCustomerActivation,
+                    FolderName = CommunicationConstants.DefaultFolder,
                     ByteData = LogitudeXmlSerializer.SerializeObject(request),
                     Logs=response                    
-                };
+                };                
                 
-                var result = Communications.AddCommunicationLog(logParams);
-                return result;
+                return await Task.Run(() => Communications.AddCommunicationLog(logParams));
+                
             }
             catch (Exception ex)
-            {                
-                throw new Exception("Failed to save communication log", ex);
+            {
+                throw new CommunicationLogException("Failed to save communication log", ex);
             }            
         }        
     }

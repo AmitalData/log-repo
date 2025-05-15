@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
-using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -139,8 +138,8 @@ namespace CommunicationWorkerRole.RestRequestExecutor
         {
             try
             {
-                var status = success==true? StatusTypeCommunication.Done: StatusTypeCommunication.Failed;                
-                logger.AddCommunicationLog(request, responseOrException, tenant, status);
+                var status = success==true? StatusTypeCommunication.Done: StatusTypeCommunication.Failed;
+                _ = logger.AddCommunicationLogAsync(request, responseOrException, tenant, status);
             }
             catch (Exception ex)
             {
@@ -160,6 +159,8 @@ namespace CommunicationWorkerRole.RestRequestExecutor
                 throw new ArgumentException("Url must be provided.", nameof(request.Url));
             if (request.Header == null)
                 throw new ArgumentException("Header must be provided.", nameof(request.Header));
+            if (request.Header.Method == null)
+                throw new ArgumentException("Method must be provided.", nameof(request.Header.Method));
         }
 
         private string WrapWithSoapEnvelope(string innerXml)
