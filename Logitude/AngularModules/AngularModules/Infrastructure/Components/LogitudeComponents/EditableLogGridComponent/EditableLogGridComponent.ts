@@ -2565,11 +2565,6 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     this.rows.filter(a => a.rowData == value)[0].IsSelected = true;
                 }
             });
-            // if (this.EnableMultiSelection === true && this.selectedRows?.length === 0) {
-            //     this.rows?.forEach((value) => {
-            //         value.IsSelected = false;
-            //     });
-            // }
         }
     }
     public EnableMultiSelection: boolean = false;
