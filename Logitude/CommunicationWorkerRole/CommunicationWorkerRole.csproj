@@ -480,6 +480,8 @@
     <Compile Include="RestRequestExecutor\ApiRequest.cs" />
     <Compile Include="RestRequestExecutor\ApiRequestHeader.cs" />
     <Compile Include="RestRequestExecutor\ApiResponse.cs" />
+    <Compile Include="RestRequestExecutor\CommunicationConstants.cs" />
+    <Compile Include="RestRequestExecutor\ApiException.cs" />
     <Compile Include="RestRequestExecutor\RestRequestExecutor.cs" />
     <Compile Include="RestRequestExecutor\StatusTypeCommunication.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
