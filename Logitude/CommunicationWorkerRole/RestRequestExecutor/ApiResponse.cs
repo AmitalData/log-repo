@@ -28,7 +28,7 @@
         }
         public override string ToString() {
             return Success    ? $"Success: {Result?.ToString() ?? "null"}"    : $"Failure: {ErrorMessage ?? "No message"} (Code: {ErrorCode})";}
-        public static explicit operator ApiResponse<T>(T result) => Ok(result);
+        public static implicit operator ApiResponse<T>(T result) => Ok(result);
     }
 }
 

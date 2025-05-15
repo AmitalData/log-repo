@@ -98,7 +98,7 @@ namespace CommunicationWorkerRole.RestRequestExecutor
         private ApiResponse<TResponse> HandleResponse<TResponse>(HttpResponseMessage response, string rawContent)
         {
             if (response.IsSuccessStatusCode)
-                return (ApiResponse<TResponse>)JsonConvert.DeserializeObject<TResponse>(rawContent);
+                return JsonConvert.DeserializeObject<TResponse>(rawContent);
 
             return ApiResponse<TResponse>.Fail(
                 $"Request failed. StatusCode: {(int)response.StatusCode}, Response: {rawContent}",
