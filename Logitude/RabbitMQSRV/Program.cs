@@ -58,7 +58,7 @@ namespace RabbitMQSRV
                 Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 /*CustomsWorkerRole.*/CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
-                //InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
                 InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
                     (string courierMasterId, int tenant) =>
@@ -249,7 +249,7 @@ namespace RabbitMQSRV
                 //throw;
             }
 
-           // InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
+            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null);
             //ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
 
             //string storageServiceMode = ConfigurationManager.AppSettings.Get("StorageServiceMode");
