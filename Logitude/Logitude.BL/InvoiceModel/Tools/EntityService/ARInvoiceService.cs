@@ -298,8 +298,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
             ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
-            
-                if (entityPM.IsConsolidationInvoice)
+
+            if (entityPM.IsConsolidationInvoice)
             {
                 this.UpdateConsolidationLines();
                 this.InitializeTransferComponents();
@@ -370,7 +370,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.GetForeignFields();
             this.RunStoredProcedures();
-           
+            this.AfterServiceFinished();
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
 
@@ -379,25 +379,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.InvoiceEntities != null && entityPM.InvoiceEntities.Count > 0) logtext += ", Interest Report Id" + entityPM.InvoiceEntities[0].EntityId;
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
-               if (CheckIfReportConnectedToInvoice(entityPM))
+                if (CheckIfReportConnectedToInvoice(entityPM))
                 {
                     string status = "2";
-                   UpdateInterestReportStatus(entityPM, status);
+                    UpdateInterestReportStatus(entityPM, status);
 
                     invoiceRepository.Remove(invoice);
                     invoiceRepository.SubmitChanges();
                     return;
                 }
-         
-                    
-               this.UpdateInterestReportFields(entityPM);
+
+                this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
-            this.GenerateInvoiceNumber();
-            this.AfterServiceFinished();
-            ARInvoiceMapping.MapEntity(entityPM, invoice, false, loggedContactId);
-            invoiceRepository.Update(invoice);
-            invoiceRepository.SubmitChanges();
+
             new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
@@ -1366,7 +1361,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (!entityPM.IsInvoiceNumberManuallySet)
                     {
-                       // this.GenerateInvoiceNumber();
+                        this.GenerateInvoiceNumber();
                     }
                 }
 
@@ -1438,7 +1433,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 if (!entityPM.IsInvoiceNumberManuallySet)
                 {
-                   // this.GenerateInvoiceNumber();
+                    this.GenerateInvoiceNumber();
                 }
 
                 this.UpdateNeedRebuild();
@@ -1477,7 +1472,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.StatusCode = "AC";
 
-               // this.GenerateInvoiceNumber();
+                this.GenerateInvoiceNumber();
             }
 
             if (!entityPM.IsConstituentInvoice)
@@ -1521,9 +1516,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (docOut != null)
             {
-                    docOut.NeedsRebuild = true;
-                    documentOutRepository.Update(docOut);
-                    documentOutRepository.SubmitChanges();
+                docOut.NeedsRebuild = true;
+                documentOutRepository.Update(docOut);
+                documentOutRepository.SubmitChanges();
             }
         }
 
@@ -4737,7 +4732,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.OnVoidingInvoise();
                 this.OnResendToSAT();
             }
-           
+
         }
 
         private void SendInvoiceToSAT()
