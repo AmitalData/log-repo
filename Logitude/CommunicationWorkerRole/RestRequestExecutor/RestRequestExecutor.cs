@@ -41,19 +41,23 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             try
             {                              
                 //Send request   
-                var response = await _retryPolicy.ExecuteAsync(() =>
+                var response = await _retryPolicy.ExecuteAsync(async () =>
                 {
                     var httpClient = new HttpClient {Timeout = TimeSpan.FromMilliseconds(request.Header.Timeout)};
                     var httpRequest = BuildHttpRequest(request);
-                    var result = httpClient.SendAsync(httpRequest);
-                    rawResponseContent = result.Result?.Content?.ReadAsStringAsync()?.Result;
+                    var result = await httpClient.SendAsync(httpRequest);
+                    rawResponseContent = await result.Content.ReadAsStringAsync();
+                    //var result =  httpClient.SendAsync(httpRequest);
+                    //rawResponseContent = result.Result?.Content?.ReadAsStringAsync()?.Result;
                     return result;
                 });
+
                 if (request.IsSoapRequest)
                 {
                     rawResponseContent = JsonConvert.SerializeObject(rawResponseContent);
                 }
-                    responseToReturn = HandleResponse<TResponse>(response, rawResponseContent);
+
+                responseToReturn = HandleResponse<TResponse>(response, rawResponseContent);
             }
             catch (Exception ex)
             {
@@ -61,12 +65,13 @@ namespace CommunicationWorkerRole.RestRequestExecutor
                 responseToReturn.ErrorCode = error.ErrorCode;
                 responseToReturn.ErrorMessage = error.ErrorMessage;
                 rawResponseContent= error.ErrorMessage;
-            }            
-            _ = Task.Run(() => LogCommunication(apiCommunicationLog,
+            }
+            
+            _ = Task.Run(() => LogCommunicationAsync(apiCommunicationLog,
                 JsonConvert.SerializeObject(request.Data),
                 rawResponseContent,
                 responseToReturn.Success,
-                request.Tenant));
+                request.Tenant));                       
             return responseToReturn;
         }
 
@@ -134,12 +139,12 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             return ApiResponse<TResponse>.Fail(message, code);
         }
 
-        private void LogCommunication(ApiCommunicationLog logger, string request, string responseOrException,bool success,  int tenant)
+        private async Task LogCommunicationAsync(ApiCommunicationLog logger, string request, string responseOrException,bool success,  int tenant)
         {
             try
             {
                 var status = success==true? StatusTypeCommunication.Done: StatusTypeCommunication.Failed;
-                _ = logger.AddCommunicationLogAsync(request, responseOrException, tenant, status);
+                await logger.AddCommunicationLogAsync(request, responseOrException, tenant, status);
             }
             catch (Exception ex)
             {
@@ -154,13 +159,13 @@ namespace CommunicationWorkerRole.RestRequestExecutor
         private void ValidateRequest<TRequest>(ApiRequest<TRequest> request)
         {
             if (request == null)
-                throw new ArgumentNullException(nameof(request));
+                throw new ValidationServiceException("request is null");            
             if (string.IsNullOrWhiteSpace(request.Url))
-                throw new ArgumentException("Url must be provided.", nameof(request.Url));
+                throw new ValidationServiceException("Url must be provided.", nameof(request.Url));
             if (request.Header == null)
-                throw new ArgumentException("Header must be provided.", nameof(request.Header));
+                throw new ValidationServiceException("Header must be provided.", nameof(request.Header));
             if (request.Header.Method == null)
-                throw new ArgumentException("Method must be provided.", nameof(request.Header.Method));
+                throw new ValidationServiceException("Method must be provided.", nameof(request.Header.Method));
         }
 
         private string WrapWithSoapEnvelope(string innerXml)
