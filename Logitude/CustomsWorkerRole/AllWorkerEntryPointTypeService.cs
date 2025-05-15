@@ -63,11 +63,9 @@ namespace CustomsWorkerRole
 
             return new Logitude.Server.Tools.WorkerEntryPoint[] {
                 new   SendDataToExternalServicesWR() ,
-                //new   UpdateClosedTablesWR() ,
                 new   CustomsMessagingSheetWR() ,
                 new   DownloadDcaMessageSheetWR() ,
                 new   CustomsCommandGetCustomRequestWR() ,
-                ///new   CustomsCommandSignRequestWR() ,
                 new   CustomsCommandSendDCAWR() ,
                 new   CustomsCommandSendDCAUploadStatusWR() ,
                 new   CustomsCommandSendWSReceiveCorrelationWR() ,
