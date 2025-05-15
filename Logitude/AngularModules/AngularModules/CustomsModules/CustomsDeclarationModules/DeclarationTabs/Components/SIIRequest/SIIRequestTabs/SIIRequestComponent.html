@@ -71,7 +71,8 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactEmail'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true" [Text]="ContactEmail"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"
+                                [Text]="ContactEmail"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.UnloadDate'" [ObjectFieldName]="'UnloadDate'"
@@ -96,7 +97,8 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactTel'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true" [Text]="ContactTel"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true" [Text]="ContactTel">
+                            </LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'"
@@ -123,7 +125,8 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactCellPhone'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactCellPhone" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactCellPhone"
+                                [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.VesselName'" [ObjectFieldName]="'VesselName'"
@@ -148,7 +151,8 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactFax'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactFax" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactFax" [HideColumns]="true">
+                            </LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.ManifestNumber'"
@@ -287,8 +291,7 @@
                                 <td style="height:25px;width:35px; ">
                                     <div *ngIf="IsCheckBoxVisible">
                                         <div class="Button" style="width: 29px;height:25px;">
-                                            <CheckBox style="right:3px; top:1.5px"
-                                                [IsChecked]="IsSelected"
+                                            <CheckBox style="right:3px; top:1.5px" [IsChecked]="IsSelected"
                                                 [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event ">
                                             </CheckBox>
                                         </div>
@@ -389,7 +392,22 @@
                                                                         </log-cell-template>
                                                                     </ng-template>
                                                                 </log-column>
-
+                                                                <log-column [width]="'35'" [Editable]="true"
+                                                                    [Alignment]="'right'" [visibility]="'visibile'">
+                                                                    <ng-template let-item>
+                                                                        <log-cell-template [IgnoreMods]="true"
+                                                                            #logcelltemplate>
+                                                                            <span
+                                                                                class="CellSeparator floatRight"></span>
+                                                                            <div class="editButtonContainer">
+                                                                                <IconButton [Name]="'Edit'"
+                                                                                    [IsSmall]="true"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)">
+                                                                                </IconButton>
+                                                                            </div>
+                                                                        </log-cell-template>
+                                                                    </ng-template>
+                                                                </log-column>
                                                             </logitude-edit-grid>
                                                         </div>
                                                     </td>

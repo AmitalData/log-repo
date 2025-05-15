@@ -46,6 +46,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public IsDisplayOnly: boolean = false;
     public isAllowChange: boolean = false;
     public entityPM: SIIRequestPM = new SIIRequestPM();
+    public initfilterAgrs: ApiQueryFilters;
     public filterAgrs: ApiQueryFilters;
     private userData: UserPM = new UserPM();
     public IsLoaded: boolean = false;
@@ -98,7 +99,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
-        this.filterAgrs = args.filterAgrs;
+        this.initfilterAgrs = args.filterAgrs;
+        this.filterAgrs = this.initfilterAgrs;
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.SIIRequest";
         this.supplierInvoiceItemsForSIIRequest = args.supplierInvoiceItemsForSIIRequest;
@@ -132,6 +134,44 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         console.log(this.SelectedRowsCheckBox.length);
     }
     //#endregion Actions
+
+    //#region complete data reqItem:
+    onEditSupplierInvoiceItemRequest(item: SupplierInvoiceItemsForSIIRequestLine) {
+        this.SelectedRow = item;
+        this.openLogWindow()
+    }
+    public isOpen: boolean;
+
+    openLogWindow() {
+        let args: any = {
+            Decalaration: this.EntityPM,
+            SIIRequest: this.entityPM,
+            invoiceItemReq: this.SelectedRow,
+            // TODO: change to more and add mode edit or getand edit
+            IsNewOrEdit: true,
+            filterAgrs: this.initfilterAgrs,
+            isAllowChange: this.isAllowChange,
+        };
+        
+        if (this.isOpen) return;
+        this.isOpen = true;
+        let logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 650;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.SIIRequest.O.CompletData");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestCopmleteDataItem/SIIRequestCopmleteDataItemComponent');
+        args.logWindow = logWindow;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            this.RefreshEntity();
+            this.isOpen = false;
+        });
+    }
+
+    //#endregion complete data reqItem
+
 
     public SearchFilterChangedEvent: any;
     SearchText: string = "";
@@ -233,7 +273,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public get IsSelected() { return this.isSelected };
     public set IsSelected(value: boolean) {
         this.isSelected = value;
-        if (!value) this.SelectedRow = null;
         this.OnRowSelectedRowsCheckBox(value ? this.supplierInvoiceItemsCollection?.Collection : []);
     }
 
