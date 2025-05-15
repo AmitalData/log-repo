@@ -113,16 +113,15 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
         this.CurrentSession.CloseCurrentWindow();
         console.log(this.entityPM);
-        console.log(this.SelectedRowsCheckBox);
-        
+        console.log(this.SelectedRowsCheckBox.length);
     }
+
     SaveSiiRequest() {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
         this.CurrentSession.CloseCurrentWindow();
         console.log(this.entityPM);
-        console.log(this.SelectedRowsCheckBox);
-        
+        console.log(this.SelectedRowsCheckBox.length);
     }
 
     SendSiiRequest(event: any) {
@@ -130,7 +129,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
         this.CurrentSession.CloseCurrentWindow();
         console.log(this.entityPM);
-        console.log(this.SelectedRowsCheckBox);
+        console.log(this.SelectedRowsCheckBox.length);
     }
     //#endregion Actions
 
