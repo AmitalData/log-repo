@@ -519,16 +519,16 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        [HttpPut]
-        public HttpResponseMessage GetExcel(ReportFliter reportFliter)
+        public HttpResponseMessage GetExcel(string filter)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
+				string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-	
-			    MemoryStream res = new ReportHelper().CreateExcelOfReport(reportFliter);
+
+				var reportFliter = JsonConvert.DeserializeObject<ReportFliter>(filter);
+				MemoryStream res = new ReportHelper().CreateExcelOfReport(reportFliter);
 
                 HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(res.ToArray()) };
                 result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
