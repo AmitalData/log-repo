@@ -112,17 +112,25 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
         this.CurrentSession.CloseCurrentWindow();
+        console.log(this.entityPM);
+        console.log(this.SelectedRowsCheckBox);
+        
     }
     SaveSiiRequest() {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
         this.CurrentSession.CloseCurrentWindow();
+        console.log(this.entityPM);
+        console.log(this.SelectedRowsCheckBox);
+        
     }
 
     SendSiiRequest(event: any) {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
         this.CurrentSession.CloseCurrentWindow();
+        console.log(this.entityPM);
+        console.log(this.SelectedRowsCheckBox);
     }
     //#endregion Actions
 
@@ -130,13 +138,17 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     SearchText: string = "";
     Search(SearchText: string) {
         this.SearchText = AppTool.IsNullOrEmpty(SearchText) ? "" : SearchText.toLowerCase();
-        const original = this.originalSupplierInvoiceItemsCollection.Collection;
-        const filtered = original.filter(i =>
-            i.ClassificationCode.toLowerCase().includes(this.SearchText) ||
-            i.ItemCode.toLowerCase().includes(this.SearchText)
-        );
+        const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
+        let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
+        if (this.SearchText === "")
+            filtered = original;
+        else
+            filtered = original.filter(i => i.ClassificationCode.toLowerCase().includes(this.SearchText) || i.ItemCode.toLowerCase().includes(this.SearchText));
+
         this.supplierInvoiceItemsCollection.Clear();
-        (filtered.length ? filtered : original).forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+        if (filtered.length > 0 || this.SearchText === "") {
+            filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+        }
     }
 
     SetPropertiesEnabled() {
