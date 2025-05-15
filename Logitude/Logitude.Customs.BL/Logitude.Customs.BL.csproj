@@ -399,6 +399,9 @@
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
+    <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
+    <Compile Include="CloseTables\Codes\EventStatuses.cs" />
+    <Compile Include="CloseTables\Codes\UserCodes.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
@@ -469,9 +472,9 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomMetaDataTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsAddressTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsBookTypeDetails.Generated.cs" />
-     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsBranchDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsBranchDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsDocumentStatusTypeDetails.Generated.cs" />
-     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsDocumentUploadDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsDocumentUploadDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsEntityStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsEnvoirmentTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsInsuranceCompanyDetails.Generated.cs" />

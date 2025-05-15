@@ -7,7 +7,6 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools.Helpers;
-///using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,8 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Unifreight.BL.EntityPMs.UGenerated;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools;
@@ -37,6 +37,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.AmitalMessaging.Customs.CustomFile;
+using Logitude.Customs.BL.CloseTables.Codes;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -151,12 +152,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationPM.PaymentDate = customResponse.GeneralData.releaseDate;
                     }
+                    ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
+                    UserRepository userRepository = new UserRepository(commonDbContext);
+                    var user = userRepository.GetSingleUserByCode(UserCodes.Mehes, declarationPM.Tenant, true);
 
+
+                    var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
                     switch (customResponse.GeneralData.ReleaseMessageCode)
                     {
                         case 1: // released
                             LogMessagingUtil.Instance.AppendLine("released");
-                            //hataraDate = customResponse.GeneralData.releaseDate;
                             declarationPM.HatraDate = customResponse.GeneralData.releaseDate.GetValueOrDefault(); //Yuval Chalup 17.01.2018 - Update date from response
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
@@ -164,18 +169,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             this.CloseCustomsCollateral(declarationPM);
 
-                            ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
-                            UserRepository userRepository = new UserRepository(commonDbContext);
-                            var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
-                       
-                                if (declarationPM.Direction == "E")
+
+
+                            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
+                            {
+                                if (declarationPM.Direction.IsExport())
                                 {
                                     RaiseEvent(declarationPM, user?.Id, status_id: "HTR", status_DateTime: statusDateTime);
 
                                     SendSoyStatusToUnifreight(declarationPM, user?.Id);
 
                                 }
-                           
+                            }
 
 
 
@@ -232,6 +237,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             declarationPM.HatraDate = null; //Yuval Chalup 17.01.2018 - Delete date
                             declarationPM.IsClose = false;
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
+                            if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
+                            {
+                                if (declarationPM.Direction.IsExport())
+                                {
+                                    RaiseEvent(declarationPM, user?.Id, EventStatuses.HTC, statusDateTime);
+                                }
+                            }
                             break;
                         case 8 when declarationPM.Direction == "E":
 
@@ -280,7 +292,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         MyRequestSheetParam.RequestDescription = string.Concat(MyRequestSheetParam.RequestDescription, "\n", declarationPM.UserNotes);
                     }
-                    if (declarationPM.Direction == "E")
+                    if (declarationPM.Direction.IsExport())
                     {
                         if (customResponse.GeneralData.ReleaseMessageCode == 4 || customResponse.GeneralData.ReleaseMessageCode == 8)
                         {
