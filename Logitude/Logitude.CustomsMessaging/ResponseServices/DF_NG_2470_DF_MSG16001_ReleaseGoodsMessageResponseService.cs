@@ -37,6 +37,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.AmitalMessaging.Customs.CustomFile;
+using Logitude.Customs.BL.CloseTables.Codes;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -153,7 +154,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     ICommonDataContext commonDbContext = CommonDataContext.GetContext(declarationPM.Tenant);
                     UserRepository userRepository = new UserRepository(commonDbContext);
-                    var user = userRepository.GetSingleUserByCode("MEHES", declarationPM.Tenant, true);
+                    var user = userRepository.GetSingleUserByCode(UserCodes.Mehes, declarationPM.Tenant, true);
 
 
                     var setting = CustomsSettingQueryService.GetSettingByTenant(declarationPM.Tenant);
@@ -161,7 +162,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         case 1: // released
                             LogMessagingUtil.Instance.AppendLine("released");
-                            //hataraDate = customResponse.GeneralData.releaseDate;
                             declarationPM.HatraDate = customResponse.GeneralData.releaseDate.GetValueOrDefault(); //Yuval Chalup 17.01.2018 - Update date from response
                             myEventContextTagModel.EventCode = "RSG";
                             myEventContextTagModel.StatusDateTime = statusDateTime;
@@ -173,7 +173,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                             {
-                                if (declarationPM.Direction == "E")
+                                if (declarationPM.Direction.IsExport())
                                 {
                                     RaiseEvent(declarationPM, user?.Id, status_id: "HTR", status_DateTime: statusDateTime);
 
@@ -239,9 +239,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             MyRequestSheetParam.RequestDescription = "ביטול התרה. תיק מספר: " + declarationPM.CustomFileNo;//eitan h 26/2/15 task 11525
                             if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                             {
-                                if (declarationPM.Direction == "E")
+                                if (declarationPM.Direction.IsExport())
                                 {
-                                    RaiseEvent(declarationPM, user?.Id,  "HTC", statusDateTime);
+                                    RaiseEvent(declarationPM, user?.Id, EventStatuses.HTC, statusDateTime);
                                 }
                             }
                             break;
@@ -292,7 +292,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         MyRequestSheetParam.RequestDescription = string.Concat(MyRequestSheetParam.RequestDescription, "\n", declarationPM.UserNotes);
                     }
-                    if (declarationPM.Direction == "E")
+                    if (declarationPM.Direction.IsExport())
                     {
                         if (customResponse.GeneralData.ReleaseMessageCode == 4 || customResponse.GeneralData.ReleaseMessageCode == 8)
                         {
