@@ -585,11 +585,13 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     name: string;
-    processAdvanceQueryFilters(filters) {
+    processAdvanceQueryFilters(filters) {        
         if (this.IsAdvancedSearchOpened == false) {
             return;
-
         }
+
+        this.fastSearchCheckbox(false);        
+
         this.dataSource = {
             pageSize: 30,
             rowCount: null,
@@ -1052,6 +1054,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         cmpRef.instance.SetFiltersMenu(this.listArgs.Filters);
                                     }
                                     cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
+                                        if($event?.Filters.AdditionalFilters?.length > 1 || !$event?.Filters.AdditionalFilters[0]?.FieldName.includes('TransportMode')) 
+                                            this.fastSearchCheckbox(false);
+
                                         this.SelectedFilterChanged($event);
 
                                         this.FiltersMenu = new ApiQueryFilters();

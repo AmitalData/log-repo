@@ -4,8 +4,8 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
 @Component({
     selector: 'app-SearchListDDL',
     template: `
-        <div class="dropdown-container">
-            <table *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-list" [style.width]="DDLWidth">
+        <div *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-container">
+            <table class="dropdown-list" [style.width]="DDLWidth">
                 <tr *ngFor="let option of dropdownOptions" (click)="optionSelected.emit(option)" class="dropdown-item">
                     <ng-container *ngFor="let label of labels; let first = first;" [ngSwitch]="label.name">
                         <td *ngIf="!first && label.lengthTemp !== 0" >&nbsp;|&nbsp;</td>
