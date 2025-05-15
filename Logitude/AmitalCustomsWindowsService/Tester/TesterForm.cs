@@ -1,6 +1,7 @@
 ﻿using AmitalCustomsWindowsService.Tester.CustomMessage;
 using AmitalCustomsWindowsService.Tester.SU;
 using CommunicationWorkerRole;
+using CommunicationWorkerRole.RestRequestExecutor;
 using CustomsWorkerRole;
 using CustomsWorkerRole.Test;
 using Logitude.Customs.BL.CloseTables;
@@ -25,6 +26,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1386,14 +1388,70 @@ namespace AmitalCustomsWindowsService.Tester
             DownloadDcaMessageSheetWR.WorkOnce();
         }
 
-        //private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
-        //{
+        private void button1_Click(object sender, EventArgs e)
+        {
+            InvokeApi();
 
-        //}
+        }
+        private void InvokeApi()
+        {
 
-        //private void _TBID_TextChanged(object sender, EventArgs e)
-        //{
+            var request = new SII
+            {
+                credentials = new Credentials
+                {
+                    userId = "igal_ya@sii.org.il",
+                    customerUniqueCode = "123456",
+                    hashPassword = "76SuIaeYkno"
+                },
+                importerNumber = "512822990",
+                modelCode = "ALEX1"
+            };
 
-        //}
+            var request1 = new ApiRequest<SII>()
+            {
+                Url = "http://199.203.226.21:8067/rest/ImportersPortal/customerservices/productFile/",
+                Header = new ApiRequestHeader
+                {
+                    Method = HttpMethod.Post,
+                    Timeout = 10000
+                },
+                Tenant = 1,
+                Data = request,
+                DeclarationId = string.Empty
+            };
+
+            var client1 = new RestRequestExecutor();
+            var result1 = client1.ExecuteAsync<SII, object>(request1).Result;
+
+            // Call the API with the request object
+            // Example: var response = ApiClient.CallApi(request);
+        }
     }
+
+    //private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)
+    //{
+
+    //}
+
+    //private void _TBID_TextChanged(object sender, EventArgs e)
+    //{
+
+    //}
+
+
+    public class SII
+    {
+        public Credentials credentials { get; set; }
+        public string importerNumber { get; set; }
+        public string modelCode { get; set; }
+    }
+
+    public class Credentials
+    {
+        public string userId { get; set; }
+        public string customerUniqueCode { get; set; }
+        public string hashPassword { get; set; }
+    }
+
 }
