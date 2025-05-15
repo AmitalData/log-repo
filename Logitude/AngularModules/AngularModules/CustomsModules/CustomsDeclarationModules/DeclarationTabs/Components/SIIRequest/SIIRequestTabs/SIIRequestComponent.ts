@@ -202,20 +202,28 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
 
     SelectedRow: SupplierInvoiceItemsForSIIRequestLine = new SupplierInvoiceItemsForSIIRequestLine(new SupplierInvoiceItemsForSIIRequest(), this);
-    SelectedRows: SupplierInvoiceItemsForSIIRequestLine[] = [];
+    SelectedRowsCheckBox: SupplierInvoiceItemsForSIIRequestLine[] = [];
     public SelectedInvoiceItemsReqList: ObservableCollection;
 
-    OnRowSelected(items: SupplierInvoiceItemsForSIIRequestLine[]) {
-        this.SelectedRows = items;
-        if (items.length === 0) this.SelectedInvoiceItemsReqList.Clear();
-        else this.SelectedInvoiceItemsReqList.Collection = items;
+    OnRowSelected(item: SupplierInvoiceItemsForSIIRequestLine) {
+        this.SelectedRow = item;
+    }
+
+    OnRowSelectedRowsCheckBox(items: SupplierInvoiceItemsForSIIRequestLine[]) {
+        if (this.SelectedRowsCheckBox.length === 0 || this.SelectedRowsCheckBox.length === this.supplierInvoiceItemsCollection?.Collection.length) {
+            this.supplierInvoiceItemsCollection?.Collection.forEach((item: SupplierInvoiceItemsForSIIRequestLine) => {
+                item.IsSelected = this.IsSelected;
+            });
+        }
+        this.SelectedRowsCheckBox = items;
     }
 
     private isSelected: boolean;
     public get IsSelected() { return this.isSelected };
     public set IsSelected(value: boolean) {
         this.isSelected = value;
-        this.OnRowSelected(value ? this.supplierInvoiceItemsCollection?.Collection : []);
+        if (!value) this.SelectedRow = null;
+        this.OnRowSelectedRowsCheckBox(value ? this.supplierInvoiceItemsCollection?.Collection : []);
     }
 
     //#region Properties Filter Methods
@@ -291,7 +299,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.ContactEmail = this.userData.Email || '';
         this.ContactTel = this.userData.BusinessPhone || '';
         this.ContactCellPhone = this.userData.Mobile || '';
-        this.ContactFax = this.userData.Fax || '';      
+        this.ContactFax = this.userData.Fax || '';
     }
 
     //#endregion user data
@@ -564,18 +572,8 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
 
     OnRowSelected(item: SupplierInvoiceItemsForSIIRequestLine, isSelected: boolean) {
         item.IsSelected = isSelected;
-        if (item.IsSelected) {
-            // remove item from selected rows:
-            this.Parent?.SelectedRows?.push(item);
-        }
-        else {
-            // remove item from selected rows:
-            const index = this.Parent?.SelectedRows?.findIndex((x: SupplierInvoiceItemsForSIIRequestLine) => x.entityPM.LineNumber == item.entityPM.LineNumber);
-            if (index != null && index > -1) {
-                this.Parent?.SelectedRows.slice(index);
-            }
-        }
-        this.Parent?.OnRowSelected(this.Parent.SelectedRows);
+        this.Parent.SelectedRowsCheckBox = this.Parent.supplierInvoiceItemsCollection?.Collection?.filter(i => i.IsSelected === true);
+        this.Parent.IsSelected = !(this.Parent.SelectedRowsCheckBox?.length !== this.Parent.supplierInvoiceItemsCollection.Collection?.length);
     }
 
     public get InvoiceNumber(): string {

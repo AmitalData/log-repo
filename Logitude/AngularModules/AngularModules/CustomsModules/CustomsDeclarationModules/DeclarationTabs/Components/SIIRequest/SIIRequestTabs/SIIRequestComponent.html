@@ -288,7 +288,7 @@
                                     <div *ngIf="IsCheckBoxVisible">
                                         <div class="Button" style="width: 29px;height:25px;">
                                             <CheckBox style="right:3px; top:1.5px"
-                                                [IsChecked]="supplierInvoiceItemsForSIIRequest?.length === SelectedInvoiceItemsReqList?.Collection?.length"
+                                                [IsChecked]="IsSelected"
                                                 [IsEnabled]="!IsDisplayOnly" (Checked)="IsSelected = $event ">
                                             </CheckBox>
                                         </div>
@@ -306,7 +306,6 @@
                                                     <td colspan="6">
                                                         <div class="GeneratedGridContainer" style="height : 100%;">
                                                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                                [EnableMultiSelection]="true"
                                                                 (SelectedItemChanged)="OnRowSelected($event)"
                                                                 [SelectedRow]="SelectedRow"
                                                                 [ItemSource]="supplierInvoiceItemsCollection"
