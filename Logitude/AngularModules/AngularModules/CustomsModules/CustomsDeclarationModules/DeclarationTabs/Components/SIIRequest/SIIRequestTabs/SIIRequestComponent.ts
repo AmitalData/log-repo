@@ -53,6 +53,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public supplierInvoiceItemsCollection: ObservableCollection;
     public originalSupplierInvoiceItemsCollection: ObservableCollection;
     public IsCheckBoxVisible: boolean = false;
+    public filterOptionsAll: FilterOptions = FilterOptions.All;
+    public filterOptionsWithResponse: FilterOptions = FilterOptions.WithResponse;
+    public filterOptionsInvoice: FilterOptions = FilterOptions.Invoice;
+    public filterOptionsDeclarationConect: FilterOptions = FilterOptions.DeclarationConect;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -118,6 +122,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     SendSiiRequest(event: any) {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
+        this.CurrentSession.CloseCurrentWindow();
     }
     //#endregion Actions
 
@@ -224,11 +229,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#endregion
 
     //#region DemandState Filter Methods
-    public DemandStateFilterSelectedValue: string = 'All';
+    public DemandStateFilterSelectedValue: string = this.filterOptionsWithResponse;
     DemandStateFilterItemClicked(itemValue: string) {
         if (this.DemandStateFilterSelectedValue != itemValue) {
             this.DemandStateFilterSelectedValue = itemValue;
-            this.DemandState = itemValue == 'All' ? null : itemValue;
+            this.DemandState = itemValue === this.filterOptionsAll ? null : itemValue;
         }
     }
     //#region Invoice ComboBox
@@ -257,11 +262,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#endregion
 
     //#region LevelSelection Filter Methods
-    public LevelSelectionFilterSelectedValue: string = 'DeclarationConect';
+    public LevelSelectionFilterSelectedValue: string = this.filterOptionsDeclarationConect;
     LevelSelectionFilterItemClicked(itemValue: string) {
         if (this.LevelSelectionFilterSelectedValue != itemValue) {
             this.LevelSelectionFilterSelectedValue = itemValue;
-            if (itemValue != "Invoice") {
+            if (itemValue !== this.filterOptionsInvoice) {
                 this.SelectedInvoiceNumber = null;
                 this.SelectedCounterKey = null;
                 this.supplierInvoiceItemsCollection.Clear();
@@ -283,17 +288,12 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         });
     }
     setUserData() {
-        console.log(this.userData?.Email);
-        console.log(this.userData?.BusinessPhone);
-        console.log(this.userData?.Mobile);
-        console.log(this.userData?.Fax);
-        this.ContactEmail = this.userData.Email;
-        this.ContactTel = this.userData.BusinessPhone;
-        this.ContactCellPhone = this.userData.Mobile;
-        this.ContactFax = this.userData.Fax;
-        this.entityPM = this.entityPM;
-        this.RefreshEntity();
+        this.ContactEmail = this.userData.Email || '';
+        this.ContactTel = this.userData.BusinessPhone || '';
+        this.ContactCellPhone = this.userData.Mobile || '';
+        this.ContactFax = this.userData.Fax || '';      
     }
+
     //#endregion user data
 
     //#region  SiiRequest properties
@@ -441,8 +441,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM?.ContactId;
     }
     public set ContactId(newValue: string) {
+        let oldValue = this.entityPM.ContactId;
         this.entityPM.ContactId = newValue;
-        this.getUserData(newValue);
+        if (!AppTool.IsNullOrEmpty(newValue) && oldValue !== newValue) this.getUserData(newValue);
+        this.entityPM.IsDirty = true;
     }
     //#endregion SiiRequest properties
 
@@ -670,4 +672,11 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set OriginCountryName(newValue: string) {
         this.entityPM.OriginCountryName = newValue;
     }
+}
+
+export enum FilterOptions {
+    All = "All",
+    WithResponse = "withResponse",
+    Invoice = "Invoice",
+    DeclarationConect = "DeclarationConect"
 }

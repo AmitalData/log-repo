@@ -71,7 +71,7 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactEmail'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true" [Text]="ContactEmail"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.UnloadDate'" [ObjectFieldName]="'UnloadDate'"
@@ -96,7 +96,7 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactTel'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true" [Text]="ContactTel"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'"
@@ -123,7 +123,7 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactCellPhone'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactCellPhone" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.VesselName'" [ObjectFieldName]="'VesselName'"
@@ -148,7 +148,7 @@
                         </td>
                         <td style="width:180px">
                             <LogTextBox [ObjectFieldName]="'ContactFax'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableNameSiiRequest" [Text]="ContactFax" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td style="width:130px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.ManifestNumber'"
@@ -215,15 +215,15 @@
                                         <td style="width: 240px;">
                                             <ul class="FiltersMenu">
                                                 <li id="withResponse"
-                                                    (click)="DemandStateFilterItemClicked('withResponse')"
+                                                    (click)="DemandStateFilterItemClicked(filterOptionsWithResponse)"
                                                     style="width: 80px; height: 22px;"
-                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === 'withResponse'"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === filterOptionsWithResponse"
                                                     class="noselect">
                                                     {{'Customs.Declaration.O.DemandState' | TextCodeTranslationPipe}}
                                                 </li>
-                                                <li id="All" (click)="DemandStateFilterItemClicked('All')"
+                                                <li id="All" (click)="DemandStateFilterItemClicked(filterOptionsAll)"
                                                     style="width: 80px; height: 22px;"
-                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === 'All'"
+                                                    [class.SelectedFilter]="DemandStateFilterSelectedValue === filterOptionsAll"
                                                     class="noselect">
                                                     {{'Customs.General.O.All' | TextCodeTranslationPipe}}
                                                 </li>
@@ -237,16 +237,17 @@
                                         <td style="width: 160px;">
                                             <ul class="FiltersMenu">
                                                 <li id="LevelSelectionDeclarationConect"
-                                                    (click)="LevelSelectionFilterItemClicked('DeclarationConect')"
+                                                    (click)="LevelSelectionFilterItemClicked(filterOptionsDeclarationConect)"
                                                     style="width: 80px; height: 22px;"
-                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === 'DeclarationConect'"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === filterOptionsDeclarationConect"
                                                     class="noselect">
                                                     {{'Customs.ImporterDeclarationQuery.O.DeclarationConect.Declaration'
                                                     | TextCodeTranslationPipe}}
                                                 </li>
-                                                <li id="Invoice" (click)="LevelSelectionFilterItemClicked('Invoice')"
+                                                <li id="Invoice"
+                                                    (click)="LevelSelectionFilterItemClicked(filterOptionsInvoice)"
                                                     style="width: 80px; height: 22px;"
-                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === 'Invoice'"
+                                                    [class.SelectedFilter]="LevelSelectionFilterSelectedValue === filterOptionsInvoice"
                                                     class="noselect">
                                                     {{'Customs.Declaration.O.Invoice' | TextCodeTranslationPipe}}
                                                 </li>
@@ -254,7 +255,7 @@
                                         </td>
                                         <td style="width:5px"></td>
                                         <td style="width: 160px;">
-                                            <ComboBox *ngIf="LevelSelectionFilterSelectedValue ==='Invoice'"
+                                            <ComboBox *ngIf="LevelSelectionFilterSelectedValue === filterOptionsInvoice"
                                                 style="width:150px;" [ItemsSource]="InvoicesNumbersList"
                                                 (SelectedItemChanged)="InvoicesSelectionChanged($event)"
                                                 [Binding]="'InvoiceNumber'"></ComboBox>
