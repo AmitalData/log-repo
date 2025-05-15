@@ -4,6 +4,7 @@ import { SearchIndexEditHistoryPMService } from "Common/Services/StandardPMs/Sea
 import { AzureSearchWebService, FastSearchResult, FastSearchSettings } from "Customs/Services/WebServices/AzureSearchWebService";
 import { ApiQueryFilters, FilterItem } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
+import { SearchListDDLComponent } from "Infrastructure/Directives/SearchListDDL/SearchListDDLComponent";
 import { ObjectTablePM } from "Infrastructure/EntityPMs/ObjectTablePM";
 import { EntityListService } from "Infrastructure/Services/EntityListService";
 import { FeatureLocator } from "Infrastructure/Utilities/FeatureLocator";
@@ -61,7 +62,7 @@ export class FastSearchService implements OnDestroy {
 
     public async initFastSearch(objectTable: ObjectTablePM, objectTableName: string, menuTableQuerySection: string): Promise<void> {
         this.resetData();
-        
+
         const havePermission = FeatureLocator.HasFeaturePermession("General", "FASTSEARCH") || isDevMode();
         const enabled = objectTable.ShowFastSearch;
         if (!havePermission || !enabled) return;
@@ -79,8 +80,6 @@ export class FastSearchService implements OnDestroy {
 
         const settings: FastSearchSettings = await this.azureSearchWebService.getSettings(indexName);
         this.settings = settings;
-
-        this.getRecentSearches();
         this.$fastSearchEnable.next(true);
     }
 
@@ -88,8 +87,8 @@ export class FastSearchService implements OnDestroy {
         this.subscriptions.push(menuHeaderchangeevent.subscribe(() => this.orginalCurrentAdditionalFilters = null));
     }
 
-    searchDropdownSelected(optionSelected: FastSearchResult | string, currentQueryFilters: ApiQueryFilters, selectedQueryCode: string, searchDropdownOptions: FastSearchResult[], methodName: string, onRowSelected: (rowData: any) => void, onQueryChangeEvent: any) {
-        if (optionSelected === 'all') {
+    public searchDropdownSelected(optionSelected: FastSearchResult | string, currentQueryFilters: ApiQueryFilters, selectedQueryCode: string, searchDropdownOptions: FastSearchResult[], methodName: string, onRowSelected: (rowData: any) => void, onQueryChangeEvent: any) {
+        if (optionSelected === SearchListDDLComponent.showAll) {
             const ids: string[] = searchDropdownOptions.map((x: FastSearchResult) => x.id);
             ids.pop();
             currentQueryFilters.AdditionalFilters = [];
@@ -103,19 +102,41 @@ export class FastSearchService implements OnDestroy {
                 });
             });
 
-            const searchIndexEditHistoryPM: SearchIndexEditHistoryPM = new SearchIndexEditHistoryPM();
-            searchIndexEditHistoryPM.Entname = this.getEntname();
-            searchIndexEditHistoryPM.Screen = this.indexName;
-            searchIndexEditHistoryPM.KeyVal = JSON.stringify(optionSelected);
-            searchIndexEditHistoryPM.Tenant = SessionLocator.Tenant;
-            this.searchIndexEditHistoryPMService.insert(searchIndexEditHistoryPM).subscribe();
+            this.AddHistorySearch(optionSelected);
         }
     }
 
-    async getRecentSearches() {
+    public async AddHistorySearch(optionSelected: string | FastSearchResult, id: string = null) {
+        if (id) 
+            optionSelected = await this.SearchById(id);
+
+        const searchIndexEditHistoryPM: SearchIndexEditHistoryPM = new SearchIndexEditHistoryPM();
+        searchIndexEditHistoryPM.Entname = this.getEntname();
+        searchIndexEditHistoryPM.Screen = this.indexName;
+        searchIndexEditHistoryPM.KeyVal = JSON.stringify(optionSelected);
+        searchIndexEditHistoryPM.Tenant = SessionLocator.Tenant;
+        this.searchIndexEditHistoryPMService.insert(searchIndexEditHistoryPM).subscribe();
+    }
+
+    private async SearchById(id: string): Promise<FastSearchResult> {
+        const filter = new ApiQueryFilters();
+        filter.addAdditionalFilter("Id", id, null, null, "Equal", false, true, false, "string");
+        if (this.menuTableQuerySection == "Customs.ExportDeclaration")
+            filter.addAdditionalFilter("Direction", 'E', null, null, "Equal", false, true, false, "string");
+
+        const searchRes = await this.azureSearchWebService.fastSearch(filter, '', this.indexName)
+     
+        if (searchRes.length != 1)
+            throw new Error("Search result is not 1, id:" + id + ", searchRes: " + JSON.stringify(searchRes));
+     
+        return searchRes[0];
+    }
+
+    public async getRecentSearches(): Promise<FastSearchResult[]> {
         const Entname = this.getEntname();
         const recentSearches: FastSearchResult[] = await this.azureSearchService.getRecentSearches<FastSearchResult>(this.settings.recentEditScreen, Entname, this.settings.recentShowTopResults);
         this.$recentSearches.next(recentSearches);
+        return recentSearches;
     }
 
     private getEntname(): string {
