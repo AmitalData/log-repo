@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestStatusUpdateClass
    {  		
-		public const string HashString = "e8b10bf02c4d31127a94d0b32c83f8ee";
+		public const string HashString = "95e256174101588fb9e51cbdddb968c3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -68,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "SIIRequest Statuses",
-			      				    Code =  "7adf",
+			      				    Code =  "c54d",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
@@ -161,7 +161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.SIIRequestStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  30,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -169,7 +169,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
+					  						SystemMaxLength =  30,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -264,6 +264,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "Search ...",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "LocalName",
+					  						ObjectTableName =  "Customs.SIIRequestStatus",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  30,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "LocalName",
+					  						ListPropertyPath =  "LocalName",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "LocalName",
+					  						DefaultText =  "LocalName",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
