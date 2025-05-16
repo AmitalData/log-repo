@@ -3488,5 +3488,28 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 OcrStatusRepository.Add(newOcrStatus);
             }
         }
+        public static void AddSIIRequestStatus(SIIRequestStatus siiRequestStatusDetails, SIIRequestStatusRepository siiRequestStatusRepository)
+        {
+            Dictionary<string, SIIRequestStatus> tenantSiiRequestStatuses = siiRequestStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenantSiiRequestStatuses.Keys.Contains(siiRequestStatusDetails.Code))
+            {
+                SIIRequestStatus siiRequestStatus = siiRequestStatusRepository.GetSingle(siiRequestStatusDetails.Code);
+                siiRequestStatus.LocalName = siiRequestStatusDetails.Name;
+                siiRequestStatus.SearchFields = (siiRequestStatusDetails.Code + "," + siiRequestStatusDetails.LocalName).ToLower();
+                siiRequestStatusRepository.Update(siiRequestStatus);
+            }
+            else
+            {
+                SIIRequestStatus newSiiRequestStatus = new SIIRequestStatus()
+                {
+                    Code = siiRequestStatusDetails.Code,
+                    Name = siiRequestStatusDetails.LocalName,
+                    SearchFields = (siiRequestStatusDetails.Code + "," + siiRequestStatusDetails.LocalName).ToLower()
+                };
+                siiRequestStatusRepository.Add(newSiiRequestStatus);
+            }
+        }
+
     }
 }

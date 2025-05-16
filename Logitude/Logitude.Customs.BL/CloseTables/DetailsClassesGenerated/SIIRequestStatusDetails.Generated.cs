@@ -26,17 +26,34 @@ namespace Logitude.Customs.BL
    {
        public List<SIIRequestStatusDetails> GetAll()
        {
-		    var all = new List<SIIRequestStatusDetails>(); 
+		    var all = new List<SIIRequestStatusDetails>();  
+            all.Add(new SIIRequestStatusDetails()
+            {    
+                Code = "0", 
+                Name = "תקין", 
+                SearchFields = "תקין,0", 
+			});
+			 
+            all.Add(new SIIRequestStatusDetails()
+            {    
+                Code = "100", 
+                Name = "נכשל", 
+                SearchFields = "100,נכשל", 
+			});
+			
             return all;
        }
 
 	    public void MapPoco(SIIRequestStatus newPoco)
-        {    
+        {   
+		    newPoco.Code = this.Code;  
+		    newPoco.Name = this.Name;  
+			newPoco.SearchFields = GetSearchFields(this);    
         }
 
 		public string GetSearchFields(SIIRequestStatus rec)
         {   
-           return string.Empty;
+           return String.Concat(rec.Code,",",rec.Name,",");
         }
    }
 }

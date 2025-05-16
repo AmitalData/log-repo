@@ -32,6 +32,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Name { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("LocalName")]
+	    public string LocalName { get; set; }
     }
 }
 	 

@@ -17558,6 +17558,16 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             ocrStatusRepository.SubmitChanges();
 
         }
+        public void FillSIIRequestStatusTable(int tenant)
+        {
+            SIIRequestStatusRepository sIIRequestStatusRepository = new SIIRequestStatusRepository(tenant);
+            Dictionary<string,SIIRequestStatus> tenantSIIRequestStatus = sIIRequestStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "0" ,LocalName ="תקין" }, sIIRequestStatusRepository);
+            AddClosedTables.AddSIIRequestStatus(new SIIRequestStatus() { Code = "100" , LocalName = "נכשל"}, sIIRequestStatusRepository);
+            sIIRequestStatusRepository.SubmitChanges();
+
+
+        }
 
     }
 
