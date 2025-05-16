@@ -37,8 +37,6 @@ using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.BL;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using System.Configuration;
-using Logitude.Customs.BL;
-using Logitude.BookingLib.Data.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
 {
