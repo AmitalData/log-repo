@@ -56,7 +56,10 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             ConsignmentPM _con = consignmentQueryService.GetSingle(_dec.Id, 1, false, false);
             _paymentOrderReply.PaymentDetails = new PaymentDetails();
             _paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(DateTime.Now.Ticks.ToString().Substring(10, 7));
+
+            _paymentOrderReply.PaymentDetails.CustomerActivityTypeSpecified = true;
             _paymentOrderReply.PaymentDetails.CustomerActivityType = (int)CustomerActivityTypeEnum.CustomsAgent;
+
 
             _paymentOrderReply.customsHouse = 2;
             _paymentOrderReply.paymentProcess = 1;
@@ -69,7 +72,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
                 entityType = 1055,
                 entityIdKey1 = _dec.DeclarationNumber
             };
-            _paymentOrderReply.taxParagraph = new TaxParagraph[1];
+           _paymentOrderReply.taxParagraph = new TaxParagraph[1];
             _paymentOrderReply.taxParagraph[0] = new TaxParagraph
             {
                 paragraphType = 15,
