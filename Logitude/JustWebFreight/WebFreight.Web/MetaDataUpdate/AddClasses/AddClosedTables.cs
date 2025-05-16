@@ -30,7 +30,6 @@ using Logitude.Infrastructure.BL;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
