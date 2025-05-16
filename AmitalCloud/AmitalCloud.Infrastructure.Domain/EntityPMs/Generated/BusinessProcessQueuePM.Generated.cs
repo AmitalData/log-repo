@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -247,6 +247,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _entityName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EntityName  
+	   {
+	     get { return _entityName; }
+		 set
+		 {
+		   if(_entityName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityName",OldValue=_entityName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _entityName=value;
+		   }
+		 }
+	   }
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -271,6 +287,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _objecttable; } 
 		set { _objecttable = value; }
 		}
+	  private string _businessRoleName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BusinessRoleName  
+	   {
+	     get { return _businessRoleName; }
+		 set
+		 {
+		   if(_businessRoleName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BusinessRoleName",OldValue=_businessRoleName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _businessRoleName=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

@@ -159,8 +159,8 @@
 
                 <td *ngIf="IsShowSendButton" style="width:7px"><div style="width:7px"></div></td>
 
-                <td *ngIf="false" >
-                    <button class="Button" style="height:22px;width:22px;" [disabled]="!IsEditingEnabled" (click)="ExportToExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                <td style="width:30px">
+                    <button class="Button" style="height:22px;width:22px;"  (click)="ExportToExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
                 </td>
 
                 <td *ngIf="IsShowSendButton" style="width:80px;vertical-align:middle;">
@@ -409,12 +409,12 @@
 
                 <td [attr.title]="'Go to the first page of a report '">
 
-                    <div><button (click)="GoToFirstPage()" [disabled]="!GoToFirstPageButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;" src="./Images/Icons/GoToFirstPageIcon.png" /></button></div>
+                    <div><button (click)="GoToFirstPage()" [disabled]="!GoToFirstPageButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;" [src]="LayoutDirection !== 'rtl' ? './Images/Icons/GoToLastPageIcon.png' : './Images/Icons/GoToFirstPageIcon.png'" /></button></div>
                 </td>
 
                 <td [attr.title]="'Go to the Previous page of a report'" style="border-right:1px solid gray;">
 
-                    <div><button (click)="PreviousPage()" [disabled]="!PreviouseButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" src="./Images/Icons/Previous.png" /></button></div>
+                    <div><button (click)="PreviousPage()" [disabled]="!PreviouseButtonEnable" style="height:25px;width:100%;"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" [src]="LayoutDirection !== 'rtl' ? './Images/Icons/Next.png' : './Images/Icons/Previous.png'" /></button></div>
                 </td>
 
                 <td>
@@ -422,14 +422,13 @@
 
                 </td>
 
-
                 <td [attr.title]="'Go to the next page of a report'" style="border-left:1px solid gray">
-                    <div><button [disabled]="!NextButtonEnable" style="height:25px;width:100%;" (click)="NextPage()"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" src="./Images/Icons/Next.png" /></button></div>
+                    <div><button [disabled]="!NextButtonEnable" style="height:25px;width:100%;" (click)="NextPage()"> <img style="margin-top:-2px;width:13px;height:15px;vertical-align:middle;" [src]="LayoutDirection !== 'rtl' ? './Images/Icons/Previous.png' : './Images/Icons/Next.png'"  /></button></div>
                 </td>
 
                 <td [attr.title]="'Go to the last page of a report '" style="border-right:1px solid gray;">
 
-                    <div><button [disabled]="!GoToLastPageButtonEnable" style="height:25px;width:100%;" (click)="GoToLastPage()"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;" src="./Images/Icons/GoToLastPageIcon.png" /></button></div>
+                    <div><button [disabled]="!GoToLastPageButtonEnable" style="height:25px;width:100%;" (click)="GoToLastPage()"> <img style="margin-top:0px;width:17px;height:15px;vertical-align:middle;"  [src]="LayoutDirection !== 'rtl' ? './Images/Icons/GoToFirstPageIcon.png' : './Images/Icons/GoToLastPageIcon.png'" /></button></div>
                 </td>
 
             </tr>

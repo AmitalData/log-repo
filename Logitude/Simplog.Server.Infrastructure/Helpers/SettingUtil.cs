@@ -63,23 +63,22 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
         }
 
-        public static int GetTenantDBFromConfig()
+        public static int GetTenantDBFromConfig(int tenant=0)
         {
             string tenantValue = ConfigurationManager.AppSettings["TenantDB"];
-            int tenant = string.IsNullOrEmpty(tenantValue) ? 0 : Convert.ToInt32(tenantValue);
+            tenant = string.IsNullOrEmpty(tenantValue) ? tenant : Convert.ToInt32(tenantValue);
             return tenant;
         }
 
-        public static int GetCurrentTenant()
+        public static int GetCurrentTenant(int tenant = -1)
         {
-            var tenant = -1;
             if (HttpContext.Current != null && HttpContext.Current.Items.Contains("Tenant"))
             {
                 tenant = Convert.ToInt32(HttpContext.Current.Items["Tenant"]);
             }
             else
             {
-                tenant = GetTenantDBFromConfig();
+                tenant = GetTenantDBFromConfig(tenant);
             }
             return tenant;
         }

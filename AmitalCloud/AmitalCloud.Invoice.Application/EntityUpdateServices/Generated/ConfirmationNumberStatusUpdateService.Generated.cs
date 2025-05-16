@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data;
 using AmitalCloud.Invoice.Domain.EntityLists;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
-using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Data.Context;
 
 namespace AmitalCloud.Invoice.Application.EntityUpdateServices
 { 
-   public partial class ConfirmationNumberStatusUpdateService:BaseEntityUpdateService<InvoiceContext,POCO.ConfirmationNumberStatus,ConfirmationNumberStatusPM,IEntityPM,ConfirmationNumberStatusList,string>
+   public partial class ConfirmationNumberStatusUpdateService:BaseEntityUpdateService<POCO.ConfirmationNumberStatus,ConfirmationNumberStatusPM,IEntityPM,ConfirmationNumberStatusList,string>
    {
    			
-        public ConfirmationNumberStatusUpdateService(IInvoiceContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((InvoiceContext)mainContext,additionalContexts, tenant)
+        public ConfirmationNumberStatusUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ConfirmationNumberStatusDataMapping();
-            Repository = new Repository<POCO.ConfirmationNumberStatus>((InvoiceContext)mainContext);
+            Repository = new Repository<POCO.ConfirmationNumberStatus>(mainContext);
         }
-        public ConfirmationNumberStatusUpdateService(int tenant) : this(InvoiceContext.GetContext(tenant), null, tenant) {}
-        public ConfirmationNumberStatusUpdateService(IInvoiceContext context) :  this(context, null, 0) {}
+        public ConfirmationNumberStatusUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ConfirmationNumberStatusDataMapping();
+            Repository = new Repository<POCO.ConfirmationNumberStatus>(tenant);
+		}
+        public ConfirmationNumberStatusUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ConfirmationNumberStatus,string> GetKeys(ConfirmationNumberStatusPM entityPM) => new ConfirmationNumberStatusKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(ConfirmationNumberStatusPM entityPM)
 		{

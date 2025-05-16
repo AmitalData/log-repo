@@ -5,6 +5,8 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MeatadataGeneratorTool
 {
@@ -1420,6 +1422,10 @@ namespace MeatadataGeneratorTool
             {
                 str.AppendLine("Default Text is Required");
             }
+            else if (ContainsHebrewCharacters(this.DefaultText))
+            {
+                str.AppendLine("Default Text cannot contain Hebrew characters");
+            }
             if (string.IsNullOrEmpty(FieldName))
             {
                 str.AppendLine("Field Name is Required");
@@ -1553,7 +1559,10 @@ namespace MeatadataGeneratorTool
                     str.AppendLine("Operator is Required");
                 }
             }
-
+            if(!string.IsNullOrEmpty(ListLableDefaultText) && ContainsHebrewCharacters(ListLableDefaultText))
+            {
+                str.AppendLine("'List Lable Default Text' cannot contain Hebrew characters");
+            }
             ErrorMessages = str.ToString();
             if (ErrorMessages != "")
             {
@@ -1566,7 +1575,10 @@ namespace MeatadataGeneratorTool
 
             FirePropertyChanged("ErrorMessages");
         }
-
+        private bool ContainsHebrewCharacters(string text)
+        {
+            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
+        }
         public RelayCommand AdvanceSettingsBtnCommand
         {
             get { return new RelayCommand(() => this.AdvanceSettingsMethod()); }

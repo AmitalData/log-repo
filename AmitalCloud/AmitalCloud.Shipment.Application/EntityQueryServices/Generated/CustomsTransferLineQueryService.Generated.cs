@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class CustomsTransferLineQueryService: BaseEntityQueryService<IShipmentContext,POCO.CustomsTransferLine,CustomsTransferLineKeys<string>,CustomsTransferLinePM,CustomsTransferLineList,string>
+   public partial class CustomsTransferLineQueryService: BaseEntityQueryService<POCO.CustomsTransferLine,CustomsTransferLineKeys<string>,CustomsTransferLinePM,CustomsTransferLineList,string>
    {
-        public CustomsTransferLineQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public CustomsTransferLineQueryService(IShipmentContext context) : base(new Repository<POCO.CustomsTransferLine>(context),new CustomsTransferLineDataMapping()) {}
+        public CustomsTransferLineQueryService(int tenant) : base(new Repository<POCO.CustomsTransferLine>(tenant),new CustomsTransferLineDataMapping()) {}
+        public CustomsTransferLineQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomsTransferLine>(context),new CustomsTransferLineDataMapping()) {}
 		public  CustomsTransferLinePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomsTransferLineKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomsTransferLine,string> GetKeys(POCO.CustomsTransferLine entityPOCO) => new CustomsTransferLineKeys<string>() { Id = entityPOCO.Id,  };
    }

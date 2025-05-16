@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class EntityLastActivityQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.EntityLastActivity,EntityLastActivityKeys<string>,EntityLastActivityPM,EntityLastActivityList,string>
+   public partial class EntityLastActivityQueryService: BaseEntityQueryService<POCO.EntityLastActivity,EntityLastActivityKeys<string>,EntityLastActivityPM,EntityLastActivityList,string>
    {
-        public EntityLastActivityQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public EntityLastActivityQueryService(int tenant) : base(new Repository<POCO.EntityLastActivity>(tenant),new EntityLastActivityDataMapping()) {}
         public EntityLastActivityQueryService(IAmitalCloudContext context) : base(new Repository<POCO.EntityLastActivity>(context),new EntityLastActivityDataMapping()) {}
 		public  EntityLastActivityPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new EntityLastActivityKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.EntityLastActivity,string> GetKeys(POCO.EntityLastActivity entityPOCO) => new EntityLastActivityKeys<string>() { Id = entityPOCO.Id,  };

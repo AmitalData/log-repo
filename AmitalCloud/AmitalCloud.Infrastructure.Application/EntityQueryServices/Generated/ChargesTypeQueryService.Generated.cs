@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ChargesTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ChargesType,ChargesTypeKeys<string>,ChargesTypePM,ChargesTypeList,string>
+   public partial class ChargesTypeQueryService: BaseEntityQueryService<POCO.ChargesType,ChargesTypeKeys<string>,ChargesTypePM,ChargesTypeList,string>
    {
-        public ChargesTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ChargesTypeQueryService(int tenant) : base(new Repository<POCO.ChargesType>(tenant),new ChargesTypeDataMapping()) {}
         public ChargesTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ChargesType>(context),new ChargesTypeDataMapping()) {}
 		public  ChargesTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ChargesTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ChargesType,string> GetKeys(POCO.ChargesType entityPOCO) => new ChargesTypeKeys<string>() { Id = entityPOCO.Id,  };

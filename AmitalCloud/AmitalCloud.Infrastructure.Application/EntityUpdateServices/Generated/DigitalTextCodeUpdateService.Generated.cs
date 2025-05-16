@@ -9,40 +9,40 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DigitalTextCodeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DigitalTextCode,DigitalTextCodePM,IEntityPM,DigitalTextCodeList,string>
+   public partial class DigitalTextCodeUpdateService:BaseEntityUpdateService<POCO.DigitalTextCode,DigitalTextCodePM,IEntityPM,DigitalTextCodeList,string>
    {
    			
-        public DigitalTextCodeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DigitalTextCodeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DigitalTextCodeDataMapping();
-            Repository = new Repository<POCO.DigitalTextCode>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DigitalTextCode>(mainContext);
         }
-        public DigitalTextCodeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DigitalTextCodeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DigitalTextCodeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DigitalTextCodeDataMapping();
+            Repository = new Repository<POCO.DigitalTextCode>(tenant);
+		}
+        public DigitalTextCodeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DigitalTextCode,string> GetKeys(DigitalTextCodePM entityPM) => new DigitalTextCodeKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(DigitalTextCodePM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("DigitalTextCode", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 		}
 		protected override void FillDefaultValuesOnUpdate(DigitalTextCodePM entityPM)
         {       

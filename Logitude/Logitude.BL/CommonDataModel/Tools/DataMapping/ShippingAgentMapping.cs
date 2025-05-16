@@ -71,6 +71,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
             entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
             entityCard.ExternalSystem = entityPM.IsHybrid ? HybridExternalSystem.HybridExternalSystemCode : null;
+            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
 
             entityPOCO.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
             entityPOCO.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;

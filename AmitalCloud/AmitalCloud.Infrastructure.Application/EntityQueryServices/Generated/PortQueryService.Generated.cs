@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class PortQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Port,PortKeys<string>,PortPM,PortList,string>
+   public partial class PortQueryService: BaseEntityQueryService<POCO.Port,PortKeys<string>,PortPM,PortList,string>
    {
-        public PortQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public PortQueryService(int tenant) : base(new Repository<POCO.Port>(tenant),new PortDataMapping()) {}
         public PortQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Port>(context),new PortDataMapping()) {}
 		public  PortPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new PortKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Port,string> GetKeys(POCO.Port entityPOCO) => new PortKeys<string>() { Id = entityPOCO.Id,  };

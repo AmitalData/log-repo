@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -214,6 +214,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _toggle; } 
 		set { _toggle = value; }
 		}
+	  private string _toggleName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToggleName  
+	   {
+	     get { return _toggleName; }
+		 set
+		 {
+		   if(_toggleName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToggleName",OldValue=_toggleName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _toggleName=value;
+		   }
+		 }
+	   }
+	  private string _createdByUser ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUser  
+	   {
+	     get { return _createdByUser; }
+		 set
+		 {
+		   if(_createdByUser != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUser",OldValue=_createdByUser,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _createdByUser=value;
+		   }
+		 }
+	   }
+	  private string _toggleDescription ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ToggleDescription  
+	   {
+	     get { return _toggleDescription; }
+		 set
+		 {
+		   if(_toggleDescription != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ToggleDescription",OldValue=_toggleDescription,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _toggleDescription=value;
+		   }
+		 }
+	   }
 	  private bool _isMultiTenant ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

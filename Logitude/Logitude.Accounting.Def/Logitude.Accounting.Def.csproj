@@ -185,6 +185,7 @@
     <Compile Include="EntityPMs\Generated\TaxReportPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TaxReportStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TaxWithholdingAssessOfficePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\TenantIdleStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TestEntityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\UserDefinedReportPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\VatReportStatusPM.Generated.cs" />

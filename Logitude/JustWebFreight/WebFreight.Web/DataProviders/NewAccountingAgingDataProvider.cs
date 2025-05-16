@@ -34,15 +34,16 @@ namespace WebFreight.Web.DataProviders
         public decimal? ExternalTransactionsTotal { get; set; }
         public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
         public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal; } }
-         public decimal? CreditUsed { get { return CreditLimit - Obligo; } }
-         public decimal? TotalLocal { get; set; } = 0;
-        public decimal? TotalForeign { get; set; } = 0;
+         public decimal? CreditUsed { get { return (CreditLimit - Obligo)*-1; } }
+         public decimal? TotalLocal { get; set; } 
+        public decimal? TotalForeign { get; set; } 
        public decimal? TotalFutureOpenCheques { get; set; }
         public decimal? TotalPastOpenCheques { get; set; }
 
         public decimal? TotalOpenShipments { get; set; }
         public decimal? BalanceInLocalCurrency { get; set; }
-         public string AccountSalesmanName { get; set; }
+
+        public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
          public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }

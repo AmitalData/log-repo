@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EntityDateUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EntityDate,EntityDatePM,IEntityPM,EntityDateList,string>
+   public partial class EntityDateUpdateService:BaseEntityUpdateService<POCO.EntityDate,EntityDatePM,IEntityPM,EntityDateList,string>
    {
    			
-        public EntityDateUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EntityDateUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EntityDateDataMapping();
-            Repository = new Repository<POCO.EntityDate>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EntityDate>(mainContext);
         }
-        public EntityDateUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EntityDateUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EntityDateUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EntityDateDataMapping();
+            Repository = new Repository<POCO.EntityDate>(tenant);
+		}
+        public EntityDateUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EntityDate,string> GetKeys(EntityDatePM entityPM) => new EntityDateKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(EntityDatePM entityPM)
 		{

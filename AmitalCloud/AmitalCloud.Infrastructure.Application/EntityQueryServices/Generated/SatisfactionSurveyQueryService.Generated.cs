@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SatisfactionSurveyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SatisfactionSurvey,SatisfactionSurveyKeys<string>,SatisfactionSurveyPM,SatisfactionSurveyList,string>
+   public partial class SatisfactionSurveyQueryService: BaseEntityQueryService<POCO.SatisfactionSurvey,SatisfactionSurveyKeys<string>,SatisfactionSurveyPM,SatisfactionSurveyList,string>
    {
-        public SatisfactionSurveyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public SatisfactionSurveyQueryService(int tenant) : base(new Repository<POCO.SatisfactionSurvey>(tenant),new SatisfactionSurveyDataMapping()) {}
         public SatisfactionSurveyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SatisfactionSurvey>(context),new SatisfactionSurveyDataMapping()) {}
 		public  SatisfactionSurveyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SatisfactionSurveyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SatisfactionSurvey,string> GetKeys(POCO.SatisfactionSurvey entityPOCO) => new SatisfactionSurveyKeys<string>() { Id = entityPOCO.Id,  };

@@ -1,5 +1,18 @@
+<style>
+    :host ::ng-deep div ng-component div div div{
+        margin-bottom: 0px !important;
+    }
+</style>
 <div class="TabHolder">
     <table>
+        <tr *ngIf="IsBlockMessageVisible" style="height: 1px;">
+            <td>
+                <div class="OrangeInfo" style="margin: 5px;">
+                    <label class="Value">{{ObjectTableName}} connected to Unifreight, updates allowed from Unifreight
+                        only</label>
+                </div>
+            </td>
+        </tr>
         <tr class="TabTitleRow">
             <td>{{'Agent.TH.Billing' | TextCodeTranslationPipe}}</td>
         </tr>
@@ -8,6 +21,21 @@
             <td>
                 <div style="width: 100%; position: relative;">
                     <div #BillingChild></div>
+                    <div >
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width: 190px;">
+                                    <LogLabel [ObjectFieldName]="'IsAutonomy'" [ObjectTableName]="'Card'"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'IsAutonomy'" [Checked]="IsAutonomy"
+                                        [ObjectTableName]="'Card'" [DataContext]="DataContext">
+                                    </LogCheckBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </td>
         </tr>

@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class LastRunDetailKeys<T> : BaseEntityKeyFields<EntityPOCOs.LastRunDetail,T> 
+   public class LastRunDetailKeys<T> : BaseEntityKeyFields<ENTITIES.LastRunDetail,T> 
    {
 		public LastRunDetailKeys() : base() {}
         public LastRunDetailKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "LastRunDetailsPM";
-	  public override Expression<Func<EntityPOCOs.LastRunDetail, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.LastRunDetail, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class ConfirmationNumberDefaultPM : BaseEntityPM   {
    #region Constructors
    public ConfirmationNumberDefaultPM() : base() {} 
-   public ConfirmationNumberDefaultPM(ConfirmationNumberDefault entity) : base()
+   public ConfirmationNumberDefaultPM(POCO.ConfirmationNumberDefault entity) : base()
    {
 		_id = entity.Id;
 		_tenant = entity.Tenant;

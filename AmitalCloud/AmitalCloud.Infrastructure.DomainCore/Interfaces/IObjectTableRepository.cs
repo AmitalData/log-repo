@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Domain.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.Interfaces
 {
     public interface IObjectTableRepository

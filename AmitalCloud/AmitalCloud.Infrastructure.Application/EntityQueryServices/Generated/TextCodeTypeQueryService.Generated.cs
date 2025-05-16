@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TextCodeTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TextCodeType,TextCodeTypeKeys<string>,TextCodeTypePM,TextCodeTypeList,string>
+   public partial class TextCodeTypeQueryService: BaseEntityQueryService<POCO.TextCodeType,TextCodeTypeKeys<string>,TextCodeTypePM,TextCodeTypeList,string>
    {
-        public TextCodeTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TextCodeTypeQueryService(int tenant) : base(new Repository<POCO.TextCodeType>(tenant),new TextCodeTypeDataMapping()) {}
         public TextCodeTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TextCodeType>(context),new TextCodeTypeDataMapping()) {}
 		public  TextCodeTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new TextCodeTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TextCodeType,string> GetKeys(POCO.TextCodeType entityPOCO) => new TextCodeTypeKeys<string>() { Code = entityPOCO.Code,  };

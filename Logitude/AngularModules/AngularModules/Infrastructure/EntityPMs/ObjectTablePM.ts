@@ -363,7 +363,7 @@ export class ObjectTablePM {
     private defaultTextPlural: string;
     public get DefaultTextPlural() { return this.defaultTextPlural; }
     public set DefaultTextPlural(newValue: string) { if (this.defaultTextPlural != newValue) { this.defaultTextPlural = newValue; this.MarkAsDirty("DefaultTextPlural"); } }
-
+       
     private isNew: boolean;
     public get IsNew() { return this.isNew; }
     public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
@@ -413,6 +413,10 @@ export class ObjectTablePM {
     public get RelatedKey() { return this.relatedKey; }
     public set RelatedKey(newValue: string) { if (this.relatedKey != newValue) { this.relatedKey = newValue; this.MarkAsDirty("RelatedKey"); } }
 
+    private showFastSearch: boolean;
+    public get ShowFastSearch() { return this.showFastSearch; }
+    public set ShowFastSearch(newValue: boolean) { if (this.showFastSearch != newValue) { this.showFastSearch = newValue; this.MarkAsDirty("ShowFastSearch"); } }
+       
 	 
 
     public OldEntityPM: ObjectTablePM;
@@ -441,4 +445,4 @@ export class ObjectTablePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

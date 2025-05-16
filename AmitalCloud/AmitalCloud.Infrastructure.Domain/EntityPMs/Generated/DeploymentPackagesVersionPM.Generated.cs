@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -225,6 +225,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VersionName",OldValue=_versionName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _versionName=value;
+		   }
+		 }
+	   }
+	  private string _createdByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	     get { return _createdByUserName; }
+		 set
+		 {
+		   if(_createdByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _createdByUserName=value;
+		   }
+		 }
+	   }
+	  private string _updatedByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	     get { return _updatedByUserName; }
+		 set
+		 {
+		   if(_updatedByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _updatedByUserName=value;
+		   }
+		 }
+	   }
+	  private string _deploymentPackageName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DeploymentPackageName  
+	   {
+	     get { return _deploymentPackageName; }
+		 set
+		 {
+		   if(_deploymentPackageName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeploymentPackageName",OldValue=_deploymentPackageName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _deploymentPackageName=value;
 		   }
 		 }
 	   }

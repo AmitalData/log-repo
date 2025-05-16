@@ -1157,6 +1157,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.BillToName = null;
                 this.EntityPM.BillToPartnerTypeId = null;
                 this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+                this.glaccount = null;
             }
 
             else {
@@ -1182,15 +1183,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                                     myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) =>
                                     {
                                         if (!myResponse.HasError) {
-                                            var glaccount: GLAccountPM = myResponse.Result;
-                                            this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
-                                            this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                                            this.glaccount = myResponse.Result;
+                                            this.EntityPM.GLAccountRecoMethodCode = this.glaccount.ReconcileMethodCode;
+                                            this.EntityPM.GLAccountCurrencyCode = this.glaccount.CurrencyCode;
                                             this.SetAmountCurrencyCode();
                                             this.ComputeLocalAmount();
                                             this.SetPaymentAmount();
-
-                                            if (glaccount != null && !glaccount.IsMultiCurrency) {
-                                                this.PaymentCurrencyId = glaccount.CurrencyId;
+                                             
+                                            if (this.glaccount != null && !this.glaccount.IsMultiCurrency) {
+                                                this.PaymentCurrencyId = this.glaccount.CurrencyId;
+                                            }
+                                            else {
+                                                this.SetCurrencyRateData();
                                             }
                                         }
                                     });
@@ -1294,6 +1298,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if(!this.EntityPM.BankTransferPaymentArguments || (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId))
                 this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.EntityPM.BillToPartnerTypeId = null;
+            
         }
 
         else {
@@ -1314,12 +1319,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     var myGLAccountPMService = new GLAccountPMService();
                     myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
-                            var glaccount: GLAccountPM = myResponse.Result;
-                            if (glaccount != null && !glaccount.IsMultiCurrency && (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId)) {
-                                this.PaymentCurrencyId = glaccount.CurrencyId;
+                            this.glaccount = myResponse.Result;
+                            if (this.glaccount != null && !this.glaccount.IsMultiCurrency && (this.EntityPM.BankTransferPaymentArguments && !this.EntityPM.BankTransferPaymentArguments.CurrencyId)) {
+                                this.PaymentCurrencyId = this.glaccount.CurrencyId;
+                            }
+                            else{
+                                this.SetCurrencyRateData();
                             }
                         }
                     });
+                }
+                else{
+                    this.glaccount = null;
                 }
             }
             
@@ -1536,11 +1547,18 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             else {
-                var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == this.PaymentCurrencyId)[0];
-                if (lastRate != null) {
-                    myRate = lastRate.Rate;
+                const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === this.PaymentCurrencyId);
+                if (lastRate) {
+                    const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === this.PaymentCurrencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+
+                    const customRate =exchangeRateId
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
+                        : null;
+
+                    myRate = customRate ?? lastRate.Rate;
                     myRateDate = lastRate.ValueDate;
                 }
+                
             }
         }
 
@@ -1561,11 +1579,19 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             else {
+                
                 if (this.LastRatesList) {
-                    var lastRate: LastRate = this.LastRatesList.filter(d => d.ForeignCurrencyId == currencyId)[0];
-                    if (lastRate != null) {
-                        result = lastRate.Rate;
+                    const lastRate = this.LastRatesList.find(rate => rate.ForeignCurrencyId === currencyId);
+                    if (lastRate) {
+                        const exchangeRateId = !this.glaccount?.IsMultiCurrency ? this.glaccount?.ExchangeRateId : this.glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === currencyId)?.ExchangeRateId ?? this.glaccount?.ExchangeRateId;
+                        const customRate = exchangeRateId 
+                        ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
+                        : null;
+                        result = customRate ?? lastRate.Rate;
+
+
                     }
+                   
                 }
             }
         }
@@ -1978,7 +2004,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.Bank != value) {
                 this.EntityPM.Bank = value;
                 if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
                     this.UpdateBankFieldForPaymentCheque();
+                    
                 }
                 if (!AppTool.IsNullOrEmpty(value)) {
                     this.UIProperties.SetRequired("Bank", this.ObjectTableName, false);
@@ -2012,8 +2040,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     else {
                         this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, true);
                     }
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
+
                     this.UpdateBankBranchFieldForPaymentCheque();
                 }
+                
             }
         }
     }
@@ -2038,6 +2069,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         this.UIProperties.SetRequired("Account", this.ObjectTableName, true);
                     }
                     this.UpdateAccountFieldForPaymentCheque();
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
+
                 }
             }
         }
@@ -2087,6 +2120,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.ChequeOrPaymentRef = value;
                 if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
                     this.SetUIProperties_Cheque();
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
                 }
                 if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
                     this.UpdatePaymentRefFieldForPaymentBankTransfer();
@@ -2495,8 +2529,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 
     ValidateChequeFields() {
-        var errors: string[];
-        errors = this.ARPaymentValidator.Validate(this.EntityPM);
+        if(this.CurrentSession.CurrentEditComponent.ValidationErrorsList === null && this.CurrentSession.CurrentEditComponent.ValidationErrorsList.length === 0) {
+            return this.CurrentSession.CurrentEditComponent.ValidationErrorsList = this.ARPaymentValidator.Validate(this.EntityPM);
+        }
+        return this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+    }
+    async ValidateDuplicateCheques(bank:string,bankBranch:string,bankAccount:string,chequeOrPaymentRef:string) {
+        var errors: string[] = [];
+        const validationResult = await this.ARPaymentValidator.ValidateDuplicateCheque(bank, bankBranch, bankAccount, chequeOrPaymentRef);
+        if (!AppTool.IsNullOrEmpty(validationResult)) {
+            errors.push(validationResult);
+        }
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         return errors;
     }

@@ -27,7 +27,7 @@ export class ReportFliter {
     NumberOfRequests: number;
     Level: string;
     DisablePreview: boolean;
-
+    NotDisplayInMenu : boolean;
 
     constructor() {
 

@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -227,6 +227,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LogType",OldValue=_logType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _logType=value;
+		   }
+		 }
+	   }
+	  private int _duration ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Duration  
+	   {
+	     get { return _duration; }
+		 set
+		 {
+		   if(_duration != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Duration",OldValue=_duration,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _duration=value;
 		   }
 		 }
 	   }

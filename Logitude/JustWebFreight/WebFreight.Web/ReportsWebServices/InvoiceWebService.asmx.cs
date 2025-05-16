@@ -90,8 +90,19 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (myInvoice != null)
             {
-                dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
-               
+                if (myInvoice.IsConsolidationInvoice)
+                {
+                    dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+                }
+                else if (myInvoice.IsGeneralInvoice)
+                {
+                    dataProvider = GetConsolidationInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+                }
+                else
+                {
+                    dataProvider = GetARInvoiceDataProvider(myInvoice, invoiceRepository, invoiceCotnext, documentTypeCopyId, tenant);
+                }
+
                 this.FillDocumentCustomFields(myInvoice, dataProvider, documentTypeCopyId, tenant);
             }
 
@@ -4439,6 +4450,7 @@ namespace WebFreight.Web.ReportsWebServices
                         VatableAmountLocal = VatableAmountLocal * -1;
                         TotalVAT = TotalVAT * -1;
                         TotalVAT_Local = TotalVAT_Local * -1;
+                        TotalVats = TotalVats * -1;
                     }
 
                     newRecord.InvoiceCurrencyVatAmount = String.Format("{0:#,0.00}", VatableAmount);

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DigitalPortalLanguageQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalPortalLanguage,DigitalPortalLanguageKeys<string>,DigitalPortalLanguagePM,DigitalPortalLanguageList,string>
+   public partial class DigitalPortalLanguageQueryService: BaseEntityQueryService<POCO.DigitalPortalLanguage,DigitalPortalLanguageKeys<string>,DigitalPortalLanguagePM,DigitalPortalLanguageList,string>
    {
-        public DigitalPortalLanguageQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DigitalPortalLanguageQueryService(int tenant) : base(new Repository<POCO.DigitalPortalLanguage>(tenant),new DigitalPortalLanguageDataMapping()) {}
         public DigitalPortalLanguageQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalPortalLanguage>(context),new DigitalPortalLanguageDataMapping()) {}
 		public  DigitalPortalLanguagePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalPortalLanguageKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalPortalLanguage,string> GetKeys(POCO.DigitalPortalLanguage entityPOCO) => new DigitalPortalLanguageKeys<string>() { Code = entityPOCO.Code,  };

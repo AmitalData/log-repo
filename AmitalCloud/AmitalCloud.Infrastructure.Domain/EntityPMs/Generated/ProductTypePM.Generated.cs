@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -87,6 +87,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private bool _inActive ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InActive  
+	   {
+	     get { return _inActive; }
+		 set
+		 {
+		   if(_inActive != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InActive",OldValue=_inActive,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _inActive=value;
+		   }
+		 }
+	   }
 	  private string _quotationDefaultTemplateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -111,6 +127,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _quotetemplate; } 
 		set { _quotetemplate = value; }
 		}
+	  private string _defaultTemplate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DefaultTemplate  
+	   {
+	     get { return _defaultTemplate; }
+		 set
+		 {
+		   if(_defaultTemplate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DefaultTemplate",OldValue=_defaultTemplate,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _defaultTemplate=value;
+		   }
+		 }
+	   }
 	  private string _routingRQuoteDefaultTemplateId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -135,6 +167,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _routingrquotedefaulttemplate; } 
 		set { _routingrquotedefaulttemplate = value; }
 		}
+	  private string _routingRQuoteDefaultTemplateName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RoutingRQuoteDefaultTemplateName  
+	   {
+	     get { return _routingRQuoteDefaultTemplateName; }
+		 set
+		 {
+		   if(_routingRQuoteDefaultTemplateName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RoutingRQuoteDefaultTemplateName",OldValue=_routingRQuoteDefaultTemplateName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _routingRQuoteDefaultTemplateName=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

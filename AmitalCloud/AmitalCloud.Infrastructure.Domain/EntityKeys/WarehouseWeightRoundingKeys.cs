@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class WarehouseWeightRoundingKeys<T> : BaseEntityKeyFields<EntityPOCOs.WarehouseWeightRounding,T> 
+   public class WarehouseWeightRoundingKeys<T> : BaseEntityKeyFields<ENTITIES.WarehouseWeightRounding,T> 
    {
 		public WarehouseWeightRoundingKeys() : base() {}
         public WarehouseWeightRoundingKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Code.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "WarehouseWeightRoundingsPM";
-	  public override Expression<Func<EntityPOCOs.WarehouseWeightRounding, bool>> Predicate => a => a.Code == Code;
+	  public override Expression<Func<ENTITIES.WarehouseWeightRounding, bool>> Predicate => a => a.Code == Code;
    }
 }
 	 

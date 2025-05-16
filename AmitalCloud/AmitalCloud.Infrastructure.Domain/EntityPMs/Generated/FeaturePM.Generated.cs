@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -32,7 +32,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_tenant = entity.Tenant;
 		_code = entity.Code;
 		_objectTableId = entity.ObjectTableId;
-		_nameTextCodeId = entity.NameTextCodeId;
+		_objecttable = entity.ObjectTable !=null ? new ObjectTablePM(entity.ObjectTable) : null;
+			_nameTextCodeId = entity.NameTextCodeId;
 		_featureTypeCode = entity.FeatureTypeCode;
 		_featuretype = entity.FeatureType !=null ? new FeatureTypePM(entity.FeatureType) : null;
 			_packagable = entity.Packagable;
@@ -111,6 +112,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private ObjectTablePM _objecttable;
+		[Include]
+        [DataMember]
+        public virtual ObjectTablePM ObjectTable 
+		{ 
+		get { return _objecttable; } 
+		set { _objecttable = value; }
+		}
 	  private string _nameTextCodeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -294,6 +303,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedObjectTableHelperControls = value; }
 	    }
+	  private string _packageCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PackageCode  
+	   {
+	     get { return _packageCode; }
+		 set
+		 {
+		   if(_packageCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageCode",OldValue=_packageCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _packageCode=value;
+		   }
+		 }
+	   }
+	  private string _roleId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RoleId  
+	   {
+	     get { return _roleId; }
+		 set
+		 {
+		   if(_roleId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RoleId",OldValue=_roleId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _roleId=value;
+		   }
+		 }
+	   }
+	  private bool _exists ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool Exists  
+	   {
+	     get { return _exists; }
+		 set
+		 {
+		   if(_exists != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Exists",OldValue=_exists,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _exists=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

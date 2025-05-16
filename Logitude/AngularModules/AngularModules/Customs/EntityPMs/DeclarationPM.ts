@@ -25,6 +25,7 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 import { AppTool } from 'Infrastructure/Tools';
 
+
 export class DeclarationPM {
       
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
@@ -1593,7 +1594,8 @@ export class DeclarationPM {
     private shipmentId: string;
     public get ShipmentId() { return this.shipmentId; }
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-
+       
+	 
     private cooStatusName: string;
     public get CooStatusName() { return this.cooStatusName; }
     public set CooStatusName(newValue: string) { if (this.cooStatusName != newValue) { this.cooStatusName = newValue; this.MarkAsDirty("CooStatusName"); } }
@@ -1609,11 +1611,11 @@ export class DeclarationPM {
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {        
+    MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
-        if(!AppTool.IsNullOrEmpty(this.Id) && !this.IsDirty) {
-            ServiceHelper.CheckIsLock(this.Id, "Customs.Declaration", true);
+ if(!AppTool.IsNullOrEmpty(this.Id) && !this.IsDirty) {
+            ServiceHelper.CheckIsLock(this.Id, "Customs.Declaration",true);
         }	
         this.IsDirty = true;
 		  	
@@ -1636,4 +1638,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class APInvoiceTypeQueryService: BaseEntityQueryService<IInvoiceContext,POCO.APInvoiceType,APInvoiceTypeKeys<string>,APInvoiceTypePM,APInvoiceTypeList,string>
+   public partial class APInvoiceTypeQueryService: BaseEntityQueryService<POCO.APInvoiceType,APInvoiceTypeKeys<string>,APInvoiceTypePM,APInvoiceTypeList,string>
    {
-        public APInvoiceTypeQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public APInvoiceTypeQueryService(IInvoiceContext context) : base(new Repository<POCO.APInvoiceType>(context),new APInvoiceTypeDataMapping()) {}
+        public APInvoiceTypeQueryService(int tenant) : base(new Repository<POCO.APInvoiceType>(tenant),new APInvoiceTypeDataMapping()) {}
+        public APInvoiceTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.APInvoiceType>(context),new APInvoiceTypeDataMapping()) {}
 		public  APInvoiceTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new APInvoiceTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.APInvoiceType,string> GetKeys(POCO.APInvoiceType entityPOCO) => new APInvoiceTypeKeys<string>() { Code = entityPOCO.Code,  };
    }

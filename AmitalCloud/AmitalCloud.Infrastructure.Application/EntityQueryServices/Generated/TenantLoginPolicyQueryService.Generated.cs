@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TenantLoginPolicyQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TenantLoginPolicy,TenantLoginPolicyKeys<int>,TenantLoginPolicyPM,TenantLoginPolicyList,int>
+   public partial class TenantLoginPolicyQueryService: BaseEntityQueryService<POCO.TenantLoginPolicy,TenantLoginPolicyKeys<int>,TenantLoginPolicyPM,TenantLoginPolicyList,int>
    {
-        public TenantLoginPolicyQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TenantLoginPolicyQueryService(int tenant) : base(new Repository<POCO.TenantLoginPolicy>(tenant),new TenantLoginPolicyDataMapping()) {}
         public TenantLoginPolicyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TenantLoginPolicy>(context),new TenantLoginPolicyDataMapping()) {}
 		public  TenantLoginPolicyPM GetSingle(int tenant,bool getComposition, bool getFromCache) => base.GetSingle(new TenantLoginPolicyKeys<int>(){ Tenant = tenant }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TenantLoginPolicy,int> GetKeys(POCO.TenantLoginPolicy entityPOCO) => new TenantLoginPolicyKeys<int>() { Tenant = entityPOCO.Tenant,  };

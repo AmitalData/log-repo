@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class CounterDefinitionKeys<T> : BaseEntityKeyFields<EntityPOCOs.CounterDefinition,T> 
+   public class CounterDefinitionKeys<T> : BaseEntityKeyFields<ENTITIES.CounterDefinition,T> 
    {
 		public CounterDefinitionKeys() : base() {}
         public CounterDefinitionKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "CounterDefinitionsPM";
-	  public override Expression<Func<EntityPOCOs.CounterDefinition, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.CounterDefinition, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

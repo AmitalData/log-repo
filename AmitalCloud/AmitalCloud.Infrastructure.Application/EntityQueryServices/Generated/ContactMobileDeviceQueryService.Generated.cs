@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ContactMobileDeviceQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ContactMobileDevice,ContactMobileDeviceKeys<string>,ContactMobileDevicePM,ContactMobileDeviceList,string>
+   public partial class ContactMobileDeviceQueryService: BaseEntityQueryService<POCO.ContactMobileDevice,ContactMobileDeviceKeys<string>,ContactMobileDevicePM,ContactMobileDeviceList,string>
    {
-        public ContactMobileDeviceQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ContactMobileDeviceQueryService(int tenant) : base(new Repository<POCO.ContactMobileDevice>(tenant),new ContactMobileDeviceDataMapping()) {}
         public ContactMobileDeviceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContactMobileDevice>(context),new ContactMobileDeviceDataMapping()) {}
 		public  ContactMobileDevicePM GetSingle(string deviceid,bool getComposition, bool getFromCache) => base.GetSingle(new ContactMobileDeviceKeys<string>(){ DeviceId = deviceid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContactMobileDevice,string> GetKeys(POCO.ContactMobileDevice entityPOCO) => new ContactMobileDeviceKeys<string>() { DeviceId = entityPOCO.DeviceId,  };

@@ -9,40 +9,40 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DeploymentPackageUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DeploymentPackage,DeploymentPackagePM,IEntityPM,DeploymentPackageList,string>
+   public partial class DeploymentPackageUpdateService:BaseEntityUpdateService<POCO.DeploymentPackage,DeploymentPackagePM,IEntityPM,DeploymentPackageList,string>
    {
    			
-        public DeploymentPackageUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DeploymentPackageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DeploymentPackageDataMapping();
-            Repository = new Repository<POCO.DeploymentPackage>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DeploymentPackage>(mainContext);
         }
-        public DeploymentPackageUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DeploymentPackageUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DeploymentPackageUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DeploymentPackageDataMapping();
+            Repository = new Repository<POCO.DeploymentPackage>(tenant);
+		}
+        public DeploymentPackageUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DeploymentPackage,string> GetKeys(DeploymentPackagePM entityPM) => new DeploymentPackageKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(DeploymentPackagePM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("DeploymentPackage", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 		}
 		protected override void FillDefaultValuesOnUpdate(DeploymentPackagePM entityPM)
         {       

@@ -1,7 +1,6 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System;
 using System.IO;
 using System.Linq;
@@ -126,7 +125,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         {
             if (string.IsNullOrEmpty(aesKey))
             {
-                Tenant currentTenant = new Repository<Tenant>(AmitalCloudContext.GetContext(tenant)).GetSingle(new TenantKeys<string>() { Id = tenant });    ///.GetSingleTenantByIdAndTenant(tenant, true);
+                Tenant currentTenant = new Repository<Tenant>(tenant).GetSingle(new TenantKeys<string>() { Id = tenant });    ///.GetSingleTenantByIdAndTenant(tenant, true);
                 if (currentTenant != null) aesKey = currentTenant.StorageEncryptionKey;
             }
 

@@ -9,44 +9,41 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class BIReportUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.BIReport,BIReportPM,IEntityPM,BIReportList,string>
+   public partial class BIReportUpdateService:BaseEntityUpdateService<POCO.BIReport,BIReportPM,IEntityPM,BIReportList,string>
    {
    			
-        public BIReportUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public BIReportUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new BIReportDataMapping();
-            Repository = new Repository<POCO.BIReport>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.BIReport>(mainContext);
         }
-        public BIReportUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public BIReportUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public BIReportUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new BIReportDataMapping();
+            Repository = new Repository<POCO.BIReport>(tenant);
+		}
+        public BIReportUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.BIReport,string> GetKeys(BIReportPM entityPM) => new BIReportKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(BIReportPM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("BIReport", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 			entityPM.CreatedByUserId = GetLoggedUserid(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
- 
-			entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 		}
 		protected override void FillDefaultValuesOnUpdate(BIReportPM entityPM)
         {       

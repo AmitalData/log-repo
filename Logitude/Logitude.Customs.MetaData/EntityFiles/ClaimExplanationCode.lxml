@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -43,7 +46,7 @@
   Code="&quot;f29d&quot;"
   Name="&quot;Customs.ClaimExplanationCode Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -58,6 +61,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;b323&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -212,6 +217,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -286,6 +292,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -362,6 +369,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -432,6 +440,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -520,127 +529,152 @@
       Code="&quot;1&quot;"
       SearchFields="&quot;1,עקרון סיווג מספר&quot;"
       Inactive="false"
-      LocalName="&quot;עקרון סיווג מספר&quot;" />
+      LocalName="&quot;עקרון סיווג מספר&quot;"
+      EnglishName="&quot;Number Classification Principle&quot;" />
     <Record
       Code="&quot;10&quot;"
       SearchFields="&quot;10,שינוי בערך יצוא מוחזר&quot;"
       Inactive="false"
-      LocalName="&quot;שינוי בערך יצוא מוחזר&quot;" />
+      LocalName="&quot;שינוי בערך יצוא מוחזר&quot;"
+      EnglishName="&quot;Change in refunded export value&quot;" />
     <Record
       Code="&quot;11&quot;"
       SearchFields="&quot;11,סגירת שנה&quot;"
       Inactive="false"
-      LocalName="&quot;סגירת שנה&quot;" />
+      LocalName="&quot;סגירת שנה&quot;"
+      EnglishName="&quot;Year Closing&quot;" />
     <Record
       Code="&quot;12&quot;"
       SearchFields="&quot;12,תיקון זיכוי מתביעה&quot;"
       Inactive="false"
-      LocalName="&quot;תיקון זיכוי מתביעה&quot;" />
+      LocalName="&quot;תיקון זיכוי מתביעה&quot;"
+      EnglishName="&quot;Correction credit from  claim&quot;" />
     <Record
       Code="&quot;13&quot;"
       SearchFields="&quot;13,תיקון מלאי בתביעה&quot;"
       Inactive="false"
-      LocalName="&quot;תיקון מלאי בתביעה&quot;" />
+      LocalName="&quot;תיקון מלאי בתביעה&quot;"
+      EnglishName="&quot;Inventory correction in claim&quot;" />
     <Record
       Code="&quot;14&quot;"
       SearchFields="&quot;14,מלאי פתיחה לשנה סגורה&quot;"
       Inactive="false"
-      LocalName="&quot;מלאי פתיחה לשנה סגורה&quot;" />
+      LocalName="&quot;מלאי פתיחה לשנה סגורה&quot;"
+      EnglishName="&quot;Opening inventory for closed year&quot;" />
     <Record
       Code="&quot;15&quot;"
       SearchFields="&quot;15,תיקון ניצול אשראי  לשנה סגורה&quot;"
       Inactive="false"
-      LocalName="&quot;תיקון ניצול אשראי  לשנה סגורה&quot;" />
+      LocalName="&quot;תיקון ניצול אשראי  לשנה סגורה&quot;"
+      EnglishName="&quot;Correction of credit utilization for  closed year&quot;" />
     <Record
       Code="&quot;16&quot;"
       SearchFields="&quot;16,איפוס  עקב אי הגשת תביעה&quot;"
       Inactive="false"
-      LocalName="&quot;איפוס  עקב אי הגשת תביעה&quot;" />
+      LocalName="&quot;איפוס  עקב אי הגשת תביעה&quot;"
+      EnglishName="&quot;Reset due to failure to file a claim&quot;" />
     <Record
       Code="&quot;17&quot;"
       SearchFields="&quot;17,חישוב חודשי&quot;"
       Inactive="false"
-      LocalName="&quot;חישוב חודשי&quot;" />
+      LocalName="&quot;חישוב חודשי&quot;"
+      EnglishName="&quot;Monthly calculation&quot;" />
     <Record
       Code="&quot;18&quot;"
       SearchFields="&quot;18,תביעה חריגה&quot;"
       Inactive="false"
-      LocalName="&quot;תביעה חריגה&quot;" />
+      LocalName="&quot;תביעה חריגה&quot;"
+      EnglishName="&quot;Extraordinary claim&quot;" />
     <Record
       Code="&quot;19&quot;"
       SearchFields="&quot;19,תיקון תביעה חריגה&quot;"
       Inactive="false"
-      LocalName="&quot;תיקון תביעה חריגה&quot;" />
+      LocalName="&quot;תיקון תביעה חריגה&quot;"
+      EnglishName="&quot;Repair of exceptional claim&quot;" />
     <Record
       Code="&quot;2&quot;"
       SearchFields="&quot;2,הנחיות סיווג&quot;"
       Inactive="false"
-      LocalName="&quot;הנחיות סיווג&quot;" />
+      LocalName="&quot;הנחיות סיווג&quot;"
+      EnglishName="&quot;Classification Guidelines&quot;" />
     <Record
       Code="&quot;20&quot;"
       SearchFields="&quot;20,שינוי אחוז ניכוי מס-הסבה&quot;"
       Inactive="false"
-      LocalName="&quot;שינוי אחוז ניכוי מס-הסבה&quot;" />
+      LocalName="&quot;שינוי אחוז ניכוי מס-הסבה&quot;"
+      EnglishName="&quot;Change in the percentage of the transfer tax deduction&quot;" />
     <Record
       Code="&quot;21&quot;"
       SearchFields="&quot;21,הסבות&quot;"
       Inactive="false"
-      LocalName="&quot;הסבות&quot;" />
+      LocalName="&quot;הסבות&quot;"
+      EnglishName="&quot;endorsements&quot;" />
     <Record
       Code="&quot;22&quot;"
       SearchFields="&quot;22,מס&quot;ב שחזר&quot;"
       Inactive="false"
-      LocalName="&quot;מס&quot;ב שחזר&quot;" />
+      LocalName="&quot;מס&quot;ב שחזר&quot;"
+      EnglishName="&quot;Masav returned&quot;" />
     <Record
       Code="&quot;23&quot;"
       SearchFields="&quot;23,שיק שחזר&quot;"
       Inactive="false"
-      LocalName="&quot;שיק שחזר&quot;" />
+      LocalName="&quot;שיק שחזר&quot;"
+      EnglishName="&quot;Return check&quot;" />
     <Record
       Code="&quot;24&quot;"
       SearchFields="&quot;24,הכחשת עסקה&quot;"
       Inactive="false"
-      LocalName="&quot;הכחשת עסקה&quot;" />
+      LocalName="&quot;הכחשת עסקה&quot;"
+      EnglishName="&quot;Denying transaction&quot;" />
     <Record
       Code="&quot;25&quot;"
       SearchFields="&quot;25,פירוט האסמכתא לתיקון&quot;"
       Inactive="false"
-      LocalName="&quot;פירוט האסמכתא לתיקון&quot;" />
+      LocalName="&quot;פירוט האסמכתא לתיקון&quot;"
+      EnglishName="&quot;Reference details for correction&quot;" />
     <Record
       Code="&quot;3&quot;"
       SearchFields="&quot;3,לא התקיים אחד התנאים הבאים&quot;"
       Inactive="false"
-      LocalName="&quot;לא התקיים אחד התנאים הבאים&quot;" />
+      LocalName="&quot;לא התקיים אחד התנאים הבאים&quot;"
+      EnglishName="&quot;One of the following conditions was not met&quot;" />
     <Record
       Code="&quot;4&quot;"
       SearchFields="&quot;4,כללי&quot;"
       Inactive="false"
-      LocalName="&quot;כללי&quot;" />
+      LocalName="&quot;כללי&quot;"
+      EnglishName="&quot;general&quot;" />
     <Record
       Code="&quot;5&quot;"
       SearchFields="&quot;5,הפרשי קנסות&quot;"
       Inactive="false"
-      LocalName="&quot;הפרשי קנסות&quot;" />
+      LocalName="&quot;הפרשי קנסות&quot;"
+      EnglishName="&quot;Fine Differences&quot;" />
     <Record
       Code="&quot;6&quot;"
       SearchFields="&quot;6,החזר יצוא מוחזר&quot;"
       Inactive="false"
-      LocalName="&quot;החזר יצוא מוחזר&quot;" />
+      LocalName="&quot;החזר יצוא מוחזר&quot;"
+      EnglishName="&quot;Returned export refund&quot;" />
     <Record
       Code="&quot;7&quot;"
       SearchFields="&quot;7,שינוי אחוז מס&quot;"
       Inactive="false"
-      LocalName="&quot;שינוי אחוז מס&quot;" />
+      LocalName="&quot;שינוי אחוז מס&quot;"
+      EnglishName="&quot;Change tax percentage&quot;" />
     <Record
       Code="&quot;8&quot;"
       SearchFields="&quot;8,שינוי במחזוריות&quot;"
       Inactive="false"
-      LocalName="&quot;שינוי במחזוריות&quot;" />
+      LocalName="&quot;שינוי במחזוריות&quot;"
+      EnglishName="&quot;Change in the cycle&quot;" />
     <Record
       Code="&quot;9&quot;"
       SearchFields="&quot;9,שינוי בערך יצוא&quot;"
       Inactive="false"
-      LocalName="&quot;שינוי בערך יצוא&quot;" />
+      LocalName="&quot;שינוי בערך יצוא&quot;"
+      EnglishName="&quot;Change in export value&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

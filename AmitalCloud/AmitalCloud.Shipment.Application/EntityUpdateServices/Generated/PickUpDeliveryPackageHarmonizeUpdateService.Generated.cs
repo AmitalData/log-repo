@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class PickUpDeliveryPackageHarmonizeUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.PickUpDeliveryPackageHarmonize,PickUpDeliveryPackageHarmonizePM,ShipmentPickUpDeliveryPackagePM,PickUpDeliveryPackageHarmonizeList,string>
+   public partial class PickUpDeliveryPackageHarmonizeUpdateService:BaseEntityUpdateService<POCO.PickUpDeliveryPackageHarmonize,PickUpDeliveryPackageHarmonizePM,ShipmentPickUpDeliveryPackagePM,PickUpDeliveryPackageHarmonizeList,string>
    {
    			
-        public PickUpDeliveryPackageHarmonizeUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public PickUpDeliveryPackageHarmonizeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PickUpDeliveryPackageHarmonizeDataMapping();
-            Repository = new Repository<POCO.PickUpDeliveryPackageHarmonize>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.PickUpDeliveryPackageHarmonize>(mainContext);
         }
-        public PickUpDeliveryPackageHarmonizeUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public PickUpDeliveryPackageHarmonizeUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public PickUpDeliveryPackageHarmonizeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PickUpDeliveryPackageHarmonizeDataMapping();
+            Repository = new Repository<POCO.PickUpDeliveryPackageHarmonize>(tenant);
+		}
+        public PickUpDeliveryPackageHarmonizeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PickUpDeliveryPackageHarmonize,string> GetKeys(PickUpDeliveryPackageHarmonizePM entityPM) => new PickUpDeliveryPackageHarmonizeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(PickUpDeliveryPackageHarmonizePM entityPM)
 		{

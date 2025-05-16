@@ -9,44 +9,41 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RuleUpdateHistoryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.RuleUpdateHistory,RuleUpdateHistoryPM,IEntityPM,RuleUpdateHistoryList,string>
+   public partial class RuleUpdateHistoryUpdateService:BaseEntityUpdateService<POCO.RuleUpdateHistory,RuleUpdateHistoryPM,IEntityPM,RuleUpdateHistoryList,string>
    {
    			
-        public RuleUpdateHistoryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RuleUpdateHistoryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RuleUpdateHistoryDataMapping();
-            Repository = new Repository<POCO.RuleUpdateHistory>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.RuleUpdateHistory>(mainContext);
         }
-        public RuleUpdateHistoryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RuleUpdateHistoryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RuleUpdateHistoryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RuleUpdateHistoryDataMapping();
+            Repository = new Repository<POCO.RuleUpdateHistory>(tenant);
+		}
+        public RuleUpdateHistoryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.RuleUpdateHistory,string> GetKeys(RuleUpdateHistoryPM entityPM) => new RuleUpdateHistoryKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(RuleUpdateHistoryPM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("RuleUpdateHistory", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 			entityPM.CreatedByUserId = GetLoggedUserid(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
- 
-			entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 		}
 		protected override void FillDefaultValuesOnUpdate(RuleUpdateHistoryPM entityPM)
         {       

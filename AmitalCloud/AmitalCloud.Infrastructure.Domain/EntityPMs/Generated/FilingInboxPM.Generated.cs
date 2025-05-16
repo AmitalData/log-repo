@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -196,6 +196,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _bodydocument; } 
 		set { _bodydocument = value; }
 		}
+	  private string _fileName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FileName  
+	   {
+	     get { return _fileName; }
+		 set
+		 {
+		   if(_fileName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FileName",OldValue=_fileName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fileName=value;
+		   }
+		 }
+	   }
 	  private string _searchFields ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -146,6 +146,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _inttrasettingmode; } 
 		set { _inttrasettingmode = value; }
 		}
+	  private string _outSettingsHost ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OutSettingsHost  
+	   {
+	     get { return _outSettingsHost; }
+		 set
+		 {
+		   if(_outSettingsHost != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OutSettingsHost",OldValue=_outSettingsHost,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _outSettingsHost=value;
+		   }
+		 }
+	   }
+	  private string _inSettingsHost ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InSettingsHost  
+	   {
+	     get { return _inSettingsHost; }
+		 set
+		 {
+		   if(_inSettingsHost != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InSettingsHost",OldValue=_inSettingsHost,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _inSettingsHost=value;
+		   }
+		 }
+	   }
 	  private string _iNTTRAId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

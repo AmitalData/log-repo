@@ -625,7 +625,12 @@ export class CardPM extends ObjectCustomFieldPM {
     public get IsExcludeCard() { return this.isExcludeCard; }
     public set IsExcludeCard(newValue: boolean) { if (this.isExcludeCard != newValue) { this.isExcludeCard = newValue; this.MarkAsDirty("IsExcludeCard"); } }
        
+    private externalSystem: string;
+    public get ExternalSystem() { return this.externalSystem; }
+    public set ExternalSystem(newValue: string) { if (this.externalSystem != newValue) { this.externalSystem = newValue; this.MarkAsDirty("ExternalSystem"); } }
+       
 	 
+
 
     public OldEntityPM: CardPM;
 		

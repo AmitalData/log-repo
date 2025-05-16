@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class ReportsTemplatesVersionUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.ReportsTemplatesVersion,ReportsTemplatesVersionPM,IEntityPM,ReportsTemplatesVersionList,string>
+   public partial class ReportsTemplatesVersionUpdateService:BaseEntityUpdateService<POCO.ReportsTemplatesVersion,ReportsTemplatesVersionPM,IEntityPM,ReportsTemplatesVersionList,string>
    {
    			
-        public ReportsTemplatesVersionUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public ReportsTemplatesVersionUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ReportsTemplatesVersionDataMapping();
-            Repository = new Repository<POCO.ReportsTemplatesVersion>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.ReportsTemplatesVersion>(mainContext);
         }
-        public ReportsTemplatesVersionUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public ReportsTemplatesVersionUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public ReportsTemplatesVersionUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ReportsTemplatesVersionDataMapping();
+            Repository = new Repository<POCO.ReportsTemplatesVersion>(tenant);
+		}
+        public ReportsTemplatesVersionUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ReportsTemplatesVersion,string> GetKeys(ReportsTemplatesVersionPM entityPM) => new ReportsTemplatesVersionKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ReportsTemplatesVersionPM entityPM)
 		{

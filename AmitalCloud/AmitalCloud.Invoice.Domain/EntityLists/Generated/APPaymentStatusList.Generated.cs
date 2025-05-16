@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Invoice.Domain.EntityLists
 {
@@ -22,7 +22,7 @@ namespace AmitalCloud.Invoice.Domain.EntityLists
    {
        #region Constructors
        public APPaymentStatusList() : base() {}
-       public APPaymentStatusList(APPaymentStatus entity) : base()
+       public APPaymentStatusList(POCO.APPaymentStatus entity) : base()
        {
           Code  = entity.Code;
           Name  = entity.Name;

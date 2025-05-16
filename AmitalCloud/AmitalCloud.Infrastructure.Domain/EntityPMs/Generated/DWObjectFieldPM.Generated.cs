@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -269,6 +269,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _displayName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DisplayName  
+	   {
+	     get { return _displayName; }
+		 set
+		 {
+		   if(_displayName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DisplayName",OldValue=_displayName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _displayName=value;
+		   }
+		 }
+	   }
 	  private bool _displayInQueryBuilder ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -317,6 +333,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private bool _isRequiered ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRequiered  
+	   {
+	     get { return _isRequiered; }
+		 set
+		 {
+		   if(_isRequiered != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRequiered",OldValue=_isRequiered,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isRequiered=value;
+		   }
+		 }
+	   }
 	  private bool _hideTree ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -330,6 +362,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HideTree",OldValue=_hideTree,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _hideTree=value;
+		   }
+		 }
+	   }
+	  private string _dimensionTableDisplayName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DimensionTableDisplayName  
+	   {
+	     get { return _dimensionTableDisplayName; }
+		 set
+		 {
+		   if(_dimensionTableDisplayName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DimensionTableDisplayName",OldValue=_dimensionTableDisplayName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dimensionTableDisplayName=value;
 		   }
 		 }
 	   }
@@ -362,6 +410,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CannotFilter",OldValue=_cannotFilter,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _cannotFilter=value;
+		   }
+		 }
+	   }
+	  private string _customPickListCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomPickListCode  
+	   {
+	     get { return _customPickListCode; }
+		 set
+		 {
+		   if(_customPickListCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomPickListCode",OldValue=_customPickListCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customPickListCode=value;
 		   }
 		 }
 	   }
@@ -410,6 +474,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalObjectFieldCode",OldValue=_originalObjectFieldCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _originalObjectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _fullNameTextCodeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FullNameTextCodeCode  
+	   {
+	     get { return _fullNameTextCodeCode; }
+		 set
+		 {
+		   if(_fullNameTextCodeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeCode",OldValue=_fullNameTextCodeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fullNameTextCodeCode=value;
 		   }
 		 }
 	   }
@@ -493,6 +573,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _factTableCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FactTableCode  
+	   {
+	     get { return _factTableCode; }
+		 set
+		 {
+		   if(_factTableCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FactTableCode",OldValue=_factTableCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _factTableCode=value;
+		   }
+		 }
+	   }
 	  private bool _useUnitSelection ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -506,6 +602,102 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UseUnitSelection",OldValue=_useUnitSelection,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _useUnitSelection=value;
+		   }
+		 }
+	   }
+	  private string _partnerOriginalObjectFieldCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartnerOriginalObjectFieldCode  
+	   {
+	     get { return _partnerOriginalObjectFieldCode; }
+		 set
+		 {
+		   if(_partnerOriginalObjectFieldCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerOriginalObjectFieldCode",OldValue=_partnerOriginalObjectFieldCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _partnerOriginalObjectFieldCode=value;
+		   }
+		 }
+	   }
+	  private string _partnerFullNameTextCodeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartnerFullNameTextCodeCode  
+	   {
+	     get { return _partnerFullNameTextCodeCode; }
+		 set
+		 {
+		   if(_partnerFullNameTextCodeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerFullNameTextCodeCode",OldValue=_partnerFullNameTextCodeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _partnerFullNameTextCodeCode=value;
+		   }
+		 }
+	   }
+	  private string _category ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Category  
+	   {
+	     get { return _category; }
+		 set
+		 {
+		   if(_category != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Category",OldValue=_category,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _category=value;
+		   }
+		 }
+	   }
+	  private int _categoryIndex ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int CategoryIndex  
+	   {
+	     get { return _categoryIndex; }
+		 set
+		 {
+		   if(_categoryIndex != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CategoryIndex",OldValue=_categoryIndex,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   _categoryIndex=value;
+		   }
+		 }
+	   }
+	  private string _typeCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TypeCode  
+	   {
+	     get { return _typeCode; }
+		 set
+		 {
+		   if(_typeCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TypeCode",OldValue=_typeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _typeCode=value;
+		   }
+		 }
+	   }
+	  private string _parentFactCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ParentFactCode  
+	   {
+	     get { return _parentFactCode; }
+		 set
+		 {
+		   if(_parentFactCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ParentFactCode",OldValue=_parentFactCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _parentFactCode=value;
 		   }
 		 }
 	   }

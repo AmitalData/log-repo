@@ -33,7 +33,7 @@
   </Column>
   <Column
     Name="CreateDate"
-    Type="datetime">
+    Type="datetime2">
     <Constraints
       Nullable="false" />
   </Column>
@@ -238,11 +238,12 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ProcessStartDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
+    <Column
+  Name="ProcessStartDate"
+  Type="datetime"
+  >
+      <Constraints
+        Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="JournalId,JournalLineNumber"

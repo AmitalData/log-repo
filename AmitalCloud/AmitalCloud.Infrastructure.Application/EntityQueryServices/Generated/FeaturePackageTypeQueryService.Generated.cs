@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class FeaturePackageTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FeaturePackageType,FeaturePackageTypeKeys<string>,FeaturePackageTypePM,FeaturePackageTypeList,string>
+   public partial class FeaturePackageTypeQueryService: BaseEntityQueryService<POCO.FeaturePackageType,FeaturePackageTypeKeys<string>,FeaturePackageTypePM,FeaturePackageTypeList,string>
    {
-        public FeaturePackageTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public FeaturePackageTypeQueryService(int tenant) : base(new Repository<POCO.FeaturePackageType>(tenant),new FeaturePackageTypeDataMapping()) {}
         public FeaturePackageTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FeaturePackageType>(context),new FeaturePackageTypeDataMapping()) {}
 		public  FeaturePackageTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new FeaturePackageTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FeaturePackageType,string> GetKeys(POCO.FeaturePackageType entityPOCO) => new FeaturePackageTypeKeys<string>() { Code = entityPOCO.Code,  };

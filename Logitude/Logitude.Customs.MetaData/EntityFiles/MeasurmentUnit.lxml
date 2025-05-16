@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;5f3c&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -136,6 +140,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -213,6 +218,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -290,6 +296,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -364,6 +371,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -440,6 +448,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -516,6 +525,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -608,273 +618,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;2I&quot;"
-      SearchFields="&quot;2I,BTU לשעה&quot;"
-      Inactive="false"
-      LocalName="&quot;BTU לשעה&quot;" />
-    <Record
-      Code="&quot;ANN&quot;"
-      SearchFields="&quot;ANN,שנה&quot;"
-      Inactive="false"
-      LocalName="&quot;שנה&quot;" />
-    <Record
-      Code="&quot;C26&quot;"
-      SearchFields="&quot;C26,מילי-שניות&quot;"
-      Inactive="false"
-      LocalName="&quot;מילי-שניות&quot;" />
-    <Record
-      Code="&quot;C47&quot;"
-      SearchFields="&quot;C47,ננו-שניות&quot;"
-      Inactive="false"
-      LocalName="&quot;ננו-שניות&quot;" />
-    <Record
-      Code="&quot;CEL&quot;"
-      SearchFields="&quot;CEL,מעלות צלזיוס&quot;"
-      Inactive="false"
-      LocalName="&quot;מעלות צלזיוס&quot;" />
-    <Record
-      Code="&quot;CLT&quot;"
-      SearchFields="&quot;CLT,סנטיליטר&quot;"
-      Inactive="false"
-      LocalName="&quot;סנטיליטר&quot;" />
-    <Record
-      Code="&quot;CMK&quot;"
-      SearchFields="&quot;CMK,סנטימטר רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;סנטימטר רבוע&quot;" />
-    <Record
-      Code="&quot;CMQ&quot;"
-      SearchFields="&quot;CMQ,ס&quot;מ מעוקב&quot;"
-      Inactive="false"
-      LocalName="&quot;ס&quot;מ מעוקב&quot;" />
-    <Record
-      Code="&quot;CMT&quot;"
-      SearchFields="&quot;CMT,סנטימטר&quot;"
-      Inactive="false"
-      LocalName="&quot;סנטימטר&quot;" />
-    <Record
-      Code="&quot;CTM&quot;"
-      SearchFields="&quot;CTM,קרט&quot;"
-      Inactive="false"
-      LocalName="&quot;קרט&quot;" />
-    <Record
-      Code="&quot;DAY&quot;"
-      SearchFields="&quot;DAY,יממה&quot;"
-      Inactive="false"
-      LocalName="&quot;יממה&quot;" />
-    <Record
-      Code="&quot;DMK&quot;"
-      SearchFields="&quot;DMK,דצימטר רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;דצימטר רבוע&quot;" />
-    <Record
-      Code="&quot;DMT&quot;"
-      SearchFields="&quot;DMT,דצימטר&quot;"
-      Inactive="false"
-      LocalName="&quot;דצימטר&quot;" />
-    <Record
-      Code="&quot;DZN&quot;"
-      SearchFields="&quot;DZN,תריסר&quot;"
-      Inactive="false"
-      LocalName="&quot;תריסר&quot;" />
-    <Record
-      Code="&quot;EA&quot;"
-      SearchFields="&quot;EA,כל אחד&quot;"
-      Inactive="false"
-      LocalName="&quot;כל אחד&quot;" />
-    <Record
-      Code="&quot;FOT&quot;"
-      SearchFields="&quot;FOT,רגל&quot;"
-      Inactive="false"
-      LocalName="&quot;רגל&quot;" />
-    <Record
-      Code="&quot;FTK&quot;"
-      SearchFields="&quot;FTK,רגל רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;רגל רבוע&quot;" />
-    <Record
-      Code="&quot;GLL&quot;"
-      SearchFields="&quot;GLL,גאלון&quot;"
-      Inactive="false"
-      LocalName="&quot;גאלון&quot;" />
-    <Record
-      Code="&quot;GRM&quot;"
-      SearchFields="&quot;GRM,גרם&quot;"
-      Inactive="false"
-      LocalName="&quot;גרם&quot;" />
-    <Record
-      Code="&quot;GRO&quot;"
-      SearchFields="&quot;GRO,גרוס&quot;"
-      Inactive="false"
-      LocalName="&quot;גרוס&quot;" />
-    <Record
-      Code="&quot;HUR&quot;"
-      SearchFields="&quot;HUR,שעה&quot;"
-      Inactive="false"
-      LocalName="&quot;שעה&quot;" />
-    <Record
-      Code="&quot;ILA&quot;"
-      SearchFields="&quot;ILA,ליטר אלכוהול&quot;"
-      Inactive="false"
-      LocalName="&quot;ליטר אלכוהול&quot;" />
-    <Record
-      Code="&quot;INH&quot;"
-      SearchFields="&quot;INH,אינצ'&quot;"
-      Inactive="false"
-      LocalName="&quot;אינצ'&quot;" />
-    <Record
-      Code="&quot;INK&quot;"
-      SearchFields="&quot;INK,אינצ' רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;אינצ' רבוע&quot;" />
-    <Record
-      Code="&quot;INQ&quot;"
-      SearchFields="&quot;INQ,אינצ' מעוקב&quot;"
-      Inactive="false"
-      LocalName="&quot;אינצ' מעוקב&quot;" />
-    <Record
-      Code="&quot;KGM&quot;"
-      SearchFields="&quot;KGM,קילוגרם&quot;"
-      Inactive="false"
-      LocalName="&quot;קילוגרם&quot;" />
-    <Record
-      Code="&quot;KMK&quot;"
-      SearchFields="&quot;KMK,ק&quot;מ רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;ק&quot;מ רבוע&quot;" />
-    <Record
-      Code="&quot;KMT&quot;"
-      SearchFields="&quot;KMT,קילומטר&quot;"
-      Inactive="false"
-      LocalName="&quot;קילומטר&quot;" />
-    <Record
-      Code="&quot;LBR&quot;"
-      SearchFields="&quot;LBR,ליברה (פאונד)&quot;"
-      Inactive="false"
-      LocalName="&quot;ליברה (פאונד)&quot;" />
-    <Record
-      Code="&quot;LTR&quot;"
-      SearchFields="&quot;LTR,ליטר&quot;"
-      Inactive="false"
-      LocalName="&quot;ליטר&quot;" />
-    <Record
-      Code="&quot;M5&quot;"
-      SearchFields="&quot;M5,מיקרו קירי&quot;"
-      Inactive="false"
-      LocalName="&quot;מיקרו קירי&quot;" />
-    <Record
-      Code="&quot;MIK&quot;"
-      SearchFields="&quot;MIK,מייל רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;מייל רבוע&quot;" />
-    <Record
-      Code="&quot;MIN&quot;"
-      SearchFields="&quot;MIN,דקה&quot;"
-      Inactive="false"
-      LocalName="&quot;דקה&quot;" />
-    <Record
-      Code="&quot;MMK&quot;"
-      SearchFields="&quot;MMK,מילימטר רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;מילימטר רבוע&quot;" />
-    <Record
-      Code="&quot;MMT&quot;"
-      SearchFields="&quot;MMT,מילימטר&quot;"
-      Inactive="false"
-      LocalName="&quot;מילימטר&quot;" />
-    <Record
-      Code="&quot;MON&quot;"
-      SearchFields="&quot;MON,חודש&quot;"
-      Inactive="false"
-      LocalName="&quot;חודש&quot;" />
-    <Record
-      Code="&quot;MTK&quot;"
-      SearchFields="&quot;MTK,מטר רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;מטר רבוע&quot;" />
-    <Record
-      Code="&quot;MTQ&quot;"
-      SearchFields="&quot;MTQ,מ&quot;ק&quot;"
-      Inactive="false"
-      LocalName="&quot;מ&quot;ק&quot;" />
-    <Record
-      Code="&quot;MTR&quot;"
-      SearchFields="&quot;MTR,מטר&quot;"
-      Inactive="false"
-      LocalName="&quot;מטר&quot;" />
-    <Record
-      Code="&quot;ONZ&quot;"
-      SearchFields="&quot;ONZ,מסה )משקל(&quot;"
-      Inactive="false"
-      LocalName="&quot;מסה )משקל(&quot;" />
-    <Record
-      Code="&quot;PK&quot;"
-      SearchFields="&quot;PK,חבילה&quot;"
-      Inactive="false"
-      LocalName="&quot;חבילה&quot;" />
-    <Record
-      Code="&quot;PR&quot;"
-      SearchFields="&quot;PR,זוג&quot;"
-      Inactive="false"
-      LocalName="&quot;זוג&quot;" />
-    <Record
-      Code="&quot;PT&quot;"
-      SearchFields="&quot;PT,פינט&quot;"
-      Inactive="false"
-      LocalName="&quot;פינט&quot;" />
-    <Record
-      Code="&quot;SEC&quot;"
-      SearchFields="&quot;SEC,שניה&quot;"
-      Inactive="false"
-      LocalName="&quot;שניה&quot;" />
-    <Record
-      Code="&quot;SMI&quot;"
-      SearchFields="&quot;SMI,מייל&quot;"
-      Inactive="false"
-      LocalName="&quot;מייל&quot;" />
-    <Record
-      Code="&quot;T3&quot;"
-      SearchFields="&quot;T3,אלף יחידות&quot;"
-      Inactive="false"
-      LocalName="&quot;אלף יחידות&quot;" />
-    <Record
-      Code="&quot;T3C&quot;"
-      SearchFields="&quot;T3C,אלף סיגריות&quot;"
-      Inactive="false"
-      LocalName="&quot;אלף סיגריות&quot;" />
-    <Record
-      Code="&quot;TNE&quot;"
-      SearchFields="&quot;TNE,טון&quot;"
-      Inactive="false"
-      LocalName="&quot;טון&quot;" />
-    <Record
-      Code="&quot;VLT&quot;"
-      SearchFields="&quot;VLT,מתח חשמלי&quot;"
-      Inactive="false"
-      LocalName="&quot;מתח חשמלי&quot;" />
-    <Record
-      Code="&quot;WEE&quot;"
-      SearchFields="&quot;WEE,שבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;שבוע&quot;" />
-    <Record
-      Code="&quot;YDK&quot;"
-      SearchFields="&quot;YDK,יארד רבוע&quot;"
-      Inactive="false"
-      LocalName="&quot;יארד רבוע&quot;" />
-    <Record
-      Code="&quot;YDQ&quot;"
-      SearchFields="&quot;YDQ,יארד מעוקב&quot;"
-      Inactive="false"
-      LocalName="&quot;יארד מעוקב&quot;" />
-    <Record
-      Code="&quot;YRD&quot;"
-      SearchFields="&quot;YRD,יארד&quot;"
-      Inactive="false"
-      LocalName="&quot;יארד&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

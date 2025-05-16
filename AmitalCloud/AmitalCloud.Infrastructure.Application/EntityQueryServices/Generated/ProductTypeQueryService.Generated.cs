@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ProductTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ProductType,ProductTypeKeys<string>,ProductTypePM,ProductTypeList,string>
+   public partial class ProductTypeQueryService: BaseEntityQueryService<POCO.ProductType,ProductTypeKeys<string>,ProductTypePM,ProductTypeList,string>
    {
-        public ProductTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ProductTypeQueryService(int tenant) : base(new Repository<POCO.ProductType>(tenant),new ProductTypeDataMapping()) {}
         public ProductTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ProductType>(context),new ProductTypeDataMapping()) {}
 		public  ProductTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ProductTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ProductType,string> GetKeys(POCO.ProductType entityPOCO) => new ProductTypeKeys<string>() { Code = entityPOCO.Code,  };

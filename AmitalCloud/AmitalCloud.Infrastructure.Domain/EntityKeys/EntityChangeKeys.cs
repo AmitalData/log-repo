@@ -10,27 +10,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class EntityChangeKeys<T> : BaseEntityKeyFields<EntityPOCOs.EntityChange,T> 
+   public class EntityChangeKeys<T> : BaseEntityKeyFields<ENTITIES.EntityChange,T> 
    {
 		public EntityChangeKeys() : base() {}
         public EntityChangeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
         public override void Initialize(IEnumerable<KeyValuePair<string, string>> paramList)
         {
 			Id = (string)Convert.ChangeType((paramList.Single(t => t.Key == "Id").Value), typeof(string));
-			FollowUpAutomationFailedXml = (string)Convert.ChangeType((paramList.Single(t => t.Key == "FollowUpAutomationFailedXml").Value), typeof(string));
-			SetSLAAutomationFailedXml = (string)Convert.ChangeType((paramList.Single(t => t.Key == "SetSLAAutomationFailedXml").Value), typeof(string));
         }
    	  public string Id  { get; set; }
 	    			   
-	  public string FollowUpAutomationFailedXml  { get; set; }
-	    			   
-	  public string SetSLAAutomationFailedXml  { get; set; }
-	    			   
-	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString()+'_'+FollowUpAutomationFailedXml.ToString()+'_'+SetSLAAutomationFailedXml.ToString(),typeof(T)) ;           
+	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "EntityChangesPM";
-	  public override Expression<Func<EntityPOCOs.EntityChange, bool>> Predicate => a => a.Id == Id && a.FollowUpAutomationFailedXml == FollowUpAutomationFailedXml && a.SetSLAAutomationFailedXml == SetSLAAutomationFailedXml;
+	  public override Expression<Func<ENTITIES.EntityChange, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

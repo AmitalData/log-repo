@@ -44,6 +44,7 @@ import { AmitalAPIAddSchemaWindowComponent } from './AmitalAPI/WindowsComponent/
 import { AmitalAPISchemaTable } from './AmitalAPI/components/AmitalAPISchemaTable';
 import { LogTexBoxFormComponent } from './AmitalAPI/components/LogTexBoxFormComponent';
 import { LogitudeGridSimpleComponent } from './AmitalAPI/components/LogitudeGridSimpleComponent';
+import { AmitalAPIDataListWindowComponent } from './AmitalAPI/WindowsComponent/AmitalAPIDataListWindowComponent';
 
 
 export const Components =
@@ -94,6 +95,7 @@ export const Components =
         LogTexBoxFormComponent,
         AmitalAPIRequestsComponent,
         LogitudeGridSimpleComponent,
+        AmitalAPIDataListWindowComponent,
     ];
 
 export class ModuleDeclarations {
@@ -148,6 +150,7 @@ export class ModuleDeclarations {
             case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
             case "AmitalAPIRequestsComponent": { myResult = AmitalAPIRequestsComponent; break; }
             case "LogitudeGridSimpleComponent": { myResult = LogitudeGridSimpleComponent; break; }            
+            case "AmitalAPIDataListWindowComponent": { myResult = AmitalAPIDataListWindowComponent; break; }
         }
 
         return myResult;

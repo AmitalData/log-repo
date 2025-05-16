@@ -50,11 +50,14 @@ export class APPaymentMenuButtonsHandler {
     }
 
     private ResetAllFlags() {
+        
         this.isApproval = false;
         this.isCancelApproval = false;
         this.isVoided = false;
         this.isPrintRequested = false;
         this.isOerationInProgrees = false;
+        this.EntityPM.SetApproved = false;
+
     }
 
     private isValid: boolean = false;

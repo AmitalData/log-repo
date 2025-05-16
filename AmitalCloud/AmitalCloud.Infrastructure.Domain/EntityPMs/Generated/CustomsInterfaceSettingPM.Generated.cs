@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -249,6 +249,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _artemusinsettings; } 
 		set { _artemusinsettings = value; }
 		}
+	  private string _artemusOutSettingsHost ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ArtemusOutSettingsHost  
+	   {
+	     get { return _artemusOutSettingsHost; }
+		 set
+		 {
+		   if(_artemusOutSettingsHost != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ArtemusOutSettingsHost",OldValue=_artemusOutSettingsHost,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _artemusOutSettingsHost=value;
+		   }
+		 }
+	   }
+	  private string _artemusInSettingsHost ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ArtemusInSettingsHost  
+	   {
+	     get { return _artemusInSettingsHost; }
+		 set
+		 {
+		   if(_artemusInSettingsHost != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ArtemusInSettingsHost",OldValue=_artemusInSettingsHost,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _artemusInSettingsHost=value;
+		   }
+		 }
+	   }
 	  private DateTime? _aMCAirStartDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -278,6 +310,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AMCOceanStartDate",OldValue=_aMCOceanStartDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _aMCOceanStartDate=value;
+		   }
+		 }
+	   }
+	  private string _localCustomsInterfaceName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LocalCustomsInterfaceName  
+	   {
+	     get { return _localCustomsInterfaceName; }
+		 set
+		 {
+		   if(_localCustomsInterfaceName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalCustomsInterfaceName",OldValue=_localCustomsInterfaceName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _localCustomsInterfaceName=value;
 		   }
 		 }
 	   }

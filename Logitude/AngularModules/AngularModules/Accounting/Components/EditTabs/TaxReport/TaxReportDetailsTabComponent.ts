@@ -1,33 +1,31 @@
 import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TaxReportPM } from '../../../EntityPMs/TaxReportPM';
-import { TaxReportLinePM } from '../../../EntityPMs/TaxReportLinePM';
-import { RatesTableExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/RatesTableExtendedListService';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { TaxReportLineStatusListService } from '../../../Services/StandardLists/TaxReportLineStatusListService';
 import { TaxReportLineExtendedListService } from '../../../Services/ExtendedLists/TaxReportLineExtendedListService';
+import { TaxReportPMService } from '../../../Services/StandardPMs/TaxReportPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TaxReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
-import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
-import { HttpResponse } from '@angular/common/http';
-import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
+import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { HttpResponse } from '@angular/common/http';
 
 declare var window: any;
 
@@ -44,7 +42,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public isRTL: boolean = false;
     public showLocals: boolean = false;
     public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
-
+    private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     private _entityListService: EntityListService = new EntityListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
@@ -57,6 +55,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
     public QueryColumns: QueryColumnPM[] = [];
     IsTesterButtonVisibile: boolean = false;
+    IsFixDupButtonVisible: boolean = false;
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
     isReady: boolean = false;
@@ -261,6 +260,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ListFilters: ApiQueryFilters = new ApiQueryFilters();
     FilterLines() {
 
+ 
 
         var filters = new ApiQueryFilters;
 
@@ -379,13 +379,18 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
     }
     PushStatus(status) {
+        
         this.SelectedStatusItems.push(status.Code);
+        this.GetDuplicateInputs();
         this.FilterLines();
+        
     }
     PopStatus(status) {
+        
         var itemIndex = this.SelectedStatusItems.indexOf(status.Code);
         if (itemIndex > -1)
             this.SelectedStatusItems.splice(itemIndex, 1);
+        this.GetDuplicateInputs();
         this.FilterLines();
     }
     GetLinesWithErrorsCount() {
@@ -394,6 +399,21 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             this.ShowErrorMsg = __errorsCount >= 1;
             this.errorsCount = __errorsCount;
         });
+    }
+
+    GetDuplicateInputs() {
+        // Duplicate: There is another Inputs transaction with the same VAT No. and Reference
+
+        const duplicateStatus = "5";
+        if (this.SelectedStatusItems.length === 1 && this.SelectedStatusItems.includes(duplicateStatus)) {
+            this._TaxReportExtendedPMService.getDuplicateInputs(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+                var __duplicateInputsCount = myResult.Result;
+                this.IsFixDupButtonVisible = __duplicateInputsCount >= 1;
+            });
+        }
+        else {
+            this.IsFixDupButtonVisible = false;
+        }
     }
 
     GetTransmitStatuses() {
@@ -407,7 +427,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.FilterLines();
     }
     PopTransmitStatus(status) {
-        
+
         var itemIndex = this.SelectedTransmitStatusItems.indexOf(status.Code);
         if (itemIndex > -1)
             this.SelectedTransmitStatusItems.splice(itemIndex, 1);
@@ -507,7 +527,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
 
 
-        //ameerah
+        
         this.columns.push({
             FieldName: 'SubTotalInLocalCurrency',
             DataTypeCode: 'Number',
@@ -518,7 +538,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        // this
+        
+    
         this.columns.push({
             FieldName: 'TotalInvoiceAmount',
             DataTypeCode: 'Number',
@@ -682,6 +703,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
 
         this.GetLinesWithErrorsCount();
+        this.GetDuplicateInputs();
 
     }
 
@@ -711,6 +733,33 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         }, error => {
             console.error('Error downloading the file:', error);
         });
+    }
+
+
+    OnFixDupButtonClicked() {
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this.EntityPM.RemoveDuplicates = true;
+        this.EntityPM.NeedsRebulid = true;
+
+        this._TaxReportPMService.update(this.EntityPM)
+            .subscribe((response: ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                if (response.HasError) {
+                    const message = new MessageWindow();
+                    message.ShowErrorIcon = true;
+                    message.Width = 400;
+                    message.Show(response.ErrorsArray.join('\n'));
+                } else {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                    const message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.Width = 400;
+                }
+            }, (error) => {
+                 new MessageWindow().Show(error || 'Something wrong happened!');
+            });
     }
 
     EditLine(entity) {
@@ -774,13 +823,19 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
                             var mm: ServiceResponse = myResult;
                             var entity = mm.Result;
                             this.btePM = entity;
+                            this.CurrentSession.StopBusyIndicator();
 
-
-                            this.timer = setInterval(() => {
-                                this.GetBTE();
-                            }, this.timerInterval);
-
-                        });
+                            var messageWindow = new MessageWindow();
+                            messageWindow.ShowSuccessIcon = true;
+                            messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                            SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                            SessionLocator.HomeComponent.CurrentProcessId = mm.Result.reportKey;
+                            SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
+  
+                            SessionLocator.HomeComponent.isPinned = true;
+  
+   
+                            });
                     }
                 });
             }

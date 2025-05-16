@@ -261,6 +261,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureSearch\AzureSearchRepoBase.cs" />
+    <Compile Include="AzureSearch\AzureSerchResponse.cs" />
+    <Compile Include="AzureSearch\FastSearchAzureSearchRepo.cs" />
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AllActiveGLAccountsView.cs" />
@@ -322,6 +324,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CargoTenantMilestoneDefinition.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\PostalCode.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\AllARPaymentChequesView.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\SearchIndexEditHistory.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TotalOpenTransInBankView.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AllActiveGLAccountsViewMap.cs" />
@@ -337,6 +340,7 @@
     <Compile Include="CommonDataModel\Mapping\MentionMap.cs" />
     <Compile Include="CommonDataModel\Mapping\PostalCodeMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ProductItemMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\SearchIndexEditHistoryMap.cs" />
     <Compile Include="CommonDataModel\Repositories\CarrierServiceLineRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\CustomerTeamRepository.cs" />
@@ -349,6 +353,7 @@
     <Compile Include="CommonDataModel\Repositories\MentionRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PortGroupRepository.cs" />
     <Compile Include="CommonDataModel\Repositories\PostalCodeRepository.cs" />
+    <Compile Include="CommonDataModel\Repositories\SearchIndexEditHistoryRepository.cs" />
     <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
     <Compile Include="Helpers\FieldValueValidator.cs" />
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
@@ -784,6 +789,8 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ReferenceCustomObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ReleaseArgs.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndex.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndexTenantHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
@@ -819,6 +826,7 @@
     <Compile Include="InfrastructureModel\Mapping\QueryExportExecutionLogMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\QuoteChargesGroupMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ReferenceCustomObjectMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SearchIndexTenantHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
@@ -854,6 +862,8 @@
     <Compile Include="InfrastructureModel\Repositories\QuoteChargesGroupRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ReferenceCustomObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ScreenSectionRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\SearchIndexRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\SearchIndexTenantHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
@@ -863,6 +873,7 @@
     <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
+    <Compile Include="InfrastructureModel\Mapping\SearchIndexMap.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberDefault.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceAnalytic.cs" />

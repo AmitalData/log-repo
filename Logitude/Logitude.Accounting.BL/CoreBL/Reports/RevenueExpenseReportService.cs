@@ -702,7 +702,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private static IQueryable<TrailReportTemp> GetTotalByMonth(int tenant, IAccountingContext accountingContext, DateTime TODatebeginOfMonth, DateTime FROMDateNextMonth)
         {
             IQueryable<Data.EntityPOCOs.GLAccountTotalByMonth> QBaseTotalsFromBirthTilStartOfMonthTo =
-                (from tot in accountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                (from tot in accountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
 
                  where tot.Tenant == tenant
                  select tot           

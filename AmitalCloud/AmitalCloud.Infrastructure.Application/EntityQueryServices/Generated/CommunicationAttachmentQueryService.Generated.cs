@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CommunicationAttachmentQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CommunicationAttachment,CommunicationAttachmentKeys<string>,CommunicationAttachmentPM,CommunicationAttachmentList,string>
+   public partial class CommunicationAttachmentQueryService: BaseEntityQueryService<POCO.CommunicationAttachment,CommunicationAttachmentKeys<string>,CommunicationAttachmentPM,CommunicationAttachmentList,string>
    {
-        public CommunicationAttachmentQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CommunicationAttachmentQueryService(int tenant) : base(new Repository<POCO.CommunicationAttachment>(tenant),new CommunicationAttachmentDataMapping()) {}
         public CommunicationAttachmentQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CommunicationAttachment>(context),new CommunicationAttachmentDataMapping()) {}
 		public  CommunicationAttachmentPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CommunicationAttachmentKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CommunicationAttachment,string> GetKeys(POCO.CommunicationAttachment entityPOCO) => new CommunicationAttachmentKeys<string>() { Id = entityPOCO.Id,  };

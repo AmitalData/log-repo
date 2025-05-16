@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class SharedLogisticsContactLastLoginQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.SharedLogisticsContactLastLogin,SharedLogisticsContactLastLoginKeys<string>,SharedLogisticsContactLastLoginPM,SharedLogisticsContactLastLoginList,string>
+   public partial class SharedLogisticsContactLastLoginQueryService: BaseEntityQueryService<POCO.SharedLogisticsContactLastLogin,SharedLogisticsContactLastLoginKeys<string>,SharedLogisticsContactLastLoginPM,SharedLogisticsContactLastLoginList,string>
    {
-        public SharedLogisticsContactLastLoginQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public SharedLogisticsContactLastLoginQueryService(int tenant) : base(new Repository<POCO.SharedLogisticsContactLastLogin>(tenant),new SharedLogisticsContactLastLoginDataMapping()) {}
         public SharedLogisticsContactLastLoginQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SharedLogisticsContactLastLogin>(context),new SharedLogisticsContactLastLoginDataMapping()) {}
 		public  SharedLogisticsContactLastLoginPM GetSingle(string contactid, string cardid, string partnertypeid, string via,bool getComposition, bool getFromCache) => base.GetSingle(new SharedLogisticsContactLastLoginKeys<string>(){ ContactId = contactid, CardId = cardid, PartnerTypeId = partnertypeid, Via = via }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SharedLogisticsContactLastLogin,string> GetKeys(POCO.SharedLogisticsContactLastLogin entityPOCO) => new SharedLogisticsContactLastLoginKeys<string>() { ContactId = entityPOCO.ContactId, CardId = entityPOCO.CardId, PartnerTypeId = entityPOCO.PartnerTypeId, Via = entityPOCO.Via,  };

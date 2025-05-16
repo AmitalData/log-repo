@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerCompetitorProductQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerCompetitorProduct,CustomerCompetitorProductKeys<string>,CustomerCompetitorProductPM,CustomerCompetitorProductList,string>
+   public partial class CustomerCompetitorProductQueryService: BaseEntityQueryService<POCO.CustomerCompetitorProduct,CustomerCompetitorProductKeys<string>,CustomerCompetitorProductPM,CustomerCompetitorProductList,string>
    {
-        public CustomerCompetitorProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerCompetitorProductQueryService(int tenant) : base(new Repository<POCO.CustomerCompetitorProduct>(tenant),new CustomerCompetitorProductDataMapping()) {}
         public CustomerCompetitorProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerCompetitorProduct>(context),new CustomerCompetitorProductDataMapping()) {}
 		public  CustomerCompetitorProductPM GetSingle(string producttypecode, string customerid, string competitorid,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerCompetitorProductKeys<string>(){ ProductTypeCode = producttypecode, CustomerId = customerid, CompetitorId = competitorid }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerCompetitorProduct,string> GetKeys(POCO.CustomerCompetitorProduct entityPOCO) => new CustomerCompetitorProductKeys<string>() { ProductTypeCode = entityPOCO.ProductTypeCode, CustomerId = entityPOCO.CustomerId, CompetitorId = entityPOCO.CompetitorId,  };

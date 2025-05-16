@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DWSubQueryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DWSubQuery,DWSubQueryPM,IEntityPM,DWSubQueryList,string>
+   public partial class DWSubQueryUpdateService:BaseEntityUpdateService<POCO.DWSubQuery,DWSubQueryPM,IEntityPM,DWSubQueryList,string>
    {
    			
-        public DWSubQueryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DWSubQueryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DWSubQueryDataMapping();
-            Repository = new Repository<POCO.DWSubQuery>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DWSubQuery>(mainContext);
         }
-        public DWSubQueryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DWSubQueryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DWSubQueryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DWSubQueryDataMapping();
+            Repository = new Repository<POCO.DWSubQuery>(tenant);
+		}
+        public DWSubQueryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DWSubQuery,string> GetKeys(DWSubQueryPM entityPM) => new DWSubQueryKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DWSubQueryPM entityPM)
 		{

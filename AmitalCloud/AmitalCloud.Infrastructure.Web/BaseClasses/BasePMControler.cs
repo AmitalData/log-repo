@@ -1,10 +1,11 @@
 ﻿using AmitalCloud.Infrastructure.Application.BaseClasses;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Data.Security;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Enums;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
 using System.Collections.Generic;
@@ -138,18 +139,17 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
         #endregion
         private int AuthenticationToken(string mode, int tenant = 0)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            AmitalCloudSecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            if (EnableSecurity)
+            int? entityTenant;
+            if (EnableSecurity && HasTenant)
             {
-                AmitalCloudSecurityUtility.CheckContactFeature(ObjectTableName, mode, authToken.Tenant);
-                if (HasTenant)
-                {
-                    AmitalCloudSecurityUtility.AuthenticationOnEntityTenant(ObjectTableName, tenant, authToken.Tenant);
-                }
+                entityTenant = tenant;
             }
-            return authToken.Tenant;
+            else
+            {
+                entityTenant = null;
+            }
+            int authTokenTenant = AmitalCloudSecurityUtility.AuthenticateTenant(entityTenant, EnableSecurity ? mode : null, ObjectTableName);
+            return authTokenTenant;
         }
         private IBaseEntityQueryService<TEntityPM, TEntityPOCO> GetService(int tenant)
         {

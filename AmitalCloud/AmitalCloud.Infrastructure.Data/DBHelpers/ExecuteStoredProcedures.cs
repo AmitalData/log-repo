@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using Devart.Data.Oracle;
 using System;
 using System.Collections.Generic;

@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -109,6 +109,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _lastrunbyuser; } 
 		set { _lastrunbyuser = value; }
 		}
+	  private string _lastRunByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastRunByUserName  
+	   {
+	     get { return _lastRunByUserName; }
+		 set
+		 {
+		   if(_lastRunByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserName",OldValue=_lastRunByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _lastRunByUserName=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

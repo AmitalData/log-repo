@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
 {
-    public abstract partial class BaseEntityUpdateService<TContext, TEntityPOCO, TEntityPM, TEntityParentPM, TEntityList, TkeyType>
+    public abstract partial class BaseEntityUpdateService<TEntity, TEntityPM, TEntityParentPM, TEntityList, TkeyType>
     {
         protected virtual void AddContext(TEntityPM myTEntityPM)
         {

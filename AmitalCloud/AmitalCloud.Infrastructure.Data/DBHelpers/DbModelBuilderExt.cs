@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Domain.Enums;
+using AmitalCloud.Infrastructure.Model.Enums;
 using System;
 using System.Collections;
 using System.Data.Entity;
@@ -12,15 +13,15 @@ namespace AmitalCloud.Infrastructure.Data.DBHelpers
             AmitalCloudDBSchema schema,
             string ConnSchemaUserId)
         {
-            if (schema == AmitalCloudDBSchema.none)
-            {
-                throw new Exception("Enums.AmitalCloudDBSchema.none !!?????");
-            }
+            //if (schema == AmitalCloudDBSchema.none)
+            //{
+            //    throw new Exception("Enums.AmitalCloudDBSchema.none !!?????");
+            //}
             var toSchema = ConnSchemaUserId;//schema.ToString();
-            if (schema == AmitalCloudDBSchema.AMITAL_DB)
-            {
-                toSchema = DBHelpers.DbContextBaseUtil.GetSchemaAMITAL_DB();
-            }
+            //if (schema == AmitalCloudDBSchema.AMITAL_DB)
+            //{
+            //    toSchema = DBHelpers.DbContextBaseUtil.GetSchemaAMITAL_DB();
+            //}
             myDbModelBuilder.HasDefaultSchema(toSchema);//Not Work !!!!
             RewriteSchema(myDbModelBuilder, toSchema);//Work !!!!
 

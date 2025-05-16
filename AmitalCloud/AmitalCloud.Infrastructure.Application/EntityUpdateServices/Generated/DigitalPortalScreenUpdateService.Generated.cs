@@ -9,40 +9,40 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DigitalPortalScreenUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DigitalPortalScreen,DigitalPortalScreenPM,IEntityPM,DigitalPortalScreenList,string>
+   public partial class DigitalPortalScreenUpdateService:BaseEntityUpdateService<POCO.DigitalPortalScreen,DigitalPortalScreenPM,IEntityPM,DigitalPortalScreenList,string>
    {
    			
-        public DigitalPortalScreenUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DigitalPortalScreenUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DigitalPortalScreenDataMapping();
-            Repository = new Repository<POCO.DigitalPortalScreen>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DigitalPortalScreen>(mainContext);
         }
-        public DigitalPortalScreenUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DigitalPortalScreenUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DigitalPortalScreenUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DigitalPortalScreenDataMapping();
+            Repository = new Repository<POCO.DigitalPortalScreen>(tenant);
+		}
+        public DigitalPortalScreenUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DigitalPortalScreen,string> GetKeys(DigitalPortalScreenPM entityPM) => new DigitalPortalScreenKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(DigitalPortalScreenPM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("DigitalPortalScreen", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 		}
 		protected override void FillDefaultValuesOnUpdate(DigitalPortalScreenPM entityPM)
         {       

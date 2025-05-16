@@ -26,7 +26,7 @@ namespace WebFreight.Web
        
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //helpMe();
            // LoadFromFolder();
 
             try
@@ -215,9 +215,9 @@ namespace WebFreight.Web
 
 
 
-            string[] fileData = File.ReadAllLines("C:\\Users\\Simon\\Desktop\\tranzila_transactions.csv");
+            string[] fileData = File.ReadAllLines("C:\\Users\\elisheva\\Downloads\\tranzila_transactionsDSV29.10.csv");
            var sb=new StringBuilder();
-            for ( int i=2;i< fileData.Length;i++)
+            for ( int i=1;i< fileData.Length;i++)
             {
                 var item = fileData[i];
                 var dt = item.Split(',');
@@ -252,7 +252,7 @@ namespace WebFreight.Web
 
                 if (MyWebHookKey == null)
                 {
-                    MyWebHookKey = new WebhookKeys() { AccessKey = "123", PartnerName = "TranzilaPayment", Tenant = 49, Description = "TranzilaPayment" };
+                    MyWebHookKey = new WebhookKeys() { AccessKey = "123", PartnerName = "TranzilaPayment", Tenant = 100, Description = "TranzilaPayment" };
                 }
                 if (MyWebHookKey != null)
                 {

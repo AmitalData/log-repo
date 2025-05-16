@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class DigitalFieldSecurityKeys<T> : BaseEntityKeyFields<EntityPOCOs.DigitalFieldSecurity,T> 
+   public class DigitalFieldSecurityKeys<T> : BaseEntityKeyFields<ENTITIES.DigitalFieldSecurity,T> 
    {
 		public DigitalFieldSecurityKeys() : base() {}
         public DigitalFieldSecurityKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "DigitalFieldSecuritiesPM";
-	  public override Expression<Func<EntityPOCOs.DigitalFieldSecurity, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.DigitalFieldSecurity, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

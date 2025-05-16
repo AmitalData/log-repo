@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -234,6 +234,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="maskedSeconderyAccessKey",OldValue=_maskedSeconderyAccessKey,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _maskedSeconderyAccessKey=value;
+		   }
+		 }
+	   }
+	  private string _searchFields ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	     get { return _searchFields; }
+		 set
+		 {
+		   if(_searchFields != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _searchFields=value;
 		   }
 		 }
 	   }

@@ -1,5 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityListQueryServices;
-using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
@@ -17,7 +17,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 List<ReportList> reportLists = new ReportListQueryService(tenant).GetList(tenant).Where(d => d.ReportGroupId == groupId).OrderBy(d => d.Name).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, reportLists);
             }

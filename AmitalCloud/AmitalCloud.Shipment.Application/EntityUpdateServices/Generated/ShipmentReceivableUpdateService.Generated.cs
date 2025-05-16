@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentReceivableUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentReceivable,ShipmentReceivablePM,ShipmentPM,ShipmentReceivableList,string>
+   public partial class ShipmentReceivableUpdateService:BaseEntityUpdateService<POCO.ShipmentReceivable,ShipmentReceivablePM,ShipmentPM,ShipmentReceivableList,string>
    {
    			
-        public ShipmentReceivableUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentReceivableUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentReceivableDataMapping();
-            Repository = new Repository<POCO.ShipmentReceivable>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentReceivable>(mainContext);
         }
-        public ShipmentReceivableUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentReceivableUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentReceivableUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentReceivableDataMapping();
+            Repository = new Repository<POCO.ShipmentReceivable>(tenant);
+		}
+        public ShipmentReceivableUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentReceivable,string> GetKeys(ShipmentReceivablePM entityPM) => new ShipmentReceivableKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(ShipmentReceivablePM entityPM)
 		{

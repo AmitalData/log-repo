@@ -23,7 +23,7 @@
 
                                 <td style="width:100px;">Bill To/ Vendor:</td>
                                 <td style="width:200px;">
-                                    <LogLov [ObjectFieldName]="'CustomerId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'CustomerId'"
                                             [ObjectTableName]="'Card'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'">
@@ -32,7 +32,7 @@
 
                                 <td style="width:50px;">Partner:</td>
                                 <td style="width:200px;">
-                                    <LogLov [ObjectFieldName]="'PartnerId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'PartnerId'"
                                             [ObjectTableName]="'Card'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'">

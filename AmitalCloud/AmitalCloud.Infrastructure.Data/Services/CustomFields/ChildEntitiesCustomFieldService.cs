@@ -1,9 +1,8 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Counters;
+﻿using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             tenant = childEntitiesCustomFieldArgs.Tenant;
             childObjectTableName = childEntitiesCustomFieldArgs.ChildObjectTableName;
             customFieldResolver = new CustomFieldResolver(tenant);
-            childEntitiesCustomFieldRepository = new Repository<ChildEntitiesCustomField>(AmitalCloudContext.GetContext(tenant));
+            childEntitiesCustomFieldRepository = new Repository<ChildEntitiesCustomField>(tenant);
             customObjectFields = GetCustomObjectFields();
             childEntitiesCustomFields = GetChildEntitiesCustomFields();
         }

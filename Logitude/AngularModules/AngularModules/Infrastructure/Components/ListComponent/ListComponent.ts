@@ -1,5 +1,3 @@
-
-declare var System: any;
 declare var window: any;
 import { Component, OnInit, Type, Output, EventEmitter, ComponentRef, ViewChild, QueryList, ViewChildren, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -38,14 +36,13 @@ import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { AmitalGatewayUtil, UnifreightMessageM } from '../../Utilities/AmitalGatewayUtil';
 import { AccountingIntegrityCheckPM } from '../../../Accounting/EntityPMs/AccountingIntegrityCheckPM';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { LogGridComponent } from '../LogitudeComponents/LogGridComponent/LogGridComponent';
 import { LogGridComponentV2 } from '../LogitudeComponents/LogGridComponent/LogGridComponentV2';
 import { UserDefinedReportPM } from 'Accounting/EntityPMs/UserDefinedReportPM';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import { VariableAst } from '@angular/compiler';
 import { EditComponent } from '../EditComponent/EditComponent';
 import { AWBWizardLoadComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardLoadComponent';
 import { AWBWizardComponent } from 'ShipmentModules/ShipmentAWB/Components/AWBWizard/AWBWizardComponent';
@@ -68,7 +65,9 @@ import { CustomizationPermissionService } from '../../../InfrastructureModules/I
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
-
+import { FastSearchResult, FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebService';
+import { FastSearchService } from './FastSearchService';
+ 
 @Component({
 
     templateUrl: './ListComponent.html',
@@ -121,7 +120,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     };
 
-    private MaxAdditionalCurrencyRate = 4;
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
     public IsShowTipArea: boolean = false;
@@ -145,11 +143,16 @@ export class ListComponent implements OnInit, AfterViewInit {
     public BackBtnTitle: string;
     public AddButtonTitle: string = "";
     public serviceArgs: ServiceArgs;
-    CurrentQueryFilters: ApiQueryFilters;
+    CurrentQueryFilters: ApiQueryFilters;    
     AdvanceFilters: ApiQueryFilters;
     @Output() onQueryChangeEvent = new EventEmitter();
     @Output() onRefershQueryEvent = new EventEmitter();
     @Output() onSelectedQueryChangeEvent = new EventEmitter();
+    searchDropdownOptions: FastSearchResult[] = [];    
+    fastSearchSettings: FastSearchSettings = null;
+    $fastSearchEnable: BehaviorSubject<boolean> = null;
+    fastSearchAllow: boolean = false;
+
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
     }
@@ -181,43 +184,60 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     onSearchTextChangeEvent(searchtext) {
+        const timer: number = this.$fastSearchEnable.value ? this.fastSearchService.Settings.idleSearchTimeMs : 400;
+
         console.log("Search");
         if ((this.searchFields != searchtext) && !(searchtext == null && this.searchFields == "")) {
             this.searchFields = searchtext;
             if (this.timerToken) {
                 clearTimeout(this.timerToken);
             }
-            this.timerToken = setTimeout(() => this.SearchMethod(), 400);
-
+            this.timerToken = setTimeout(() => this.searchMethod(), timer);
         }
-        //this.searchFields = searchtext;
-
-        //this.SearchFieldchangeevent.emit(this.searchFields);
     }
 
-    SearchMethod() {
-        //this.ApplyPreDefinedFilters();
-
-        var searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
-
-
+    async searchMethod() {        
+        const searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
-        //if (this.searchFields && this.searchFields != "") {
-        //    this.searchFields = this.searchFields.replace(/"/g, '');
-        //    //this.searchFields = this.searchFields.replace(/\//g, '');//("\\", "\\");
-        //    this.searchFields = this.searchFields.replace(/\\/g, "\\\\");
-        //    //this.searchFields = this.searchFields.replace('"', '');
-        //    //this.searchFields = this.searchFields.trim();
-        //}
-        //if (this.ClearMySearch == false) {
+        
+        if (this.fastSearchService.$fastSearchEnable.value) {
+            try {
+                this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
+                if (this.searchDropdownOptions) {
+                    this.CD.detectChanges();
+                    return;
+                }    
+            } catch (error) {
+                if(error instanceof HttpErrorResponse && error.error.ErrorType === "FieldsNotExistsInIndexException")
+                    this.fastSearchCheckbox(false);
+            }
+        }
+            
         this.CurrentQueryFilters.addAdditionalFilter(searchFieldName, this.searchFields, null, null, "Contains", false, true, false, "String");
         this.onQueryChangeEvent.emit({ QueryCode: this.SelectedQueryCode, Filters: this.CurrentQueryFilters, SearchFieldChanged: true, Reload: true });
-        //}
-        //else {
-        //    this.ClearMySearch = false;
-        //}
+        this.CD.detectChanges();            
     }
 
+    searchDropdownSelected(optionSelected: FastSearchResult | string) {
+        this.fastSearchService.searchDropdownSelected(optionSelected, this.CurrentQueryFilters, this.SelectedQueryCode, this.searchDropdownOptions, this.MethodName, this.onRowSelected.bind(this), this.onQueryChangeEvent);
+    }
+   
+    fastSearchCheckbox(check: boolean) {
+        this.fastSearchService.$fastSearchEnable.next(check);
+        if(!check && this.fastSearchService.orginalCurrentAdditionalFilters != null) {
+            this.CurrentQueryFilters.AdditionalFilters = [...this.fastSearchService.orginalCurrentAdditionalFilters];
+            this.fastSearchService.orginalCurrentAdditionalFilters = null;
+        }
+
+        this.searchMethod();
+    }
+
+    async showRecentSearches() {        
+        this.fastSearchService.$RecentSearches.pipe(take(1)).subscribe(recentSearches => {
+            this.searchDropdownOptions = [...recentSearches];
+            this.CD.detectChanges();
+        });
+    }
 
     GetMethodName() {
         if (this.MenuTableQuerySection) return this.ObjectTableName;
@@ -247,8 +267,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.dataSource.sortingDir = this.SelectedQuery.DefaultSortDirection;
             }
-
-            //this.GetQueryColumns(this.SelectedQuery.Id, this.UserId);
         }
         this.CurrentQueryFilters = new ApiQueryFilters();
         if (window.PreDefinedFilters.filter(d => d.QueryCode == this.SelectedQuery.UniqueCode) != null) {
@@ -523,7 +541,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private SessionEvent: any = null;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef) {
+    constructor(public _ListComponentArgs: ListComponentArgs, private _http: HttpClient, private _entityListService: EntityListService, private _entityResourceService: EntityResourceService, public pubSubAdvanceQueryFiltersService: PubSubService, private temp: PubSubService1, private entityPMService: EntityPMService, private _totangoService: TotangoService, private CD: ChangeDetectorRef, private fastSearchService: FastSearchService) {
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
 
@@ -779,6 +797,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.EnglishView = true;
         }
 
+        this.fastSearchService.subscribeMenuHeaderchangeevent(this.MenuHeaderchangeevent);
     }
     public ReloadAllListEvent: any = null;
     Listen() {
@@ -911,7 +930,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     private isLoaderReady: boolean;
     DeclarationsTable = false;
     View: string;
-    RunComponent() {
+    async RunComponent() {
 
 
         if (window.Tips) {
@@ -1052,8 +1071,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                 this.RunComponentTimer();
             }
         }
+        
+        await this.fastSearchService.initFastSearch(this.ObjectTable, this.ObjectTableName, this.MenuTableQuerySection);
+        this.$fastSearchEnable = this.fastSearchService.$fastSearchEnable;
+        this.fastSearchAllow = this.$fastSearchEnable.value;        
+        if (this.fastSearchAllow)
+            this.fastSearchSettings = this.fastSearchService.Settings;
     }
-
+  
     private Retries: number = 0;
     private timerToken: any;
     private RunComponentTimer() {
@@ -1162,13 +1187,10 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     ViewInitCompleted(event) {
-        //this.afterViewGridInitCompleted.emit(event);
         this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
             this.BackBtnTitle = this.listArgs.BackButtonTitle;
-            //this.Title = this.listArgs.DisplayTitle;
             this.ResourcesLoaded = true;
             this.ViewQuery(this.listArgs.Filters, this.listArgs.DisplayTitle, this.listArgs.BackButtonTitle, this.listArgs.IsReadOnlyList, this.listArgs.IsBackToCurrentListView);
-            //this.CD.detectChanges();
         });
     }
 
@@ -1183,15 +1205,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     TipVisibilityChanged(event) {
-
         if (event == "true") this.IsShowTipArea = true;
         else this.IsShowTipArea = false;
 
         this.IsFirstTipLoad = false;
-        //this.HideLogGrid = true;
-        //this.HideLogGrid = false;
         this.RefreshBtnClick();
-
     }
 
 
@@ -1595,16 +1613,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
         }
-        //if (!AppTool.IsNullOrEmpty(this.SelectedQuery.SpotlightDataTemplate)) {
-        //    this.EnableSpotLight = true;
-        //    //this.CD.detectChanges();
-        //}
 
-        //console.log("QueryValueChanged()", queryId);
-        //var userId = JSON.parse(sessionStorage.getItem("userData")).Id;
-        //this.GetQueryColumns(queryId, this.UserId);
         this.SelectedQueryCode = Args.QueryCode;
-        //this.SelectedQueryId = Args.QueryId;
 
         this.dataSource = {
             pageSize: 30,
@@ -1629,7 +1639,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                         Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
                     }
                     Args.Filters.AdditionalFilters.push(filter);
-                    //this.Filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, false, filter.DisplayInList, false, filter.FieldDataType);
                 }
             });
 
@@ -1646,21 +1655,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.onSelectedQueryChangeEvent.emit(new QueryPM());
             return;
         }
-        //alert("Hi");
         this.AdvanceFilters = new ApiQueryFilters();
         this.QueryCode = Args.UniqueCode;
-        //this.GetQueries();
-        //var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
 
-        //this.Queries = allQueries.filter(x => x.UserId == null && FeatureLocator.IsFeatureGranted(x.FeatureId));
-        //this.Queries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId == null);
         this.UserQueries = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id && x.UserId != null && x.SystemLevel == false && x.Tenant == SessionInfo.LoggedUserTenant && x.QuerySection == this.MenuTableQuerySection);
         this.QueryListSourceChanged.emit(this.UserQueries);
         var SelectedQuery: any = {};
-        //if (this.listArgs.Perspective != null) {
-        //    this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
-        //    this.Queries = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective);
-        //}
         if (this.QueryCode) {
             SelectedQuery = this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] != null ? this.Queries.filter(x => x.UniqueCode === this.QueryCode)[0] : this.UserQueries.filter(x => x.UniqueCode === this.QueryCode)[0];
         }
@@ -1689,19 +1689,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
         var query = window.Queries.filter(q => q.ObjectTableId == this.ObjectTable.Id && q.UniqueCode == this.QueryCode)[0];
 
-        //if (!AppTool.IsNullOrEmpty(query.SpotlightDataTemplate)) {
-        //    this.EnableSpotLight = true;
-        //    this.CD.detectChanges();
-        //}
         if (query != null) {
             this.temp1 = query;
-            //if (!AppTool.IsNullOrEmpty(queryDisplayName)) {
-            //    this.Title = queryDisplayName;
-            //}
-            //else {
-            //    this.Title = TextCodeTranslator.Translate(query.NameTextCodeCode);
-            //    //this.CD.detectChanges();
-            //}
             if (window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode) != null) {
                 var predefinedFilters = window.PreDefinedFilters.filter(d => d.QueryCode == query.UniqueCode);
                 predefinedFilters.forEach((filter, key) => {
@@ -1883,22 +1872,14 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (filter.FieldName == "DirectionId") {
                 this.listArgs.SelectedDirection = filter.FieldValue;
             }
-            //if (filter.FieldName == "ShipmentLevelCode") {
-            //    this.listArgs.select = filter.FieldValue;
-            //}
         });
     }
     HasFilters: boolean = false;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.CurrentQueryFilters = new ApiQueryFilters();
         if (filters.AdditionalFilters.length > 0) {
-            //this.HasFilters = true;
-            //this.CD.detectChanges();
         }
         var MyFilters = new ApiQueryFilters();
-        //if (filters == null) {
-        //    filters = new ApiQueryFilters();
-        //}
 
         if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
             this.listArgs.DefaultFilterItems.forEach((filter) => {
@@ -1914,19 +1895,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
 
         });
-        //console.log(searchfields);
         if (searchfields && !this.IsUseCardSearchMechanism()) {
-            //filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", null, null, null, "Text");
             MyFilters.Filter1Name = "SearchFields";
             MyFilters.Filter1Operator = "Contains";
             MyFilters.Filter1Value = searchfields;
-            //console.log(filters.AdditionalFilters);
         }
-        //if (this.firstCall == true) {
-        //filters.GetCount = true;
         MyFilters.GetCount = getCount;
-        //this.firstCall = false;
-        //}
         MyFilters.PageIndex = skip;
 
         if (this.IsUseCardSearchMechanism()) {
@@ -3151,9 +3125,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         isEnabled = false;
                     }
                 }
-                else if (this.ObjectTableName == "AdditionalCurrencyRate") {
-                    isEnabled = this.CheckNewAdditionalCurrencyRateButton();
-                }
+                
 
                 if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
                     isEnabled = false;
@@ -3168,18 +3140,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
 
-    private CheckNewAdditionalCurrencyRateButton() {
-        if (this.dataSource.rowCount !== null) {
-            return this.dataSource.rowCount < this.MaxAdditionalCurrencyRate;
-        }
-        const interval = setInterval(() => {
-            if (this.dataSource.rowCount !== null) {
-                clearInterval(interval);
-                this.SetNewEntityButtonDisabled();
-            }
-          }, 1000);
-        return false;
-    }
+   
 
     private SetNewEntityButtonVisibility() {
 
@@ -3907,7 +3868,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         logWindow.Title = windowTitle;
         logWindow.Show('./Common/Components/Maintenance/TenantImportComponent');
         this.ShowIt = false;
-        //this.CD.detectChanges();
         logWindow.WindowClosed.subscribe(($event: any) => {
 
             this.CD.detectChanges();

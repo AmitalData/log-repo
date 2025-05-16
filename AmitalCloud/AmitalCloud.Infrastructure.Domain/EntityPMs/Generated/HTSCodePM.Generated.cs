@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -162,6 +162,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DestinationCountryId",OldValue=_destinationCountryId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _destinationCountryId=value;
+		   }
+		 }
+	   }
+	  private string _countryEnglishName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CountryEnglishName  
+	   {
+	     get { return _countryEnglishName; }
+		 set
+		 {
+		   if(_countryEnglishName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryEnglishName",OldValue=_countryEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _countryEnglishName=value;
 		   }
 		 }
 	   }

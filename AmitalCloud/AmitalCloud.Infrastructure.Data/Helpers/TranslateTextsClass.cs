@@ -1,6 +1,5 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -309,7 +308,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 email = HttpContext.Current.User.Identity.Name;
             else
                 email = "system@tenant" + tenant.ToString() + ".com";
-            Contact contactPM = new Repository<Contact>(AmitalCloudContext.GetContext(tenant)).GetMulti(a => a.Email == email && a.Tenant == tenant).FirstOrDefault();    //GetSingleContactByEmailAndTenant(email, tenant);
+            Contact contactPM = new Repository<Contact>(tenant).GetMulti(a => a.Email == email && a.Tenant == tenant).FirstOrDefault();    //GetSingleContactByEmailAndTenant(email, tenant);
             return contactPM;
         }
 

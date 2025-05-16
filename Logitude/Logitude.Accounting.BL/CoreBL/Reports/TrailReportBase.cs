@@ -201,14 +201,14 @@ into groupBy_currency
      ForeignAmountCredit = groupBy_currency.Sum(ltYearTransfer => ltYearTransfer.ForeignAmountCredit),
 
      CHANGE_TYPE = "",
-     DateTypeValue = GLAccountTotalDateTypeValues.Accountingdate,
+     DateTypeValue = GLAccountTotalDateTypeValues.AccountingDate,
  });
 
 
 
 
             QBasePeriodGLATotalByMonths_TotalStart_From0BC_TilNotInclude_BeginOfMonth_FromDate =
-                 (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                 (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
                   where tot.Tenant == _TrailReportParam.Tenant
                   where tot.Year < _FromBeginOfMonth.Year ||
                   (tot.Year == _FromBeginOfMonth.Year &&
@@ -270,7 +270,7 @@ into groupBy_currency
 
 
             QBasePeriodGLATotalByMonths_TotalDelta2End_FromBeginOfMonthFromDate_Til_BeginOfMonthToDate =
-            (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+            (from tot in _AccountingContext.GLAccountTotalByMonths.Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
              where tot.Tenant == _TrailReportParam.Tenant
 
 

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class PaymentGatewayPartnerQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.PaymentGatewayPartner,PaymentGatewayPartnerKeys<string>,PaymentGatewayPartnerPM,PaymentGatewayPartnerList,string>
+   public partial class PaymentGatewayPartnerQueryService: BaseEntityQueryService<POCO.PaymentGatewayPartner,PaymentGatewayPartnerKeys<string>,PaymentGatewayPartnerPM,PaymentGatewayPartnerList,string>
    {
-        public PaymentGatewayPartnerQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public PaymentGatewayPartnerQueryService(int tenant) : base(new Repository<POCO.PaymentGatewayPartner>(tenant),new PaymentGatewayPartnerDataMapping()) {}
         public PaymentGatewayPartnerQueryService(IAmitalCloudContext context) : base(new Repository<POCO.PaymentGatewayPartner>(context),new PaymentGatewayPartnerDataMapping()) {}
 		public  PaymentGatewayPartnerPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new PaymentGatewayPartnerKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.PaymentGatewayPartner,string> GetKeys(POCO.PaymentGatewayPartner entityPOCO) => new PaymentGatewayPartnerKeys<string>() { Code = entityPOCO.Code,  };

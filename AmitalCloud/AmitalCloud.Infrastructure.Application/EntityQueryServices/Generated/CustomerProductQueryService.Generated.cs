@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomerProductQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomerProduct,CustomerProductKeys<string>,CustomerProductPM,CustomerProductList,string>
+   public partial class CustomerProductQueryService: BaseEntityQueryService<POCO.CustomerProduct,CustomerProductKeys<string>,CustomerProductPM,CustomerProductList,string>
    {
-        public CustomerProductQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomerProductQueryService(int tenant) : base(new Repository<POCO.CustomerProduct>(tenant),new CustomerProductDataMapping()) {}
         public CustomerProductQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomerProduct>(context),new CustomerProductDataMapping()) {}
 		public  CustomerProductPM GetSingle(string customerid, string producttypecode,bool getComposition, bool getFromCache) => base.GetSingle(new CustomerProductKeys<string>(){ CustomerId = customerid, ProductTypeCode = producttypecode }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomerProduct,string> GetKeys(POCO.CustomerProduct entityPOCO) => new CustomerProductKeys<string>() { CustomerId = entityPOCO.CustomerId, ProductTypeCode = entityPOCO.ProductTypeCode,  };

@@ -217,6 +217,8 @@ import { NLogSettingsComponent } from './Components/Maintenance/NLogSettingsComp
 import { CloseSaveButtonsComponent } from './Components/LogitudeComponents/CloseSaveButtonsComponent';
 import { GeneralLockComponent } from './Components/Maintenance/GeneralLockComponent';
 import { GeneralLockListTemplate } from './Components/Templates/GeneralLockListTemplate';
+import { SearchListDDLDirective } from './Directives/SearchListDDL/SearchListDDLDirective';
+import { SearchListDDLComponent } from './Directives/SearchListDDL/SearchListDDLComponent';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -229,6 +231,7 @@ export const Directives = [
     FloatEndDirective,
     TextAlignStart,
     TextAlignEnd,
+    SearchListDDLDirective,
 ];
 export const Pipes = [
     NumbersPipe,
@@ -442,6 +445,7 @@ export const Components = [
     AddEditChildEntityComponent,
     NewCustomObjectComponent,
     GeneralLockComponent,
+    SearchListDDLComponent,
 
  ];
  
@@ -576,6 +580,7 @@ export class ModuleDeclarations {
             case 'GridScreenSectionComponent': { myResult = GridScreenSectionComponent; break; }
             case 'AddEditChildEntityComponent': { myResult = AddEditChildEntityComponent; break; }
             case "NewCustomObjectComponent": { myResult = NewCustomObjectComponent; break; }
+            case "SearchListDDLComponent": { myResult = SearchListDDLComponent; break; }
             
              case 'SatisfactionSurveyComponent': {
                 myResult = SatisfactionSurveyComponent;

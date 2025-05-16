@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -182,6 +182,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
+		   }
+		 }
+	   }
+	  private bool _isAir ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsAir  
+	   {
+	     get { return _isAir; }
+		 set
+		 {
+		   if(_isAir != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsAir",OldValue=_isAir,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isAir=value;
+		   }
+		 }
+	   }
+	  private bool _isInland ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsInland  
+	   {
+	     get { return _isInland; }
+		 set
+		 {
+		   if(_isInland != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsInland",OldValue=_isInland,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isInland=value;
+		   }
+		 }
+	   }
+	  private bool _isOcean ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsOcean  
+	   {
+	     get { return _isOcean; }
+		 set
+		 {
+		   if(_isOcean != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsOcean",OldValue=_isOcean,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isOcean=value;
 		   }
 		 }
 	   }

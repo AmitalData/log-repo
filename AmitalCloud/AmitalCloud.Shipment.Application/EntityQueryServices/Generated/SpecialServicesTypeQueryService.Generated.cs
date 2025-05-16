@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class SpecialServicesTypeQueryService: BaseEntityQueryService<IShipmentContext,POCO.SpecialServicesType,SpecialServicesTypeKeys<string>,SpecialServicesTypePM,SpecialServicesTypeList,string>
+   public partial class SpecialServicesTypeQueryService: BaseEntityQueryService<POCO.SpecialServicesType,SpecialServicesTypeKeys<string>,SpecialServicesTypePM,SpecialServicesTypeList,string>
    {
-        public SpecialServicesTypeQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public SpecialServicesTypeQueryService(IShipmentContext context) : base(new Repository<POCO.SpecialServicesType>(context),new SpecialServicesTypeDataMapping()) {}
+        public SpecialServicesTypeQueryService(int tenant) : base(new Repository<POCO.SpecialServicesType>(tenant),new SpecialServicesTypeDataMapping()) {}
+        public SpecialServicesTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.SpecialServicesType>(context),new SpecialServicesTypeDataMapping()) {}
 		public  SpecialServicesTypePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new SpecialServicesTypeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.SpecialServicesType,string> GetKeys(POCO.SpecialServicesType entityPOCO) => new SpecialServicesTypeKeys<string>() { Id = entityPOCO.Id,  };
    }

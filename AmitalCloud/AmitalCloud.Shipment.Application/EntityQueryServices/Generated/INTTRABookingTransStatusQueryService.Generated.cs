@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class INTTRABookingTransStatusQueryService: BaseEntityQueryService<IShipmentContext,POCO.INTTRABookingTransStatus,INTTRABookingTransStatusKeys<string>,INTTRABookingTransStatusPM,INTTRABookingTransStatusList,string>
+   public partial class INTTRABookingTransStatusQueryService: BaseEntityQueryService<POCO.INTTRABookingTransStatus,INTTRABookingTransStatusKeys<string>,INTTRABookingTransStatusPM,INTTRABookingTransStatusList,string>
    {
-        public INTTRABookingTransStatusQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public INTTRABookingTransStatusQueryService(IShipmentContext context) : base(new Repository<POCO.INTTRABookingTransStatus>(context),new INTTRABookingTransStatusDataMapping()) {}
+        public INTTRABookingTransStatusQueryService(int tenant) : base(new Repository<POCO.INTTRABookingTransStatus>(tenant),new INTTRABookingTransStatusDataMapping()) {}
+        public INTTRABookingTransStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.INTTRABookingTransStatus>(context),new INTTRABookingTransStatusDataMapping()) {}
 		public  INTTRABookingTransStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new INTTRABookingTransStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.INTTRABookingTransStatus,string> GetKeys(POCO.INTTRABookingTransStatus entityPOCO) => new INTTRABookingTransStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

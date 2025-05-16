@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AdvancedQueryFilterQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AdvancedQueryFilter,AdvancedQueryFilterKeys<string>,AdvancedQueryFilterPM,AdvancedQueryFilterList,string>
+   public partial class AdvancedQueryFilterQueryService: BaseEntityQueryService<POCO.AdvancedQueryFilter,AdvancedQueryFilterKeys<string>,AdvancedQueryFilterPM,AdvancedQueryFilterList,string>
    {
-        public AdvancedQueryFilterQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AdvancedQueryFilterQueryService(int tenant) : base(new Repository<POCO.AdvancedQueryFilter>(tenant),new AdvancedQueryFilterDataMapping()) {}
         public AdvancedQueryFilterQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AdvancedQueryFilter>(context),new AdvancedQueryFilterDataMapping()) {}
 		public  AdvancedQueryFilterPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AdvancedQueryFilterKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AdvancedQueryFilter,string> GetKeys(POCO.AdvancedQueryFilter entityPOCO) => new AdvancedQueryFilterKeys<string>() { Id = entityPOCO.Id,  };

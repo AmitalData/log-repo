@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;946d&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -135,6 +139,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -211,6 +216,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -287,6 +293,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -360,6 +367,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -436,6 +444,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -523,243 +532,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
-  <Records>
-    <Record
-      Code="&quot;1&quot;"
-      SearchFields="&quot;1,מס&quot;ב הכנסה&quot;"
-      Inactive="false"
-      LocalName="&quot;מס&quot;ב הכנסה&quot;" />
-    <Record
-      Code="&quot;10&quot;"
-      SearchFields="&quot;10,רכב נכים אוצר&quot;"
-      Inactive="false"
-      LocalName="&quot;רכב נכים אוצר&quot;" />
-    <Record
-      Code="&quot;100&quot;"
-      SearchFields="&quot;100,העברה בנקאית - אשראי&quot;"
-      Inactive="false"
-      LocalName="&quot;העברה בנקאית - אשראי&quot;" />
-    <Record
-      Code="&quot;101&quot;"
-      SearchFields="&quot;101,ניצול פקדון&quot;"
-      Inactive="false"
-      LocalName="&quot;ניצול פקדון&quot;" />
-    <Record
-      Code="&quot;102&quot;"
-      SearchFields="&quot;102,החזר בסילוקין דרך חשכ&quot;ל&quot;"
-      Inactive="false"
-      LocalName="&quot;החזר בסילוקין דרך חשכ&quot;ל&quot;" />
-    <Record
-      Code="&quot;103&quot;"
-      SearchFields="&quot;103,החזר ערבות ממומשת&quot;"
-      Inactive="false"
-      LocalName="&quot;החזר ערבות ממומשת&quot;" />
-    <Record
-      Code="&quot;104&quot;"
-      SearchFields="&quot;104,אשראי אינטרנט&quot;"
-      Inactive="false"
-      LocalName="&quot;אשראי אינטרנט&quot;" />
-    <Record
-      Code="&quot;105&quot;"
-      SearchFields="&quot;105,ניצול עיקול&quot;"
-      Inactive="false"
-      LocalName="&quot;ניצול עיקול&quot;" />
-    <Record
-      Code="&quot;11&quot;"
-      SearchFields="&quot;11,רכב נכים ביטוח לאומי&quot;"
-      Inactive="false"
-      LocalName="&quot;רכב נכים ביטוח לאומי&quot;" />
-    <Record
-      Code="&quot;12&quot;"
-      SearchFields="&quot;12,חילוט פיקדון&quot;"
-      Inactive="false"
-      LocalName="&quot;חילוט פיקדון&quot;" />
-    <Record
-      Code="&quot;13&quot;"
-      SearchFields="&quot;13,משרד הבטחון&quot;"
-      Inactive="false"
-      LocalName="&quot;משרד הבטחון&quot;" />
-    <Record
-      Code="&quot;14&quot;"
-      SearchFields="&quot;14,רכב נכים-פ.איבה&quot;"
-      Inactive="false"
-      LocalName="&quot;רכב נכים-פ.איבה&quot;" />
-    <Record
-      Code="&quot;15&quot;"
-      SearchFields="&quot;15,כרטיס אשראי&quot;"
-      Inactive="false"
-      LocalName="&quot;כרטיס אשראי&quot;" />
-    <Record
-      Code="&quot;16&quot;"
-      SearchFields="&quot;16,יצירת תב. מזורזת&quot;"
-      Inactive="false"
-      LocalName="&quot;יצירת תב. מזורזת&quot;" />
-    <Record
-      Code="&quot;2&quot;"
-      SearchFields="&quot;2,קופה&quot;"
-      Inactive="false"
-      LocalName="&quot;קופה&quot;" />
-    <Record
-      Code="&quot;20&quot;"
-      SearchFields="&quot;20,החזר הנהלה&quot;"
-      Inactive="false"
-      LocalName="&quot;החזר הנהלה&quot;" />
-    <Record
-      Code="&quot;21&quot;"
-      SearchFields="&quot;21,החזר מס&quot;ב&quot;"
-      Inactive="false"
-      LocalName="&quot;החזר מס&quot;ב&quot;" />
-    <Record
-      Code="&quot;23&quot;"
-      SearchFields="&quot;23,אולם נוסעים&quot;"
-      Inactive="false"
-      LocalName="&quot;אולם נוסעים&quot;" />
-    <Record
-      Code="&quot;24&quot;"
-      SearchFields="&quot;24,א. נוסעים&quot;"
-      Inactive="false"
-      LocalName="&quot;א. נוסעים&quot;" />
-    <Record
-      Code="&quot;28&quot;"
-      SearchFields="&quot;28,ממ&quot;ן החזרים&quot;"
-      Inactive="false"
-      LocalName="&quot;ממ&quot;ן החזרים&quot;" />
-    <Record
-      Code="&quot;29&quot;"
-      SearchFields="&quot;29,ממ&quot;ן הכנסה&quot;"
-      Inactive="false"
-      LocalName="&quot;ממ&quot;ן הכנסה&quot;" />
-    <Record
-      Code="&quot;3&quot;"
-      SearchFields="&quot;3,פקודות להעברה&quot;"
-      Inactive="false"
-      LocalName="&quot;פקודות להעברה&quot;" />
-    <Record
-      Code="&quot;32&quot;"
-      SearchFields="&quot;32,עיקול לחובת גורם&quot;"
-      Inactive="false"
-      LocalName="&quot;עיקול לחובת גורם&quot;" />
-    <Record
-      Code="&quot;33&quot;"
-      SearchFields="&quot;33,עיקול לזכות גורם&quot;"
-      Inactive="false"
-      LocalName="&quot;עיקול לזכות גורם&quot;" />
-    <Record
-      Code="&quot;4&quot;"
-      SearchFields="&quot;4,הלוואות מע&quot;מ&quot;"
-      Inactive="false"
-      LocalName="&quot;הלוואות מע&quot;מ&quot;" />
-    <Record
-      Code="&quot;5&quot;"
-      SearchFields="&quot;5,קרן מיוחדת&quot;"
-      Inactive="false"
-      LocalName="&quot;קרן מיוחדת&quot;" />
-    <Record
-      Code="&quot;50&quot;"
-      SearchFields="&quot;50,רטרו/חילוט&quot;"
-      Inactive="false"
-      LocalName="&quot;רטרו/חילוט&quot;" />
-    <Record
-      Code="&quot;51&quot;"
-      SearchFields="&quot;51,ניצול מימוש ערבות (שיוך)&quot;"
-      Inactive="false"
-      LocalName="&quot;ניצול מימוש ערבות (שיוך)&quot;" />
-    <Record
-      Code="&quot;52&quot;"
-      SearchFields="&quot;52,מימוש ערבות&quot;"
-      Inactive="false"
-      LocalName="&quot;מימוש ערבות&quot;" />
-    <Record
-      Code="&quot;55&quot;"
-      SearchFields="&quot;55,חבילת שי&quot;"
-      Inactive="false"
-      LocalName="&quot;חבילת שי&quot;" />
-    <Record
-      Code="&quot;56&quot;"
-      SearchFields="&quot;56,נעמן החזרים&quot;"
-      Inactive="false"
-      LocalName="&quot;נעמן החזרים&quot;" />
-    <Record
-      Code="&quot;57&quot;"
-      SearchFields="&quot;57,נעמן הכנסה&quot;"
-      Inactive="false"
-      LocalName="&quot;נעמן הכנסה&quot;" />
-    <Record
-      Code="&quot;70&quot;"
-      SearchFields="&quot;70,ויזה&quot;"
-      Inactive="false"
-      LocalName="&quot;ויזה&quot;" />
-    <Record
-      Code="&quot;71&quot;"
-      SearchFields="&quot;71,ישרכארט&quot;"
-      Inactive="false"
-      LocalName="&quot;ישרכארט&quot;" />
-    <Record
-      Code="&quot;72&quot;"
-      SearchFields="&quot;72,לאומי קארד&quot;"
-      Inactive="false"
-      LocalName="&quot;לאומי קארד&quot;" />
-    <Record
-      Code="&quot;73&quot;"
-      SearchFields="&quot;73,דינרס&quot;"
-      Inactive="false"
-      LocalName="&quot;דינרס&quot;" />
-    <Record
-      Code="&quot;74&quot;"
-      SearchFields="&quot;74,ויזה-אינטרנט&quot;"
-      Inactive="false"
-      LocalName="&quot;ויזה-אינטרנט&quot;" />
-    <Record
-      Code="&quot;75&quot;"
-      SearchFields="&quot;75,ישרכארט אינטרנט&quot;"
-      Inactive="false"
-      LocalName="&quot;ישרכארט אינטרנט&quot;" />
-    <Record
-      Code="&quot;76&quot;"
-      SearchFields="&quot;76,לאומי אינטרנט&quot;"
-      Inactive="false"
-      LocalName="&quot;לאומי אינטרנט&quot;" />
-    <Record
-      Code="&quot;77&quot;"
-      SearchFields="&quot;77,העברה בנקאית&quot;"
-      Inactive="false"
-      LocalName="&quot;העברה בנקאית&quot;" />
-    <Record
-      Code="&quot;78&quot;"
-      SearchFields="&quot;78,העברת זהב&quot;"
-      Inactive="false"
-      LocalName="&quot;העברת זהב&quot;" />
-    <Record
-      Code="&quot;79&quot;"
-      SearchFields="&quot;79,ניצול העברת זהב&quot;"
-      Inactive="false"
-      LocalName="&quot;ניצול העברת זהב&quot;" />
-    <Record
-      Code="&quot;8&quot;"
-      SearchFields="&quot;8,קרן הבאהיים&quot;"
-      Inactive="false"
-      LocalName="&quot;קרן הבאהיים&quot;" />
-    <Record
-      Code="&quot;88&quot;"
-      SearchFields="&quot;88,יצירת קרן&quot;"
-      Inactive="false"
-      LocalName="&quot;יצירת קרן&quot;" />
-    <Record
-      Code="&quot;9&quot;"
-      SearchFields="&quot;9,רכב נכים ביטחון&quot;"
-      Inactive="false"
-      LocalName="&quot;רכב נכים ביטחון&quot;" />
-    <Record
-      Code="&quot;99&quot;"
-      SearchFields="&quot;99,לאישור הסוכן&quot;"
-      Inactive="false"
-      LocalName="&quot;לאישור הסוכן&quot;" />
-    <Record
-      Code="&quot;999&quot;"
-      SearchFields="&quot;999,סעיף טכני&quot;"
-      Inactive="false"
-      LocalName="&quot;סעיף טכני&quot;" />
-  </Records>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

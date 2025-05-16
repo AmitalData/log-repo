@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DistributorQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.Distributor,DistributorKeys<string>,DistributorPM,DistributorList,string>
+   public partial class DistributorQueryService: BaseEntityQueryService<POCO.Distributor,DistributorKeys<string>,DistributorPM,DistributorList,string>
    {
-        public DistributorQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DistributorQueryService(int tenant) : base(new Repository<POCO.Distributor>(tenant),new DistributorDataMapping()) {}
         public DistributorQueryService(IAmitalCloudContext context) : base(new Repository<POCO.Distributor>(context),new DistributorDataMapping()) {}
 		public  DistributorPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new DistributorKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.Distributor,string> GetKeys(POCO.Distributor entityPOCO) => new DistributorKeys<string>() { Code = entityPOCO.Code,  };

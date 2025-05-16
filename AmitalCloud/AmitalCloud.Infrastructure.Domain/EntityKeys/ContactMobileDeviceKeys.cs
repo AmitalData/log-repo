@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class ContactMobileDeviceKeys<T> : BaseEntityKeyFields<EntityPOCOs.ContactMobileDevice,T> 
+   public class ContactMobileDeviceKeys<T> : BaseEntityKeyFields<ENTITIES.ContactMobileDevice,T> 
    {
 		public ContactMobileDeviceKeys() : base() {}
         public ContactMobileDeviceKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(DeviceId.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "ContactMobileDevicesPM";
-	  public override Expression<Func<EntityPOCOs.ContactMobileDevice, bool>> Predicate => a => a.DeviceId == DeviceId;
+	  public override Expression<Func<ENTITIES.ContactMobileDevice, bool>> Predicate => a => a.DeviceId == DeviceId;
    }
 }
 	 

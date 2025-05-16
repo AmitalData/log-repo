@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class PackageTypeKeys<T> : BaseEntityKeyFields<EntityPOCOs.PackageType,T> 
+   public class PackageTypeKeys<T> : BaseEntityKeyFields<ENTITIES.PackageType,T> 
    {
 		public PackageTypeKeys() : base() {}
         public PackageTypeKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "PackageTypesPM";
-	  public override Expression<Func<EntityPOCOs.PackageType, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.PackageType, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PaymentTermUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PaymentTerm,PaymentTermPM,IEntityPM,PaymentTermList,string>
+   public partial class PaymentTermUpdateService:BaseEntityUpdateService<POCO.PaymentTerm,PaymentTermPM,IEntityPM,PaymentTermList,string>
    {
    			
-        public PaymentTermUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PaymentTermUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PaymentTermDataMapping();
-            Repository = new Repository<POCO.PaymentTerm>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PaymentTerm>(mainContext);
         }
-        public PaymentTermUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PaymentTermUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PaymentTermUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PaymentTermDataMapping();
+            Repository = new Repository<POCO.PaymentTerm>(tenant);
+		}
+        public PaymentTermUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PaymentTerm,string> GetKeys(PaymentTermPM entityPM) => new PaymentTermKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(PaymentTermPM entityPM)
 		{

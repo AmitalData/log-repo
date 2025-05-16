@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FeaturePackageTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.FeaturePackageType,FeaturePackageTypePM,IEntityPM,FeaturePackageTypeList,string>
+   public partial class FeaturePackageTypeUpdateService:BaseEntityUpdateService<POCO.FeaturePackageType,FeaturePackageTypePM,IEntityPM,FeaturePackageTypeList,string>
    {
    			
-        public FeaturePackageTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public FeaturePackageTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new FeaturePackageTypeDataMapping();
-            Repository = new Repository<POCO.FeaturePackageType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.FeaturePackageType>(mainContext);
         }
-        public FeaturePackageTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public FeaturePackageTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public FeaturePackageTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new FeaturePackageTypeDataMapping();
+            Repository = new Repository<POCO.FeaturePackageType>(tenant);
+		}
+        public FeaturePackageTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.FeaturePackageType,string> GetKeys(FeaturePackageTypePM entityPM) => new FeaturePackageTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(FeaturePackageTypePM entityPM)
 		{

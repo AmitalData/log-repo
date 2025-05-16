@@ -1,15 +1,15 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+ using AmitalCloud.Infrastructure.Model.EntityClasses ;
+ using AmitalCloud.Infrastructure.Domain.EntityPMs;
+using AmitalCloud.Infrastructure.Domain.Helpers;
+ using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Transactions;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class FeatureQuery
@@ -21,7 +21,6 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<Feature>(context);
         }
-        //        public FeatureQuery(IRepository<IAmitalCloudContext,Feature, string> repository) => this.repository = repository;
         public List<FeaturePM> GetAllowedFeaturesForRole(string myRoleId, List<string> allowedPackages, int tenant)
         {
             List<FeaturePM> myResult = new List<FeaturePM>();
@@ -35,9 +34,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 List<PackageFeature> allPackageFeatures = new List<PackageFeature>();
 
                 #region allFeatures
-                allFeatures = (from a in context.Features.Include("NameTextCode")
-                               where (a.Tenant == 0 || a.Tenant == tenant)
-                               select new FeaturePM(a)).ToList();
+                allFeatures = repository.GetMulti(a => a.Tenant == 0 || a.Tenant == tenant, a => new FeaturePM(a)).ToList();
                 #endregion
 
                 #region allRoleFeatures
@@ -94,7 +91,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                         {
                             if (!allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).Any())
                             {
-                                //myFeature.PackageCode = item.PackageCode;
+                                myFeature.PackageCode = item.PackageCode;
                                 allAllowedPackageFeatures.Add(myFeature);
                             }
                         }
@@ -110,22 +107,21 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                         {
                             if (!myResult.Where(d => d.Id == myFeature.Id).Any())
                             {
-                                //myFeature.RoleId = item.RoleId;
+                                myFeature.RoleId = item.RoleId;
 
                                 if (myFeature.Packagable)
                                 {
                                     FeaturePM myAllowedPackageFeature = allAllowedPackageFeatures.Where(d => d.Id == myFeature.Id).FirstOrDefault();
                                     if (myAllowedPackageFeature != null)
                                     {
-                                        //myFeature.Exists = true;
-                                        //myFeature.PackageCode = myAllowedPackageFeature.PackageCode;
+                                        myFeature.Exists = true;
+                                        myFeature.PackageCode = myAllowedPackageFeature.PackageCode;
                                         myResult.Add(myFeature);
                                     }
                                 }
-
                                 else
                                 {
-                                    //myFeature.Exists = true;
+                                    myFeature.Exists = true;
                                     myResult.Add(myFeature);
                                 }
                             }
@@ -159,9 +155,8 @@ namespace AmitalCloud.Infrastructure.Data.Queries
         public LoggedUserFeatures GetAllowedFeaturesForLoggedUser(string loggedUserId, int tenant)
         {
             LoggedUserFeatures loggedUserFeatures;
-            if (true)
-                //!AmitalCloudSettings.DeploymentStage.IsDBStage(AmitalCloudSettings.DeploymentStage.LogboxAndAccountingProduction))
-            {
+             if (!SettingUtil.DeploymentStage.IsDBStage(SettingUtil.DeploymentStage.LogboxAndAccountingProduction))
+             {
                 string key = $"GetAllowedFeaturesForLoggedUser,{loggedUserId},{tenant}";
                 loggedUserFeatures = CacheManager.GetOrInsertNewObject<LoggedUserFeatures>(key, () =>
                 {
@@ -185,11 +180,11 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             ContactTenantPM contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, tenant);
             if (contactTenant == null)
             {
-                    contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, 0);
-                    UserQuery userQuery = new UserQuery(0);
-                    UserPM user = userQuery.GetSinglePM(loggedUserId, 0);
-                    isDistributor = user.IsDistributor;
-                    isCustomerCare = !user.IsDistributor;
+                contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, 0);
+                UserQuery userQuery = new UserQuery(0);
+                UserPM user = userQuery.GetSinglePM(loggedUserId, 0);
+                isDistributor = user.IsDistributor;
+                isCustomerCare = !user.IsDistributor;
             }
 
             else if (contactTenant.TenantId == 0)
@@ -212,9 +207,9 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             if (contactTenantRoles.Count > 0)
             {
                 List<string> allRolesIds = contactTenantRoles.Select(s => s.RoleId).ToList();
-                List<RolePM> allCustomRoles = new Repository<Role>(context)
-                    .GetMulti(a => allRolesIds.Contains(a.Id) && a.IsCustomRole == true, a => new RolePM(a));
-                foreach (RolePM item in allCustomRoles)
+                List<Role> allCustomRoles = new Repository<Role>(context)
+                    .GetMulti(a => allRolesIds.Contains(a.Id) && a.IsCustomRole == true);
+                foreach (Role item in allCustomRoles)
                 {
                     if (allRolesIds.Contains(item.ParentRoleId))
                     {

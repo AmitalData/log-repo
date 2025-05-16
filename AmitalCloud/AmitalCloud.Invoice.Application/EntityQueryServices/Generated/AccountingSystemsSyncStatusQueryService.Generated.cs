@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class AccountingSystemsSyncStatusQueryService: BaseEntityQueryService<IInvoiceContext,POCO.AccountingSystemsSyncStatus,AccountingSystemsSyncStatusKeys<string>,AccountingSystemsSyncStatusPM,AccountingSystemsSyncStatusList,string>
+   public partial class AccountingSystemsSyncStatusQueryService: BaseEntityQueryService<POCO.AccountingSystemsSyncStatus,AccountingSystemsSyncStatusKeys<string>,AccountingSystemsSyncStatusPM,AccountingSystemsSyncStatusList,string>
    {
-        public AccountingSystemsSyncStatusQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public AccountingSystemsSyncStatusQueryService(IInvoiceContext context) : base(new Repository<POCO.AccountingSystemsSyncStatus>(context),new AccountingSystemsSyncStatusDataMapping()) {}
+        public AccountingSystemsSyncStatusQueryService(int tenant) : base(new Repository<POCO.AccountingSystemsSyncStatus>(tenant),new AccountingSystemsSyncStatusDataMapping()) {}
+        public AccountingSystemsSyncStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountingSystemsSyncStatus>(context),new AccountingSystemsSyncStatusDataMapping()) {}
 		public  AccountingSystemsSyncStatusPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new AccountingSystemsSyncStatusKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountingSystemsSyncStatus,string> GetKeys(POCO.AccountingSystemsSyncStatus entityPOCO) => new AccountingSystemsSyncStatusKeys<string>() { Id = entityPOCO.Id,  };
    }

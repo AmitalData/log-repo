@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AuthenticationTokenQueryService: BaseEntityQueryService<IGlobalContext,POCO.AuthenticationToken,AuthenticationTokenKeys<string>,AuthenticationTokenPM,AuthenticationTokenList,string>
+   public partial class AuthenticationTokenQueryService: BaseEntityQueryService<POCO.AuthenticationToken,AuthenticationTokenKeys<string>,AuthenticationTokenPM,AuthenticationTokenList,string>
    {
-        public AuthenticationTokenQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public AuthenticationTokenQueryService(int tenant) : base(new Repository<POCO.AuthenticationToken>(tenant),new AuthenticationTokenDataMapping()) {}
         public AuthenticationTokenQueryService(IGlobalContext context) : base(new Repository<POCO.AuthenticationToken>(context),new AuthenticationTokenDataMapping()) {}
 		public  AuthenticationTokenPM GetSingle(string token,bool getComposition, bool getFromCache) => base.GetSingle(new AuthenticationTokenKeys<string>(){ Token = token }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AuthenticationToken,string> GetKeys(POCO.AuthenticationToken entityPOCO) => new AuthenticationTokenKeys<string>() { Token = entityPOCO.Token,  };

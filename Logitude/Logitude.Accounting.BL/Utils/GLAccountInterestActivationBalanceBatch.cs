@@ -243,8 +243,8 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         ////////////
                         /// 2.7. Compute our InterestReportId 
-                        string actionDateStrPre = actionDate.ToString("dd.MM.yyyy").Replace(".", String.Empty);
-                        string ourInterestReportIdPre = OPEN_ + actionDateStrPre;
+                        string FormatReportId(DateTime date) => OPEN_ + date.ToString("ddMMyyyy");
+                        string ourInterestReportIdPre = OPEN_ + FormatReportId(actionDate);
 
                         ////////////
                         /// 3. Compute "Before" that are still open (to "close" them with "OPEN_")
@@ -279,24 +279,11 @@ namespace Logitude.Accounting.BL.Utils
                         /// 5.Update InterestTransaction
                         if (before_listPre != null && before_listPre.Any())
                         {
-                            int total_count = before_listPre.Count;
-                            int count = 0;
-                            int each = 100;
-
-                            before_listPre.ForEach(intt =>
-                            {
-                                count++;
-                                bool commit = (count >= total_count || count % each == 0);
-                                InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
-                                if (interestTransactionPM != null)
-                                {
-                                    interestTransactionPM.IsClosed = true;
-                                    interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    interestTransactionPM.InterestReportId = ourInterestReportIdPre;
-                                    myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
-                                }
-                            }
-                                );
+                            UpdateInterestTransactions(
+                                before_listPre, true,
+                                myInterestTransactionService,
+                                myInterestTransactionUpdateService,
+                                ourInterestReportIdPre);
                         }
                     }
 
@@ -374,31 +361,18 @@ namespace Logitude.Accounting.BL.Utils
 
                     
                         before_list.RemoveAll(item => backwardList.Any(b => b.Id == item.Id));
-                   
 
-                        ////////////////
+
+                    ////////////////
                     /// 5.Update InterestTransaction
-                        if (before_list != null && before_list.Any())
-                        {
-                            int total_count = before_list.Count;
-                            int count = 0;
-                            int each = 100;
-
-                            before_list.ForEach(intt =>
-                                {
-                                    count++;
-                                    bool commit = (count >= total_count || count % each == 0);
-                                    InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
-                                    if (interestTransactionPM != null)
-                                    {
-                                        interestTransactionPM.IsClosed = true;
-                                        interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
-                                        interestTransactionPM.InterestReportId = ourInterestReportId;
-                                        myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
-                                    }
-                                }
-                                );
-                        }
+                    if (before_list != null && before_list.Any())
+                    {
+                        UpdateInterestTransactions(
+                                before_list, true,
+                                myInterestTransactionService,
+                                myInterestTransactionUpdateService,
+                                ourInterestReportId);
+                    }
 
                         ////////////////
                         /// 6.Update GLAccount.InterestOpenBalance and create new InterestTransaction
@@ -454,6 +428,30 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
+        private void UpdateInterestTransactions(
+                        List<InterestTransactionBefore> transactions, bool isClosedNewValue,
+                        InterestTransactionQueryService myInterestTransactionService,
+                        InterestTransactionUpdateService myInterestTransactionUpdateService,
+                        string interestReportId)
+        {
+            int total_count = transactions.Count;
+            int count = 0;
+            int each = 100;
+
+            transactions.ForEach(intt =>
+            {
+                count++;
+                bool commit = (count >= total_count || count % each == 0);
+                InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
+                if (interestTransactionPM != null)
+                {
+                    interestTransactionPM.IsClosed = isClosedNewValue;
+                    interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
+                    interestTransactionPM.InterestReportId = interestReportId;
+                    myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
+                }
+            });
+        }
 
 
         private (decimal amountAfter, List<InterestTransactionBefore> resultingList) ComputeValueAfter_AccDateBefore(IAccountingContext context, int tenant, HashSet<string> concernedGLAccounts,
@@ -610,24 +608,10 @@ namespace Logitude.Accounting.BL.Utils
 
             if (before_list != null &&  before_list.Any()) 
             {
-                int total_count = before_list.Count;
-                int count = 0;
-                int each = 100;
-
-                before_list.ForEach(intt =>
-                {
-                    count++;
-                    bool commit = (count >= total_count || count % each == 0);
-                    InterestTransactionPM interestTransactionPM = myInterestTransactionService.GetSingle(intt.Id, false, false);
-                    if (interestTransactionPM != null)
-                    {
-                        interestTransactionPM.IsClosed = false;
-                        interestTransactionPM.ChangeSetOp = ChangeSetOperation.Update;
-                        interestTransactionPM.InterestReportId = null;
-                        myInterestTransactionUpdateService.Update(interestTransactionPM, commit);
-                    }
-                }
-                    );
+                UpdateInterestTransactions(
+                            before_list, false,
+                            myInterestTransactionService,
+                            myInterestTransactionUpdateService, null);
             }
 
 
@@ -649,9 +633,7 @@ namespace Logitude.Accounting.BL.Utils
                         .Where(rec => concernedGLAccounts.Contains(rec.GLAccountId) 
                         && rec.InterestReportStatusCode != InterestReportStatusCodes.Cancelled
                         && rec.InterestCalculationDate <=interestActivationDate) select rep.Id; 
-            if (q.Count() > 0) { return true; }
-
-            return false;
+            return q.Any();
         }
 
         private void TryDeleteLockRow(int tenant)

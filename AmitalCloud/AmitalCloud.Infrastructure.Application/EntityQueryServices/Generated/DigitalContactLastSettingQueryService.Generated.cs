@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DigitalContactLastSettingQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DigitalContactLastSetting,DigitalContactLastSettingKeys<string>,DigitalContactLastSettingPM,DigitalContactLastSettingList,string>
+   public partial class DigitalContactLastSettingQueryService: BaseEntityQueryService<POCO.DigitalContactLastSetting,DigitalContactLastSettingKeys<string>,DigitalContactLastSettingPM,DigitalContactLastSettingList,string>
    {
-        public DigitalContactLastSettingQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DigitalContactLastSettingQueryService(int tenant) : base(new Repository<POCO.DigitalContactLastSetting>(tenant),new DigitalContactLastSettingDataMapping()) {}
         public DigitalContactLastSettingQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DigitalContactLastSetting>(context),new DigitalContactLastSettingDataMapping()) {}
 		public  DigitalContactLastSettingPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DigitalContactLastSettingKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DigitalContactLastSetting,string> GetKeys(POCO.DigitalContactLastSetting entityPOCO) => new DigitalContactLastSettingKeys<string>() { Id = entityPOCO.Id,  };

@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class CounterStatListQueryService  : BaseEntityListQueryService<CounterStatList,POCO.CounterStat,  CounterStatKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.CounterStat> contextEntity => (context as IAmitalCloudContext).CounterStats;
-		public CounterStatListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public CounterStatListQueryService(int tenant) : base(tenant) { }
         public CounterStatList GetSingle(int id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

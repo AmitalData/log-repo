@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EntityCasualDataUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EntityCasualData,EntityCasualDataPM,IEntityPM,EntityCasualDataList,string>
+   public partial class EntityCasualDataUpdateService:BaseEntityUpdateService<POCO.EntityCasualData,EntityCasualDataPM,IEntityPM,EntityCasualDataList,string>
    {
    			
-        public EntityCasualDataUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EntityCasualDataUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EntityCasualDataDataMapping();
-            Repository = new Repository<POCO.EntityCasualData>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EntityCasualData>(mainContext);
         }
-        public EntityCasualDataUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EntityCasualDataUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EntityCasualDataUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EntityCasualDataDataMapping();
+            Repository = new Repository<POCO.EntityCasualData>(tenant);
+		}
+        public EntityCasualDataUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EntityCasualData,string> GetKeys(EntityCasualDataPM entityPM) => new EntityCasualDataKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(EntityCasualDataPM entityPM)
 		{

@@ -1,4 +1,4 @@
-using AmitalCloud.Infrastructure.Data;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using System.Web;
 

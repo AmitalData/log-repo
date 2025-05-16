@@ -13,8 +13,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.BaseClasses;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-namespace AmitalCloud.Infrastructure.Domain.EntityPOCOs
+using AmitalCloud.Infrastructure.Domain.EntityClasses;
+namespace AmitalCloud.Infrastructure.Domain.EntityClasses
 {
     public class QueryColumn : BaseEntity
 	{

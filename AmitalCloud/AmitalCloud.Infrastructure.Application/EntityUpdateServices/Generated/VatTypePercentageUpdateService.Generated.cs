@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class VatTypePercentageUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.VatTypePercentage,VatTypePercentagePM,VatTypePM,VatTypePercentageList,string>
+   public partial class VatTypePercentageUpdateService:BaseEntityUpdateService<POCO.VatTypePercentage,VatTypePercentagePM,VatTypePM,VatTypePercentageList,string>
    {
    			
-        public VatTypePercentageUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public VatTypePercentageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new VatTypePercentageDataMapping();
-            Repository = new Repository<POCO.VatTypePercentage>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.VatTypePercentage>(mainContext);
         }
-        public VatTypePercentageUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public VatTypePercentageUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public VatTypePercentageUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new VatTypePercentageDataMapping();
+            Repository = new Repository<POCO.VatTypePercentage>(tenant);
+		}
+        public VatTypePercentageUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.VatTypePercentage,string> GetKeys(VatTypePercentagePM entityPM) => new VatTypePercentageKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(VatTypePercentagePM entityPM)
 		{

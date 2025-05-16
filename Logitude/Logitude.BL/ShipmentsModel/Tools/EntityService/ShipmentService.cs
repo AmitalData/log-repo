@@ -2239,6 +2239,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             {
                 if (IsPrivateLabelTenant(entityPM.Tenant))
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ForwarderShipmentQueue - Call Stack: \n{Environment.StackTrace}");
                     IQueueService queueservice = new DbQueueService();
                     queueservice.InitializeQueue("ForwarderShipmentQueue", 0);
                     queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", entityPM.Id }, { "Tenant", tenant.ToString() }, }, tenant);

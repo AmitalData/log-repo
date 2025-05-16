@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2892",
                     Name = "(2892)תיקון הצהרה",
                     Entity="Declaration",
-                    Param1= @"{ ""Error"":""false""}",
+                    Param1= @"{ ""Error"":""false"" , ""RequestNo"" : ""1000"" }",
 MainInterfaceCode ="2892"
                 },
                                new SincroTestCaseDetail()
@@ -199,6 +199,16 @@ MainInterfaceCode ="5002"
                     Param1= @"{""paymentStatus"":""3"",  ""paymentProcess"" :""1""}",
                     Param2= @"{}",
                     MainInterfaceCode="3050",
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "3050",
+                    Name = "הוראת תשלום לבדלרות",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""paymentStatus"":""3"",  ""paymentProcess"" :""1""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3053",
                 },
 
                    new SincroTestCaseDetail()

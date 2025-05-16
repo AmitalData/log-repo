@@ -66,6 +66,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.GLAccountName = gLAccount.LocalName ??gLAccount.EnglishName ;
                     entityPM.GLAccountNumber = gLAccount.DisplayNumber;
+                    entityPM.ExchangeRateId = gLAccount.ExchangeRateId;
                 }
             }
 

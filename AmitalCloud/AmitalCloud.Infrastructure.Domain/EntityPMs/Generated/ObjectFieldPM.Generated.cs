@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -1412,6 +1412,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _fullNameTextCodeDefaultText ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FullNameTextCodeDefaultText  
+	   {
+	     get { return _fullNameTextCodeDefaultText; }
+		 set
+		 {
+		   if(_fullNameTextCodeDefaultText != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeDefaultText",OldValue=_fullNameTextCodeDefaultText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fullNameTextCodeDefaultText=value;
+		   }
+		 }
+	   }
 	  private string _objectTableId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1457,6 +1473,70 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowedinAutomationConditions",OldValue=_allowedinAutomationConditions,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _allowedinAutomationConditions=value;
+		   }
+		 }
+	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
+		   }
+		 }
+	   }
+	  private string _fullNameTextCodeLocalDefaultText ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FullNameTextCodeLocalDefaultText  
+	   {
+	     get { return _fullNameTextCodeLocalDefaultText; }
+		 set
+		 {
+		   if(_fullNameTextCodeLocalDefaultText != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeLocalDefaultText",OldValue=_fullNameTextCodeLocalDefaultText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fullNameTextCodeLocalDefaultText=value;
+		   }
+		 }
+	   }
+	  private string _objectTable_LookUpTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTable_LookUpTableName  
+	   {
+	     get { return _objectTable_LookUpTableName; }
+		 set
+		 {
+		   if(_objectTable_LookUpTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTable_LookUpTableName",OldValue=_objectTable_LookUpTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTable_LookUpTableName=value;
+		   }
+		 }
+	   }
+	  private string _objectTable_MultiTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTable_MultiTableName  
+	   {
+	     get { return _objectTable_MultiTableName; }
+		 set
+		 {
+		   if(_objectTable_MultiTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTable_MultiTableName",OldValue=_objectTable_MultiTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTable_MultiTableName=value;
 		   }
 		 }
 	   }
@@ -1521,6 +1601,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortNameTextCodeCode",OldValue=_shortNameTextCodeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _shortNameTextCodeCode=value;
+		   }
+		 }
+	   }
+	  private string _listTextCodeDefaultText ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ListTextCodeDefaultText  
+	   {
+	     get { return _listTextCodeDefaultText; }
+		 set
+		 {
+		   if(_listTextCodeDefaultText != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ListTextCodeDefaultText",OldValue=_listTextCodeDefaultText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _listTextCodeDefaultText=value;
+		   }
+		 }
+	   }
+	  private string _helpTextCodeDefaultText ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HelpTextCodeDefaultText  
+	   {
+	     get { return _helpTextCodeDefaultText; }
+		 set
+		 {
+		   if(_helpTextCodeDefaultText != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HelpTextCodeDefaultText",OldValue=_helpTextCodeDefaultText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _helpTextCodeDefaultText=value;
+		   }
+		 }
+	   }
+	  private string _shortNameTextCodeDefaultText ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShortNameTextCodeDefaultText  
+	   {
+	     get { return _shortNameTextCodeDefaultText; }
+		 set
+		 {
+		   if(_shortNameTextCodeDefaultText != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShortNameTextCodeDefaultText",OldValue=_shortNameTextCodeDefaultText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _shortNameTextCodeDefaultText=value;
 		   }
 		 }
 	   }
@@ -1794,6 +1922,86 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsListFilter",OldValue=_isListFilter,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isListFilter=value;
+		   }
+		 }
+	   }
+	  private string _dataTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DataTypeName  
+	   {
+	     get { return _dataTypeName; }
+		 set
+		 {
+		   if(_dataTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DataTypeName",OldValue=_dataTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _dataTypeName=value;
+		   }
+		 }
+	   }
+	  private bool _indexOrder ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IndexOrder  
+	   {
+	     get { return _indexOrder; }
+		 set
+		 {
+		   if(_indexOrder != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndexOrder",OldValue=_indexOrder,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _indexOrder=value;
+		   }
+		 }
+	   }
+	  private bool _inUse ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InUse  
+	   {
+	     get { return _inUse; }
+		 set
+		 {
+		   if(_inUse != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InUse",OldValue=_inUse,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _inUse=value;
+		   }
+		 }
+	   }
+	  private string _relatedEntities ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RelatedEntities  
+	   {
+	     get { return _relatedEntities; }
+		 set
+		 {
+		   if(_relatedEntities != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RelatedEntities",OldValue=_relatedEntities,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _relatedEntities=value;
+		   }
+		 }
+	   }
+	  private bool _isRelatedEntity ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsRelatedEntity  
+	   {
+	     get { return _isRelatedEntity; }
+		 set
+		 {
+		   if(_isRelatedEntity != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsRelatedEntity",OldValue=_isRelatedEntity,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isRelatedEntity=value;
 		   }
 		 }
 	   }

@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentUnassignedFieldQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentUnassignedField,ShipmentUnassignedFieldKeys<string>,ShipmentUnassignedFieldPM,ShipmentUnassignedFieldList,string>
+   public partial class ShipmentUnassignedFieldQueryService: BaseEntityQueryService<POCO.ShipmentUnassignedField,ShipmentUnassignedFieldKeys<string>,ShipmentUnassignedFieldPM,ShipmentUnassignedFieldList,string>
    {
-        public ShipmentUnassignedFieldQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentUnassignedFieldQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentUnassignedField>(context),new ShipmentUnassignedFieldDataMapping()) {}
+        public ShipmentUnassignedFieldQueryService(int tenant) : base(new Repository<POCO.ShipmentUnassignedField>(tenant),new ShipmentUnassignedFieldDataMapping()) {}
+        public ShipmentUnassignedFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentUnassignedField>(context),new ShipmentUnassignedFieldDataMapping()) {}
 		public  ShipmentUnassignedFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentUnassignedFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentUnassignedField,string> GetKeys(POCO.ShipmentUnassignedField entityPOCO) => new ShipmentUnassignedFieldKeys<string>() { Id = entityPOCO.Id,  };
    }

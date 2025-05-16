@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class BusinessHoursHolidayListQueryService  : BaseEntityListQueryService<BusinessHoursHolidayList,POCO.BusinessHoursHoliday,  BusinessHoursHolidayKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.BusinessHoursHoliday> contextEntity => (context as IAmitalCloudContext).BusinessHoursHolidays;
-		public BusinessHoursHolidayListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public BusinessHoursHolidayListQueryService(int tenant) : base(tenant) { }
         public BusinessHoursHolidayList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

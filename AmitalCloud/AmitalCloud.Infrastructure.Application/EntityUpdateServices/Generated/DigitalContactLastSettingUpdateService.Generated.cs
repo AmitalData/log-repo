@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DigitalContactLastSettingUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DigitalContactLastSetting,DigitalContactLastSettingPM,IEntityPM,DigitalContactLastSettingList,string>
+   public partial class DigitalContactLastSettingUpdateService:BaseEntityUpdateService<POCO.DigitalContactLastSetting,DigitalContactLastSettingPM,IEntityPM,DigitalContactLastSettingList,string>
    {
    			
-        public DigitalContactLastSettingUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DigitalContactLastSettingUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DigitalContactLastSettingDataMapping();
-            Repository = new Repository<POCO.DigitalContactLastSetting>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DigitalContactLastSetting>(mainContext);
         }
-        public DigitalContactLastSettingUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DigitalContactLastSettingUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DigitalContactLastSettingUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DigitalContactLastSettingDataMapping();
+            Repository = new Repository<POCO.DigitalContactLastSetting>(tenant);
+		}
+        public DigitalContactLastSettingUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DigitalContactLastSetting,string> GetKeys(DigitalContactLastSettingPM entityPM) => new DigitalContactLastSettingKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(DigitalContactLastSettingPM entityPM)
 		{

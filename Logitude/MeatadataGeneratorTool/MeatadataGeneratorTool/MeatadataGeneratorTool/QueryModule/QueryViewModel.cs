@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -403,6 +404,10 @@ namespace MeatadataGeneratorTool.QueryModule
             {
                 str.AppendLine("Default Text is Required");
             }
+            else if (ContainsHebrewCharacters(TextCode))
+            {
+                str.AppendLine("Text cannot contain Hebrew characters");
+            }
             if (string.IsNullOrEmpty(QueryGroupCode))
             {
                 str.AppendLine("Query Group Code is Required");
@@ -438,7 +443,10 @@ namespace MeatadataGeneratorTool.QueryModule
             //FirePropertyChanged("ErrorMessages");
         }
 
-     
+        private bool ContainsHebrewCharacters(string text)
+        {
+            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
+        }
 
         public ObservableCollection<QueryColumnsViewModel> queryColumnObsList;
         public ObservableCollection<QueryColumnsViewModel> QueryColumnObsList

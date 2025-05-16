@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class TenantLoginPolicyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.TenantLoginPolicy,TenantLoginPolicyPM,IEntityPM,TenantLoginPolicyList,int>
+   public partial class TenantLoginPolicyUpdateService:BaseEntityUpdateService<POCO.TenantLoginPolicy,TenantLoginPolicyPM,IEntityPM,TenantLoginPolicyList,int>
    {
    			
-        public TenantLoginPolicyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public TenantLoginPolicyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new TenantLoginPolicyDataMapping();
-            Repository = new Repository<POCO.TenantLoginPolicy>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.TenantLoginPolicy>(mainContext);
         }
-        public TenantLoginPolicyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public TenantLoginPolicyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public TenantLoginPolicyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new TenantLoginPolicyDataMapping();
+            Repository = new Repository<POCO.TenantLoginPolicy>(tenant);
+		}
+        public TenantLoginPolicyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.TenantLoginPolicy,int> GetKeys(TenantLoginPolicyPM entityPM) => new TenantLoginPolicyKeys<int>() { Tenant = entityPM.Tenant };
 protected override void FillDefaultValuesOnCreate(TenantLoginPolicyPM entityPM)
 		{

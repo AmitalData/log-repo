@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -49,7 +49,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_internal = entity.Internal;
 		_advancedCondition = entity.AdvancedCondition;
 		_triggerFieldCode = entity.TriggerFieldCode;
-		objectTableRuleFields = entity.ObjectTableRuleFields != null ? entity.ObjectTableRuleFields.Select(a=>new ObjectTableRuleFieldPM(a)).ToList() : null;
+		//objectTableRuleFields = entity.ObjectTableRuleFields != null ? entity.ObjectTableRuleFields.Select(a=>new ObjectTableRuleFieldPM(a)).ToList() : null;
 		ruleConditionFields = entity.RuleConditionFields != null ? entity.RuleConditionFields.Select(a=>new RuleConditionFieldPM(a)).ToList() : null;
    }
    #endregion Constructors
@@ -429,6 +429,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedRuleConditionFields = value; }
 	    }
+	  private string _ruleTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RuleTypeName  
+	   {
+	     get { return _ruleTypeName; }
+		 set
+		 {
+		   if(_ruleTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RuleTypeName",OldValue=_ruleTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _ruleTypeName=value;
+		   }
+		 }
+	   }
+	  private bool _isCreatedFromSystemRule ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCreatedFromSystemRule  
+	   {
+	     get { return _isCreatedFromSystemRule; }
+		 set
+		 {
+		   if(_isCreatedFromSystemRule != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCreatedFromSystemRule",OldValue=_isCreatedFromSystemRule,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isCreatedFromSystemRule=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

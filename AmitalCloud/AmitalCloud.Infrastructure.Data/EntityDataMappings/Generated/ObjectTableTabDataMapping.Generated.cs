@@ -13,7 +13,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Domain.Enums;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 
@@ -40,7 +40,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ScreenCode, 
 	         OriginalTabCode, 
 	         HideTabNameInScreen, 
-	         Islocked,	      }
+	         IsLocked,	      }
 	      public enum PMPropertyNames
           { 
 		     None,  
@@ -60,7 +60,11 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         ScreenCode, 
 	         OriginalTabCode, 
 	         HideTabNameInScreen, 
-	         Islocked,	      }
+	         IsLocked, 
+	         TabNameTextCodeDefaultText, 
+	         Name, 
+	         ObjectTableName, 
+	         ScreenName,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ObjectTableTabPM entityPM, POCO.ObjectTableTab entityPOCO)
@@ -80,7 +84,7 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ScreenCode)) { entityPOCO.ScreenCode = entityPM.ScreenCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginalTabCode)) { entityPOCO.OriginalTabCode = entityPM.OriginalTabCode;}
 							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HideTabNameInScreen)) { entityPOCO.HideTabNameInScreen = entityPM.HideTabNameInScreen;}
-							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Islocked)) { entityPOCO.Islocked = entityPM.Islocked;}
+							if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLocked)) { entityPOCO.IsLocked = entityPM.IsLocked;}
 					}
 		public void POCOToPM(ObjectTableTabPM entityPM, POCO.ObjectTableTab entityPOCO)
         {
@@ -148,9 +152,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
 					entityPM.HideTabNameInScreen = entityPOCO.HideTabNameInScreen;
             }
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Islocked))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsLocked))
             {
-					entityPM.Islocked = entityPOCO.Islocked;
+					entityPM.IsLocked = entityPOCO.IsLocked;
             }
 		}
 		public void PMToOldPM(ObjectTableTabPM entityPM, ObjectTableTabPM oldEntityPM)
@@ -216,9 +220,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
             {
                 oldEntityPM.HideTabNameInScreen = entityPM.HideTabNameInScreen;
             }
-						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Islocked))
+						if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLocked))
             {
-                oldEntityPM.Islocked = entityPM.Islocked;
+                oldEntityPM.IsLocked = entityPM.IsLocked;
             }
 					}
 		public void POCOToList(POCO.ObjectTableTab entityPOCO, ObjectTableTabList entityList)

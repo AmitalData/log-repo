@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentDigitalFieldQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentDigitalField,ShipmentDigitalFieldKeys<string>,ShipmentDigitalFieldPM,ShipmentDigitalFieldList,string>
+   public partial class ShipmentDigitalFieldQueryService: BaseEntityQueryService<POCO.ShipmentDigitalField,ShipmentDigitalFieldKeys<string>,ShipmentDigitalFieldPM,ShipmentDigitalFieldList,string>
    {
-        public ShipmentDigitalFieldQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentDigitalFieldQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentDigitalField>(context),new ShipmentDigitalFieldDataMapping()) {}
+        public ShipmentDigitalFieldQueryService(int tenant) : base(new Repository<POCO.ShipmentDigitalField>(tenant),new ShipmentDigitalFieldDataMapping()) {}
+        public ShipmentDigitalFieldQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentDigitalField>(context),new ShipmentDigitalFieldDataMapping()) {}
 		public  ShipmentDigitalFieldPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentDigitalFieldKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentDigitalField,string> GetKeys(POCO.ShipmentDigitalField entityPOCO) => new ShipmentDigitalFieldKeys<string>() { Id = entityPOCO.Id,  };
    }

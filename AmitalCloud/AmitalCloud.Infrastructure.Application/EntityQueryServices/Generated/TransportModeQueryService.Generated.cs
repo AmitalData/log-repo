@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class TransportModeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.TransportMode,TransportModeKeys<string>,TransportModePM,TransportModeList,string>
+   public partial class TransportModeQueryService: BaseEntityQueryService<POCO.TransportMode,TransportModeKeys<string>,TransportModePM,TransportModeList,string>
    {
-        public TransportModeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public TransportModeQueryService(int tenant) : base(new Repository<POCO.TransportMode>(tenant),new TransportModeDataMapping()) {}
         public TransportModeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.TransportMode>(context),new TransportModeDataMapping()) {}
 		public  TransportModePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new TransportModeKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.TransportMode,string> GetKeys(POCO.TransportMode entityPOCO) => new TransportModeKeys<string>() { Id = entityPOCO.Id,  };

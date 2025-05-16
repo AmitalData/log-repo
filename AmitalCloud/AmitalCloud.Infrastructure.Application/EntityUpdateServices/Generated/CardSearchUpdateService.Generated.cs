@@ -9,36 +9,35 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
-using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
-using System;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CardSearchUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CardSearch,CardSearchPM,IEntityPM,CardSearchList,int>
+   public partial class CardSearchUpdateService:BaseEntityUpdateService<POCO.CardSearch,CardSearchPM,IEntityPM,CardSearchList,int>
    {
    			
-        public CardSearchUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CardSearchUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CardSearchDataMapping();
-            Repository = new Repository<POCO.CardSearch>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CardSearch>(mainContext);
         }
-        public CardSearchUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CardSearchUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CardSearchUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CardSearchDataMapping();
+            Repository = new Repository<POCO.CardSearch>(tenant);
+		}
+        public CardSearchUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CardSearch,int> GetKeys(CardSearchPM entityPM) => new CardSearchKeys<int>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(CardSearchPM entityPM)
 		{
-			entityPM.Id =Convert.ToInt32( IdCounter.GetNumber("CardSearch", entityPM.Tenant)); 
 		}
 		protected override void FillDefaultValuesOnUpdate(CardSearchPM entityPM)
         {       

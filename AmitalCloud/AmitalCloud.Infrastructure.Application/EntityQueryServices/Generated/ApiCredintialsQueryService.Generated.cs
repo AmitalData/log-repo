@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ApiCredintialsQueryService: BaseEntityQueryService<IGlobalContext,POCO.ApiCredintials,ApiCredintialsKeys<string>,ApiCredintialsPM,ApiCredintialsList,string>
+   public partial class ApiCredintialsQueryService: BaseEntityQueryService<POCO.ApiCredintials,ApiCredintialsKeys<string>,ApiCredintialsPM,ApiCredintialsList,string>
    {
-        public ApiCredintialsQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public ApiCredintialsQueryService(int tenant) : base(new Repository<POCO.ApiCredintials>(tenant),new ApiCredintialsDataMapping()) {}
         public ApiCredintialsQueryService(IGlobalContext context) : base(new Repository<POCO.ApiCredintials>(context),new ApiCredintialsDataMapping()) {}
 		public  ApiCredintialsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ApiCredintialsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ApiCredintials,string> GetKeys(POCO.ApiCredintials entityPOCO) => new ApiCredintialsKeys<string>() { Id = entityPOCO.Id,  };

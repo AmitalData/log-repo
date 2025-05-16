@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -102,12 +102,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public string EmailAutomationFailedXml  { get; set; }
        [DataMember]
        public int ExecutionTime  { get; set; }
-
-       [Key]
        [DataMember]
        public string FollowUpAutomationFailedXml  { get; set; }
-
-       [Key]
        [DataMember]
        public string SetSLAAutomationFailedXml  { get; set; }
        [DataMember]

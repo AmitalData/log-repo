@@ -9,31 +9,33 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class ShipmentDigitalFieldUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.ShipmentDigitalField,ShipmentDigitalFieldPM,IEntityPM,ShipmentDigitalFieldList,string>
+   public partial class ShipmentDigitalFieldUpdateService:BaseEntityUpdateService<POCO.ShipmentDigitalField,ShipmentDigitalFieldPM,IEntityPM,ShipmentDigitalFieldList,string>
    {
    			
-        public ShipmentDigitalFieldUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public ShipmentDigitalFieldUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new ShipmentDigitalFieldDataMapping();
-            Repository = new Repository<POCO.ShipmentDigitalField>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.ShipmentDigitalField>(mainContext);
         }
-        public ShipmentDigitalFieldUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public ShipmentDigitalFieldUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public ShipmentDigitalFieldUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new ShipmentDigitalFieldDataMapping();
+            Repository = new Repository<POCO.ShipmentDigitalField>(tenant);
+		}
+        public ShipmentDigitalFieldUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.ShipmentDigitalField,string> GetKeys(ShipmentDigitalFieldPM entityPM) => new ShipmentDigitalFieldKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(ShipmentDigitalFieldPM entityPM)
 		{

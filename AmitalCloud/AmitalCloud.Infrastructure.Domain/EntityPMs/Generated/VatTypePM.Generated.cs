@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -158,6 +158,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalName",OldValue=_localName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _localName=value;
+		   }
+		 }
+	   }
+	  private string _computedLocalName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComputedLocalName  
+	   {
+	     get { return _computedLocalName; }
+		 set
+		 {
+		   if(_computedLocalName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _computedLocalName=value;
 		   }
 		 }
 	   }
@@ -323,6 +339,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedVatTypeGroups = value; }
 	    }
+	  private double _newEntityPercentage ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double NewEntityPercentage  
+	   {
+	     get { return _newEntityPercentage; }
+		 set
+		 {
+		   if(_newEntityPercentage != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewEntityPercentage",OldValue=_newEntityPercentage,NewValue=value,PropertyType="double"};
+		    NotifyPropertyChanged(values);
+		   _newEntityPercentage=value;
+		   }
+		 }
+	   }
+	  private DateTime _newEntityPercentageDate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime NewEntityPercentageDate  
+	   {
+	     get { return _newEntityPercentageDate; }
+		 set
+		 {
+		   if(_newEntityPercentageDate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NewEntityPercentageDate",OldValue=_newEntityPercentageDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   _newEntityPercentageDate=value;
+		   }
+		 }
+	   }
 	  private double? _recognizedPercentage ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -9,6 +9,10 @@
   ObjectTablePlural="&quot;Regimen Fiscals&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Regimen Fiscal&quot;"
-  Code="&quot;70a5&quot;"
+  Code="&quot;e2ff&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -56,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;e204&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -87,6 +92,7 @@
     SystemMaxLength="3"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -130,6 +136,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -159,6 +166,7 @@
     SystemMaxLength="200"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -202,6 +210,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -231,6 +240,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -274,6 +284,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -337,7 +348,7 @@
       SearchFields="&quot;606,Arrendamiento&quot;" />
     <Record
       Code="&quot;607&quot;"
-      Name="&quot;Régimen de Enajenación o Adquisición de Bienes&quot;"
+      Name="&quot;Regimen de Enajenación o Adquisición de Bienes&quot;"
       SearchFields="&quot;607,Régimen de Enajenación o Adquisición de Bienes&quot;" />
     <Record
       Code="&quot;608&quot;"
@@ -349,7 +360,7 @@
       SearchFields="&quot;610,Residentes en el Extranjero sin Establecimiento Permanente en México&quot;" />
     <Record
       Code="&quot;611&quot;"
-      Name="&quot;Ingresos por Dividendos (socios y accionistas)&quot;"
+      Name="&quot;Ingresos por Dividendos_socios y accionistas&quot;"
       SearchFields="&quot;611,Ingresos por Dividendos (socios y accionistas)&quot;" />
     <Record
       Code="&quot;612&quot;"
@@ -388,11 +399,11 @@
       Code="&quot;624&quot;"
       SearchFields="&quot;624,Coordinados&quot;" />
     <Record
-      Name="&quot;Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas&quot;"
+      Name="&quot;Regimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas&quot;"
       Code="&quot;625&quot;"
       SearchFields="&quot;625,Régimen de las Actividades Empresariales con ingresos a través de Plataformas Tecnológicas&quot;" />
     <Record
-      Name="&quot;Régimen Simplificado de Confianza&quot;"
+      Name="&quot;Regimen Simplificado de Confianza&quot;"
       Code="&quot;626&quot;"
       SearchFields="&quot;626,Régimen Simplificado de Confianza&quot;" />
   </Records>

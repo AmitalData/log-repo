@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<SignStation> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SignStation> iQueryable)
+		private IQueryable<SignStation> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SignStation> iQueryable,int tenant)
         {
 			throw new NotImplementedException();
 		}

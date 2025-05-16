@@ -217,7 +217,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var ac = new AccountBalanceByDateCodeService(null, param.Tenant, param.GLAccountId, null);
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
                 
-                ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate,
+                ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.AccountingDate, param.accoutingDate,
                     false,
                     param.includeAccoutingDateLTransaction,
                     

@@ -461,7 +461,7 @@
       SearchFields="&quot;AC,Accounting Partner&quot;" />
     <Record
       Id="&quot;SC&quot;"
-      Name="&quot;Shipper-Consignee&quot;"
+      Name="&quot;Shipper_Consignee&quot;"
       SearchFields="&quot;SC,Shipper-Consignee&quot;" />
   </Records>
   <DataContracts />

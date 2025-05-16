@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Invoice.Domain.Interfaces;
-using AmitalCloud.Invoice.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -26,7 +26,7 @@ namespace AmitalCloud.Invoice.Domain.EntityPMs
    public partial class ARInvoiceStatusPM : BaseEntityPM   {
    #region Constructors
    public ARInvoiceStatusPM() : base() {} 
-   public ARInvoiceStatusPM(ARInvoiceStatus entity) : base()
+   public ARInvoiceStatusPM(POCO.ARInvoiceStatus entity) : base()
    {
 		_code = entity.Code;
 		_name = entity.Name;

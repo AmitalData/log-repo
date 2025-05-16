@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class GeneralLockQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.GeneralLock,GeneralLockKeys<string>,GeneralLockPM,GeneralLockList,string>
+   public partial class GeneralLockQueryService: BaseEntityQueryService<POCO.GeneralLock,GeneralLockKeys<string>,GeneralLockPM,GeneralLockList,string>
    {
-        public GeneralLockQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public GeneralLockQueryService(int tenant) : base(new Repository<POCO.GeneralLock>(tenant),new GeneralLockDataMapping()) {}
         public GeneralLockQueryService(IAmitalCloudContext context) : base(new Repository<POCO.GeneralLock>(context),new GeneralLockDataMapping()) {}
 		public  GeneralLockPM GetSingle(int tenant, string generalkey,bool getComposition, bool getFromCache) => base.GetSingle(new GeneralLockKeys<string>(){ Tenant = tenant, GeneralKey = generalkey }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.GeneralLock,string> GetKeys(POCO.GeneralLock entityPOCO) => new GeneralLockKeys<string>() { Tenant = entityPOCO.Tenant, GeneralKey = entityPOCO.GeneralKey,  };

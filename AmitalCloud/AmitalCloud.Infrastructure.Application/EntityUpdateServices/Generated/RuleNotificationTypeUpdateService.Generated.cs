@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class RuleNotificationTypeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.RuleNotificationType,RuleNotificationTypePM,IEntityPM,RuleNotificationTypeList,string>
+   public partial class RuleNotificationTypeUpdateService:BaseEntityUpdateService<POCO.RuleNotificationType,RuleNotificationTypePM,IEntityPM,RuleNotificationTypeList,string>
    {
    			
-        public RuleNotificationTypeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public RuleNotificationTypeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new RuleNotificationTypeDataMapping();
-            Repository = new Repository<POCO.RuleNotificationType>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.RuleNotificationType>(mainContext);
         }
-        public RuleNotificationTypeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public RuleNotificationTypeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public RuleNotificationTypeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new RuleNotificationTypeDataMapping();
+            Repository = new Repository<POCO.RuleNotificationType>(tenant);
+		}
+        public RuleNotificationTypeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.RuleNotificationType,string> GetKeys(RuleNotificationTypePM entityPM) => new RuleNotificationTypeKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(RuleNotificationTypePM entityPM)
 		{

@@ -363,7 +363,7 @@ namespace Logitude.Accounting.BL.CoreBL
              {
                  Tenant = groupByAccountCurrency.Key.Tenant,
                  AccountId = groupByAccountCurrency.Key.AccountId,
-                 DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
+                 DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
                  CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
                  Year = groupByAccountCurrency.Key.Year,
@@ -485,7 +485,7 @@ namespace Logitude.Accounting.BL.CoreBL
              {
                  Tenant = groupByAccountCurrency.Key.Tenant,
                  AccountId = groupByAccountCurrency.Key.AccountId,
-                 DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
+                 DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
                  CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
                  Year = groupByAccountCurrency.Key.Year,
@@ -591,7 +591,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             //eyal : While Insert GLAccount there is connect to Control account;
-            var myConnectedControlGLAccountTotalByMonthsAccountingdate = ControlGLAccountTotalByMonths.Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate);
+            var myConnectedControlGLAccountTotalByMonthsAccountingdate = ControlGLAccountTotalByMonths.Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate);
 
 
             CheckNoSameAccIdJoinTotalAndControlTotal();

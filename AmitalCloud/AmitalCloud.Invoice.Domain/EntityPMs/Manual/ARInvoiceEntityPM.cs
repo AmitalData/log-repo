@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Invoice.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Model.EntityClasses;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Invoice.Domain.EntityPMs

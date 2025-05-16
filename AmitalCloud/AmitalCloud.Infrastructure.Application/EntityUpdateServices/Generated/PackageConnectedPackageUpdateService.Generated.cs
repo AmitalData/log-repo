@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class PackageConnectedPackageUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.PackageConnectedPackage,PackageConnectedPackagePM,PackagePM,PackageConnectedPackageList,string>
+   public partial class PackageConnectedPackageUpdateService:BaseEntityUpdateService<POCO.PackageConnectedPackage,PackageConnectedPackagePM,PackagePM,PackageConnectedPackageList,string>
    {
    			
-        public PackageConnectedPackageUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public PackageConnectedPackageUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new PackageConnectedPackageDataMapping();
-            Repository = new Repository<POCO.PackageConnectedPackage>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.PackageConnectedPackage>(mainContext);
         }
-        public PackageConnectedPackageUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public PackageConnectedPackageUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public PackageConnectedPackageUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new PackageConnectedPackageDataMapping();
+            Repository = new Repository<POCO.PackageConnectedPackage>(tenant);
+		}
+        public PackageConnectedPackageUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.PackageConnectedPackage,string> GetKeys(PackageConnectedPackagePM entityPM) => new PackageConnectedPackageKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(PackageConnectedPackagePM entityPM)
 		{

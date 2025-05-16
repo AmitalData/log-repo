@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -37,7 +37,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
           LastMappingDateTime  = entity.LastMappingDateTime;
           UpdateDateTime  = entity.UpdateDateTime;
           StatusTypeCode  = entity.StatusTypeCode;
-            StatusType  = default;
+            StatusTypeName  = default;
           IsExportActivated  = entity.IsExportActivated;
           IsCustomsActivated  = entity.IsCustomsActivated;
        }
@@ -74,7 +74,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string StatusTypeCode  { get; set; }
        [DataMember]
-       public string StatusType  { get; set; }
+       public string StatusTypeName  { get; set; }
        [DataMember]
        public bool IsExportActivated  { get; set; }
        [DataMember]

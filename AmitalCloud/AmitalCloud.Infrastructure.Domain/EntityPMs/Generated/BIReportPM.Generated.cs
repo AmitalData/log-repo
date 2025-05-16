@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -300,6 +300,70 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _bireportfolder; } 
 		set { _bireportfolder = value; }
 		}
+	  private string _createdByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreatedByUserName  
+	   {
+	     get { return _createdByUserName; }
+		 set
+		 {
+		   if(_createdByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreatedByUserName",OldValue=_createdByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _createdByUserName=value;
+		   }
+		 }
+	   }
+	  private string _updatedByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	     get { return _updatedByUserName; }
+		 set
+		 {
+		   if(_updatedByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=_updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _updatedByUserName=value;
+		   }
+		 }
+	   }
+	  private DateTime? _lastRunDate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? LastRunDate  
+	   {
+	     get { return _lastRunDate; }
+		 set
+		 {
+		   if(_lastRunDate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunDate",OldValue=_lastRunDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   _lastRunDate=value;
+		   }
+		 }
+	   }
+	  private string _lastRunByUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LastRunByUserName  
+	   {
+	     get { return _lastRunByUserName; }
+		 set
+		 {
+		   if(_lastRunByUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LastRunByUserName",OldValue=_lastRunByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _lastRunByUserName=value;
+		   }
+		 }
+	   }
 	  private string _factTableName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -340,6 +404,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _lastrundetail; } 
 		set { _lastrundetail = value; }
 		}
+	  private bool _availableForScheduling ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AvailableForScheduling  
+	   {
+	     get { return _availableForScheduling; }
+		 set
+		 {
+		   if(_availableForScheduling != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AvailableForScheduling",OldValue=_availableForScheduling,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _availableForScheduling=value;
+		   }
+		 }
+	   }
 	 }
 #endregion Properties
 }

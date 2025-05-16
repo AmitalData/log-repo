@@ -44,7 +44,7 @@
                     <!-- User -->
                     <td style="width: 50px;" class="Label">User:</td>
                     <td style="width: 180px;">
-                        <LogLov [NoObjectField]="true"
+                        <LogLov [ShowInActive]="true" [NoObjectField]="true"
                                 [ObjectFieldName]="'UserId'"
                                 [SelectedValue]="UserId"
                                 [DataContext]="DataContext"
@@ -54,7 +54,7 @@
 
                     <td style="width: 50px;" class="Label">Event:</td>
                     <td style="width: 180px;">
-                        <LogLov [NoObjectField]="true"
+                        <LogLov [ShowInActive]="true" [NoObjectField]="true"
                                 [ObjectFieldName]="'EventTypeId'"
                                 [SelectedValue]="EventTypeId"
                                 [DataContext]="DataContext"

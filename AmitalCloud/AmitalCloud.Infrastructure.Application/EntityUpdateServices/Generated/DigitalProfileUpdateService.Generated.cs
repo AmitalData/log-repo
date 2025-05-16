@@ -9,40 +9,40 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DigitalProfileUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.DigitalProfile,DigitalProfilePM,IEntityPM,DigitalProfileList,string>
+   public partial class DigitalProfileUpdateService:BaseEntityUpdateService<POCO.DigitalProfile,DigitalProfilePM,IEntityPM,DigitalProfileList,string>
    {
    			
-        public DigitalProfileUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DigitalProfileUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DigitalProfileDataMapping();
-            Repository = new Repository<POCO.DigitalProfile>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.DigitalProfile>(mainContext);
         }
-        public DigitalProfileUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DigitalProfileUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DigitalProfileUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DigitalProfileDataMapping();
+            Repository = new Repository<POCO.DigitalProfile>(tenant);
+		}
+        public DigitalProfileUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.DigitalProfile,string> GetKeys(DigitalProfilePM entityPM) => new DigitalProfileKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(DigitalProfilePM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("DigitalProfile", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
 		}
 		protected override void FillDefaultValuesOnUpdate(DigitalProfilePM entityPM)
         {       

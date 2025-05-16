@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -372,6 +372,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsHouse",OldValue=_isHouse,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   _isHouse=value;
+		   }
+		 }
+	   }
+	  private string _objectTableName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ObjectTableName  
+	   {
+	     get { return _objectTableName; }
+		 set
+		 {
+		   if(_objectTableName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ObjectTableName",OldValue=_objectTableName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _objectTableName=value;
 		   }
 		 }
 	   }
@@ -979,6 +995,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OnPrintPopulateDateFieldName",OldValue=_onPrintPopulateDateFieldName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _onPrintPopulateDateFieldName=value;
+		   }
+		 }
+	   }
+	  private string _copyName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CopyName  
+	   {
+	     get { return _copyName; }
+		 set
+		 {
+		   if(_copyName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CopyName",OldValue=_copyName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _copyName=value;
 		   }
 		 }
 	   }

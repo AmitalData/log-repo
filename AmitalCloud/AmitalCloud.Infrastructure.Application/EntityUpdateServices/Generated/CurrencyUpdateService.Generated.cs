@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CurrencyUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Currency,CurrencyPM,IEntityPM,CurrencyList,string>
+   public partial class CurrencyUpdateService:BaseEntityUpdateService<POCO.Currency,CurrencyPM,IEntityPM,CurrencyList,string>
    {
    			
-        public CurrencyUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CurrencyUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CurrencyDataMapping();
-            Repository = new Repository<POCO.Currency>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Currency>(mainContext);
         }
-        public CurrencyUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CurrencyUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CurrencyUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CurrencyDataMapping();
+            Repository = new Repository<POCO.Currency>(tenant);
+		}
+        public CurrencyUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Currency,string> GetKeys(CurrencyPM entityPM) => new CurrencyKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CurrencyPM entityPM)
 		{

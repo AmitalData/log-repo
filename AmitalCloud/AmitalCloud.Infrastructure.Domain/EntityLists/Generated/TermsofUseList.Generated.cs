@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -24,7 +24,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        public TermsofUseList() : base() {}
        public TermsofUseList(POCO.TermsofUse entity) : base()
        {
-          DropVersion  = entity.DropVersion;
           Date  = entity.Date;
           VersionNumber  = entity.VersionNumber;
           Tenant  = entity.Tenant;
@@ -37,8 +36,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        #endregion Constructors
        #region Properties
           [DataMember]
-       public int? DropVersion  { get; set; }
-       [DataMember]
        public DateTime Date  { get; set; }
        [DataMember]
        public int? VersionNumber  { get; set; }

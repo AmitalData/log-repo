@@ -87,5 +87,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
 		public string RelatedEntity { get; set; }
 		public string ThisKey { get; set; }
 		public string RelatedKey { get; set; }
-	}
+        public bool ShowFastSearch { get; set; }
+    }
 }

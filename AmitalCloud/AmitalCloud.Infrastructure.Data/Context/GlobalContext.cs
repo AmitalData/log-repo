@@ -1,13 +1,13 @@
+using AmitalCloud.Infrastructure.Domain.DataContracts;
+using AmitalCloud.Infrastructure.Model.EntityClasses;
+using AmitalCloud.Infrastructure.Model.Enums;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using AmitalCloud.Infrastructure.Data.BaseClasses;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityMapping;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using AmitalCloud.Infrastructure.Domain.Enums;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+using AmitalCloud.Infrastructure.Data.DBHelpers;
 namespace AmitalCloud.Infrastructure.Data.Context
 {
     public class GlobalContext : DbContextBase, IGlobalContext
@@ -32,7 +32,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
         }
         public static IGlobalContext OverrideIGlobalContextFake { get; set; }
 
-        internal static IGlobalContext GetContext(int? ConnectionLifetime = null, bool? suppressPool = null)
+        public static IGlobalContext GetContext(int? ConnectionLifetime = null, bool? suppressPool = null)
         {
             if (OverrideIGlobalContextFake != null)
             {
@@ -47,7 +47,7 @@ namespace AmitalCloud.Infrastructure.Data.Context
             {
                 dbConnectionInfo = ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
             }
-            dbConnectionInfo = DBHelpers.DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
+            dbConnectionInfo = DbContextBaseUtil.GetConnectionStringWithAmitalNetRole(dbConnectionInfo);
             if (AmitalCloudSettings.DatabaseManagementSystem == "oracle")
             {
                 return new GlobalContext(DatabaseInitializer.GetConnection(dbConnectionInfo, ConnectionLifetime, suppressPool));

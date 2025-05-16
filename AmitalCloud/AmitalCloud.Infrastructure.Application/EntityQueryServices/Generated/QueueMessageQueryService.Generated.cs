@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class QueueMessageQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.QueueMessage,QueueMessageKeys<string>,QueueMessagePM,QueueMessageList,string>
+   public partial class QueueMessageQueryService: BaseEntityQueryService<POCO.QueueMessage,QueueMessageKeys<string>,QueueMessagePM,QueueMessageList,string>
    {
-        public QueueMessageQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public QueueMessageQueryService(int tenant) : base(new Repository<POCO.QueueMessage>(tenant),new QueueMessageDataMapping()) {}
         public QueueMessageQueryService(IAmitalCloudContext context) : base(new Repository<POCO.QueueMessage>(context),new QueueMessageDataMapping()) {}
 		public  QueueMessagePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new QueueMessageKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.QueueMessage,string> GetKeys(POCO.QueueMessage entityPOCO) => new QueueMessageKeys<string>() { Id = entityPOCO.Id,  };

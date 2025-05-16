@@ -183,6 +183,7 @@
     <Compile Include="Controllers\Generated\ListControllers\AccountingTransferTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\Generated\ListControllers\APPaymentStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\Generated\ListControllers\ARPaymentTransferStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\Generated\PMControllers\SATInterfaceSettingController.Generated.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

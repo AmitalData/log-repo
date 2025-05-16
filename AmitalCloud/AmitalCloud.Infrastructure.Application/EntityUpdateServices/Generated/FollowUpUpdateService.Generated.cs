@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FollowUpUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.FollowUp,FollowUpPM,IEntityPM,FollowUpList,string>
+   public partial class FollowUpUpdateService:BaseEntityUpdateService<POCO.FollowUp,FollowUpPM,IEntityPM,FollowUpList,string>
    {
    			
-        public FollowUpUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public FollowUpUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new FollowUpDataMapping();
-            Repository = new Repository<POCO.FollowUp>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.FollowUp>(mainContext);
         }
-        public FollowUpUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public FollowUpUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public FollowUpUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new FollowUpDataMapping();
+            Repository = new Repository<POCO.FollowUp>(tenant);
+		}
+        public FollowUpUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.FollowUp,string> GetKeys(FollowUpPM entityPM) => new FollowUpKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(FollowUpPM entityPM)
 		{

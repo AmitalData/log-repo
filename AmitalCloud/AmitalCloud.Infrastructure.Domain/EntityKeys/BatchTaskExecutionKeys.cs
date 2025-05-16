@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class BatchTaskExecutionKeys<T> : BaseEntityKeyFields<EntityPOCOs.BatchTaskExecution,T> 
+   public class BatchTaskExecutionKeys<T> : BaseEntityKeyFields<ENTITIES.BatchTaskExecution,T> 
    {
 		public BatchTaskExecutionKeys() : base() {}
         public BatchTaskExecutionKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Id.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "BatchTaskExecutionsPM";
-	  public override Expression<Func<EntityPOCOs.BatchTaskExecution, bool>> Predicate => a => a.Id == Id;
+	  public override Expression<Func<ENTITIES.BatchTaskExecution, bool>> Predicate => a => a.Id == Id;
    }
 }
 	 

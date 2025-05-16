@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -140,6 +140,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BusinessRoleId",OldValue=_businessRoleId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _businessRoleId=value;
+		   }
+		 }
+	   }
+	  private string _roleName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RoleName  
+	   {
+	     get { return _roleName; }
+		 set
+		 {
+		   if(_roleName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RoleName",OldValue=_roleName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _roleName=value;
 		   }
 		 }
 	   }

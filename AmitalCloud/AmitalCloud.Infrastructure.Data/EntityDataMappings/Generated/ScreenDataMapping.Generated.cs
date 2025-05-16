@@ -13,7 +13,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Domain.Enums;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 
@@ -58,7 +58,9 @@ namespace AmitalCloud.Infrastructure.Data.EntityDataMappings
 	         SortedType, 
 	         SearchFields, 
 	         RelatedScreenCode, 
-	         IsHeaderScreen,	      }
+	         IsHeaderScreen, 
+	         ObjectTableName, 
+	         UserTenant,	      }
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
 	    public void PMToPOCO(ScreenPM entityPM, POCO.Screen entityPOCO)

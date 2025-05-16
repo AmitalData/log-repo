@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class APInvoiceStatusQueryService: BaseEntityQueryService<IInvoiceContext,POCO.APInvoiceStatus,APInvoiceStatusKeys<string>,APInvoiceStatusPM,APInvoiceStatusList,string>
+   public partial class APInvoiceStatusQueryService: BaseEntityQueryService<POCO.APInvoiceStatus,APInvoiceStatusKeys<string>,APInvoiceStatusPM,APInvoiceStatusList,string>
    {
-        public APInvoiceStatusQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public APInvoiceStatusQueryService(IInvoiceContext context) : base(new Repository<POCO.APInvoiceStatus>(context),new APInvoiceStatusDataMapping()) {}
+        public APInvoiceStatusQueryService(int tenant) : base(new Repository<POCO.APInvoiceStatus>(tenant),new APInvoiceStatusDataMapping()) {}
+        public APInvoiceStatusQueryService(IAmitalCloudContext context) : base(new Repository<POCO.APInvoiceStatus>(context),new APInvoiceStatusDataMapping()) {}
 		public  APInvoiceStatusPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new APInvoiceStatusKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.APInvoiceStatus,string> GetKeys(POCO.APInvoiceStatus entityPOCO) => new APInvoiceStatusKeys<string>() { Code = entityPOCO.Code,  };
    }

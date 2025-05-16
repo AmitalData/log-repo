@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CustomTableQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CustomTable,CustomTableKeys<string>,CustomTablePM,CustomTableList,string>
+   public partial class CustomTableQueryService: BaseEntityQueryService<POCO.CustomTable,CustomTableKeys<string>,CustomTablePM,CustomTableList,string>
    {
-        public CustomTableQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CustomTableQueryService(int tenant) : base(new Repository<POCO.CustomTable>(tenant),new CustomTableDataMapping()) {}
         public CustomTableQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CustomTable>(context),new CustomTableDataMapping()) {}
 		public  CustomTablePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new CustomTableKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CustomTable,string> GetKeys(POCO.CustomTable entityPOCO) => new CustomTableKeys<string>() { Id = entityPOCO.Id,  };

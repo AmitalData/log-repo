@@ -1,9 +1,9 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,20 +11,21 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
 using System.Web;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 namespace AmitalCloud.Infrastructure.Data.Queries
 {
     public class ContactQuery
     {
         IRepository<Contact> repository;
         IAmitalCloudContext context;
- 
+
         public ContactQuery(int tenant)
         {
             context = AmitalCloudContext.GetContext(tenant);
             repository = new Repository<Contact>(context);
         }
         #region GetSingle ContactPM
-        private ContactPM GetContactPMFromCache(int tenant, string cacheKey, Expression<Func<ContactPM, bool>> predicate)
+        private ContactPM GetContactPMFromCache(int tenant, string cacheKey, Expression<Func<Contact, bool>> predicate)
         {
             ContactPM entity;
             if (HttpContext.Current != null)
@@ -32,7 +33,7 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 entity = (ContactPM)CacheManager.CacheWrapper.Get(cacheKey);
                 if (entity == null)
                 {
-                    entity = GetEntityPMWithPassword(tenant, predicate);
+                    entity = GetEntityPMWithPassword(predicate);
                     if (entity != null)
                     {
                         if (CacheManager.CacheWrapper.Get(cacheKey) == null)
@@ -44,22 +45,22 @@ namespace AmitalCloud.Infrastructure.Data.Queries
             }
             else
             {
-                entity = GetEntityPMWithPassword(tenant, predicate);
+                entity = GetEntityPMWithPassword(predicate);
             }
 
             return entity;
         }
         private IQueryable<ContactPM> GetContactPMQuery()
         => (from a in context.Contacts
-                    where a.UserType == "R"
-                    let contact = new ContactPM(a)
-                    {
-                        //ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                        //DontShowLocal = a.DontShowLocalLabels,
-                        ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
-                        //ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
-                    }
-                    select contact);
+            where a.UserType == "R"
+            let contact = new ContactPM(a)
+            {
+                //ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                //DontShowLocal = a.DontShowLocalLabels,
+                ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                //ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
+            }
+            select contact);
         private void GetContactPassword(ContactPM instance)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -81,28 +82,36 @@ namespace AmitalCloud.Infrastructure.Data.Queries
                 scope.Complete();
             }
         }
-        private ContactPM GetEntityPMWithPassword(int tenant, Expression<Func<ContactPM, bool>> predicate)
+        private ContactPM GetEntityPMWithPassword(Expression<Func<Contact, bool>> predicate)
         {
-            ContactPM entity = GetContactPMQuery().Where(predicate).FirstOrDefault();
-            if (entity == null)
-            {
-                tenant = 0;
-                entity = GetContactPMQuery().Where(predicate).FirstOrDefault();
-            }
+            Contact entity = context.Contacts.Where(predicate).FirstOrDefault();
             if (entity != null)
             {
-                GetContactPassword(entity);
+                ContactPM contactPM = new ContactPM(entity);
+                GetContactPassword(contactPM);
+                return contactPM;
             }
-
-            return entity;
+            else
+            {
+                return null;
+            }
         }
-        public ContactPM GetSingleContact(string email, int tenant) => GetEntityPMWithPassword(tenant, a => a.Email == email.ToLower() && a.Tenant == tenant);
-        public ContactPM GetContactByEmailOnly(string email, int tenant) => GetContactPMFromCache(tenant, $"ContactPM_({email}_{tenant})".ToLower(), a => a.Email == email && a.InActive == false && a.Tenant == tenant);
+        public ContactPM GetSingleContact(string email, int tenant) => GetEntityPMWithPassword(a => a.Email == email.ToLower() && a.Tenant == tenant);
+        public ContactPM GetContactByEmailOnly(string email, int tenant)
+        {
+            ContactPM contact = GetContactPMFromCache(tenant, $"ContactPM_({email}_{tenant})".ToLower(), a => a.Email == email && a.InActive == false && a.Tenant == tenant);
+            if (contact == null)
+            {
+                contact = GetContactPMFromCache(tenant, $"ContactPM_({email}_0)".ToLower(), a => a.Email == email && a.InActive == false && a.Tenant == 0);
+            }
+            return contact;
+        }
         public ContactPM GetSingleByEmail(string email, int tenant) => GetSingleContact(email, tenant);
         #endregion GetSingle ContactPM  
         public IQueryable<ContactList> GetContactListsByListIds(List<string> contactIds, int tenant)
-        => (from a in context.Contacts where contactIds.Contains(a.Id) && a.Tenant == tenant
-                                                    select new ContactList(a));
+        => (from a in context.Contacts
+            where contactIds.Contains(a.Id) && a.Tenant == tenant
+            select new ContactList(a));
 
     }
 }

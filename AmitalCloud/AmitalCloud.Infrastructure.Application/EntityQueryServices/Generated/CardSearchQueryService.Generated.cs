@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class CardSearchQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.CardSearch,CardSearchKeys<int>,CardSearchPM,CardSearchList,int>
+   public partial class CardSearchQueryService: BaseEntityQueryService<POCO.CardSearch,CardSearchKeys<int>,CardSearchPM,CardSearchList,int>
    {
-        public CardSearchQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public CardSearchQueryService(int tenant) : base(new Repository<POCO.CardSearch>(tenant),new CardSearchDataMapping()) {}
         public CardSearchQueryService(IAmitalCloudContext context) : base(new Repository<POCO.CardSearch>(context),new CardSearchDataMapping()) {}
 		public  CardSearchPM GetSingle(int id,bool getComposition, bool getFromCache) => base.GetSingle(new CardSearchKeys<int>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.CardSearch,int> GetKeys(POCO.CardSearch entityPOCO) => new CardSearchKeys<int>() { Id = entityPOCO.Id,  };

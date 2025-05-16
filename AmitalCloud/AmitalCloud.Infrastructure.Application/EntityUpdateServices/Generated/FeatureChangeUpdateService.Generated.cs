@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FeatureChangeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.FeatureChange,FeatureChangePM,IEntityPM,FeatureChangeList,string>
+   public partial class FeatureChangeUpdateService:BaseEntityUpdateService<POCO.FeatureChange,FeatureChangePM,IEntityPM,FeatureChangeList,string>
    {
    			
-        public FeatureChangeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public FeatureChangeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new FeatureChangeDataMapping();
-            Repository = new Repository<POCO.FeatureChange>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.FeatureChange>(mainContext);
         }
-        public FeatureChangeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public FeatureChangeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public FeatureChangeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new FeatureChangeDataMapping();
+            Repository = new Repository<POCO.FeatureChange>(tenant);
+		}
+        public FeatureChangeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.FeatureChange,string> GetKeys(FeatureChangePM entityPM) => new FeatureChangeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(FeatureChangePM entityPM)
 		{

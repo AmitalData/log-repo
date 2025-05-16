@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class AutomationHistoryUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.AutomationHistory,AutomationHistoryPM,IEntityPM,AutomationHistoryList,string>
+   public partial class AutomationHistoryUpdateService:BaseEntityUpdateService<POCO.AutomationHistory,AutomationHistoryPM,IEntityPM,AutomationHistoryList,string>
    {
    			
-        public AutomationHistoryUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public AutomationHistoryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AutomationHistoryDataMapping();
-            Repository = new Repository<POCO.AutomationHistory>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.AutomationHistory>(mainContext);
         }
-        public AutomationHistoryUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public AutomationHistoryUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public AutomationHistoryUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AutomationHistoryDataMapping();
+            Repository = new Repository<POCO.AutomationHistory>(tenant);
+		}
+        public AutomationHistoryUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AutomationHistory,string> GetKeys(AutomationHistoryPM entityPM) => new AutomationHistoryKeys<string>() { Version = entityPM.Version, AutomationsId = entityPM.AutomationsId };
 protected override void FillDefaultValuesOnCreate(AutomationHistoryPM entityPM)
 		{

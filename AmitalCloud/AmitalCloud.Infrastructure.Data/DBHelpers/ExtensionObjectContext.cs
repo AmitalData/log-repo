@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data.BaseClasses;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;

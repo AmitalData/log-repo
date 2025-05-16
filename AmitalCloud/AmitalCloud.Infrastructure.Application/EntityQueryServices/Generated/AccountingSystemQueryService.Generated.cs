@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class AccountingSystemQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.AccountingSystem,AccountingSystemKeys<string>,AccountingSystemPM,AccountingSystemList,string>
+   public partial class AccountingSystemQueryService: BaseEntityQueryService<POCO.AccountingSystem,AccountingSystemKeys<string>,AccountingSystemPM,AccountingSystemList,string>
    {
-        public AccountingSystemQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public AccountingSystemQueryService(int tenant) : base(new Repository<POCO.AccountingSystem>(tenant),new AccountingSystemDataMapping()) {}
         public AccountingSystemQueryService(IAmitalCloudContext context) : base(new Repository<POCO.AccountingSystem>(context),new AccountingSystemDataMapping()) {}
 		public  AccountingSystemPM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new AccountingSystemKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.AccountingSystem,string> GetKeys(POCO.AccountingSystem entityPOCO) => new AccountingSystemKeys<string>() { Code = entityPOCO.Code,  };

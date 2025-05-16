@@ -33,6 +33,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "1,עקרון סיווג מספר", 
                 Inactive = false, 
                 LocalName = "עקרון סיווג מספר", 
+                EnglishName = "Number Classification Principle", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -41,6 +42,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "10,שינוי בערך יצוא מוחזר", 
                 Inactive = false, 
                 LocalName = "שינוי בערך יצוא מוחזר", 
+                EnglishName = "Change in refunded export value", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -49,6 +51,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "11,סגירת שנה", 
                 Inactive = false, 
                 LocalName = "סגירת שנה", 
+                EnglishName = "Year Closing", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -57,6 +60,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "12,תיקון זיכוי מתביעה", 
                 Inactive = false, 
                 LocalName = "תיקון זיכוי מתביעה", 
+                EnglishName = "Correction credit from  claim", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -65,6 +69,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "13,תיקון מלאי בתביעה", 
                 Inactive = false, 
                 LocalName = "תיקון מלאי בתביעה", 
+                EnglishName = "Inventory correction in claim", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -73,6 +78,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "14,מלאי פתיחה לשנה סגורה", 
                 Inactive = false, 
                 LocalName = "מלאי פתיחה לשנה סגורה", 
+                EnglishName = "Opening inventory for closed year", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -81,6 +87,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "15,תיקון ניצול אשראי  לשנה סגורה", 
                 Inactive = false, 
                 LocalName = "תיקון ניצול אשראי  לשנה סגורה", 
+                EnglishName = "Correction of credit utilization for  closed year", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -89,6 +96,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "16,איפוס  עקב אי הגשת תביעה", 
                 Inactive = false, 
                 LocalName = "איפוס  עקב אי הגשת תביעה", 
+                EnglishName = "Reset due to failure to file a claim", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -97,6 +105,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "17,חישוב חודשי", 
                 Inactive = false, 
                 LocalName = "חישוב חודשי", 
+                EnglishName = "Monthly calculation", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -105,6 +114,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "18,תביעה חריגה", 
                 Inactive = false, 
                 LocalName = "תביעה חריגה", 
+                EnglishName = "Extraordinary claim", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -113,6 +123,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "19,תיקון תביעה חריגה", 
                 Inactive = false, 
                 LocalName = "תיקון תביעה חריגה", 
+                EnglishName = "Repair of exceptional claim", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -121,6 +132,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "2,הנחיות סיווג", 
                 Inactive = false, 
                 LocalName = "הנחיות סיווג", 
+                EnglishName = "Classification Guidelines", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -129,6 +141,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "20,שינוי אחוז ניכוי מס-הסבה", 
                 Inactive = false, 
                 LocalName = "שינוי אחוז ניכוי מס-הסבה", 
+                EnglishName = "Change in the percentage of the transfer tax deduction", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -137,6 +150,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "21,הסבות", 
                 Inactive = false, 
                 LocalName = "הסבות", 
+                EnglishName = "endorsements", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -145,6 +159,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "22,מס''ב שחזר", 
                 Inactive = false, 
                 LocalName = "מס''ב שחזר", 
+                EnglishName = "Masav returned", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -153,6 +168,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "23,שיק שחזר", 
                 Inactive = false, 
                 LocalName = "שיק שחזר", 
+                EnglishName = "Return check", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -161,6 +177,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "24,הכחשת עסקה", 
                 Inactive = false, 
                 LocalName = "הכחשת עסקה", 
+                EnglishName = "Denying transaction", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -169,6 +186,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "25,פירוט האסמכתא לתיקון", 
                 Inactive = false, 
                 LocalName = "פירוט האסמכתא לתיקון", 
+                EnglishName = "Reference details for correction", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -177,6 +195,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "3,לא התקיים אחד התנאים הבאים", 
                 Inactive = false, 
                 LocalName = "לא התקיים אחד התנאים הבאים", 
+                EnglishName = "One of the following conditions was not met", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -185,6 +204,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "4,כללי", 
                 Inactive = false, 
                 LocalName = "כללי", 
+                EnglishName = "general", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -193,6 +213,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "5,הפרשי קנסות", 
                 Inactive = false, 
                 LocalName = "הפרשי קנסות", 
+                EnglishName = "Fine Differences", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -201,6 +222,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "6,החזר יצוא מוחזר", 
                 Inactive = false, 
                 LocalName = "החזר יצוא מוחזר", 
+                EnglishName = "Returned export refund", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -209,6 +231,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "7,שינוי אחוז מס", 
                 Inactive = false, 
                 LocalName = "שינוי אחוז מס", 
+                EnglishName = "Change tax percentage", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -217,6 +240,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "8,שינוי במחזוריות", 
                 Inactive = false, 
                 LocalName = "שינוי במחזוריות", 
+                EnglishName = "Change in the cycle", 
 			});
 			 
             all.Add(new ClaimExplanationCodeDetails()
@@ -225,6 +249,7 @@ namespace Logitude.Customs.BL
                 SearchFields = "9,שינוי בערך יצוא", 
                 Inactive = false, 
                 LocalName = "שינוי בערך יצוא", 
+                EnglishName = "Change in export value", 
 			});
 			
             return all;
@@ -235,12 +260,13 @@ namespace Logitude.Customs.BL
 		    newPoco.Code = this.Code;  
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.Inactive = this.Inactive;  
-		    newPoco.LocalName = this.LocalName;   
+		    newPoco.LocalName = this.LocalName;  
+		    newPoco.EnglishName = this.EnglishName;   
         }
 
 		public string GetSearchFields(ClaimExplanationCode rec)
         {   
-           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",");
+           return String.Concat(rec.Code,",",rec.Inactive,",",rec.LocalName,",",rec.EnglishName,",");
         }
    }
 }

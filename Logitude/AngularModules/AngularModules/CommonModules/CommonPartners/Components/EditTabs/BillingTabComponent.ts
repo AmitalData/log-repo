@@ -16,7 +16,7 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     public ObjectTableName: string;
     public DataContext = this;
     public Profact4Enabled: boolean = false;
-
+     public IsBlockMessageVisible: boolean = false;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
@@ -24,14 +24,21 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
         this.ScreenCode = entityArgs.ObjectTableName + ".BillingTabScreen";
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.EntityPM = this.entityArgs.EntityPM;
-        this.LoadGeneratedComponents();
 
+        this.LoadGeneratedComponents();
+        this.SetFieldsEditability();
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
             this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
     }
+    SetFieldsEditability() {
+        if (this.EntityPM?.Card?.ExternalSystem == "UNIFREIGHT") {
+            this.IsBlockMessageVisible = true;
+            this.UIProperties.SetEnabled("IsAutonomy", "Card", false);
 
+        }
+    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null; 
     private Listen() {
@@ -143,4 +150,12 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
             this.EntityPM.SATForeignRFC = newValue;
         }
     }
+    get IsAutonomy() { return this.EntityPM?.Card?.IsAutonomy; }
+    set IsAutonomy(newValue: boolean) {
+        if (this.EntityPM?.Card != null && this.EntityPM?.Card?.IsAutonomy != newValue) {
+            this.EntityPM.Card.IsAutonomy = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }   
+
 }

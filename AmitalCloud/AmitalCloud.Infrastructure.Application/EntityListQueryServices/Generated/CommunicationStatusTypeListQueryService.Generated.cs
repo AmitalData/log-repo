@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class CommunicationStatusTypeListQueryService  : BaseEntityListQueryService<CommunicationStatusTypeList,POCO.CommunicationStatusType,  CommunicationStatusTypeKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.CommunicationStatusType> contextEntity => (context as IAmitalCloudContext).CommunicationStatusTypes;
-		public CommunicationStatusTypeListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public CommunicationStatusTypeListQueryService(int tenant) : base(tenant) { }
         public CommunicationStatusTypeList GetSingle(string code)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

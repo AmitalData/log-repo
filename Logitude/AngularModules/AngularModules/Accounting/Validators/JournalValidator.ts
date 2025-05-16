@@ -59,7 +59,13 @@ export class JournalValidator
                 }
                
                
-
+                if((line.ActionCode === '2' || line.ActionCode === '3') && isApprove && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
+                    const vendorValidator: VendorValidator = new VendorValidator();
+                    const noAddressToVendor = TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
+                    if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode)) {
+                        errors.push(noAddressToVendor);
+                    }
+                }
 
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
@@ -71,13 +77,7 @@ export class JournalValidator
                     }
                 }
 
-                if(line.ActionCode === '2' && isApprove && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
-                    const vendorValidator: VendorValidator = new VendorValidator();
-                    const noAddressToVendor = TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
-                    if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode)) {
-                        errors.push(noAddressToVendor);
-                    }
-                }
+              
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line

@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -284,6 +284,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _origincountry; } 
 		set { _origincountry = value; }
 		}
+	  private string _originCountryName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginCountryName  
+	   {
+	     get { return _originCountryName; }
+		 set
+		 {
+		   if(_originCountryName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryName",OldValue=_originCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _originCountryName=value;
+		   }
+		 }
+	   }
 	  private string _shipperId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -308,6 +324,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _shipper; } 
 		set { _shipper = value; }
 		}
+	  private string _shipperName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipperName  
+	   {
+	     get { return _shipperName; }
+		 set
+		 {
+		   if(_shipperName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperName",OldValue=_shipperName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _shipperName=value;
+		   }
+		 }
+	   }
 	  private double? _productValue ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -361,6 +393,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Quantity",OldValue=_quantity,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _quantity=value;
+		   }
+		 }
+	   }
+	  private string _productValueCurrencyCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ProductValueCurrencyCode  
+	   {
+	     get { return _productValueCurrencyCode; }
+		 set
+		 {
+		   if(_productValueCurrencyCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProductValueCurrencyCode",OldValue=_productValueCurrencyCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _productValueCurrencyCode=value;
 		   }
 		 }
 	   }

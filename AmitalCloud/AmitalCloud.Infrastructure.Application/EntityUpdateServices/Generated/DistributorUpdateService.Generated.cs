@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class DistributorUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.Distributor,DistributorPM,IEntityPM,DistributorList,string>
+   public partial class DistributorUpdateService:BaseEntityUpdateService<POCO.Distributor,DistributorPM,IEntityPM,DistributorList,string>
    {
    			
-        public DistributorUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public DistributorUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new DistributorDataMapping();
-            Repository = new Repository<POCO.Distributor>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.Distributor>(mainContext);
         }
-        public DistributorUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public DistributorUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public DistributorUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new DistributorDataMapping();
+            Repository = new Repository<POCO.Distributor>(tenant);
+		}
+        public DistributorUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.Distributor,string> GetKeys(DistributorPM entityPM) => new DistributorKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(DistributorPM entityPM)
 		{

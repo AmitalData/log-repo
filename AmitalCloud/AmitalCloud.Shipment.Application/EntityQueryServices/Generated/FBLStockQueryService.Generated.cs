@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class FBLStockQueryService: BaseEntityQueryService<IShipmentContext,POCO.FBLStock,FBLStockKeys<string>,FBLStockPM,FBLStockList,string>
+   public partial class FBLStockQueryService: BaseEntityQueryService<POCO.FBLStock,FBLStockKeys<string>,FBLStockPM,FBLStockList,string>
    {
-        public FBLStockQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public FBLStockQueryService(IShipmentContext context) : base(new Repository<POCO.FBLStock>(context),new FBLStockDataMapping()) {}
+        public FBLStockQueryService(int tenant) : base(new Repository<POCO.FBLStock>(tenant),new FBLStockDataMapping()) {}
+        public FBLStockQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FBLStock>(context),new FBLStockDataMapping()) {}
 		public  FBLStockPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new FBLStockKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FBLStock,string> GetKeys(POCO.FBLStock entityPOCO) => new FBLStockKeys<string>() { Id = entityPOCO.Id,  };
    }

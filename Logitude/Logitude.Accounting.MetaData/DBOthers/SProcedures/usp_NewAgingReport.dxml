@@ -58,7 +58,8 @@ BEGIN
     Future DECIMAL(30, 2),
     ExternalTransactionsTotal DECIMAL(30, 2),
    TotalForeign DECIMAL(30, 2),
-   	Rate DECIMAL(30, 2),
+   	BalanceInLocalCurrency DECIMAL(30, 2),
+   	BalanceInForeignCurrency DECIMAL(30, 2),
 
 );
 
@@ -82,7 +83,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
       WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -92,7 +92,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -102,7 +101,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 61 AND 90 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -112,7 +110,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 91 AND 120 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -122,7 +119,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 121 AND 150 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -132,7 +128,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 151 AND 180 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -142,7 +137,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) > 180 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -154,7 +148,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -30 AND 0 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -164,7 +157,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -60 AND -31 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -173,7 +165,6 @@ INSERT INTO #TemporaryTable
 	 SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -90 AND -61 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -183,7 +174,6 @@ INSERT INTO #TemporaryTable
     SUM(CASE 
         WHEN DATEDIFF(day, T.DueDate, @InputDate) < -90 THEN 
             CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId = TEN.CurrencyId THEN T.OpenAmount
                 WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
                 ELSE T.OpenAmount
             END
@@ -205,12 +195,9 @@ INSERT INTO #TemporaryTable
     WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit) 
     ELSE 0 
      END) AS TotalForeign,
-	max(t.ExchangeRate)as Rate
-
-   
- 
-   
-FROM 
+	SUM(t.OpenAmount*t.ExchangeRate) AS BalanceInLocalCurrency,
+	SUM(t.OpenAmount) AS BalanceInForeignCurrency
+   FROM 
     GLACCOUNTS GL
 LEFT JOIN 
     (SELECT * FROM LedgerTransactions WHERE tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile=0) T ON GL.Id = T.ACCOUNTID
@@ -218,31 +205,24 @@ INNER JOIN
     TENANTS TEN ON GL.tenant = TEN.Id
 	LEFT JOIN
 	 (
-   SELECT 
-        jl.CreditAccountId,
-        COALESCE(SUM(DISTINCT CASE WHEN jl.DueDate <= @InputDate THEN jl.LocalAmount ELSE 0 END), 0) AS TotPastOpenChequesInLocalCur,
-        COALESCE(SUM(DISTINCT CASE WHEN jl.DueDate > @InputDate THEN jl.LocalAmount ELSE 0 END), 0) AS TotFutureOpenChequesInLocalCur
-    FROM JournalLines jl
+ SELECT max(a.AccountId) as AccountId,
+SUM( CASE WHEN a.ValueDate <= @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotPastOpenChequesInLocalCur,
+SUM( CASE WHEN a.ValueDate > @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotFutureOpenChequesInLocalCur
 
-    JOIN Journals j 
-        ON jl.JournalId = j.Id
-    JOIN ARPaymentCheques arpch 
-        ON j.AccountingEntityId = arpch.PaymentId
-    WHERE 
-	  j.Tenant = 74 and
-	  j.AccountingEntityCode = '3'
-      AND jl.ActionCode = '1'
-      AND j.IsLedgerCreated = 1
-	  AND (@AccountID IS NULL OR jl.CreditAccountId = @AccountID) 
-
-    GROUP BY jl.CreditAccountId
-)  FUTQ ON FUTQ.CreditAccountId = GL.ID
+FROM AllARPaymentChequesViews a
+LEFT JOIN BankDepositLines l ON a.ChequeId = l.ARPaymentChequeId
+LEFT JOIN BankDeposits b ON l.DepositId = b.Id
+LEFT JOIN BankAccounts ba ON b.DepositBankAccountId = ba.Id
+WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)
+ AND a.Tenant = @tenant
+ group by  a.AccountId
+)  FUTQ ON FUTQ.AccountId = GL.ID
 LEFT JOIN 
     (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
 	 C ON GL.CardsDataId = C.Id
 	 LEFT JOIN 
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant) 
-     CURRENCY ON GL.CurrencyId = CURRENCY.Id 
+     CURRENCY ON T.CurrencyId = CURRENCY.Id 
      WHERE 
     GL.tenant = @Tenant 
 	
@@ -287,9 +267,6 @@ LEFT JOIN
 	  DROP TABLE  #TemporaryTable 
 END;
 
-
-	
-GO
 
 
 

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class ObjectFieldModificationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.ObjectFieldModification,ObjectFieldModificationKeys<string>,ObjectFieldModificationPM,ObjectFieldModificationList,string>
+   public partial class ObjectFieldModificationQueryService: BaseEntityQueryService<POCO.ObjectFieldModification,ObjectFieldModificationKeys<string>,ObjectFieldModificationPM,ObjectFieldModificationList,string>
    {
-        public ObjectFieldModificationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public ObjectFieldModificationQueryService(int tenant) : base(new Repository<POCO.ObjectFieldModification>(tenant),new ObjectFieldModificationDataMapping()) {}
         public ObjectFieldModificationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ObjectFieldModification>(context),new ObjectFieldModificationDataMapping()) {}
 		public  ObjectFieldModificationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ObjectFieldModificationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ObjectFieldModification,string> GetKeys(POCO.ObjectFieldModification entityPOCO) => new ObjectFieldModificationKeys<string>() { Id = entityPOCO.Id,  };

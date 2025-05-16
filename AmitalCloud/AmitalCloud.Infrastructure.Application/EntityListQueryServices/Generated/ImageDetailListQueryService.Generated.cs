@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class ImageDetailListQueryService  : BaseEntityListQueryService<ImageDetailList,POCO.ImageDetail,  ImageDetailKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.ImageDetail> contextEntity => (context as IAmitalCloudContext).ImageDetails;
-		public ImageDetailListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public ImageDetailListQueryService(int tenant) : base(tenant) { }
         public ImageDetailList GetSingle(string id)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

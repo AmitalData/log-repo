@@ -1093,6 +1093,7 @@ namespace Simplog.Data.CommonDataModel
 
         public IDbSet<TruckerSetting> TruckerSettings { get; set; }
         public IDbSet<Responsibility> Responsibilities { get; set; }
+        public IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get; set; }
 
 
 

@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         public List<DeclarationList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
-            GenericSort sortClass = new GenericSort(tenant);
+            GenericSort sortClass = new GenericSort();
 
             IQueryable<POCO.Declaration> iQueryable = (from a in context.Declarations
                                               
@@ -93,6 +93,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
 						case "date":
                         case "datetime":
+						case "datetime2": 
                             {
                                 query2 = sortClass.GetSorterQuery<DeclarationList, DateTime>(queryOperations, query2);
                                 break;

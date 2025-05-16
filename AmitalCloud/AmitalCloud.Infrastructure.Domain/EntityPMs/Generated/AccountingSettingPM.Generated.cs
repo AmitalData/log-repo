@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -293,6 +293,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _vATableTempCard ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VATableTempCard  
+	   {
+	     get { return _vATableTempCard; }
+		 set
+		 {
+		   if(_vATableTempCard != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VATableTempCard",OldValue=_vATableTempCard,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vATableTempCard=value;
+		   }
+		 }
+	   }
+	  private string _vATExemptTempCard ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VATExemptTempCard  
+	   {
+	     get { return _vATExemptTempCard; }
+		 set
+		 {
+		   if(_vATExemptTempCard != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VATExemptTempCard",OldValue=_vATExemptTempCard,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vATExemptTempCard=value;
+		   }
+		 }
+	   }
 	  private bool _allowClosureWithoutPayables ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -434,6 +466,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ARPaymentTransferStartDate",OldValue=_aRPaymentTransferStartDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _aRPaymentTransferStartDate=value;
+		   }
+		 }
+	   }
+	  private string _vatNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VatNumber  
+	   {
+	     get { return _vatNumber; }
+		 set
+		 {
+		   if(_vatNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatNumber",OldValue=_vatNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vatNumber=value;
+		   }
+		 }
+	   }
+	  private string _paymentTermId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PaymentTermId  
+	   {
+	     get { return _paymentTermId; }
+		 set
+		 {
+		   if(_paymentTermId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PaymentTermId",OldValue=_paymentTermId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _paymentTermId=value;
 		   }
 		 }
 	   }
@@ -853,6 +917,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _transferftpdetail; } 
 		set { _transferftpdetail = value; }
 		}
+	  private string _transferFTPDetailHost ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TransferFTPDetailHost  
+	   {
+	     get { return _transferFTPDetailHost; }
+		 set
+		 {
+		   if(_transferFTPDetailHost != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TransferFTPDetailHost",OldValue=_transferFTPDetailHost,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _transferFTPDetailHost=value;
+		   }
+		 }
+	   }
 	  private bool _enableEnteringTotalVAT ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

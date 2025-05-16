@@ -2,7 +2,7 @@
 using AmitalCloud.Infrastructure.Data.Counters;
 using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
             tenant = entityCustomFieldServiceArgs.Tenant;
             entities = entityCustomFieldServiceArgs.Entities;
             type = entityCustomFieldServiceArgs.Type;
-            customFieldsMainObjectRepository = new Repository<CustomFieldsMainObject>(AmitalCloudContext.GetContext(tenant));
+            customFieldsMainObjectRepository = new Repository<CustomFieldsMainObject>(tenant);
             customObjectFields = GetCustomObjectFields();
             customFieldsMainObjects = GetCustomFieldsMainObjects(entityCustomFieldServiceArgs.EntityId);
             if (!string.IsNullOrEmpty(entityCustomFieldServiceArgs.KeyName))

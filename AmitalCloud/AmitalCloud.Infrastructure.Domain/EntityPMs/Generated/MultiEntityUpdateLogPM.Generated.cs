@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -217,6 +217,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartDate",OldValue=_startDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _startDate=value;
+		   }
+		 }
+	   }
+	  private string _multiEntityUpdateData ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MultiEntityUpdateData  
+	   {
+	     get { return _multiEntityUpdateData; }
+		 set
+		 {
+		   if(_multiEntityUpdateData != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MultiEntityUpdateData",OldValue=_multiEntityUpdateData,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _multiEntityUpdateData=value;
 		   }
 		 }
 	   }

@@ -1,4 +1,4 @@
-﻿using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+﻿using AmitalCloud.Infrastructure.Domain.EntityClasses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

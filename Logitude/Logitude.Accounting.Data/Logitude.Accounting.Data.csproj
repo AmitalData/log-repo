@@ -222,7 +222,10 @@
     <Compile Include="EntityListQueryServices\Generated\InterestReportStatuseListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InterestTransactionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalAdditionalDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\JournalExternalReconcileListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalMoreDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\JournalReconcileListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\JournalReconcileListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RevaluationStatusListQueryService.Generated.cs" />
@@ -255,6 +258,7 @@
     <Compile Include="EntityListQueryServices\InterestReportStatuseListQueryService.cs" />
     <Compile Include="EntityListQueryServices\InterestTransactionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalAdditionalDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\JournalExternalReconcileListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalMoreDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportStatusListQueryService.cs" />
@@ -305,6 +309,7 @@
     <Compile Include="EntityLists\Generated\InterestReportStatuseList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterestTransactionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\JournalExternalReconcileList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalMoreDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportStatusList.Generated.cs" />
@@ -427,12 +432,13 @@
     <Compile Include="Enums\ChartOfAccountsTypes.cs" />
     <Compile Include="Enums\GLAccountTypes.cs" />
     <Compile Include="Enums\InterestEntityTypeCodes.cs" />
+    <Compile Include="Enums\InputsTaxReportLineTypes.cs" />
     <Compile Include="Enums\InterestEntityTypes.cs" />
     <Compile Include="Enums\InterestPeriodLineTypes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
-     <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
-     <Compile Include="Enums\JournalActionTypes.cs" />
-     <Compile Include="Enums\RevaluationStatusEnum.cs" />
+    <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
+    <Compile Include="Enums\JournalActionTypes.cs" />
+    <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\Aur_ItemRepository.cs" />

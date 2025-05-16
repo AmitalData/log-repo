@@ -1,5 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
-using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
@@ -15,7 +15,7 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant();
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
                 TenantPM myResult = new TenantQueryService(tenant).GetSingle(tenant, true, true);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

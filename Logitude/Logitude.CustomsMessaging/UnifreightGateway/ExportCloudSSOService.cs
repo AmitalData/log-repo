@@ -100,7 +100,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             Simplog.Data.CommonDataModel.EntityPOCOs.Contact contact =null;
             if (!string.IsNullOrWhiteSpace(unifreightUser))
             {
-                var userRepository = new UserRepository();
+                var userRepository = new UserRepository(itenant);
                 var user =userRepository.GetSingleUserByCode(unifreightUser, itenant, true);
                 if (!string.IsNullOrWhiteSpace(user?.Id))
                 {

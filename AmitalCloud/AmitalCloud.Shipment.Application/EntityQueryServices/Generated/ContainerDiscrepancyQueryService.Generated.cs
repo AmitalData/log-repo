@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ContainerDiscrepancyQueryService: BaseEntityQueryService<IShipmentContext,POCO.ContainerDiscrepancy,ContainerDiscrepancyKeys<string>,ContainerDiscrepancyPM,ContainerDiscrepancyList,string>
+   public partial class ContainerDiscrepancyQueryService: BaseEntityQueryService<POCO.ContainerDiscrepancy,ContainerDiscrepancyKeys<string>,ContainerDiscrepancyPM,ContainerDiscrepancyList,string>
    {
-        public ContainerDiscrepancyQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ContainerDiscrepancyQueryService(IShipmentContext context) : base(new Repository<POCO.ContainerDiscrepancy>(context),new ContainerDiscrepancyDataMapping()) {}
+        public ContainerDiscrepancyQueryService(int tenant) : base(new Repository<POCO.ContainerDiscrepancy>(tenant),new ContainerDiscrepancyDataMapping()) {}
+        public ContainerDiscrepancyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContainerDiscrepancy>(context),new ContainerDiscrepancyDataMapping()) {}
 		public  ContainerDiscrepancyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ContainerDiscrepancyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContainerDiscrepancy,string> GetKeys(POCO.ContainerDiscrepancy entityPOCO) => new ContainerDiscrepancyKeys<string>() { Id = entityPOCO.Id,  };
    }

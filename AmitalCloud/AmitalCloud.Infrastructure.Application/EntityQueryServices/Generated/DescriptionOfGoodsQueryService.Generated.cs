@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DescriptionOfGoodsQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DescriptionOfGoods,DescriptionOfGoodsKeys<string>,DescriptionOfGoodsPM,DescriptionOfGoodsList,string>
+   public partial class DescriptionOfGoodsQueryService: BaseEntityQueryService<POCO.DescriptionOfGoods,DescriptionOfGoodsKeys<string>,DescriptionOfGoodsPM,DescriptionOfGoodsList,string>
    {
-        public DescriptionOfGoodsQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DescriptionOfGoodsQueryService(int tenant) : base(new Repository<POCO.DescriptionOfGoods>(tenant),new DescriptionOfGoodsDataMapping()) {}
         public DescriptionOfGoodsQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DescriptionOfGoods>(context),new DescriptionOfGoodsDataMapping()) {}
 		public  DescriptionOfGoodsPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DescriptionOfGoodsKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DescriptionOfGoods,string> GetKeys(POCO.DescriptionOfGoods entityPOCO) => new DescriptionOfGoodsKeys<string>() { Id = entityPOCO.Id,  };

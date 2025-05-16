@@ -9,44 +9,41 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using AmitalCloud.Infrastructure.Data.Counters;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class FeatureToggleUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.FeatureToggle,FeatureTogglePM,IEntityPM,FeatureToggleList,string>
+   public partial class FeatureToggleUpdateService:BaseEntityUpdateService<POCO.FeatureToggle,FeatureTogglePM,IEntityPM,FeatureToggleList,string>
    {
    			
-        public FeatureToggleUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public FeatureToggleUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new FeatureToggleDataMapping();
-            Repository = new Repository<POCO.FeatureToggle>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.FeatureToggle>(mainContext);
         }
-        public FeatureToggleUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public FeatureToggleUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public FeatureToggleUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new FeatureToggleDataMapping();
+            Repository = new Repository<POCO.FeatureToggle>(tenant);
+		}
+        public FeatureToggleUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.FeatureToggle,string> GetKeys(FeatureTogglePM entityPM) => new FeatureToggleKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(FeatureTogglePM entityPM)
 		{
 			entityPM.Id = IdCounter.GetNumber("FeatureToggle", entityPM.Tenant); 
 			entityPM.CreateDate =  TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 			entityPM.CreatedByUserId = GetLoggedUserid(entityPM.Tenant);
- 
-			entityPM.UpdateDate =  entityPM.CreateDate;
- 
-			entityPM.UpdatedByUserId = entityPM.CreatedByUserId;
 		}
 		protected override void FillDefaultValuesOnUpdate(FeatureTogglePM entityPM)
         {       

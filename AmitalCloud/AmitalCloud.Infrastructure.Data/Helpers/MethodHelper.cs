@@ -1,7 +1,6 @@
-﻿using AmitalCloud.Infrastructure.Data.Context;
-using AmitalCloud.Infrastructure.Data.Repositories;
+﻿using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using System;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
@@ -734,7 +733,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             Address address = null;
             if (!string.IsNullOrEmpty(tenant.AddressId))
             {
-                address = new Repository<Address>(AmitalCloudContext.GetContext(tenant.Id)).GetSingle(new AddressKeys<string>() { Id = tenant.AddressId }); //(tenant.AddressId, tenant.Id);                
+                address = new Repository<Address>(tenant.Id).GetSingle(new AddressKeys<string>() { Id = tenant.AddressId }); //(tenant.AddressId, tenant.Id);                
             }
 
             if (address == null)

@@ -21,24 +21,21 @@ namespace ConsoleApp1
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                var query = @"
-                    SELECT 
-                        C.TABLE_NAME, 
-                        C.COLUMN_NAME, 
-                        C.DATA_TYPE, 
-                        C.IS_NULLABLE, 
-                        C.CHARACTER_MAXIMUM_LENGTH,
-                        C.ORDINAL_POSITION,
-                        CASE WHEN KCU.COLUMN_NAME IS NOT NULL THEN 1 ELSE 0 END AS IS_PRIMARY
-                    FROM INFORMATION_SCHEMA.COLUMNS C
-                    LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE KCU
-                        ON C.TABLE_NAME = KCU.TABLE_NAME
-                        AND C.COLUMN_NAME = KCU.COLUMN_NAME
-                        AND KCU.CONSTRAINT_NAME IN (
-                            SELECT CONSTRAINT_NAME
-                            FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
-                            WHERE CONSTRAINT_TYPE = 'PRIMARY KEY'
-                        ) ";
+                var query = @"SELECT 
+                                     C.TABLE_NAME, 
+                                     C.COLUMN_NAME, 
+                                     C.DATA_TYPE, 
+                                     C.IS_NULLABLE, 
+                                     C.CHARACTER_MAXIMUM_LENGTH,
+                                     C.ORDINAL_POSITION,
+                                     CASE WHEN TC.CONSTRAINT_TYPE = 'PRIMARY KEY' THEN 1 ELSE 0 END AS IS_PRIMARY,
+                                     CASE WHEN TC.CONSTRAINT_TYPE = 'FOREIGN KEY' THEN 1 ELSE 0 END AS IS_FOREIGN
+                                     FROM INFORMATION_SCHEMA.COLUMNS C
+                                     LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE KCU
+                                         ON C.TABLE_NAME = KCU.TABLE_NAME 
+                                         AND C.COLUMN_NAME = KCU.COLUMN_NAME
+                                     LEFT JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS TC
+                                         ON KCU.CONSTRAINT_NAME = TC.CONSTRAINT_NAME";
 
                 using (var command = new SqlCommand(query, connection))
                 {
@@ -56,8 +53,9 @@ namespace ConsoleApp1
                                             ? (int?)reader["CHARACTER_MAXIMUM_LENGTH"]
                                             : null,
                                 OrdinalPosition = (int)reader["ORDINAL_POSITION"],
-                                IsPrimary = (int)reader["IS_PRIMARY"] == 1
-                            };
+                                IsPrimary = (int)reader["IS_PRIMARY"] == 1,
+								IsForegin = (int)reader["IS_FOREIGN"] == 1
+							};
                             columns.Add(columnInfo);
                         }
                     }
@@ -77,9 +75,11 @@ namespace ConsoleApp1
         public int? MaxLength { get; set; }
         public int OrdinalPosition { get; set; }
         public bool IsPrimary { get; set; }
-    }
+		public bool IsForegin { get; set; }
 
-    internal class TableRetriever
+	}
+
+	internal class TableRetriever
     {
         private readonly string _connectionString;
 

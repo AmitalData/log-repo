@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class CustomerSizeUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.CustomerSize,CustomerSizePM,IEntityPM,CustomerSizeList,string>
+   public partial class CustomerSizeUpdateService:BaseEntityUpdateService<POCO.CustomerSize,CustomerSizePM,IEntityPM,CustomerSizeList,string>
    {
    			
-        public CustomerSizeUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public CustomerSizeUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new CustomerSizeDataMapping();
-            Repository = new Repository<POCO.CustomerSize>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.CustomerSize>(mainContext);
         }
-        public CustomerSizeUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public CustomerSizeUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public CustomerSizeUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new CustomerSizeDataMapping();
+            Repository = new Repository<POCO.CustomerSize>(tenant);
+		}
+        public CustomerSizeUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.CustomerSize,string> GetKeys(CustomerSizePM entityPM) => new CustomerSizeKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(CustomerSizePM entityPM)
 		{

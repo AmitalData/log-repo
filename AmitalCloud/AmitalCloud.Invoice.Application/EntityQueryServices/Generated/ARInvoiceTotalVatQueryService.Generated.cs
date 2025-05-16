@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Invoice.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Invoice.Domain.EntityPMs;
 using AmitalCloud.Invoice.Data.EntityDataMappings;
 using AmitalCloud.Invoice.Domain.EntityKeys;
-using AmitalCloud.Invoice.Data.Context;
 using AmitalCloud.Invoice.Domain.EntityLists;
-using AmitalCloud.Invoice.Domain.Interfaces;
+
+
 namespace AmitalCloud.Invoice.Application.EntityQueryServices
 { 
-   public partial class ARInvoiceTotalVATQueryService: BaseEntityQueryService<IInvoiceContext,POCO.ARInvoiceTotalVAT,ARInvoiceTotalVATKeys<string>,ARInvoiceTotalVATPM,ARInvoiceTotalVATList,string>
+   public partial class ARInvoiceTotalVATQueryService: BaseEntityQueryService<POCO.ARInvoiceTotalVAT,ARInvoiceTotalVATKeys<string>,ARInvoiceTotalVATPM,ARInvoiceTotalVATList,string>
    {
-        public ARInvoiceTotalVATQueryService(int tenant) : this(InvoiceContext.GetContext(tenant))  { }
-        public ARInvoiceTotalVATQueryService(IInvoiceContext context) : base(new Repository<POCO.ARInvoiceTotalVAT>(context),new ARInvoiceTotalVATDataMapping()) {}
+        public ARInvoiceTotalVATQueryService(int tenant) : base(new Repository<POCO.ARInvoiceTotalVAT>(tenant),new ARInvoiceTotalVATDataMapping()) {}
+        public ARInvoiceTotalVATQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ARInvoiceTotalVAT>(context),new ARInvoiceTotalVATDataMapping()) {}
 		public  ARInvoiceTotalVATPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ARInvoiceTotalVATKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ARInvoiceTotalVAT,string> GetKeys(POCO.ARInvoiceTotalVAT entityPOCO) => new ARInvoiceTotalVATKeys<string>() { Id = entityPOCO.Id,  };
    }

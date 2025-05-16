@@ -18,6 +18,7 @@ import { QueryFilterItem } from './Filters/QueryFilterItem';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { MenuTypes } from './ProcessMenuComponent';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -57,6 +58,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ReportsRunUsingWR: boolean = false;
     IsUsedReportsRunUsingWR: boolean = false;
     @Output() OnDone: EventEmitter<any> = new EventEmitter();
+    IsUsedExportToExel: boolean = false;
 
     NumberOfRequests: number = 0;
     public isRTL: boolean = false;
@@ -345,6 +347,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (!this.ShowBusyIndicator) {
             this.ShowBusyIndicator = true;
             this.ReportFliter = this.FillReportFilter(filter);
+            if (this.IsUsedExportToExel)
+            {
+               this.StartBusyIndicator("ExportToExel...");
+               this.ExportToExcel(this.ReportFliter);
+               return
+            }
             if (!this.IsHaveRunReportViewWorkerRoleToggleFeature || (this.IsHaveRunReportViewWorkerRoleToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {
 
                 this.IsRunReportSucceeded = false;
@@ -390,7 +398,17 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
         }
     }
-
+    async ExportToExcel(reportFliter: ReportFliter) {
+        const res: Blob = await this._reportService.GetExcel(reportFliter);
+        const blobUrl: string = window.URL.createObjectURL(res);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = reportFliter.ReportName + ".xlsx";
+        link.click();
+        link.remove();
+        this.IsUsedExportToExel = false;
+        this.ShowBusyIndicator = false;
+    }
     GenerateReportViewWorkerRole(filter: ReportFliter) {
         this.IsRunReportSucceeded = false;
         this.IsRunReportFailed = false;
@@ -479,8 +497,8 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
         filter.DisablePreview = this.Report.DisablePreview;
-
-        if (this.ReportsTemplateLists) {
+        filter.NotDisplayInMenu = this.IsSchedulerReport;
+        if (this.ReportsTemplateLists && !this.IsUsedExportToExel) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
             if (reportTemplate) {
                 filter.DefaultTemplateVsersion = reportTemplate.CurrentVersion;
@@ -540,19 +558,25 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
-                var messageWindow = new MessageWindow();
-                messageWindow.ShowSuccessIcon = true;
-
-                messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-                SessionLocator.HomeComponent.IsReportPanelVisible = true;
-                SessionLocator.HomeComponent.CurrentReportId = myResponse.Result.ReportKey;
-                SessionLocator.HomeComponent.isPinned = true;
-
-                this.BackButtonClicked()
                 this.ReportFliter = myResponse.Result;
-                this.StopBusyIndicator();
+
+               if(!this.IsSchedulerReport){
+                    var messageWindow = new MessageWindow();
+                    messageWindow.ShowSuccessIcon = true;
+      
+                    messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                SessionLocator.HomeComponent.CurrentProcessId  = myResponse.Result.ReportKey;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
+                    SessionLocator.HomeComponent.isPinned = true;
+      
+                    this.BackButtonClicked()
+                    this.StopBusyIndicator();
+                }
+                else{
+                    this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+                }
                 
-                //this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
             } else {
 
                 filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = false;

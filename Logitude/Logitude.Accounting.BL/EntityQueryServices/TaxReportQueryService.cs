@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
 using Simplog.Server.Infrastructure.Helpers;
-//using System.Data.Entity;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -25,6 +25,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     {
         const string TaxReportLineInputType = "I";
         const string TaxReportLineOutType = "O";
+
+        private string[] _InputsTaxReportLineTypes = new[]
+{
+            InputsTaxReportLineTypes.IsraeliVendorInputs,
+            InputsTaxReportLineTypes.SelfInputs,
+            InputsTaxReportLineTypes.SmallCashInputs,
+            InputsTaxReportLineTypes.ImportCustomsInputs,
+            InputsTaxReportLineTypes.PalestinianVendorsInputs,
+            InputsTaxReportLineTypes.LawDefinedDocumentInputs
+        };
         public TaxReportLinesCounter GetReportLinesCounter(string taxReportId, int tenant)
         {
             TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);
@@ -45,25 +55,32 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);
 
             IQueryable<TaxReportLine> lines = linesRepo.GetByReportId(taxReportId, tenant);
-            //var l = lines.ToList();
-            int count = lines.Where(d => d.StatusCode != "6" && (d.TransmitStatusCode == "1" || d.TransmitStatusCode == "4")).Count(); // StatusCode 6 - Ready for transmit , TransmitStatusCode 1 - For transmit, 4 - Transmit even if Duplicate
+
+            int count = lines.Where(d => d.StatusCode != "6" && (d.TransmitStatusCode == "1" || d.TransmitStatusCode == "4")).Count(); 
+
+            return count;
+        }
+
+
+        public int GetDuplicateInputReportLines(string taxReportId, int tenant)
+        {
+            TaxReportLineRepository linesRepo = new TaxReportLineRepository(context);
+
+            IQueryable<TaxReportLine> lines = linesRepo.GetByReportId(taxReportId, tenant);
+
+            int count = lines.Where(d => d.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference 
+            && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.ForTransmit
+            && _InputsTaxReportLineTypes.Contains(d.LineTypeCode)).Count(); 
 
             return count;
         }
 
         public IQueryable<TaxReportLine> GetReportLines(string taxReportId, int tenant)
         {
-            //var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
-            //       .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
 
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
                                                where a.TaxReportId == taxReportId && a.Tenant == tenant
                                                select a);
-            //if (sameReferenceAndOppositeVatLines.Count > 0)
-            //{
-            //    var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
-            //    query = query.Where(x => !taxReportLinesReferences.Contains(x.Reference));
-            //}
             return query;
         }
 
@@ -189,7 +206,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public bool CheckIfTaxReportCanHaveClosingJournal(string taxReportId, string vatOutputGLAccountId, int tenant, ref List<TaxReportLineForErrors> reconciledLines)
         {
-            //return true;
             var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
                       .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
             var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
@@ -198,7 +214,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                           join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
                                           join journal in context.Journals on line.JournalId equals journal.Id
                                           where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == vatOutputGLAccountId
-                                                 && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                                                 && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.ForTransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                                                  && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                           select new TaxReportLineForErrors
                                           {
@@ -223,7 +239,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                          join journal in context.Journals on line.JournalId equals journal.Id
 
                                          where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
-                                                     && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                                                     && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.ForTransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                                                      && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                          select new TaxReportLineForErrors
                                          {
@@ -252,12 +268,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var reconciledLTLines = (from line in context.TaxReportLines
                                      join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
                                      where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATOutputGLAccountId
-                                              && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                              && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.ForTransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                      select ledger).Union(
                                              from line in context.TaxReportLines
                                              join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
                                              where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == fullAccountingSettings.VATInputsGLAccountId
-                                                      && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                                      && (line.TransmitStatusCode == TaxReportLineTransmitStatusValues.ForTransmit || line.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
                                              select ledger);
 
             // Reconciliation Lines of the reconciledLTLines

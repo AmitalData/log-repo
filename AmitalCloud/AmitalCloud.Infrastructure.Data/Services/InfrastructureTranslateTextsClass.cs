@@ -1,10 +1,11 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Validators
 {
@@ -152,7 +153,7 @@ namespace AmitalCloud.Infrastructure.Data.Validators
             string result = string.Empty;
 
             TranslationRepository translationRepository = new TranslationRepository(tenant);
-            Tenant myTenant = new Repository<Tenant>(translationRepository.context).GetMulti(a => a.Id == tenant).FirstOrDefault();
+            Tenant myTenant = new Repository<Tenant>(translationRepository.context).GetSingle(a => a.Id == tenant);
 
             if (myTenant != null)
             {

@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentAWBPrintOnlyQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentAWBPrintOnly,ShipmentAWBPrintOnlyKeys<string>,ShipmentAWBPrintOnlyPM,ShipmentAWBPrintOnlyList,string>
+   public partial class ShipmentAWBPrintOnlyQueryService: BaseEntityQueryService<POCO.ShipmentAWBPrintOnly,ShipmentAWBPrintOnlyKeys<string>,ShipmentAWBPrintOnlyPM,ShipmentAWBPrintOnlyList,string>
    {
-        public ShipmentAWBPrintOnlyQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentAWBPrintOnlyQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentAWBPrintOnly>(context),new ShipmentAWBPrintOnlyDataMapping()) {}
+        public ShipmentAWBPrintOnlyQueryService(int tenant) : base(new Repository<POCO.ShipmentAWBPrintOnly>(tenant),new ShipmentAWBPrintOnlyDataMapping()) {}
+        public ShipmentAWBPrintOnlyQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentAWBPrintOnly>(context),new ShipmentAWBPrintOnlyDataMapping()) {}
 		public  ShipmentAWBPrintOnlyPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentAWBPrintOnlyKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentAWBPrintOnly,string> GetKeys(POCO.ShipmentAWBPrintOnly entityPOCO) => new ShipmentAWBPrintOnlyKeys<string>() { Id = entityPOCO.Id,  };
    }

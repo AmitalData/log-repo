@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class DocumentFilingBackupSettingListQueryService  : BaseEntityListQueryService<DocumentFilingBackupSettingList,POCO.DocumentFilingBackupSetting,  DocumentFilingBackupSettingKeys<int>,int>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.DocumentFilingBackupSetting> contextEntity => (context as IAmitalCloudContext).DocumentFilingBackupSettings;
-		public DocumentFilingBackupSettingListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public DocumentFilingBackupSettingListQueryService(int tenant) : base(tenant) { }
         public DocumentFilingBackupSettingList GetSingle(int tenant)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class FieldDataTypeQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.FieldDataType,FieldDataTypeKeys<string>,FieldDataTypePM,FieldDataTypeList,string>
+   public partial class FieldDataTypeQueryService: BaseEntityQueryService<POCO.FieldDataType,FieldDataTypeKeys<string>,FieldDataTypePM,FieldDataTypeList,string>
    {
-        public FieldDataTypeQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public FieldDataTypeQueryService(int tenant) : base(new Repository<POCO.FieldDataType>(tenant),new FieldDataTypeDataMapping()) {}
         public FieldDataTypeQueryService(IAmitalCloudContext context) : base(new Repository<POCO.FieldDataType>(context),new FieldDataTypeDataMapping()) {}
 		public  FieldDataTypePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new FieldDataTypeKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.FieldDataType,string> GetKeys(POCO.FieldDataType entityPOCO) => new FieldDataTypeKeys<string>() { Code = entityPOCO.Code,  };

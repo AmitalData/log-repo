@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -113,6 +113,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _requeststatuscode; } 
 		set { _requeststatuscode = value; }
 		}
+	  private string _statusName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusName  
+	   {
+	     get { return _statusName; }
+		 set
+		 {
+		   if(_statusName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=_statusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _statusName=value;
+		   }
+		 }
+	   }
 	  private string _forwarderId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -137,6 +153,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _hybridpartnerid; } 
 		set { _hybridpartnerid = value; }
 		}
+	  private string _forwarderName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ForwarderName  
+	   {
+	     get { return _forwarderName; }
+		 set
+		 {
+		   if(_forwarderName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForwarderName",OldValue=_forwarderName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _forwarderName=value;
+		   }
+		 }
+	   }
 	  private bool _isCustoms ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

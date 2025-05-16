@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -522,6 +522,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=_searchFields,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _searchFields=value;
+		   }
+		 }
+	   }
+	  private string _fWBNotifyContacts ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FWBNotifyContacts  
+	   {
+	     get { return _fWBNotifyContacts; }
+		 set
+		 {
+		   if(_fWBNotifyContacts != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FWBNotifyContacts",OldValue=_fWBNotifyContacts,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fWBNotifyContacts=value;
+		   }
+		 }
+	   }
+	  private string _fHLNotifyContacts ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FHLNotifyContacts  
+	   {
+	     get { return _fHLNotifyContacts; }
+		 set
+		 {
+		   if(_fHLNotifyContacts != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FHLNotifyContacts",OldValue=_fHLNotifyContacts,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fHLNotifyContacts=value;
+		   }
+		 }
+	   }
+	  private string _fFRNotifyContacts ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FFRNotifyContacts  
+	   {
+	     get { return _fFRNotifyContacts; }
+		 set
+		 {
+		   if(_fFRNotifyContacts != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FFRNotifyContacts",OldValue=_fFRNotifyContacts,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fFRNotifyContacts=value;
 		   }
 		 }
 	   }

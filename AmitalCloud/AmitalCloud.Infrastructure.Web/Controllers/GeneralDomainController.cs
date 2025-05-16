@@ -1,5 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Application.EntityQueryServices;
-using AmitalCloud.Infrastructure.Data.Security;
+using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using System;
@@ -16,8 +16,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         {
             try
             {
-                int tenant = AmitalCloudSecurityUtility.AuthenticationOnTenant(); ;
-                List<ObjectFieldModificationPM> result = new ObjectFieldModificationQueryService(tenant).GetMulti(a => a.Tenant == tenant, "");
+                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant(); ;
+                List<ObjectFieldModificationPM> result = new ObjectFieldModificationQueryService(tenant).GetMulti(a=> a.Tenant == tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 

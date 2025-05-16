@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class DefaultAndConfigurationQueryService: BaseEntityQueryService<IAmitalCloudContext,POCO.DefaultAndConfiguration,DefaultAndConfigurationKeys<string>,DefaultAndConfigurationPM,DefaultAndConfigurationList,string>
+   public partial class DefaultAndConfigurationQueryService: BaseEntityQueryService<POCO.DefaultAndConfiguration,DefaultAndConfigurationKeys<string>,DefaultAndConfigurationPM,DefaultAndConfigurationList,string>
    {
-        public DefaultAndConfigurationQueryService(int tenant) : this(AmitalCloudContext.GetContext(tenant))  { }
+        public DefaultAndConfigurationQueryService(int tenant) : base(new Repository<POCO.DefaultAndConfiguration>(tenant),new DefaultAndConfigurationDataMapping()) {}
         public DefaultAndConfigurationQueryService(IAmitalCloudContext context) : base(new Repository<POCO.DefaultAndConfiguration>(context),new DefaultAndConfigurationDataMapping()) {}
 		public  DefaultAndConfigurationPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new DefaultAndConfigurationKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.DefaultAndConfiguration,string> GetKeys(POCO.DefaultAndConfiguration entityPOCO) => new DefaultAndConfigurationKeys<string>() { Id = entityPOCO.Id,  };

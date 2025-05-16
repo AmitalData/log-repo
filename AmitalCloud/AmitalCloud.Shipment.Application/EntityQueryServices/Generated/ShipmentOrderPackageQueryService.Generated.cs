@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ShipmentOrderPackageQueryService: BaseEntityQueryService<IShipmentContext,POCO.ShipmentOrderPackage,ShipmentOrderPackageKeys<string>,ShipmentOrderPackagePM,ShipmentOrderPackageList,string>
+   public partial class ShipmentOrderPackageQueryService: BaseEntityQueryService<POCO.ShipmentOrderPackage,ShipmentOrderPackageKeys<string>,ShipmentOrderPackagePM,ShipmentOrderPackageList,string>
    {
-        public ShipmentOrderPackageQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ShipmentOrderPackageQueryService(IShipmentContext context) : base(new Repository<POCO.ShipmentOrderPackage>(context),new ShipmentOrderPackageDataMapping()) {}
+        public ShipmentOrderPackageQueryService(int tenant) : base(new Repository<POCO.ShipmentOrderPackage>(tenant),new ShipmentOrderPackageDataMapping()) {}
+        public ShipmentOrderPackageQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ShipmentOrderPackage>(context),new ShipmentOrderPackageDataMapping()) {}
 		public  ShipmentOrderPackagePM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new ShipmentOrderPackageKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ShipmentOrderPackage,string> GetKeys(POCO.ShipmentOrderPackage entityPOCO) => new ShipmentOrderPackageKeys<string>() { Id = entityPOCO.Id,  };
    }

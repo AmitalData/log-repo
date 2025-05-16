@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -49,7 +49,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		documentOuts = entity.DocumentOuts != null ? entity.DocumentOuts.Select(a=>new DocumentOutPM(a)).ToList() : null;
 		filingInboxAttachments = entity.FilingInboxAttachments != null ? entity.FilingInboxAttachments.Select(a=>new FilingInboxAttachmentPM(a)).ToList() : null;
 		imageLibrarys = entity.ImageLibrarys != null ? entity.ImageLibrarys.Select(a=>new ImageLibraryPM(a)).ToList() : null;
-		//oceanInsightsStatusess = entity.OceanInsightsStatusess != null ? entity.OceanInsightsStatusess.Select(a=>new OceanInsightsStatusesPM(a)).ToList() : null;
 		quoteTemplates_Footerdocid = entity.QuoteTemplates_Footerdocid != null ? entity.QuoteTemplates_Footerdocid.Select(a=>new QuoteTemplatePM(a)).ToList() : null;
 		quoteTemplates_Headerdocid = entity.QuoteTemplates_Headerdocid != null ? entity.QuoteTemplates_Headerdocid.Select(a=>new QuoteTemplatePM(a)).ToList() : null;
 		quoteTemplateSections = entity.QuoteTemplateSections != null ? entity.QuoteTemplateSections.Select(a=>new QuoteTemplateSectionPM(a)).ToList() : null;
@@ -508,37 +507,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedImageLibrarys = value; }
 	    }
-	   //private List<OceanInsightsStatusesPM> oceanInsightsStatusess;
-	 
-		     
-	   //[Include]
-	   //[Association("OceanInsightsStatusesDocument", "Id","Contentdocumentid")]
-	   //[DataMember]
-	   //public virtual List<OceanInsightsStatusesPM> OceanInsightsStatusess  
-	   //{
-	   //     get
-    //         {
-    //             if (oceanInsightsStatusess == null)
-    //             {
-    //                 oceanInsightsStatusess = new List<OceanInsightsStatusesPM>();
-    //             }
-    //             return oceanInsightsStatusess;
-    //          }
-    //         set { oceanInsightsStatusess = value; }
-	   // }
-	   //private List<OceanInsightsStatusesPM>  deletedOceanInsightsStatusess;
-	   //public virtual List<OceanInsightsStatusesPM> DeletedOceanInsightsStatusess  
-	   //{
-	   //     get
-    //         {
-    //             if ( deletedOceanInsightsStatusess == null)
-    //             {
-    //                  deletedOceanInsightsStatusess = new List<OceanInsightsStatusesPM>();
-    //             }
-    //             return  deletedOceanInsightsStatusess;
-    //          }
-    //         set {  deletedOceanInsightsStatusess = value; }
-	   // }
 	   private List<QuoteTemplatePM> quoteTemplates_Footerdocid;
 	 
 		     

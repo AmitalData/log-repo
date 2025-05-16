@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated> CustomClassesGenerator.tt
 //---
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -92,6 +92,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
 						case "date":
                         case "datetime":
+						case "datetime2": 
                             {
                                 query2 = sortClass.GetSorterQuery<CustomsPaymentTermList, DateTime>(queryOperations, query2);
                                 break;

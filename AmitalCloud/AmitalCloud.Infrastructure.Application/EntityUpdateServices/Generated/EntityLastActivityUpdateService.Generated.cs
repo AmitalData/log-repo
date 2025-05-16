@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class EntityLastActivityUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.EntityLastActivity,EntityLastActivityPM,IEntityPM,EntityLastActivityList,string>
+   public partial class EntityLastActivityUpdateService:BaseEntityUpdateService<POCO.EntityLastActivity,EntityLastActivityPM,IEntityPM,EntityLastActivityList,string>
    {
    			
-        public EntityLastActivityUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public EntityLastActivityUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new EntityLastActivityDataMapping();
-            Repository = new Repository<POCO.EntityLastActivity>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.EntityLastActivity>(mainContext);
         }
-        public EntityLastActivityUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public EntityLastActivityUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public EntityLastActivityUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new EntityLastActivityDataMapping();
+            Repository = new Repository<POCO.EntityLastActivity>(tenant);
+		}
+        public EntityLastActivityUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.EntityLastActivity,string> GetKeys(EntityLastActivityPM entityPM) => new EntityLastActivityKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(EntityLastActivityPM entityPM)
 		{

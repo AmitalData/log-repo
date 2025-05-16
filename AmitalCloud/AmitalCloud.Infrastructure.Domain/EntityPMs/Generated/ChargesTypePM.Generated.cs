@@ -16,7 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -263,6 +263,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _payableDebitAccountExternalId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PayableDebitAccountExternalId  
+	   {
+	     get { return _payableDebitAccountExternalId; }
+		 set
+		 {
+		   if(_payableDebitAccountExternalId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayableDebitAccountExternalId",OldValue=_payableDebitAccountExternalId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _payableDebitAccountExternalId=value;
+		   }
+		 }
+	   }
+	  private string _receivableCreditAccountExternalId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReceivableCreditAccountExternalId  
+	   {
+	     get { return _receivableCreditAccountExternalId; }
+		 set
+		 {
+		   if(_receivableCreditAccountExternalId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivableCreditAccountExternalId",OldValue=_receivableCreditAccountExternalId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _receivableCreditAccountExternalId=value;
+		   }
+		 }
+	   }
+	  private string _chargesTypeExternalCodeExternalId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChargesTypeExternalCodeExternalId  
+	   {
+	     get { return _chargesTypeExternalCodeExternalId; }
+		 set
+		 {
+		   if(_chargesTypeExternalCodeExternalId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChargesTypeExternalCodeExternalId",OldValue=_chargesTypeExternalCodeExternalId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _chargesTypeExternalCodeExternalId=value;
+		   }
+		 }
+	   }
 	  private string _iATACodeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -367,6 +415,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _computedLocalName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComputedLocalName  
+	   {
+	     get { return _computedLocalName; }
+		 set
+		 {
+		   if(_computedLocalName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _computedLocalName=value;
+		   }
+		 }
+	   }
 	  private string _containerMeasurementId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -415,6 +479,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _measurement; } 
 		set { _measurement = value; }
 		}
+	  private string _measurementCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MeasurementCode  
+	   {
+	     get { return _measurementCode; }
+		 set
+		 {
+		   if(_measurementCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementCode",OldValue=_measurementCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _measurementCode=value;
+		   }
+		 }
+	   }
+	  private string _measurementShortName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MeasurementShortName  
+	   {
+	     get { return _measurementShortName; }
+		 set
+		 {
+		   if(_measurementShortName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasurementShortName",OldValue=_measurementShortName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _measurementShortName=value;
+		   }
+		 }
+	   }
 	  private string _vatTypeId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -704,6 +800,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedChargeTypeAccountings = value; }
 	    }
+	  private string _vatTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VatTypeName  
+	   {
+	     get { return _vatTypeName; }
+		 set
+		 {
+		   if(_vatTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatTypeName",OldValue=_vatTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _vatTypeName=value;
+		   }
+		 }
+	   }
 	  private string _sATExternalId ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -952,6 +1064,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _payablesdefaultcurrency; } 
 		set { _payablesdefaultcurrency = value; }
 		}
+	  private string _receivableCreditGLAcountNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReceivableCreditGLAcountNumber  
+	   {
+	     get { return _receivableCreditGLAcountNumber; }
+		 set
+		 {
+		   if(_receivableCreditGLAcountNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReceivableCreditGLAcountNumber",OldValue=_receivableCreditGLAcountNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _receivableCreditGLAcountNumber=value;
+		   }
+		 }
+	   }
 	  private string _recCreditGLAcountLocalName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -965,6 +1093,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RecCreditGLAcountLocalName",OldValue=_recCreditGLAcountLocalName,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _recCreditGLAcountLocalName=value;
+		   }
+		 }
+	   }
+	  private string _payableDebitGLAcountNumber ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PayableDebitGLAcountNumber  
+	   {
+	     get { return _payableDebitGLAcountNumber; }
+		 set
+		 {
+		   if(_payableDebitGLAcountNumber != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PayableDebitGLAcountNumber",OldValue=_payableDebitGLAcountNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _payableDebitGLAcountNumber=value;
 		   }
 		 }
 	   }

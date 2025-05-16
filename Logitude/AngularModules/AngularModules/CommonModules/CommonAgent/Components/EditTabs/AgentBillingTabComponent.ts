@@ -20,7 +20,7 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
     public IsCreditLimitActivated: boolean = false;
     public DisplaySATSettings: boolean = false;
     public Profact4Enabled: boolean = false;
-
+    public IsBlockMessageVisible: boolean = false;
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
@@ -124,6 +124,11 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
             }
         }
 
+        if (this.EntityPM?.Card?.ExternalSystem == "UNIFREIGHT") {
+            this.IsBlockMessageVisible = true;
+            this.UIProperties.SetEnabled("IsAutonomy", "Card", false);
+
+        }
         this.UIProperties.SetEnabled("BlockNewInvoiceCreation", this.ObjectTableName, isFieldActivated);
         this.UIProperties.SetEnabled("BlockNewShipmentCreation", this.ObjectTableName, isFieldActivated);
     }
@@ -190,4 +195,11 @@ export class AgentBillingTabComponent extends BaseComponent implements OnInit, O
             this.EntityPM.SATForeignRFC = newValue;
         }
     }
+    get IsAutonomy() { return this.EntityPM.Card?.IsAutonomy; }
+    set IsAutonomy(newValue: boolean) {
+        if (this.EntityPM?.Card != null && this.EntityPM.Card?.IsAutonomy != newValue) {
+            this.EntityPM.Card.IsAutonomy = newValue;
+            this.EntityPM.IsDirty = true;
+        }
+    }  
 }

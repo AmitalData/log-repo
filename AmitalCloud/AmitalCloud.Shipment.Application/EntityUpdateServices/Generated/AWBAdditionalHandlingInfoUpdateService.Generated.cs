@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data;
 using AmitalCloud.Shipment.Domain.EntityLists;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
-using AmitalCloud.Shipment.Domain.Interfaces;
-using AmitalCloud.Shipment.Data.Context;
 
 namespace AmitalCloud.Shipment.Application.EntityUpdateServices
 { 
-   public partial class AWBAdditionalHandlingInfoUpdateService:BaseEntityUpdateService<ShipmentContext,POCO.AWBAdditionalHandlingInfo,AWBAdditionalHandlingInfoPM,IEntityPM,AWBAdditionalHandlingInfoList,string>
+   public partial class AWBAdditionalHandlingInfoUpdateService:BaseEntityUpdateService<POCO.AWBAdditionalHandlingInfo,AWBAdditionalHandlingInfoPM,IEntityPM,AWBAdditionalHandlingInfoList,string>
    {
    			
-        public AWBAdditionalHandlingInfoUpdateService(IShipmentContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((ShipmentContext)mainContext,additionalContexts, tenant)
+        public AWBAdditionalHandlingInfoUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new AWBAdditionalHandlingInfoDataMapping();
-            Repository = new Repository<POCO.AWBAdditionalHandlingInfo>((ShipmentContext)mainContext);
+            Repository = new Repository<POCO.AWBAdditionalHandlingInfo>(mainContext);
         }
-        public AWBAdditionalHandlingInfoUpdateService(int tenant) : this(ShipmentContext.GetContext(tenant), null, tenant) {}
-        public AWBAdditionalHandlingInfoUpdateService(IShipmentContext context) :  this(context, null, 0) {}
+        public AWBAdditionalHandlingInfoUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new AWBAdditionalHandlingInfoDataMapping();
+            Repository = new Repository<POCO.AWBAdditionalHandlingInfo>(tenant);
+		}
+        public AWBAdditionalHandlingInfoUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.AWBAdditionalHandlingInfo,string> GetKeys(AWBAdditionalHandlingInfoPM entityPM) => new AWBAdditionalHandlingInfoKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(AWBAdditionalHandlingInfoPM entityPM)
 		{

@@ -42,7 +42,7 @@ public void GeneratePM(string xmlFilePath, string outputFilePath)
 
 	if (entity.IsMetadataOnlyTable.GetType() == typeof(string) && entity.IsMetadataOnlyTable == "true")
 	{
-		//return;
+		return;
 	}
 
 	WritePMMethod(entity);
@@ -181,7 +181,7 @@ namespace <#= pmnamespacestring #>
    {
 <#+
  	foreach(var field in entity["field"])  
-	 { 
+	 {        
 		if( field.IsPrimaryKey.GetType() == typeof(string))
 		{
 			if(field.IsPrimaryKey.ToString() == "false")
@@ -217,14 +217,26 @@ namespace <#= pmnamespacestring #>
 								continue;
 							}
 						}
+                        if( field.IsMulti.GetType() == typeof(string) && field.IsMulti == "true")  
+						{ 
+							
 					string multitablename = field.MultiTableName.ToString().Trim('"');
 #>
 		<#= privatepropname #> = entity.<#= field.FieldName.Trim('"') #> != null ? entity.<#= field.FieldName.Trim('"') #>.Select(a=>new <#= multitablename #>PM(a)).ToList() : null;
+<#+							
+						}
+                        else 
+                        {
+#>
+		<#= privatepropname #> = null;
 <#+
+                        }
+
 						continue;
 					}
 				   else
 					{
+
 						continue;
 #>
 		_<#= privatepropname #> = default;
@@ -241,7 +253,7 @@ namespace <#= pmnamespacestring #>
 if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyName.GetType() == typeof(string))
 { 
 	
-	string keyvalue = field.NavigationPropertyName;
+	string keyvalue = field.NavigationPropertyName + "_" + field.ObjectTableName;
 	if(field.IsForeignKey == "true" && !addedProperties.Keys.Contains(keyvalue))
 	{
 	#>
@@ -272,7 +284,7 @@ if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyNam
    #region Properties
    <#+
  	foreach(var field in entity["field"])  //get all classes
-	 { 
+	 {    
 		if( field.IsPrimaryKey.GetType() == typeof(string))
 		{
 			if(field.IsPrimaryKey.ToString() == "false")
@@ -304,6 +316,11 @@ if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyNam
 					{
 						if(field.HasDataBaseField == "false")
 						{
+                        if(field.NoMetaDataField.GetType() == typeof(string) && field.NoMetaDataField.ToString() == "true")
+                        {
+                             continue;
+                        }
+					    WritePMProperty(field);
 						continue;	
 						}
 					}
@@ -445,12 +462,12 @@ else
 if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyName.GetType() == typeof(string))
 { 
 	
-	string keyvalue = field.NavigationPropertyName;
+	string keyvalue = field.NavigationPropertyName + "_" + field.ObjectTableName;;
 	if(field.IsForeignKey == "true" && !addedProperties.Keys.Contains(keyvalue))
 	{
 	      
 	      string value = field.ForeignEntity;
-	      addedProperties.Add(keyvalue,value);
+	    	      addedProperties.Add(keyvalue,value);
 			WritePMRelated(field);
 
 	}

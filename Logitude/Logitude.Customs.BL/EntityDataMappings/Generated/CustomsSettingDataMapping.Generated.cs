@@ -12,667 +12,658 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools;
+using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
+   
+   public partial class CustomsSettingDataMapping: IMapping<CustomsSettingPM, POCO.CustomsSetting>,IMappingEncodeBase64NVARCHARFields<CustomsSettingPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         IsConnectedToUniFreight, 
+	         CustomsAgentId, 
+	         SignServiceAddress, 
+	         IIGServiceAddress, 
+	         DCAServiceAddress, 
+	         Tenant, 
+	         DCAPartnerVault, 
+	         UServerServiceAddress, 
+	         DefaultNotificationAssignee, 
+	         SearchFields, 
+	         CustomsEnvoirmentTypeCode, 
+	         OnPremiseFillingService, 
+	         UnfConnectionString, 
+	         TehilaDca, 
+	         BlockAgentBankForMasab, 
+	         PaymentOrderAccCard, 
+	         UnifreightCertificateActivated, 
+	         AutoFillPaymentScreen, 
+	         AutoFillAccountType, 
+	         AutoUnitMeasurement, 
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS, 
+	         SuppressIIGMessageFromDate, 
+	         SuppressIIGMessageToDate, 
+	         HSMCompanyId, 
+	         HSMToken, 
+	         StandAlone, 
+	         OcrToken, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive, 
+	         CourierDocToken, 
+	         ForbiddenSigns,
+	      }
 
-    public partial class CustomsSettingDataMapping : IMapping<CustomsSettingPM, POCO.CustomsSetting>, IMappingEncodeBase64NVARCHARFields<CustomsSettingPM>
-    {
-        public enum POCOPropertyNames
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         IsConnectedToUniFreight, 
+	         CustomsAgentId, 
+	         SignServiceAddress, 
+	         IIGServiceAddress, 
+	         DCAServiceAddress, 
+	         Tenant, 
+	         DCAPartnerVault, 
+	         UServerServiceAddress, 
+	         DefaultNotificationAssignee, 
+	         DefaultNotificationAssigneeName, 
+	         SearchFields, 
+	         CustomsEnvoirmentTypeCode, 
+	         CustomsEnvoirmentTypeName, 
+	         OnPremiseFillingService, 
+	         UnfConnectionString, 
+	         TehilaDca, 
+	         BlockAgentBankForMasab, 
+	         PaymentOrderAccCard, 
+	         UnifreightCertificateActivated, 
+	         AutoFillPaymentScreen, 
+	         AutoFillAccountType, 
+	         AutoUnitMeasurement, 
+	         CompanyType, 
+	         IsMessagesPending, 
+	         QtyFeedbackInPendingMessage, 
+	         LastRunningDCAWS, 
+	         LastNumOfMessagesDCAWS, 
+	         ServiceScript, 
+	         SuppressIIGMessageFromDate, 
+	         SuppressIIGMessageToDate, 
+	         HSMCompanyId, 
+	         HSMToken, 
+	         StandAlone, 
+	         OcrToken, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive, 
+	         CourierDocToken, 
+	         ForbiddenSigns,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO)
         {
-            None,
-            Id,
-            IsConnectedToUniFreight,
-            CustomsAgentId,
-            SignServiceAddress,
-            IIGServiceAddress,
-            DCAServiceAddress,
-            Tenant,
-            DCAPartnerVault,
-            UServerServiceAddress,
-            DefaultNotificationAssignee,
-            SearchFields,
-            CustomsEnvoirmentTypeCode,
-            OnPremiseFillingService,
-            UnfConnectionString,
-            TehilaDca,
-            BlockAgentBankForMasab,
-            PaymentOrderAccCard,
-            UnifreightCertificateActivated,
-            AutoFillPaymentScreen,
-            AutoFillAccountType,
-            AutoUnitMeasurement,
-            CompanyType,
-            IsMessagesPending,
-            QtyFeedbackInPendingMessage,
-            LastRunningDCAWS,
-            LastNumOfMessagesDCAWS,
-            SuppressIIGMessageFromDate,
-            SuppressIIGMessageToDate,
-            HSMCompanyId,
-            HSMToken,
-            StandAlone,
-            OcrToken,
-            MaxItemsSendInteractive,
-            MaxSISendInteractive,
-            CourierDocToken,
-            ForbiddenSigns,
-        }
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConnectedToUniFreight))
+            {
+				entityPOCO.IsConnectedToUniFreight = entityPM.IsConnectedToUniFreight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentId))
+            {
+				entityPOCO.CustomsAgentId = entityPM.CustomsAgentId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignServiceAddress))
+            {
+				entityPOCO.SignServiceAddress = entityPM.SignServiceAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IIGServiceAddress))
+            {
+				entityPOCO.IIGServiceAddress = entityPM.IIGServiceAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAServiceAddress))
+            {
+				entityPOCO.DCAServiceAddress = entityPM.DCAServiceAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAPartnerVault))
+            {
+				entityPOCO.DCAPartnerVault = entityPM.DCAPartnerVault;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UServerServiceAddress))
+            {
+				entityPOCO.UServerServiceAddress = entityPM.UServerServiceAddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultNotificationAssignee))
+            {
+				entityPOCO.DefaultNotificationAssignee = entityPM.DefaultNotificationAssignee;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+            {
+				entityPOCO.SearchFields = entityPM.SearchFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsEnvoirmentTypeCode))
+            {
+				entityPOCO.CustomsEnvoirmentTypeCode = entityPM.CustomsEnvoirmentTypeCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnPremiseFillingService))
+            {
+				entityPOCO.OnPremiseFillingService = entityPM.OnPremiseFillingService;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnfConnectionString))
+            {
+				entityPOCO.UnfConnectionString = entityPM.UnfConnectionString;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TehilaDca))
+            {
+				entityPOCO.TehilaDca = entityPM.TehilaDca;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockAgentBankForMasab))
+            {
+				entityPOCO.BlockAgentBankForMasab = entityPM.BlockAgentBankForMasab;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentOrderAccCard))
+            {
+				entityPOCO.PaymentOrderAccCard = entityPM.PaymentOrderAccCard;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightCertificateActivated))
+            {
+				entityPOCO.UnifreightCertificateActivated = entityPM.UnifreightCertificateActivated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillPaymentScreen))
+            {
+				entityPOCO.AutoFillPaymentScreen = entityPM.AutoFillPaymentScreen;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillAccountType))
+            {
+				entityPOCO.AutoFillAccountType = entityPM.AutoFillAccountType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
+            {
+				entityPOCO.AutoUnitMeasurement = entityPM.AutoUnitMeasurement;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
+            {
+				entityPOCO.CompanyType = entityPM.CompanyType;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
+            {
+				entityPOCO.IsMessagesPending = entityPM.IsMessagesPending;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
+            {
+				entityPOCO.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+            {
+				entityPOCO.LastRunningDCAWS = entityPM.LastRunningDCAWS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
+            {
+				entityPOCO.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageFromDate))
+            {
+				entityPOCO.SuppressIIGMessageFromDate = entityPM.SuppressIIGMessageFromDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
+            {
+				entityPOCO.SuppressIIGMessageToDate = entityPM.SuppressIIGMessageToDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
+            {
+				entityPOCO.HSMCompanyId = entityPM.HSMCompanyId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+            {
+				entityPOCO.HSMToken = entityPM.HSMToken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
+            {
+				entityPOCO.StandAlone = entityPM.StandAlone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
+            {
+				entityPOCO.OcrToken = entityPM.OcrToken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
+            {
+				entityPOCO.MaxItemsSendInteractive = entityPM.MaxItemsSendInteractive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
+            {
+				entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
+            {
+				entityPOCO.CourierDocToken = entityPM.CourierDocToken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
+            {
+				entityPOCO.ForbiddenSigns = entityPM.ForbiddenSigns;
+			}
+			
+				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+		  }
 
-
-        public enum PMPropertyNames
+		public void POCOToPM(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO)
         {
-            None,
-            Id,
-            IsConnectedToUniFreight,
-            CustomsAgentId,
-            SignServiceAddress,
-            IIGServiceAddress,
-            DCAServiceAddress,
-            Tenant,
-            DCAPartnerVault,
-            UServerServiceAddress,
-            DefaultNotificationAssignee,
-            DefaultNotificationAssigneeName,
-            SearchFields,
-            CustomsEnvoirmentTypeCode,
-            CustomsEnvoirmentTypeName,
-            OnPremiseFillingService,
-            UnfConnectionString,
-            TehilaDca,
-            BlockAgentBankForMasab,
-            PaymentOrderAccCard,
-            UnifreightCertificateActivated,
-            AutoFillPaymentScreen,
-            AutoFillAccountType,
-            AutoUnitMeasurement,
-            CompanyType,
-            IsMessagesPending,
-            QtyFeedbackInPendingMessage,
-            LastRunningDCAWS,
-            LastNumOfMessagesDCAWS,
-            ServiceScript,
-            SuppressIIGMessageFromDate,
-            SuppressIIGMessageToDate,
-            HSMCompanyId,
-            HSMToken,
-            StandAlone,
-            OcrToken,
-            MaxItemsSendInteractive,
-            MaxSISendInteractive,
-            CourierDocToken,
-            ForbiddenSigns,
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
 
-        }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConnectedToUniFreight))
+            {
+					entityPM.IsConnectedToUniFreight = entityPOCO.IsConnectedToUniFreight;
+            }
 
-        List<POCOPropertyNames> CustomMappedPOCOProperties = new List<POCOPropertyNames>();
-        List<PMPropertyNames> CustomMappedPMProperties = new List<PMPropertyNames>();
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsAgentId))
+            {
+					entityPM.CustomsAgentId = entityPOCO.CustomsAgentId;
+            }
 
-        public void PMToPOCO(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO)
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SignServiceAddress))
+            {
+					entityPM.SignServiceAddress = entityPOCO.SignServiceAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IIGServiceAddress))
+            {
+					entityPM.IIGServiceAddress = entityPOCO.IIGServiceAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DCAServiceAddress))
+            {
+					entityPM.DCAServiceAddress = entityPOCO.DCAServiceAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DCAPartnerVault))
+            {
+					entityPM.DCAPartnerVault = entityPOCO.DCAPartnerVault;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UServerServiceAddress))
+            {
+					entityPM.UServerServiceAddress = entityPOCO.UServerServiceAddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DefaultNotificationAssignee))
+            {
+					entityPM.DefaultNotificationAssignee = entityPOCO.DefaultNotificationAssignee;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
+            {
+					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsEnvoirmentTypeCode))
+            {
+					entityPM.CustomsEnvoirmentTypeCode = entityPOCO.CustomsEnvoirmentTypeCode;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OnPremiseFillingService))
+            {
+					entityPM.OnPremiseFillingService = entityPOCO.OnPremiseFillingService;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnfConnectionString))
+            {
+					entityPM.UnfConnectionString = entityPOCO.UnfConnectionString;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TehilaDca))
+            {
+					entityPM.TehilaDca = entityPOCO.TehilaDca;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BlockAgentBankForMasab))
+            {
+					entityPM.BlockAgentBankForMasab = entityPOCO.BlockAgentBankForMasab;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentOrderAccCard))
+            {
+					entityPM.PaymentOrderAccCard = entityPOCO.PaymentOrderAccCard;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnifreightCertificateActivated))
+            {
+					entityPM.UnifreightCertificateActivated = entityPOCO.UnifreightCertificateActivated;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoFillPaymentScreen))
+            {
+					entityPM.AutoFillPaymentScreen = entityPOCO.AutoFillPaymentScreen;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoFillAccountType))
+            {
+					entityPM.AutoFillAccountType = entityPOCO.AutoFillAccountType;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoUnitMeasurement))
+            {
+					entityPM.AutoUnitMeasurement = entityPOCO.AutoUnitMeasurement;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CompanyType))
+            {
+					entityPM.CompanyType = entityPOCO.CompanyType;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMessagesPending))
+            {
+					entityPM.IsMessagesPending = entityPOCO.IsMessagesPending;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QtyFeedbackInPendingMessage))
+            {
+					entityPM.QtyFeedbackInPendingMessage = entityPOCO.QtyFeedbackInPendingMessage;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunningDCAWS))
+            {
+					entityPM.LastRunningDCAWS = entityPOCO.LastRunningDCAWS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastNumOfMessagesDCAWS))
+            {
+					entityPM.LastNumOfMessagesDCAWS = entityPOCO.LastNumOfMessagesDCAWS;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SuppressIIGMessageFromDate))
+            {
+					entityPM.SuppressIIGMessageFromDate = entityPOCO.SuppressIIGMessageFromDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SuppressIIGMessageToDate))
+            {
+					entityPM.SuppressIIGMessageToDate = entityPOCO.SuppressIIGMessageToDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMCompanyId))
+            {
+					entityPM.HSMCompanyId = entityPOCO.HSMCompanyId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMToken))
+            {
+					entityPM.HSMToken = entityPOCO.HSMToken;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StandAlone))
+            {
+					entityPM.StandAlone = entityPOCO.StandAlone;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrToken))
+            {
+					entityPM.OcrToken = entityPOCO.OcrToken;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxItemsSendInteractive))
+            {
+					entityPM.MaxItemsSendInteractive = entityPOCO.MaxItemsSendInteractive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxSISendInteractive))
+            {
+					entityPM.MaxSISendInteractive = entityPOCO.MaxSISendInteractive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocToken))
+            {
+					entityPM.CourierDocToken = entityPOCO.CourierDocToken;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForbiddenSigns))
+            {
+					entityPM.ForbiddenSigns = entityPOCO.ForbiddenSigns;
+            }
+
+		}
+
+		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
         {
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConnectedToUniFreight))
-            {
-                entityPOCO.IsConnectedToUniFreight = entityPM.IsConnectedToUniFreight;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentId))
-            {
-                entityPOCO.CustomsAgentId = entityPM.CustomsAgentId;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignServiceAddress))
-            {
-                entityPOCO.SignServiceAddress = entityPM.SignServiceAddress;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IIGServiceAddress))
-            {
-                entityPOCO.IIGServiceAddress = entityPM.IIGServiceAddress;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAServiceAddress))
-            {
-                entityPOCO.DCAServiceAddress = entityPM.DCAServiceAddress;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
-            {
-                entityPOCO.Tenant = entityPM.Tenant;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAPartnerVault))
-            {
-                entityPOCO.DCAPartnerVault = entityPM.DCAPartnerVault;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UServerServiceAddress))
-            {
-                entityPOCO.UServerServiceAddress = entityPM.UServerServiceAddress;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultNotificationAssignee))
-            {
-                entityPOCO.DefaultNotificationAssignee = entityPM.DefaultNotificationAssignee;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
-            {
-                entityPOCO.SearchFields = entityPM.SearchFields;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsEnvoirmentTypeCode))
-            {
-                entityPOCO.CustomsEnvoirmentTypeCode = entityPM.CustomsEnvoirmentTypeCode;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnPremiseFillingService))
-            {
-                entityPOCO.OnPremiseFillingService = entityPM.OnPremiseFillingService;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnfConnectionString))
-            {
-                entityPOCO.UnfConnectionString = entityPM.UnfConnectionString;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TehilaDca))
-            {
-                entityPOCO.TehilaDca = entityPM.TehilaDca;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockAgentBankForMasab))
-            {
-                entityPOCO.BlockAgentBankForMasab = entityPM.BlockAgentBankForMasab;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentOrderAccCard))
-            {
-                entityPOCO.PaymentOrderAccCard = entityPM.PaymentOrderAccCard;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightCertificateActivated))
-            {
-                entityPOCO.UnifreightCertificateActivated = entityPM.UnifreightCertificateActivated;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillPaymentScreen))
-            {
-                entityPOCO.AutoFillPaymentScreen = entityPM.AutoFillPaymentScreen;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillAccountType))
-            {
-                entityPOCO.AutoFillAccountType = entityPM.AutoFillAccountType;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
-            {
-                entityPOCO.AutoUnitMeasurement = entityPM.AutoUnitMeasurement;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
-            {
-                entityPOCO.CompanyType = entityPM.CompanyType;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
-            {
-                entityPOCO.IsMessagesPending = entityPM.IsMessagesPending;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
-            {
-                entityPOCO.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
-            {
-                entityPOCO.LastRunningDCAWS = entityPM.LastRunningDCAWS;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
-            {
-                entityPOCO.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageFromDate))
-            {
-                entityPOCO.SuppressIIGMessageFromDate = entityPM.SuppressIIGMessageFromDate;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
-            {
-                entityPOCO.SuppressIIGMessageToDate = entityPM.SuppressIIGMessageToDate;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
-            {
-                entityPOCO.HSMCompanyId = entityPM.HSMCompanyId;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
-            {
-                entityPOCO.HSMToken = entityPM.HSMToken;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
-            {
-                entityPOCO.StandAlone = entityPM.StandAlone;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
-            {
-                entityPOCO.OcrToken = entityPM.OcrToken;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
-            {
-                entityPOCO.MaxItemsSendInteractive = entityPM.MaxItemsSendInteractive;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
-            {
-                entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
-            }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
-            {
-                entityPOCO.CourierDocToken = entityPM.CourierDocToken;
-            }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
-            {
-                entityPOCO.ForbiddenSigns = entityPM.ForbiddenSigns;
-            }
-
-           
-
-            BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
-        }
-
- 
-
-        public void POCOToPM(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO)
-        {
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
-            {
-                entityPM.Id = entityPOCO.Id;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsConnectedToUniFreight))
-            {
-                entityPM.IsConnectedToUniFreight = entityPOCO.IsConnectedToUniFreight;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsAgentId))
-            {
-                entityPM.CustomsAgentId = entityPOCO.CustomsAgentId;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.SignServiceAddress))
-            {
-                entityPM.SignServiceAddress = entityPOCO.SignServiceAddress;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.IIGServiceAddress))
-            {
-                entityPM.IIGServiceAddress = entityPOCO.IIGServiceAddress;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.DCAServiceAddress))
-            {
-                entityPM.DCAServiceAddress = entityPOCO.DCAServiceAddress;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
-            {
-                entityPM.Tenant = entityPOCO.Tenant;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.DCAPartnerVault))
-            {
-                entityPM.DCAPartnerVault = entityPOCO.DCAPartnerVault;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.UServerServiceAddress))
-            {
-                entityPM.UServerServiceAddress = entityPOCO.UServerServiceAddress;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.DefaultNotificationAssignee))
-            {
-                entityPM.DefaultNotificationAssignee = entityPOCO.DefaultNotificationAssignee;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
-            {
-                entityPM.SearchFields = entityPOCO.SearchFields;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsEnvoirmentTypeCode))
-            {
-                entityPM.CustomsEnvoirmentTypeCode = entityPOCO.CustomsEnvoirmentTypeCode;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.OnPremiseFillingService))
-            {
-                entityPM.OnPremiseFillingService = entityPOCO.OnPremiseFillingService;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnfConnectionString))
-            {
-                entityPM.UnfConnectionString = entityPOCO.UnfConnectionString;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.TehilaDca))
-            {
-                entityPM.TehilaDca = entityPOCO.TehilaDca;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.BlockAgentBankForMasab))
-            {
-                entityPM.BlockAgentBankForMasab = entityPOCO.BlockAgentBankForMasab;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentOrderAccCard))
-            {
-                entityPM.PaymentOrderAccCard = entityPOCO.PaymentOrderAccCard;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.UnifreightCertificateActivated))
-            {
-                entityPM.UnifreightCertificateActivated = entityPOCO.UnifreightCertificateActivated;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoFillPaymentScreen))
-            {
-                entityPM.AutoFillPaymentScreen = entityPOCO.AutoFillPaymentScreen;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoFillAccountType))
-            {
-                entityPM.AutoFillAccountType = entityPOCO.AutoFillAccountType;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoUnitMeasurement))
-            {
-                entityPM.AutoUnitMeasurement = entityPOCO.AutoUnitMeasurement;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.CompanyType))
-            {
-                entityPM.CompanyType = entityPOCO.CompanyType;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMessagesPending))
-            {
-                entityPM.IsMessagesPending = entityPOCO.IsMessagesPending;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.QtyFeedbackInPendingMessage))
-            {
-                entityPM.QtyFeedbackInPendingMessage = entityPOCO.QtyFeedbackInPendingMessage;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastRunningDCAWS))
-            {
-                entityPM.LastRunningDCAWS = entityPOCO.LastRunningDCAWS;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.LastNumOfMessagesDCAWS))
-            {
-                entityPM.LastNumOfMessagesDCAWS = entityPOCO.LastNumOfMessagesDCAWS;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.SuppressIIGMessageFromDate))
-            {
-                entityPM.SuppressIIGMessageFromDate = entityPOCO.SuppressIIGMessageFromDate;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.SuppressIIGMessageToDate))
-            {
-                entityPM.SuppressIIGMessageToDate = entityPOCO.SuppressIIGMessageToDate;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMCompanyId))
-            {
-                entityPM.HSMCompanyId = entityPOCO.HSMCompanyId;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMToken))
-            {
-                entityPM.HSMToken = entityPOCO.HSMToken;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.StandAlone))
-            {
-                entityPM.StandAlone = entityPOCO.StandAlone;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.OcrToken))
-            {
-                entityPM.OcrToken = entityPOCO.OcrToken;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxItemsSendInteractive))
-            {
-                entityPM.MaxItemsSendInteractive = entityPOCO.MaxItemsSendInteractive;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxSISendInteractive))
-            {
-                entityPM.MaxSISendInteractive = entityPOCO.MaxSISendInteractive;
-            }
-
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocToken))
-            {
-                entityPM.CourierDocToken = entityPOCO.CourierDocToken;
-            }
-            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForbiddenSigns))
-            {
-                entityPM.ForbiddenSigns = entityPOCO.ForbiddenSigns;
-            }
-
-         
-
-        }
-
-        public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
-        {
-            oldEntityPM.ChangedProperties.Clear();
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConnectedToUniFreight))
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsConnectedToUniFreight))
             {
                 oldEntityPM.IsConnectedToUniFreight = entityPM.IsConnectedToUniFreight;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentId))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsAgentId))
             {
                 oldEntityPM.CustomsAgentId = entityPM.CustomsAgentId;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignServiceAddress))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SignServiceAddress))
             {
                 oldEntityPM.SignServiceAddress = entityPM.SignServiceAddress;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IIGServiceAddress))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IIGServiceAddress))
             {
                 oldEntityPM.IIGServiceAddress = entityPM.IIGServiceAddress;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAServiceAddress))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAServiceAddress))
             {
                 oldEntityPM.DCAServiceAddress = entityPM.DCAServiceAddress;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAPartnerVault))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DCAPartnerVault))
             {
                 oldEntityPM.DCAPartnerVault = entityPM.DCAPartnerVault;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UServerServiceAddress))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UServerServiceAddress))
             {
                 oldEntityPM.UServerServiceAddress = entityPM.UServerServiceAddress;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultNotificationAssignee))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DefaultNotificationAssignee))
             {
                 oldEntityPM.DefaultNotificationAssignee = entityPM.DefaultNotificationAssignee;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsEnvoirmentTypeCode))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsEnvoirmentTypeCode))
             {
                 oldEntityPM.CustomsEnvoirmentTypeCode = entityPM.CustomsEnvoirmentTypeCode;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnPremiseFillingService))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OnPremiseFillingService))
             {
                 oldEntityPM.OnPremiseFillingService = entityPM.OnPremiseFillingService;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnfConnectionString))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnfConnectionString))
             {
                 oldEntityPM.UnfConnectionString = entityPM.UnfConnectionString;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TehilaDca))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TehilaDca))
             {
                 oldEntityPM.TehilaDca = entityPM.TehilaDca;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockAgentBankForMasab))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BlockAgentBankForMasab))
             {
                 oldEntityPM.BlockAgentBankForMasab = entityPM.BlockAgentBankForMasab;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentOrderAccCard))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentOrderAccCard))
             {
                 oldEntityPM.PaymentOrderAccCard = entityPM.PaymentOrderAccCard;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightCertificateActivated))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UnifreightCertificateActivated))
             {
                 oldEntityPM.UnifreightCertificateActivated = entityPM.UnifreightCertificateActivated;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillPaymentScreen))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillPaymentScreen))
             {
                 oldEntityPM.AutoFillPaymentScreen = entityPM.AutoFillPaymentScreen;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillAccountType))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoFillAccountType))
             {
                 oldEntityPM.AutoFillAccountType = entityPM.AutoFillAccountType;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoUnitMeasurement))
             {
                 oldEntityPM.AutoUnitMeasurement = entityPM.AutoUnitMeasurement;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CompanyType))
             {
                 oldEntityPM.CompanyType = entityPM.CompanyType;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMessagesPending))
             {
                 oldEntityPM.IsMessagesPending = entityPM.IsMessagesPending;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QtyFeedbackInPendingMessage))
             {
                 oldEntityPM.QtyFeedbackInPendingMessage = entityPM.QtyFeedbackInPendingMessage;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastRunningDCAWS))
             {
                 oldEntityPM.LastRunningDCAWS = entityPM.LastRunningDCAWS;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastNumOfMessagesDCAWS))
             {
                 oldEntityPM.LastNumOfMessagesDCAWS = entityPM.LastNumOfMessagesDCAWS;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageFromDate))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageFromDate))
             {
                 oldEntityPM.SuppressIIGMessageFromDate = entityPM.SuppressIIGMessageFromDate;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SuppressIIGMessageToDate))
             {
                 oldEntityPM.SuppressIIGMessageToDate = entityPM.SuppressIIGMessageToDate;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMCompanyId))
             {
                 oldEntityPM.HSMCompanyId = entityPM.HSMCompanyId;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMToken))
             {
                 oldEntityPM.HSMToken = entityPM.HSMToken;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
             {
                 oldEntityPM.StandAlone = entityPM.StandAlone;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
             {
                 oldEntityPM.OcrToken = entityPM.OcrToken;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
             {
                 oldEntityPM.MaxItemsSendInteractive = entityPM.MaxItemsSendInteractive;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
             {
                 oldEntityPM.MaxSISendInteractive = entityPM.MaxSISendInteractive;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
             {
                 oldEntityPM.CourierDocToken = entityPM.CourierDocToken;
             }
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
             {
                 oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
             }
+			
+		}
 
-            
-
-        }
-
-
-
-
-        public void EncodeBase64NVARCHARFields(CustomsSettingPM entityPM)
+	    public void EncodeBase64NVARCHARFields(CustomsSettingPM entityPM)
         {
-            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy))
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {
                 return;
 
@@ -685,11 +676,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.ForbiddenSigns = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ForbiddenSigns));
             }
-            entityPM.EncodeBase64NVARCHARFieldsBy = null;
-        }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
 
 
-        public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
         {
             CustomMappedPOCOProperties.Add(pocoPropertyName);
         }
@@ -698,15 +689,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
-
-        private void BuildSearchFieldsGenerated(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO, bool isNewEntity)
+		
+		private void BuildSearchFieldsGenerated(CustomsSettingPM entityPM, POCO.CustomsSetting entityPOCO, bool isNewEntity)
         {
             string mySearchFields = "";
-
-
+			
+           
             entityPM.SearchFields += mySearchFields;
             entityPOCO.SearchFields += mySearchFields;
         }
-    }
+			  
+   }
 }
-
+	 

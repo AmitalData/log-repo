@@ -16,7 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -472,6 +472,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _partnerTypeName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartnerTypeName  
+	   {
+	     get { return _partnerTypeName; }
+		 set
+		 {
+		   if(_partnerTypeName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerTypeName",OldValue=_partnerTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _partnerTypeName=value;
+		   }
+		 }
+	   }
 	  private int? _sharedLogisticsInvitationStatusCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -496,6 +512,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _sharedlogisticsinvitationstatus; } 
 		set { _sharedlogisticsinvitationstatus = value; }
 		}
+	  private string _sharedLogisticsInvitationStatusName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SharedLogisticsInvitationStatusName  
+	   {
+	     get { return _sharedLogisticsInvitationStatusName; }
+		 set
+		 {
+		   if(_sharedLogisticsInvitationStatusName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SharedLogisticsInvitationStatusName",OldValue=_sharedLogisticsInvitationStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _sharedLogisticsInvitationStatusName=value;
+		   }
+		 }
+	   }
 	  private DateTime? _invitationDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -536,6 +568,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _cargotrackinginvitationstatus; } 
 		set { _cargotrackinginvitationstatus = value; }
 		}
+	  private string _cargoTrackingInvitationStatusName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CargoTrackingInvitationStatusName  
+	   {
+	     get { return _cargoTrackingInvitationStatusName; }
+		 set
+		 {
+		   if(_cargoTrackingInvitationStatusName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CargoTrackingInvitationStatusName",OldValue=_cargoTrackingInvitationStatusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cargoTrackingInvitationStatusName=value;
+		   }
+		 }
+	   }
 	  private DateTime? _cargoTrackingInvitationDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -776,6 +824,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _computedLocalName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComputedLocalName  
+	   {
+	     get { return _computedLocalName; }
+		 set
+		 {
+		   if(_computedLocalName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedLocalName",OldValue=_computedLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _computedLocalName=value;
+		   }
+		 }
+	   }
 	  private string _vatNumber ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -856,6 +920,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _partnertype; } 
 		set { _partnertype = value; }
 		}
+	  private string _accountingCard ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountingCard  
+	   {
+	     get { return _accountingCard; }
+		 set
+		 {
+		   if(_accountingCard != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingCard",OldValue=_accountingCard,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _accountingCard=value;
+		   }
+		 }
+	   }
 	  private string _notes ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -904,6 +984,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _mainAddressId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MainAddressId  
+	   {
+	     get { return _mainAddressId; }
+		 set
+		 {
+		   if(_mainAddressId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MainAddressId",OldValue=_mainAddressId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _mainAddressId=value;
+		   }
+		 }
+	   }
 	   private List<AddressPM> addresses;
 	 
 		     
@@ -935,6 +1031,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
               }
              set {  deletedAddresses = value; }
 	    }
+	  private string _customerStatusCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerStatusCode  
+	   {
+	     get { return _customerStatusCode; }
+		 set
+		 {
+		   if(_customerStatusCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerStatusCode",OldValue=_customerStatusCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _customerStatusCode=value;
+		   }
+		 }
+	   }
+	  private string _accountManagerUserId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountManagerUserId  
+	   {
+	     get { return _accountManagerUserId; }
+		 set
+		 {
+		   if(_accountManagerUserId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountManagerUserId",OldValue=_accountManagerUserId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _accountManagerUserId=value;
+		   }
+		 }
+	   }
+	  private string _partnerCode ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PartnerCode  
+	   {
+	     get { return _partnerCode; }
+		 set
+		 {
+		   if(_partnerCode != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PartnerCode",OldValue=_partnerCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _partnerCode=value;
+		   }
+		 }
+	   }
 	  private string _usoCFDICode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1151,6 +1295,54 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private string _calculatedLocalName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CalculatedLocalName  
+	   {
+	     get { return _calculatedLocalName; }
+		 set
+		 {
+		   if(_calculatedLocalName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedLocalName",OldValue=_calculatedLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _calculatedLocalName=value;
+		   }
+		 }
+	   }
+	  private string _calculatedEnglishName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CalculatedEnglishName  
+	   {
+	     get { return _calculatedEnglishName; }
+		 set
+		 {
+		   if(_calculatedEnglishName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CalculatedEnglishName",OldValue=_calculatedEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _calculatedEnglishName=value;
+		   }
+		 }
+	   }
+	  private bool _isDisconnectedFromGLAccount ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsDisconnectedFromGLAccount  
+	   {
+	     get { return _isDisconnectedFromGLAccount; }
+		 set
+		 {
+		   if(_isDisconnectedFromGLAccount != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsDisconnectedFromGLAccount",OldValue=_isDisconnectedFromGLAccount,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isDisconnectedFromGLAccount=value;
+		   }
+		 }
+	   }
 	  private string _createdByPartner ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1180,6 +1372,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StorageFreeDays",OldValue=_storageFreeDays,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   _storageFreeDays=value;
+		   }
+		 }
+	   }
+	  private string _rankId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RankId  
+	   {
+	     get { return _rankId; }
+		 set
+		 {
+		   if(_rankId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RankId",OldValue=_rankId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _rankId=value;
+		   }
+		 }
+	   }
+	  private string _industryId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IndustryId  
+	   {
+	     get { return _industryId; }
+		 set
+		 {
+		   if(_industryId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IndustryId",OldValue=_industryId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _industryId=value;
 		   }
 		 }
 	   }
@@ -1263,6 +1487,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+	  private bool? _allowUnassignedEntry ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? AllowUnassignedEntry  
+	   {
+	     get { return _allowUnassignedEntry; }
+		 set
+		 {
+		   if(_allowUnassignedEntry != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowUnassignedEntry",OldValue=_allowUnassignedEntry,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   _allowUnassignedEntry=value;
+		   }
+		 }
+	   }
 	  private string _regimenFiscalCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1287,6 +1527,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _regimenfiscal; } 
 		set { _regimenfiscal = value; }
 		}
+	  private string _teamId ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TeamId  
+	   {
+	     get { return _teamId; }
+		 set
+		 {
+		   if(_teamId != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TeamId",OldValue=_teamId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _teamId=value;
+		   }
+		 }
+	   }
 	  private string _sATCustomerName ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1463,6 +1719,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _manifestinvoicetemplate; } 
 		set { _manifestinvoicetemplate = value; }
 		}
+	  private bool _isExcludeCard ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsExcludeCard  
+	   {
+	     get { return _isExcludeCard; }
+		 set
+		 {
+		   if(_isExcludeCard != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsExcludeCard",OldValue=_isExcludeCard,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isExcludeCard=value;
+		   }
+		 }
+	   }
+	  private bool _isFromGlaAccountUpdate ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsFromGlaAccountUpdate  
+	   {
+	     get { return _isFromGlaAccountUpdate; }
+		 set
+		 {
+		   if(_isFromGlaAccountUpdate != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsFromGlaAccountUpdate",OldValue=_isFromGlaAccountUpdate,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   _isFromGlaAccountUpdate=value;
+		   }
+		 }
+	   }
 	  private string _emailForSendingSingArinvoice ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

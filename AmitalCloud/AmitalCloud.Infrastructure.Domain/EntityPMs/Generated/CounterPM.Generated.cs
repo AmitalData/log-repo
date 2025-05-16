@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -35,7 +35,8 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_objectTableId = entity.ObjectTableId;
 		_objecttable = entity.ObjectTable !=null ? new ObjectTablePM(entity.ObjectTable) : null;
 			_changedByUserId = entity.ChangedByUserId;
-		_changedDate = entity.ChangedDate;
+		_user = entity.User !=null ? new UserPM(entity.User) : null;
+			_changedDate = entity.ChangedDate;
 		counterDefinitions = entity.CounterDefinitions != null ? entity.CounterDefinitions.Select(a=>new CounterDefinitionPM(a)).ToList() : null;
 		counterStats = entity.CounterStats != null ? entity.CounterStats.Select(a=>new CounterStatPM(a)).ToList() : null;
    }
@@ -146,6 +147,14 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
+		private UserPM _user;
+		[Include]
+        [DataMember]
+        public virtual UserPM User 
+		{ 
+		get { return _user; } 
+		set { _user = value; }
+		}
 	  private DateTime? _changedDate ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

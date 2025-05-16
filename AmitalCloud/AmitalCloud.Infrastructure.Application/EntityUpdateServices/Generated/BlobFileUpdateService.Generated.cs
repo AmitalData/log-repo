@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class BlobFileUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.BlobFile,BlobFilePM,IEntityPM,BlobFileList,string>
+   public partial class BlobFileUpdateService:BaseEntityUpdateService<POCO.BlobFile,BlobFilePM,IEntityPM,BlobFileList,string>
    {
    			
-        public BlobFileUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public BlobFileUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new BlobFileDataMapping();
-            Repository = new Repository<POCO.BlobFile>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.BlobFile>(mainContext);
         }
-        public BlobFileUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public BlobFileUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public BlobFileUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new BlobFileDataMapping();
+            Repository = new Repository<POCO.BlobFile>(tenant);
+		}
+        public BlobFileUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.BlobFile,string> GetKeys(BlobFilePM entityPM) => new BlobFileKeys<string>() { Id = entityPM.Id };
 protected override void FillDefaultValuesOnCreate(BlobFilePM entityPM)
 		{

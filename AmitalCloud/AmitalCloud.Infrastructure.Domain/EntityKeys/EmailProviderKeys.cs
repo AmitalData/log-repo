@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class EmailProviderKeys<T> : BaseEntityKeyFields<EntityPOCOs.EmailProvider,T> 
+   public class EmailProviderKeys<T> : BaseEntityKeyFields<ENTITIES.EmailProvider,T> 
    {
 		public EmailProviderKeys() : base() {}
         public EmailProviderKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(ProviderNumber.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "EmailProvidersPM";
-	  public override Expression<Func<EntityPOCOs.EmailProvider, bool>> Predicate => a => a.ProviderNumber == ProviderNumber;
+	  public override Expression<Func<ENTITIES.EmailProvider, bool>> Predicate => a => a.ProviderNumber == ProviderNumber;
    }
 }
 	 

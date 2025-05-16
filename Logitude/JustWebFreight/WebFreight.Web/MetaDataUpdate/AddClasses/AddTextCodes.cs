@@ -16,7 +16,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
     {
         
         private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
-        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, TextCodeRepository textCodeRepository, Dictionary<string, TextCode> textCodes)
+        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, TextCodeRepository textCodeRepository, Dictionary<string, TextCode> textCodes,int contextTenant = 0)
         {
             if (textCodes.Keys.Contains(textCodeDetails.Code + textCodeDetails.Tenant + textCodeDetails.ObjectTableId))
             {
@@ -45,7 +45,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         DefaultTextPlural = textCodeDetails.DefaultTextPlural,
                         DefaultText = textCodeDetails.DefaultText,
                         Code = textCodeDetails.Code,
-                        Id = IdCounter.GetNumber("TextCode", textCodeDetails.Tenant).ToString(),
+                        Id = IdCounter.GetNumber("TextCode", contextTenant).ToString(),
                         ObjectTableId = textCodeDetails.ObjectTableId,
                         Tenant = textCodeDetails.Tenant,
                         LocalDefaultText = textCodeDetails.LocalDefaultText,
@@ -63,7 +63,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         }
 
 
-        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, Dictionary<string, TextCode> textCodes, List<TextCode> addedTextCodes)
+        public static TextCode AddTextCode(TextCodeDetails textCodeDetails, Dictionary<string, TextCode> textCodes, List<TextCode> addedTextCodes,int contextTenant = 0)
         {
             if (textCodes.Keys.Contains(textCodeDetails.Code + textCodeDetails.Tenant + textCodeDetails.ObjectTableId))
             {
@@ -78,7 +78,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     DefaultTextPlural = textCodeDetails.DefaultTextPlural,
                     DefaultText = textCodeDetails.DefaultText,
                     Code = textCodeDetails.Code,
-                    Id = IdCounter.GetIdWithIdsRange("TextCode", 100, textCodeDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
+                    Id = IdCounter.GetIdWithIdsRange("TextCode", 100, contextTenant).ToString(),//IdCounter.GetNumber("TextCode",textCodeDetails.Tenant).ToString(),
                     ObjectTableId = textCodeDetails.ObjectTableId,
                     Tenant = textCodeDetails.Tenant,
                     LocalDefaultText = textCodeDetails.LocalDefaultText,

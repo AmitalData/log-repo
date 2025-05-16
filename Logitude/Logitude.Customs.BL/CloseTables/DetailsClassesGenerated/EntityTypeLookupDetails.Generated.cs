@@ -1430,9 +1430,9 @@ namespace Logitude.Customs.BL
             all.Add(new EntityTypeLookupDetails()
             {    
                 Code = "12266", 
-                SearchFields = "12266,סימולציה \ הרצה יזומה", 
+                SearchFields = "12266,סימולציה - הרצה יזומה", 
                 Inactive = false, 
-                LocalName = "סימולציה \ הרצה יזומה", 
+                LocalName = "סימולציה - הרצה יזומה", 
 			});
 			 
             all.Add(new EntityTypeLookupDetails()

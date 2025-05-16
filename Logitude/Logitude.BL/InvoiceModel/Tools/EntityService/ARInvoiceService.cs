@@ -406,8 +406,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private bool CheckIfReportConnectedToInvoice(ARInvoicePM theEntityPM)
         {
-            entityPM.InterestReportNumber = theEntityPM.InvoiceEntities[0]?.EntityReference;
-            entityPM.InterestReportId = theEntityPM.InvoiceEntities[0]?.EntityId;
+            if(theEntityPM.InvoiceEntities == null || theEntityPM.InvoiceEntities.Count == 0)
+            {
+                return false;
+            }
+            entityPM.InterestReportNumber =  theEntityPM.InvoiceEntities[0]?.EntityReference ;
+            entityPM.InterestReportId = theEntityPM.InvoiceEntities[0]?.EntityId ;
             IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
             return  InterestReportsConnectedInvoiceUpdate.CheckInterestReportsConnected(theEntityPM.InvoiceEntities[0].EntityId, tenant, null);
 

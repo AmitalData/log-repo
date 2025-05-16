@@ -1,9 +1,7 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using AmitalCloud.Infrastructure.Domain.EntityPMs;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +13,9 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class CacheWrapper : ICacheWrapper
     {
-
-        Cache cache;
+		Cache cache;
         public CacheWrapper(Cache cache)
-        {
+		{
             this.cache = cache;
             List<GlobalTenant> globalTenants = new Repository<GlobalTenant>(GlobalContext.GetContext()).GetAll(0);
             cache.Insert(GetCacheKey<GlobalTenant>(null), globalTenants);
@@ -106,7 +103,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
         public object Invalidate<T>(int tenant)
         {
-            return Invalidate(GetCacheKey<T>(tenant),tenant);
+            return Invalidate(GetCacheKey<T>(tenant), tenant);
         }
 
         public object Invalidate(string key, int tenant = -1)
@@ -115,7 +112,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             {
                 using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())//TransactionFactory.GetNewTransaction())
                 {
-                    Remove(key,tenant);
+                    Remove(key, tenant);
                     CacheMessageSender.SendMessageToTopic(GetCacheKey(key, tenant));
                     scope.Complete();
                 }
@@ -128,7 +125,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         }
 
 
-        public object Remove(string key, int tenant = -1 )
+        public object Remove(string key, int tenant = -1)
         {
             return cache.Remove(GetCacheKey(key, tenant));
         }
@@ -136,7 +133,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
         private string GetCacheKey(string key, int tenant) => $"DB_({GetDB(tenant)})_OriginalKey_({key})";
         private string GetDB(int tenant)
         {
-            if (tenant ==-1)
+            if (tenant == -1)
             {
                 if (HttpContext.Current.Items.Contains("Tenant"))
                 {
@@ -165,7 +162,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
                 }
             }
             List<GlobalTenant> globalTenants = (List<GlobalTenant>)cache.Get(GetCacheKey<GlobalTenant>(null));
-            return globalTenants.Where(a=>a.Id == tenant).FirstOrDefault().GlobalDBId;
+            return globalTenants.Where(a => a.Id == tenant).FirstOrDefault().GlobalDBId;
         }
     }
 }

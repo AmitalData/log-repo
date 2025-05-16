@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -212,6 +212,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Color",OldValue=_color,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _color=value;
+		   }
+		 }
+	   }
+	  private string _genderName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string GenderName  
+	   {
+	     get { return _genderName; }
+		 set
+		 {
+		   if(_genderName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GenderName",OldValue=_genderName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _genderName=value;
 		   }
 		 }
 	   }

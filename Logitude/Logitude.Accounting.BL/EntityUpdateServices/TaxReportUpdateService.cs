@@ -30,6 +30,7 @@ using Logitude.Accounting.BL.CloseTables;
 using System.Globalization;
 using System.Diagnostics;
 using Logitude.Accounting.BL.EntityDataMappings;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -37,9 +38,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
     {
         private static HashSet<string> BlockedStatuses = new HashSet<string>
         {
-            TaxReportLineTransmitStatusValues.Notfortransmitatall,
-            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
+            TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
+            TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
         };
+        private string[] _InputsTaxReportLineTypes = new[]
+        {
+            InputsTaxReportLineTypes.IsraeliVendorInputs,
+            InputsTaxReportLineTypes.SelfInputs,
+            InputsTaxReportLineTypes.SmallCashInputs,
+            InputsTaxReportLineTypes.ImportCustomsInputs,
+            InputsTaxReportLineTypes.PalestinianVendorsInputs,
+            InputsTaxReportLineTypes.LawDefinedDocumentInputs
+        };
+
         protected override void OnCreating(TaxReportPM entityPM, EntityPM entityParentPM)
         {
 
@@ -76,6 +87,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
             return settingQueryService.GetSingleFullAccountingSetting(tenant);
         }
+
 
         protected override void Validate(TaxReportPM entityPM)
         {
@@ -156,14 +168,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM)
         {
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-
-
-            }
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-            }
             UpdateReportStatus(entityPM);
 
         }
@@ -221,21 +225,37 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 bool isUpdate = false;
 
-                if (notToSendKeyList.Contains(row.Line) && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                if (notToSendKeyList.Contains(row.Line) && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                 {
                     isUpdate = true;
-                    row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
-                    row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
+
+                    row.TransmitStatusCode = TaxReportLineTransmitStatusValues.NotForTransmitAtAll;
+                    row.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
                 }
-                else if (duplicateKeyList.Contains(row.Line) && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                else if (duplicateKeyList.Contains(row.Line) && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                 {
                     isUpdate = true;
-                    row.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                    row.StatusCode = TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference;
+                    if (taxReportPM.RemoveDuplicates && _InputsTaxReportLineTypes.Contains(row.LineTypeCode))
+                    {
+                        row.TransmitStatusCode = TaxReportLineTransmitStatusValues.NotForTransmitAtAll;
+                        row.StatusCode = TaxReportLineStatusValues.ReadyForTransmit; // Just to clear the error
+                    }
                 }
-                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference || row.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
+                {
+                    if (taxReportPM.RemoveDuplicates && _InputsTaxReportLineTypes.Contains(row.LineTypeCode))
+                    {
+                        isUpdate = true;
+                        row.TransmitStatusCode = TaxReportLineTransmitStatusValues.NotForTransmitAtAll;
+                        row.StatusCode = TaxReportLineStatusValues.ReadyForTransmit; // Just to clear the error
+                    }
+                }
+                else if (row.StatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
+
                 {
                     isUpdate = true;
-                    row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
+                    row.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
                 }
 
                 if (isUpdate)
@@ -250,6 +270,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant)
                 .UpdateMulti(updateList, new List<TaxReportLinePM>(), taxReportPM, true);
         }
+
 
         private class DupLines
         {
@@ -266,9 +287,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToList();
 
-            if (taxReportPM.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal &&  taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted && taxReportPM.StatusCode != VatReportStatusValues.CancelationInProgress && taxReportPM.StatusCode != VatReportStatusValues.CancelationFailed && !(taxReportPM.StatusCode == VatReportStatusValues.InProgress && taxReportPM.RecalculateData))
+            if (taxReportPM.StatusCode != VatReportStatusValues.TransmittedAndAClosingJournalWasCreated &&  taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted && taxReportPM.StatusCode != VatReportStatusValues.CancelationInProgress && taxReportPM.StatusCode != VatReportStatusValues.CancelationFailed && !(taxReportPM.StatusCode == VatReportStatusValues.InProgress && taxReportPM.RecalculateData))
             {
-                bool hasErrors = lines.Any(ln => ln.StatusCode != TaxReportLineStatusValues.Readyfortransmit && !BlockedStatuses.Contains(ln.TransmitStatusCode)); 
+                bool hasErrors = lines.Any(ln => ln.StatusCode != TaxReportLineStatusValues.ReadyForTransmit && !BlockedStatuses.Contains(ln.TransmitStatusCode)); 
                 if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
                 {
                     taxReportPM.StatusCode = VatReportStatusValues.Error;
@@ -314,6 +335,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
+
                 CancelTaxReport(entityPM);
                 return;
             }
@@ -363,6 +385,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
 
                 }
+
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
                 if (entityPM.RecalculateData)
@@ -377,6 +400,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             entityPM.StatusCode = "P";
             entityPM.RecalculateData = true;
+
         }
         
        
@@ -484,9 +508,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                  (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
                  (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Error) ||
                  (entityPM.StatusCode == VatReportStatusValues.CancelationInProgress && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
-                 (entityPM.StatusCode == VatReportStatusValues.Cancelled && entityPOCO.StatusCode == VatReportStatusValues.TransmittedAndClosingJournal) ||
-                 (entityPM.StatusCode == VatReportStatusValues.TransmittedAndClosingJournal && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
-                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Cancelled && entityPOCO.StatusCode == VatReportStatusValues.TransmittedAndAClosingJournalWasCreated) ||
+                 (entityPM.StatusCode == VatReportStatusValues.TransmittedAndAClosingJournalWasCreated && entityPOCO.StatusCode == VatReportStatusValues.Transmitted) ||
+                 (entityPM.StatusCode == VatReportStatusValues.Draft && entityPOCO.StatusCode    == VatReportStatusValues.Transmitted) ||
                  (entityPM.StatusCode == VatReportStatusValues.Transmitted && entityPOCO.StatusCode == VatReportStatusValues.Draft) ||
                  (entityPM.StatusCode == VatReportStatusValues.CancelationFailed && entityPOCO.StatusCode == VatReportStatusValues.CancelationInProgress) ||
                  (entityPM.StatusCode == VatReportStatusValues.Cancelled && entityPOCO.StatusCode == VatReportStatusValues.CancelationFailed) ||

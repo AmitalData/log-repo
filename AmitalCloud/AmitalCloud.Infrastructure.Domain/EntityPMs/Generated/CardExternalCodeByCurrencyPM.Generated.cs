@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -140,6 +140,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalPayableTableId",OldValue=_externalPayableTableId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _externalPayableTableId=value;
+		   }
+		 }
+	   }
+	  private string _cardName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CardName  
+	   {
+	     get { return _cardName; }
+		 set
+		 {
+		   if(_cardName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CardName",OldValue=_cardName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _cardName=value;
+		   }
+		 }
+	   }
+	  private string _currencyName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyName  
+	   {
+	     get { return _currencyName; }
+		 set
+		 {
+		   if(_currencyName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyName",OldValue=_currencyName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _currencyName=value;
 		   }
 		 }
 	   }

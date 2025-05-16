@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace AmitalCloud.Shipment.Domain.EntityPMs
 {
     [CustomValidation(typeof(IShipmentClassLevelValidator), "ValidateClass")]
-    public class CommodityPackagePM : BaseEntityPM
+    public partial class CommodityPackagePM : BaseEntityPM
     {
         [Key]
         public string Id { get; set; }

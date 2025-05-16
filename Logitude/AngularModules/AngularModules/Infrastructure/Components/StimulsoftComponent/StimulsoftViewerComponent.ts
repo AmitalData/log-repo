@@ -27,6 +27,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ReportsTemplatePM } from '../../../Common/EntityPMs/ReportsTemplatePM';
 import { SchedulerReportMessageTemplateService } from './Services/SchedulerReportMessageTemplateService';
 import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 @Component({
 
@@ -103,8 +104,10 @@ export class StimulsoftViewerComponent implements OnInit {
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
     private schedulerReportMessageTemplateService: SchedulerReportMessageTemplateService;
+    LayoutDirection: string = 'ltr';
 
     constructor() {
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
 
         this.FillFontSizeLists();
@@ -1397,21 +1400,12 @@ ResetEditableField(field: EditableFieldPosition){
     }
 
     async ExportToExcel() {
-        this.CurrentSession.StartBusyIndicator("Exporting...");
-
-        const reportKey:string = this.StimulsoftArgData.ReportKey;
-        const tenant: string = this.StimulsoftArgData.Tenant.toString();
-        const reportCode: string = this.StimulsoftArgData?.ReportsPreviewComponent?.Report.Code;
-        const reportName: string = this.StimulsoftArgData?.ReportsPreviewComponent?.Report.LocalName;
-
-        const res: Blob = await this.reportService.GetExcel(reportKey, reportName, tenant, reportCode);
-        const blobUrl: string = window.URL.createObjectURL(res);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = reportName + ".xlsx";
-        link.click();
-        link.remove();
-
-        this.CurrentSession.StopBusyIndicator();
+        
+        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = true;
+       
+        if (this.StimulsoftArgData.ReportFilterConmponent) {
+            this.RunReport();
+        }
+        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = false;
     }
 }

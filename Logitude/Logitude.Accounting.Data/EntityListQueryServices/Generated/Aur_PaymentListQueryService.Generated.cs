@@ -94,6 +94,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             }
 						case "date":
                         case "datetime":
+						case "datetime2": 
                             {
                                 query2 = sortClass.GetSorterQuery<Aur_PaymentList, DateTime>(queryOperations, query2);
                                 break;

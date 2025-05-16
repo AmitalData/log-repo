@@ -70,6 +70,8 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 catch (Exception exception)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError($"failed to handle report execution exception: {exception.Message}");
+                    UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = exception });
+
                 }
             }
         }
@@ -125,7 +127,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 reportExecutionLog.ExecutedByServerName = reportExecutionLogArgs.ExecutedByServerName != null ? reportExecutionLogArgs.ExecutedByServerName : reportExecutionLog.ExecutedByServerName;
                 reportExecutionLog.ExceptionMessage = reportExecutionLogArgs.Exception != null ? GetFullExceptionMessageFromException(reportExecutionLogArgs.Exception) : reportExecutionLog.ExceptionMessage;
                 reportExecutionLog.DoneDate = reportExecutionLogArgs.DoneDate != null ? reportExecutionLogArgs.DoneDate : reportExecutionLog.DoneDate;
-                if (reportExecutionLog.RetryNumber >= 2 && reportExecutionLog.StatusCode != "D" && reportExecutionLogArgs.Exception != null)
+                if ( reportExecutionLog.StatusCode != "D" && reportExecutionLogArgs.Exception != null)
                 {
                     reportExecutionLog.StatusCode = "F";
                     reportExecutionLog.DoneDate = DateTime.Now;
@@ -139,17 +141,17 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         {
             ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Report execution log queue worker role start", null, null);
             if (queueResponse != null)
+         {
+          if (queueResponse.RetryNumber <= 1)
+         {
+               queueService.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
+           }
+             if (queueResponse.RetryNumber >= 2)
             {
-                if (queueResponse.RetryNumber <= 1)
-                {
-                    queueService.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
-                }
-                if (queueResponse.RetryNumber >= 2)
-                {
-                    queueService.CompleteAsFailed();
-                }
+              queueService.CompleteAsFailed();
             }
-            else queueService.CompleteAsFailed();
+           }
+          else queueService.CompleteAsFailed();
 
             UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = exception});
         }

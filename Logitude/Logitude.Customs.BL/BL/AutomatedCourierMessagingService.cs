@@ -17,6 +17,8 @@ using Devart.Data.Oracle;
 using Simplog.Data.Helpers;
 using System.Data.SqlClient;
 using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data;
+using System.Data.Entity;
 
 
 namespace Logitude.Customs.BL.BL
@@ -41,7 +43,8 @@ namespace Logitude.Customs.BL.BL
         }
         public void CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
-            
+
+
             if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment)
             {
                 return;
@@ -54,9 +57,19 @@ namespace Logitude.Customs.BL.BL
 
             var courierMasterRepo = new CourierMasterRepository(declarationCourierStatusPM.Tenant);
             var declarationPendingRepo = new DeclarationPendingRepository(declarationCourierStatusPM.Tenant);
-            var declarationRepo = new DeclarationRepository(declarationCourierStatusPM.Tenant);
 
-            Declaration declaration = null;
+            Declaration declaration;
+            using (var ctx = (CustomContext)CustomContext.GetContext(declarationCourierStatusPM.Tenant))
+            {
+                declaration = ctx.Declarations      
+                                 .AsNoTracking()
+                                 .FirstOrDefault(d => d.Id == declarationCourierStatusPM.DeclarationId && d.Tenant == declarationCourierStatusPM.Tenant);
+            }
+
+            if(declaration == null || declaration.IsAmendment == true)
+            {
+                return;
+            }
 
             if (_featureSendManifest && declarationCourierStatusPM.CourierManifestStatusCode == "R")
             {
@@ -70,19 +83,15 @@ namespace Logitude.Customs.BL.BL
                 && declarationCourierStatusPM.DocumentStatusCode == "V")
             {
 
-                declaration = declarationRepo.GetSingle(
-                    declarationCourierStatusPM.DeclarationId,
-                    declarationCourierStatusPM.Tenant);
-
-
                 bool hasActivePending = false;
                 if (declaration != null)
                 {
                     hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant, "A");
                 }
-                if (declaration != null &&
-                    !hasActivePending &&
-                    string.IsNullOrEmpty(declaration.ImporterCode))
+                bool importerOk =(string.IsNullOrEmpty(declaration.ImporterCode) && (string.IsNullOrEmpty(declaration.ImporterId))
+                    || !string.IsNullOrEmpty(declaration.ImporterId));
+
+                if (declaration != null && !hasActivePending && importerOk )
                 {
                     SendDeclaration(declarationCourierStatusPM);
                     return;
@@ -101,12 +110,6 @@ namespace Logitude.Customs.BL.BL
                     return;
                 }
 
-                if (declaration == null)
-                {
-                    declaration = declarationRepo.GetSingle(
-                        declarationCourierStatusPM.DeclarationId,
-                        declarationCourierStatusPM.Tenant);
-                }
 
                 if (declarationCourierStatusPM.CourierDeclarationStatusCode == "V")
                 {
@@ -131,7 +134,7 @@ namespace Logitude.Customs.BL.BL
             {
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
                 var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2755", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
-                if (requestInProgressList != null && requestInProgressList.Any())
+                if (requestInProgressList?.Exists(x => x.InterfaceTypeCode == "2755") == true)
                 {
                     return;
                 }
@@ -147,6 +150,7 @@ namespace Logitude.Customs.BL.BL
                         InterfaceTypeCode = "2755",
                         LoggingUserId = userId,
                         RequestVIA = SendRequestVIA.WebServiceBatch,
+                        FutureSendDateTime = DateTime.Now.AddMinutes(5),
                     };
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
 
@@ -180,7 +184,7 @@ namespace Logitude.Customs.BL.BL
                         LoggingEnabled = true,
                         LoggingObjectTableId = declarationObjectTableId,
                         LoggingEntityId = declarationCourierStatusPM.DeclarationId,
-                        FromAutomate = true, 
+                        FromAutomate = true,
                         AppicationId = declarationCourierStatusPM.DeclarationId,
                         InterfaceTypeCode = "2750",
                         LoggingUserId = userId,
@@ -203,14 +207,14 @@ namespace Logitude.Customs.BL.BL
         {
             try
             {
-
+                LogMessagingUtil.Instance.AppendLine($" Automated SendManifest({declarationCourierStatusPM.DeclarationId})");
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
                 var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
                 if (requestInProgressList != null && requestInProgressList.Any())
                 {
                     return;
                 }
-
+                LogMessagingUtil.Instance.AppendLine($"Didnt return Automated SendManifest({declarationCourierStatusPM.DeclarationId})");
                 var requestParams1170 = new MANIFESTRequestRequestParams()
                 {
                     Tenant = declarationCourierStatusPM.Tenant,

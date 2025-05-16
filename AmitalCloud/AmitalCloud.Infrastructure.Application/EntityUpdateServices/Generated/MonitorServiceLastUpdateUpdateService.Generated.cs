@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class MonitorServiceLastUpdateUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.MonitorServiceLastUpdate,MonitorServiceLastUpdatePM,IEntityPM,MonitorServiceLastUpdateList,string>
+   public partial class MonitorServiceLastUpdateUpdateService:BaseEntityUpdateService<POCO.MonitorServiceLastUpdate,MonitorServiceLastUpdatePM,IEntityPM,MonitorServiceLastUpdateList,string>
    {
    			
-        public MonitorServiceLastUpdateUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public MonitorServiceLastUpdateUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new MonitorServiceLastUpdateDataMapping();
-            Repository = new Repository<POCO.MonitorServiceLastUpdate>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.MonitorServiceLastUpdate>(mainContext);
         }
-        public MonitorServiceLastUpdateUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public MonitorServiceLastUpdateUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public MonitorServiceLastUpdateUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new MonitorServiceLastUpdateDataMapping();
+            Repository = new Repository<POCO.MonitorServiceLastUpdate>(tenant);
+		}
+        public MonitorServiceLastUpdateUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.MonitorServiceLastUpdate,string> GetKeys(MonitorServiceLastUpdatePM entityPM) => new MonitorServiceLastUpdateKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(MonitorServiceLastUpdatePM entityPM)
 		{

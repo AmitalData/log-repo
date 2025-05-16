@@ -15,18 +15,19 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
+
+
 namespace AmitalCloud.Infrastructure.Application.EntityQueryServices
 { 
-   public partial class BluesnapContractQueryService: BaseEntityQueryService<IGlobalContext,POCO.BluesnapContract,BluesnapContractKeys<string>,BluesnapContractPM,BluesnapContractList,string>
+   public partial class BluesnapContractQueryService: BaseEntityQueryService<POCO.BluesnapContract,BluesnapContractKeys<string>,BluesnapContractPM,BluesnapContractList,string>
    {
-        public BluesnapContractQueryService(int tenant) : this(GlobalContext.GetContext(tenant))  { }
+        public BluesnapContractQueryService(int tenant) : base(new Repository<POCO.BluesnapContract>(tenant),new BluesnapContractDataMapping()) {}
         public BluesnapContractQueryService(IGlobalContext context) : base(new Repository<POCO.BluesnapContract>(context),new BluesnapContractDataMapping()) {}
 		public  BluesnapContractPM GetSingle(string id,bool getComposition, bool getFromCache) => base.GetSingle(new BluesnapContractKeys<string>(){ Id = id }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.BluesnapContract,string> GetKeys(POCO.BluesnapContract entityPOCO) => new BluesnapContractKeys<string>() { Id = entityPOCO.Id,  };

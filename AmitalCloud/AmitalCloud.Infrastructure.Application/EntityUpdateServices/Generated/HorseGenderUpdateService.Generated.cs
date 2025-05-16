@@ -9,30 +9,32 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System.Web;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class HorseGenderUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.HorseGender,HorseGenderPM,IEntityPM,HorseGenderList,string>
+   public partial class HorseGenderUpdateService:BaseEntityUpdateService<POCO.HorseGender,HorseGenderPM,IEntityPM,HorseGenderList,string>
    {
    			
-        public HorseGenderUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public HorseGenderUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new HorseGenderDataMapping();
-            Repository = new Repository<POCO.HorseGender>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.HorseGender>(mainContext);
         }
-        public HorseGenderUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public HorseGenderUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public HorseGenderUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new HorseGenderDataMapping();
+            Repository = new Repository<POCO.HorseGender>(tenant);
+		}
+        public HorseGenderUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.HorseGender,string> GetKeys(HorseGenderPM entityPM) => new HorseGenderKeys<string>() { Code = entityPM.Code };
 protected override void FillDefaultValuesOnCreate(HorseGenderPM entityPM)
 		{

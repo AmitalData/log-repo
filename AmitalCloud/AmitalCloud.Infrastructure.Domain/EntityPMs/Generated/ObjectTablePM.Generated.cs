@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -100,8 +100,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		_supportSubEntity = entity.SupportSubEntity;
 		_applyGenericCustomFields = entity.ApplyGenericCustomFields;
 		_fullNameTextCodeId = entity.FullNameTextCodeId;
-		_fullnametextcode = entity.FullNameTextCode !=null ? new TextCodePM(entity.FullNameTextCode) : null;
-			_fullNameTextCodeCode = entity.FullNameTextCodeCode;
+		_fullNameTextCodeCode = entity.FullNameTextCodeCode;
 		_availableInDocumentTypes = entity.AvailableInDocumentTypes;
 		_dBTableShortName = entity.DBTableShortName;
    }
@@ -1228,14 +1227,6 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		   }
 		 }
 	   }
-		private TextCodePM _fullnametextcode;
-		[Include]
-        [DataMember]
-        public virtual TextCodePM FullNameTextCode 
-		{ 
-		get { return _fullnametextcode; } 
-		set { _fullnametextcode = value; }
-		}
 	  private string _fullNameTextCodeCode ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -1249,6 +1240,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeCode",OldValue=_fullNameTextCodeCode,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   _fullNameTextCodeCode=value;
+		   }
+		 }
+	   }
+	  private string _fullNameTextCodeDefaultText ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FullNameTextCodeDefaultText  
+	   {
+	     get { return _fullNameTextCodeDefaultText; }
+		 set
+		 {
+		   if(_fullNameTextCodeDefaultText != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullNameTextCodeDefaultText",OldValue=_fullNameTextCodeDefaultText,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _fullNameTextCodeDefaultText=value;
 		   }
 		 }
 	   }

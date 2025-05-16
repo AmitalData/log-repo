@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class HybridTenantStateKeys<T> : BaseEntityKeyFields<EntityPOCOs.HybridTenantState,T> 
+   public class HybridTenantStateKeys<T> : BaseEntityKeyFields<ENTITIES.HybridTenantState,T> 
    {
 		public HybridTenantStateKeys() : base() {}
         public HybridTenantStateKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -24,7 +25,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(Tenant.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "HybridTenantStatesPM";
-	  public override Expression<Func<EntityPOCOs.HybridTenantState, bool>> Predicate => a => a.Tenant == Tenant;
+	  public override Expression<Func<ENTITIES.HybridTenantState, bool>> Predicate => a => a.Tenant == Tenant;
    }
 }
 	 

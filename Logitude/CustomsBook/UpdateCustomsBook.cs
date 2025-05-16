@@ -388,7 +388,7 @@ namespace CustomsBook
 
 
         }
-        public static void StartStatic(Action<bool, bool> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
+        public static void StartStatic(Action<bool, bool,int> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
         {
             InjectionUtil.Init(CreateAmitalRestrictOwnerModelService: null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
 

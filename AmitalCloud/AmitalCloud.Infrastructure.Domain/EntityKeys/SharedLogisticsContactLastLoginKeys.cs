@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;  
 using System.Linq.Expressions;
+using ENTITIES = AmitalCloud.Infrastructure.Model.EntityClasses;
 namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 {
-   public class SharedLogisticsContactLastLoginKeys<T> : BaseEntityKeyFields<EntityPOCOs.SharedLogisticsContactLastLogin,T> 
+   public class SharedLogisticsContactLastLoginKeys<T> : BaseEntityKeyFields<ENTITIES.SharedLogisticsContactLastLogin,T> 
    {
 		public SharedLogisticsContactLastLoginKeys() : base() {}
         public SharedLogisticsContactLastLoginKeys(IEnumerable<KeyValuePair<string, string>> paramList) : base(paramList) {}
@@ -33,7 +34,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityKeys
 	    			   
 	  public override T GetFullKey() =>   (T)Convert.ChangeType(ContactId.ToString()+'_'+CardId.ToString()+'_'+PartnerTypeId.ToString()+'_'+Via.ToString(),typeof(T)) ;           
       public override string GetEntityPMName() => "SharedLogisticsContactLastLoginsPM";
-	  public override Expression<Func<EntityPOCOs.SharedLogisticsContactLastLogin, bool>> Predicate => a => a.ContactId == ContactId && a.CardId == CardId && a.PartnerTypeId == PartnerTypeId && a.Via == Via;
+	  public override Expression<Func<ENTITIES.SharedLogisticsContactLastLogin, bool>> Predicate => a => a.ContactId == ContactId && a.CardId == CardId && a.PartnerTypeId == PartnerTypeId && a.Via == Via;
    }
 }
 	 

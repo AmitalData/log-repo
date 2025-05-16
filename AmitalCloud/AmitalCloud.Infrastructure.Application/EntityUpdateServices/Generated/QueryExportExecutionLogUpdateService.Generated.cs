@@ -9,33 +9,34 @@ using System.Collections.Generic;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Threading.Tasks;
 using System;
 using AmitalCloud.Infrastructure.Data.Helpers;
 using System.Web;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.EntityKeys;
-using AmitalCloud.Infrastructure.Data;
 using AmitalCloud.Infrastructure.Domain.EntityLists;
 using AmitalCloud.Infrastructure.Data.EntityDataMappings;
-using AmitalCloud.Infrastructure.Domain.Interfaces;
-using AmitalCloud.Infrastructure.Data.Context;
 
 namespace AmitalCloud.Infrastructure.Application.EntityUpdateServices
 { 
-   public partial class QueryExportExecutionLogUpdateService:BaseEntityUpdateService<AmitalCloudContext,POCO.QueryExportExecutionLog,QueryExportExecutionLogPM,IEntityPM,QueryExportExecutionLogList,string>
+   public partial class QueryExportExecutionLogUpdateService:BaseEntityUpdateService<POCO.QueryExportExecutionLog,QueryExportExecutionLogPM,IEntityPM,QueryExportExecutionLogList,string>
    {
    			
-        public QueryExportExecutionLogUpdateService(IAmitalCloudContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
-            : base((AmitalCloudContext)mainContext,additionalContexts, tenant)
+        public QueryExportExecutionLogUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
         {
             Mapping = new QueryExportExecutionLogDataMapping();
-            Repository = new Repository<POCO.QueryExportExecutionLog>((AmitalCloudContext)mainContext);
+            Repository = new Repository<POCO.QueryExportExecutionLog>(mainContext);
         }
-        public QueryExportExecutionLogUpdateService(int tenant) : this(AmitalCloudContext.GetContext(tenant), null, tenant) {}
-        public QueryExportExecutionLogUpdateService(IAmitalCloudContext context) :  this(context, null, 0) {}
+        public QueryExportExecutionLogUpdateService(int tenant) :  base( tenant)  
+		{
+            Mapping = new QueryExportExecutionLogDataMapping();
+            Repository = new Repository<POCO.QueryExportExecutionLog>(tenant);
+		}
+        public QueryExportExecutionLogUpdateService(IContext context) :  this(context, null, 0) {}
 		protected override IEntityKeyFields<POCO.QueryExportExecutionLog,string> GetKeys(QueryExportExecutionLogPM entityPM) => new QueryExportExecutionLogKeys<string>() { Id = entityPM.Id };
 		protected override void FillDefaultValuesOnCreate(QueryExportExecutionLogPM entityPM)
 		{

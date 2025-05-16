@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 namespace AmitalCloud.Infrastructure.Domain.EntityLists
 {
@@ -32,7 +32,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
             DefaultTemplate  = default;
             Id  = default;
           RoutingRQuoteDefaultTemplateId  = entity.RoutingRQuoteDefaultTemplateId;
-            RoutingRQuoteDefaultTemplate  = default;
+            RoutingRQuoteDefaultTemplateName  = default;
        }
        #endregion Constructors
        #region Properties
@@ -55,7 +55,7 @@ namespace AmitalCloud.Infrastructure.Domain.EntityLists
        [DataMember]
        public string RoutingRQuoteDefaultTemplateId  { get; set; }
        [DataMember]
-       public string RoutingRQuoteDefaultTemplate  { get; set; }
+       public string RoutingRQuoteDefaultTemplateName  { get; set; }
          #endregion Properties
    }
 

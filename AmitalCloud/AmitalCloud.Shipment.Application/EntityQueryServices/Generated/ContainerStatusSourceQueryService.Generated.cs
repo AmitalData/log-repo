@@ -15,19 +15,20 @@ using System.ComponentModel.DataAnnotations;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using AmitalCloud.Infrastructure.Data.Repositories;
-using POCO = AmitalCloud.Shipment.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.Interfaces;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Shipment.Domain.EntityPMs;
 using AmitalCloud.Shipment.Data.EntityDataMappings;
 using AmitalCloud.Shipment.Domain.EntityKeys;
-using AmitalCloud.Shipment.Data.Context;
 using AmitalCloud.Shipment.Domain.EntityLists;
-using AmitalCloud.Shipment.Domain.Interfaces;
+
+
 namespace AmitalCloud.Shipment.Application.EntityQueryServices
 { 
-   public partial class ContainerStatusSourceQueryService: BaseEntityQueryService<IShipmentContext,POCO.ContainerStatusSource,ContainerStatusSourceKeys<string>,ContainerStatusSourcePM,ContainerStatusSourceList,string>
+   public partial class ContainerStatusSourceQueryService: BaseEntityQueryService<POCO.ContainerStatusSource,ContainerStatusSourceKeys<string>,ContainerStatusSourcePM,ContainerStatusSourceList,string>
    {
-        public ContainerStatusSourceQueryService(int tenant) : this(ShipmentContext.GetContext(tenant))  { }
-        public ContainerStatusSourceQueryService(IShipmentContext context) : base(new Repository<POCO.ContainerStatusSource>(context),new ContainerStatusSourceDataMapping()) {}
+        public ContainerStatusSourceQueryService(int tenant) : base(new Repository<POCO.ContainerStatusSource>(tenant),new ContainerStatusSourceDataMapping()) {}
+        public ContainerStatusSourceQueryService(IAmitalCloudContext context) : base(new Repository<POCO.ContainerStatusSource>(context),new ContainerStatusSourceDataMapping()) {}
 		public  ContainerStatusSourcePM GetSingle(string code,bool getComposition, bool getFromCache) => base.GetSingle(new ContainerStatusSourceKeys<string>(){ Code = code }, getComposition, getFromCache);
 	    protected override IEntityKeyFields<POCO.ContainerStatusSource,string> GetKeys(POCO.ContainerStatusSource entityPOCO) => new ContainerStatusSourceKeys<string>() { Code = entityPOCO.Code,  };
    }

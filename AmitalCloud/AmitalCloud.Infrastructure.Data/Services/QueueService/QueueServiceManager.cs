@@ -1,4 +1,5 @@
 ﻿using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using Microsoft.Practices.Unity;
 using System;
@@ -42,7 +43,7 @@ namespace AmitalCloud.Infrastructure.Data.Services
                     //customsDeploymentStage.ToString() + 
                     branch + "_" + savequeueName;
             }
-           
+
 
             return queueName;
 

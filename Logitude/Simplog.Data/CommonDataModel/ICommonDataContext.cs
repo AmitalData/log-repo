@@ -258,6 +258,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<Responsibility> Responsibilities { get; set; }
         IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
         IDbSet<ExternalLink> ExternalLinks { get; set; }
+        IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get; set; }
 
         void SetAsModified(object entity);
         void DetectChanges();

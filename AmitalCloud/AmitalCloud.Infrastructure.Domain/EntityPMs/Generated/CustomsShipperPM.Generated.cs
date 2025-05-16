@@ -16,7 +16,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -149,6 +149,38 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ValidityEndDate",OldValue=_validityEndDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   _validityEndDate=value;
+		   }
+		 }
+	   }
+	  private string _englishName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishName  
+	   {
+	     get { return _englishName; }
+		 set
+		 {
+		   if(_englishName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishName",OldValue=_englishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _englishName=value;
+		   }
+		 }
+	   }
+	  private string _shipperVAT ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ShipperVAT  
+	   {
+	     get { return _shipperVAT; }
+		 set
+		 {
+		   if(_shipperVAT != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipperVAT",OldValue=_shipperVAT,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _shipperVAT=value;
 		   }
 		 }
 	   }

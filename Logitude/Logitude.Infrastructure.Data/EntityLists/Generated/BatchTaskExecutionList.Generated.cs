@@ -28,7 +28,9 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string ClassName  { get; set; }
        [DataMember]
        public string PrametersXml  { get; set; }
-       [DataMember]
+        [DataMember]
+        public bool NotDisplayInMenu { get; set; }
+        [DataMember]
        public string StatusCode  { get; set; }
        [DataMember]
        public string ErrorLog  { get; set; }

@@ -1,9 +1,10 @@
 ﻿using AmitalCloud.Infrastructure.Data.Context;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
 using System;
 using System.Linq;
+using AmitalCloud.Infrastructure.Model.Interfaces;
 
 namespace AmitalCloud.Infrastructure.Data.Repositories
 {
@@ -30,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Data.Repositories
             {
                 token = token.Replace(" ", "+");
             }
-            return GetMulti(a => a.Token == token).FirstOrDefault();
+            return GetSingle(a => a.Token == token);
         }
         public static AuthenticationToken GetSingleTokenFromCache(string token)
         {

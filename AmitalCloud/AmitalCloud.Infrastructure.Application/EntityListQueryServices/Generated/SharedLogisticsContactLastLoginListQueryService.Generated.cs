@@ -8,17 +8,14 @@
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using System.Collections.Generic;
 using System.Linq;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs ;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses ;
 using AmitalCloud.Infrastructure.Domain.EntityLists ;
 using AmitalCloud.Infrastructure.Domain.EntityKeys ;
-using AmitalCloud.Infrastructure.Data.Context ;
-using AmitalCloud.Infrastructure.Domain.Interfaces ;
 namespace AmitalCloud.Infrastructure.Application.EntityListQueryServices
 { 
     public partial class SharedLogisticsContactLastLoginListQueryService  : BaseEntityListQueryService<SharedLogisticsContactLastLoginList,POCO.SharedLogisticsContactLastLogin,  SharedLogisticsContactLastLoginKeys<string>,string>
     {
-	    protected override System.Data.Entity.IDbSet<POCO.SharedLogisticsContactLastLogin> contextEntity => (context as IAmitalCloudContext).SharedLogisticsContactLastLogins;
-		public SharedLogisticsContactLastLoginListQueryService(int tenant) : base(AmitalCloudContext.GetContext(tenant)) { }
+		public SharedLogisticsContactLastLoginListQueryService(int tenant) : base(tenant) { }
         public SharedLogisticsContactLastLoginList GetSingle(string contactid, string cardid, string partnertypeid, string via)
 		{
 			IEnumerable<KeyValuePair<string, string>> paramList = new List<KeyValuePair<string, string>>() ;

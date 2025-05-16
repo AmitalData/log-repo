@@ -1,15 +1,10 @@
 import {Injectable} from '@angular/core';
-import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {TaxReportPM} from '../../EntityPMs/TaxReportPM';
-import {TaxReportLinePM} from '../../EntityPMs/TaxReportLinePM';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 
 @Injectable()
@@ -183,6 +178,18 @@ export class TaxReportExtendedPMService {
 
     }
 
+    getDuplicateInputs(reportId: string) {
+	    var callTime = new Date();
+
+       return this.httpClient.get(this._apiUrl+'/GetDuplicateInputs/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
+        map(response => {
+            var result = response;
+
+            return result;
+        }),
+        catchError(ServiceHelper.HandleServiceError));
+
+    }
 
     GetTaxReportReconciledLines(taxReportId: string)
     {

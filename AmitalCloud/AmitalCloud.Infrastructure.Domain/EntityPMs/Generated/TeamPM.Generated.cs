@@ -15,7 +15,7 @@ using AmitalCloud.Infrastructure.Domain.BaseClasses;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
-using POCO = AmitalCloud.Infrastructure.Domain.EntityPOCOs;
+using POCO = AmitalCloud.Infrastructure.Model.EntityClasses;
 
 
 
@@ -230,6 +230,22 @@ namespace AmitalCloud.Infrastructure.Domain.EntityPMs
 		get { return _manageruser; } 
 		set { _manageruser = value; }
 		}
+	  private string _managerUserName ;
+	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ManagerUserName  
+	   {
+	     get { return _managerUserName; }
+		 set
+		 {
+		   if(_managerUserName != value)
+		   {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ManagerUserName",OldValue=_managerUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   _managerUserName=value;
+		   }
+		 }
+	   }
 	  private string _notify ;
 	  	   [CustomValidation(typeof(IInfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]

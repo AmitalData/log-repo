@@ -111,7 +111,6 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<SharedUserQuery> SharedUserQueries { get; }
         IDbSet<DWCategories> DWCategories { get; }
         IDbSet<DWObjectFieldCategories> DWObjectFieldCategories { get; }
-        //IDbSet<SchedulerLogs> SchedulerLogs { get; }
         IDbSet<SchedulerProcedure> SchedulerProcedures { get; }
         IDbSet<WorkerRoleName> WorkerRoleNames { get; }
 
@@ -128,6 +127,8 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions { get; }
         IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
         IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs { get; }
+        IDbSet<SearchIndex> SearchIndexes { get; }
+        IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories { get; }
         DbContextTransaction GetSnapshotTransaction();
 
         void SetAsModified(object entity);
