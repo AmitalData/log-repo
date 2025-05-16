@@ -41,6 +41,11 @@ export class SIIRequestStatusPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private localName: string;
+    public get LocalName() { return this.localName; }
+    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
+       
+	 
 
     public OldEntityPM: SIIRequestStatusPM;
 		
