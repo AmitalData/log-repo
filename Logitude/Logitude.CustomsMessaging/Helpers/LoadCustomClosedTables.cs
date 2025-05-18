@@ -1433,7 +1433,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> entitySystemTables = null;
             bool errorHandel = false;
             int rowUpdateAdded = 0;
-            int tenant= SettingUtil.GetCurrentTenant();            
+            int tenant= SettingUtil.GetCurrentTenant();
+            if(tenant == -1)
+            {
+                tenant = requestParams.Tenant;
+            }
             ICustomContext customContext = CustomContext.GetContext(tenant);
             CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
             CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = tableId });
@@ -1445,7 +1449,6 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                    
 
                     InitializeSettings();
-
                     ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
 
                     table.StatusCode = "2";
