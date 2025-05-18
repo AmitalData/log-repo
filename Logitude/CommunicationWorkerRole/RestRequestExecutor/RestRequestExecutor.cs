@@ -13,6 +13,15 @@ namespace CommunicationWorkerRole.RestRequestExecutor
 {
     public class RestRequestExecutor
     {
+        private static readonly string SoapEnvelopeTemplate = @"<?xml version=""1.0"" encoding=""utf-8""?>
+             <soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
+               xmlns:xsd=""http://www.w3.org/2001/XMLSchema""
+               xmlns:soap=""http://schemas.xmlsoap.org/soap/envelope/"">
+               <soap:Body>
+               {0}
+              </soap:Body>
+           </soap:Envelope>";
+
         private readonly AsyncRetryPolicy<HttpResponseMessage> _retryPolicy;
         public RestRequestExecutor()
         {
@@ -46,9 +55,7 @@ namespace CommunicationWorkerRole.RestRequestExecutor
                     var httpClient = new HttpClient {Timeout = TimeSpan.FromMilliseconds(request.Header.Timeout)};
                     var httpRequest = BuildHttpRequest(request);
                     var result = await httpClient.SendAsync(httpRequest);
-                    rawResponseContent = await result.Content.ReadAsStringAsync();
-                    //var result =  httpClient.SendAsync(httpRequest);
-                    //rawResponseContent = result.Result?.Content?.ReadAsStringAsync()?.Result;
+                    rawResponseContent = await result.Content.ReadAsStringAsync();                    
                     return result;
                 });
 
@@ -85,14 +92,12 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             if (request.Data != null && MethodSupportsBody(request.Header.Method))
             {
                 if (request.IsSoapRequest)
-                {
-                    var xmlBody = SerializeToXml(request.Data);
-                    var soapBody = WrapWithSoapEnvelope(xmlBody);
+                {                    
+                    var soapBody =  string.Format(SerializeToXml(request.Data)); 
                     httpRequest.Content = new StringContent(soapBody, Encoding.UTF8, "text/xml");
                 }
                 else
                 {
-
                     httpRequest.Content = new StringContent(JsonConvert.SerializeObject(request.Data), Encoding.UTF8, request.Header.ContentType);
                 }
             }
@@ -166,20 +171,7 @@ namespace CommunicationWorkerRole.RestRequestExecutor
                 throw new ValidationServiceException("Header must be provided.", nameof(request.Header));
             if (request.Header.Method == null)
                 throw new ValidationServiceException("Method must be provided.", nameof(request.Header.Method));
-        }
-
-        private string WrapWithSoapEnvelope(string innerXml)
-        {
-            return $@"<?xml version=""1.0"" encoding=""utf-8""?>
-                 <soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
-                   xmlns:xsd=""http://www.w3.org/2001/XMLSchema""
-                   xmlns:soap=""http://schemas.xmlsoap.org/soap/envelope/"">
-                   <soap:Body>
-                       {innerXml}
-                    </soap:Body>
-                </soap:Envelope>";
-        }
-
+        }        
         private string SerializeToXml<T>(T data)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
