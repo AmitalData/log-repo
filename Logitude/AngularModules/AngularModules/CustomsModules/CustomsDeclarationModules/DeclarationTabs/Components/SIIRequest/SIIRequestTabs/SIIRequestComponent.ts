@@ -106,7 +106,13 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.supplierInvoiceItemsForSIIRequest = args.supplierInvoiceItemsForSIIRequest;
         this.supplierInvoiceItemsCollection = new ObservableCollection([]);
         this.originalSupplierInvoiceItemsCollection = new ObservableCollection([]);
+        this.initFullData();
+    }
+
+    initFullData() {
         this.buildSupplierInvoiceItemsCollection();
+        this.DemandStateFilterItemClicked(this.filterOptionsWithResponse);
+        if (!AppTool.IsNullOrEmpty(this.entityPM?.ContactId)) this.getUserData(this.entityPM.ContactId);
     }
 
     // #region Actions:
@@ -119,11 +125,76 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     SaveSiiRequest() {
-        this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
-        this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
-        this.CurrentSession.CloseCurrentWindow();
-        console.log(this.entityPM);
-        console.log(this.SelectedRowsCheckBox.length);
+        if (this.IsNewOrEdit === SiiRequestMode.IsNew) {
+            this.siiRequestPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                if (response.ErrorsArray.length === 0 && response?.Result) {
+                    this.entityPM = response.Result;
+                    this.IsNewOrEdit = SiiRequestMode.IsEdit;
+                    this.IsDisplayOnly = false;
+                    this.isAllowChange = true;
+                    this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
+                    this.CurrentSession.CloseCurrentWindow();
+                }
+                else if (response.ErrorsArray.length > 0) {
+                    this.validationErrors = response.ErrorsArray;
+                    this.CheckMandatoryCustomsFields(this.validationErrors);
+                }
+            });
+        }
+        else if (this.IsNewOrEdit === SiiRequestMode.IsEdit) {
+            this.siiRequestPMService.update(this.entityPM).subscribe((response: ServiceResponse) => {
+                if (response?.Result) {
+                    this.entityPM = response.Result;
+                    this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
+                    this.CurrentSession.CloseCurrentWindow();
+                }
+                else if (response.ErrorsArray.length > 0) {
+                    this.validationErrors = response.ErrorsArray;
+                    this.CheckMandatoryCustomsFields(this.validationErrors);
+                }
+            });
+        }
+    }
+
+    CheckMandatoryCustomsFields(ValidationErrors: any[]) {
+        var windowArgs: any = {};
+        windowArgs.Errors = ValidationErrors;
+        // windowArgs.Warning = ValidationErrors;
+        windowArgs.NoButtonVisibility = false;
+        windowArgs.CancelButtonVisibility = true;
+        windowArgs.SaveButtonText = "אשר";
+        windowArgs.CancelButtonText = "בטל";
+        windowArgs.ComponentHeight = '328px';
+        // TODO: replace to TTextCodeTranslator.Translate()
+        var windowTitle = "שגיאה במילוי שדות חובה במסך ";
+        var logWindow = new LogitudeWindow(this.CurrentSession);
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if (this.TaxationWindowClosed($event))
+                return true; // TODO: change to return action like save or send or nothing
+            else
+                return false;
+        });
+
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+    validationErrors: string[] = [];
+    TaxationWindowClosed(event) {
+        this.validationErrors = [];
+        switch (event) {
+            case "ok": {
+                return true;
+            }
+            case "cancel": {
+                return false;
+            }
+        }
     }
 
     SendSiiRequest(event: any) {
@@ -200,7 +271,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("WareHouseAddress", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("WareHouseCity", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("IsClosed", this.ObjectTableNameSiiRequest, enabled);
-        this.UIProperties.SetEnabled("WareHouseCityName", this.ObjectTableNameSiiRequest, enabled);
+        // this.UIProperties.SetEnabled("WareHouseCityName", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("SupplierInvoiceItemsReqLists", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("Remarks", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("ListCounter", this.ObjectTableNameSiiRequest, enabled);
@@ -286,7 +357,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#endregion
 
     //#region DemandState Filter Methods
-    public DemandStateFilterSelectedValue: string = this.filterOptionsWithResponse;
+    public DemandStateFilterSelectedValue: string = this.filterOptionsAll;
     DemandStateFilterItemClicked(itemValue: string) {
         if (this.DemandStateFilterSelectedValue !== itemValue) {
             this.DemandStateFilterSelectedValue = itemValue;
@@ -298,7 +369,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
         }
     }
-    
+
     private isValidDemandState(value: string): boolean {
         return (Object.values(DemandStateFilterOptions) as string[]).includes(value);
     }

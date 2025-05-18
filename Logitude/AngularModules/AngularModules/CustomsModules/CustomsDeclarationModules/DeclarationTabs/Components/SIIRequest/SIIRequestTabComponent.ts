@@ -68,6 +68,10 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         });
       });
     });
+    this.initFullScreen();
+  }
+
+  initFullScreen() {
     this.DisplayOnlyCheck();
     this.loadRequests();
   }
@@ -180,6 +184,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
       this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
       this.ReloadMyScreen();
       this.isOpen = false;
+      this.initFullScreen();
     });
   }
 
