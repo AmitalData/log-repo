@@ -17,7 +17,7 @@
 	/* width: 82vh; */
 	left: 353px;
 	max-width: 543px;
-    min-width: 543px;
+	min-width: 543px;
 	height: 22px;
 	gap: 20px;
 }
@@ -85,6 +85,23 @@
 	.CategoriesTable {
 		display: flex !important;
 	}
+
+	.mainTable_top>ul {
+		max-width: 543px;
+		min-width: 385px;
+	}
+}
+
+@media (min-width: 1366px) {
+	.mainTable_top>ul {
+		min-width: 415px;
+	}
+}
+
+@media (min-width: 1500px) {
+	.mainTable_top>ul {
+		min-width: 543px;
+	}
 }
 
 /* Media Queries for Responsive Design */
@@ -99,6 +116,7 @@
 		top: 176px;
 	}
 }
+
 @media (min-width: 1010px) {
 	.mainTable_top {
 		top: 75px;

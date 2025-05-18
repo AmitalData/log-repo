@@ -200,13 +200,13 @@ export class DataRowComponent implements OnInit {
 		isExistData = !isExistData && this.data?.MeasurementUnitName && this.level > 3 ? true : isExistData;
 		// Set width:
 		if (isExistData && this.screenWidth > 1199 && this.screenWidth < 1300) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "10%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "30%");
 		}
 		else if (isExistData && this.screenWidth >= 1301 && this.screenWidth < 1350) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "16%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "35%");
 		}
 		else if (isExistData && this.screenWidth >= 1351 && this.screenWidth < 1700) {
-			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "25%");
+			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "36%");
 		}
 		else if (isExistData && this.screenWidth >= 1701 && this.screenWidth < 1900) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "40%");
@@ -229,10 +229,10 @@ export class DataRowComponent implements OnInit {
 		else if (this.screenWidth > 900 && this.screenWidth <= 990) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "80%");
 		}
-		else if (this.screenWidth > 990 && this.screenWidth <= 1350) {
+		else if (this.screenWidth > 990 && this.screenWidth <= 1351) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "83%");
 		}
-		else if (this.screenWidth > 1350 && this.screenWidth <= 1550) {
+		else if (this.screenWidth > 1351 && this.screenWidth <= 1550) {
 			this.renderer.setStyle(this.dynamicDiv.nativeElement.children[0], 'width', "88%");
 		}
 		else if (this.screenWidth > 1550) {
