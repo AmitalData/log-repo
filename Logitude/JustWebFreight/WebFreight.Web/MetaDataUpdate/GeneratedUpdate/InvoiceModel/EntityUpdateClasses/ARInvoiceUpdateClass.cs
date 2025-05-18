@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
- 		public const string HashString = "339fa79e1f1562f92e64c6480de12dee";
+		public const string HashString = "b11edca9e91444412d56291b34bb5184";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15220,6 +15220,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsApprovalFailed",
+					  						ObjectTableName =  "ARInvoice",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsApprovalFailed",
+					  						ListPropertyPath =  "IsApprovalFailed",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ARInvoice",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsApprovalFailed",
+					  						DefaultText =  "Is Approval Failed ",
+					  						ListFieldLable =  "IsApprovalFailedListLable",
+					  						ListLableDefaultText =  "IsApprovalFailed ",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -15303,6 +15366,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 			   TextCode ARInvoiceTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.SATInvoicesWaitingCancellation", DefaultText = @"SAT Waiting for Cancellation",LocalDefaultText = "SAT מחכה לביטול", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARInvoiceFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoice.Q.SATInvoicesWaitingCancellation", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceFeatures.SATInvoicesWaitingCancellation", NameTextCodeDefaultText = "SATInvoicesWaitingCancellation", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ARInvoiceTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.FailedInvoice", DefaultText = @"Failed Invoice",LocalDefaultText = "חשבוניות בסטטוס נכשל", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ARInvoiceFeature_15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ARInvoice.Q.FailedInvoice", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoiceFeatures.FailedInvoice", NameTextCodeDefaultText = "Failed Invoice", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -15848,6 +15915,41 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			 QueryColumn SATInvoicesWaitingCancellationQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ARInvoice.AmountDue" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter SATInvoicesWaitingCancellationQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.SATTransferStatusCode", PredefinedValue = "CS",PredefinedValue2 = null, CustomPredefined = false, QueryId = SATInvoicesWaitingCancellationQuery.Id,QueryCode = SATInvoicesWaitingCancellationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query FailedInvoiceQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ARInvoiceTextCode_15.Id, NameTextCodeCode = ARInvoiceTextCode_15.Code, ObjectTableName = "ARInvoice", Code = "Failed Invoice",  QueryGroupCode = "INVC", IndexOrder = 15, Tenant = 0, ObjectTableId = ARInvoiceObjectTable.Id, QuerySection = "ARInvoice", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ARInvoiceFeature_15.Id,FeatureUniqeCode= ARInvoiceFeature_15.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn FailedInvoiceQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ARInvoice.IsPrinted" , ColumnWidth = 30 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ARInvoice.IsSigned" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ARInvoice.IsSignedName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ARInvoice.Sent" , ColumnWidth = 30 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ARInvoice.InvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ARInvoice.ARInvoiceTypeName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ARInvoice.BillToName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ARInvoice.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ARInvoice.DueDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ARInvoice.InvoiceCurrencyCode" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ARInvoice.AmountInInvoiceCurrency" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ARInvoice.AmountDue" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ARInvoice.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn FailedInvoiceQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ARInvoice.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
+
+             AdvancedQueryFilter FailedInvoiceQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ARInvoice.IsApprovalFailed", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = FailedInvoiceQuery.Id,QueryCode = FailedInvoiceQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -16496,6 +16598,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
                 Code =  "CNF",
                 EnglishName =  "Confirmation number failed",
                 LocalName =  "כשלון בקבלת הקצאה",
+                IsManualEntry =  true,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "APF",
+                EnglishName =  "Approving failed",
+                LocalName =  "Approving failed",
                 IsManualEntry =  true,
                 ShortView =  true,
                 IsAgentView =  false,

@@ -49,6 +49,11 @@ export class TenantIdleStatusPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private objectTable: string;
+    public get ObjectTable() { return this.objectTable; }
+    public set ObjectTable(newValue: string) { if (this.objectTable != newValue) { this.objectTable = newValue; this.MarkAsDirty("ObjectTable"); } }
+       
+	 
 
     public OldEntityPM: TenantIdleStatusPM;
 		

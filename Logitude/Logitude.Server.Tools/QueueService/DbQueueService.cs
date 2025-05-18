@@ -439,7 +439,7 @@ namespace Logitude.Server.Tools.QueueService
             }
         }
 
-        public QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null)
+        public QueueResponse ReceiveDetailsByTenant(string objectTable, TimeSpan? serverWaitTime = null)
         {
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
 
@@ -539,7 +539,7 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
-                            SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek_Jouranl_Approval]", cn);
+                            SqlCommand cmd = new SqlCommand("[dbo].[usp_Queue_Peek_ThreadPerTenant]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
                             SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
@@ -547,6 +547,7 @@ namespace Logitude.Server.Tools.QueueService
                             SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
                             SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
                             SqlParameter tenantPar = new SqlParameter("@Tenant", SqlDbType.Int);
+                            SqlParameter objectTablePar = new SqlParameter(parameterName: "@ObjectTable", SqlDbType.VarChar, 25);
 
                             messageIdPar.Direction = ParameterDirection.Output;
                             messageBodyPar.Direction = ParameterDirection.Output;
@@ -554,9 +555,11 @@ namespace Logitude.Server.Tools.QueueService
                             retryNumberPar.Direction = ParameterDirection.Output;
                             watingStatusPar.Direction = ParameterDirection.Input;
                             tenantPar.Direction = ParameterDirection.Output;
+                            objectTablePar.Direction = ParameterDirection.Input;
 
                             queueCodePar.Value = QueueCode;
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
+                            objectTablePar.Value = objectTable;
 
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
@@ -564,6 +567,7 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(queueCodePar);
                             cmd.Parameters.Add(watingStatusPar);
                             cmd.Parameters.Add(tenantPar);
+                            cmd.Parameters.Add(objectTablePar);
 
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();
@@ -616,7 +620,7 @@ namespace Logitude.Server.Tools.QueueService
             return response;
         }
 
-        public void FreeTenants()
+        public void FreeTenants(string objectTable)
         {
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = System.Transactions.IsolationLevel.ReadCommitted }))
             {
@@ -626,7 +630,12 @@ namespace Logitude.Server.Tools.QueueService
                 {
                     SqlCommand cmd = new SqlCommand("[dbo].[SetTenantIdleProcedure]", cn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    
+                    SqlParameter objectTablePar = new SqlParameter(parameterName: "@ObjectTable", SqlDbType.VarChar, 25);
+                    objectTablePar.Direction = ParameterDirection.Input;
+                    objectTablePar.Value = objectTable;
+                    cmd.Parameters.Add(objectTablePar);
+
+
                     cn.Open();
                     cmd.ExecuteNonQuery();
                     cn.Close();
