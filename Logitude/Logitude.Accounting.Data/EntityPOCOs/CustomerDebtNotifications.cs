@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Accounting.Data.EntityPOCOs
+{
+   
+    public class CustomerDebtNotification
+    {
+	 string dbms;
+
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
+        [Column("InActive")]
+	    public string InActive { get; set; }
+        [Column("TypesDebts")]
+	    public string TypesDebts { get; set; }
+        [Column("DebtLevel")]
+	    public string DebtLevel { get; set; }
+        [Column("DebtLevelAmount")]
+	    public decimal DebtLevelAmount { get; set; }
+        [ForeignKey("TasksScheduler")]
+        [Column("TasksSchedulerId")]
+	    public string TasksSchedulerId { get; set; }
+	      
+        public virtual TasksScheduler TasksScheduler { get; set; }
+        [Column("PaymentNotes")]
+	    public string PaymentNotes { get; set; }
+    }
+}
+	 

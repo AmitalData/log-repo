@@ -132,6 +132,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new CopyFromTenant0Map());
 	
+            modelBuilder.Configurations.Add(new CustomerDebtNotificationMap());
+	
             modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
 	
             modelBuilder.Configurations.Add(new ExternalReconciliationMap());
@@ -280,6 +282,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<BankDeposit>().Property(x => x.ForeignAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<CashBook>().Property(x => x.TotalAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<CustomerDebtNotification>().Property(x => x.DebtLevelAmount).HasPrecision(6, 3);
 				
 			modelBuilder.Entity<ExternalPageAdditionalData>().Property(x => x.LastPageCloseBalance).HasPrecision(16, 2);
 				
@@ -916,6 +920,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<CopyFromTenant0> CopyFromTenant0 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomerDebtNotification> CustomerDebtNotifications 
 	 {
 	      get; set;
 	 

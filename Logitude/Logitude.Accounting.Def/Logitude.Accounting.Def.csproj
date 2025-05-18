@@ -118,6 +118,7 @@
     <Compile Include="EntityPMs\Generated\ChartOfAccountsTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChequeCounterSerialPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CopyFromTenant0PM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomerDebtNotificationsPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalPageAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />

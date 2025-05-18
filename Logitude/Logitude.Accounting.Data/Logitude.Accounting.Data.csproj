@@ -112,6 +112,7 @@
     <Compile Include="EntityKeys\CalculatedChartsOfAccountsLineKeys.cs" />
     <Compile Include="EntityKeys\ChequeCounterSerialKeys.cs" />
     <Compile Include="EntityKeys\CopyFromTenant0Keys.cs" />
+    <Compile Include="EntityKeys\CustomerDebtNotificationsKeys.cs" />
     <Compile Include="EntityKeys\ExternalPageAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountAgingDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountCardsDataKeys.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="EntityListQueryServices\CalculatedChartsOfAccountsLineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ChequeCounterSerialListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CopyFromTenant0ListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomerDebtNotificationsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExternalPageAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingEntityJournalListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingIntegrityCheckListQueryService.Generated.cs" />
@@ -170,6 +172,7 @@
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountsLineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ChequeCounterSerialListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CopyFromTenant0ListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomerDebtNotificationsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExternalPageAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountAgingDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountCardsDataListQueryService.Generated.cs" />
@@ -249,6 +252,7 @@
     <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountsLineList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ChequeCounterSerialList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CopyFromTenant0List.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomerDebtNotificationsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExternalPageAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountAgingDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountCardsDataList.Generated.cs" />
@@ -296,6 +300,7 @@
     <Compile Include="EntityMapping\CalculatedChartsOfAccountsLineMap.cs" />
     <Compile Include="EntityMapping\ChequeCounterSerialMap.cs" />
     <Compile Include="EntityMapping\CopyFromTenant0Map.cs" />
+    <Compile Include="EntityMapping\CustomerDebtNotificationsMap.cs" />
     <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountAgingDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountCardsDataMap.cs" />
@@ -342,6 +347,7 @@
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccountsLine.cs" />
     <Compile Include="EntityPOCOs\ChequeCounterSerial.cs" />
     <Compile Include="EntityPOCOs\CopyFromTenant0.cs" />
+    <Compile Include="EntityPOCOs\CustomerDebtNotifications.cs" />
     <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
     <Compile Include="EntityPOCOs\GLAccountAgingData.cs" />
     <Compile Include="EntityPOCOs\GLAccountCardsData.cs" />
@@ -383,9 +389,9 @@
     <Compile Include="Enums\GLAccountTypes.cs" />
     <Compile Include="Enums\InterestEntityTypes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
-     <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
-     <Compile Include="Enums\JournalActionTypes.cs" />
-     <Compile Include="Enums\RevaluationStatusEnum.cs" />
+    <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
+    <Compile Include="Enums\JournalActionTypes.cs" />
+    <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
@@ -393,6 +399,7 @@
     <Compile Include="Repositories\CalculatedChartsOfAccountsLineRepository.cs" />
     <Compile Include="Repositories\ChequeCounterSerialRepository.cs" />
     <Compile Include="Repositories\CopyFromTenant0Repository.cs" />
+    <Compile Include="Repositories\CustomerDebtNotificationsRepository.cs" />
     <Compile Include="Repositories\Generated\AccountingEntityJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\ARPaymentsJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsLineTypeRepository.Generated.cs" />
@@ -400,6 +407,7 @@
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountsLineRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\ChequeCounterSerialRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CopyFromTenant0Repository.Generated.cs" />
+    <Compile Include="Repositories\Generated\CustomerDebtNotificationsRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountFollowUpDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountRecocileDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountAgingDataRepository.Generated.cs" />
