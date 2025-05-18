@@ -11,7 +11,7 @@
     Size="5">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
+      Nullable="false" /> 
   </Column>
   <Column
     Name="LocalName"
