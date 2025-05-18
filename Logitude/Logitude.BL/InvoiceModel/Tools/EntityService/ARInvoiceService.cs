@@ -481,7 +481,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
         }
-        private void SetConfirmationNumberStatus()
+        public void SetConfirmationNumberStatus()
         {
             var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
                                              where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate && a.InActive == false
@@ -499,6 +499,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             }
         }
+
 
         private static string[] GetStack(int removeLines)
         {
@@ -548,7 +549,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
 
                     }
-                    //entityPM.ConfirmationNumber=
                 }
 
                 else

@@ -74,8 +74,8 @@
     <None Include="DBOthers\SProcedures\usp_Queue_Peek_ThreadPerTenant.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
-     <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
-     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
+    <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
+    <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateLTForeign.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateLTLocal.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
@@ -235,6 +235,7 @@
     <None Include="DBTables\JournalStatusType.dxml" />
     <None Include="DBTables\JournalType.dxml" />
     <None Include="DBTables\LedgerTransaction.dxml" />
+    <None Include="DBTables\MagayaSteps.dxml" />
     <None Include="DBTables\OpenFormatReport.dxml" />
     <None Include="DBTables\OpenFormatReportStatus.dxml" />
     <None Include="DBTables\PaymentCheque.dxml" />
@@ -311,6 +312,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\BankPageEntryType.lxml" />
+    <None Include="EntityFiles\MagayaSteps.lxml" />
     <None Include="EntityFiles\OpenFormatReport.lxml" />
     <None Include="EntityFiles\OpenFormatReportStatus.lxml" />
     <None Include="EntityFiles\PaymentCheque.lxml" />
