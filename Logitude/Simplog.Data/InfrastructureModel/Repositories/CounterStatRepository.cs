@@ -104,11 +104,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             }
         }
 
-        //public int GetLargestLastValueOfCounterStatsByCounterId(string counterId, int tenant)
-        //{
-        //    IQueryable<CounterStat> x = context.CounterStats.Where(d => d.Tenant == tenant && d.CounterId == counterId);
-        //    if (x.Count() == 0) return 0;
-        //    return x.Max(d => d.LastValue);
-        //}
+
+        public CounterStat GetSingleCounter(int id, int tenant)
+        {
+            return context.CounterStats.Where(d => d.Tenant == tenant && d.Id == id).FirstOrDefault();
+        }
+
+        
     }
 }

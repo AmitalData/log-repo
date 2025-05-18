@@ -7,10 +7,9 @@ namespace Logitude.Server.Tools.QueueService
     {
         void InitializeQueue(string queueCode, int tenant);
         void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null);
-        //QueueResponse Receive();
         QueueResponse Receive(TimeSpan? serverWaitTime = null);
 
-        QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null);
+        QueueResponse ReceiveDetailsByTenant(string objectTable, TimeSpan? serverWaitTime = null);
         void Complete();
         void Delay(TimeSpan delayTime);
         void Return();
@@ -20,9 +19,6 @@ namespace Logitude.Server.Tools.QueueService
 
     public partial class QueueResponse
     {
-        
-        //public bool HasError { get; set; }
-        //public string ErrorMessage { get; set; }
         public string MessageId { get; set; }
         public int RetryNumber { get; set; }
         public int Tenant { get; set; }
@@ -34,7 +30,7 @@ namespace Logitude.Server.Tools.QueueService
         public DateTime? MessageCreatedServerTime { get; set; }
     }
 
-    public partial class CustomDBQueueMessage //: QueueResponse//Oracle Extention
+    public partial class CustomDBQueueMessage
     {
         //private QueueResponse q;
         private CustomDbQueueModel CustomDbQueueParams;
@@ -57,7 +53,6 @@ namespace Logitude.Server.Tools.QueueService
         public CustomDBQueueMessage(QueueResponse q, CustomDbQueueModel CustomDbQueueParams)
             :this(q)
         {
-            // TODO: Complete member initialization
             
             this.CustomDbQueueParams = CustomDbQueueParams;
         }

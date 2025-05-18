@@ -256,11 +256,11 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
 
         var isEnabled = true;
 
-        if (this.father.TransferStatusCode == "TR") {
+        if (this.father.TransferStatusCode === "TR") {
             isEnabled = false;
         }
 
-        else if (this.invoicePM.StatusCode == "DR" || this.invoicePM.StatusCode == "LL") {
+        else if (this.invoicePM.StatusCode === "DR" || this.invoicePM.StatusCode === "LL" || this.invoicePM.StatusCode === "PR") {
             isEnabled = false;
         }
 

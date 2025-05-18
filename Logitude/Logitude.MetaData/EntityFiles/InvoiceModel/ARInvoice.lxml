@@ -18378,6 +18378,80 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;787b8ef4-7a55-416d-b83b-278cfd6f5291&quot;"
+    FieldName="&quot;IsApprovalFailed&quot;"
+    OldNames="IsApprovalFailed"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    FieldsDataType="&quot;Boolean&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;IsApprovalFailed&quot;"
+    ListPropertyPath="&quot;IsApprovalFailed&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARInvoice&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;IsApprovalFailed&quot;"
+    DefaultText="&quot;Is Approval Failed &quot;"
+    ListFieldLable="&quot;IsApprovalFailedListLable&quot;"
+    ListLableDefaultText="&quot;IsApprovalFailed &quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
    <Query
     Code="&quot;Draft General Invoices&quot;"
     TextCode="&quot;Draft Invoices&quot;"
@@ -19919,6 +19993,103 @@
         CustomPredefined="false" />
     </QueryFilters>
   </Query>
+  <Query
+    Code="&quot;Failed Invoice&quot;"
+    TextCode="&quot;Failed Invoice&quot;"
+    LocalTextCode="&quot;חשבוניות בסטטוס נכשל&quot;"
+    QueryGroupCode="&quot;INVC&quot;"
+    IndexOrder="15"
+    ObjectTableName="&quot;ARInvoice&quot;"
+    QuerySection="&quot;ARInvoice&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;IsPrinted&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;IsSigned&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;IsSignedName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Sent&quot;"
+        ColumnWidth="30" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;InvoiceNumber&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;ARInvoiceTypeName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;BillToName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;InvoiceCurrencyCode&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;AmountInInvoiceCurrency&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;AmountDue&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="130" />
+      <QueryColumn
+        QueryCode="&quot;Failed Invoice&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;Failed Invoice&quot;"
+        PredefinedValue="&quot;true&quot;"
+        ObjectFieldName="&quot;IsApprovalFailed&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;ARInvoice&quot;"
@@ -20562,6 +20733,19 @@
       ObjectTableName="&quot;ARInvoice&quot;"
       EnglishName="&quot;Confirmation number failed&quot;"
       LocalName="&quot;כשלון בקבלת הקצאה&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;APF&quot;"
+      ObjectTableName="&quot;ARInvoice&quot;"
+      EnglishName="&quot;Approving failed&quot;"
+      LocalName="&quot;Approving failed&quot;"
       IsManualEntry="true"
       ShortView="true"
       IsAgentView="false"

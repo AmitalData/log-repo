@@ -43,4 +43,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="ObjectTable"
+    Type="varchar"
+    Size="25"
+    DefaultValue="'Journal'">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
 </Table>

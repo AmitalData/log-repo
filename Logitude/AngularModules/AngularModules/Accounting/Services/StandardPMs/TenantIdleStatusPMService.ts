@@ -32,12 +32,12 @@ export class TenantIdleStatusPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/tenantidlestatuses';      
     }
 
-	get(id: string) {       
+	get(id: string, objecttable: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id+'&'+'objecttable=' + objecttable, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class TenantIdleStatusPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TenantIdleStatus", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "TenantIdleStatus", "GetSinglePM", 'id=' + id+'&'+'objecttable=' + objecttable);
 				 
 						return serviceResponse;
 
