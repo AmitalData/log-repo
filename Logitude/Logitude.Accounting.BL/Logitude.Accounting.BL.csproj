@@ -632,6 +632,7 @@
     <Compile Include="EntityDataMappings\ChartOfAccountsTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ChequeCounterSerialDataMapping.cs" />
     <Compile Include="EntityDataMappings\CopyFromTenant0DataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerDebtNotificationsDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalPageAdditionalDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalReconciliationDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalReconciliationLineDataMapping.cs" />
@@ -672,6 +673,7 @@
     <Compile Include="EntityDataMappings\Generated\ChartOfAccountsTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ChequeCounterSerialDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CopyFromTenant0DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerDebtNotificationsDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalPageAdditionalDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationLineDataMapping.Generated.cs" />
@@ -853,6 +855,7 @@
     <Compile Include="EntityQueryServices\Generated\CalculatedChartsOfAccountsLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ChequeCounterSerialQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CopyFromTenant0QueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerDebtNotificationsQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalPageAdditionalDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationQueryService.Generated.cs" />
@@ -962,6 +965,7 @@
     <Compile Include="EntityUpdateServices\Generated\Aur_TimesheetUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TenantIdleStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomerDebtNotificationsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />
