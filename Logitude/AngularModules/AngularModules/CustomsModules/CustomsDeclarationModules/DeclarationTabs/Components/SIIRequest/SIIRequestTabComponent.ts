@@ -107,7 +107,11 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.siiRequestList = response.Result;
         this.ItemsSource.Clear();
         let counter = 0;
-        this.siiRequestList.forEach(item => {
+        this.siiRequestList?.sort((a, b) => {
+          return a.Id.localeCompare(b.Id);
+        });
+
+        this.siiRequestList?.forEach(item => {
           item.ListCounter = ++counter;
           this.ItemsSource.Insert(item, true);
         });
