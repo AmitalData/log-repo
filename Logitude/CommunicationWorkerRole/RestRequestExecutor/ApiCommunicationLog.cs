@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             }
             catch (Exception ex)
             {
-                throw new CommunicationLogException("Failed to save communication log", ex);
+                throw new CommunicationLogException($"Failed to save communication log Tenant {tenant}", ex);
             }            
         }        
     }
