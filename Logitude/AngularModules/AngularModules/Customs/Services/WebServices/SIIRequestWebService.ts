@@ -67,4 +67,5 @@ export class SupplierInvoiceItemsForSIIRequest {
     ItemPriceCurrencyCode: string;
     OriginCountryCode: string;
     OriginCountryName: string;
+    ReqConfirmationTypeCode: string;
 }

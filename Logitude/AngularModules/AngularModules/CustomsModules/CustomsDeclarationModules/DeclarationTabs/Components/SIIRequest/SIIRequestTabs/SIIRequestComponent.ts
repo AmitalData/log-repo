@@ -152,7 +152,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             filterAgrs: this.initfilterAgrs,
             isAllowChange: this.isAllowChange,
         };
-        
+
         if (this.isOpen) return;
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
@@ -278,7 +278,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     //#region Properties Filter Methods
     private SelectedCounterKey: number = null;
-    private DemandState: string = null;
     private selectedInvoiceNumber: string = null;
     public get SelectedInvoiceNumber() { return this.selectedInvoiceNumber }
     public set SelectedInvoiceNumber(newValue: string) {
@@ -289,11 +288,21 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#region DemandState Filter Methods
     public DemandStateFilterSelectedValue: string = this.filterOptionsWithResponse;
     DemandStateFilterItemClicked(itemValue: string) {
-        if (this.DemandStateFilterSelectedValue != itemValue) {
+        if (this.DemandStateFilterSelectedValue !== itemValue) {
             this.DemandStateFilterSelectedValue = itemValue;
-            this.DemandState = itemValue === this.filterOptionsAll ? null : itemValue;
+            const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
+            let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
+            filtered = itemValue === this.filterOptionsAll ? original : original.filter(i => this.isValidDemandState(i.ReqConfirmationTypeCode));
+            this.supplierInvoiceItemsCollection.Clear();
+            if (filtered.length > 0)
+                filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
         }
     }
+    
+    private isValidDemandState(value: string): boolean {
+        return (Object.values(DemandStateFilterOptions) as string[]).includes(value);
+    }
+
     //#region Invoice ComboBox
     SelectedInvoiceReqConfirmation: string;
     filterSupplierInvoiceItemsForSIIRequestLineByInvoiceNumber: SupplierInvoiceItemsForSIIRequestLine[] = [];
@@ -322,7 +331,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#region LevelSelection Filter Methods
     public LevelSelectionFilterSelectedValue: string = this.filterOptionsDeclarationConect;
     LevelSelectionFilterItemClicked(itemValue: string) {
-        if (this.LevelSelectionFilterSelectedValue != itemValue) {
+        if (this.LevelSelectionFilterSelectedValue !== itemValue) {
             this.LevelSelectionFilterSelectedValue = itemValue;
             if (itemValue !== this.filterOptionsInvoice) {
                 this.SelectedInvoiceNumber = null;
@@ -517,92 +526,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
 }
 
-
-
-//#region SupplierInvoiceItemsReqListLine properties
-export class SupplierInvoiceItemsReqListLine extends BaseComponent {
-    public entityPM: SupplierInvoiceItemsReqListPM;
-    public ObjectTableName: string = "Customs.CertificateOfOriginItem";
-    public DataContext = this;
-    Parent: SIIRequestComponent;
-    constructor(EntityPM: SupplierInvoiceItemsReqListPM, parent: SIIRequestComponent) {
-        super();
-        this.entityPM = EntityPM;
-        this.Parent = parent;
-    }
-
-    public get LineNumber(): number {
-        return this.entityPM.LineNumber;
-    }
-    public set LineNumber(newValue: number) {
-        this.entityPM.LineNumber = newValue;
-    }
-
-    public get SIIRequestID(): string {
-        return this.entityPM.SIIRequestID;
-    }
-    public set SIIRequestID(newValue: string) {
-        this.entityPM.SIIRequestID = newValue;
-    }
-
-    public get InvoiceCounterKey(): number {
-        return this.entityPM.InvoiceCounterKey;
-    }
-    public set InvoiceCounterKey(newValue: number) {
-        this.entityPM.InvoiceCounterKey = newValue;
-    }
-
-    public get InvoiceItemLineNumber(): number {
-        return this.entityPM.InvoiceItemLineNumber;
-    }
-    public set InvoiceItemLineNumber(newValue: number) {
-        this.entityPM.InvoiceItemLineNumber = newValue;
-    }
-
-    public get RequestType(): string {
-        return this.entityPM.RequestType;
-    }
-    public set RequestType(newValue: string) {
-        this.entityPM.RequestType = newValue;
-    }
-
-    public get ProductFileNumber(): string {
-        return this.entityPM.ProductFileNumber;
-    }
-    public set ProductFileNumber(newValue: string) {
-        this.entityPM.ProductFileNumber = newValue;
-    }
-
-    public get ManufactureCountryCode(): string {
-        return this.entityPM.ManufactureCountryCode;
-    }
-    public set ManufactureCountryCode(newValue: string) {
-        this.entityPM.ManufactureCountryCode = newValue;
-    }
-
-    public get ManufactureCountryName(): string {
-        return this.entityPM.ManufactureCountryName;
-    }
-    public set ManufactureCountryName(newValue: string) {
-        this.entityPM.ManufactureCountryName = newValue;
-    }
-
-    public get ManufacturerName(): string {
-        return this.entityPM.ManufacturerName;
-    }
-    public set ManufacturerName(newValue: string) {
-        this.entityPM.ManufacturerName = newValue;
-    }
-
-    public get Remarks(): string {
-        return this.entityPM.Remarks;
-    }
-    public set Remarks(newValue: string) {
-        this.entityPM.Remarks = newValue;
-    }
-}
-//#endregion SupplierInvoiceItemsReqListLine properties
-
 //#region SupplierInvoiceItemsForSIIRequestLine properties:
 export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public entityPM: SupplierInvoiceItemsForSIIRequest;
@@ -720,6 +643,13 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set OriginCountryName(newValue: string) {
         this.entityPM.OriginCountryName = newValue;
     }
+
+    public get ReqConfirmationTypeCode(): string {
+        return this.entityPM.ReqConfirmationTypeCode;
+    }
+    public set ReqConfirmationTypeCode(newValue: string) {
+        this.entityPM.ReqConfirmationTypeCode = newValue;
+    }
 }
 
 export enum FilterOptions {
@@ -727,4 +657,9 @@ export enum FilterOptions {
     WithResponse = "withResponse",
     Invoice = "Invoice",
     DeclarationConect = "DeclarationConect"
+}
+export enum DemandStateFilterOptions {
+    FirstCertificate = "401",
+    SecondCertificate = "402",
+    ThirdCertificate = "403",
 }
