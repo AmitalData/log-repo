@@ -364,6 +364,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
             let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
             filtered = itemValue === this.filterOptionsAll ? original : original.filter(i => this.isValidDemandState(i.ReqConfirmationTypeCode));
+
+            if (this.LevelSelectionFilterSelectedValue === this.filterOptionsInvoice) {
+                this.InvoicesSelectionChanged(this.currentSelectedItem);
+                return;
+            }
             this.supplierInvoiceItemsCollection.Clear();
             if (filtered.length > 0)
                 filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
@@ -377,13 +382,19 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#region Invoice ComboBox
     SelectedInvoiceReqConfirmation: string;
     filterSupplierInvoiceItemsForSIIRequestLineByInvoiceNumber: SupplierInvoiceItemsForSIIRequestLine[] = [];
+    currentSelectedItem: SupplierInvoiceItemLine;
 
     InvoicesSelectionChanged(selectedItem) {
+        this.currentSelectedItem = selectedItem;
         if (!selectedItem) return;
         this.SelectedInvoiceNumber = selectedItem.InvoiceNumber;
         this.SelectedCounterKey = selectedItem.InvoiceCounterKey;
         this.SelectedInvoiceReqConfirmation = selectedItem.ReqConfirmationTypeCode;
-        const items = this.originalSupplierInvoiceItemsCollection.Collection.filter(i => i.InvoiceNumber === selectedItem.InvoiceNumber);
+        let items = this.originalSupplierInvoiceItemsCollection.Collection.filter(i => i.InvoiceNumber === selectedItem.InvoiceNumber);
+        // filter by DemandState also:
+        const original: SupplierInvoiceItemsForSIIRequestLine[] = items;
+        items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => this.isValidDemandState(i.ReqConfirmationTypeCode));
+
         if (!items.length) return;
         this.supplierInvoiceItemsCollection.Clear();
         items.forEach(item => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this)));
@@ -407,8 +418,16 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             if (itemValue !== this.filterOptionsInvoice) {
                 this.SelectedInvoiceNumber = null;
                 this.SelectedCounterKey = null;
+                let items: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
+
+                // add filter by DemandState also:
+                if (this.LevelSelectionFilterSelectedValue === this.filterOptionsDeclarationConect) {
+                    const original: SupplierInvoiceItemsForSIIRequestLine[] = items;
+                    items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => this.isValidDemandState(i.ReqConfirmationTypeCode));
+                }
+
                 this.supplierInvoiceItemsCollection.Clear();
-                this.originalSupplierInvoiceItemsCollection.Collection.forEach((item) => {
+                items.forEach((item) => {
                     this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
                 });
             }
