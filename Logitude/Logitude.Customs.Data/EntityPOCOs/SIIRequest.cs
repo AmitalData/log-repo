@@ -36,8 +36,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual SIIRequestStatus SIIRequestStatus { get; set; }
         [Column("WareHouseAddress")]
 	    public string WareHouseAddress { get; set; }
+        [ForeignKey("City")]
         [Column("WareHouseCity")]
 	    public string WareHouseCity { get; set; }
+	      
+        public virtual City City { get; set; }
         [Column("IsClosed")]
 	    public bool IsClosed { get; set; }
         [Column("Remarks")]

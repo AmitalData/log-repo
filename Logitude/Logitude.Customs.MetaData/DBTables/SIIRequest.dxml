@@ -55,8 +55,8 @@
   </Column>
   <Column
     Name="WareHouseCity"
-    Type="nvarchar"
-    Size="4">
+    Type="varchar"
+    Size="5">
     <Constraints
       Nullable="true" />
   </Column>
@@ -83,6 +83,11 @@
   <Relation
     ForeignKeyColumn="Status"
     ReferencedTable="SIIRequestStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="WareHouseCity"
+    ReferencedTable="Cities"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
