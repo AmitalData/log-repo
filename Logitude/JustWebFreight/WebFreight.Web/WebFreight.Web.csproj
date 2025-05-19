@@ -1127,7 +1127,6 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CustomerDebtNotificationsViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\CustomerDebtNotificationsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
-    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\MagayaStepsViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentsMetaDataTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ResponsibilityViewsController.Generated.cs" />
@@ -4538,7 +4537,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticActionResponseReqSUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticPermitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticsReferenceTypeUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MagayaStepsUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MagayaStepUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanSpecialActionStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanSpecialActionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
