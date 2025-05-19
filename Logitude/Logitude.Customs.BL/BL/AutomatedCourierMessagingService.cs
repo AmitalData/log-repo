@@ -137,6 +137,18 @@ namespace Logitude.Customs.BL.BL
                 {
                     return;
                 }
+                var bankIds = new CustomBankRepository(declarationCourierStatusPM.Tenant)
+                .GetAll(declarationCourierStatusPM.Tenant)
+                .Where(b => b.PayerTypeCode == "3" && !b.InActive)
+                .Select(b => b.Id)
+                .Take(2)          
+                .ToList();
+
+                if (bankIds.Count != 1)           
+                    return;
+
+                string unifreightList = SetBankIdInUnifreightListOnServerOnly(bankIds[0]);
+
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
                     var requestParams2755 = new GenericRequestParams()
@@ -147,8 +159,10 @@ namespace Logitude.Customs.BL.BL
                         LoggingEntityId = declarationCourierStatusPM.DeclarationId,
                         AppicationId = declarationCourierStatusPM.DeclarationId,
                         InterfaceTypeCode = "2755",
+                        FromAutomate = true,
                         LoggingUserId = userId,
                         RequestVIA = SendRequestVIA.WebServiceBatch,
+                        UnifreightListOnServerOnly = unifreightList,
                         FutureSendDateTime = DateTime.Now.AddMinutes(5),
                     };
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
@@ -239,6 +253,13 @@ namespace Logitude.Customs.BL.BL
             {
                 LogMessagingUtil.Instance.AppendLine($"Exception!!!CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId}) : {ex.Message}");
             }
+        }
+        private static string SetBankIdInUnifreightListOnServerOnly(string internalBankId)
+        {
+            var dic = new Dictionary<string, string>();
+            dic.Add("InternalBankId", internalBankId);
+            var UnifreightListOnServerOnly = UnifreightListsUtil.Serialize(dic);
+            return UnifreightListOnServerOnly;
         }
     }
 }
