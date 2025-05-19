@@ -27,6 +27,8 @@ namespace Logitude.BL.InvoiceModel.Tools
         public string Bank { get; set; }
         public bool IsFromReconcileScreen { get; set; }
         public bool IsExternalEntity { get; set; }
+        public string Id { get; set; }
 
+        public bool SetVoided { get; set; }   
     }
 }
