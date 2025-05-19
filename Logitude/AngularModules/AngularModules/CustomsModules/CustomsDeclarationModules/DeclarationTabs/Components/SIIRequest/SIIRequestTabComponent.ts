@@ -177,6 +177,8 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     logWindow.Width = 1030;
     logWindow.Height = 770;
     logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
+    logWindow.SubTitle = `${this.EntityPM?.CustomFileNo}`;
+    if(!AppTool.IsNullOrEmpty(this.selectedSIIRequest?.ImporterId)) logWindow.SubTitle += ` / ${TextCodeTranslator.Translate("Customs.SIIRequest.F.ImporterId")}: ${this.selectedSIIRequest?.ImporterId}`;
     args.isAllowChange = this.IsAllowChange;
     logWindow.WindowArgs = args;
     logWindow.ShowCloseButton = true;
@@ -195,7 +197,6 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   ReloadMyScreen() {
     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
     this.DisplayOnlyCheck();
-    // TODO: add getSiiRequest method getSiiRequest()
   }
 
   OnRowSelected(itemComponent: SIIRequestPM) {

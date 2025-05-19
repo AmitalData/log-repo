@@ -304,22 +304,21 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.SearchText = AppTool.IsNullOrEmpty(SearchText) ? "" : SearchText.toLowerCase();
         const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
         let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
-        if (this.SearchText === "")
-            filtered = original;
-        else
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
             filtered = original.filter(i => i.ClassificationCode.toLowerCase().includes(this.SearchText) || i.ItemCode.toLowerCase().includes(this.SearchText));
-
-        this.supplierInvoiceItemsCollection.Clear();
-        if (filtered.length > 0 || this.SearchText === "") {
-            filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+            this.supplierInvoiceItemsCollection.Clear();
+            if (filtered.length > 0) {
+                filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+            }
         }
+        else this.DemandStateFilterItemClicked(this.DemandStateFilterSelectedValue, true);
     }
     //#endregion Properties Filter Methods
 
     //#region DemandState Filter Methods
     public DemandStateFilterSelectedValue: string = this.filterOptionsAll;
-    DemandStateFilterItemClicked(itemValue: string) {
-        if (this.DemandStateFilterSelectedValue !== itemValue) {
+    DemandStateFilterItemClicked(itemValue: string, isSearched: boolean = false) {
+        if (this.DemandStateFilterSelectedValue !== itemValue || isSearched) {
             this.DemandStateFilterSelectedValue = itemValue;
             const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
             let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];

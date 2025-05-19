@@ -18,6 +18,14 @@
     height: 24vh;
 }
 
+.LogTextBoxMultiLine {
+    padding-bottom: 11px !important;
+}
+
+::ng-deep .LogTextBoxMultiLine .InputDiv {
+    height: 55px !important;
+}
+
 .GrayBox:hover {}
 
 .CertTicketWrapper {
