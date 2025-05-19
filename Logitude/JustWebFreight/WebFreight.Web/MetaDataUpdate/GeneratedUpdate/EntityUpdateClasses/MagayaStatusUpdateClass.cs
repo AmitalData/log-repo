@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class MagayaStatusUpdateClass
    {  		
-		public const string HashString = "a320effa290f7cc0b9a061a56affd744";
+		public const string HashString = "863e4297ae87ae14b79f939bcf5ed48d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,11 +70,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Magaya Status",
-			      				    Code =  "a342",
+			      				    Code =  "526a",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "StatusCode",
 			      				    CloseTableName =  "StatusName",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Accounting",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  true,
@@ -228,7 +229,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext,int contextTenant)
-	    {    
+	    {   
+
+		   ObjectTable MagayaStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MagayaStatus" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> MagayaStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MagayaStatus").ToList();
+		       
+	      
+
+	         Screen MagayaStatusMagayaStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStatus.HeaderScreen", Name = "MagayaStatusHeaderScreen", ObjectTableId = MagayaStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    MagayaStatusObjectTable.HeaderScreenId = MagayaStatusMagayaStatusHeaderScreenScreen0.Id;
+		    MagayaStatusObjectTable.HeaderScreenCode = MagayaStatusMagayaStatusHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
