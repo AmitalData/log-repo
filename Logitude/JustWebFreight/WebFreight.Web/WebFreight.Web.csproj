@@ -1076,6 +1076,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalAdditionalDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalExternalReconcileViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\JournalReconcileViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\MagayaStepViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\RevaluationStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\TenantIdleStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\AccountingEntityJournalController.Generated.cs" />

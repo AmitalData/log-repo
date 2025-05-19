@@ -136,8 +136,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         {
             CustomMappedPMProperties.Add(pocoPropertyName);
         }
-
-
 			  
    }
 }
