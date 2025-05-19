@@ -13,9 +13,7 @@
 	justify-content: space-evenly;
 	position: absolute;
 	bottom: 5px;
-	/* left: 40vh; */
-	/* width: 82vh; */
-	left: 353px;
+	left: 350px;
 	max-width: 543px;
 	min-width: 543px;
 	height: 22px;
@@ -27,13 +25,9 @@
 }
 
 .mainTable_top {
-	/* position: relative;
-	top: 0px; */
-	/* top: 220px; */
 	position: absolute;
 	top: 75px;
 	margin-right: 100px;
-	/* right: 100px; */
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -89,22 +83,24 @@
 	.mainTable_top>ul {
 		max-width: 543px;
 		min-width: 385px;
+		left: 325px;
 	}
 }
 
 @media (min-width: 1366px) {
 	.mainTable_top>ul {
 		min-width: 415px;
+		left: 330px;
 	}
 }
 
 @media (min-width: 1500px) {
 	.mainTable_top>ul {
 		min-width: 543px;
+		left: 350px;
 	}
 }
 
-/* Media Queries for Responsive Design */
 @media (max-width: 800px) {
 	.mainTable_top {
 		top: 240px;

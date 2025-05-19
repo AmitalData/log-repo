@@ -19,10 +19,10 @@
 			</span>
 			<div *ngIf="!isShowDetailsOpen && !(!data?.PurchaseTax && !data?.MeasurementUnitName && !data?.CustomsRate && !data?.OptionalTaxAddition)"
 				class="item_details">
-				<a>{{ data?.PurchaseTax ?? '-' }}</a>
-				<a>{{ data?.MeasurementUnitName ?? '-' }}</a>
-				<a>{{ data?.CustomsRate ?? '-' }}</a>
-				<a>{{ data?.OptionalTaxAddition ?? '-' }}</a>
+				<a [title]="data?.PurchaseTax">{{ data?.PurchaseTax ?? '-' }}</a>
+				<a [title]="data?.MeasurementUnitName">{{ data?.MeasurementUnitName ?? '-' }}</a>
+				<a [title]="data?.CustomsRate">{{ data?.CustomsRate ?? '-' }}</a>
+				<a [title]="data?.OptionalTaxAddition">{{ data?.OptionalTaxAddition ?? '-' }}</a>
 			</div>
 		</a>
 	</div>
