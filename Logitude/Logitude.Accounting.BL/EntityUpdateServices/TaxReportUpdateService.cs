@@ -29,11 +29,22 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.BL.CloseTables;
 using System.Globalization;
 using System.Diagnostics;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class TaxReportUpdateService
     {
+        private string[] _InputsTaxReportLineTypes = new[]
+        {
+            InputsTaxReportLineTypes.IsraeliVendorInputs,
+            InputsTaxReportLineTypes.SelfInputs,
+            InputsTaxReportLineTypes.SmallCashInputs,
+            InputsTaxReportLineTypes.ImportCustomsInputs,
+            InputsTaxReportLineTypes.PalestinianVendorsInputs,
+            InputsTaxReportLineTypes.LawDefinedDocumentInputs
+        };
+
         protected override void OnCreating(TaxReportPM entityPM, EntityPM entityParentPM)
         {
 
@@ -70,15 +81,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
             return settingQueryService.GetSingleFullAccountingSetting(tenant);
         }
-        //protected override void UpdateComposition(TaxReportPM entityPM)
-        //{
-
-        //    var taxReportLineUpdateService = new TaxReportLineUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-        //    taxReportLineUpdateService.UpdateMulti(entityPM.TaxReportLines, entityPM.DeletedTaxReportLines, entityPM, true);
 
 
-        //    base.UpdateComposition(entityPM);
-        //}
         protected override void Validate(TaxReportPM entityPM)
         {
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
@@ -150,8 +154,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 return OverrideGetLoggedContactFunc(tenant);
             }
 
-            //ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
-            //ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
 
             ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
             return loggedcontact;
@@ -160,22 +162,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM)
         {
-            //IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
-            //TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
-            //TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-
-                //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant);
-
-            }
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                //List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(entityPM, entityPM.Tenant);
-                //TaxReportService.CalculateReportTotals(entityPM, lines);
-                //entityPM.ChangeSetOp = ChangeSetOperation.Update;
-                //taxReportUpdateService.Update(entityPM, true);
-            }
             UpdateReportStatus(entityPM);
 
         }
@@ -237,14 +223,28 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     isUpdate = true;
                     row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
-                    row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
+                    row.StatusCode = TaxReportLineStatusValues.Readyfortransmit; // Just to clear the error
                 }
                 else if (duplicateKeyList.Contains(row.Line) && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                 {
                     isUpdate = true;
                     row.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                    if (taxReportPM.RemoveDuplicates && _InputsTaxReportLineTypes.Contains(row.LineTypeCode))
+                    {
+                        row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                        row.StatusCode = TaxReportLineStatusValues.Readyfortransmit; // Just to clear the error
+                    }
                 }
-                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference || row.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                else if (row.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference && row.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                {
+                    if (taxReportPM.RemoveDuplicates && _InputsTaxReportLineTypes.Contains(row.LineTypeCode))
+                    {
+                        isUpdate = true;
+                        row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                        row.StatusCode = TaxReportLineStatusValues.Readyfortransmit; // Just to clear the error
+                    }
+                }
+                else if (row.StatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                 {
                     isUpdate = true;
                     row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
@@ -262,6 +262,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant)
                 .UpdateMulti(updateList, new List<TaxReportLinePM>(), taxReportPM, true);
         }
+
 
         private class DupLines
         {
@@ -323,10 +324,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             IAccountingContext accountingContext = AccountingContext.GetContext(entityPM.Tenant);
             TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(accountingContext);
             TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), Tenant);
-            ///***
+
             if (entityPOCO.IsCancelled == false && entityPM.IsCancelled == true)
             {
-                // canceled!!C:\source\log-repo\Logitude\JustWebFreight\WebFreight.Web\obj\
+
                 CancelTaxReport(entityPM);
                 return;
             }
@@ -376,7 +377,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     TaxReportService.CalculateReportTotals(entityPM, linesPM);
 
                 }
-                // entityPM.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
+
                 ContactPM loggedContact = GetLoggedContact(entityPM.Tenant);
                 entityPM.UpdatedByUserName = loggedContact.LocalName != null ? loggedContact.LocalName : loggedContact.EnglishName;
                 if (entityPM.RecalculateData)
@@ -391,7 +392,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             entityPM.StatusCode = "P";
             entityPM.RecalculateData = true;
-            //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant, entityPM.RecalculateData);
+
         }
         
        
