@@ -136,6 +136,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 
             Type repositoryType = GetRepositoryType(entityName);
+            if(repositoryType == null)
+                return null;
             MethodInfo methodInfos = GetSingaleMethod(repositoryType);
 
             var repoArgs = new object[] { tenant };
