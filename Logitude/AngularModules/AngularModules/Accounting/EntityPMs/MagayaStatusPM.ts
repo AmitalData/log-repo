@@ -16,7 +16,7 @@ import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldCl
 import { AppTool } from 'Infrastructure/Tools';
 
 
-export class MagayaStepPM {
+export class MagayaStatusPM {
       
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -26,28 +26,18 @@ export class MagayaStepPM {
       }
  	 
     
-    private code: string;
-    public get Code() { return this.code; }
-    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
+    private statusCode: string;
+    public get StatusCode() { return this.statusCode; }
+    public set StatusCode(newValue: string) { if (this.statusCode != newValue) { this.statusCode = newValue; this.MarkAsDirty("StatusCode"); } }
        
 	 
-    private englishName: string;
-    public get EnglishName() { return this.englishName; }
-    public set EnglishName(newValue: string) { if (this.englishName != newValue) { this.englishName = newValue; this.MarkAsDirty("EnglishName"); } }
-       
-	 
-    private localName: string;
-    public get LocalName() { return this.localName; }
-    public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
-       
-	 
-    private isAllowResend: boolean;
-    public get IsAllowResend() { return this.isAllowResend; }
-    public set IsAllowResend(newValue: boolean) { if (this.isAllowResend != newValue) { this.isAllowResend = newValue; this.MarkAsDirty("IsAllowResend"); } }
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
        
 	 
 
-    public OldEntityPM: MagayaStepPM;
+    public OldEntityPM: MagayaStatusPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -60,13 +50,13 @@ export class MagayaStepPM {
 		 
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "MagayaStep");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "MagayaStatus");
            
         }
        }
     }
 
-    private MyClone: MagayaStepPM;
+    private MyClone: MagayaStatusPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

@@ -358,6 +358,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\InterestReportStatuseDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\MagayaStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\MagayaStepDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OpenFormatReportStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PaymentChequeStatusDetails.Generated.cs" />
@@ -387,6 +388,7 @@
     <Compile Include="CloseTables\EnumGenerated\InterestReportStatuseStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\MagayaStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\MagayaStepStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\OpenFormatReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PaymentChequeStatusStruct.Generated.cs" />
@@ -721,6 +723,7 @@
     <Compile Include="EntityDataMappings\Generated\JournalStatusTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LedgerTransactionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MagayaStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\MagayaStepDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OpenFormatReportDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OpenFormatReportStatusDataMapping.Generated.cs" />
@@ -785,6 +788,7 @@
     <Compile Include="EntityDataMappings\JournalStatusTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LedgerTransactionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MagayaStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\MagayaStepDataMapping.cs" />
     <Compile Include="EntityDataMappings\OpenFormatReportDataMapping.cs" />
     <Compile Include="EntityDataMappings\OpenFormatReportStatusDataMapping.cs" />
@@ -894,6 +898,7 @@
     <Compile Include="EntityQueryServices\Generated\JournalExternalReconcileQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalMoreDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalReconcileQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MagayaStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\MagayaStepQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OpenFormatReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OpenFormatReportStatusQueryService.Generated.cs" />
@@ -978,6 +983,7 @@
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TenantIdleStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerDebtNotificationsUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\MagayaStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\MagayaStepUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />

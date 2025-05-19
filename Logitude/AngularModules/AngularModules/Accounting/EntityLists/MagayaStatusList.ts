@@ -6,12 +6,10 @@
 // </auto-generated> AccountingClassesGenerator.tt
 //------------------------------------------------------------------------------
 
-export class MagayaStepList {
+export class MagayaStatusList {
    
-	Code: string;
-	EnglishName: string;
-	LocalName: string;
-	IsAllowResend: boolean;
+	StatusCode: string;
+	StatusName: string;
 	
 }
  
