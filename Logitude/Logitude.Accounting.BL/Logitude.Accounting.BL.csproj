@@ -187,6 +187,13 @@
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\Bin\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Stimulsoft.Report, Version=2015.1.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>StimulsoftDll\Stimulsoft.Report.dll</HintPath>
@@ -351,6 +358,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\InterestReportStatuseDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\MagayaStepsDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OpenFormatReportStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PaymentChequeStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PeriodTypeDetails.Generated.cs" />
@@ -1076,11 +1084,13 @@
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
     <Compile Include="InterestService\HelperClasses\InterestReportArguments.cs" />
     <Compile Include="InterestService\InterestReportService.CS" />
+    <Compile Include="Interfaces\Magaya\MagayaService.cs" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
     <Compile Include="Utils\APInvoiceStatusUpdateBatch.cs" />
     <Compile Include="Utils\BanksCCExternalRecoBatch.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
+    <Compile Include="Utils\MagayaInvoicesQueryBatch.cs" />
     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\GLAccountInterestActivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountInterestDeactivationBalanceBatch.cs" />
@@ -1230,6 +1240,65 @@
     <Compile Include="Utils\GLAccountTotalsByMonthBatch.cs" />
     <Compile Include="Utils\JournalLinePMExt.cs" />
     <Compile Include="Utils\RevaluationBatch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
+      <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
+      <Name>Logitude.Accounting.Data</Name>
+      <Aliases>global</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
+      <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{a663e7ef-b858-4bb6-bc33-e473f51b8e56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Customs.BL\Logitude.Customs.BL.csproj">
+      <Project>{D2951C0F-8A2B-4EE2-933A-8B6B4134F766}</Project>
+      <Name>Logitude.Customs.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CustomsMessaging.Common\Logitude.CustomsMessaging.Common.csproj">
+      <Project>{F0039DBE-4A1A-4755-8F37-E4005EA74746}</Project>
+      <Name>Logitude.CustomsMessaging.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
+      <Project>{BD959AB6-4476-48B3-AA4D-CFD7ED120E55}</Project>
+      <Name>Logitude.Infrastructure.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Infrastructure.Data\Logitude.Infrastructure.Data.csproj">
+      <Project>{B02E4D92-9226-4F3F-990F-66C7F66E9316}</Project>
+      <Name>Logitude.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.SystemLogs\Logitude.SystemLogs.csproj">
+      <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
+      <Name>Logitude.SystemLogs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.XSD\Logitude.XSD.csproj">
+      <Project>{3E75C83F-67C7-4B62-9759-7EA92E16F272}</Project>
+      <Name>Logitude.XSD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TraceEvents\" />

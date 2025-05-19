@@ -277,7 +277,14 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "DeleteOldDocumentsExecutionLogsTask", 
                 IsInternallyDefined = false, 
 			});
-			
+
+            all.Add(new SchedulerProcedureDetails()
+            {
+                Code = "MagayaInvoicesQueryTask",
+                Name = "MagayaInvoicesQueryTask",
+                SearchFields = "MagayaInvoicesQueryTask",
+                Description = "MagayaInvoicesQueryTask",
+            });
             return all;
        }
 

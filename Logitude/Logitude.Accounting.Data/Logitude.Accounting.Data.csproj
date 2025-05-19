@@ -159,6 +159,7 @@
     <Compile Include="EntityKeys\JournalAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\JournalExternalReconcileKeys.cs" />
     <Compile Include="EntityKeys\JournalMoreDataKeys.cs" />
+    <Compile Include="EntityKeys\MagayaStepsKeys.cs" />
     <Compile Include="EntityKeys\OpenFormatReportKeys.cs" />
     <Compile Include="EntityKeys\OpenFormatReportStatusKeys.cs" />
     <Compile Include="EntityKeys\RevaluationStatusKeys.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="EntityListQueryServices\Generated\JournalMoreDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\JournalReconcileListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\JournalReconcileListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\MagayaStepsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OpenFormatReportStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RevaluationStatusListQueryService.Generated.cs" />
@@ -263,6 +265,7 @@
     <Compile Include="EntityListQueryServices\JournalAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalExternalReconcileListQueryService.cs" />
     <Compile Include="EntityListQueryServices\JournalMoreDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\MagayaStepsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OpenFormatReportStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RevaluationStatusListQueryService.cs" />
@@ -315,6 +318,7 @@
     <Compile Include="EntityLists\Generated\JournalAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalExternalReconcileList.Generated.cs" />
     <Compile Include="EntityLists\Generated\JournalMoreDataList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\MagayaStepsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OpenFormatReportStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RevaluationStatusList.Generated.cs" />
@@ -368,6 +372,7 @@
     <Compile Include="EntityMapping\JournalAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\JournalExternalReconcileMap.cs" />
     <Compile Include="EntityMapping\JournalMoreDataMap.cs" />
+    <Compile Include="EntityMapping\MagayaStepsMap.cs" />
     <Compile Include="EntityMapping\OpenFormatReportMap.cs" />
     <Compile Include="EntityMapping\OpenFormatReportStatusMap.cs" />
     <Compile Include="EntityMapping\RevaluationStatusMap.cs" />
@@ -420,6 +425,7 @@
     <Compile Include="EntityPOCOs\JournalExternalReconcile.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
     <Compile Include="EntityPOCOs\LedgerTransactionsDeductionView.cs" />
+    <Compile Include="EntityPOCOs\MagayaSteps.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReport.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReportStatus.cs" />
     <Compile Include="EntityPOCOs\RevaluationStatus.cs" />
@@ -479,6 +485,7 @@
     <Compile Include="Repositories\Generated\InterestReportRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportsConnectInvoiceRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\InterestReportStatuseRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\MagayaStepsRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\TenantIdleStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\UserDefinedReportRepository.Generated.cs" />
     <Compile Include="Repositories\GLAccountFollowUpDataRepository.cs" />
@@ -491,6 +498,7 @@
     <Compile Include="Repositories\InterestReportRepository.cs" />
     <Compile Include="Repositories\InterestReportsConnectInvoiceRepository.cs" />
     <Compile Include="Repositories\InterestReportStatuseRepository.cs" />
+    <Compile Include="Repositories\MagayaStepsRepository.cs" />
     <Compile Include="Repositories\TenantIdleStatusRepository.cs" />
     <Compile Include="Repositories\UserDefinedReportRepository.cs" />
     <Compile Include="Utilities\InterestTransactionGetParameters.cs" />
