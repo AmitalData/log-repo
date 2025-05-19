@@ -34,7 +34,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public DisplaySATSettings: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private entityResourceService: EntityResourceService = new EntityResourceService();
-    private isDataLoaded: boolean = false;
+    public isDataLoaded: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.entityResourceService.getEntityResourceByTableName("Card").subscribe((response: any) => {
