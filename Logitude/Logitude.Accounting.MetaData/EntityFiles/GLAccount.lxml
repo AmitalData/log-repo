@@ -15993,6 +15993,19 @@
     FeatureDefaultText="&quot;Events&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Customer Debt Notification&quot;"
+    TabLocalName="&quot;הודעת חוב אוטומטית&quot;"
+    ObjectTableName="&quot;GLAccount&quot;"
+    Code="&quot;CDNO&quot;"
+    ControlPath="&quot;CustomerDebtNotificationComponent&quot;"
+    TextCode="&quot;GLAccount.TH.CustomerDebtNotification&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./Accounting/Components/Maintenance/CustomerDebtNotificationComponent&quot;"
+    HtmlComponentName="&quot;CustomerDebtNotificationComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;ENCH&quot;"
@@ -19458,7 +19471,7 @@
       LocalDefaultText="&quot;לא נבחרו התאמות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;GLAccounts.O.MarkedByAnother &quot;"
       DefaultText="&quot;There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.&quot;"
       LocalDefaultText="&quot;ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.&quot;"
@@ -19470,13 +19483,13 @@
       LocalDefaultText="&quot;יש התאמות בתהליך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
+    <TextCode
       Code="&quot;GLaccount.O.BalanceDiffersFrom&quot;"
       DefaultText="&quot;Balance differs from&quot;"
       LocalDefaultText="&quot;יתרה שונה מ&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-   </AdditionalTextCodes>
+  </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
       Code="&quot;RECONCILE&quot;"
