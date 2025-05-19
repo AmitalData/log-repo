@@ -204,6 +204,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string accountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountId  
+	   {
+	    
+	     get
+		{
+		   return accountId;
+		 }
+		 set
+		 {
+		   if(accountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountId",OldValue=accountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountId=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

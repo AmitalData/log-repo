@@ -64,6 +64,11 @@ export class CustomerDebtNotificationPM {
     public set PaymentNotes(newValue: string) { if (this.paymentNotes != newValue) { this.paymentNotes = newValue; this.MarkAsDirty("PaymentNotes"); } }
        
 	 
+    private accountId: string;
+    public get AccountId() { return this.accountId; }
+    public set AccountId(newValue: string) { if (this.accountId != newValue) { this.accountId = newValue; this.MarkAsDirty("AccountId"); } }
+       
+	 
 
     public OldEntityPM: CustomerDebtNotificationPM;
 		

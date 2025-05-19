@@ -16,6 +16,7 @@ export class CustomerDebtNotificationList {
 	DebtLevelAmount: number;
 	TasksSchedulerId: string;
 	PaymentNotes: string;
+	AccountId: string;
 	
 }
  

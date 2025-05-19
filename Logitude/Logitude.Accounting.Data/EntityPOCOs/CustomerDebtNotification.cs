@@ -38,6 +38,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual TasksScheduler TasksScheduler { get; set; }
         [Column("PaymentNotes")]
 	    public string PaymentNotes { get; set; }
+        [Column("AccountId")]
+	    public string AccountId { get; set; }
     }
 }
 	 
