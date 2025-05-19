@@ -1871,7 +1871,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 else {
                     if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
 
-
+                                       
+                    this.ValidationErrorsList = mm.ErrorsArray;  
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                  
                     if (mm.ErrorsArray.length > 0 && mm.ErrorsArray.some(e => e.includes("GLAccounts.O.MarkedByAnother"))) {
                         this.ValidationErrorsList = mm.ErrorsArray.map(error =>
                             error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ") : error
