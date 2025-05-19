@@ -25,7 +25,7 @@ namespace Logitude.Accounting.Data.EntityMapping
 	 
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.StatusName).HasColumnName("StatusName").HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.StatusName).HasColumnName("StatusName").HasMaxLength(60).IsUnicode(false);
         }
     }
 }
