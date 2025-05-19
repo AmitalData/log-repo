@@ -37,8 +37,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          DebtLevelAmount = a.DebtLevelAmount,
 					
-											  TasksSchedulerId = a.TasksSchedulerId,
-							
+					                          TasksSchedulerId = a.TasksSchedulerId,
+					
 					                          PaymentNotes = a.PaymentNotes,
 					
 		                    	            });

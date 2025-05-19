@@ -61,6 +61,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="TasksSchedulerId"
     ReferencedTable="TasksScheduler"
