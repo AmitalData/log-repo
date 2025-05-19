@@ -34,7 +34,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public DisplaySATSettings: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     private entityResourceService: EntityResourceService = new EntityResourceService();
-
+    private isDataLoaded: boolean = false;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.entityResourceService.getEntityResourceByTableName("Card").subscribe((response: any) => {
@@ -58,7 +58,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
                 this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
                 this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
             }
-    
+            this.isDataLoaded = true;     
             this.Listen();
         })
       
