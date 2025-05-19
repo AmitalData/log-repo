@@ -34,8 +34,9 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
     public TaxReportLists: CodeNameClass[] = [];
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isReady: boolean = false;
-
-    //new
+    public ChartOfAccountsComboBoxValue: string ="All";
+    private filterAll = "All";
+    private filterNotAll = "NotAll";
     selectedChartOfAccountsTypes: any[] = [];
     chartOfAccountsTypes: any[] = [];
     selectedChartOfAccounts: any[] = [];
@@ -55,6 +56,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                         this.entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
                             this.entityResourceService.getEntityResourceByTableName("General").subscribe((response: any) => {
                             this.isReady = true;
+
                     });
                     });
                     });
@@ -64,12 +66,12 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         this.DataContext.UIProperties.SetRequired("ChartOfAccountsComboBoxValue", this.ObjectTableName, true)
         this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, true)
 
-        //new 
-        this.getChartOfAccounts();
     }
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
         this.DetailedForJobs=false
+        this.getChartOfAccounts();
+
     }
 
   
@@ -78,19 +80,6 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         
     }
 
-      
-   
-   //new
-    private chartOfAccountsComboBoxValue: string;
-    public get ChartOfAccountsComboBoxValue(): string
-    {
-        return this.chartOfAccountsComboBoxValue;
-    }
-    public set ChartOfAccountsComboBoxValue(v: string)
-    {
-        this.chartOfAccountsComboBoxValue = v;
-        this.SetChartOfAccountsFilterProperties();
-    }
 
     private detailedForJobs: boolean;
     get DetailedForJobs() { return this.detailedForJobs; }
@@ -121,6 +110,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
               this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
     }
     
+    AdditionalServiceSelectedValue:string
 
     private getChartOfAccounts()
     {
@@ -132,16 +122,19 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                 this.chartOfAccounts = arg.Result;                
                 this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
                     Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
-                    Checked: this.selectedChartOfAccounts?.some(selectedItem =>this.ChartOfAccountsComboBoxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+                    Checked: this.ChartOfAccountsComboBoxValue === this.filterNotAll && this.AdditionalServiceSelectedValue?.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id)
 
-                }}).sort((a, b) => a.Code - b.Code);            });
+                }}).sort((a, b) => a.Code - b.Code); });
+
     }
     OnChartOfAccountsItemClicked(items){
 
         this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
 
     }
-
+    SelectedItemChanged(item) {
+        this.ChartOfAccountsComboBoxValue = item;
+    }
 
     public RunReportTitle: string = 'Run Report';
     SetRunReportTitle() {
@@ -176,13 +169,10 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                     this.NumberOfYear = queryFilterItem.FieldValue;
                     break;
                 case "ChartOfAccountsIdList":
-                    {
-                        this.selectedChartOfAccounts = queryFilterItem.FieldValue;
-                        if(this.selectedChartOfAccounts?.length>0 )
-                            this.chartOfAccountsComboBoxValue="NotAll";
-                        else
-                            this.chartOfAccountsComboBoxValue="All";
-                        break;
+                    {  this.ChartOfAccountsComboBoxValue =  queryFilterItem.FieldValue === this.filterAll ? this.filterAll : this.filterNotAll; 
+                       this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
+                       
+                       break;
     
                     }
                                  
