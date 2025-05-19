@@ -232,6 +232,7 @@
     <None Include="DBTables\JournalStatusType.dxml" />
     <None Include="DBTables\JournalType.dxml" />
     <None Include="DBTables\LedgerTransaction.dxml" />
+    <None Include="DBTables\MagayaStatus.dxml" />
     <None Include="DBTables\MagayaStep.dxml" />
     <None Include="DBTables\OpenFormatReport.dxml" />
     <None Include="DBTables\OpenFormatReportStatus.dxml" />
@@ -310,6 +311,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\BankPageEntryType.lxml" />
+    <None Include="EntityFiles\MagayaStatus.lxml" />
     <None Include="EntityFiles\MagayaStep.lxml" />
     <None Include="EntityFiles\OpenFormatReport.lxml" />
     <None Include="EntityFiles\OpenFormatReportStatus.lxml" />
