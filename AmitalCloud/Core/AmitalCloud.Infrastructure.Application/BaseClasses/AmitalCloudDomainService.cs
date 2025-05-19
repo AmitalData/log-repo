@@ -1,5 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Data.Helpers;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,80 +22,27 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 {
                     result = base.Submit(changeSet);
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateException e)
+                catch (DbUpdateException e)
                 {
-                    var errorMessages = new StringBuilder();
-
-                    var entries = e.Entries;
-                    foreach (var entry in entries)
-                    {
-                        errorMessages.AppendLine($"Entity of type {entry.Entity.GetType().Name} in state {entry.State} caused an error.");
-                    }
-
-                    if (e.InnerException != null)
-                    {
-                        errorMessages.AppendLine("Inner exception: " + e.InnerException.Message);
-                        if (e.InnerException.InnerException != null)
-                        {
-                            errorMessages.AppendLine("Inner-inner exception: " + e.InnerException.InnerException.Message);
-                        }
-                    }
-
-                    string Error = errorMessages.ToString();
-
-                    string authenticateduser = "";
-                    try
-                    {
-                        authenticateduser = AmitalCloudSecurityUtility.GetAuthenticatedUser();
-                    }
-                    catch
-                    {
-                        authenticateduser = "UnKnown";
-                    }
-                    string ip = "";
-                    if (HttpContextHelper.Request != null)
-                    {
-                        string currentIP = HttpContextHelper.Request.Headers["X-Real-IP"];
-                        if (string.IsNullOrEmpty(currentIP))
-                        {
-                            currentIP = HttpContextHelper.HttpContext.Connection.RemoteIpAddress?.ToString();
-                        }
-                        ip = currentIP;
-                    }
-                    ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
-                    throw new Exception(Error);
+                    HandleExceptionOnUpdate(e);
+                    throw new ApplicationException("Database update failed", e);
                 }
                 scope.Complete();
                 return result;
             }
         }
+
         protected override void OnError(DomainServiceErrorInfo errorInfo)
         {
+            List<ChangeSetEntry>? errors = null;
             if (this.ChangeSet != null)
             {
-                this.ChangeSet.ChangeSetEntries.Where(f => f.HasError == true);
+                errors = this.ChangeSet?.ChangeSetEntries?.Where(f => f.HasError)?.ToList();
             }
-            base.OnError(errorInfo);
-            string authenticateduser = "";
-            try
-            {
-                authenticateduser = AmitalCloudSecurityUtility.GetAuthenticatedUser();
-            }
-            catch
-            {
-                authenticateduser = "UnKnown";
-            }
-            string ip = "";
-            if (HttpContextHelper.Request != null)
-            {
-                string currentIP = HttpContextHelper.Request.Headers["X-Real-IP"];
-                if (string.IsNullOrEmpty(currentIP))
-                {
-                    currentIP = HttpContextHelper.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-                }
-                ip = currentIP;
-            }
-            ExceptionHandler.HandleException(errorInfo.Error, DateTime.Now, 0, "", authenticateduser, "OnError()", ip);
+
+            var (authenticateduser, ip) = AmitalCloudSecurityUtility.GetAuditInfo();
+
+            ExceptionHandler.HandleException(errorInfo.Error, DateTime.Now, 0, "", authenticateduser, "OnError() " + errors?.ToString(), ip);
             throw errorInfo.Error;
         }
         public override System.Collections.IEnumerable Query(QueryDescription queryDescription, out IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> validationErrors, out int totalCount)
@@ -104,6 +52,32 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         public override object Invoke(InvokeDescription invokeDescription, out IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> validationErrors)
         {
             return base.Invoke(invokeDescription, out validationErrors);
+        }
+
+        private void HandleExceptionOnUpdate(DbUpdateException e)
+        {
+            var errorMessages = new StringBuilder();
+
+            var entries = e.Entries;
+            foreach (var entry in entries)
+            {
+                errorMessages.AppendLine($"Entity of type {entry.Entity.GetType().Name} in state {entry.State} caused an error.");
+            }
+
+            if (e.InnerException != null)
+            {
+                errorMessages.AppendLine("Inner exception: " + e.InnerException.Message);
+                if (e.InnerException.InnerException != null)
+                {
+                    errorMessages.AppendLine("Inner-inner exception: " + e.InnerException.InnerException.Message);
+                }
+            }
+
+            string Error = errorMessages.ToString();
+
+            var (authenticateduser, ip) = AmitalCloudSecurityUtility.GetAuditInfo();
+
+            ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
         }
     }
 }

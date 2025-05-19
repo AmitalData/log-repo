@@ -18,7 +18,7 @@ namespace AmitalCloud.Infrastructure.Domain.DataContracts
         public int PageIndex { get; set; }
         public int DataCount { get; set; }
         public string SortByColumnName { get; set; }
-        public string SortDirectin { get; set; }
+        public string SortDirection { get; set; }
         string querySection;
         public bool GetAll { get; set; }
 

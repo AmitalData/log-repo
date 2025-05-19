@@ -229,7 +229,7 @@ void SaveEntityDomainServiceOutput(string outputFileName)
 // </auto-generated> EntityDomainServiceGenerator.tt from <#= Path.GetFileName(Host.TemplateFile) #>
 //---
 using System.Collections.Generic;
-using System.ServiceModel.DomainServices.Hosting;
+//using System.ServiceModel.DomainServices.Hosting;
 using AmitalCloud.Infrastructure.Application.BaseClasses;
 using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Domain.Interfaces;
@@ -242,7 +242,7 @@ using <#= NamespacesDictionary["entitylistqueryeservicespacestring"] #> ;
 namespace <#= domainservicenamespacestring + ".DomainServices" #>
 { 
 
-    [EnableClientAccess()]
+    //[EnableClientAccess()]
     public partial class <#= tableName + "DomainService" #> : AmitalCloudDomainService
     {
 	    IDomainServiceUpdateClass<<#= pmName #>> service;

@@ -10,6 +10,7 @@ using AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Model.Enums;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace AmitalCloud.Infrastructure.Application.BaseClasses
@@ -36,13 +37,16 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         public List<TEntityList> GetList(QueryOperations queryOperations, int tenant, TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericSort sortClass;
-            int skippedPorts;
-            IQueryable<TEntityList> query = GetQuery(queryOperations, treeFilterQueryArgs, out sortClass, out skippedPorts);
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            int skipCount;
+            IQueryable<TEntityList> query = GetQuery(queryOperations, treeFilterQueryArgs, out sortClass, out skipCount);
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirection))
             {
                 PropertyInfo propInfo = typeof(TEntityList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> ObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("AccountingInformationIdentifier", tenant).ToList();
-                ObjectField objectField = (from a in ObjectFields
+                if (propInfo == null)
+                    throw new InvalidOperationException($"Sort column '{queryOperations.SortByColumnName}' does not exist on type {typeof(TEntityList).Name}");
+
+                List<ObjectField> objectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(nameof(AccountingInformationIdentifier), tenant).ToList();
+                ObjectField objectField = (from a in objectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
                 if (objectField != null)
@@ -92,20 +96,15 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                                 }
                             default:
                                 {
-                                    //query2 = query2.OrderBy(d => d.Code);
                                     break;
                                 }
                         }
                     }
                 }
             }
-            else
+            if (!queryOperations.GetAll && queryOperations.PageSize > 0)
             {
-                //query2 = query2.OrderBy(a => a.)
-            }
-            if (!queryOperations.GetAll)
-            {
-                query = query.Skip(skippedPorts).Take(queryOperations.PageSize);
+                query = query.Skip(skipCount).Take(queryOperations.PageSize);
             }
             return query.ToList();
         }
@@ -131,8 +130,8 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         public int GetListCount(QueryOperations queryOperations, int tenant, TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericSort sortClass;
-            int skippedPorts;
-            var query = GetQuery(queryOperations, treeFilterQueryArgs, out sortClass, out skippedPorts);
+            int skipCount;
+            var query = GetQuery(queryOperations, treeFilterQueryArgs, out sortClass, out skipCount);
             return query.Count();
         }
         public TEntityList GetSingle(IEnumerable<KeyValuePair<string, string>> paramList)
@@ -151,12 +150,26 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         }
         private TEntityList GetNewList(TEntity entity)
         {
-            return (TEntityList)typeof(TEntityList).GetConstructor(new Type[] { typeof(TEntity) }).Invoke(entity, null);
+            return _factory(entity);
         }
+
+        private static readonly Func<TEntity, TEntityList> _factory = CreateFactory();
+        private static Func<TEntity, TEntityList> CreateFactory()
+        {
+            var param = Expression.Parameter(typeof(TEntity), "entity");
+            var ctor = typeof(TEntityList).GetConstructor(new[] { typeof(TEntity) });
+            var newExpr = Expression.New(ctor, param);
+            var lambda = Expression.Lambda<Func<TEntity, TEntityList>>(newExpr, param);
+            return lambda.Compile();
+        }
+
         private IContext GetContext(int tenant)
         {
             Type type = typeof(TEntity);
-            var attribute = (DataBaseAttribute)Attribute.GetCustomAttribute(type, typeof(DataBaseAttribute));
+            var attribute = (DataBaseAttribute?)Attribute.GetCustomAttribute(type, typeof(DataBaseAttribute));
+            if (attribute == null)
+                throw new InvalidOperationException($"Missing DataBaseAttribute on type {type.Name}");
+
             switch (attribute.Name)
             {
                 case AmitalCloudDBSchema.AMITAL_MAIN:

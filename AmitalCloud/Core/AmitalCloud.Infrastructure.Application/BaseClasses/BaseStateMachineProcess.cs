@@ -27,15 +27,17 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
 
             public override int GetHashCode()
             {
-                return 17 + 31 * CurrentState.GetHashCode() + 31 * Command.GetHashCode();
+                return HashCode.Combine(CurrentState, Command);
+
+
             }
 
             public override bool Equals(object obj)
             {
                 StateTransition other = obj as StateTransition;
                 return other != null &&
-                    this.CurrentState.ToString() == other.CurrentState.ToString() &&
-                    this.Command.ToString() == other.Command.ToString();
+                    EqualityComparer<ProcessState>.Default.Equals(this.CurrentState, other.CurrentState) &&
+                    EqualityComparer<CommandEnum>.Default.Equals(this.Command, other.Command);
             }
         }
 
@@ -102,18 +104,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         //     Occurs when changes occur that affect whether or not the command should execute.
         event EventHandler CanExecuteChanged;
 
-        // Summary:
-        //     Defines the method that determines whether the command can execute in its
-        //     current state.
-        //
-        // Parameters:
-        //   parameter:
-        //     Data used by the command. If the command does not require data to be passed,
-        //     this object can be set to null.
-        //
-        // Returns:
-        //     true if this command can be executed; otherwise, false.
-        bool CanExecute(object parameter);
         //
         // Summary:
         //     Defines the method to be called when the command is invoked.
@@ -161,16 +151,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
 
         public RCmmand(CommandEnum command, Func<object, bool> func)
         {
-
-            if (!typeof(ProcessState).IsEnum)
-            {
-                throw new ArgumentException("ProcessState must be an enum.");
-            }
-            if (!typeof(CommandEnum).IsEnum)
-            {
-                throw new ArgumentException("ProcessState must be an enum.");
-            }
-
             MyCommand = command;
             if (func == null)
                 throw new ArgumentNullException("execute");
@@ -185,10 +165,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             return res;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
         public event EventHandler CanExecuteChanged;
     }
 

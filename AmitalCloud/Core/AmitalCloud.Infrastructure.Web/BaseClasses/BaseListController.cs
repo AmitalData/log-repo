@@ -22,7 +22,7 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
         private protected string ObjectTableName;
         private protected string QuerySection;
         private protected bool EnableSecurity;
-        protected int Tenant { get => AuthenticationToken(); }
+        protected int Tenant { get => AmitalCloudSecurityUtility.AuthenticateTenant(mode: "READ", objectTableName: ObjectTableName); }
         #region Constructors
         protected BaseListController(string objectTableName, string querySection, bool enableSecurity = false)
         {
@@ -37,9 +37,7 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
         #endregion
 
         #region Public Methods
-        //[Route("api/{controller}/GetSingle")]
-        [HttpGet]
-        [ActionName("GetSingle")]
+        [HttpGet("GetSingle")]
         public IActionResult GetSingle()
         {
             string logKey = PerformanceLogger.LogCurrentTime();
@@ -50,6 +48,8 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
             }
             catch (Exception ex)
             {
+                if (ex is AutenticationException)
+                    throw;
                 return StatusCode(StatusCodes.Status500InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
                 // return Request.CreateResponse(HttpStatusCode.BadRequest, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
@@ -59,9 +59,7 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
             }
         }
 
-        [HttpGet]
-        //[Route("api/{controller}/GetByFilters")]
-        [ActionName("GetByFilters")]
+        [HttpGet("GetByFilters")]
         public IActionResult GetByFilters([FromQuery] ApiQueryFilters filters)
         {
             string logKey = PerformanceLogger.LogCurrentTime();
@@ -74,7 +72,7 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
                     PageSize = filters.PageSize,
                     QuerySection = QuerySection,
                     SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
+                    SortDirection = filters.SortDirection,
                     GetAll = filters.GetAll,
                 };
                 List<ObjectField> answerStatusObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(queryOperations.ObjectTableName, Tenant);
@@ -158,6 +156,8 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
             }
             catch (Exception ex)
             {
+                if (ex is AutenticationException)
+                    throw;
                 return StatusCode(StatusCodes.Status500InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
             finally
@@ -166,9 +166,7 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
             }
         }
 
-        //[Route("api/{controller}/GetAll")]
-        [HttpGet]
-        [ActionName("GetAll")]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             string logKey = PerformanceLogger.LogCurrentTime();
@@ -178,6 +176,8 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
             }
             catch (Exception ex)
             {
+                if (ex is AutenticationException)
+                    throw;
                 return StatusCode(StatusCodes.Status500InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
             finally
@@ -218,24 +218,6 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
                 count = queryService.GetListCount(queryOperations, treeFilterQueryArgs);
             }
             return queryService.GetList(queryOperations, Tenant, treeFilterQueryArgs);
-        }
-        private int AuthenticationToken()
-        {
-            try
-            {
-                string token = HttpContext.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                AmitalCloudSecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                if (EnableSecurity)
-                {
-                    AmitalCloudSecurityUtility.CheckContactFeature(ObjectTableName, "READ", authToken.Tenant);
-                }
-                return authToken.Tenant;
-            }
-            catch (Exception)
-            {
-                throw new AutenticationException("Not authorized!");
-            }
         }
         protected bool hasCustomFields = false;
         private IEntityListQueryService<TEntityList> GetService()

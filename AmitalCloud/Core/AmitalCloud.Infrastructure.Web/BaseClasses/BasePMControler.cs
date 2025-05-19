@@ -127,6 +127,7 @@ namespace AmitalCloud.Infrastructure.Web.BaseClasses
         }
 
         // DELETE api/<controller>/5
+        [HttpDelete]
         public void Delete(int id)
         {
         }

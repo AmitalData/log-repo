@@ -31,7 +31,7 @@ namespace AmitalCloud.Infrastructure.Data.Helpers
             }
             SortParams<T, N> sortParams = new SortParams<T, N>();
             sortParams.QuerableData = querableData;
-            sortParams.SortDirection = queryOperations.SortDirectin;
+            sortParams.SortDirection = queryOperations.SortDirection;
             sortParams.FirstSortExpression = GetSortExpression<T, N>(queryOperations.SortByColumnName);
             if (!String.IsNullOrWhiteSpace(keyName) && //AmitalCloudSettings.DatabaseManagementSystem == "oracle" &&
                 typeof(T).GetProperty(keyName).PropertyType == typeof(Guid)

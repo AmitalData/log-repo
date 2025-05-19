@@ -21,7 +21,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         protected IRepository<TEntityPOCO> Repository;
         protected IContext MainContext;
         protected TEntityKeys EntityKeys;
-        public BaseEntityQueryService()
+        protected BaseEntityQueryService()
         {
 
         }
@@ -39,7 +39,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 var cacheObj = CacheManager.CacheWrapper.Get(cacheKey, Tenant);
                 if (cacheObj != null)
                 {
-                    if (cacheObj.GetType() == typeof(NullCache))
+                    if (IsNullCache(cacheObj))
                     {
                         EntityPM = default(TEntityPM);
                     }
@@ -71,16 +71,8 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             }
             else
             {
-                EntityPM = new TEntityPM();
                 EntityPOCO = Repository.GetSingle(entityKeys);
-                if (EntityPOCO != null)
-                {
-                    EntityPM = GetEntityPM(EntityPOCO, getComposition, entityKeys);
-                }
-                else
-                {
-                    EntityPM = default(TEntityPM);
-                }
+                EntityPM = EntityPOCO != null ? GetEntityPM(EntityPOCO, getComposition, entityKeys) : default;                
             }
             return EntityPM;
         }
@@ -98,7 +90,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
                 return default(TEntityPM);
             }
             mapping.POCOToPM(entityPM, entityPOCO);
-            if (getComposition)
+            if (getComposition && entityKeys != null)
             {
                 GetComposition(entityKeys, entityPM);
             }
@@ -120,10 +112,13 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             foreach (TEntityPOCO entityPOCO in entityPOCOs)
             {
                 TEntityPM entityPM = new TEntityPM();
-                IEntityKeyFields<TEntityPOCO, TkeyType> entityKeys = GetKeys(entityPOCO);
-                if (entityKeys != null && getComposition)
+                if (entityPOCO != null)
                 {
-                    GetComposition(entityKeys, entityPM);
+                    var entityKeys = GetKeys(entityPOCO);
+                    if (entityKeys != null && getComposition)
+                    {
+                        GetComposition(entityKeys, entityPM);
+                    }
                 }
                 mapping.CustomPOCOToPM(entityPM, entityPOCO);
                 mapping.POCOToPM(entityPM, entityPOCO);
@@ -134,9 +129,9 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         public List<TEntityPM> GetMultiFromCache(string cacheKey, Expression<Func<TEntityPOCO, bool>> predicate, string include = null, Expression<Func<TEntityPOCO, TEntityPM>> select = null)
         {
             List<TEntityPM> entityPMs;
+            var formattedCacheKey = $"PMCache:{typeof(TEntityPOCO).Name}:{cacheKey}:{include}";
 
-            cacheKey = $"TEntityPMGetMulti_({cacheKey};{include ?? string.Empty})";
-            var cacheObj = CacheManager.CacheWrapper.Get(cacheKey);
+            var cacheObj = CacheManager.CacheWrapper.Get(formattedCacheKey);
             if (cacheObj != null)
             {
                 entityPMs = (List<TEntityPM>)cacheObj;
@@ -158,11 +153,11 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
 
                 if (entityPMs != null)
                 {
-                    CacheManager.CacheWrapper.Insert(cacheKey, entityPMs);
+                    CacheManager.CacheWrapper.Insert(formattedCacheKey, entityPMs);
                 }
                 else
                 {
-                    CacheManager.CacheWrapper.Insert(cacheKey, new NullCache());
+                    CacheManager.CacheWrapper.Insert(formattedCacheKey, new NullCache());
                 }
             }
             return entityPMs;
@@ -181,5 +176,6 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             => Repository.GetMulti(predicate, select);
         public List<TResult> GetMulti<TResult>(Expression<Func<TEntityPOCO, bool>> predicate, Expression<Func<TEntityPOCO, TResult>> select, string include)
         => Repository.GetMulti(predicate, select, include);
+        private bool IsNullCache(object obj) => obj is NullCache;
     }
 }

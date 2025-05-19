@@ -93,21 +93,10 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             }
             if (!exists)
             {
-                string errorMessage = "Sorry! you have no permission to do this operation" + Environment.NewLine + "Table:" + objectTableName + Environment.NewLine + "User:" + overrideEmail + Environment.NewLine + "Tenant:" + tenant;
-                string ip = "";
-                if (HttpContextHelper.HttpContext != null && HttpContextHelper.Request != null)
-                {
-                    string currentIP = HttpContextHelper.Request.Headers["X-Real-IP"];
-                    if (string.IsNullOrEmpty(currentIP))
-                    {
-                        currentIP = HttpContextHelper.HttpContext.Connection.RemoteIpAddress?.ToString();
-                    }
-                    ip = currentIP;
-                }
                 bool showLocal = contactinfo != null ? (!contactinfo.DontShowLocalLabels) : false;
                 string objectTableLocalName = TextCodesTranslator.TranslateText(objectTableName, tenant, showLocal);
                 string error = TextCodesTranslator.TranslateText("Accounting.General.O.YouDontHavePermission", tenant, showLocal);
-                throw new Exception(error + " " + objectTableLocalName + ". Please contact your administrator.");
+                throw new AutenticationException(error + " " + objectTableLocalName + ". Please contact your administrator.");
             }
         }
         private static Dictionary<string, FeaturePM> GetFeaturesForRole(string roleId, List<string> allowedPackages, int tenant, bool forceAPIFeaturesCheck = false)
@@ -629,7 +618,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
         }
         public static string GetAuthenticatedUser(int tenant)
         {
-            string email = !string.IsNullOrEmpty(HttpContextHelper.User?.Identity?.Name)? HttpContextHelper.User.Identity.Name: "system@tenant" + tenant.ToString() + ".com";
+            string email = !string.IsNullOrEmpty(HttpContextHelper.User?.Identity?.Name) ? HttpContextHelper.User.Identity.Name : "system@tenant" + tenant.ToString() + ".com";
             return email;
         }
         public static string GetAuthenticatedWorkWebUser()
@@ -680,24 +669,36 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
         }
         public static int AuthenticateTenant(int? entityTenant = null, string mode = null, string objectTableName = null)
         {
-            string token = HttpContextHelper.Request.Headers["Token"];
-            if (string.IsNullOrEmpty(token))
+            try
             {
-                throw new AutenticationException("missing token");
-            }
+                string? token = HttpContextHelper.Request.Headers["Token"];
+                if (string.IsNullOrEmpty(token))
+                {
+                    throw new AutenticationException("missing token");
+                }
 
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                AuthenticationOnTenant(authToken.Tenant);
 
-            if (!string.IsNullOrEmpty(mode) && !string.IsNullOrEmpty(objectTableName))
-            {
-                CheckContactFeature(objectTableName, mode, authToken.Tenant);
+                if (!string.IsNullOrEmpty(mode) && !string.IsNullOrEmpty(objectTableName))
+                {
+                    CheckContactFeature(objectTableName, mode, authToken.Tenant);
+                }
+                if (entityTenant != null)
+                {
+                    AuthenticationOnEntityTenant((int)entityTenant, authToken.Tenant);
+                }
+                return authToken.Tenant;
             }
-            if (entityTenant != null)
+            catch (AutenticationException)
             {
-                AuthenticationOnEntityTenant((int)entityTenant, authToken.Tenant);
+                throw;
             }
-            return authToken.Tenant;
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to authenticate tenant/token: {ex.Message}");
+                throw new AutenticationException("Not authorized!");
+            }
         }
         public static void AuthenticationOnTenant(int tenant)
         {
@@ -867,7 +868,7 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
         public static void AuthenticationOnEntityTenant(int entityTenant, int authTokenTenant)
         {
             if (entityTenant != authTokenTenant)
-                throw new Exception("Sorry! you have no permission to do this operation on Tenant:" + entityTenant + ". Please contact your administrator.");
+                throw new AutenticationException("Sorry! you have no permission to do this operation on Tenant:" + entityTenant + ". Please contact your administrator.");
         }
         public static bool CheckPackageFeature(string objectTableName, string featureCode, int tenant)
         {
@@ -901,8 +902,28 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             bool isAppService = ConfigurationHelper.GetValue("IsAppService") == "true";
 
             HttpContext context = HttpContextHelper.HttpContext;
-            string host = (isAppServiceENV || isAppService) && !string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]) ? context.Request.Headers["X-ORIGINAL-HOST"]: context.Request.Host.Host;
+            string host = (isAppServiceENV || isAppService) && !string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]) ? context.Request.Headers["X-ORIGINAL-HOST"] : context.Request.Host.Host;
             return host;
+        }
+
+        public static (string user, string? ip) GetAuditInfo()
+        {
+            string user;
+            try { user = GetAuthenticatedUser(); }
+            catch { user = "UnKnown"; }
+
+            string? ip = "";
+            try
+            {
+                var request = HttpContextHelper.Request;
+                if (request != null)
+                {
+                    ip = request.Headers["X-Real-IP"].ToString() ?? HttpContextHelper.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+                }
+            }
+            catch { ip = "UnKnown"; }
+
+            return (user, ip);
         }
     }
 }

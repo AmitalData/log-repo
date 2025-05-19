@@ -18,4 +18,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="NetCommonHelper">
+      <HintPath>..\..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

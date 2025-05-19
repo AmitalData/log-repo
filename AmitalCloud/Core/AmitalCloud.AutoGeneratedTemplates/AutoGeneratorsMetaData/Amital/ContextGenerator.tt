@@ -25,7 +25,7 @@ bool isPartial;
 string filename;
 public void GenerateIContext(string sourceFolder,string destinationFolder,string contextname)
 {
-    filename = contextname;
+    filename = contextname.Replace(".", "");
     isPartial = false;
     if (contextname.Contains("."))
     {
@@ -48,7 +48,7 @@ string mappingsspacestring = contextnamespacestring.ToString().Substring(0,conte
 // </auto-generated>
 //-----
 using AmitalCloud.Infrastructure.Model.EntityClasses;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace <#= contextnamespacestring #>
 {
@@ -110,7 +110,7 @@ private void GenerateIDbSet(string xmlFilePath)
     }
 
 	#>
-	 IDbSet<<#= tableName #>> <#= dBTableName #> { get; }
+	 DbSet<<#= tableName #>> <#= dBTableName #> { get; }
 	<#+
     
 }
@@ -154,7 +154,7 @@ public dynamic GetContextNameSpace(string destinationFolder)
 
 private void GenerateContext(string sourceFolder,string destinationFolder,string contextname)
 {
-    filename = contextname;
+    filename = contextname.Replace(".", "");
     isPartial = false;
     if (contextname.Contains("."))
     {
@@ -185,8 +185,7 @@ using AmitalCloud.Infrastructure.Model.EntityClasses;
 using AmitalCloud.Infrastructure.Model.Enums;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using System.Data.Common;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.EntityFrameworkCore;
 
 namespace <#= contextnamespacestring #>
 {
@@ -619,7 +618,7 @@ private void GenerateIDbSetForContext(string xmlFilePath)
 		dBTableName = dBTableName.ToString().Split('.')[1];
           
     }
-	#>public IDbSet<<#= tableName #>> <#= dBTableName #>  {  get; set; }
+	#>public DbSet<<#= tableName #>> <#= dBTableName #>  {  get; set; }
 	<#+
 }
  

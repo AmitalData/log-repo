@@ -10,7 +10,7 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
         {
             if (EntityUpdateServiceContext.Current == null)
             {
-                EntityUpdateServiceContext.Current = new CurrentDebug() { EntityUpdateService = this as object };
+                EntityUpdateServiceContext.Current = new EntityUpdateServiceDebugContext() { EntityUpdateService = this as object };
             }
         }
         protected void AddExternalTrace(string Trace)
@@ -55,9 +55,9 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
             {
                 AncestorEntityUpdateService = EntityUpdateServiceContext.Current.EntityUpdateService;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //throw;
+                Debug.WriteLine($"Failed to get ancestor: {ex.Message}");
             }
 
         }
@@ -81,26 +81,30 @@ namespace AmitalCloud.Infrastructure.Application.BaseClasses
     class EntityUpdateServiceContext
     {
         [ThreadStatic]
-        public static CurrentDebug Current = null;
+        public static EntityUpdateServiceDebugContext Current = null;
     }
-    class CurrentDebug
+    public class EntityUpdateServiceDebugContext
     {
+        private const string ExternalTraceTag = "ExternalTrace";
         public object EntityUpdateService = null;
         private StringBuilder _sb;
         private Stopwatch _sw;
-        public CurrentDebug()
+        public EntityUpdateServiceDebugContext()
         {
             _sb = new StringBuilder();
             _sw = Stopwatch.StartNew();
         }
         internal void AddStepTrace(string stepName)
         {
-            _sb.AppendLine(stepName + ":Took:" + _sw.ElapsedMilliseconds);
-            _sw.Restart();
+            lock (_sb)
+            {
+                _sb.AppendLine($"{stepName}:Took:{_sw.ElapsedMilliseconds}");
+                _sw.Restart();
+            }
         }
         internal void AddExternalTrace(string Trace)
         {
-            _sb.AppendLine("ExternalTrace:" + Trace);
+            _sb.AppendLine($"{ExternalTraceTag}:{Trace}");
         }
         internal string GetDebugTrace()
         {
