@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class MagayaStepUpdateClass
    {  		
-		public const string HashString = "770a2d047c4d9db1ca0c4e8ab0d96733";
+		public const string HashString = "53dd8b5d26c76393a1b3b0a56b595bd3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Magaya Step",
-			      				    Code =  "adf5",
+			      				    Code =  "de9b",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
@@ -311,6 +311,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LocalName",
 					  						ListPropertyPath =  "LocalName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -376,6 +377,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsAllowResend",
 					  						ListPropertyPath =  "IsAllowResend",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -422,7 +424,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable MagayaStepObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MagayaStep" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> MagayaStepObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MagayaStep").ToList();
+		       
+	      
+
+	         Screen MagayaStepMagayaStepHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStep.HeaderScreen", Name = "MagayaStepHeaderScreen", ObjectTableId = MagayaStepObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    MagayaStepObjectTable.HeaderScreenId = MagayaStepMagayaStepHeaderScreenScreen0.Id;
+		    MagayaStepObjectTable.HeaderScreenCode = MagayaStepMagayaStepHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

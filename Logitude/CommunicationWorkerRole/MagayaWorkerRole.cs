@@ -167,10 +167,10 @@ namespace CommunicationWorkerRole
 
         private void ProcessStep()
         {
-            switch (switch_on)
-            {
-                default:
-            }
+            //switch (switch_on)
+            //{
+            //    default:
+            //}
         }
 
 
