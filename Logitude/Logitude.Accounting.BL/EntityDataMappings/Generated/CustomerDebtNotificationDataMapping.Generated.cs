@@ -35,7 +35,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DebtLevel, 
 	         DebtLevelAmount, 
 	         TasksSchedulerId, 
-	         PaymentNotes,
+	         PaymentNotes, 
+	         AccountId,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DebtLevel, 
 	         DebtLevelAmount, 
 	         TasksSchedulerId, 
-	         PaymentNotes,
+	         PaymentNotes, 
+	         AccountId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -91,6 +93,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentNotes))
             {
 				entityPOCO.PaymentNotes = entityPM.PaymentNotes;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountId))
+            {
+				entityPOCO.AccountId = entityPM.AccountId;
 			}
 			}
 
@@ -137,6 +144,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.PaymentNotes = entityPOCO.PaymentNotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AccountId))
+            {
+					entityPM.AccountId = entityPOCO.AccountId;
+            }
+
 		}
 
 		public void PMToOldPM(CustomerDebtNotificationPM entityPM, CustomerDebtNotificationPM oldEntityPM)
@@ -176,6 +188,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentNotes))
             {
                 oldEntityPM.PaymentNotes = entityPM.PaymentNotes;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountId))
+            {
+                oldEntityPM.AccountId = entityPM.AccountId;
             }
 			
 		}

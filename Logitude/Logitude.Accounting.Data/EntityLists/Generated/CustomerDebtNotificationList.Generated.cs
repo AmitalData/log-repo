@@ -37,6 +37,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TasksSchedulerId  { get; set; }
        [DataMember]
        public string PaymentNotes  { get; set; }
+       [DataMember]
+       public string AccountId  { get; set; }
    }
 
 }
