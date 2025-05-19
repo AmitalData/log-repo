@@ -388,6 +388,7 @@
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\MagayaStepsStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\MagayaStepStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\OpenFormatReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PaymentChequeStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PeriodTypeStruct.Generated.cs" />
