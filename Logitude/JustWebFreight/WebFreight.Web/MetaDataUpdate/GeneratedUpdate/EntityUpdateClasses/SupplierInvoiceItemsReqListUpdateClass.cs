@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "af0aa346ee8b6eccb5bd22d54a9f7a72";
+		public const string HashString = "97b3fbca29dc7234ab006302700a0d51";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת בקשות",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "0539",
+			      				    Code =  "4569",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -387,8 +387,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LineNumber",
 					  						DefaultText =  "Line Number",
+					  						FullLocalDefaultText =  "שורה",
 					  						ListFieldLable =  "LineNumberListLable",
 					  						ListLableDefaultText =  "Line Number",
+					  						ListLocalDefaultText =  "שורה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -575,8 +577,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceItemLineNumber",
 					  						DefaultText =  "Invoice Item Line Number",
+					  						FullLocalDefaultText =  "שורה",
 					  						ListFieldLable =  "InvoiceItemLineNumberListLable",
 					  						ListLableDefaultText =  "Invoice Item Line Number",
+					  						ListLocalDefaultText =  "שורה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "SupplierInvoiceItem",
 					  						NavigationPropertyName =  "SupplierInvoiceItem",
