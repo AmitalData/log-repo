@@ -578,6 +578,11 @@ export class APPaymentPM {
     public get IsMultiCurrency() { return this.isMultiCurrency; }
     public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
        
+    private vendorCountry: string;
+    public get VendorCountry() { return this.vendorCountry; }
+    public set VendorCountry(newValue: string) { if (this.vendorCountry != newValue) { this.vendorCountry = newValue; this.MarkAsDirty("VendorCountry"); } }
+       
+	 
     public OldEntityPM: APPaymentPM;
 		
     public IsDirty: boolean;
