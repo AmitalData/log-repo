@@ -1589,6 +1589,11 @@ export class DeclarationPM {
     public set CooStatusCode(newValue: string) { if (this.cooStatusCode != newValue) { this.cooStatusCode = newValue; this.MarkAsDirty("CooStatusCode"); } }
        
 	 
+    private updateTaxationDateTime: boolean;
+    public get UpdateTaxationDateTime() { return this.updateTaxationDateTime; }
+    public set UpdateTaxationDateTime(newValue: boolean) { if (this.updateTaxationDateTime != newValue) { this.updateTaxationDateTime = newValue; this.MarkAsDirty("UpdateTaxationDateTime"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

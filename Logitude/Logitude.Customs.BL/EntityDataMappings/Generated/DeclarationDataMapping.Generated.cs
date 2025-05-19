@@ -444,7 +444,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoSending, 
 	         DiamondsDeclarationFilter, 
 	         CooStatusName, 
-	         CooStatusCode,
+	         CooStatusCode, 
+	         UpdateTaxationDateTime,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

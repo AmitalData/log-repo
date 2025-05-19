@@ -30,6 +30,7 @@ using System.Data.Entity.Validation;
 using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.ILOVS;
 using Logitude.Customs.BL.Infrastructure;
+using Logitude.Customs.Data.EntityLists;
 
 
 namespace Logitude.Customs.BL.EntityUpdateServices
@@ -42,6 +43,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public string LastMileServiceType;
         public string MAWB;
         public string ImporterCode;
+        public bool UpdateTaxationDateTime;
 
         protected override void OnCreating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
@@ -678,6 +680,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         private void HandleAutomatedMessaging(DeclarationCourierStatusPM pm)
         {
+            if (UpdateTaxationDateTime) // manual send declaration will not trigger automessaging
+            {
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - UpdateTaxationDateTime");
+                return;
+            }
             bool run =
                 (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) ||
                 (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) ||
