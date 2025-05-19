@@ -173,14 +173,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             }
         }
 
-        public HttpResponseMessage GetObjectTableRuleFieldPMsByTenant(int tenant)
+        public HttpResponseMessage GetObjectTableRuleFieldPMsByTenant()
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                int tenant = authToken.Tenant;
 
                 ObjectTableRuleFieldQuery objectTableRuleFieldQuery = new ObjectTableRuleFieldQuery(tenant);
                 List<ObjectTableRuleFieldPM> result = objectTableRuleFieldQuery.GetObjectTableRuleFieldPMsByTenant(tenant).ToList();

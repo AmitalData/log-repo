@@ -262,8 +262,6 @@ export class AppTool {
 
         if (current_URL.indexOf('localhost') > -1) {
             return 'http://localhost:9996/';
-            // for amitalcloud: 
-            // return 'http://localhost:44346/';
         }
         else {
             let url = current_URL.split("/index.html")[0];
