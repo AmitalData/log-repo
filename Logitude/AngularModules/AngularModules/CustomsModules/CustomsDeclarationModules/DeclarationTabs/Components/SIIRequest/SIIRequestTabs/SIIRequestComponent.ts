@@ -271,7 +271,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("WareHouseAddress", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("WareHouseCity", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("IsClosed", this.ObjectTableNameSiiRequest, enabled);
-        // this.UIProperties.SetEnabled("WareHouseCityName", this.ObjectTableNameSiiRequest, enabled);
+        this.UIProperties.SetEnabled("WareHouseCityName", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("SupplierInvoiceItemsReqLists", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("Remarks", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("ListCounter", this.ObjectTableNameSiiRequest, enabled);
@@ -496,18 +496,23 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.entityPM.WareHouseCity = newValue;
     }
 
+    public get WareHouseCityName(): string {
+        return this.entityPM?.WareHouseCityName;
+    }
+    public set WareHouseCityName(newValue: string) {
+
+        this.entityPM.WareHouseCityName = newValue;
+    }
+
+    SetLocalName(entity, fieldName) {
+        this.entityPM[fieldName] = !AppTool.IsNullOrEmpty(entity) ? entity?.LocalName : null;
+    }
+
     public get IsClosed(): boolean {
         return this.entityPM.IsClosed ?? false;
     }
     public set IsClosed(newValue: boolean) {
         this.entityPM.IsClosed = newValue;
-    }
-
-    public get WareHouseCityName(): string {
-        return this.entityPM?.WareHouseCityName;
-    }
-    public set WareHouseCityName(newValue: string) {
-        this.entityPM.WareHouseCityName = newValue;
     }
 
     public get SupplierInvoiceItemsReqLists(): SupplierInvoiceItemsReqListPM[] {
