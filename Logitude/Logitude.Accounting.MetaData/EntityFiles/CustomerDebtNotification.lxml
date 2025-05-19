@@ -4,7 +4,6 @@
   ObjectTableName="&quot;CustomerDebtNotification&quot;"
   IsNew="true"
   DBTableName="&quot;CustomerDebtNotifications&quot;"
-  DBTableOldNames="CustomerDebtNotifications"
   ObjectTableSingular="&quot;CustomerDebtNotification&quot;"
   ObjectTablePlural="&quot;CustomerDebtNotifications&quot;"
   HasCustomFilter="false"
