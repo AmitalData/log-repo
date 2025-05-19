@@ -586,6 +586,7 @@ export class SendDeclarationService implements OnDestroy {
             case "ok": {
                 this.StartMyBusyIndicator("");///this.CurrentSession.CurrentEditComponent.StartBusyIndicator("");
                 this.EntityPM.TaxationDateTime = DateTool.GetCurrentDateAsUtc();
+                this.EntityPM.UpdateTaxationDateTime = true;
                 var declarationPMService: DeclarationPMService = new DeclarationPMService();
                 declarationPMService.update(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse.HasError) {
