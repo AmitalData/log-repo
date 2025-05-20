@@ -45,13 +45,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     initiallizeComponent() {
         this.IsLoaded = true;
-        // this.entityResourceService.getEntityResourceByTableName("Customs.SIIRequest").subscribe((response: any) => {
-        //     this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsReqList").subscribe((response: any) => {
-        //         this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-        //         });
-        //     });
-        // });
-
+        this.SetPropertiesEnabled();
     }
 
     SetWindowArgs(args: any) {
@@ -64,11 +58,15 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
         this.entityPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
         console.log(this.entityPM);
-
     }
 
-
     SetPropertiesEnabled() {
+        let enabled: boolean = !this.IsDisplayOnly;
+        this.UIProperties.SetEnabled("ManufactureCountryCode", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("ItemNo", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("ItemName", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("InvoiceQuantity", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("InvoiceQuantityType", this.ObjectTableNameSiiRequest, !enabled);
     }
 
     SaveSupplierInvoiceItemsReqList() {
@@ -118,7 +116,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         return this._IsAggravationGroup1Req;
     }
     public set IsAggravationGroup1Req(newValue: boolean) {
-        debugger
         this._IsAggravationGroup1Req = newValue;
     }
 
