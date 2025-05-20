@@ -18,7 +18,7 @@
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td>
-                            <img class="SearchIcon" src="./Images/Search.png" (click)="SearchProductFileNumber(ProductFileNumber)" [style.opacity]="opacity" title="" />
+                            <img class="SearchIcon" src="./Images/Search.png" (click)="SearchProductFileNumber()" [style.opacity]="opacity" title="" />
                         </td>
                         <td style="width:50px"></td>
                     </tr>
@@ -125,9 +125,9 @@
                     </tr>
                     <tr class="FieldRow">
                         <td style="width:50px"></td>
-                        <td style="width:150px">
+                        <td style="width:170px">
                             <!-- TODO: change to textcode -->
-                            <LogLabel [Text]="'האם מבוקש החמרה לקבוצה 1  '" [ObjectFieldName]="'IsAggravationGroup1Req'"
+                            <LogLabel [Text]="'האם מבוקש החמרה לקבוצה 1 '" [ObjectFieldName]="'IsAggravationGroup1Req'"
                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">

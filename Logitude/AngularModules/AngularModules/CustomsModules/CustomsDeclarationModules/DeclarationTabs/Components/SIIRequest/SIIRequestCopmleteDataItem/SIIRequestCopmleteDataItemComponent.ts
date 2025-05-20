@@ -73,8 +73,8 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     // #endregion initialization data
 
     //#region search product file number by API request:
-    SearchProductFileNumber(value: string) {
-        console.log(value);
+    SearchProductFileNumber() {
+        console.log(this.ProductFileNumber);
 
         // TODO: Activate the API request after adding the function in the backend:
         // this.siiRequestWebService.searchApiByProductFileNumber(value).then((response) => {
