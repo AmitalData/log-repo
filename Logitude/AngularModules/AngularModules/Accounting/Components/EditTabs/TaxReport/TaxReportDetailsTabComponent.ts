@@ -746,91 +746,19 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     } 
 
 
-    timer: any;
-    timerInterval: number = 1000;
-    btePM: any;
-    bteList: BatchTaskExecutionList;
-
     ConfirmRecalculatingReport() {
-        let confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 400;
-        confirmWindow.YesButtonText = TextCodeTranslator.Translate('InterestReport.O.Approve');
-        confirmWindow.NoButtonText = TextCodeTranslator.Translate('InterestReport.O.Cancel');
 
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                this.CurrentSession.StartBusyIndicator("Refreshing ...");
-                this.EntityPM.RecalculateData = true;
+        this.CurrentSession.StartBusyIndicator("Refreshing ...");
+        this.EntityPM.IsEdited = false;
 
-
-                this.TaxReportPMService.update(this.EntityPM).subscribe((myResult: any) => {
-                    var mm: ServiceResponse = myResult;
-                    if (!mm.HasError) {
-                        var entity = mm.Result;
-                        this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe((myResult: any) => {
-                            var mm: ServiceResponse = myResult;
-                            var entity = mm.Result;
-                            this.btePM = entity;
-                            this.CurrentSession.StopBusyIndicator();
-
-                            var messageWindow = new MessageWindow();
-                            messageWindow.ShowSuccessIcon = true;
-                            messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-                            SessionLocator.HomeComponent.IsProcessMenuVisible = true;
-                            SessionLocator.HomeComponent.CurrentProcessId = mm.Result.reportKey;
-                            SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
-  
-                            SessionLocator.HomeComponent.isPinned = true;
-  
-   
-                            });
-                    }
-                });
-            }
-        });
-
-        confirmWindow.Show(TextCodeTranslator.Translate('TaxReport.O.ConfirmRecalculateReport'));
-    }
-
-
-    GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult: any) => {
-            console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
+        this.TaxReportPMService.update(this.EntityPM).subscribe((myResult: any) => {
             var mm: ServiceResponse = myResult;
+                this.CurrentSession.StopBusyIndicator();
             if (!mm.HasError) {
-                this.bteList = mm.Result;
-                if (this.bteList.StatusCode == "D") // D- Done
-                {
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    
-                        this.entityArgs.EditComponent.ReloadEntityPM();
-                        this.CurrentSession.StopBusyIndicator();
-
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-
-                }
-                else if (this.bteList.StatusCode == "F") 
-                {
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-                  
-
-                }
+                this.entityArgs.EditComponent.ReloadEntityPM();
             }
-            else {
-            }
+
         });
-
     }
 
 }
