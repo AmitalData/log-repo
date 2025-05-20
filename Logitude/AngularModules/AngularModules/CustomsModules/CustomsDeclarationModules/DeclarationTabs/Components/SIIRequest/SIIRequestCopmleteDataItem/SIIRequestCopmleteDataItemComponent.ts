@@ -51,7 +51,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         //         });
         //     });
         // });
-        
+
     }
 
     SetWindowArgs(args: any) {
@@ -64,7 +64,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
         this.entityPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
         console.log(this.entityPM);
-        
+
     }
 
 
@@ -112,6 +112,15 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public set Remarks(newValue: string) {
         this.entityPM.Remarks = newValue;
     }
+    // TODO: Delete after adding the property to the entity
+    private _IsAggravationGroup1Req: boolean = false;
+    public get IsAggravationGroup1Req(): boolean {
+        return this._IsAggravationGroup1Req;
+    }
+    public set IsAggravationGroup1Req(newValue: boolean) {
+        debugger
+        this._IsAggravationGroup1Req = newValue;
+    }
 
     // TODO: Uncomment after adding the property to the entity 
     // public get ItemNo(): string {
@@ -154,6 +163,12 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     // }
     // public set StatisticQuantityType(newValue: string) {
     //     this.entityPM.StatisticQuantityType = newValue;
+    // }
+    // public get IsAggravationGroup1Req(): string {
+    //     return this.entityPM?.IsAggravationGroup1Req;
+    // }
+    // public set IsAggravationGroup1Req(newValue: string) {
+    //     this.entityPM.IsAggravationGroup1Req = newValue;
     // }
 
     //#endregion SiiRequest properties
