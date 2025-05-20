@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Interfaces.Magaya;
@@ -7,7 +8,10 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
+using Logitude.XSD.CW_API.ABM;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -77,7 +81,9 @@ namespace Logitude.Accounting.BL.Utils
 
                 foreach (var item in items)
                 {
-                    SaveMagayaInvoiceInQueue(item.Guid, item.Type, item.LogType, item.LogDate, tenant);
+                    string communicationId = AddCommuincationLog(tenant);
+                    AddMagayaCommuicationLog(communicationId, item.Guid, tenant);
+                    SaveMagayaInvoiceInQueue(item.Guid, item.Type, item.LogType, item.LogDate, communicationId, tenant);
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"SaveMagayaInvoiceInQueue : {item}");
 
                 }
@@ -91,17 +97,67 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-        public void SaveMagayaInvoiceInQueue(string guid, string type, string logType, string logDate, int tenant)
+        public void SaveMagayaInvoiceInQueue(string guid, string type, string logType, string logDate, string communicationId, int tenant)
         {
             try
             {
+
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("MagayaQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "Guid", guid }, { "Type", type }, { "LogType", logType }, { "LogDate", logDate } }, tenant, null, null, null, null);
+                queueservice.Send(new Dictionary<string, string>() { { "Guid", guid }, { "Type", type }, { "LogType", logType }, { "LogDate", logDate }, { "communicationId", communicationId } }, tenant, null, null, null, null);
             }
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"SaveMagayaInvoiceInQueue Exception: {ex.Message}");
+                throw;
+            }
+        }
+        public string AddCommuincationLog(int tenant)
+        {
+            try
+            {
+
+                CommunicationsParams logParams = new CommunicationsParams()
+                {
+                    Tenant = tenant,
+                    CommunicationLogTypeCode = "DCBK",
+                    Priority = 1,
+                    InOut = "O",
+                    Status = "W",
+                    Subject = "Magaya Get Invoice API",
+                    FolderName = "MagayaBackup",
+
+                };
+
+                return Communications.AddCommunicationLog(logParams);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"AddCommuincationLog Exception: {ex.Message}");
+                throw;
+            }
+        }
+
+        public void AddMagayaCommuicationLog(string communicationId, string guid, int tenant)
+        {
+            try
+            {
+                MagayaCommunicationLog log = new MagayaCommunicationLog()
+                {
+                    CommunicationId = communicationId,
+                    CreateDate = DateTime.Now,
+                    StatusCode = MagayaStatusEnum.Created,
+                    Step = MagayaStepEnum.OpenMagayaSession,
+                    SearchFields = guid + "," + tenant,
+
+                };
+                MagayaCommunicationLogRepository magayaCommunicationLogUpdateService = new MagayaCommunicationLogRepository(tenant);
+                magayaCommunicationLogUpdateService.Add(log);
+
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"AddMagayaCommuicationLog Exception: {ex.Message}");
                 throw;
             }
         }

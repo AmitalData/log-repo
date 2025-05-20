@@ -206,6 +206,7 @@ namespace CommunicationWorkerRole
         {
 
             string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
+            bool isMagaya = response.MessageValues["IsMagaya"].ToString() == "true" ;
             int tenant = 0;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
 
@@ -221,7 +222,20 @@ namespace CommunicationWorkerRole
                     aRInvoicePM.IsApprovalFailed = false;
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.Update(aRInvoicePM, true);
+                   
                     _DbQueueService.Complete();
+                    if (isMagaya)
+                    {
+                        try
+                        {
+                            invoiceService.PrintOrSendInvoice(null, tenant);
+
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
 
                     if (aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
                     {
@@ -378,6 +392,9 @@ namespace CommunicationWorkerRole
             service.Update(interestReportPM, true);
 
         }
+
+
+     
 
     }
 }

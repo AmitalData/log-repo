@@ -32,18 +32,18 @@
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;EnglishName&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Magaya Step&quot;"
-  Code="&quot;de9b&quot;"
+  Code="&quot;6820&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
   NoViewController="false"
@@ -376,14 +376,67 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Screen
-    Name="&quot;MagayaStepHeaderScreen&quot;"
+    Name="&quot;HeaderScreen&quot;"
     ObjectTableName="&quot;MagayaStep&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    Code="&quot;MagayaStatus.HeaderScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="HeaderScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ScreenName="HeaderScreen" />
+    </ScreenFields>
   </Screen>
+  <Screen
+    Name="&quot;GeneralTabScreen&quot;"
+    ObjectTableName="&quot;MagayaStep&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;MagayaStatus.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="4">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;IsAllowResend&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ScreenName="GeneralTabScreen" />
+    </ScreenFields>
+  </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    ObjectTableName="&quot;MagayaStep&quot;"
+    Code="&quot;MSGT&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;MagayaStep.TH.General&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -454,7 +507,28 @@
       LocalName="&quot;הדפסה/שליחה במייל&quot;"
       IsAllowResend="false" />
   </Records>
-  <DataContracts />
+  <DataContracts>
+    <DataContract
+      Name="&quot;MagayaStep&quot;"
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
+      <DCField
+        DCFieldName="&quot;Code&quot;"
+        FieldName="&quot;Code&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+    </DataContract>
+  </DataContracts>
   <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

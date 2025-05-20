@@ -50,6 +50,12 @@ namespace Logitude.Accounting.BL
                 StatusCode = "4", 
                 StatusName = "Done", 
 			});
+			 
+            all.Add(new MagayaStatusDetails()
+            {    
+                StatusCode = "5", 
+                StatusName = "Failed", 
+			});
 			
             return all;
        }
