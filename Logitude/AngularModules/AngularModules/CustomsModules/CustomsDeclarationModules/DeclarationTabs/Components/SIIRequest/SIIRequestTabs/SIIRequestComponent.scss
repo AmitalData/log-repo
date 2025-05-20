@@ -50,6 +50,20 @@
 
 }
 
+.tickImg {
+    position: absolute;
+    top: -2px;
+    padding-top: 3px;
+    left: 1px;
+    opacity: 0.8;
+}
+
+.tickImg:hover,
+.certOkImg:hover,
+.certNoImg:hover {
+    opacity: 1 !important;
+}
+
 .CertTicket:active:not(.Selected) {
     -webkit-box-shadow: inset 0px 0px 11px 0px rgba(50, 50, 50, 0.10);
     -moz-box-shadow: inset 0px 0px 11px 0px rgba(50, 50, 50, 0.10);

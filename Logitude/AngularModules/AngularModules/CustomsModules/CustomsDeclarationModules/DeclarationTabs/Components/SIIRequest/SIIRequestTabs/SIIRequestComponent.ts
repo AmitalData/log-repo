@@ -59,6 +59,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public filterOptionsInvoice: FilterOptions = FilterOptions.Invoice;
     public filterOptionsDeclarationConect: FilterOptions = FilterOptions.DeclarationConect;
     public isOpen: boolean;
+    public isUnCompleted: CompleteStatuses = CompleteStatuses.UnCompleted;
+    public isPartiallyCompleted: CompleteStatuses = CompleteStatuses.PartiallyCompleted;
+    public isFullyCompleted: CompleteStatuses = CompleteStatuses.FullyCompleted;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -583,6 +586,8 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     Parent: SIIRequestComponent;
+    public isCompleteStatus: CompleteStatuses = CompleteStatuses.UnCompleted;
+    
     constructor(EntityPM: SupplierInvoiceItemsForSIIRequest, parent: SIIRequestComponent) {
         super();
         this.entityPM = EntityPM;
@@ -701,6 +706,7 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set ReqConfirmationTypeCode(newValue: string) {
         this.entityPM.ReqConfirmationTypeCode = newValue;
     }
+
 }
 
 export enum FilterOptions {
@@ -713,4 +719,9 @@ export enum DemandStateFilterOptions {
     FirstCertificate = "401",
     SecondCertificate = "402",
     ThirdCertificate = "403",
+}
+export enum CompleteStatuses {
+    UnCompleted = 0,
+    PartiallyCompleted = 1,
+    FullyCompleted = 2
 }

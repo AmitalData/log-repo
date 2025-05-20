@@ -117,8 +117,8 @@
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px" class="LogTextBoxMultiLine">
-                            <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
-                                [Text]="Remarks" [ObjectFieldName]="'Remarks'" [HideColumns]="true"
+                            <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true" [Text]="Remarks"
+                                [ObjectFieldName]="'Remarks'" [HideColumns]="true"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [InputType]="'nText'"
                                 [DataContext]="DataContext" [Direction]="'RTL'">
                             </LogTextBox>
@@ -423,9 +423,33 @@
                                                                                 class="CellSeparator floatRight"></span>
                                                                             <div class="editButtonContainer">
                                                                                 <IconButton [Name]="'Edit'"
+                                                                                    [Title]="TooltipEdit"
                                                                                     [IsSmall]="true"
+                                                                                    *ngIf="item.isCompleteStatus === isUnCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithGreenTick.png" />
                                                                                 </IconButton>
+                                                                                <button class="Button"
+                                                                                    title={{TooltipEdit}}
+                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    id="Edit_Additional"
+                                                                                    *ngIf="item.isCompleteStatus === isFullyCompleted"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)"
+                                                                                    tabindex="-1">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithGreenTick.png" />
+                                                                                </button>
+                                                                                <button class="Button"
+                                                                                    title={{TooltipEdit}}
+                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    id="Edit_Additional"
+                                                                                    *ngIf="item.isCompleteStatus === isPartiallyCompleted"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)"
+                                                                                    tabindex="-1">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithX.png" />
+                                                                                </button>
                                                                             </div>
                                                                         </log-cell-template>
                                                                     </ng-template>
