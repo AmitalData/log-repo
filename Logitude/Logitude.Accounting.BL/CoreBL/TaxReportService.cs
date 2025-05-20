@@ -1447,8 +1447,19 @@ namespace Logitude.Accounting.BL.CoreBL
                 }, tenant);
             return taskExe;
         }
-    }
-    public class PNCFileArgs
+		public static void ValidationJournalAdditinalData(int tenant, string taxReportId, List<TaxReportLinePM> lines)
+		{
+			var journalIds = lines.Where(x => x.Tenant == tenant && x.TransmitStatusCode == "1").Select(x => x.JournalId).ToHashSet();
+
+			JournalAdditionalDataQueryService journalAdditionalDataQueryService = new JournalAdditionalDataQueryService(tenant);
+			bool isExist = journalAdditionalDataQueryService.ValidationJournalAdditinalData(tenant, journalIds, taxReportId);
+
+			if (isExist)
+				throw new Exception("journalAdditionalData not Updated all TaxReportId");
+		}
+
+	}
+	public class PNCFileArgs
     {
         public string ReportId { get; set; }
         public int Tenant { get; set; }
