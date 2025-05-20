@@ -68,6 +68,10 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         });
       });
     });
+    this.initFullScreen();
+  }
+
+  initFullScreen() {
     this.DisplayOnlyCheck();
     this.loadRequests();
   }
@@ -103,7 +107,11 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.siiRequestList = response.Result;
         this.ItemsSource.Clear();
         let counter = 0;
-        this.siiRequestList.forEach(item => {
+        this.siiRequestList?.sort((a, b) => {
+          return a.Id.localeCompare(b.Id);
+        });
+
+        this.siiRequestList?.forEach(item => {
           item.ListCounter = ++counter;
           this.ItemsSource.Insert(item, true);
         });
@@ -169,6 +177,8 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     logWindow.Width = 1030;
     logWindow.Height = 770;
     logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
+    logWindow.SubTitle = `${this.EntityPM?.CustomFileNo}`;
+    if(!AppTool.IsNullOrEmpty(this.selectedSIIRequest?.ImporterId)) logWindow.SubTitle += ` / ${TextCodeTranslator.Translate("Customs.SIIRequest.F.ImporterId")}: ${this.selectedSIIRequest?.ImporterId}`;
     args.isAllowChange = this.IsAllowChange;
     logWindow.WindowArgs = args;
     logWindow.ShowCloseButton = true;
@@ -180,13 +190,13 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
       this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
       this.ReloadMyScreen();
       this.isOpen = false;
+      this.initFullScreen();
     });
   }
 
   ReloadMyScreen() {
     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
     this.DisplayOnlyCheck();
-    // TODO: add getSiiRequest method getSiiRequest()
   }
 
   OnRowSelected(itemComponent: SIIRequestPM) {
