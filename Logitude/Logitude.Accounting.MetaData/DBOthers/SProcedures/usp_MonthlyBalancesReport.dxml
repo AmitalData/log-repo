@@ -27,7 +27,7 @@ BEGIN
 )
 SELECT
 MAX(gt.MONTH),
-AccountId AS ACCOUNTID,
+gt.AccountId AS ACCOUNTID,
 
 max(g.ChartOfAccountsId) as chartOfAccount,
 max(g.LocalName) as LocalName,
