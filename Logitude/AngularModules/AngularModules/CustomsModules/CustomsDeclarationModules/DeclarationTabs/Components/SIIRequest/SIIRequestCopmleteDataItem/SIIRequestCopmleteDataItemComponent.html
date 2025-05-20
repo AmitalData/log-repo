@@ -17,6 +17,9 @@
                             <LogTextBox [ObjectFieldName]="'ProductFileNumber'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
+                        <td>
+                            <img class="SearchIcon" src="./Images/Search.png" (click)="SearchProductFileNumber(ProductFileNumber)" [style.opacity]="opacity" title="" />
+                        </td>
                         <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">

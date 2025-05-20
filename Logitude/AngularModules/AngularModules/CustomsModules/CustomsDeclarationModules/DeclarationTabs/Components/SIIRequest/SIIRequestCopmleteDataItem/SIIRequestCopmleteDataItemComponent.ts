@@ -7,6 +7,7 @@ import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { SIIRequestWebService } from 'Customs/Services/WebServices/SIIRequestWebService';
 
 
 @Component({
@@ -18,11 +19,12 @@ import { EntityResourceService } from 'Infrastructure/Services/EntityResourceSer
 
 
 export class SIIRequestCopmleteDataItemComponent extends BaseComponent implements OnInit {
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public entityResourceService: EntityResourceService = new EntityResourceService();
+    public siiRequestWebService: SIIRequestWebService;
     public currentSiiRequest: SIIRequestPM = new SIIRequestPM();
     public entityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
     public DecalarationData: DeclarationPM;
-    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public DataContext = this;
     public ObjectTableName: string = "Customs.SupplierInvoiceItemsReqList";
     public ObjectTableNameDeclaration: string = "Customs.Declaration";
@@ -33,16 +35,16 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public IsNewOrEdit: boolean = false;
     public IsLoaded: boolean = false;
 
-
-
     constructor(public entityArgs: EntityArgs) {
         super();
+        this.siiRequestWebService = new SIIRequestWebService();
     }
 
     ngOnInit(): void {
         this.initiallizeComponent();
     }
 
+    // #region initialization data:
     initiallizeComponent() {
         this.IsLoaded = true;
         this.SetPropertiesEnabled();
@@ -68,7 +70,21 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.UIProperties.SetEnabled("InvoiceQuantity", this.ObjectTableNameSiiRequest, !enabled);
         this.UIProperties.SetEnabled("InvoiceQuantityType", this.ObjectTableNameSiiRequest, !enabled);
     }
+    // #endregion initialization data
 
+    //#region search product file number by API request:
+    SearchProductFileNumber(value: string) {
+        console.log(value);
+
+        // TODO: Activate the API request after adding the function in the backend:
+        // this.siiRequestWebService.searchApiByProductFileNumber(value).then((response) => {
+        // }).catch((error) => {
+        //     console.error("Error fetching product file number:", error);
+        // });
+    }
+    //#endregion search product file number by API request
+
+    //#region acations methods:
     SaveSupplierInvoiceItemsReqList() {
 
     }
@@ -76,6 +92,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     CancelSupplierInvoiceItemsReqList() {
 
     }
+    //#endregion acations methods
 
     //#region  SiiRequest properties
     public get ProductFileNumber(): string {

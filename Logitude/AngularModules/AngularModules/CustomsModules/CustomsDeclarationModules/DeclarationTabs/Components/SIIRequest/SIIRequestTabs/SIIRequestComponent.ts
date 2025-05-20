@@ -31,15 +31,15 @@ import { SupplierInvoiceItemLine } from 'CustomsModules/CustomsDeclarationModule
 
 
 export class SIIRequestComponent extends BaseComponent implements OnInit {
-    private declarationWebService: DeclarationWebService = new DeclarationWebService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    public DataContext = this;
-    public ObjectTableName: string = "Customs.Declaration";
-    public ObjectTableNameSiiRequest: string = "Customs.SIIRequests";
+    private declarationWebService: DeclarationWebService = new DeclarationWebService;
     public siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
     public userPmService: UserPMService = new UserPMService();
     public supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
     public entityResourceService: EntityResourceService = new EntityResourceService();
+    public DataContext = this;
+    public ObjectTableName: string = "Customs.Declaration";
+    public ObjectTableNameSiiRequest: string = "Customs.SIIRequests";
     private CurrentSession = SessionLocator.SelectedSession;
     public DecalarationData: DeclarationPM;
     public IsNewOrEdit: SiiRequestMode;
@@ -586,12 +586,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     Parent: SIIRequestComponent;
-    public isCompleteStatus: CompleteStatuses = CompleteStatuses.UnCompleted;
-    
+
     constructor(EntityPM: SupplierInvoiceItemsForSIIRequest, parent: SIIRequestComponent) {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
+        this.IsCompletedStatus = CompleteStatuses.UnCompleted;
     }
     private isSelected: boolean;
     public get IsSelected() { return this.isSelected };
@@ -610,6 +610,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     }
     public set InvoiceNumber(newValue: string) {
         this.entityPM.InvoiceNumber = newValue;
+    }
+    public get IsCompletedStatus(): number {
+        return this.entityPM.IsCompletedStatus;
+    }
+    public set IsCompletedStatus(newValue: number) {
+        this.entityPM.IsCompletedStatus = newValue;
     }
     public get LineNumber(): number {
         return this.entityPM.LineNumber;

@@ -425,7 +425,7 @@
                                                                                 <IconButton [Name]="'Edit'"
                                                                                     [Title]="TooltipEdit"
                                                                                     [IsSmall]="true"
-                                                                                    *ngIf="item.isCompleteStatus === isUnCompleted"
+                                                                                    *ngIf="item.IsCompletedStatus === isUnCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)">
                                                                                     <img class="tickImg"
                                                                                         src="./Images/Buttons/EditWithGreenTick.png" />
@@ -434,7 +434,7 @@
                                                                                     title={{TooltipEdit}}
                                                                                     style="height:18px; width: 18px;right:2px;"
                                                                                     id="Edit_Additional"
-                                                                                    *ngIf="item.isCompleteStatus === isFullyCompleted"
+                                                                                    *ngIf="item.IsCompletedStatus === isFullyCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)"
                                                                                     tabindex="-1">
                                                                                     <img class="tickImg"
@@ -444,7 +444,7 @@
                                                                                     title={{TooltipEdit}}
                                                                                     style="height:18px; width: 18px;right:2px;"
                                                                                     id="Edit_Additional"
-                                                                                    *ngIf="item.isCompleteStatus === isPartiallyCompleted"
+                                                                                    *ngIf="item.IsCompletedStatus === isPartiallyCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)"
                                                                                     tabindex="-1">
                                                                                     <img class="tickImg"
