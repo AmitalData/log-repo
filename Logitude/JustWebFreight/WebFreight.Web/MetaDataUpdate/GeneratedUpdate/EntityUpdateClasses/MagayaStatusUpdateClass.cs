@@ -70,11 +70,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Magaya Status",
-			      				    Code =  "a342",
+			      				    Code =  "045a",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "StatusCode",
 			      				    CloseTableName =  "StatusName",
 			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Accounting",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  true,
@@ -164,7 +165,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "MagayaStatus",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  3,
+					  						MaxLength =  60,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
@@ -172,7 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  3,
+					  						SystemMaxLength =  60,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -228,7 +229,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext,int contextTenant)
-	    {    
+	    {   
+
+		   ObjectTable MagayaStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MagayaStatus" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> MagayaStatusObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "MagayaStatus").ToList();
+		       
+	      
+
+	         Screen MagayaStatusMagayaStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStatus.HeaderScreen", Name = "MagayaStatusHeaderScreen", ObjectTableId = MagayaStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    MagayaStatusObjectTable.HeaderScreenId = MagayaStatusMagayaStatusHeaderScreenScreen0.Id;
+		    MagayaStatusObjectTable.HeaderScreenCode = MagayaStatusMagayaStatusHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

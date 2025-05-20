@@ -3159,7 +3159,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #endregion
 
             Feature AccountingIntegrityCheckMenuFeature = tenantFeatures.Where(d => d.Code == "AccountingIntegrityCheck.Features.Menu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-
+            Feature MagayaCommunicationLogMenuFeature = tenantFeatures.Where(d => d.Code == "MagayaCommunicationLogMenu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature AdditionalCurrencyRateMenuFeature = tenantFeatures.Where(d => d.Code == "AdditionalCurrencyRate.Features.Menu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
@@ -3207,6 +3207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TXDR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 16, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.TaxDeductionReport", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "TaxDeductionReport").FirstOrDefault().Id, FeatureId = TaxDeductionReportMenuFeature.Id }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "AICH", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 17, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.IntegrityChecks", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AccountingIntegrityCheck").FirstOrDefault().Id, FeatureId = AccountingIntegrityCheckMenuFeature.Id, FeatureUniqeCode = AccountingIntegrityCheckMenuFeature.FeatureUniqeCode }, menusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "ACR", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 18, CategoryTypeCode = "ACC", TextCode = "General.MC.ACC.AdditionalCurrencyRate", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AdditionalCurrencyRate").FirstOrDefault().Id, FeatureId = AdditionalCurrencyRateMenuFeature.Id, FeatureUniqeCode = AdditionalCurrencyRateMenuFeature.FeatureUniqeCode }, menusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MACL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 18, CategoryTypeCode = "ACC", TextCode = "General.MC.AC.MagayaCommunicationLog", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "MagayaCommunicationLog").FirstOrDefault().Id, FeatureId = MagayaCommunicationLogMenuFeature.Id, FeatureUniqeCode = MagayaCommunicationLogMenuFeature.FeatureUniqeCode }, menusTablesRepository, tenantMenusTables);
 
             #endregion
 

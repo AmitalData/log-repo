@@ -40,11 +40,12 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Magaya Status&quot;"
-  Code="&quot;a342&quot;"
+  Code="&quot;045a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;StatusCode&quot;"
   CloseTableName="&quot;StatusName&quot;"
   GenerateDomainService="false"
+  ClientModuleName="&quot;Accounting&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
@@ -153,7 +154,7 @@
     ObjectTableName="&quot;MagayaStatus&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="3"
+    MaxLength="60"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -162,7 +163,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="3"
+    SystemMaxLength="60"
     DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
@@ -219,6 +220,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;MagayaStatusHeaderScreen&quot;"
+    ObjectTableName="&quot;MagayaStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"

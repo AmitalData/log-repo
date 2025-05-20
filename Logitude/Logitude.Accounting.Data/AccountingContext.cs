@@ -224,6 +224,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new LedgerTransactionMap());
 	
+            modelBuilder.Configurations.Add(new MagayaCommunicationLogMap());
+	
             modelBuilder.Configurations.Add(new MagayaStatusMap());
 	
             modelBuilder.Configurations.Add(new MagayaStepMap());
@@ -1216,6 +1218,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<LedgerTransaction> LedgerTransactions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<MagayaCommunicationLog> MagayaCommunicationLogs 
 	 {
 	      get; set;
 	 

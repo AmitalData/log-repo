@@ -2,7 +2,8 @@
 <Table
   Name="MagayaStatuses"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Accounting">
   <Column
     Name="StatusCode"
     Type="varchar"
@@ -14,7 +15,7 @@
   <Column
     Name="StatusName"
     Type="varchar"
-    Size="3">
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

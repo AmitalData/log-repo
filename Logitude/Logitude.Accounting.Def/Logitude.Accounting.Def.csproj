@@ -162,6 +162,7 @@
     <Compile Include="EntityPMs\Generated\JournalStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LedgerTransactionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MagayaCommunicationLogPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MagayaStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\MagayaStepPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OpenFormatReportPM.Generated.cs" />

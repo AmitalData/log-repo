@@ -133,6 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		JournalStatusTypeUpdateClass  JournalStatusTypeUpdateClass = new JournalStatusTypeUpdateClass();
 		JournalTypeUpdateClass  JournalTypeUpdateClass = new JournalTypeUpdateClass();
 		LedgerTransactionUpdateClass  LedgerTransactionUpdateClass = new LedgerTransactionUpdateClass();
+		MagayaCommunicationLogUpdateClass  MagayaCommunicationLogUpdateClass = new MagayaCommunicationLogUpdateClass();
 		MagayaStatusUpdateClass  MagayaStatusUpdateClass = new MagayaStatusUpdateClass();
 		MagayaStepUpdateClass  MagayaStepUpdateClass = new MagayaStepUpdateClass();
 		OpenFormatReportUpdateClass  OpenFormatReportUpdateClass = new OpenFormatReportUpdateClass();
@@ -394,6 +395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			TablesHashStrings.Add("JournalStatusType",  JournalStatusTypeUpdateClass.HashString);
 			TablesHashStrings.Add("JournalType",  JournalTypeUpdateClass.HashString);
 			TablesHashStrings.Add("LedgerTransaction",  LedgerTransactionUpdateClass.HashString);
+			TablesHashStrings.Add("MagayaCommunicationLog",  MagayaCommunicationLogUpdateClass.HashString);
 			TablesHashStrings.Add("MagayaStatus",  MagayaStatusUpdateClass.HashString);
 			TablesHashStrings.Add("MagayaStep",  MagayaStepUpdateClass.HashString);
 			TablesHashStrings.Add("OpenFormatReport",  OpenFormatReportUpdateClass.HashString);
@@ -2965,6 +2967,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
+			if(MetadataUpdateUtility.IsChangedMetadataTable("MagayaCommunicationLog", ObjectTables, MagayaCommunicationLogUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("MagayaCommunicationLog");
+					MagayaCommunicationLogUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					MagayaCommunicationLogUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					MagayaCommunicationLogUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					MagayaCommunicationLogUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					MagayaCommunicationLogUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					MagayaCommunicationLogUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					MagayaCommunicationLogUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					MagayaCommunicationLogUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					MagayaCommunicationLogUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
 			if(MetadataUpdateUtility.IsChangedMetadataTable("MagayaStatus", ObjectTables, MagayaStatusUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -4265,6 +4300,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   VatReportStatusUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
+	   	
+	   	   MagayaCommunicationLogUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository,contextTenant);
+	
 	
         }
    
@@ -4700,6 +4738,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   VatReportStatusUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
+	   	   MagayaCommunicationLogUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups,contextTenant);
+	
 	
         }
 
@@ -4917,6 +4957,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   VatReportStatusUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
+	   	   MagayaCommunicationLogUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext,contextTenant);
+	
 	
         }
 
@@ -5134,6 +5176,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   VatReportStatusUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
+	   	   MagayaCommunicationLogUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext,contextTenant);
+	
 	
         }
 
@@ -5352,6 +5396,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
 	
+	   	   MagayaCommunicationLogUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses,contextTenant);
+	
+	
         }
 
 		public void CreateAllFeatures(int contextTenant)
@@ -5568,6 +5615,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   VatReportStatusUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
+	   	   MagayaCommunicationLogUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
+	
 	
         }
 		public void CreateAdditionalTextCodes(int contextTenant)
@@ -5784,6 +5833,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   VatReportStatusUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
+	   	   MagayaCommunicationLogUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext,contextTenant);
 	
         }
 		public void CreateAllMenuButtons(int contextTenant)
@@ -6001,6 +6051,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   WithholdingTaxDeductionTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
 	
+	   	   MagayaCommunicationLogUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext,contextTenant);
+	
+	
         }
 
 		public void CreateAllClosedTables(int contextTenant)
@@ -6140,6 +6193,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   
 	   
 	   	   VatReportStatusUpdateClass.FillVatReportStatus(contextTenant);
+
+	   
 	
 	   
         }
