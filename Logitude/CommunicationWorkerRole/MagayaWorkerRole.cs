@@ -1,11 +1,17 @@
 ﻿
-using Intuit.Ipp.Data;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Interfaces.Magaya;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.InvoiceModel;
 using System;
 using System.Collections.Generic;
@@ -23,6 +29,9 @@ namespace CommunicationWorkerRole
         DbQueueService queueService;
         QueueResponse response = null;
         MagayaService magayaService;
+        MagayaCommunicationLogPM magayaCommunicationLog = null;
+        CommunicationLog communicationLog = null;
+
         int tenant = 0;
 
 
@@ -106,10 +115,13 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                        tenant = response.Tenant;
-                        if (response.MessageValues.ContainsKey("Guid"))
+                       
+                        if (response.MessageValues.ContainsKey("communicationLogId"))
                         {
-                            this.WorkOnce();
+                            string communicationLogId = response.MessageValues["communicationLogId"].ToString();
+                            tenant = response.Tenant;
+                            GetCommunicationLogAndMagayaLog(communicationLogId);
+                             WorkOnce();
                         }
 
                     }
@@ -147,15 +159,7 @@ namespace CommunicationWorkerRole
             try
             {
                magayaService = new MagayaService();
-               if( magayaService.OpenConnection("TEST","TEZT"))
-                {
-                    ProcessStep();
-                }
-                else
-                {
-                    throw new Exception("Failed to connect to Magaya API");
-                }
-
+               ProcessStep();
                 queueService.Complete();
             }
             catch (Exception ex)
@@ -167,24 +171,110 @@ namespace CommunicationWorkerRole
 
         private void ProcessStep()
         {
-            //switch (switch_on)
-            //{
-            //    default:
-            //}
+
+
+            if (magayaCommunicationLog == null)
+                throw new Exception("MagayaCommunicationLog not found for GUID: " + response.MessageValues["Guid"]);
+           
+            switch (magayaCommunicationLog.Step)
+            {
+                case MagayaStepEnum.OpenMagayaSession:
+                    OpenMagayaSession();
+                    break;
+              
+                case MagayaStepEnum.GetMagayaInvoice:
+                    GetInvoice();
+                    break;
+                case MagayaStepEnum.CloseMagayaSession:
+                    CloseMagayaSession();
+                    break;
+                case MagayaStepEnum.GenerateInvoice:
+                    GenerateInvoice(null);
+                    break;
+                case MagayaStepEnum.GetConfirmationNumber:
+                    SetConfirmationNumberStatusInvoice(null,null);
+                    break;
+                case MagayaStepEnum.ApproveInvoice:
+                    ApproveInvoice(null,null);
+                    break;
+                case MagayaStepEnum.PrintOrSendInvoice:
+                    PrintOrSendInvoice(null,tenant);
+                    break;
+                
+                default:
+                    throw new Exception("Unknown step: " + magayaCommunicationLog.Step);
+            }
         }
 
+        private void OpenMagayaSession()
+        {
+            try
+            {
+                UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.InProgress);
+                magayaService = new MagayaService();
 
+                var success = magayaService.OpenConnection("", "");
+                if (!success) {
+                    UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.Failed, "OpenConnection Failed");
+                    queueService.CompleteAsFailed();
+
+                }
+
+                else
+                {
+                    UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.Done);
+                    GetInvoice();
+                }
+            }
+            catch (Exception ex)
+            {
+                UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.Failed, ex.Message);
+                queueService.CompleteAsFailed();
+
+            }
+
+        }
         private void GetInvoice() {
 
-            var (success, xml) = magayaService.GetTransaction(response.MessageValues["Type"], 1, response.MessageValues["Guid"]);
-            if (!success || string.IsNullOrWhiteSpace(xml))
-                throw new Exception("GetTransaction failed or returned empty XML");
-            GenerateInvoice(xml);
+            try
+            {
+                UpdateCommunicationStatus(MagayaStepEnum.GetMagayaInvoice, MagayaStatusEnum.InProgress);
+                var (success, xml) = magayaService.GetTransaction(response.MessageValues["Type"], 1, response.MessageValues["Guid"]);
+                if (!success || string.IsNullOrWhiteSpace(xml))
+                    throw new Exception("GetTransaction failed or returned empty XML");
+                UpdateCommunicationStatus(MagayaStepEnum.GetMagayaInvoice, MagayaStatusEnum.Done);
 
+                CloseMagayaSession();
+            }
+            catch (Exception ex)
+            {
+                UpdateCommunicationStatus(MagayaStepEnum.GetMagayaInvoice, MagayaStatusEnum.Failed, ex.Message);
+
+                queueService.CompleteAsFailed();
+            }
+
+
+        }
+        private void CloseMagayaSession()
+        {
+            try
+            {
+                UpdateCommunicationStatus(MagayaStepEnum.CloseMagayaSession, MagayaStatusEnum.InProgress);
+                magayaService.EndSession();
+                UpdateCommunicationStatus(MagayaStepEnum.CloseMagayaSession, MagayaStatusEnum.Done);
+                GenerateInvoice(null);
+            }
+            catch (Exception ex)
+            {
+                UpdateCommunicationStatus(MagayaStepEnum.CloseMagayaSession, MagayaStatusEnum.Failed, ex.Message);
+                queueService.CompleteAsFailed();
+
+            }
         }
         private void GenerateInvoice(string xml) {
 
             try {
+                UpdateCommunicationStatus(MagayaStepEnum.GenerateInvoice, MagayaStatusEnum.InProgress);
                 ARInvoicePM aRInvoicePM = MapXmlToArinvoice(xml);
                 if (aRInvoicePM == null)
                 {
@@ -193,12 +283,17 @@ namespace CommunicationWorkerRole
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
                 service.Create(aRInvoicePM);
+
+                UpdateCommunicationStatus(MagayaStepEnum.GenerateInvoice, MagayaStatusEnum.Done);
+
                 SetConfirmationNumberStatusInvoice(aRInvoicePM, service);
 
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error generating invoice", null, null);
+                UpdateCommunicationStatus(MagayaStepEnum.GenerateInvoice, MagayaStatusEnum.Failed,ex.Message);
+
+                queueService.CompleteAsFailed();
             }
 
         }
@@ -206,28 +301,46 @@ namespace CommunicationWorkerRole
         {
             try
             {
+                UpdateCommunicationStatus(MagayaStepEnum.GetConfirmationNumber, MagayaStatusEnum.InProgress);
+
                 service.SetConfirmationNumberStatus();
+                UpdateCommunicationStatus(MagayaStepEnum.GetConfirmationNumber, MagayaStatusEnum.Done);
+
                 ApproveInvoice(aRInvoicePM, service);
              }
             catch (Exception ex)
             {
-                UpdateCommunicationStatus(aRInvoicePM);
+                UpdateCommunicationStatus(MagayaStepEnum.GetConfirmationNumber,MagayaStatusEnum.Failed,ex.Message);
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error setting confirmation number status", null, null);
             }
         }
         private void ApproveInvoice(ARInvoicePM aRInvoicePM, ARInvoiceService service) {
             try
             {
-                aRInvoicePM.StatusCode = "PR";
-                service.Update(aRInvoicePM);
+                UpdateCommunicationStatus(MagayaStepEnum.ApproveInvoice, MagayaStatusEnum.InProgress);
+
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ARInvoiceApproveWR", tenant);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "ARInvoiceId", aRInvoicePM.Id },
+                    { "Tenant", tenant.ToString() },
+                    { "BatchIdFromInterestInvoice", null },
+                    {"IsMagaya", "true" }
+                   }, tenant);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error approving invoice", null, null);
+                UpdateCommunicationStatus(MagayaStepEnum.ApproveInvoice, MagayaStatusEnum.Failed, ex.Message);
+
+                queueService.CompleteAsFailed();
             }
         }
         private void PrintOrSendInvoice(string xml, int tenant) { }
-        private void CloseMagayaSession() {}
+       
+
+
+
 
         private ARInvoicePM MapXmlToArinvoice(string xml)
         {
@@ -254,17 +367,47 @@ namespace CommunicationWorkerRole
         }
 
 
-        public void UpdateCommunicationStatus(ARInvoicePM aRInvoicePM)
+        public void UpdateCommunicationStatus(string step , string status ,string exception = null)
         {
             try
             {
-                if (response != null)
+                if(magayaCommunicationLog != null)
                 {
+                    MagayaCommunicationLogUpdateService magayaCommunicationLogUpdateService = new MagayaCommunicationLogUpdateService(tenant);
+                    magayaCommunicationLog.Step = step;
+                    magayaCommunicationLog.StatusCode = status;
+                    magayaCommunicationLog.Exception = exception;
+                    magayaCommunicationLogUpdateService.Update(magayaCommunicationLog ,true);
+
                 }
+
             }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error updating communication status", null, null);
+            }
+        }
+
+
+        public void GetCommunicationLogAndMagayaLog(string communicationLogId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(communicationLogId))
+                    throw new Exception("CommunicationLogId is null or empty");
+
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+                communicationLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+
+                MagayaCommunicationLogQueryService magayaCommunicationLogQueryService = new MagayaCommunicationLogQueryService(tenant);
+                magayaCommunicationLog = magayaCommunicationLogQueryService.GetByCommunicationId(communicationLogId, tenant);
+                if (magayaCommunicationLog == null)
+                    throw new Exception("MagayaCommunicationLog not found for communicationLogId: " + communicationLogId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error getting communication log", null, null);
             }
         }
     }

@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Magaya Status&quot;"
-  Code="&quot;045a&quot;"
+  Code="&quot;afc4&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;StatusCode&quot;"
   CloseTableName="&quot;StatusName&quot;"
@@ -270,6 +270,9 @@
     <Record
       StatusCode="&quot;4&quot;"
       StatusName="&quot;Done&quot;" />
+    <Record
+      StatusCode="&quot;5&quot;"
+      StatusName="&quot;Failed&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

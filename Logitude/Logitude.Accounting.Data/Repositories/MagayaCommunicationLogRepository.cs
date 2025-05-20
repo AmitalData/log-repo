@@ -14,11 +14,18 @@ namespace Logitude.Accounting.Data.Repositories
 {
    public partial class MagayaCommunicationLogRepository:IRepository<MagayaCommunicationLog>
    {
-        
-		public List<MagayaCommunicationLog> GetMulti(EntityKeyFields entityKeys)
+        public List<MagayaCommunicationLog> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
+        }
+
+  
+        public MagayaCommunicationLog GetByCommunicationId(int tenant, string communicationId)
+        {
+           return currentContext.MagayaCommunicationLogs
+                .Where(x => x.Tenant == tenant && x.CommunicationId == communicationId).FirstOrDefault();
+
         }
 
    }

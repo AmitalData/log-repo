@@ -279,6 +279,8 @@
     <Compile Include="CloseTables\EnumGenerated\TaxReportLineTransmitStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\VatReportStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\MagayaStatusEnum.cs" />
+    <Compile Include="CloseTables\MagayaStepEnum.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
     <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />
@@ -804,6 +806,7 @@
     <Compile Include="EntityQueryServices\JournalMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalStatusTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\MagayaCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\PaymentChequeLineQueryService.cs" />
     <Compile Include="EntityQueryServices\PaymentChequeQueryService.cs" />
     <Compile Include="EntityQueryServices\ReconcileExternalPageLineQueryService.cs" />
@@ -831,6 +834,7 @@
     <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServices\MagayaCommunicationLogUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingEntityJournalUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingIntegrityCheckUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />

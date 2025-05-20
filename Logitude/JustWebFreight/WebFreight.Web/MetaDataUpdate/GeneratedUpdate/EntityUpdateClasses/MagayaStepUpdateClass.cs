@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class MagayaStepUpdateClass
    {  		
-		public const string HashString = "53dd8b5d26c76393a1b3b0a56b595bd3";
+		public const string HashString = "917d95e5cc1b09493d014f70ead02b0c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,18 +124,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "EnglishName",
 			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
+			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Magaya Step",
-			      				    Code =  "de9b",
+			      				    Code =  "6820",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "LocalName",
+			      				    CloseTableName =  "EnglishName",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
 			      				    NoTS =  false,
@@ -431,17 +431,45 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen MagayaStepMagayaStepHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStep.HeaderScreen", Name = "MagayaStepHeaderScreen", ObjectTableId = MagayaStepObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    MagayaStepObjectTable.HeaderScreenId = MagayaStepMagayaStepHeaderScreenScreen0.Id;
-		    MagayaStepObjectTable.HeaderScreenCode = MagayaStepMagayaStepHeaderScreenScreen0.Code;
+	         Screen MagayaStepHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStatus.HeaderScreen", Name = "HeaderScreen", ObjectTableId = MagayaStepObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField MagayaStepMagayaStatusHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MagayaStepHeaderScreenScreen0.Id,ScreenCode = MagayaStepHeaderScreenScreen0.Code, ObjectFieldCode = "MagayaStep.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MagayaStepMagayaStatusHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MagayaStepHeaderScreenScreen0.Id,ScreenCode = MagayaStepHeaderScreenScreen0.Code, ObjectFieldCode = "MagayaStep.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
+		    MagayaStepObjectTable.HeaderScreenId = MagayaStepHeaderScreenScreen0.Id;
+		    MagayaStepObjectTable.HeaderScreenCode = MagayaStepHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen MagayaStepGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStatus.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = MagayaStepObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField MagayaStepMagayaStatusGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = MagayaStepGeneralTabScreenScreen1.Id,ScreenCode = MagayaStepGeneralTabScreenScreen1.Code, ObjectFieldCode = "MagayaStep.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MagayaStepMagayaStatusGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = MagayaStepGeneralTabScreenScreen1.Id,ScreenCode = MagayaStepGeneralTabScreenScreen1.Code, ObjectFieldCode = "MagayaStep.IsAllowResend", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MagayaStepMagayaStatusGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = MagayaStepGeneralTabScreenScreen1.Id,ScreenCode = MagayaStepGeneralTabScreenScreen1.Code, ObjectFieldCode = "MagayaStep.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField MagayaStepMagayaStatusGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = MagayaStepGeneralTabScreenScreen1.Id,ScreenCode = MagayaStepGeneralTabScreenScreen1.Code, ObjectFieldCode = "MagayaStep.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable MagayaStepObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "MagayaStep" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode MagayaStepGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "MagayaStep.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = MagayaStepObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature MagayaStepGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MagayaStep.Tab.General", ObjectTableId = MagayaStepObjectTable.Id, Tenant = 0, NameTextCodeCode = "MagayaStepFeatures.MSGT", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,MagayaStepObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MSGT",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = MagayaStepGeneralFeature_TH0.Id,FeatureUniqeCode = MagayaStepGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = MagayaStepObjectTable.Id, TabNameTextCodeId = MagayaStepGeneralTextCode_TH0.Id, TabNameTextCodeCode = MagayaStepGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
