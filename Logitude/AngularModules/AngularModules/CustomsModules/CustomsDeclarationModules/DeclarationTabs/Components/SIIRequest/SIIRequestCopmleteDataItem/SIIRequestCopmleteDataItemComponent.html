@@ -1,1 +1,47 @@
-<div>check SIIRequestCopmleteDataItemComponent</div>
+<style>
+
+</style>
+<table *ngIf="DecalarationData != null && IsLoaded">
+    <tr style="height:300px;">
+        <td style="vertical-align:top">
+            <div style="vertical-align:top; margin:5px">
+                <!-- Section One -->
+                <table>
+                    <tr class="FieldRow"> 1</tr>
+                    <tr class="FieldRow"> 2</tr>
+                    <tr class="FieldRow"> 3</tr>
+                    <tr class="FieldRow"> 4</tr>
+                    <tr class="FieldRow"> 5</tr>
+                    <tr class="FieldRow"> 6</tr>
+                    <tr class="FieldRow"> 7</tr>
+                    <tr class="FieldRow"> 8</tr>
+                    <tr class="FieldRow"> 9</tr>
+                    <tr class="FieldRow"> 10</tr>
+                </table>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+    <tr style="height:10px"></tr>
+    <tr style="height: 30px; display: flex; justify-content: flex-end; align-items: flex-end;">
+        <td style="width: 235px;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-around;">
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="Button" (click)="CancelSupplierInvoiceItemsReqList()">{{'Customs.General.B.Cancel'
+                        |TextCodeTranslationPipe}}</button>
+                </div>
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="RedButton" (click)="SaveSupplierInvoiceItemsReqList()" [disabled]="IsDisplayOnly">{{'General.B.Save' |
+                        TextCodeTranslationPipe}}</button>
+                </div>
+
+                <!-- <div style="width: 110px;vertical-align: bottom;">
+                    <custom-send-options [IsDisabled]="IsDisplayOnly" [AvoidDoubleClick]="true"
+                        #MyCustomSendOptionsComponent (SendButtonClicked)="SendSiiRequest($event)">
+                    </custom-send-options>
+                </div> -->
+
+            </div>
+        </td>
+    </tr>
+</table>

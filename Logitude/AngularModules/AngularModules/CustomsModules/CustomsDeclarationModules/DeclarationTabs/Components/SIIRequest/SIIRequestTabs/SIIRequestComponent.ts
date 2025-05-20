@@ -213,7 +213,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     openLogWindow() {
         let args: any = {
-            Decalaration: this.EntityPM,
+            Decalaration: this.DecalarationData,
             SIIRequest: this.entityPM,
             invoiceItemReq: this.SelectedRow,
             IsNewOrEdit: SiiRequestMode.IsEdit,
