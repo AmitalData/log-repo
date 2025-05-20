@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class MagayaStatusUpdateClass
    {  		
-		public const string HashString = "a320effa290f7cc0b9a061a56affd744";
+		public const string HashString = "5cb59464b5f03dfa4d8b78ff9e729c5f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -236,7 +236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen MagayaStatusMagayaStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStatus.HeaderScreen", Name = "MagayaStatusHeaderScreen", ObjectTableId = MagayaStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen MagayaStatusMagayaStatusHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MagayaStatus.HeaderScreen", Name = "MagayaStatusHeaderScreen", ObjectTableId = MagayaStatusObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
       	
 		    MagayaStatusObjectTable.HeaderScreenId = MagayaStatusMagayaStatusHeaderScreenScreen0.Id;
 		    MagayaStatusObjectTable.HeaderScreenCode = MagayaStatusMagayaStatusHeaderScreenScreen0.Code;
