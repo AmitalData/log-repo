@@ -363,7 +363,7 @@ namespace Logitude.Accounting.BL.DataContract
                     }).ToList();
            
             gLAccounts = gLAccounts.Concat(GetVendorsGLAccounts(vendors)).ToList();
-            vendors = vendors.Concat(GetAccountsVendors(gLAccounts.Select(d => d.Id).ToList())).ToList();
+            vendors = GetAccountsVendors(gLAccounts.Select(d => d.Id).ToList()).ToList();
             addresses = addresses.Concat(GetVendorsAddresses(vendors.Select(d => d.Id).ToHashSet())).ToHashSet();
             return vendors;
 
