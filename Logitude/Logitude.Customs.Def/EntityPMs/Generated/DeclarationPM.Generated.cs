@@ -6305,6 +6305,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool updateTaxationDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool UpdateTaxationDateTime  
+	   {
+	    
+	     get
+		{
+		   return updateTaxationDateTime;
+		 }
+		 set
+		 {
+		   if(updateTaxationDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateTaxationDateTime",OldValue=updateTaxationDateTime,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   updateTaxationDateTime=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
