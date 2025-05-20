@@ -307,18 +307,27 @@
                             <td colspan="3" style="width: 310px;">
 
                                 <div style="width: 30px; float: left;">
-                                    <IconButton
-                                        *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked"
-                                        [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
+                                    <IconButton *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked"
+                                                [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
                                 </div>
-                                <div *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked" style="width: 50px; float: left;" >
+                                <div *ngIf="!IsLeumi && (ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked)" style="width: 50px; float: left;">
                                     <input class="upload" style="display: none;width:65px"
                                            type="file" (change)="OnFileChanged($event)"
                                            (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
                                            #fileInput>
                                     <a href="#" style="text-decoration:none">
                                         <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
-                                        <input #myInput  accept=".xlsx, .xls"  type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                                        <input #myInput accept=".xlsx, .xls" type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                                    </a>
+                                </div>
+                                <div *ngIf="IsLeumi && (ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked)" style="width: 50px; float: left;">
+                                    <input class="upload" style="display: none;width:65px"
+                                           type="file" (change)="OnTextFileChanged($event)"
+                                           (click)="fileInput.value = null" value="" accept=".dat"
+                                           #fileInput>
+                                    <a href="#" style="text-decoration:none">
+                                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
+                                        <input #myInput accept=".dat" type="file" [(ngModel)]="FileData" (change)="UploadTextFile($event)" (click)="UploadTextFile($event)" style="display:none;width:65px" class="upload" />
                                     </a>
                                 </div>
                                 <div style="width: 220px; float: right;">

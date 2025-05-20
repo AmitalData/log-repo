@@ -993,7 +993,32 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	    }
-   
+
+        private bool removeDuplicates;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool RemoveDuplicates
+        {
+
+            get
+            {
+                return removeDuplicates;
+            }
+            set
+            {
+                if (removeDuplicates != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "RemoveDuplicates", OldValue = removeDuplicates, NewValue = value, PropertyType = "bool" };
+                    NotifyPropertyChanged(values);
+                    removeDuplicates = value;
+                }
+
+            }
+        }
+
+    }
+
 }
 	 

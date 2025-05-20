@@ -1,0 +1,44 @@
+::ng-deep {
+	mat-option.no-wrap span  {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap !important;
+		margin-left: auto;
+		margin-right: inherit !important;
+		max-width: 900px;
+	}
+
+	mat-expansion-panel-header span.mat-content {	
+		flex: none;
+	}
+	
+	div.mat-mdc-autocomplete-panel {
+		max-height: 460px !important;
+	}
+	
+	.mat-mdc-optgroup-label {
+		min-height: auto !important;
+	}	
+}
+
+.ddl-group-description {
+	max-width: 750px;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+mat-expansion-panel {
+	box-shadow: none !important;
+}
+
+mat-expansion-panel-header {
+	text-align: right;
+	font-weight: bold !important;
+	height: 35px !important;
+}
+
+mat-option {
+	min-height: auto !important;
+	height: 35px !important;
+}

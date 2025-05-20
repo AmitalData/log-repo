@@ -22,6 +22,7 @@ using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.BL.InvoiceModel.CustomFilters;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using System.Data.SqlClient;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -1456,6 +1457,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             IsPrinted = a.IsPrinted,
                             HasDoc = a.DocumentFilingId != null ? true : false,
                             BillToName = a.BillTo == null ? "" : a.BillTo.EnglishName,
+                            BillToLocalName = a.BillTo == null ? "" : a.BillTo.LocalName,
+                            BillToDisplayNumber = a.BillTo == null ? "" : a.BillTo.GLAccountDisplayNumber,
                             BillToCity = a.BillTo == null ? "" : a.BillTo.CityName,
                             BillToCountry = a.BillTo == null ? "" : a.BillTo.CountryName,
                             BillToCode = a.BillTo == null ? "" : a.BillTo.Code,
@@ -1575,6 +1578,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
                              Tenant = entity.Tenant,
                              BillToName = entity.BillTo.EnglishName,
+                             BillToLocalName = entity.BillTo.LocalName,
+                             BillToDisplayNumber = entity.BillTo.GLAccountDisplayNumber,
                              BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
                              BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
                              BillToCode = entity.BillTo.Code,
@@ -1758,7 +1763,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
                                          Tenant = entity.Tenant,
                                          BillToName = entity.BillTo.EnglishName,
-                                         BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
+                                        BillToLocalName = entity.BillTo.LocalName,
+                                        BillToDisplayNumber = entity.BillTo.GLAccountDisplayNumber,
+                                        BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
                                          BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
                                          BillToCode = entity.BillTo.Code,
                                          BillToPartnerName = entity.BillTo.PartnerType.Name,
@@ -1936,6 +1943,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               HasDoc = a.DocumentFilingId != null ? true : false,
                                               DebitAccount = a.DebitAccount,
                                               BillToName = a.BillTo == null ? "" : a.BillTo.EnglishName,
+                                              BillToLocalName = a.BillTo == null ? "" : a.BillTo.LocalName,
+                                              BillToDisplayNumber = a.BillTo == null ? "" : a.BillTo.GLAccountDisplayNumber,
                                               BillToCity = a.BillTo == null ? "" : a.BillTo.CityName,
                                               BillToCountry = a.BillTo == null ? "" : a.BillTo.CountryName,
                                               BillToCode = a.BillTo == null ? "" : a.BillTo.Code,
@@ -2165,6 +2174,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 {
                     entityPM.BillToName = myBillTo.EnglishName;
                     entityPM.BillToLocalName = myBillTo.LocalName;
+                    entityPM.BillToDisplayNumber = myBillTo.GLAccountDisplayNumber;
                     entityPM.BillToCode = myBillTo.Code;
                     entityPM.BillToPartnerTypeId = myBillTo.PartnerTypeId;
                     entityPM.IsBillToAllowConsolidation = myBillTo.EnableConsolidationInvoices;
@@ -2453,6 +2463,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SubTotalInLocalCurrency = entity.SubTotalInLocalCurrency,
                              Tenant = entity.Tenant,
                              BillToName = entity.BillTo.EnglishName,
+                             BillToLocalName = entity.BillTo.LocalName,
+                             BillToDisplayNumber = entity.BillTo.GLAccountDisplayNumber,
                              BillToCity = entity.BillTo == null ? "" : entity.BillTo.CityName,
                              BillToCountry = entity.BillTo == null ? "" : entity.BillTo.CountryName,
                              BillToCode = entity.BillTo.Code,
@@ -2653,6 +2665,51 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                  select a).FirstOrDefault();
             return invoice != null ? invoice.ARInvoiceTypeCode : null;
         }
+
+        public List<ARInvoiceList> GetInvoiceSequenceStatus(int tenant, DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                List<ARInvoiceList> results = new List<ARInvoiceList>();
+                string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "usp_GetInvoiceSequenceStatus";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@FromDate", fromDate);
+                    command.Parameters.AddWithValue("@ToDate", toDate);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var result = new ARInvoiceList
+                            {
+                                InvoiceSeries = reader["Series"] != DBNull.Value ? (string)reader["Series"] : null,
+                                InvoiceNumberPart = reader["InvoiceNumberPart"] != DBNull.Value ? (string)reader["InvoiceNumberPart"] : null,
+                                InvoiceNumber = reader["OriginalInvoiceNumber"] != DBNull.Value ? (string)reader["OriginalInvoiceNumber"] : null,
+                                SequenceStatus = reader["SequenceStatus"] != DBNull.Value ? (string)reader["SequenceStatus"] : null,
+                                InvoiceDate = (DateTime)reader["InvoiceDate"]
+                            };
+                            results.Add(result);
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return results;
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         #region Digital Portal 
 

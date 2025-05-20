@@ -102,52 +102,24 @@ export class DocumentOutPMService {
 
 
 
-    //getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number) {
+    PutRetrySignature(documentOutId: string, tenant: number) {
 
-    //    var createDocumentOutArgs: CreateDocumentOutArgs = new CreateDocumentOutArgs();
-    //    createDocumentOutArgs.DocumentTypeId = documentTypeId;
-    //    createDocumentOutArgs.ChildEntityId = childEntityId;
-    //    createDocumentOutArgs.EntityId = entityId;
-    //    createDocumentOutArgs.ChildReference = childReference;
-    //    createDocumentOutArgs.ObjectTableId = objectTableId;
-    //    createDocumentOutArgs.Tenant = tenant;
+        
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+        return defer(() => {
+            return this._http.put(this._apiUrl + '/PutRetrySignature?'+ 'documentId=' + documentOutId + '&tenant=' + tenant, null, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                 var result: any = response;
+              
+                this.CurrentSession.FireEvent("IsSignedChanged");
+                return result;
+            }), catchError(ServiceHelper.HandleServiceError));
+        }
 
+        );
 
-    //    var authHeader = new Headers();
-    //    authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-
-    //    return this._http.get(this._apiUrl + '/getcreatedocumentout/?' +'documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-    //            var result :any = response;
-    //            var entity: DocumentOutPM;
-    //            entity = this.MapJsonToEntityPM(result);
-    //            var pmresponse: ServiceResponse;
-    //            pmresponse = new ServiceResponse();
-    //            pmresponse.Result = entity;
-    //            return pmresponse;
-    //    }),catchError(ServiceHelper.HandleServiceError));
-
-
-
-    //    //var authHeader = new Headers();
-    //    //authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-
-
-    //    //return this._http.get(logitude_url + 'api/DocumentOutExtended' + '?documentTypeId=' + documentTypeId + '&entityId=' + entityId + '&childEntityId=' + childEntityId + '&childReference=' + childReference + '&objectTableId=' + objectTableId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-    //    //    var result :any = response;
-    //    //    var entity: DocumentOutPM;
-    //    //    entity = this.MapJsonToEntityPM(result);
-    //    //    return entity;
-    //    //});
-
-
-
-
-
-
-
-    //}
-
+    }
 
     getSingleDocumentOutPM(id: string, tenant: number) {
         var authHeader = new Headers();

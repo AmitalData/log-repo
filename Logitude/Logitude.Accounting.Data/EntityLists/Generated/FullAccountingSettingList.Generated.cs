@@ -133,6 +133,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool OppositeAccountNumber  { get; set; }
        [DataMember]
        public string TenantForConfirmationNumberApi  { get; set; }
+       [DataMember]
+       public string InvoiceNotes  { get; set; }
+       [DataMember]
+       public string InterestInvoiceNotes  { get; set; }
    }
 
 }

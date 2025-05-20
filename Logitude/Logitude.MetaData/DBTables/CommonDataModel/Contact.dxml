@@ -133,8 +133,8 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
-    Size="60">
+    Type="nvarchar"
+    Size="120">
     <Constraints
       Nullable="false" />
   </Column>
@@ -252,17 +252,17 @@
     ReferencedTable="ContactDoneMethods"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
-  <!--<Relation
+  <Relation
     ForeignKeyColumn="DigitalPortalLanguage"
     ReferencedTable="DigitalPortalLanguages"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />-->
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,Email" />
   <Index
     Columns="Tenant" />
-	<Index
-   Columns="ExternalId" />
+  <Index
+    Columns="ExternalId" />
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index

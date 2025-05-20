@@ -190,10 +190,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
         public CustomsSettingPM GetSingleByTenant(int tenant)
         {
-            var poco = repository.GetSettingByTenant(tenant);
 
-
-            return GetEntityPM(poco);
+            string entityKeyString = "GetSingleCustomsSettingByTenant," + tenant;
+            var pm = CacheManager.GetOrInsertNewObject<CustomsSettingPM>(entityKeyString, () =>
+            {
+                var poco = repository.GetSettingByTenant(tenant);
+                return GetEntityPM(poco);
+            });
+            return pm;
 
         }
 
@@ -251,6 +255,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return poco.LastRunningDCAWS;
 
         }
+
+        public int GetTheFirstTenantWithCustomsAgentId()
+        {
+            var poco = repository.GetRealAll().Where(rec => !String.IsNullOrEmpty(rec.CustomsAgentId)).FirstOrDefault();
+            if (poco == null)
+            {
+                return 0;
+            }
+            return poco.Tenant;
+        }   
 
 
 

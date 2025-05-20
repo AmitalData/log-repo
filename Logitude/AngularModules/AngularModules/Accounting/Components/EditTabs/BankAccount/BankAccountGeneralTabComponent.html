@@ -286,8 +286,9 @@
                                                 </td>
 
                                                 <td width="240px;">
-                                                    <LogTextBox [ObjectFieldName]="'ChequeCounter'" [DataContext]="DataContext"
-                                                        [ObjectTableName]="ObjectTableName" [Text]="ChequeCounter" [HideColumns]="true">
+                                                    <LogTextBox [ObjectFieldName]="'ChequeCounter'"
+                                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                        [Text]="ChequeCounter" [HideColumns]="true">
                                                     </LogTextBox>
                                                 </td>
                                                 <td>
@@ -304,8 +305,9 @@
                                                 </td>
 
                                                 <td width="240px;">
-                                                    <LogTextBox [ObjectFieldName]="'ChequeCounterSeriesID'" [DataContext]="DataContext"
-                                                        [ObjectTableName]="ObjectTableName" [Text]="ChequeCounterSeriesID" [HideColumns]="true">
+                                                    <LogTextBox [ObjectFieldName]="'ChequeCounterSeriesID'"
+                                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                                        [Text]="ChequeCounterSeriesID" [HideColumns]="true">
                                                     </LogTextBox>
                                                 </td>
                                                 <td>
@@ -367,7 +369,22 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
+                                            <!-- FactoringBank -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'FactoringBank'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
+                                                </td>
 
+                                                <td>
+                                                    <CheckBox [IsChecked]="FactoringBank" (Checked)="FactoringBank = $event">
+                                                    </CheckBox>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
                                             <!-- InActive -->
                                             <tr class="FormFieldRow">
                                                 <td>
@@ -410,7 +427,8 @@
                                             <!-- ChequeCounter -->
                                             <tr class="FormFieldRow">
                                                 <td style="text-align: right; vertical-align: top;">
-                                                    <button style="display: inline-block;width:100px;" class="Button" (click)="defineSerials()">הגדרת סדרות</button>
+                                                    <button style="display: inline-block;width:100px;" class="Button"
+                                                        (click)="defineSerials()">הגדרת סדרות</button>
                                                 </td>
                                             </tr>
                                         </table>

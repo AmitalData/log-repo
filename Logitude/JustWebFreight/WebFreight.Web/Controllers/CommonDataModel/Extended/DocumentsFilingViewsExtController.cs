@@ -215,7 +215,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                                     }
                                 default:
                                     {
-                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f => f.Code);
+                                        entityLists = entityLists.OrderByDescending(d => d.CreateDate);
                                         break;
                                     }
                             }
@@ -226,12 +226,16 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                         entityLists = sortClass.GetSorterQuery<DocumentsFilingList, string>(queryOperations, entityLists);
                     }
                 }
-                else
-                {
-                    entityLists = entityLists.OrderByDescending(d => d.CreateDate).ThenBy(f=>f.Code);
-                }
+				else if (queryOperations.QueryFilterItems.Count == 1)
+				{
+					entityLists = entityLists.OrderByDescending(d => d.CreateDate);
+				}
+				else
+				{
+					entityLists = entityLists.OrderByDescending(d => Guid.NewGuid());
+				}
 
-                ServiceResponse response = new ServiceResponse();
+				ServiceResponse response = new ServiceResponse();
 
                 if (filters.GetCount)
                 {

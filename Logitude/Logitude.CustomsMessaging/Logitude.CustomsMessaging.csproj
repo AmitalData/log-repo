@@ -51,6 +51,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
@@ -160,6 +193,9 @@
     <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.6.8.1\lib\net462\RabbitMQ.Client.dll</HintPath>
     </Reference>
+    <Reference Include="RtfPipe, Version=2.0.7677.4303, Culture=neutral, PublicKeyToken=5f6ab4ce530296d2, processorArchitecture=MSIL">
+      <HintPath>..\packages\RtfPipe.2.0.7677.4303\lib\net45\RtfPipe.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -233,10 +269,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -306,7 +342,13 @@
     <Compile Include="Helpers\ClosedTable\Update1998NDMessageActionCode.cs" />
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
+    <Compile Include="Helpers\ForbiddenSigns.cs" />
     <Compile Include="MessagingServices\DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInUCB8373_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBAC_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCB2755E_MsgMessagingService.cs" />
@@ -475,6 +517,10 @@
     <Compile Include="RequestServices\DF_MSG8235_ExportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG8235_TransshipmentDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderRequestService.cs" />
+    <Compile Include="RequestServices\Get_CB_MSG_8318_CustomItemMekachRequestService.cs" />
+    <Compile Include="RequestServices\Get_CB_MSG_8319_CustomItemRuleRequestService.cs" />
+    <Compile Include="RequestServices\Get_CB_MSG_8323_ClassifGuidanceDetailsRequestService.cs" />
+    <Compile Include="RequestServices\Get_CB_MSG_8317_CustomItemClassifGuidanceRequestService.cs" />
     <Compile Include="RequestServices\PC_NG_2280_MSG01_CertificateOfOriginRequestRequestService.cs" />
     <Compile Include="RequestServices\SaveDF_MSG2751_2757_TransshipmentDeclarationRequestRequestService.cs" />
     <Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
@@ -529,6 +575,10 @@
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_8237_TransshipmentDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderResponseService.cs" />
+    <Compile Include="ResponseServices\Get_CB_MSG_8318_CustomItemMekachRequestService.cs" />
+    <Compile Include="ResponseServices\Get_CB_MSG_8319_CustomItemRuleResponseService.cs" />
+    <Compile Include="ResponseServices\Get_CB_MSG_8323_ClassifGuidanceDetailsResponseService.cs" />
+    <Compile Include="ResponseServices\Get_CB_MSG_8317_CustomItemClassifGuidanceResponseService.cs" />
     <Compile Include="ResponseServices\PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService.cs" />
     <Compile Include="ResponseServices\SaveDF_MSG2751_2757_TransshipmentDeclarationRequestResponseService .cs" />
     <Compile Include="ResponseServices\SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesResponseService.cs" />
@@ -546,6 +596,7 @@
     <Compile Include="ResponseServices\MultiUpdateBatchUCBCMSS_MsgResponseService.cs" />
     <Compile Include="ResponseServices\LG_NG_8410_LogisticActionRequestMessageResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchApproveAllPending_MsgResponseService.cs" />
+    <Compile Include="ResponseServices\UniCourierBatchSend8373_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniCourierBatchSendAC_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniExportDeclarationBatchPayment2755E_MsgResponseService.cs" />
     <Compile Include="ResponseServices\UniExportDeclarationBatchSend2751_MsgResponseService.cs" />
@@ -707,6 +758,7 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
+    <Compile Include="Tasks\UpdateClosedTables.cs" />
     <Compile Include="Tasks\POAExpireReminder.cs" />
     <Compile Include="Tasks\EnqueueSucceedRequestsheets.cs" />
     <Compile Include="Tasks\SendReportExel.cs" />

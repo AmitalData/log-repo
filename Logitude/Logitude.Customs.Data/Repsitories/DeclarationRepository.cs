@@ -87,6 +87,15 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+
+        public string GetDeclarationNumberByDecId(string id, int tenant)
+        {
+            //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return context.Declarations.Where(d => d.DeclarationNumber != null && (d.Id == id || d.AmendmentOriginalDeclartation == id))?.FirstOrDefault()?.DeclarationNumber;
+        }
+
         public Declaration GetAcceptDeclarationAmendment(string id, int tenant)
         {
 
@@ -281,8 +290,7 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant && a.IsCancelled == false
                     select a).FirstOrDefault();
         }
-
-
+     
         public int GetDeclarationMaxCancelRequestNumber(int tenant)
         {
             // && a.Id==id
@@ -1246,10 +1254,10 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public DeclarationConsignments GetDeclarationConsignment(string exportFile)
+        public DeclarationConsignments GetDeclarationConsignment(string exportFile,int tenant)
         {
             var declarationsQ = (from d in context.Declarations
-                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList
+                                 where d.ExportFile == exportFile && d.Tenant == tenant && !d.AmendmentDontDisplayInList
                                  select d
                        );
             List<Declaration> declarations = declarationsQ.ToList();
@@ -1260,12 +1268,11 @@ namespace Logitude.Customs.Data.Repsitories
                                  on d.Id equals c.DeclarationId into cjoin
                                  from cj in cjoin.DefaultIfEmpty()
 
-                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList
-                                 select cj
+                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList && d.Tenant == tenant select cj
                               ); 
             List<Consignment> consignments = consignmentsQ.ToList();
 
-            var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile && !d.AmendmentDontDisplayInList).Take(1)
+            var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile && !d.AmendmentDontDisplayInList && d.Tenant == tenant).Take(1)
 
                         join c in context.ConsignmentPackages.Select(x => new ConsignmentPackagesShort { DeclarationId = x.DeclarationId, PackageTypeCode = x.PackageTypeCode, Quantity = x.PackageQuantity.Value }) on d.Id equals c.DeclarationId into cjoin
                         from cj in cjoin.DefaultIfEmpty()
@@ -1658,6 +1665,16 @@ namespace Logitude.Customs.Data.Repsitories
 
             return declaration;
         }
+        public Declaration GetDeclarationAmendmentByAmendmentRequestNumber(int tenant,string requestNumber)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            Declaration declaration = (from a in context.Declarations
+                                              where a.Tenant == tenant && a.AmendmentRequestNumber == requestNumber
+                                       select a).FirstOrDefault();
+
+            return declaration;
+        }
 
 		public Declaration GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
 		{
@@ -1669,10 +1686,7 @@ namespace Logitude.Customs.Data.Repsitories
 									   where d.Tenant == tenant && d.CourierHAWB == hawb && cm.IntegratorCode == IntegratorCode
 									   select d).FirstOrDefault();
 
-			return declaration;
-		}
-
-
+	
 	}
 
 

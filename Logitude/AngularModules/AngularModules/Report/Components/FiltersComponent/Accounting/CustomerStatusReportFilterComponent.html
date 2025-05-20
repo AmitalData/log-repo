@@ -290,8 +290,8 @@
                             <!-- 2 -->
                             <td style="">
                                 <ComboBox [ItemsSource]="CategoriesList"
-                                          style="display: block;width: 130px;"
-                                          (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
+                                          style="display: block;width: 130px;"[IsDisabled]="IsCategoryDisabled" [SelectedItem]="SelectedCategory"
+                                          (SelectedItemChanged)="SelectedItemChanged($event)" ></ComboBox>
                             </td>
 
                             <!-- 3 -->
@@ -303,31 +303,31 @@
                                     <!-- Category 1 -->
                                     <LogLov *ngSwitchCase="'Category 1'" [ObjectFieldName]="'Category1'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category1'"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true" [SelectedValue]="Category1">
                                     </LogLov>
 
                                     <!-- Category 2 -->
                                     <LogLov *ngSwitchCase="'Category 2'" [ObjectFieldName]="'Category2'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category2'"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true" [SelectedValue]="Category2">
                                     </LogLov>
 
                                     <!-- Category 3 -->
                                     <LogLov *ngSwitchCase="'Category 3'" [ObjectFieldName]="'Category3'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category3'"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true" [SelectedValue]="Category3">
                                     </LogLov>
 
                                     <!-- Category 4 -->
                                     <LogLov *ngSwitchCase="'Category 4'" [ObjectFieldName]="'Category4'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category4'"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true" [SelectedValue]="Category4">
                                     </LogLov>
 
                                     <!-- Category 5 -->
                                     <LogLov *ngSwitchCase="'Category 5'" [ObjectFieldName]="'Category5'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category5'"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true" [SelectedValue]="Category5">
                                     </LogLov>
 
                                     <!-- Default -->

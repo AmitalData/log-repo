@@ -65,9 +65,50 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 SecurityUtility.CheckContactFeature("ReportExecutionLog", "READ", tenant);
-                ReportExecutionLogQuery reportExecutionLogQuery = new ReportExecutionLogQuery(authToken.Tenant);
-                reportExecutionLogQuery.CancelStuckReports(authToken.Tenant, reportId);
+                 SecurityUtility.CheckContactFeature("ReportExecutionLog", "UPDATE", tenant);
 
+                var reportExecutionLogRepository = new ReportExecutionLogRepository(tenant);
+                var reportExecutionLog = reportExecutionLogRepository.GetReportExecutionLog(reportId);
+                var contactRep = new ContactRepository(tenant);
+                string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
+                Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, tenant);
+
+                reportExecutionLog.StatusCode = "F";
+                reportExecutionLog.ExceptionMessage =string.Format("Stopped manually by {0}", contact.Id);
+                reportExecutionLog.DoneDate = DateTime.Now;
+
+
+                reportExecutionLogRepository.Update(reportExecutionLog);
+                reportExecutionLogRepository.SubmitChanges();
+
+                QueueMessageRepository messagesRepository = new QueueMessageRepository(tenant);
+                var message = messagesRepository.GetSingleQueueMessageByReportId(reportExecutionLog.Id, reportExecutionLog.Tenant);
+                string strConnString = TenantServerConfigration.GetDbConnection(tenant);
+                if (message != null)
+                {
+                    using (SqlConnection cn = new SqlConnection(strConnString))
+                    {
+                        SqlCommand cmd = new SqlCommand("[dbo].[Queue_SetStatus]", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
+                        SqlParameter statusPar = new SqlParameter("@V_Statud", SqlDbType.Int);
+
+
+                        messageIdPar.Direction = ParameterDirection.Input;
+                        statusPar.Direction = ParameterDirection.Input;
+
+                        messageIdPar.Value = message.Id;
+                        statusPar.Value = 22;
+
+                        cmd.Parameters.Add(messageIdPar);
+                        cmd.Parameters.Add(statusPar);
+
+                        cn.Open();
+                        var output = cmd.ExecuteNonQuery();
+                        cn.Close();
+                    }
+                }
+ 
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");
             }
@@ -77,6 +118,5 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
 
         }
-
-    }
+     }
 }

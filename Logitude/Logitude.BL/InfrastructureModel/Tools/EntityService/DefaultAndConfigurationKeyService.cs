@@ -3,6 +3,7 @@ using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
@@ -31,7 +32,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Create(DefaultAndConfigurationKeyPM theEntityPm)
         {
-            
+
             this.entityPM = theEntityPm;
             this.Poco = new DefaultAndConfigurationKey();
             DefaultAndConfigurationKeyMapping.MapEntity(theEntityPm, Poco);
@@ -42,7 +43,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Update(DefaultAndConfigurationKeyPM theEntityPm)
         {
-             
+
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleDefaultAndConfigurationKey(theEntityPm.SetKey);
             DefaultAndConfigurationKeyMapping.MapEntity(theEntityPm, Poco);
@@ -51,8 +52,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         }
 
         public void Delete(string SetKey)
-        { 
-            this.Poco = entityRepository.GetSingleDefaultAndConfigurationKey(SetKey); 
+        {
+            this.Poco = entityRepository.GetSingleDefaultAndConfigurationKey(SetKey);
             entityRepository.Remove(Poco);
             entityRepository.SubmitChanges();
         }

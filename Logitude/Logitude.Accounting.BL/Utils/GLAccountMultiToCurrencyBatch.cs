@@ -37,6 +37,7 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Accounting.BL.CloseTables;
 using Microsoft.SqlServer.Server;
+using Logitude.Accounting.BL.EntityUpdateServices;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -46,6 +47,7 @@ namespace Logitude.Accounting.BL.Utils
         private HttpStatusCode _StatusCode;
         private List<string> _badList;
         private int _AccMade = 0; 
+        private int _AccRecoMethodOnlyMade = 0;
         private int _RecosMade = 0;
         private int _TransactionsMade = 0;
         private bool _retry; 
@@ -90,7 +92,6 @@ namespace Logitude.Accounting.BL.Utils
                 CurrencyQueryService currencyQueryService = new CurrencyQueryService(tenant);
 
 
-                //  string lastCheckedId = "";
                 bool only_part_2 = false;
 
                 // Check Account 
@@ -103,7 +104,7 @@ namespace Logitude.Accounting.BL.Utils
                 else
                 {
                     gLAccountPM = gLAccountQueryService.GetSinglePM(myGLAccountId, tenant);
-                    //  gLAccountQueryService.GetComposition(new GLAccountKeys() { Id = myGLAccountId }, gLAccountPM);
+
                     if (gLAccountPM == null)
                     {
                         this.AddErrorRow($"GLAccount id={gLAccountPM} is not found in tenant {tenant}");
@@ -181,7 +182,6 @@ namespace Logitude.Accounting.BL.Utils
                     if (othercurr)
                     {
                         this.AddErrorRow($"GLAccount {gLAccountPM.DisplayNumber} Id={gLAccountPM} has transactions not in {currency.Code}");
-                      //  _errors = true;
                         only_part_2 = true;
                         recoMethod = gLAccountPM.ReconcileMethodCode;
                     }
@@ -192,6 +192,7 @@ namespace Logitude.Accounting.BL.Utils
                 // Change Currency 
                 if (!_errors && !only_part_2 && !toMulti)
                 {
+                    bool oneMade = false;
                     if ((!gLAccountPM.IsMultiCurrency.HasValue || gLAccountPM.IsMultiCurrency.Value == false) && gLAccountPM.CurrencyId == toCurrencyId)
                     {
                         // already changed to 'toCurrencyId'
@@ -205,6 +206,22 @@ namespace Logitude.Accounting.BL.Utils
                             {
                                 _AccMade = Update_Acc(tenant, myGLAccountId, toCurrencyId, recoMethod, strConnString);
                                 scope.Complete();
+                                oneMade = true;
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+                    if (!oneMade && gLAccountPM.ReconcileMethodCode != recoMethod)
+                    {
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+                        {
+                            try
+                            {
+                                _AccRecoMethodOnlyMade = Update_AccRecoMethodOnly(tenant, myGLAccountId, recoMethod, strConnString);
+                                scope.Complete();
                             }
                             catch (Exception e)
                             {
@@ -213,7 +230,21 @@ namespace Logitude.Accounting.BL.Utils
                         }
                     }
 
-
+                }
+                else if (!_errors && !only_part_2 && toMulti && gLAccountPM.ReconcileMethodCode != recoMethod)
+                {
+                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+                    {
+                        try
+                        {
+                            _AccRecoMethodOnlyMade = Update_AccRecoMethodOnly(tenant, myGLAccountId, recoMethod, strConnString);
+                            scope.Complete();
+                        }
+                        catch (Exception e)
+                        {
+                            throw;
+                        }
+                    }
                 }
 
                 if (!_errors || only_part_2)
@@ -231,43 +262,16 @@ namespace Logitude.Accounting.BL.Utils
                             throw;
                         }
                     }
-                    if (recoMethod == ReconcileMethodValues.LocalCurrency)  
-                    {
-                        // Open Transactions - Local
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
-                        {
-                            try
-                            {
-                                _TransactionsMade = Update_LT_Local(tenant, myGLAccountId, accountingCurrencyId, strConnString);
-                                scope.Complete();
-                            }
-                            catch (Exception e)
-                            {
-                                throw;
-                            }
-                        }
-                    }
-                    else //(recoMethod == ReconcileMethodValues.ForeignCurrency) 
-                    {
-                        // Open Transactions - Foreign
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))
-                        {
-                            try
-                            {
-                                _TransactionsMade = Update_LT_Foreign(tenant, myGLAccountId, strConnString);
-                                scope.Complete();
-                            }
-                            catch (Exception e)
-                            {
-                                throw;
-                            }
-                        }
-                    }
+
+                    // Recalculate the LT open amounts (refactored call to GLAccountUpdateService)
+                    var glAccountUpdateService = new GLAccountUpdateService(accContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
+                    _TransactionsMade = glAccountUpdateService.RecalculateLTOpenAmounts(tenant, myGLAccountId, accountingCurrencyId, strConnString, recoMethod);
+
                 }
 
 
 
-                string updated = _AccMade > 0 ? "Account Updated, " : "";
+                string updated = _AccMade > 0 || _AccRecoMethodOnlyMade > 0 ? "Account Updated, " : "";
 
                 _ResponseText = $"{updated} Made Reconciliations: {_RecosMade}, Transactions: {_TransactionsMade}, Errors/Messages: {String.Join(", \n", _badList.ToArray())}";
             }
@@ -319,6 +323,44 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
+
+        private static int Update_AccRecoMethodOnly(int tenant, string accountId, string recoMethod, string strConnString)
+        {
+
+
+            using (SqlConnection connection = new SqlConnection(strConnString))
+            {
+                connection.Open();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "UPDATE GLAccounts SET ReconcileMethodCode= @V_recoMethod " +
+                        "WHERE Tenant = @V_tenant and Id = @V_AccountId";
+
+
+                    command.CommandType = CommandType.Text;
+
+                    command.Parameters.Add("@V_tenant", SqlDbType.Int);
+                    command.Parameters["@V_tenant"].Value = tenant;
+
+
+                    command.Parameters.Add("@V_AccountId", SqlDbType.VarChar);
+                    command.Parameters["@V_AccountId"].Value = accountId;
+
+
+                    command.Parameters.Add("@V_recoMethod", SqlDbType.VarChar);
+                    command.Parameters["@V_recoMethod"].Value = recoMethod;
+
+                    int rows = command.ExecuteNonQuery();
+                    connection.Close();
+                    return rows;
+                }
+            }
+
+        }
+
+
+
         private static int Update_Reco(int tenant, string accountId, string strConnString)
         {
 
@@ -350,72 +392,6 @@ namespace Logitude.Accounting.BL.Utils
 
         }
 
-        private static int Update_LT_Local(int tenant, string accountId, string accountingCurrencyId, string strConnString)
-        {
-
-
-            using (SqlConnection connection = new SqlConnection(strConnString))
-            {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
-                {
-
-                    command.CommandText =
-                        "UPDATE LedgerTransactions SET IsReconciled = 0, OpenAmountCurrencyId = @V_accountingCurrencyId, OpenAmount = LocalAmountDebit - LocalAmountCredit " +
-                        "WHERE Tenant = @V_tenant and AccountId = @V_AccountId " +
-                        "AND ((IsReconciled = 1) OR (OpenAmountCurrencyId <> @V_accountingCurrencyId) OR (OpenAmount <> LocalAmountDebit - LocalAmountCredit))";
-
-
-                    command.CommandType = CommandType.Text;
-
-                    command.Parameters.Add("@V_tenant", SqlDbType.Int);
-                    command.Parameters["@V_tenant"].Value = tenant;
-
-                    command.Parameters.Add("@V_AccountId", SqlDbType.VarChar);
-                    command.Parameters["@V_AccountId"].Value = accountId;
-
-                    command.Parameters.Add("@V_accountingCurrencyId", SqlDbType.VarChar);
-                    command.Parameters["@V_accountingCurrencyId"].Value = accountingCurrencyId;
-
-                    int rows = command.ExecuteNonQuery();
-                    connection.Close();
-                    return rows;
-                }
-            }
-
-        }
-
-        private static int Update_LT_Foreign(int tenant, string accountId, string strConnString)
-        {
-
-
-            using (SqlConnection connection = new SqlConnection(strConnString))
-            {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
-                {
-
-                    command.CommandText =
-                        "UPDATE LedgerTransactions SET IsReconciled = 0, OpenAmountCurrencyId = CurrencyId, OpenAmount = ForeignAmountDebit - ForeignAmountCredit " +
-                        "WHERE Tenant = @V_tenant AND AccountId = @V_AccountId " +
-                        "AND ((IsReconciled = 1) OR (OpenAmountCurrencyId <> CurrencyId) OR (OpenAmount <> ForeignAmountDebit - ForeignAmountCredit))";
-
-
-                    command.CommandType = CommandType.Text;
-
-                    command.Parameters.Add("@V_tenant", SqlDbType.Int);
-                    command.Parameters["@V_tenant"].Value = tenant;
-
-                    command.Parameters.Add("@V_AccountId", SqlDbType.VarChar);
-                    command.Parameters["@V_AccountId"].Value = accountId;
-
-                    int rows = command.ExecuteNonQuery();
-                    connection.Close();
-                    return rows;
-                }
-            }
-
-        }
 
         private BatchTaskExecutionUpdateService GetBatchTaskUpdateServiceInstance(int tenant)
         {
@@ -431,9 +407,7 @@ namespace Logitude.Accounting.BL.Utils
     {
         public int Tenant { get; set; }
         public string AccountId { get; set; }
-        //public string AccountDisplayNumber { get; set; }
         public string ToCurrencyId { get; set; }
-        //public string ToCurrencyCode { get; set; }
         public bool Batch { get; set; }
         public BatchTaskExecutionPM BatchTask { get; set; }
     }

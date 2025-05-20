@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DefaultAndConfigurationKeyUpdateClass
    {  		
-		public const string HashString = "1eedc02d9138aca18238fea50382b9dd";
+		public const string HashString = "8e4b573147510fbeb22b279f5f60f92a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,7 +99,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsNew =  true,
 			      				    DBTableName =  "DefaultAndConfigurationKeys",
 			      				    ObjectTableSingular =  "Default And Configuration Key",
-			      				    ObjectTablePlural =  "DefaultAndConfigurationKey",
+			      				    ObjectTablePlural =  "DefaultAndConfigurationKeys",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
@@ -134,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Default And Configuration Key",
-			      				    Code =  "13df",
+			      				    Code =  "d825",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",

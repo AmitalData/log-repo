@@ -377,7 +377,12 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+    ButtonUpdateRedeemedChecksFIX_Click() {
+        const opr = "_ButtonUpdateRedeemedChecksFIX_Click";
+        const obj = { MyTenant: SessionLocator.Tenant, MyDate: new Date(), MyGLAccId: "" };
+        this.StrandartOp(opr, obj, () => { });
 
+    }
     _ButtonReverseAllMonthsFIX_Click() {
         let opr = "_ButtonReverseAllMonthsFIX_Click";
         let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
@@ -1200,7 +1205,15 @@ Line3
         this.PostOp(opr, str, () => { });
     }
 
-
+    ButtonLoadInterestDefinitions_Click() {
+        let opr = "ButtonLoadInterestDefinitions_Click";
+        let str: string =
+            `Please insert page  //Tenant=1071
+Line2
+Line3
+`;
+        this.PostOp(opr, str, () => { });
+    }
 
     ButtonLoadChargeTypes_Click() {
         let opr = "ButtonLoadChargeTypes_Click";

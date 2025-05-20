@@ -1,4 +1,5 @@
 ﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,7 +20,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             // Properties
             this.Property(t => t.Id)
                 .IsRequired();
-               
+
             this.Property(t => t.SetKey)
                .IsRequired()
                .HasMaxLength(36)
@@ -60,12 +61,12 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.SetKey).HasColumnName("SetKey");
             this.Property(t => t.AdditionalKey).HasColumnName("AdditionalKey ");
             this.Property(t => t.SortOrder).HasColumnName("AdditionalKey");
-            this.Property(t => t.SetValueType1).HasColumnName("SetValueType1"); 
+            this.Property(t => t.SetValueType1).HasColumnName("SetValueType1");
             this.Property(t => t.Value1).HasColumnName("Value1");
-            this.Property(t => t.SetValueType2).HasColumnName("SetValueType2"); 
+            this.Property(t => t.SetValueType2).HasColumnName("SetValueType2");
             this.Property(t => t.Value2).HasColumnName("Value2");
             this.Property(t => t.AllowInheritance).HasColumnName("AllowInheritance");
- 
+
         }
     }
 }

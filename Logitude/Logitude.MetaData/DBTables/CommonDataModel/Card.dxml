@@ -631,7 +631,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
- ForeignKeyColumn="SingleInvoiceTemplateId"
+   ForeignKeyColumn="SingleInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

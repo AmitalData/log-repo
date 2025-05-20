@@ -41,6 +41,7 @@ using System.Data.Common;
 using System.Transactions;
 using static Logitude.Customs.BL.Messaging.Amital.UnifreightQInvoiceList;
 using NPOI.SS.Formula.Functions;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -101,7 +102,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 			 }
             List<MonthlyBalancesLine> monthlyBalancesLine=GetMonthlyBalancesReportByYearAndTenant(tenant, year);
             dataProvider.ChartOfAccountLine=new List<ChartOfAccountLine>();
-            
+			dataProvider.Year = year;
+
             for (int i = 0; i < chartOfAccountList?.Count(); i++)
             {
                 List<MonthlyBalancesLine> monthlyBalancesLineOfChartOfAccount= monthlyBalancesLine.Where(a=>a.ChartOfAccount == chartOfAccountList[i].Id).ToList();
@@ -127,7 +129,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     GLAcountEnglishName = chartOfAccountList[i].EnglishName,
 									MonthlyBalancesLine= (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount: new List<MonthlyBalancesLine>(),
 									LocalOpenBalance= monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.LocalOpenBalance) : 0,
-                                    ForeignOpenBalance = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.ForeignOpenBalance) : 0,
 
                                 };
 				dataProvider.ChartOfAccountLine.Add(chartOfAccountLine);
@@ -171,28 +172,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 QuantityForOctober = reader["MONTH10"] != DBNull.Value ? (decimal)reader["MONTH10"] : 0,
                                 QuantityForNovember = reader["MONTH11"] != DBNull.Value ? (decimal)reader["MONTH11"] : 0,
                                 QuantityForDecember= reader["MONTH12"] != DBNull.Value ? (decimal)reader["MONTH12"] : 0,
-                                TotalReport = reader["MONTH12"] != DBNull.Value ? (decimal)reader["TOTAL_MONTHS"] : 0,
+                                TotalReport = reader["TOTAL_MONTHS"] != DBNull.Value ? (decimal)reader["TOTAL_MONTHS"] : 0,
 								GLAcountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
 								GLAcountNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
                                 GLAcountEnglishName= reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 ChartOfAccount = reader["chartOfAccount"] != DBNull.Value ? (string)reader["chartOfAccount"] : null,
-                                AccountId = reader["AccountId"] != DBNull.Value ? (string)reader["AccountId"] : null
+                                AccountId = reader["AccountId"] != DBNull.Value ? (string)reader["AccountId"] : null,
+
+                                LocalOpenBalance = reader["LocalOpenBalance"] != DBNull.Value ? (decimal)reader["LocalOpenBalance"] : 0
                             };
                             results.Add(result);
                         }
                     }
                     connection.Close();
                 }
-                var ac = new AccountBalanceByDateCodeService(null, tenant, results.Select(a => a.AccountId).FirstOrDefault(), results.Select(a => a.AccountId).AsQueryable<string>());
-                ac.CalculateBalance(true, null, new DateTime(year, 1, 1), false, false, true, false, false);
-				foreach (var result in results)
-				{
-					var CurrencySumUntillMounth = ac.AccountBalance.verbose.CurrencySumUntillMounth.Where(A => A.AccountId == result.AccountId).FirstOrDefault();
-
-                    result.LocalOpenBalance = CurrencySumUntillMounth?.LocalAmountDebit - CurrencySumUntillMounth?.LocalAmountCredit;
-                    result.ForeignOpenBalance = CurrencySumUntillMounth?.ForeignAmountDebit - CurrencySumUntillMounth?.ForeignAmountDebit;
-
-                }
+               
                 return results;
             }
 

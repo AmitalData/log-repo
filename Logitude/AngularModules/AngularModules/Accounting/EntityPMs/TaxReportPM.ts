@@ -233,7 +233,10 @@ export class TaxReportPM {
     public get CanRecalculate() { return this.canRecalculate; }
     public set CanRecalculate(newValue: boolean) { if (this.canRecalculate != newValue) { this.canRecalculate = newValue; this.MarkAsDirty("CanRecalculate"); } }
        
-	 
+	 	 
+    private removeDuplicates: boolean;
+    public get RemoveDuplicates() { return this.removeDuplicates; }
+    public set RemoveDuplicates(newValue: boolean) { if (this.removeDuplicates != newValue) { this.removeDuplicates = newValue; this.MarkAsDirty("RemoveDuplicates"); } }
 
     public OldEntityPM: TaxReportPM;
 		
@@ -262,4 +265,4 @@ export class TaxReportPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

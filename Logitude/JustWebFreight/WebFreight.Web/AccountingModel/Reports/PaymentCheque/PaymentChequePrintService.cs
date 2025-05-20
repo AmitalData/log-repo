@@ -206,9 +206,18 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 
 
                 }).ToList();
+
                 PaymentChequeDP.PaymentChequeLines = lines;
+
+                //Invoice numbers paid by PaymentCheque
+                APInvoiceQuery invoiceQuery = new APInvoiceQuery(tenant);
+                var invoiceNumbers = invoiceQuery.GetInvoiceNumberByAPPaymentId(paymentChequePM.APPaymentId, tenant);
+                PaymentChequeDP.InvoiceNumbers = invoiceNumbers ?? new List<string>();
+                
                 PaymentChequeDP.TotalAmount = (decimal)paymentChequePM.ForeignAmount;// (decimal) paymentChequePM.PaymentChequeLines.Sum(d => d.Amount);
                 PaymentChequeDP.AccountDisplayNumber = GetPayToGLAccountDisplayNumber(paymentChequePM);
+
+
 
             }
 

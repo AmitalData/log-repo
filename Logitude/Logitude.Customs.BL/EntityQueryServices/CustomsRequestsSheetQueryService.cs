@@ -205,6 +205,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "DCAOCR",//פתיחת חשבון יצואן - OCR
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
+"8317",//הנחיות סיווג
+"8323",//פרטי הנחיות סיווג
+"8319",//כללים - ספר סיווג
+"8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג
+"UCB8373",
 
 
             };
@@ -272,6 +277,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
             return pmList;
         }
+
+
+
         public List<CustomsRequestsSheetPM> GetRequestInProgress(
             int Tenant,
             string InterfaceTypeCode,
@@ -297,98 +305,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 UserId= userId,
             });
         }
-        public List<CustomsRequestsSheetPM> GetRequestInProgress(
-            //int tenant,
-            //string InterfaceTypeCode,
-            //string ObjectTableId1, string EntityId1,
-            //string ObjectTableId2, string EntityId2,
-            //string CustomFileNo,
-            //bool displayOnlyMode = false
-            RequestInProgressParams requestInProgressParams
-            )
+        public List<CustomsRequestsSheetPM> GetRequestInProgress(RequestInProgressParams requestInProgressParams)
         {
             if (!requestInProgressParams.DisplayOnlyMode && string.IsNullOrWhiteSpace(requestInProgressParams.InterfaceTypeCode))
             {
                 throw new Exception("GetRequestInProgress !displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
             }
             requestInProgressParams.InterfaceTypeCode = requestInProgressParams.InterfaceTypeCode.Trim();// angular send " 2750" why  ??
-            var intrefaceTypeList =
-                new List<string>()
-                {
-"2715",//CustomsDocument Request
-"2750",// - מסר הצהרה יוצא
-"2754",// - משוב להגשה/הצהרה
-"2755",// - מסר הגשה
-"8211",// - מסר דרישה לבטוחה
-"8212",// - מסר מענה לדרישה לבטוחה
-"8214",// -מסר בקשה של סוכן לאישור אילוצים 
-"8215",// - מסר של החלטת גורם מאשר לאישור האילוץ
-"8216",// - מסר תשובה של סוכן עם נימוקים לאישור האילוץ
-"8227",// - מסר מסמך נדרש
-"US2L01I",// - תהליך SIVUG BATCH 
-//"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
-"UCTZIP",// - תהליך BuildCustomTableZip
-"UCB2750",//,Batch Send 2750 per CourierMasterId
-"UCB2755",//,Batch Send 2755 per CourierMasterId
-"UCB1170",//,Batch Send 1170 per CourierMasterId
-"UCBAC",//,Batch Send UCBAC per CourierMasterId
-"UCB2751",//,Batch Send 2751 for export
-"UCB2755E",//,Batch Payment 2755E for export
-"UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
-"UCB8250",//,Batch Send 8250 per CourierMasterId
-"UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
-"UCB8212",/// Batch Send Collateral
-"2892",
-"2450",
-"UCBNDCD",///  Send bonded filing
-"UCUDO", 
-///"8302", //בקשה לטופס הצהרה
-
-"2751"//הצהרת יצוא- מסר יוצא
-,"2757", //הצהרת יצוא - מסר נכנס
-///"8302" //בקשה לטופס הצהרה
-
-"UCB2715", // שידור מסמכים שגויים ראשי - מפצל
-"UCBSEDF",// שידור תעודות עיכוב ראשי - מפצל
-"UCB2715SendNow", // שידור מסמכים שגויים ראשי - מפצל
-"UCBCTML", // שידור הגשה בלדר
-"UCBCMSS", //שינוי אתר איחסון לבלדר
-"ClosePending",//סגירה גורפת ל-Pending
-"UCB9999", // ניתוח מחדש
-"8326", // שאילתא לתצהיר יבואן
-"DCAMU", // multi update 
-"DCAUAC", // multi update 
-"DCACCFII",//יצירת אישור לפרטי מכס
-"DCACSIFF", // יצירת חשבון ספק מאקסל
-"DCACESIFF",//חשבונות יצואן מאקסל
-"2755T", // הגשת שטעון
-"2757T", // תשובה להגשת שטעון
-"2751T", // הצהרת שטעון
-"2751T2", // תשובה להצהרת שטעון
-"UCADPE", // add multi pending
-"DCAInUCBApproveAllPending",//אישור PENDING
-"CourierMastersConnected", // קישור הצהרות לטיסה
-"UCADPE", // add multi pending
-"8235T", // תיקון שטעון
-"8314",//נתוני פרט מכס
-"8888",// תשובה לנתוני פרט מכס
-"2791",// אחסנה
-"2755E",// הגשה יצוא
-"8250",// סטטוס הצהרה
-"DCAOCR",//פתיחת חשבון יצואן - OCR
-"8235", // תיקון הצהרה ברקע
-"2280",//תעודת מקור
-"2281",//משוב תעודת מקור
-            };
-
-            //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
-            //if (settingPm.IsConnectedToUniFreight && 
-            //    settingPm.CompanyType == "C")//elisheva +itzik 
-            //{
-            //    intrefaceTypeList.Add("8302");//בקשה לטופס הצהרה
-            //}
-
-
+            List<string> intrefaceTypeList = GetAllintrefacesTypeList();
             string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
             if (!requestInProgressParams.DisplayOnlyMode && !intrefaceTypeList.Contains(requestInProgressParams.InterfaceTypeCode) && !(requestInProgressParams.InterfaceTypeCode == "UCUDO"))
             {
@@ -399,21 +323,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 listSheetStatusInProcess.Add(((int)item).ToString());
             }
-            //List<CustomsRequestsSheet> requests = repository.GetCustomsRequestsSheetByCustomFileNumber(customFileNumber, tenant);
-            var q = //context.CustomsRequestsSheets
-                this.repository.GetAll(requestInProgressParams.Tenant)
+            var q = this.repository.GetAll(requestInProgressParams.Tenant)
                 .Where(rec => rec.Tenant == requestInProgressParams.Tenant)
-                .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode)
-                    //rec.RequestStatusCode == "1" /*EnglishName	LocalName Created	בקשה נרשמה */
-                    //||
-                    //rec.RequestStatusCode == "2" /*EnglishName	LocalName In Process	באמצע טיפול*/
-                    ////||
-                    ////rec.RequestStatusCode == "5" /* Waiting For Signing	ממתין לחתימה */ //Yuval Chalup 06.08.2015 TASK-15156 (Remarked)
-                    //||
-                    //rec.RequestStatusCode == "20" /* Sent	נשלח */ //Yuval Chalup 06.08.2015 TASK-15156
-                    //||
-                    //rec.RequestStatusCode == "21" /* Received	התקבלה תשובה */ //Yuval Chalup 06.08.2015 TASK-15156
-                    );
+                .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode));
+
             if (requestInProgressParams.Include8250IsShaam)
             {
                 var my = intrefaceTypeListDisplayOnly.ToList();
@@ -428,8 +341,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 q = q.Where(rec => rec.InterfaceTypeCode == requestInProgressParams.InterfaceTypeCode);
             }
-
-
             var haveFilter = false;
             if (requestInProgressParams.IsWorkSheetFromExcel)
             {
@@ -452,17 +363,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 haveFilter = true;
                 q = q.Where(rec => rec.EntityId2 == requestInProgressParams.EntityId2 && rec.ObjectTableId2 == requestInProgressParams.ObjectTableId2);
             }
-
             if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomsRequestsSheetId))
             {
                 haveFilter = true;
                 q = q.Where(rec => rec.Id != requestInProgressParams.CustomsRequestsSheetId);
             }
-
-            //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('CR1', 'GetRequestInProgress 2715', 'CR1,GetRequestInProgress 2715')
-            //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('-1', '1', TO_TIMESTAMP('2020-11-22 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2020-11-22 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'CR1', '1', '0', 'CR1')
-
-            ///Bug 75132: העלאת מסמך ללא קישור - מסמך נשלח למכס מס' פעמים
             if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("CR1", requestInProgressParams.Tenant))
             {
                 if (requestInProgressParams.InterfaceTypeCode == "2715")
@@ -472,6 +377,172 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         q = q.Where(rec => rec.EntityId2 == requestInProgressParams.EntityId2 && rec.ObjectTableId2 == requestInProgressParams.ObjectTableId2);
                     }
                 }
+            }
+            if (!haveFilter)
+            {
+                return new List<CustomsRequestsSheetPM>();
+            }
+
+            var pmList = q.ToList().Select(rec => this.GetEntityPM(rec)).ToList();
+            return pmList;
+        }
+
+        public List<string> GetAllintrefacesTypeList()
+        {
+            return new List<string>()
+            {
+            "2715",//CustomsDocument Request
+            "2750",// - מסר הצהרה יוצא
+            "2754",// - משוב להגשה/הצהרה
+            "2755",// - מסר הגשה
+            "8211",// - מסר דרישה לבטוחה
+            "8212",// - מסר מענה לדרישה לבטוחה
+            "8214",// -מסר בקשה של סוכן לאישור אילוצים 
+            "8215",// - מסר של החלטת גורם מאשר לאישור האילוץ
+            "8216",// - מסר תשובה של סוכן עם נימוקים לאישור האילוץ
+            "8227",// - מסר מסמך נדרש
+            "US2L01I",// - תהליך SIVUG BATCH 
+            //"UCUW2L",// - פתיחת הצהרה ממסר אינטגרטור
+            "UCTZIP",// - תהליך BuildCustomTableZip
+            "UCB2750",//,Batch Send 2750 per CourierMasterId
+            "UCB2755",//,Batch Send 2755 per CourierMasterId
+            "UCB1170",//,Batch Send 1170 per CourierMasterId
+            "UCBAC",//,Batch Send UCBAC per CourierMasterId
+            "UCB2751",//,Batch Send 2751 for export
+            "UCB2755E",//,Batch Payment 2755E for export
+            "UCBUDCSMC",//Batch update declarationCourierStatus MasterChanged
+            "UCB8250",//,Batch Send 8250 per CourierMasterId
+            "UCBUD2LT",///UniCourierBatchSendUCBUD2LT_MsgResponseService
+            "UCB8212",/// Batch Send Collateral
+            "2892",
+            "2450",
+            "UCBNDCD",///  Send bonded filing
+            "UCUDO", 
+            ///"8302", //בקשה לטופס הצהרה
+            "2751"//הצהרת יצוא- מסר יוצא
+            ,"2757", //הצהרת יצוא - מסר נכנס
+            ///"8302" //בקשה לטופס הצהרה
+            "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+            "UCBSEDF",// שידור תעודות עיכוב ראשי - מפצל
+            "UCB2715SendNow", // שידור מסמכים שגויים ראשי - מפצל
+            "UCBCTML", // שידור הגשה בלדר
+            "UCBCMSS", //שינוי אתר איחסון לבלדר
+            "ClosePending",//סגירה גורפת ל-Pending
+            "UCB9999", // ניתוח מחדש
+            "8326", // שאילתא לתצהיר יבואן
+            "DCAMU", // multi update 
+            "DCAUAC", // multi update 
+            "DCACCFII",//יצירת אישור לפרטי מכס
+            "DCACSIFF", // יצירת חשבון ספק מאקסל
+            "DCACESIFF",//חשבונות יצואן מאקסל
+            "2755T", // הגשת שטעון
+            "2757T", // תשובה להגשת שטעון
+            "2751T", // הצהרת שטעון
+            "2751T2", // תשובה להצהרת שטעון
+            "UCADPE", // add multi pending
+            "DCAInUCBApproveAllPending",//אישור PENDING
+            "CourierMastersConnected", // קישור הצהרות לטיסה
+            "UCADPE", // add multi pending
+            "8235T", // תיקון שטעון
+            "8314",//נתוני פרט מכס
+            "8888",// תשובה לנתוני פרט מכס
+            "2791",// אחסנה
+            "2755E",// הגשה יצוא
+            "8250",// סטטוס הצהרה
+            "DCAOCR",//פתיחת חשבון יצואן - OCR
+            "8235", // תיקון הצהרה ברקע
+            "2280",//תעודת מקור
+            "2281",//משוב תעודת מקור
+            "8317",//הנחיות סיווג
+            "8323",//פרטי הנחיות סיווג
+            "8319",//כללים - ספר סיווג
+            "8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג
+            "UCB8373",
+            };
+        }
+
+        public List<CustomsRequestsSheetPM> GetRequestInProgressForAll(
+          int Tenant,
+          string InterfaceTypeCode,
+          string ObjectTableId1, string EntityId1,
+          string ObjectTableId2, string EntityId2,
+          string CustomFileNo,
+          bool displayOnlyMode = false,
+          string customsRequestsSheetId = null
+          , bool IsWorkSheetFromExcel = false, string userId = null)
+        {
+            return GetRequestInProgressForAll(new RequestInProgressParams()
+            {
+                Tenant = Tenant,
+                InterfaceTypeCode = InterfaceTypeCode,
+                ObjectTableId1 = ObjectTableId1,
+                EntityId1 = EntityId1,
+                ObjectTableId2 = ObjectTableId2,
+                EntityId2 = EntityId2,
+                CustomFileNo = CustomFileNo,
+                CustomsRequestsSheetId = customsRequestsSheetId,
+                DisplayOnlyMode = displayOnlyMode,
+                IsWorkSheetFromExcel = IsWorkSheetFromExcel,
+                UserId = userId,
+            });
+        }
+
+        public List<CustomsRequestsSheetPM> GetRequestInProgressForAll(RequestInProgressParams requestInProgressParams)
+        {
+            if (!requestInProgressParams.DisplayOnlyMode)
+            {
+                throw new Exception("GetRequestInProgress !displayOnlyMode && string.IsNullOrWhiteSpace(InterfaceTypeCode) ");
+            }
+            List<string> intrefaceTypeList = GetAllintrefacesTypeList();
+            string[] intrefaceTypeListDisplayOnly = GetintrefaceTypeListDisplayOnly();
+            if (!requestInProgressParams.DisplayOnlyMode)
+            {
+                return new List<CustomsRequestsSheetPM>();
+            }
+            var listSheetStatusInProcess = new List<string>();
+            foreach (var item in Enum.GetValues(typeof(SheetStatusInProcessEnum)))
+            {
+                listSheetStatusInProcess.Add(((int)item).ToString());
+            }
+            var q = this.repository.GetAll(requestInProgressParams.Tenant)
+                .Where(rec => rec.Tenant == requestInProgressParams.Tenant)
+                .Where(rec => listSheetStatusInProcess.Contains(rec.RequestStatusCode));
+            if (requestInProgressParams.Include8250IsShaam)
+            {
+                var my = intrefaceTypeListDisplayOnly.ToList();
+                my.Add("8250");
+                intrefaceTypeListDisplayOnly = my.ToArray();
+            }
+            if (requestInProgressParams.DisplayOnlyMode)
+                q = q.Where(rec => intrefaceTypeListDisplayOnly.Contains(rec.InterfaceTypeCode));
+            else
+                q = q.Where(rec => intrefaceTypeList.Contains(rec.InterfaceTypeCode)); // #116713
+            
+            var haveFilter = false;
+            if (requestInProgressParams.IsWorkSheetFromExcel)
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.RequestOwnerId == requestInProgressParams.UserId && rec.ObjectTableId1 == requestInProgressParams.ObjectTableId1);
+            }
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomFileNo))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.CustomFileNo == requestInProgressParams.CustomFileNo);
+            }
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId1) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId1))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.EntityId1 == requestInProgressParams.EntityId1 && rec.ObjectTableId1 == requestInProgressParams.ObjectTableId1);
+            }
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.EntityId2) && !string.IsNullOrWhiteSpace(requestInProgressParams.ObjectTableId2))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.EntityId2 == requestInProgressParams.EntityId2 && rec.ObjectTableId2 == requestInProgressParams.ObjectTableId2);
+            }
+            if (!string.IsNullOrWhiteSpace(requestInProgressParams.CustomsRequestsSheetId))
+            {
+                haveFilter = true;
+                q = q.Where(rec => rec.Id != requestInProgressParams.CustomsRequestsSheetId);
             }
             if (!haveFilter)
             {
@@ -545,6 +616,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
 "2280",//תעודת מקור
 "2281",//משוב תעודת מקור
+"8317",//הנחיות סיווג
+"8323",//פרטי הנחיות סיווג
+"8319",//כללים - ספר סיווג
+"8318",// תדפיסי חקיקה (מקח''ים) - ספר סיווג
+"UCB8373",
 };
 
 
@@ -562,7 +638,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return pmList;
         }
 
-
+        public List<CustomsRequestsSheetPM> GetByInterfaceTypeCodeLastTime(int time, string interfaceTypeCode)
+        {
+           return
+              this.repository.GetAll(Tenant)
+              .Where(x=>x.InterfaceTypeCode== interfaceTypeCode && x.RequestCreateDate >= DateTime.Now.AddMinutes(time*-1)).Select(x=> new CustomsRequestsSheetPM { CorrelationId = x.CorrelationId}).ToList();
+        }
 
         public List<CustomsRequestsSheetPM> GetRequestByInterfaceTypeCode(
             int Tenant,
@@ -788,7 +869,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pm = this.GetEntityPM(poco);
             return pm;
         }
-
         public List<CustomsRequestsSheetPM> GetGeneralRequestInProgressByEntity2(
            int Tenant,
            string InterfaceTypeCode,

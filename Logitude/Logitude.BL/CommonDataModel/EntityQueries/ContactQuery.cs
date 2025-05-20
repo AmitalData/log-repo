@@ -1701,7 +1701,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Mobile = a.Mobile,
                                            Fax = a.Fax,
                                            BusinessPhone = a.BusinessPhone,
-
+                                           Email = a.Email,
                                        }).FirstOrDefault();
             return contactList;
         }
@@ -2087,5 +2087,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return contacts;
         }
+
+        public Contact GetContactByEmail(string email, int tenant)
+        {
+            return repository.GetContactByEmail(email, tenant);
+        }
+
     }
 }

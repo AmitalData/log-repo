@@ -13,6 +13,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             return this.repository.GetCustomsBookRulesData(customsItemId);
         }
+
     }
 
 }

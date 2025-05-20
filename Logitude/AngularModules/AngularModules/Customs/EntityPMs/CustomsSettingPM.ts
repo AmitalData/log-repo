@@ -209,10 +209,13 @@ export class CustomsSettingPM {
     public set MaxSISendInteractive(newValue: number) { if (this.maxSISendInteractive != newValue) { this.maxSISendInteractive = newValue; this.MarkAsDirty("MaxSISendInteractive"); } }
        
 	 
-    private courierDocToken: string;
+     private courierDocToken: string;
     public get CourierDocToken() { return this.courierDocToken; }
     public set CourierDocToken(newValue: string) { if (this.courierDocToken != newValue) { this.courierDocToken = newValue; this.MarkAsDirty("CourierDocToken"); } }
-       
+     private forbiddenSigns: string;
+    public get ForbiddenSigns() { return this.forbiddenSigns; }
+    public set ForbiddenSigns(newValue: string) { if (this.forbiddenSigns != newValue) { this.forbiddenSigns = newValue; this.MarkAsDirty("ForbiddenSigns"); } }
+        
 	 
 
     public OldEntityPM: CustomsSettingPM;
@@ -242,4 +245,4 @@ export class CustomsSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

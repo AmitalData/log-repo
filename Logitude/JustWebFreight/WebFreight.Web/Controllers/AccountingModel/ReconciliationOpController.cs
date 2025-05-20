@@ -305,6 +305,30 @@ tenant);
             }
         }
 
+        [HttpPut]
+        [Route("ReconciliationOp/RecheckDraftReconciliationTransactions")]
+        public HttpResponseMessage RecheckDraftReconciliationTransactions(List<LedgerTransactionPM> transactions)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                foreach (var item in transactions)
+                {
+                    SecurityUtility.AuthenticationOnEntityTenant("LedgerTransaction", item.Tenant, tenant);
+                }
+
+                RecheckDraftRecoTrans(transactions, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { Ok = true });
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         private static void UpdateDraftReconciliationTransactions(List<LedgerTransactionPM> transactions, int tenant)
         {
             var accountingContext = AccountingContext.GetContext(tenant);
@@ -312,6 +336,13 @@ tenant);
             query.DelSertOpenRecilationDrafts(transactions);
         }
 
+
+        private static void RecheckDraftRecoTrans(List<LedgerTransactionPM> transactions, int tenant)
+        {
+            var accountingContext = AccountingContext.GetContext(tenant);
+            LedgerTransactionUpdateService query = new LedgerTransactionUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
+            query.RecheckOpenReconcilationDrafts(transactions);
+        }
 
         private static void BlockEmptyTransactions(List<LedgerTransactionPM> transactions)
         {
@@ -411,6 +442,30 @@ tenant);
                     response.Count = transactionsCount;
 
                 response.Result = openReconciliation;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage GetReconciliationsByJournalId(string journalId)
+        {
+            try
+            {
+                int tenant = AuthinticateTenant();
+
+                ReconciliationListQueryService reconciliationListQueryService = new ReconciliationListQueryService(AccountingContext.GetContext(tenant));
+                List<ReconciliationList> openReconciliation = reconciliationListQueryService.GetReconciliationsByJournalId(journalId, tenant);
+                  ServiceResponse response = new ServiceResponse();
+                  response.Count = openReconciliation.Count();
+                 response.Result = openReconciliation;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
                 return reponseMessage;

@@ -303,7 +303,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string originCountryField = "";
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
             SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
-            List<SupplierInvoicePM> mySupplierInvoices = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
+			SupplierInvioceItemCertificatUpdateService supplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), tenant);
+
+			List<SupplierInvoicePM> mySupplierInvoices = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, invoiceNumber, customResponse.tenant, true);
             SupplierInvoicePM mySupplierInvoice =
                                     mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == invoiceNumber)
                                     ?? mySupplierInvoices.FirstOrDefault(x => x.InvoiceNumber == null)
@@ -580,7 +582,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                  {
 						     		 ChangeSetOp = ChangeSetOperation.Insert,
 			                         CertificateNumber = CerDef.CertificateNumber,
-			                         ReqConfirmationTypeCode = CerDef.CertificateNumber,
+			                         ReqConfirmationTypeCode = CerDef.ReqConfirmationTypeCode,
 						     		 CertificateExemptionTypeCode = CerDef.CertificateExemptionTypeCode,
 						     		 AttachmentTypeCode = CerDef.AttachmentTypeCode,
 			                         ResConfirmationTypeCode = CerDef.ResConfirmationTypeCode,
@@ -588,7 +590,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			                         SequenceNumeric = CerDef.SequenceNumeric,
                              
 						     	};
-					             supplierInvoiceItemPM.SupplierInvioceItemCertificats.Add(supplierInvioceItemCertificatPM);
+								supplierInvoiceItemPM.CertificatesStatusCode = supplierInvioceItemCertificatUpdateService.UpdateCertificateStatus(supplierInvioceItemCertificatPM, tenant, true);
+								supplierInvoiceItemPM.SupplierInvioceItemCertificats.Add(supplierInvioceItemCertificatPM);
 						     }
 						}
 					}

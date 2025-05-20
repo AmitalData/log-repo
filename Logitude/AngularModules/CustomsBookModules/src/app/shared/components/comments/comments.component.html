@@ -1,7 +1,6 @@
 <div class="detailsSlide_box" id="comments" *ngIf="showComments && allComments?.length > 0">
     <div class="detailsSlide_toggle" (click)="expandedArea = !expandedArea">
         <div>
-            <!-- <h3 *ngIf="allComments?.length >= 0">הערות בפרק ({{allComments?.length}})</h3> -->
             <h3>הערות</h3>
         </div>
         <div class="toggle" [class.active]="expandedArea">
@@ -22,27 +21,6 @@
                         <a class="actionCommentBox" href="#" role="button" (click)="editComment($event,comment)" [title]="'עריכה'">
                             <i role="img" aria-hidden="true" class="icon-pencil"></i>
                         </a>
-                        <!-- <a href="#" role="button" class="commentOptions_toggle" (click)="showMenu()"
-                            (click)="$event.preventDefault()">
-                            <i role="img" aria-hidden="true" class="icon-dots"></i>
-                        </a>
-                        <div class="commentOptions_pop" *ngIf="showMenuOpen">
-                            <ul style="padding: 5px;">
-                                <li>
-                                    <a href="#" role="button" (click)="editComment($event,comment)">
-                                        <i role="img" aria-hidden="true" class="icon-pencil"></i><span>עריכה</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" role="button" (click)="deleteComment($event, comment)">
-                                        <i role="img" aria-hidden="true" class="icon-trash"></i><span>מחיקה</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="commentOptions_trapFocus" (click)="$event.preventDefault()">
-                                <a href="#" role="button">חזור לתחילת הפאנל</a>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="commentText">
                         <p class="commentSection" [innerHTML]="highlight(comment.RemarkDescription)">
@@ -54,20 +32,3 @@
         </section>
     </div>
 </div>
-
-<!--<div class="detailsSlide_comments" [class.hidden]="!showComments">
-  <div class="detailsSlide_commentsTop">
-    <div class="detailsSlide_commentsTitle">
-      <a class="detailsSlide_commentsPinned" role="checkbox" aria-checked="false"
-         (click)="clickPin = !clickPin">
-        <i role="img" aria-hidden="true" [ngClass]="clickPin ? 'icon-pin' : 'icon-pin_full'"></i>-->
-<!-- <i role="img" aria-hidden="true" class="icon-pin"></i> -->
-<!-- <i role="img" aria-hidden="true" class="icon-pin_full"></i> -->
-<!--</a>
-      <h3 *ngIf="allComments?.length >= 0">הערות בפרק ({{allComments?.length}})</h3>
-    </div>
-    <div class="detailsSlide_commentsClose" (click)="closeCommentsClick()">
-      <a role="button"
-         aria-controls="comments"><i role="img" aria-hidden="true" class="icon-close"></i></a>
-    </div>
-  </div>--> 

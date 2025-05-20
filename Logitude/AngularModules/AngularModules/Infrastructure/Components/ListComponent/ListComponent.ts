@@ -2766,12 +2766,10 @@ export class ListComponent implements OnInit, AfterViewInit {
             this._ListComponentArgs.SuppressOnRowSelectedField = true;
         }
 
-        if (this.SelectedQuery.Code == 'LedgerTransactions') {
-            SessionLocator.DynamicLoader.Load(
-                './Infrastructure/Components/EditComponent/EditComponent',
-                this.CurrentSession.SessionLocation.viewContainerRef
-            ).then((cmpRef) => {
-                cmpRef.instance.ComponentRef = cmpRef;
+         if (this.ObjectTableName == "LedgerTransaction") {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({
                     EntityId: $event.rowData.JournalId,
                     ObjectTableName: 'Journal',
@@ -2952,9 +2950,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 break;
                             }
 
-                            case 'ApiCredintials': {
-                                windowTitle = 'Add/Edit Api Credentials';
-                                logWindow.Height = 450;
+                             case "DefaultAndConfiguration": {
+                                logWindow.Height = 400;
+                                break;
+                            }
+
+                            case "ApiCredintials": {
+                                windowTitle = "Add/Edit Api Credentials";
+                                 logWindow.Height = 450;
                                 logWindow.Width = 650;
                                 break;
                             }
@@ -4156,16 +4159,36 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 GLAccountSecurityLevelService.ShowSecurityBockingMessage();
                                 return;
                             }
+                            });
+
+                    }
+                    else if (myObjectTableName == "Card") {
+                       
+                        this._entityListService.getAllFromCache("PartnerType", new ApiQueryFilters()).then((res3: any) => {
+                            res3.subscribe(res4 => {
+                                this.PartnerTypes = res4.Result;
+                                var id = $event.rowData['Id'];
+                                var table = this.GetObjectTableNameForDependency($event.rowData["PartnerTypeId"], "Card");
+                                if (!AppTool.IsNullOrEmpty(id)) {
+                                    var logWindow = new LogitudeWindow();
+                                    logWindow.Title = "Edit " + TextCodeTranslator.TranslateTable(table);
+                                    logWindow.ShowEditComponent(id, table);
+                                    logWindow.WindowClosed.subscribe(($event: any) => {
+                                        this.isEditControlOpened = false;
+                                        this.OnBackFromEdit(selectedEntityId, $event)
+                                    });
+                                }
+
+                            })
                         });
-                    } else {
-                        SessionLocator.DynamicLoader.Load(
-                            './Infrastructure/Components/EditComponent/EditComponent',
-                            this.CurrentSession.SessionLocation.viewContainerRef
-                        ).then((cmpRef: ComponentRef<EditComponent>) => {
-                            var label = TextCodeTranslator.Translate(
-                                this.SelectedQuery.NameTextCodeCode
-                            );
-                            cmpRef.instance.ComponentRef = cmpRef;
+                        
+                    }
+                    else {
+
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then((cmpRef: ComponentRef<EditComponent>) => {
+                                var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run({
                                 EntityId: selectedEntityId, ///$event.rowData.Id
                                 ObjectTableName: myObjectTableName,
@@ -5179,6 +5202,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 }
             }
 
+            if (this.ObjectTableName == "TaxDeductionReport") {
+                str = TextCodeTranslator.Translate("General.O.NewReport");
+            }
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
             }
@@ -6337,6 +6363,30 @@ export class ListComponent implements OnInit, AfterViewInit {
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
             this.RefreshBtnClick();
         });
+    }
+    private PartnerTypes: Array<any> = [];
+
+    private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {
+
+        if (parentObjectName == "Card" && dependency == "PO") {
+            dependency = "CS";
+        }
+
+        var partnerType = this.PartnerTypes.filter(p => p.Id.toLowerCase() == dependency.toLowerCase())[0];
+        if (partnerType != null && partnerType != undefined) {
+            var name: string = partnerType.Name.replace(" ", "");
+            var table: ObjectTablePM = window.ObjectTables.filter(d => d.Name.toLowerCase() === name.toLocaleLowerCase())[0];
+            if (table != null) {
+                return table.Name;
+            }
+            else {
+                return parentObjectName;
+            }
+        }
+        else {
+            return parentObjectName;
+        }
+       
     }
 }
 

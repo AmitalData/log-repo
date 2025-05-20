@@ -1,23 +1,32 @@
-import { AfterViewInit, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+declare var window: any;
+import { AfterViewInit, Component, HostListener, Input, OnInit, SimpleChanges } from '@angular/core';
 import { DataRowComponent } from '../data-row/data-row.component';
 import { DetailsFrameComponent } from '../details-frame/details-frame.component';
 import { TableTopComponent, TableTopState } from '../table-top/table-top.component';
-import { NgFor, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
 import { API_MainService, Filters } from '../../../core/API_MainService';
 import { BehaviorSubject, filter } from 'rxjs';
 import { SearchBy, SearchService } from '../page-top/service/top-page.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
 import { FilterPopupService, FiltersSearch } from '../filter-popup/service/filter-popup.service';
 import { AddCommentComponent } from '../add-comment/add-comment.component';
 import { SessionInfo } from '../../../core/Infrastructure/Utilities/SessionInfo';
+import { FeatureLocator } from '../../../core/Infrastructure/Utilities/FeatureLocator';
+import { InfrastructureDomainService } from '../../../core/Infrastructure/Services/InfrastructureDomainService';
+import { LoginService } from '../../../core/Infrastructure/Services/LoginService';
+import { Router } from '@angular/router';
+import { RomanToolService } from '../../services/roman-tool.service';
+import { AddCommentService } from '../add-comment/service/add-comment.service';
+import { PreferenceMenuComponent } from '../preference-menu/preference-menu';
+import { PreferencesService } from '../preference-menu/PreferencesService';
 @Component({
 	selector: 'app-main-display',
 	standalone: true,
-	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule],
+	imports: [NgFor, NgForOf, NgIf, DataRowComponent, DetailsFrameComponent, TableTopComponent, AddCommentComponent, FormsModule, NgStyle, PreferenceMenuComponent],
 	templateUrl: './main-display.component.html',
 	styleUrl: './main-display.component.css',
 	animations: [
@@ -37,6 +46,7 @@ export class MainDisplayComponent implements OnInit {
 	@Input() showChiledren: boolean = false;
 	@Input() itemsData: BehaviorSubject<CB_CustomsItemComputedDataList[]>;
 	@Input() isLoadingMode: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	@Input() isFeaturePermessionCB: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	selectSearchBy: string = SearchBy.searchBy_form01;
 	showDetails: boolean = false;
 	showCommentsIsOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -44,54 +54,141 @@ export class MainDisplayComponent implements OnInit {
 
 	showAddComment: boolean = false;
 	showCommentSidebar: boolean = false;
-	// childrenToDesplay: number[] = [];
 	private _filters;
-	//data: any | never | undefined = {};
 	data: CB_CustomsItemComputedDataList[] = [];
 	fullData: CB_CustomsItemComputedDataList[] = [];
+	originalDataByIsDiscountCodes: CB_CustomsItemComputedDataList[] = [];
+
 	KeyValue = Object.keys;
 	Object: ObjectConstructor = Object;
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private filterPopupService: FilterPopupService) { }
+	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private preferencesService: PreferencesService,
+		private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
+		private myInfrastructureDomainService: InfrastructureDomainService, private router: Router, private romanTool: RomanToolService) {
+		this.screenWidth = window.innerWidth;
+	}
 	searchState: string = searchState.יבוא;
+
 
 	ngOnInit() {
 		this.headerService.searchState$.subscribe((data) => {
 			if (!searchState[data]) return;
-			this.searchState = searchState[data];
-			this.InitData();
-			this.ListenToItemsSearched();
+
+			if (this.searchState != searchState[data]) {
+				this.searchState = searchState[data];
+				this.InitData();
+			}
+
+			// this.InitData();
 		});
+		this.ListenToItemsSearched();
+		this.getByIsDiscountCodes();
 	}
 
 	InitData() {
-		let filters: Filters = {
-			CustomsBookType: this.searchState,
-			Tenant: SessionInfo.LoggedUserTenant,
-			SearchFields: ''
-		};
-		this.isLoadingMode.next(true);
-		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
-			const result: CB_CustomsItemComputedDataList[] = data.body;
-			if (!result) return; // TODO: add error message
-			this.countSearchResult = 0;
-			this.handleClearResults();
-			this.fullData = this.orderedData(result);
-			this.data = this.fullData;
-			this.searchMode = TableTopState.ViewAll;
-			this.isLoadingMode.next(false);
-		});
+		if (SessionInfo.LoggedUserTenant == 0) this.GetAllCustomsBookMainView();
+		else this.checkIsFeaturePermessionCustomsBook(() => this.GetAllCustomsBookMainView());
 
 		// listen to loading mode changes:
 		this.isLoadingMode.subscribe((isLoading) => {
 			this.isLoading = isLoading;
 		});
+		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
+			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
+		});
+	}
+
+	errorPermessionCustomsBook: string = "You have no permission to access this feature";
+	checkIsFeaturePermessionCustomsBook(onSuccess: () => void) {
+		this.loginService.GetObjectTables().subscribe((myResult: any) => {
+			if (!myResult) return true;
+			window.ObjectTables = myResult;
+			this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: any) => {
+				if (!myResponse) return true;
+				if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
+					this.data = [];
+					this.fullData = [];
+					this.originalDataByIsDiscountCodes = [];
+					this.isLoadingMode.next(false);
+					this.isFeaturePermessionCB.next(true);
+				}
+				else {
+					this.isFeaturePermessionCB.next(false);
+					onSuccess();
+				}
+			});
+		});
+	}
+	getByIsDiscountCodes() {
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+			if (this.searchService.GetSearchText()) this.getSearchDataByFilter(this.filterPopupService.getFilters());
+			else this.InitData();
+		});
+	}
+
+	IsDiscountCodes: boolean = false;
+	GetAllCustomsBookMainView() {
+		this.isLoadingMode.next(true);
+		let filters: Filters = {
+			CustomsBookType: this.searchState,
+			Tenant: SessionInfo.LoggedUserTenant,
+			SearchFields: ''
+		};
+
+		filters.IsDiscountCodes = this.headerService.IsDiscountCodes?.getValue();
+
+		this.getRulesData();
+		this.getCommentsData(SessionInfo.LoggedUserTenant);
+
+
+
+		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: any) => {
+			const result: CB_CustomsItemComputedDataList[] = data.body;
+			if (!result) return; // TODO: add error message
+			this.countSearchResult = 0;
+			this.handleClearResults();
+
+
+			this.data = this.orderedData(result);
+			if (this.data.length > 0) {
+				if (this.IsDiscountCodes) this.originalDataByIsDiscountCodes = this.data;
+				else this.fullData = this.data;
+			}
+
+			this.searchMode = TableTopState.ViewAll;
+			this.isLoadingMode.next(false);
+			this.isFeaturePermessionCB.next(false);
+		});
+	}
+
+	allRulesData = [];
+	getRulesData() {
+		this.API_MainService.GetAllCustomsBookRulesData().subscribe((data: any) => {
+			if (!data.body) return; // TODO: add error message
+			// Clean up spaces by replacing multiple &nbsp; with a single space, then condense extra spaces
+			let rules = data.body;
+			rules.forEach(rule => {
+				rule.Rules = rule.Rules.replace(/(&nbsp;)+/g, ' ').replace(/\s+/g, ' ').trim();
+			});
+			this.allRulesData = rules;
+		});
+	}
+
+	allCommentsData = [];
+	getCommentsData(tenant) {
+		this.API_MainService.GetAllComments(tenant).subscribe((data: any) => {
+			if (!data.body) return; // TODO: add error message
+			this.allCommentsData = data?.body;
+			this.addCommentService.fullCommentsData.next(this.allCommentsData);
+		});
 	}
 
 	isLoading: boolean = false;
+	isFeaturePermessionCBMsg: boolean = false;
 	searchValue: string = '';
 	countSearchResult: number = 0;
 	ListenToItemsSearched() {
@@ -99,7 +196,6 @@ export class MainDisplayComponent implements OnInit {
 		this.searchService.searchText$.subscribe((searchText) => {
 			if (searchText === "") this.handleClearResults();
 		});
-
 
 		// listen to itemsData changes:
 		this.itemsData.subscribe((data: CB_CustomsItemComputedDataList[] = []) => {
@@ -118,8 +214,8 @@ export class MainDisplayComponent implements OnInit {
 				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-				this.searchToggleAllChildren(true); // expand all 
-
+				// this.searchToggleAllChildren(true); // expand all 
+				this.toggleVisibility(true, this.data);
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
 				if (this.showDetails) {
@@ -140,9 +236,10 @@ export class MainDisplayComponent implements OnInit {
 
 	onToggleAll(event: Event, item: CB_CustomsItemComputedDataList): void {
 		const checked = (event.target as HTMLInputElement)?.checked;
+		if (item.ItemHierarchicLocationID == "2")
+			item.checked = checked;
 		this.toggleVisibility(checked, item.children);
 	}
-
 
 	searchToggleAllChildren(expend: boolean) {
 		this.toggleVisibilitySearch(expend, this.data); // Assuming this.data is your main data array
@@ -182,7 +279,7 @@ export class MainDisplayComponent implements OnInit {
 				if (searchText.length == 4 && itemHierarchicLocationID > 3) {
 					return;
 				}
-				this.showChildern(expend, item);
+				this.showChildern(expend, item, true);
 				shouldExpandParent = true;
 			}
 		});
@@ -193,7 +290,9 @@ export class MainDisplayComponent implements OnInit {
 
 	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
 		data.forEach(item => {
-			this.showChildern(expend, item);
+			if (item.ItemHierarchicLocationID == "2")
+				item.checked = expend;
+			this.showChildern(expend, item, true);
 
 			if (item.children && item.children.length > 0) {
 				this.toggleVisibility(expend, item.children); // Recursively toggle children
@@ -222,6 +321,7 @@ export class MainDisplayComponent implements OnInit {
 	updateShowDetailsClick() {
 		this.showDetails = !this.showDetails;
 		this.showDetailsOpen.next(this.showDetails);
+		this.preferencesService.showSettingsClick(false);
 		if (!this.showDetails) {
 			this.showCommentsIsOpen.next(false);
 			this.showRulesIsOpen.next(false);
@@ -246,16 +346,20 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 
-	showChildern(openAction: any, item: CB_CustomsItemComputedDataList) {
+	showChildern(openAction: any, item: CB_CustomsItemComputedDataList, isMultiOpen: boolean = false) {
 		item.IsShowChildren = openAction; // #109074- fix open children display
+		if (openAction) this.scrollDown(item, isMultiOpen);  // #114429- fix scroll to the last child
+	}
 
-		// const isShown = this.childrenToDesplay.indexOf(item.CustomsItemID);
-		// if (openAction && isShown === -1) {
-		// 	this.childrenToDesplay.push(item.CustomsItemID);
-		// }
-		// else if (!openAction && isShown !== -1) {
-		// 	this.childrenToDesplay.splice(isShown);
-		// }
+	scrollDown(item: CB_CustomsItemComputedDataList, isMultiOpen: boolean) {
+		setTimeout(() => {
+			const element = document.getElementById(`${item.CustomsItemID}`);
+			if (element) {
+				const { bottom } = element.getBoundingClientRect();
+				if (bottom > window.innerHeight - 150 && !isMultiOpen)
+					window.scrollBy({ top: bottom - window.innerHeight + 200, behavior: 'smooth' });
+			}
+		}, 0);
 	}
 
 	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
@@ -271,6 +375,11 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	filtersSearchClick(filtersSearch: FiltersSearch) {
+		if (SessionInfo.LoggedUserTenant == 0) this.getSearchDataByFilter(filtersSearch);
+		else this.checkIsFeaturePermessionCustomsBook(() => this.getSearchDataByFilter(filtersSearch));
+	}
+
+	getSearchDataByFilter(filtersSearch: FiltersSearch) {
 		let filters: Filters = {
 			SearchFields: this.searchService.GetSearchText(),
 			CustomsBookType: this.searchState,
@@ -281,15 +390,23 @@ export class MainDisplayComponent implements OnInit {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
+		if (this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
 
 		this.selectSearchBy = this.searchService.selectSearchBy;
 
 		if (SearchBy.searchBy_form01 == this.selectSearchBy) {
 			this.isLoadingMode.next(true); // update loading mode
 			if (filters.CustomsItemHierarchic === '') {
-				filters.Reamarks = true;
-				filters.Rules = true;
+				// filters.Reamarks = true;
+				// filters.Rules = true;
+				filters.Reamarks = false;
+				filters.Rules = false;
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
+			}
+
+			if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
+				filters.CustomsItemHierarchic = null;
 			}
 			this.API_MainService.GetCustomsBookMainViewSearchByClassification(filters).subscribe(
 				(data: any) => {
@@ -309,8 +426,14 @@ export class MainDisplayComponent implements OnInit {
 			this.isLoadingMode.next(true); // update loading mode
 			if (filters.CustomsItemHierarchic === '') {
 				filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;
-				filters.Reamarks = true;
-				filters.Rules = true;
+				filters.Reamarks = false;
+				filters.Rules = false;
+				// filters.Reamarks = true;
+				// filters.Rules = true;
+			}
+
+			if (filters.CustomsItemHierarchic == "6" || filters.CustomsItemHierarchic == "7" || filters.CustomsItemHierarchic == "6,7") {
+				filters.CustomsItemHierarchic = null;
 			}
 			this.API_MainService.GetCustomsBookMainViewSearchByText(filters).subscribe(
 				(data: any) => {
@@ -334,7 +457,6 @@ export class MainDisplayComponent implements OnInit {
 	}
 
 	handleClearResults() {
-		// if (this.searchMode === TableTopState.ViewAll) return;
 		this.searchMode = TableTopState.ViewAll;
 		this.selectedItemId = null;
 		this.showDetails = false;
@@ -345,8 +467,11 @@ export class MainDisplayComponent implements OnInit {
 		this.searchValue = "";
 		this.countSearchResult = 0;
 		this.filterPopupService.toggleFilterPopup(false);
-		this.data = this.fullData;
-		this.searchToggleAllChildren(false);
+		// this.data = this.fullData;
+		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
+		if (this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
+		this.toggleVisibility(false, this.data);
+		this.preferencesService.showSettingsClick(false);
 	}
 
 	public orderedDataForSearch = (data) => {
@@ -354,15 +479,30 @@ export class MainDisplayComponent implements OnInit {
 			const children = data.filter((item) => item?.CI_Parent_CustomsItemIDNum === parentItem?.CustomsItemID);
 			children.forEach((child) => {
 				child.children = getChildren(child);
+				// delete from rootItems value the children :
+				rootItems = deleteFromRootChildrens(child.CustomsItemID);
 			});
 			return children;
 		};
 
-		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
-		if (rootItems.length === 0) {
-			rootItems = data;
+		const deleteFromRootChildrens = (CustomsItemID) => {
+			rootItems = rootItems.filter((x) => x.CustomsItemID != CustomsItemID);
+			return rootItems;
+		};
+
+		if (this.allRulesData?.length > 0 || this.allCommentsData?.length > 0) {
+			data.forEach(item => {
+				if (this.allRulesData?.length > 0)
+					item.rulesData = this.allRulesData?.filter((x) => x.CustomsItemID == item.CustomsItemID);
+				if (this.allCommentsData?.length > 0)
+					item.remarksClassificationList = this.allCommentsData?.filter((x) => x.CustomsItemsID == item.CustomsItemID);
+			});
 		}
-		this.sortByFullClassification(rootItems);
+
+		let rootItems = data;
+		if (rootItems?.length == 0) return;
+
+		this.romanTool.sortArry(rootItems, 'FullClassification');
 
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
@@ -396,11 +536,21 @@ export class MainDisplayComponent implements OnInit {
 			});
 			return children;
 		};
+
+		if (this.allRulesData?.length > 0 || this.allCommentsData?.length > 0) {
+			data.forEach(item => {
+				if (this.allRulesData?.length > 0)
+					item.rulesData = this.allRulesData?.filter((x) => x.CustomsItemID == item.CustomsItemID);
+				if (this.allCommentsData?.length > 0)
+					item.remarksClassificationList = this.allCommentsData?.filter((x) => x.CustomsItemsID == item.CustomsItemID);
+
+			});
+		}
+
 		let rootItems = data.filter((item) => !item?.CI_Parent_CustomsItemIDNum);
 		if (rootItems.length == 0) return;
 
-		// order by FullClassification number
-		this.sortByFullClassification(rootItems);
+		this.romanTool.sortArry(rootItems, 'FullClassification');
 
 		const orderedData = rootItems.map((rootItem) => {
 			const children = getChildren(rootItem);
@@ -410,16 +560,11 @@ export class MainDisplayComponent implements OnInit {
 		return orderedData;
 	};
 
-	// Function to convert Roman numeral to integer
-	private romanToInt(roman: string): number {
-		const romanMap: { [key: string]: number } = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
-		return roman.split('').reduce((num, char, i, arr) =>
-			num + (romanMap[char] < romanMap[arr[i + 1]] ? -romanMap[char] : romanMap[char]), 0);
-	}
-
-	// Function to sort the list based on FullClassification
-	sortByFullClassification(items: CB_CustomsItemComputedDataList[]): CB_CustomsItemComputedDataList[] {
-		return items.sort((a, b) => this.romanToInt(a.FullClassification) - this.romanToInt(b.FullClassification));
+	screenWidth: number;
+	// Get current screen width
+	@HostListener('window:resize', ['$event'])
+	onResize(event: Event): void {
+		this.screenWidth = (event.target as Window).innerWidth;
 	}
 }
 
@@ -433,19 +578,19 @@ export enum FilterOption {
 	Remarks = '7'
 }
 
-export interface ItemData {
-	customsItemId: number;
-	measurementUnitMalamId: number;
-}
 export class MainEntity {
 	CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[];
 	CB_TariffList: CB_TariffList[];
 	CB_RequirementComputedDataList: CB_RequirementComputedDataList[];
+	CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[];
+	Mekach: Mekach[];
 
-	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[]) {
+	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[], CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[], Mekach: Mekach[]) {
 		this.CB_CustomsItemComputedDataList = CB_CustomsItemComputedDataList;
 		this.CB_TariffList = CB_TariffList;
 		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
+		this.CustomItemClassifGuidanceResult = CustomItemClassifGuidanceResult;
+		this.Mekach = Mekach;
 	}
 }
 
@@ -475,18 +620,21 @@ export interface CB_CustomsItemComputedDataList {
 	PH_IsCarItem?: boolean;
 	FullGoodsDescription: string;
 	Agreements?: number;
-	CustomsRate: string;
-	PurchaseTax: string;
+	CustomsRate: string; // ממס קניה
+	PurchaseTax: string; // מכס כללי
 	OptionalTaxAddition?: number;
 	MeasurementUnitName: string;
 	Remarks: string;
 	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
 	IsShowChildren: boolean;
+	checked: boolean;
 	remarksClassificationList?: RemarksClassificationList[];
 	rulesDetailsList?: RulesDetailsList[];
 	agreementsList?: CB_TariffList[];
 	requirementComputedDataList?: CB_RequirementComputedDataList[];
+	Rules: boolean;
+	rulesData?: any[];
 }
 
 export interface CB_RequirementComputedDataList {
@@ -552,9 +700,47 @@ export interface RulesDetailsList {
 	RuleID: number;
 	Title: string;
 	Rules: string;
+	Index: string;
+	ParentID: number;
 	UpdateDate: Date;
 	ChangeRequestTypePriority: number;
 	OrderinalPostion: number;
 	EntityStatusID: string;
-	Parent_RuleDetailsHistoryID: number;
+	customsItemId?: number;
+	CB_ID?: number;
+}
+
+export class CustomItemClassifGuidanceResult {
+	classificationGuidanceNumber: string;
+	title: string;
+	classificationGuidanceTypeName: string;
+	fullClassification: string;
+	publicationDate?: Date;
+	customsItemId?: number;
+}
+
+export class ClassifGuidanceDetailsResponseData {
+	classificationGuidanceNumber: string;
+	title: string;
+	classificationGuidanceTypeName: string;
+	fullClassificationItem: string;
+	createDate: Date;
+	expirationDate?: Date;
+	publicationDate: Date;
+	classificationGuidanceTextRTF: string;
+	classifGuidanceAttached: ClassifGuidanceAttached[] = [];
+}
+
+export class ClassifGuidanceAttached {
+	fullClassification: string;
+	attachedCustomsItemID: number;
+}
+
+export class Mekach {
+	mekachNumber: number; // מס מק"ת/מק"ח
+	attachedMekahFile: string; // קובץ מצורף (נתיב לקובץ)
+	validityDate: Date; // בתוקף מיום
+	changeDescription: string; // דברי הסבר
+	customsItemId?: number;
+	tenant?: number;
 }

@@ -20,10 +20,13 @@ using System.Data.SqlClient;
 using Simplog.Data.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel;
-using Newtonsoft.Json.Linq;
+ using Newtonsoft.Json.Linq;
 using Simplog.Data.CommonDataModel.Mapping;
 using Logitude.BL.Resolvers;
-
+ 
+using Logitude.BL.CommonDataModel.EntityLists;
+using System.Reflection;
+ 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class LedgerTransactionUpdateService : EntityUpdateService<LedgerTransaction, LedgerTransactionPM, EntityPM>
@@ -40,6 +43,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(LedgerTransactionPM entityPM)
         {
+
             if (entityPM.IsReconciled == null)
             {
                 entityPM.IsReconciled = false;
@@ -194,6 +198,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
             }
         }
+
+
+
+        public void RecheckOpenReconcilationDrafts(List<LedgerTransactionPM> OpenRecilationDrafts)
+        {
+            int tenant;
+            if (OpenRecilationDrafts != null && OpenRecilationDrafts.Count > 0)
+            {
+                tenant = OpenRecilationDrafts.First().Tenant;
+                var transIdList = OpenRecilationDrafts.Select(r => r.Id).ToList();
+                LedgerTransactionQueryService qs = new LedgerTransactionQueryService((MainContext as IAccountingContext));
+                List<string> isReconciledReferences = new List<string>();
+                var listPM = qs.GetLedgerTransactionPMsByIdList(transIdList, tenant);
+                bool isValid = true;
+                foreach (var pm in listPM)
+                {
+                    var draft = OpenRecilationDrafts.First(r => r.Id == pm.Id);
+                    if (pm.IsReconciled || pm.OpenAmount != draft.OpenAmount)
+                    {
+                        isValid = false;
+                        isReconciledReferences.Add(pm.Reference1);
+                    }
+                }
+                if (!isValid)
+                {
+                    var showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    var msg = TranslateTextsClass.Translate("LedgerTransaction.O.ReconciledInDraft", tenant, showLocals);
+                    throw new ApplicationException(msg + Environment.NewLine + string.Join(Environment.NewLine, isReconciledReferences));
+                }
+            }
+        }
+
+        
+
         internal void UpdateBankAccount(LedgerTransactionPM entityPM)
         {
             BankAccountQueryService qs = new BankAccountQueryService((MainContext as IAccountingContext));

@@ -21,8 +21,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsSettingUpdateClass
    {  		
-		public const string HashString = "4db1f246c3f270f57a4ffd311e331392";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 		public const string HashString = "5937cbd808476341d658353d487b47b2";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -704,10 +704,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DefaultNotificationAssignee",
 					  						DefaultText =  "Default Notification Assignee",
-					  						FullLocalDefaultText =  "משתמש ברירת מחדל להתראות",
+					  						FullLocalDefaultText =  "משתמש ברירת מחדל להתרםות",
 					  						ListFieldLable =  "DefaultNotificationAssigneeListLable",
 					  						ListLableDefaultText =  "Default Notification Assignee",
-					  						ListLocalDefaultText =  "משתמש ברירת מחדל להתראות",
+					  						ListLocalDefaultText =  "משתמש ברירת מחדל להתרםות",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "User",
@@ -771,10 +771,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DefaultNotificationAssigneeName",
 					  						DefaultText =  "Default Notification Assignee",
-					  						FullLocalDefaultText =  "משתמש ברירת מחדל להתראות",
+					  						FullLocalDefaultText =  "משתמש ברירת מחדל להתרםות",
 					  						ListFieldLable =  "DefaultNotificationAssigneeNameListLable",
 					  						ListLableDefaultText =  "Default Notification Assignee",
-					  						ListLocalDefaultText =  "משתמש ברירת מחדל להתראות",
+					  						ListLocalDefaultText =  "משתמש ברירת מחדל להתרםות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1286,7 +1286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentOrderAccCard",
 					  						DefaultText =  "Payment Order Acc Card",
-					  						FullLocalDefaultText =  "כרטיס מעבר הוראות תשלום",
+					  						FullLocalDefaultText =  "כרטיס מעבר הורםות תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1346,7 +1346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UnifreightCertificateActivated",
 					  						DefaultText =  "Unifreight Certificate Activated",
-					  						FullLocalDefaultText =  "מערכת אישורים פעילה",
+					  						FullLocalDefaultText =  "מערכת םישורים פעילה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1406,7 +1406,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoFillPaymentScreen",
 					  						DefaultText =  "Auto Fill Payment Screen",
-					  						FullLocalDefaultText =  "מילוי אוטומטי של מסך הגשת תשלום",
+					  						FullLocalDefaultText =  "מילוי םוטומטי של מסך הגשת תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1468,10 +1468,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoFillAccountType",
 					  						DefaultText =  "Auto Fill Account Type",
-					  						FullLocalDefaultText =  "קבע אוטומטית סוג חשבון",
+					  						FullLocalDefaultText =  "קבע םוטומטית סוג חשבון",
 					  						ListFieldLable =  "AutoFillAccountTypeListLable",
 					  						ListLableDefaultText =  "Auto Fill Account Type",
-					  						ListLocalDefaultText =  "קבע אוטומטית סוג חשבון",
+					  						ListLocalDefaultText =  "קבע םוטומטית סוג חשבון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1533,10 +1533,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutoUnitMeasurement",
 					  						DefaultText =  "Auto Unit Measurement",
-					  						FullLocalDefaultText =  "עדכון אוטומטי של יחידת מידה",
+					  						FullLocalDefaultText =  "עדכון םוטומטי של יחידת מידה",
 					  						ListFieldLable =  "AutoUnitMeasurementListLable",
 					  						ListLableDefaultText =  "Auto Unit Measurement",
-					  						ListLocalDefaultText =  "עדכון אוטומטי של יחידת מידה",
+					  						ListLocalDefaultText =  "עדכון םוטומטי של יחידת מידה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1659,7 +1659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMessagesPending",
 					  						DefaultText =  "Is Messages Pending",
-					  						FullLocalDefaultText =  "לאפשר הודעות ממתינות",
+					  						FullLocalDefaultText =  "לםפשר הודעות ממתינות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1779,7 +1779,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastRunningDCAWS",
 					  						DefaultText =  "Last Running",
-					  						FullLocalDefaultText =  "ריצה אחרונה",
+					  						FullLocalDefaultText =  "ריצה םחרונה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1899,7 +1899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ServiceScript",
 					  						DefaultText =  "Restart Service Script",
-					  						FullLocalDefaultText =  "אתחול סרוויסים",
+					  						FullLocalDefaultText =  "םתחול סרוויסים",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1959,7 +1959,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SuppressIIGMessageFromDate",
 					  						DefaultText =  "Suppress IIG Message From Date Time",
-					  						FullLocalDefaultText =  "השבת מסרי מכס מתאריך",
+					  						FullLocalDefaultText =  "השבת מסרי מכס מתםריך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2454,6 +2454,73 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ForbiddenSigns",
+					  						ObjectTableName =  "Customs.CustomsSetting",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  128,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  128,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ForbiddenSigns",
+					  						ListPropertyPath =  "ForbiddenSigns",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "CustomsSetting",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ForbiddenSigns",
+					  						DefaultText =  "Forbidden Signs",
+					  						FullLocalDefaultText =  "סימנים םסורים בשימוש",
+					  						ListFieldLable =  "ForbiddenSignsListLable",
+					  						ListLableDefaultText =  "Forbidden Signs",
+					  						ListLocalDefaultText =  "סימנים םסורים בשימוש",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2561,7 +2628,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature CustomsSettingGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable);
  
                  
-			   TextCode CustomsSettingEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode CustomsSettingEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsSetting.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature CustomsSettingEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = CustomsSettingObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsSetting.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CustomsSettingObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();

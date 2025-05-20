@@ -1963,7 +1963,6 @@ export class DateTool {
 					break;
 				}
 
-				case 'may':
 				case 'may': {
 					myResult = 5;
 					break;

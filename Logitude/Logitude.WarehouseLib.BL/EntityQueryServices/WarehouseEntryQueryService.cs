@@ -232,7 +232,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                             CreateDate = warehouseEntry.CreateDate,
                             ActivityDate = activity.ActivityDate,
                             ActivityTypeName = activity.ActivityType!=null? activity.ActivityType.Name:"",
-                            ActivityByUserName = activity.User!=null? activity.User.Contact.EnglishName:"",
+                            ActivityByUserName = activity.User!=null? activity.User.Contact.EnglishName:null,
                             DirectionName = warehouseEntry.Direction != null ? warehouseEntry.Direction.Name : "",
                             TransportModeName = warehouseEntry.TransportMode != null ? warehouseEntry.TransportMode.Name : "",
                         };

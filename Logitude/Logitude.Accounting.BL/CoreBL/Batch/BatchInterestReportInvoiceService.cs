@@ -10,6 +10,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
@@ -27,6 +28,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -96,8 +98,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             args.CloseWithoutInvoice = interestReportArguments.CloseWithoutInvoice;
             if (interestReportArguments.AllSelected)
             {
-                List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
-                List<InterestReportPM> interestReportsFillteredByCategory = interestReportQueryService.GetNotInvoicedInterestReportsByCategory(interestReports, interestReportArguments);
+                IQueryable<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
+                IQueryable<InterestReportPM> interestReportsFillteredByCategory = interestReportQueryService.GetNotInvoicedInterestReportsByCategory(interestReports, interestReportArguments);
                 List<InterestReportLinesByDatePM> LinesByDatesForSelectedReports = interestReportQueryService.GetFirstAndLastInterestReportLineByDatesForInterestReports(interestReportsFillteredByCategory.Select(s => s.Id).ToList()).ToList();
 
                 foreach (InterestReportPM report in interestReportsFillteredByCategory)
@@ -143,12 +145,14 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 interestReport.InterestReportLinesByDates = LinesByDatesForSelectedReport;
                 CreateInvoiceForInterestReport(interestReportArgs, interestReport);
             }
-
-            catch (Exception e)
-            {
+            catch (BusinessErrorException e) {
                 BatchTaskExecution.ErrorLog += "\n" + "Report # " + interestReport.ReportNumber + " " + e.Message;
-                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "9", null, e.Message);
             }
+             catch (Exception e)
+            {
+                    BatchTaskExecution.ErrorLog += "\n" + "Report # " + interestReport.ReportNumber + " " + e.Message;
+                    UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "9", null, e.Message);
+               }
 
 
         }
@@ -170,27 +174,44 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             else
             {
-                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                ARInvoicePM aRInvoicePM = new ARInvoicePM();    
+                try
                 {
-                    try
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Start CreateInvoiceForInterestReport interestReport.ARinvoiceId=" + interestReport.ARinvoiceId);
+                    aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
+                    CheckVatNumber(interestReportArgs.Tenant, aRInvoicePM);
+                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
+                    ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant, interestReportArgs.Email);
+                    invoiceService.Create(aRInvoicePM);  
+
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*1*) aRInvoicePM.Id=" + aRInvoicePM.Id);
+
+                }
+                catch (Exception ex)
+                {
+
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*2*) interestReport.Id=" + interestReport.Id);
+                    throw ex;
+                }
+                if (!String.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
+                {
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteTrace("Start CreateInvoiceForInterestReport interestReport.ARinvoiceId=" + interestReport.ARinvoiceId);
-                        ARInvoicePM aRInvoicePM = FullMapInvoice(interestReportArgs, interestReport);
-                        CheckVatNumber(interestReportArgs.Tenant, aRInvoicePM);
-                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(interestReportArgs.Tenant);
-                        ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, interestReportArgs.Tenant, interestReportArgs.Email);
-                        invoiceService.Create(aRInvoicePM);
-                        BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
-                        UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
-                        SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
-                        NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport aRInvoicePM.Id=" + aRInvoicePM.Id);
-                        scope.Complete();
-                    }
-                    catch (Exception ex)
-                    {
-                        scope.Dispose();
-                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport interestReport.Id=" + interestReport.Id);
-                        throw;   
+                        try
+                        {
+                            BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
+                            UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
+                            SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
+                            NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
+                            scope.Complete();
+                        }
+                        catch (Exception ex)
+                        {
+                            scope.Dispose();
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReport.Id);
+
+                            throw;
+                        }
                     }
                 }
             }
@@ -305,8 +326,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
 
             VatTypePercentageQuery vatTypePercentageQuery = new VatTypePercentageQuery(interestReportArgs.Tenant);
-            VatTypePercentagePM vatTypePercentagePM = vatTypePercentageQuery.GetVatTypePercentagesForVatType(interestReportArgs.Tenant, chargesType.VatTypeId).ToList()[0];
 
+            VatTypePercentagePM vatTypePercentagePM = vatTypePercentageQuery.GetVatTypePercentagesForVatTypeDate(interestReportArgs.Tenant, chargesType.VatTypeId, interestReportArgs.InvoiceDate);
 
             InterestReportObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
             ARInvoiceObjectTableId = objectTableQuery.GetObjectTableIdByName("ARInvoice");

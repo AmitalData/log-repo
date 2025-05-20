@@ -755,7 +755,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         windowArgs.EntityPM = this.EntityPM;
         windowArgs.IsUnpaidChecks = true;
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
+        logWindow.Width = 1200;
         logWindow.Height = 600;
         logWindow.Title = TextCodeTranslator.Translate('GLAccount.O.ChequesList');
         logWindow.ShowCloseButton = false;
@@ -770,7 +770,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
          windowArgs.EntityPM = this.EntityPM;
          windowArgs.IsFutureOpenCheques = true;
          var logWindow = new LogitudeWindow();
-         logWindow.Width = 1100;
+         logWindow.Width = 1200;
          logWindow.Height = 600;
          logWindow.Title = TextCodeTranslator.Translate('GLAccount.O.ChequesList');
          logWindow.ShowCloseButton = false;

@@ -35,7 +35,17 @@ export type ShaamSettingsArgs = {
                 <LogLabel [Text]="'Is Test Environment'" [DataContext]="DataContext"></LogLabel>
             </td>
             <td>
-                <LogCheckBox [DataContext]="DataContext" [Checked]="isTestEnvironment" [ObjectFieldName]='"isTestEnvironment"'></LogCheckBox>
+                <LogCheckBox [DataContext]="DataContext" [Checked]="DataContext['isTestEnvironment']" [ObjectFieldName]="'isTestEnvironment'"></LogCheckBox>
+            </td>
+        </tr>
+        <tr style='height: 50px'>
+            <td style='width:120px'>
+                <LogLabel [Text]="'Approval API Version'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td>
+            <select [(ngModel)]="approvalInvoiceVersion" class='approval-invoice-version'>
+                <option *ngFor="let item of [1,2]" >{{item}}</option>
+            </select>
             </td>
         </tr>
         <tr>
@@ -46,15 +56,21 @@ export type ShaamSettingsArgs = {
         <button style='width: 60px;' class="RedButton" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>    
         <button style='width: 60px; margin-right: 10px;' class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel' |TextCodeTranslationPipe}}</button>
     <div>
-    `
+    `,
+    styles: [`
+        .approval-invoice-version {
+            width: 50px;
+        }
+    `]
 })
 export class ShaamSettingsComponent extends BaseComponent {
     DataContext: ShaamSettingsComponent = this;
     key: string = '';
     secret: string = '';
-    isTestEnvironment: boolean = false;
+    isTestEnvironment: boolean = false;    
     windowInstance: LogitudeWindow = null;
     shaamWebService = new ShaamWebService();
+    approvalInvoiceVersion: number = 1;
 
     ngOnInit() {
         this.initShaamSettings();
@@ -79,6 +95,7 @@ export class ShaamSettingsComponent extends BaseComponent {
         this.key = shaamSettings.clientId;
         this.secret = shaamSettings.secret;
         this.isTestEnvironment = shaamSettings.isTestEnvironment;
+        this.approvalInvoiceVersion = shaamSettings.approvalInvoiceVersion;
     }
 
     async OkButtonClicked() {
@@ -93,7 +110,7 @@ export class ShaamSettingsComponent extends BaseComponent {
     async updateShaamSettings() {
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate('General.B.Save'));
         try {
-            await this.shaamWebService.postShaamSettings(this.key, this.secret, this.isTestEnvironment);
+            await this.shaamWebService.postShaamSettings(this.key, this.secret, this.isTestEnvironment, this.approvalInvoiceVersion);
             SessionLocator.SelectedSession.StopBusyIndicator();
         } catch (error) {
             SessionLocator.SelectedSession.StopBusyIndicator();

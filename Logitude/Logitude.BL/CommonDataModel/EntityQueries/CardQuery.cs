@@ -238,8 +238,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       LastLoginDate = a.LastLoginDate,
                                       CollectorId = a.CollectorId,
                                       ClassifierId = a.ClassifierId,
-                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
-                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
+                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
+                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
                                       CreateDate = a.CreateDate,
                                       UpdateDate = a.UpdateDate,
                                       CreatedByUserId = a.CreatedByUserId,
@@ -360,10 +360,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LastLoginDate = a.LastLoginDate,
                                   CollectorId = a.CollectorId,
                                   ClassifierId = a.ClassifierId,
-                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
-                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
+                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
+                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
                                   CreateDate = a.CreateDate,
-                                  UpdateDate = a.UpdateDate,
+                                  UpdateDate = a.UpdateDate,    
                                   CreatedByUserId = a.CreatedByUserId,
                                   UpdatedByUserId = a.UpdatedByUserId,
                                   PrimaryContactId = a.PrimaryContactId,
@@ -479,6 +479,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public CardPM GetSinglePMByCode(string code, int tenant)
         {
             var cardId = repository.GetCardIdByCode(code, tenant);
+            return GetSinglePM(cardId, tenant);
+
+        }
+
+        public CardPM GetSinglePMByCodePartnerTypes(string code, int tenant, List<string> partnerTypes = null)
+        {
+            var cardId = repository.GetCardIdByCodePartnerTypes(code, tenant, partnerTypes);
             return GetSinglePM(cardId, tenant);
 
         }
@@ -842,8 +849,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           LastLoginDate = a.LastLoginDate,
                                           CollectorId = a.CollectorId,
                                           ClassifierId = a.ClassifierId,
-                                          ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
-                                          CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
+                                          ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
+                                          CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
                                           CreateDate = a.CreateDate,
                                           UpdateDate = a.UpdateDate,
                                           CreatedByUserId = a.CreatedByUserId,
@@ -943,8 +950,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       LastLoginDate = a.LastLoginDate,
                                       CollectorId = a.CollectorId,
                                       ClassifierId = a.ClassifierId,
-                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
-                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
+                                      ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
+                                      CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
                                       CreateDate = a.CreateDate,
                                       UpdateDate = a.UpdateDate,
                                       CreatedByUserId = a.CreatedByUserId,
@@ -1034,8 +1041,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   LastLoginDate = a.LastLoginDate,
                                   CollectorId = a.CollectorId,
                                   ClassifierId = a.ClassifierId,
-                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : "",
-                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : "",
+                                  ClassifierName = a.ClassifierUser != null ? a.ClassifierUser.Contact.EnglishName : null,
+                                  CollectorName = a.CollectorUser != null ? a.CollectorUser.Contact.EnglishName : null,
                                   CreateDate = a.CreateDate,
                                   UpdateDate = a.UpdateDate,
                                   CreatedByUserId = a.CreatedByUserId,
@@ -1519,6 +1526,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == false ? "Shipper/Consignee" : card.PartnerType.Name),
                                                 CityName = card.CityName,
                                                  CountryCode = card.CountryCode,
+                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
+                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                 PartnerTypeId = card.PartnerTypeId,
                                                 CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,

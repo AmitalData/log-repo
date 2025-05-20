@@ -320,8 +320,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
         DocumentHelper documentHelper = new DocumentHelper();
-      
+ 
 
+        public HttpResponseMessage PutRetrySignature(string documentId, int tenant)
+        {
+            try           
+            {
+                
+                Authentication(tenant);
+                DocumentHelper documentHelper = new DocumentHelper();
+                documentHelper.RetrySignature(documentId, tenant);
+                              
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+ 
          public void createDocumentInterestReport(int tenant,string arinvocieId)
         {
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
@@ -368,7 +387,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
  
-        private static void Authentication()
+         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);

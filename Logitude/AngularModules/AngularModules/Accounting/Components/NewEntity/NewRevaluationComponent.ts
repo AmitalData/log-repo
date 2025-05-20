@@ -3,7 +3,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {RevaluationPM} from '../../EntityPMs/RevaluationPM';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {AppTool, DateTool} from '../../../Infrastructure/Tools';
+import {DateTool} from '../../../Infrastructure/Tools';
 import {FullAccountingSettingPMService} from '../../Services/StandardPMs/FullAccountingSettingPMService';
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {RevaluationPMService} from '../../Services/StandardPMs/RevaluationPMService';
@@ -25,6 +25,7 @@ export class NewRevaluationComponent extends BaseComponent {
     public TenantPM: TenantPM;
     fullAccountingSettingPMService: FullAccountingSettingPMService = new FullAccountingSettingPMService();
     GLAccountFilterItems: ApiQueryFilters;
+    RevaluationGLAccountFilterItems: ApiQueryFilters;
     RevaluationService: RevaluationPMService;
     entityResourceService: EntityResourceService = new EntityResourceService();
     public ValidationErrorsList: string[] = [];
@@ -49,13 +50,16 @@ export class NewRevaluationComponent extends BaseComponent {
                 if (myResult) {
                     if (!myResult.HasError) {
                         this.RevaluationsGLAccountId = myResult.Result.ExchangeRateDiffGLAccountId;
-                      //  this.EnglishName = myResult.Result.EnglishName;
                     }
                 }
             });
 
             this.GLAccountFilterItems = new ApiQueryFilters();
             this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", "1", null, null, "Equals", false, false, false, "string");
+
+            this.RevaluationGLAccountFilterItems = new ApiQueryFilters();
+            this.RevaluationGLAccountFilterItems.addAdditionalFilter("IsControlAccount", false, null, null,
+                  "Equals", false, false, false, "string", false, true);
        
     }
     GetRequierdFieldErrorText(fieldName) {
@@ -66,7 +70,7 @@ export class NewRevaluationComponent extends BaseComponent {
     get RevaluationDate() { return this.EntityPM.RevaluationDate; }
     set RevaluationDate(value: Date) {
         this.UIProperties.SetValidity("RevaluationDate", "Revaluation", true, "");
-        if (this.EntityPM.RevaluationDate != value) {
+        if (this.EntityPM.RevaluationDate !== value) {
           
 
             if (value > DateTool.GetCurrentDateTimeAsUtc()) {
@@ -78,38 +82,30 @@ export class NewRevaluationComponent extends BaseComponent {
 
     get RevaluationsGLAccountId() { return this.EntityPM.RevaluationsGLAccountId; }
     set RevaluationsGLAccountId(value: string) {
-        if (this.EntityPM.RevaluationsGLAccountId != value) {
+        if (this.EntityPM.RevaluationsGLAccountId !== value) {
             this.EntityPM.RevaluationsGLAccountId = value;
         }
     }
-
-    //englishName: string;
-    //get EnglishName() { return this.englishName; }
-    //set EnglishName(value: string) {
-    //    if (this.englishName != value) {
-    //        this.englishName = value;
-    //    }
-    //}
 
 
 
     get GLAccountId() { return this.EntityPM.GLAccountId; }
     set GLAccountId(value: string) {
-        if (this.EntityPM.GLAccountId != value) {
+        if (this.EntityPM.GLAccountId !== value) {
             this.EntityPM.GLAccountId = value;
         }
     }
 
     get ChartOfAccountsId() { return this.EntityPM.ChartOfAccountsId; }
     set ChartOfAccountsId(value: string) {
-        if (this.EntityPM.ChartOfAccountsId != value) {
+        if (this.EntityPM.ChartOfAccountsId !== value) {
             this.EntityPM.ChartOfAccountsId = value;
         }
     }
 
     get DefaultGLAccountId() { return this.EntityPM.ChartOfAccountsId; }
     set DefaultGLAccountId(value: string) {
-        if (this.EntityPM.ChartOfAccountsId != value) {
+        if (this.EntityPM.ChartOfAccountsId !== value) {
             this.EntityPM.ChartOfAccountsId = value;
         }
     }
@@ -129,7 +125,6 @@ export class NewRevaluationComponent extends BaseComponent {
             this.UIProperties.SetEnabled("ChartOfAccountsId", this.ObjectTableName, true);
             this.EntityPM.RevaluationEnabled = false;
         }
-         //   this.SetChartOfAccount(value);
       
     }
 
@@ -150,7 +145,6 @@ export class NewRevaluationComponent extends BaseComponent {
             this.EntityPM.RevaluationEnabled = true;
            
         }
-         //   this.SetDefaultGLAccount(value);
         
     }
 
@@ -169,7 +163,6 @@ export class NewRevaluationComponent extends BaseComponent {
         this.ChartOfAccountsId=null;
             this.EntityPM.RevaluationEnabled = false;
         }
-        //    this.SetGLAccount(value);
        
     }
 
@@ -199,18 +192,18 @@ export class NewRevaluationComponent extends BaseComponent {
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
 
         // Custom Validation
-        if (this.RevaluationDate == null) {
+        if (this.RevaluationDate === null) {
             errors.push(this.GetRequierdFieldErrorText("Revaluation.F.RevaluationDate"));
         }
 
-        if (this.RevaluationsGLAccountId == null) {
+        if (this.RevaluationsGLAccountId === null) {
             errors.push(this.GetRequierdFieldErrorText("Revaluation.F.RevaluationsGLAccountId"));
         }
-        if  (this.GLAccount && this.GLAccountId == null) {
+        if  (this.GLAccount && this.GLAccountId === null) {
             errors.push(TextCodeTranslator.Translate("Revaluation.O.GLAccountForRevaluation"));
         }
 
-        if (this.ChartOfAccount && this.ChartOfAccountsId == null) {
+        if (this.ChartOfAccount && this.ChartOfAccountsId === null) {
             errors.push(TextCodeTranslator.Translate("Revaluation.O.ChartAccountForRevaluation"));
         }
       if (this.RevaluationDate > DateTool.GetCurrentDateTimeAsUtc()) {
@@ -218,7 +211,7 @@ export class NewRevaluationComponent extends BaseComponent {
       }
        
         this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
+        if (this.ValidationErrorsList.length === 0) {
             this.SubmitChanges();
         }
         

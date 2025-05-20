@@ -21,7 +21,7 @@ import { TotangoService } from '../../Services/WebServices/TotangoService';
 import { CachedDataManager } from '../../Utilities/CachedDataManager';
 import { LastFilterClass } from '../../Utilities/LastFilterClass';
 import { EditTabComponent } from './EditTabComponent';
-import { Subscription, TeardownLogic } from 'rxjs';//itzik
+import { Subscription, TeardownLogic } from 'rxjs';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
@@ -42,7 +42,7 @@ import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlow
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
+ import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 import { PartnerServicePM, PartnersDomainService } from 'Common/Services/PartnersDomainService';
 import { result } from 'cypress/types/lodash';
 import { debug } from 'console';
@@ -58,7 +58,10 @@ import { TruckerPM } from 'Common/EntityPMs/TruckerPM';
 import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
 import { AirlinePM } from 'Common/EntityPMs/AirlinePM';
 import { WarehousePM } from 'Common/EntityPMs/WarehousePM';
-
+ import { take } from 'rxjs/operators';
+import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
+import { resolve } from 'cypress/types/bluebird';
+ 
 
 const InterestTransactionTabCode = 'GLIT';
 const CustomerGLAccountTypeCode = "2";
@@ -1719,7 +1722,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.SaveEntityChanges(true);
     }
 
-    private SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
+    private async SaveEntityChanges(isClosing: boolean, busyIndicatorText: string = null, loadNextEntity: boolean = false, loadPreviousEntity: boolean = false) {
         if (this.EntityPM.IsDirty) {
 
             this.ValidationErrorsList = [];
@@ -1732,8 +1735,19 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
             }
 
-            this.SaveStart.emit(this.EntityPM)
+            this.SaveStart.emit(this.EntityPM);
+            if(this.ObjectTableName === "BankAccount"){
+                const oldFactoringBank = this.EntityPM.OldEntityPM?.factoringBank;
+                const newFactoringBank = this.EntityPM.FactoringBank;
+                 if (oldFactoringBank !== newFactoringBank) {
 
+                   const canContinue = await this.CheckOpenCheques(this.EntityPM);
+                   if (!canContinue) {
+                      return;
+                   }
+                  }
+            }
+        
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
                 || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "UserDefinedReport" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
@@ -1762,6 +1776,18 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                     '\n' + myResponse.Result?.APIResponseToConfirmation;
                                 messageWindow.Show(text);
                             }
+                            if (this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus == 6) {
+                                const messageWindow = new MessageWindow();
+                                messageWindow.RTL = true;
+                                messageWindow.Height = 250;
+                                messageWindow.Width = 420;
+                                messageWindow.IsMessageMultiLine = true
+                                messageWindow.LayoutDirection = 'rtl'
+                                var text = TextCodeTranslator.Translate("ARInvoice.O.DelayedInvoice") ;
+                                messageWindow.Show(text);
+                            }
+
+
 
                             this.EntityPM = myResponse.Result;
                             this.EntityId = this.EntityPM.Id;
@@ -1923,8 +1949,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
            
 
             }
-        
-        
+         
         }
         else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
             this.SaveDraftVersion(isClosing);
@@ -1932,7 +1957,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
         else {
             this.Close();
-        }
+         }
      
     }
     async CheckDuplicateEntity(): Promise<boolean> {
@@ -1969,13 +1994,43 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 } else {
                     resolve(false);
                 }
-            }, (err) => {
+         }
+        
+    }}
+
+    arPaymentChequeOperationsService: ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService()
+
+    async CheckOpenCheques(entityPM: any): Promise<boolean> {
+        this.CurrentSession.StartBusyIndicator("Check cheques");
+        return new Promise<boolean>((resolve) => {
+            this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(entityPM.Tenant, entityPM.Id).subscribe((result: any) => {
+                if (result > 0) {
+                    this.StopBusyIndicator();
+                   
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 450;
+                    confirmWindow.Height = 190;
+                    var message=entityPM.FactoringBank? "BankAccounts.O.AutoRedeemed":"BankAccounts.O.NotAutoRedeemed";
+                    var countFutureChecksText = TextCodeTranslator.Translate("BankAccounts.O.CountFutureChecks");
+                    countFutureChecksText = countFutureChecksText.replace("X%", result);
+                    confirmWindow.Show(countFutureChecksText+" ,"+TextCodeTranslator.Translate(message))
+                    
+                    confirmWindow.WindowClosed.subscribe(() => {
+                        if (confirmWindow.Yes) {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    });
+                } else {
+                    resolve(true);
+                }
+             }, (err) => {
                 console.error(err);
                 reject(new Error("Error checking for duplicate entity"));
             });
         });
-    }
-
+     }
     
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
     SaveDraftVersion(isClosing: boolean) {

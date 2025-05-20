@@ -329,6 +329,16 @@ export class FullAccountingSettingPM {
     public set TenantForConfirmationNumberApi(newValue: string) { if (this.tenantForConfirmationNumberApi != newValue) { this.tenantForConfirmationNumberApi = newValue; this.MarkAsDirty("TenantForConfirmationNumberApi"); } }
        
 	 
+    private invoiceNotes: string;
+    public get InvoiceNotes() { return this.invoiceNotes; }
+    public set InvoiceNotes(newValue: string) { if (this.invoiceNotes != newValue) { this.invoiceNotes = newValue; this.MarkAsDirty("InvoiceNotes"); } }
+       
+	 
+    private interestInvoiceNotes: string;
+    public get InterestInvoiceNotes() { return this.interestInvoiceNotes; }
+    public set InterestInvoiceNotes(newValue: string) { if (this.interestInvoiceNotes != newValue) { this.interestInvoiceNotes = newValue; this.MarkAsDirty("InterestInvoiceNotes"); } }
+       
+	 
 
     public OldEntityPM: FullAccountingSettingPM;
 		

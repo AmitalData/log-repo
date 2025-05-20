@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
@@ -39,15 +38,36 @@ export class AmitalAPIAddWindowService {
     }
 
     chekFormValidation(fields: TextBoxField[], data: any): boolean {
-        let hasError = false;
+        const error = this.getValidationErrors(fields, data);
+        return error.length === 0;
+    }
+
+    getValidationErrors(fields: TextBoxField[], data: any): fieldsError[] {
+        const errors: fieldsError[] = [];
+
         fields.filter(f => data[f.name] === undefined).forEach(field => { data[field.name] = ''; });
         fields.forEach(field => (<UIProperties>data.UIProperties).SetRequired(field.name, null, field.type != 'boolean'));
         fields.forEach(field => {
-            const required = field.type != 'boolean' && (data[field.name] === undefined || data[field.name] === '' || data[field.name] === null);
-            (<UIProperties>data.UIProperties).SetRequired(field.name, null, required);
-            field.error = required;
-            hasError = hasError || required;
+            const value: any = data[field.name];
+            const emptyValue: boolean = !!(value === undefined || value  === '' || value === null);
+            const requiredError: boolean = field.type != 'boolean' && emptyValue && field.required;
+            const typeError: boolean = field.type === 'number' && !emptyValue && isNaN(value);
+            const error = requiredError || typeError;
+
+            if (error) {
+                const errorMessage: string =  TextCodeTranslator.Translate(requiredError ? 'Customs.General.O.RequiredFields' : 'General.O.InvalidInput');
+                errors.push({ fieldName: field.name, error: errorMessage });
+            }
+
+            field.error = error;
+            (<UIProperties>data.UIProperties).SetRequired(field.name, null, error);
         });
-        return !hasError;
+
+        return errors;
     }
 }
+
+export type fieldsError = {
+    fieldName: string;
+    error: string;
+};

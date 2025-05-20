@@ -6,6 +6,7 @@ using Logitude.Customs.BL.DataContracts;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Def.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
@@ -23,6 +24,25 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class DeclarationReferantDataWebServiceController : ApiController
     {
 
+        public HttpResponseMessage GetDeclarationReferandDateByDeclarationIdToDisplay(string declarationId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int myTenant = authToken.Tenant;
+
+                DeclarationReferantDataQueryService declarationReferantDataService = new DeclarationReferantDataQueryService(tenant);
+                DeclarationReferantDataPM declarationReferantData = declarationReferantDataService.GetDeclarationReferandDateByDeclarationIdToDisplay(declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, declarationReferantData);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetDeclarationReferantDataDashBoard(int tenant)
         {
             try

@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CB_RuleClassificationList
+   {
+   
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
+       [DataMember]
+       public int CustomsItemID  { get; set; }
+       [DataMember]
+       public int ID  { get; set; }
+       [DataMember]
+       public string CustomsBookType  { get; set; }
+       [DataMember]
+       public string Rules  { get; set; }
+       [DataMember]
+       public int? ParentID  { get; set; }
+       [DataMember]
+       public string Index  { get; set; }
+   }
+
+}
+	 

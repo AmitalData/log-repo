@@ -53,7 +53,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClosedByAssignee, 
 	         BadjCount, 
 	         CustomerId, 
-	         ResponseToMessage,
+	         ResponseToMessage, 
+	         SenderName,
 	      }
 
 
@@ -93,7 +94,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ClosedByAssigneeName, 
 	         NotificationReplyLastLineNumber, 
 	         CustomerId, 
-	         ResponseToMessage,
+	         ResponseToMessage, 
+	         SenderName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -225,6 +227,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ResponseToMessage))
             {
 				entityPOCO.ResponseToMessage = entityPM.ResponseToMessage;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SenderName))
+            {
+				entityPOCO.SenderName = entityPM.SenderName;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -363,6 +370,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ResponseToMessage = entityPOCO.ResponseToMessage;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SenderName))
+            {
+					entityPM.SenderName = entityPOCO.SenderName;
+            }
+
 		}
 
 		public void PMToOldPM(NotificationPM entityPM, NotificationPM oldEntityPM)
@@ -494,6 +506,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ResponseToMessage = entityPM.ResponseToMessage;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SenderName))
+            {
+                oldEntityPM.SenderName = entityPM.SenderName;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(NotificationPM entityPM)
@@ -518,6 +535,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ResponseToMessage)) //T4 find type == nText 
             {
                 entityPM.ResponseToMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ResponseToMessage));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.SenderName)) //T4 find type == nText 
+            {
+                entityPM.SenderName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SenderName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

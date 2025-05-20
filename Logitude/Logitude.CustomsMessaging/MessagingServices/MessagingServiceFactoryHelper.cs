@@ -649,19 +649,33 @@ namespace Logitude.CustomsMessaging.MessagingServices
 			ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
 			   DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService>
 			   ((new DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService()).MainInterfaceCode);
-		}
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+           DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService>
+           ((new DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService()).MainInterfaceCode);
+
+
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+           DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService>
+           ((new DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService()).MainInterfaceCode);
+           
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+           DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService>
+           ((new DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService()).MainInterfaceCode);
+        
+              ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+           DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService>
+           ((new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService()).MainInterfaceCode);
+        
+            
+            ContainerAccessor.Container.RegisterType<IMessagingServiceInterfaceType,
+                DCAInUCB8373_MsgMessagingService>
+                ((new DCAInUCB8373_MsgMessagingService()).MainInterfaceCode);
+        }
         public static void InitContainer()
         {
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("this method its to enshur static constractor is up ");
         }
-        //public static void ResolveAndExecute(string mainInterfaceCode, int tenant, string correlationId,
-        //    CustomsCommandEnum myCustomsCommandEnum)
-        //{
-        //    MessagingServiceFactoryHelper.InitContainer();
-        //    var anaO = ContainerAccessor.Container.Resolve<IMessagingServiceInterfaceType>(mainInterfaceCode);
-        //    anaO.CurrentCustomsCommandWR = myCustomsCommandEnum;
-
-        //}
 
         public static IMessagingServiceInterfaceType GetMessagingService(string mainInterfaceCode, string correlationId = "")
         {

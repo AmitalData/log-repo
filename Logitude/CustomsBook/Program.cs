@@ -13,7 +13,7 @@ namespace CustomsBook
         {
             LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory , "NLog.config"));
             
-            logger.Debug("Start TaskScheduler");
+            logger.Debug(message: "Start TaskScheduler");
 
             await UpdateCustomsBook.Run();
 

@@ -42,8 +42,9 @@ import { List } from 'Infrastructure/DataContracts/Dashboard/List';
 import { isDebuggerStatement } from 'typescript';
 import { CourierPendingReasonExtendedListService } from 'Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 import { DeclarationCourierStatusExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
-import { GatepassRequestComponent } from '../GatepassRequest/GatepassRequestComponent';
-
+ import { GatepassRequestComponent } from '../GatepassRequest/GatepassRequestComponent';
+ import { SendRecoverDecRequestParams } from 'Customs/DataContract/RequestParams/SendRecoverDecRequestParams';
+ 
 
 @Component({
 
@@ -60,6 +61,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     entityPM: CourierMasterPM;
     public ComponentBackground: string = "white";
     //private EntityResourceService: EntityResourceService = new EntityResourceService();
+    private CurrentSession = SessionLocator.SelectedSession;
 
 
     private _RowsItems: any;
@@ -136,8 +138,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     public IsSendDocumentsFromQueueButton: boolean = false;
     public DisplayOnlyMessage: string = "";
     private currentSession = SessionLocator.SelectedSession;
-    private ChangedUnloadPortSite: boolean;
-    HasRequiresApprovalFeature: boolean = false;
+    private ChangedUnloadPortSite: boolean;    
+    HasRequiresApprovalFeature: boolean = false;    
 
     //constructor(public entityArgs: EntityArgs) {
     constructor(public _CourierWorksheetSharedDataService: CourierWorksheetSharedDataService, public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
@@ -369,7 +371,61 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         this.RefreshList();
     }
 
+    SendRecoverDeclaration(courierDeclarationStatusCode: string){
+        this.currentSession.StartBusyIndicatorLoading();
+        if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show("חסרים שדות חובה ברמת הטיסה");
+            this.currentSession.StopBusyIndicator();
+            return;
+        }
+        if(this._InCorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "X"){
+            var myMessageWindow = new MessageWindow();
+            myMessageWindow.Width = 250;
+            myMessageWindow.Height = 150;
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            this.currentSession.StopBusyIndicator();
+            return;
+        }
+
+        var currRequestParams = new SendRecoverDecRequestParams();
+        currRequestParams.LoggingEnabled = true;
+        currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        currRequestParams.Tenant = SessionLocator.Tenant;
+        currRequestParams.CourierMasterId = this.entityPM.Id;
+        currRequestParams.HAWB = this.entityPM.HAWB;
+        currRequestParams.CourierDeclarationStatusCode = courierDeclarationStatusCode;
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            currRequestParams.Declarations = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
+        }
+
+        this._CourierMasterService.PostSendRecoverDeclaration(currRequestParams)
+        .subscribe((res: any) => {
+
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            var myMessageWindow = new MessageWindow();
+            if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                myMessageWindow.ShowEventButton=true;
+                myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+            }  
+            myMessageWindow.Show(res.Message);
+            myMessageWindow.WindowClosed.subscribe(s => {
+                this.RefreshButtonClicked();
+            });
+            myMessageWindow.SendEvent.subscribe(s=>{
+                if(s){
+                    this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                }
+            });
+        });
+
+    }    
+
     SendALLCorrectManifest(courierDeclarationStatusCode: string) {
+        this.CurrentSession.StartBusyIndicatorLoading();
+
         if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -412,11 +468,10 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.SelectedCustomStatusValue = this._SelectedCustomStatusValue;
         currRequestParams.SelectedFinalReleaseValue = this._SelectedFinalReleaseValue;
 
-
         this._CourierMasterService.PostSendALLCorrectManifest(currRequestParams)
             .subscribe((res: any) => {
-
-                SessionLocator.SelectedSession.StopBusyIndicator();
+                
+                   SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
                 if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
                     myMessageWindow.ShowEventButton=true;
@@ -425,6 +480,8 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                    this.CurrentSession.StopBusyIndicator();
+
                 });
                 myMessageWindow.SendEvent.subscribe(s=>{
                     if(s){
@@ -436,7 +493,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     }
 
     SendReadyLOWPAYToBatch() {
-
+        
         if (this._PAYReadyNotFastindividual == 0) {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
@@ -445,6 +502,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             return;
         }
 
+        this.currentSession.StartBusyIndicatorLoading();
         // get the storage sites count for the courier ID / selected declaration IDs
         this._declarationCourierStatusExtendedListService.getGroupByStorageSite(this.entityPM.Id, this._CourierWorksheetSharedDataService._SelectedItems?.Collection).subscribe((response: ServiceResponse) => {
             // if all declarations are not regarding the only one and same storage site, display a confirmation window
@@ -464,6 +522,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 this.SendReadyForPayment();
             }
         });
+        this.currentSession.StopBusyIndicator();
     }
 
     SendReadyForPayment() {
@@ -542,30 +601,30 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
     }
 
-    SendALLCorrectDec(courierDeclarationStatusCode: string) {
-
+    SendALLCorrectDec(courierDeclarationStatusCode: string) {        
         if (this._ReadyDECToBatchSend == 0 && courierDeclarationStatusCode == "R") {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
-            myMessageWindow.Height = 150;
+            myMessageWindow.Height = 150;            
             myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
             return;
         }
         if (this._CorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "RV") {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
-            myMessageWindow.Height = 150;
-            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Height = 150;            
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));            
             return;
         }
         if (this._InCorrectDECToBatchSend == 0 && courierDeclarationStatusCode == "X") {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show(TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));            
             return;
         }
 
+        this.currentSession.StartBusyIndicatorLoading();
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;
         currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
@@ -604,6 +663,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 });
             });
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
+        this.currentSession.StopBusyIndicator();
     }
 
     SendALLSVG(isAll: boolean) {
@@ -735,6 +795,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _ReadyDECToBatchSendButtonText: string = "";
     _ReadyMNFToBatchSend = 0;
     _ReadyMNFToBatchSendButtonText: string = "";
+    _ReadyRecoverToBatchSendButtonText: string = "";
     _HOLD_TotalButtonText: string = "";
     _PAYReadyNotFastindividual = 0;
     _SVGTotal = 0;
@@ -797,6 +858,15 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             this._SelectedMNFToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.ReadyMNFToSend") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
         }
         return this._SelectedMNFToBatchSendButtonText;
+    }
+
+    private _SelectedRecoverDecToBatchSendButtonText: string = "";
+    public get SelectedRecoverDecToBatchSendButtonText(): string {
+        this._SelectedRecoverDecToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.SelectedRecoverDec");
+        if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
+            this._SelectedRecoverDecToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.SelectedRecoverDec") + ' (' + this._CourierWorksheetSharedDataService._SelectedItems.Collection.length + ')';
+        }
+        return this._SelectedRecoverDecToBatchSendButtonText;
     }
 
     private _SelectedApprovPendingSendButtonText: string = "";
@@ -932,6 +1002,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                         case "DEC_W": {
                             this._DEC_W_Total = item.Value;
                             this._InCorrectDECToBatchSend = item.Value;
+                            this._ReadyRecoverToBatchSendButtonText = TextCodeTranslator.Translate("Customs.CourierMaster.O.RecoverDecX") + ' (' + this._InCorrectDECToBatchSend + ')';
                             if (this._ValidationErrors != null && this._ValidationErrors.length > 0) {
                                 this._CorrectDECToBatchSend = 0;
                             }
@@ -2272,9 +2343,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             return;
         }
 
-        GatepassRequestComponent.showWindow(this.entityPM);
+         GatepassRequestComponent.showWindow(this.entityPM);
     }
-
+ 
     SendALLTerminal() {
         var currRequestParams = new SendALLCorrectRequestParams();
         currRequestParams.LoggingEnabled = true;

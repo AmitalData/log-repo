@@ -86,6 +86,13 @@ namespace Logitude.Customs.Def.ClosedTable
                 SearchFields = "RetrievingPOAThatIsAboutToExpire,RetrievingPOAThatIsAboutToExpire",
                 Description = "RetrievingPOAThatIsAboutToExpire",
             });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
+                Code = "CustomsUpdateClosedTables",
+                Name = "CustomsUpdateClosedTables",
+                SearchFields = "CustomsUpdateClosedTables,CustomsUpdateClosedTables",
+                Description = "Update Closed Tables",
+            });
             return all;
         }
             public void MapPoco(SchedulerProcedure newPoco)

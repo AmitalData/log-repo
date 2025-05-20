@@ -168,10 +168,11 @@ namespace WebFreight.Web.MetaDataUpdate
             AddReports.AddReport(new ReportDetails() { Code = "RCIL", Description = "Control For Invoice Lines", Name = "Control Invoice Lines", LocalName = "דוח בקרת שורות חשבונית", FilterControlName = "ControlInvoiceLinesReportFilterComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = Feature_ControlInvoiceLines.Id, FeatureUniqeCode = Feature_ControlInvoiceLines.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/ControlInvoiceLinesReportFilterComponent" }, reportRepository, tenantReports);
 			AddReports.AddReport(new ReportDetails() { Code = "LRBE", Description = "Loan Reports By Email", Name = "Loan Reports By Email", LocalName = "דוחות משאילתא במייל", FilterControlName = "MainReportSchedulerComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_LoanReportsByEmail.Id, FeatureUniqeCode = feature_LoanReportsByEmail.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/Scheduler/MainReportSchedulerComponent" }, reportRepository, tenantReports);
             AddReports.AddReport(new ReportDetails() { Code = "MBBR", Description = "Monthly balances Report", Name = "Monthly balances Report", LocalName = "דוח יתרות חודשיות", FilterControlName = "MonthlyBalancesReportFilterComponent", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = Feature_MonthlyBalancesReport.Id, FeatureUniqeCode = Feature_MonthlyBalancesReport.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/MonthlyBalancesReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "NAGR", Description = "New Accounting Aging Report", Name = "New Aging Report", LocalName = "דוח גיול חדש", FilterControlName = "AgingFilterControl", Tenant = 0, ReportGroupId = accountingGroup.Id, FeatureId = feature_AccAgingReport.Id, FeatureUniqeCode = feature_AccAgingReport.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Accounting/NewAgingFilterComponent" }, reportRepository, tenantReports);
 
 
-		}
-		private void LoadReports_Quotes(ReportGroup quotesGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        }
+        private void LoadReports_Quotes(ReportGroup quotesGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {
             Feature quotesFeature = tenantFeatures.Where(d => d.Code == "QUOTESSTATISTICS" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             Feature shipmentProfitVSQuoteEstimateFeature = tenantFeatures.Where(d => d.Code == "Report.Features.ShipmentProfitVSQuoteEstimate" && d.FeatureTypeCode == "AREA").FirstOrDefault();
@@ -232,18 +233,16 @@ namespace WebFreight.Web.MetaDataUpdate
         }
 
         private void LoadReports_ExportCustoms(ReportGroup ExportCustomGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
-        {
-            Feature ExportDeclarationFeature = tenantFeatures.Where(d => d.Code == "ExportDeclarationReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+        {            Feature ExportDeclarationFeature = tenantFeatures.Where(d => d.Code == "ExportDeclarationReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             AddReports.AddReport(new ReportDetails() { Code = "EXDE", Description = "Export Declaration", Name = "Export Declaration", LocalName = "דוח הצהרות יצוא", FilterControlName = "ExportDeclarationReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = ExportDeclarationFeature.Id, FeatureUniqeCode = ExportDeclarationFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent" }, reportRepository, tenantReports);
             
             Feature CustomsCollateralFeature = tenantFeatures.Where(d => d.Code == "CustomsCollateralReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             AddReports.AddReport(new ReportDetails() { Code = "ECCR", Description = "Customs Collateral", Name = "Customs Collateral", LocalName = "דוח בטוחות", FilterControlName = "CustomsCollateralReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CustomsCollateralFeature.Id, FeatureUniqeCode = CustomsCollateralFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent" }, reportRepository, tenantReports);
-
-            Feature CertificateOfOriginFeature = tenantFeatures.Where(d => d.Code == "Declaration.Tab.DigitalCertificateOfOrigin").FirstOrDefault();
-            AddReports.AddReport(new ReportDetails() { Code = "COO", Description = "Certificate Of Origin", Name = "Certificate Of Origin", LocalName = "דוח תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent" }, reportRepository, tenantReports);
-            AddReports.AddReport(new ReportDetails() { Code = "COOC", Description = "Certificate Of Origin Count", Name = "Certificate Of Origin Count", LocalName = "ספירת תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginCountReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CertificateOfOriginFeature.Id, FeatureUniqeCode = CertificateOfOriginFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent" }, reportRepository, tenantReports);
+ 
+            AddReports.AddReport(new ReportDetails() { Code = "COO", Description = "Certificate Of Origin", Name = "Certificate Of Origin", LocalName = "דוח תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = ExportDeclarationFeature.Id, FeatureUniqeCode = ExportDeclarationFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent" }, reportRepository, tenantReports);
+            AddReports.AddReport(new ReportDetails() { Code = "COOC", Description = "Certificate Of Origin Count", Name = "Certificate Of Origin Count", LocalName = "ספירת תעודות מקור דיגיטליות", FilterControlName = "CertificateOfOriginCountReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = ExportDeclarationFeature.Id, FeatureUniqeCode = ExportDeclarationFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent", AvailableForScheduling = true }, reportRepository, tenantReports);
         }
-
+ 
         private void LoadReports_CustomShipment(List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {
             Feature ShipmentFormFeature = tenantFeatures.Where(d => d.Code == "ShipmentFormReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();

@@ -5,6 +5,7 @@ using Logitude.Accounting.BL.CoreBL.InterestReport;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityPOCOs;
@@ -41,6 +42,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 case "_ButtonReverseTotal_Click":
                     {
                        return _ButtonReverseTotal_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "_ButtonUpdateRedeemedChecksFIX_Click":
+                    {
+                        return ButtonUpdateRedeemedChecksFIX_Click(tenant, _TextBoxParam);
                     }
                     break;
                 case "_ButtonReverseTrans_Click":
@@ -103,6 +109,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 case "ButtonLoadInterestTransactions_Click":
                     {
                         return ButtonLoadInterestTransactions_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "ButtonLoadInterestDefinitions_Click":
+                    {
+                        return ButtonLoadInterestDefinitions_Click(tenant, _TextBoxParam);
                     }
                     break;
                 case "ButtonLoadChargeTypes_Click":
@@ -1138,6 +1149,45 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
 
 
+        private GateWayTesterResult ButtonLoadInterestDefinitions_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileInterestDefinitions = textBoxParam;
+
+
+                var myInterestDefinitionsCSVFlatFileAnalyser = new InterestDefinitionsCSVFlatFileAnalyser();
+                myInterestDefinitionsCSVFlatFileAnalyser.Analyse(null, fileInterestDefinitions);
+
+                gateWayTesterResult.JsonOut = "Interest Definitions Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+
         private GateWayTesterResult ButtonLoadGLAccounts_Click(int tenant, string textBoxParam)
         {
 
@@ -1247,6 +1297,35 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             return gateWayTesterResult;
         }
 
+        GateWayTesterResult ButtonUpdateRedeemedChecksFIX_Click(int tenant, string _TextBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+                if (_TextBoxParam != null) {
+                    var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(_TextBoxParam);
+                    var FutureOpenChequesBatch = new FutureOpenChequesBatch();
+                    FutureOpenChequesBatch.RedeemOpenChequesByFactoringBank(param.MyDate, param.MyTenant);
+                 }
+
+                gateWayTesterResult.JsonOut = "OK";
+
+            }
+            catch (Exception eee)
+            {
+                 gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
         private GateWayTesterResult ClosingVATReport(int tenant, string textBoxParam)
         {
             var gateWayTesterResult = new GateWayTesterResult();

@@ -274,6 +274,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     if (card != null)
                     {
                         entityPM.VatNumber = card.VatNumber;
+                        entityPM.CardCountryCode =card.CountryCode;
                     }
                 }
 

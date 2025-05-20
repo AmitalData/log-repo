@@ -174,6 +174,9 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.PaymentTerms).HasColumnName("PaymentTerms").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ContactId).HasColumnName("ContactId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.MarkDate).HasColumnName("MarkDate");
+
         }
     }
 }

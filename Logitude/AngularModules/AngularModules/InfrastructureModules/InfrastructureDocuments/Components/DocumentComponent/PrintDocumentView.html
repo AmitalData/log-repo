@@ -164,7 +164,7 @@
 
                                             <td style="width:60px;max-width:60px;margin-left:3px;margin-right:3px; min-width:60px;border-bottom:1px solid #E4E3E1;">
 
-                                                <button [disabled]="(!item.IsPrintButtonEnabled &&!(item.IsOriginal && Signed ))|| this.EntityPM?.IsSigned==2 " *ngIf="item.IsButtonsStackPanelVisible" id="Printbutton" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="PrintMethod(item)">
+                                                <button [disabled]="((!item.IsPrintButtonEnabled && this.ObjectTableName!='ARInvoice') || SignatureFaild || (!item.IsPrintButtonEnabled && this.ObjectTableName=='ARInvoice' && NoSignature))" *ngIf="item.IsButtonsStackPanelVisible" id="Printbutton" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="PrintMethod(item)">
                                                     <table>
                                                         <tr>
                                                             <td><img style="width:17px;height:17px;margin-bottom:1px;margin-left:-2px" src="./Images/SimplogIcons/File-pdf-48.png" /></td>
@@ -179,17 +179,14 @@
 
 
                                             <td style="margin-left:3px;margin-right:3px; min-width:60px;width:60px;max-width:60px;border-bottom:1px solid #E4E3E1;">
-
-                                                <button [disabled]="(!item.IsPrintButtonEnabled || (DisableSendOriginalCopy && item.IsOriginal))||this.EntityPM?.IsSigned==2" *ngIf="item.IsButtonsStackPanelVisible" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="showSendControlDialog(item)">
+                                                <button [disabled]="((!item.IsPrintButtonEnabled && this.ObjectTableName!='ARInvoice') || SignatureFaild || (NoSignature && item.IsOriginal))" *ngIf="item.IsButtonsStackPanelVisible" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="showSendControlDialog(item)">
                                                     <table>
                                                         <tr>
-                                                           
                                                             <td><img style="width:20px;height:24px;margin-bottom:0px;margin-left:-4px" src="./Images/DoumentIcon/SendIcon.png" /></td>
                                                             <td style="margin-top:-2px;">Send</td>
                                                         </tr>
                                                     </table>
                                                 </button>
-
 
                                             </td>
 
@@ -199,10 +196,11 @@
 
                                             <td class="GridViewCell" style="border-bottom:1px solid #E4E3E1; position: relative;">
 
-                                                <div [attr.title]="item.PrintedByMessage" style="text-align:left;width:370px; min-width: 370px;margin-top:5px;overflow:hidden;font-size:11px;text-overflow: ellipsis;white-space: nowrap;display:inline-block;color:black">
-                                                    {{item.PrintedByMessage}}
-                                                   
+                                                <div style="text-align:left;width:370px; min-width: 370px;margin-top:5px;overflow:hidden;font-size:11px;text-overflow: ellipsis;white-space: nowrap;display:inline-block;color:black">
+                                                    <span [attr.title]="item.PrintedByMessage" >{{item.PrintedByMessage}}</span>
+                                                     <span *ngIf="SignatureFaild"[attr.title]="'Invoice not signed retry'" >Invoice not signed <a class="Link" (click)="RetrySignature(item)">retry</a>    </span>
                                                 </div>
+                                               
                                             </td>
 
 

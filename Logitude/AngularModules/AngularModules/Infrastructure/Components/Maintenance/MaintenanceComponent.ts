@@ -408,7 +408,7 @@ export class MaintenanceComponent {
     }
 
     private BuildSystemSettings() {
-        var item = new MenusTablePM();
+         var item = new MenusTablePM();
         item.CategoryTypeCode = 'CMS';
         item.Icon = 'List';
         item.Code = 'DEFU';
@@ -418,14 +418,9 @@ export class MaintenanceComponent {
             )[0].Id);
         (item.TranslatedName = 'Defaults'), // TextCodeTranslator.Translate('General.MC.Logs');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-
-        if (
-            FeatureLocator.HasFeaturePermession(
-                'General',
-                this.invoiceConfirmationNumber
-            )
-        ) {
-            var item2 = new MenusTablePM();
+            
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
+             var item2 = new MenusTablePM();
             item2.CategoryTypeCode = 'CMS';
             item2.Icon = 'Settings';
             item2.Code = 'CUSC';
@@ -1631,10 +1626,10 @@ export class MaintenanceComponent {
                         'Customs.MC.General.AmitalAPISettings'
                     );
                     logWindow.IsShowCloseButton = true;
-                    logWindow.Show(
+                     logWindow.Show(
                         './InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPISettingsComponent'
                     );
-                    break;
+                     break;
                 }
 
                 case 'API_SETTINGS': {
@@ -1645,10 +1640,10 @@ export class MaintenanceComponent {
                         'Customs.MC.General.APISettings'
                     );
                     logWindow.IsShowCloseButton = true;
-                    logWindow.Show(
+                     logWindow.Show(
                         './InfrastructureModules/InfrastructureOthers/AmitalAPI/APISettingsComponent'
                     );
-                    break;
+                     break;
                 }
 
                 case 'API_Requests': {
@@ -1659,10 +1654,10 @@ export class MaintenanceComponent {
                         'Customs.MC.General.API_Requests'
                     );
                     logWindow.IsShowCloseButton = true;
-                    logWindow.Show(
+                     logWindow.Show(
                         './InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent'
                     );
-                    break;
+                     break;
                 }
 
                 case 'CSSS': {

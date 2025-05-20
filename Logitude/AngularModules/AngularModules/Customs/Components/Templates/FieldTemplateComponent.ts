@@ -29,6 +29,7 @@ import { CustomsRequestsSheetList } from 'Customs/EntityLists/CustomsRequestsShe
 import { CommunicationLogList } from 'Common/EntityLists/CommunicationLogList';
 import { ConfirmationNumberTokenLogList } from 'Customs/EntityLists/ConfirmationNumberTokenLogList';
 import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
+import { DeclarationReferantDataWebService } from 'Customs/Services/WebServices/DeclarationReferantDataWebService';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -53,6 +54,7 @@ export class FieldTemplateComponent {
     declarationPMService: DeclarationPMService = new DeclarationPMService();
     exceptionReasonExtendedListService: ExceptionReasonExtendedListService = new ExceptionReasonExtendedListService();
     _declarationReferantDataPMService: DeclarationReferantDataPMService = new DeclarationReferantDataPMService();
+    _declarationReferantDataWebService: DeclarationReferantDataWebService = new DeclarationReferantDataWebService();
     private _ListComponentArgs: ListComponentArgs;
     @ViewChild('SpotLight', { read: ViewContainerRef, static: false }) SpotLightViewContainerRef: ViewContainerRef;
     RowIndex: any;
@@ -708,7 +710,7 @@ export class FieldTemplateComponent {
                 SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
               
-                this._declarationReferantDataPMService.get(this.Entity?.DeclarationId).subscribe((getResponse: any) => {
+                this._declarationReferantDataWebService.GetDeclarationReferandDateByDeclarationIdToDisplay(this.Entity?.DeclarationId, this.Entity.Tenant).subscribe((getResponse: any) => {
                     if (getResponse?.Result) {
 
                         const declarationReferantDataPM=getResponse.Result;

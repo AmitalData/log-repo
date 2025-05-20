@@ -103,10 +103,11 @@ import { ReportVariablesComponent } from './Components/ReportVariablesComponent'
 
 //Export Customs
 import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
-import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
-import { CertificateOfOriginReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent';
+ import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
+ import { CertificateOfOriginReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent';
 import { CertificateOfOriginCountReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent';
-
+import { NewAgingFilterComponent } from './Components/FiltersComponent/Accounting/NewAgingFilterComponent';
+ 
 
 export const Components =
     [
@@ -157,6 +158,7 @@ export const Components =
         ShipmentProfitVSQuoteEstimateComponent,
         ArchivoExportadoComponent,
         AgingFilterComponent,
+        NewAgingFilterComponent,
         CustomerStatusReportFilterComponent,
         LedgerTransactionsFilterControl,
         InventoryReportFilterConmponent,
@@ -186,18 +188,19 @@ export const Components =
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
         UserDefinedReportFilterControl,
-        LogitudeCRMReportFilterComponent,
+         LogitudeCRMReportFilterComponent,
         ExcelReportTemplateComponent,
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
         ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent,
-        CertificateOfOriginReportFilterComponent,
+ 
+         CertificateOfOriginReportFilterComponent,
         CertificateOfOriginCountReportFilterComponent,
-        MonthlyBalancesReportFilterComponent,
-        CustomsCollateralFilterComponent,
-
+         MonthlyBalancesReportFilterComponent,
+         CustomsCollateralFilterComponent,
+ 
     ];
 
 export class ModuleDeclarations {
@@ -289,12 +292,14 @@ export class ModuleDeclarations {
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
             case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
             case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
-            case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
-            case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
-            case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
+             case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
+              case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
+ 
+             case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
             case "CertificateOfOriginCountReportFilterComponent": { myResult = CertificateOfOriginCountReportFilterComponent; break; }
+            case "NewAgingFilterComponent": { myResult = NewAgingFilterComponent; break; }
 
-        }
+         }
 
         return myResult;
     }

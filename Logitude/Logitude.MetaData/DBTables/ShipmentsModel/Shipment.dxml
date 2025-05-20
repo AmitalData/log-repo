@@ -3746,7 +3746,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
+   <Column
     Name="ReferantUserId"
     Type="varchar"
     Size="15">
@@ -3766,7 +3766,35 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
+   <Column
+    Name="LockerAddress"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LockerCity"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LockerName"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LockerCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+   <Relation
     ForeignKeyColumn="CountryForStatisticsId"
     ReferencedTable="Countries"
     ReferencedColumn="Id"

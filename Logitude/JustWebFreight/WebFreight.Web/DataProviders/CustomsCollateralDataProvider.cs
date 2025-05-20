@@ -22,7 +22,8 @@ namespace WebFreight.Web.DataProviders
         public DateTime? RequestValidityDate { get; set; }//תוקף דרישה
         public DateTime? CollateralValidityDate { get; set; }//תוקף בטוחה נדרש
         public string CollateralRequestStatusName { get; set; }//שם סטטוס בקשה בטחונות
-        
+        public decimal? RequestedAmount { get; set; }//סכום בטוחה מבוקש סה"כ
+
         public List<CustomsCollateralsAnswers> CustomsCollateralsAnswers { get; set; }//חשבונות
        
 

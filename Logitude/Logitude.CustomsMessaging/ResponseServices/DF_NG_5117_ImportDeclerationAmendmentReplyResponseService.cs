@@ -43,6 +43,7 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Logitude.Customs.BL.Messaging.Customs;
 using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.CustomsMessaging.Helpers;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -108,12 +109,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
 
-				bool isDCA = requestParams.RequestVIA == SendRequestVIA.DCABatch;
+                bool isDCA = requestParams.RequestVIA == SendRequestVIA.DCABatch;
 
 
-				//var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant);
+                //var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, requestParams.Tenant);
 
-				if (declaration != null)
+                if (declaration != null)
                 {
                     _MyDeclarationPM = declaration;
                     var AdditionalInformation = customResponse.Response.AdditionalInformation;
@@ -311,7 +312,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                         _MyDeclarationPM.AmendmentRejectionReason = amendRequestRejectReasonType != null ? amendRequestRejectReasonType.LocalName : additionalInformation.Content?.Value;
                                     }
-                                        break;
+                                    break;
 
                                 }
 
@@ -512,7 +513,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                     }
 
-                                    
+
                                     break;
                                 }
                         }
@@ -605,7 +606,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
-                   
+
 
                     if (myUpdateEventContextTagModel != null)
                         this._MyDeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
@@ -625,7 +626,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         declarationReferantData.DeclarationIdToDisplay = _MyDeclarationPM.Id;
                         declarationReferantData.ChangeSetOp = ChangeSetOperation.Update;
-                        myDeclarationReferantData.Update(declarationReferantData,true);
+                        myDeclarationReferantData.Update(declarationReferantData, true);
 
                         _MyDeclarationPM.DeclarationStatusTypeCode = customResponse.Response.Status.NameCode.Value;
                         _MyDeclarationPM.PaymentDate = _MyDeclarationPMOrg.PaymentDate;
@@ -1052,6 +1053,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void UpdateReplacingDeclaration(GenericRequestParams requestParams, DeclarationQueryService myDeclarationQueryService, DeclarationUpdateService myDeclarationUpdateService)
         {
+
             if (!string.IsNullOrEmpty(_MyDeclarationPM.ReplacingRepairRequest))
             {
                 var declarationReplacing = myDeclarationQueryService.GetDeclarationAmendmentByIdAndAmendmentNo(requestParams.Tenant, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.ReplacingRepairRequest);
@@ -1083,7 +1085,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseStatus;
             }
         }
-      
+
 
         public UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration CastDeclaration(UnifreightIIG.Common.MessageLib.ID.Declaration declaration)
         {

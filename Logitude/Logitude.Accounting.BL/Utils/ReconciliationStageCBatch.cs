@@ -366,8 +366,8 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         try
                         {
-                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
-                            {
+                         using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(2)))
+                           {
                                 ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
                                 _counter++;
                                 scope.Complete();

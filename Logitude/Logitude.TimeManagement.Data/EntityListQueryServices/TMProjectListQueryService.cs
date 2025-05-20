@@ -31,7 +31,7 @@ namespace Logitude.TimeManagement.Data.EntityListQueryServices
                                                    Description = a.Description,
                                                    CustomerId = a.CustomerId,
                                                    CustomerName = a.Customer != null ? a.Customer.EnglishName : null,
-                                                   OwnerName = a.Owner == null ? "" : a.Owner.Contact.EnglishName,
+                                                   OwnerName = a.Owner == null ? null : a.Owner.Contact.EnglishName,
                                                    CreatedByUserId = a.CreatedByUserId,
                                                    CreateDate = a.CreateDate,
                                                    UpdateDate = a.UpdateDate,

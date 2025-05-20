@@ -21,6 +21,9 @@ using Newtonsoft.Json;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.Data.EntityLists;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -52,10 +55,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 myReconciliationLinePM.Line = i;
                 myReconciliationLinePM.CurrencyId = currLedgerTrans.OpenAmountCurrencyId;
                 myReconciliationLinePM.TransactionId = currLedgerTrans.Id;
-                myReconciliationLinePM.ReconciliationAmount = //currLedgerTrans.OpenAmount;
+                myReconciliationLinePM.ReconciliationAmount = 
                             currLedgerTrans.AmountToReconcile;
 
-                //ReconciliationLinePM.IsPartial = currLedgerTrans.OpenAmount;
                 myReconciliationLinePM.GroupNumber = currLedgerTrans.GroupMatch;
 
                 myReconciliationPM.ReconciliationLines.Add(myReconciliationLinePM);
@@ -65,7 +67,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
         private static Object thisLock = new Object();
-        public RecoCallback CreateReconciliation(ReconciliationPM reconciliationPM)
+        public RecoCallback CreateReconciliation(ReconciliationPM reconciliationPM, string exceptCommLogId = "")
         {
             // changeset
             if (reconciliationPM.ChangeSetOp != ChangeSetOperation.Insert)
@@ -79,20 +81,28 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             RecoCallback recoCallBack = new RecoCallback();
-            using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
+            if (!reconciliationPM.CreatedByReconciliationStageB)
             {
-                var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
-                if (ledgerTransactionReconciled) 
+                using (TransactionScope scope = TransactionFactory.GetNewReadUncommittedTransaction())
                 {
-                    throw new ApplicationException("ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.");
+                    var ledgerTransactionInProgress = CheckIfAnotherReconciliationInProgress(reconciliationPM, exceptCommLogId);
+                    if (ledgerTransactionInProgress)
+                    {
+                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.LedgerTransactionInProgress", 0, LoggedContactResolver.GetLoggedContactShowLocal(reconciliationPM.Tenant)));
 
+                    }
+                    var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
+                    if (ledgerTransactionReconciled)
+                    {
+                    throw new ApplicationException("GLAccounts.O.MarkedByAnother");
+
+                    }
+                   
                 }
             }
 
 
-            // List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
-            // List<LedgerTransactionJournalLineLT> ltjlines = GetLedgerTransactionJournalLineLTsByIdList(transactionsIds, reconciliationPM.Tenant);
-            bool hasMultipleARPayments = false; // CheckIfHasMultiplePaymentsLT(ltjlines);
+            bool hasMultipleARPayments = false; 
             if (hasMultipleARPayments && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber == 0) && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber != 0))
             {
                     recoCallBack = SplitAndSubmitReconciliationByGroupNumberNonZero(reconciliationPM, hasMultipleARPayments);
@@ -114,13 +124,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 recoCallBack = new RecoCallback() { isSplitted = true, splittedRecoCount = paymentReconciliations.Count };
 
             }
-
-            var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
+            if (!reconciliationPM.CreatedByReconciliationStageB)
+            {
+                var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
                 var repoLedger = new LedgerTransactionRepository(accountingContext as IAccountingContext);
                 repoLedger.ResetDraftOpenReconciliation(reconciliationPM.AccountId, reconciliationPM.Tenant);
+            }
+            return recoCallBack;
 
-                return recoCallBack;
-            //}
         }
 
         private static void CheckIfReconcilePaymentOnly(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)
@@ -142,7 +153,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (ReconciliationPM recoPM in paymentReconciliations)
             {
                 service.Update(recoPM, true);
-                //throw new ApplicationException("Manual exc");
+                
             }
             if (updateGLAccountAgingDataUsingWR) {
                 WriteEntityPMOnCommunicationLog(paymentReconciliations, tenant);
@@ -152,6 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private RecoCallback SplitAndSubmitReconciliationByGroupNumber(ReconciliationPM reconciliationPM)
         {
             bool updateGLAccountAgingDataUsingWR = FeatureToggleHelper.HasFeatureToggle("UAD", reconciliationPM.Tenant);
+            if (reconciliationPM.CreatedByReconciliationStageB) updateGLAccountAgingDataUsingWR = false;
             var accountingContext = AccountingContext.GetContext(reconciliationPM.Tenant);
             RecoCallback recoCallBack;
             ReconciliationUpdateService service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), reconciliationPM.Tenant);
@@ -297,7 +309,17 @@ namespace Logitude.Accounting.BL.CoreBL
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(reconciliationPM.Tenant);
             return transactionQueryService.CheckAnyLedgerTransactionReconciledByIdList(transactionsIds, reconciliationPM.Tenant);
         }
-        
+        private bool CheckIfAnotherReconciliationInProgress(ReconciliationPM entityPm, string exceptCommLogId = "")
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(entityPm.Tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+            CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant, exceptCommLogId, "W");
+            if (commLog != null)
+            {
+                return true;
+            }
+            return false;
+        }
         private List<ReconciliationPM> SplitReconciliationByGroup(ReconciliationPM originalRecoPM)
         {
             List<ReconciliationPM> recoPMs = new List<ReconciliationPM>();
@@ -393,7 +415,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         public ReconciliationPM reconciliationPM;
-        //public List<ReconciliationPM> splittedRecoPMs;
+        
 
         public bool isSplitted = false;
         public int splittedRecoCount = 0;

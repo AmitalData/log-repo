@@ -7,6 +7,9 @@ namespace Logitude.BL.Helpers
     {
         public static T GetFromCache<T>(string cacheId, Func<T> action)
         {
+            if (CacheManager.CacheWrapper == null)
+                CacheManager.CacheWrapper = new MockCacheWrapper();
+
             T entity = (T)CacheManager.CacheWrapper.Get(cacheId);
 
             if (entity == null)

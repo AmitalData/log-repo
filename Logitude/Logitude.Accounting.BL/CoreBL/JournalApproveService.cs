@@ -51,6 +51,8 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
+using CsvHelper.Configuration;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -125,7 +127,34 @@ namespace Logitude.Accounting.BL.CoreBL
                     Success = true
                 };
             }
-            finally
+			catch (Exception ex)
+			{
+				NetCommonHelper.Logger.DevLog.Instance.WriteError(
+				$"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex}");
+
+				if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
+				{
+					try
+					{
+						using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
+						{
+							var updater = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
+							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+							scope.Complete();
+						}
+					}
+					catch (Exception updateEx)
+					{
+						NetCommonHelper.Logger.DevLog.Instance.WriteError(
+							$"[usp_AccountingStreaming] Failed to update journal status after primary exception. JournalId={_JournalPM?.Id} | Update Exception: {updateEx}");
+					}
+				}
+				return new ResultApproveJournalM()
+				{
+					Success = false
+				};
+			}
+			finally
             {
                 LogMessagingUtil.Instance.AppendLine("SubmitApprove(" + _SeedJournalId + ") took:" + sw.Elapsed.ToString());
             }
@@ -272,6 +301,14 @@ namespace Logitude.Accounting.BL.CoreBL
             throw new NotImplementedException();
         }
 
+
+        private static string GetTenantCurrencyId(int tenant)
+        {
+            TenantQuery tenantQuery = new TenantQuery(tenant);
+            var tenantPM = tenantQuery.GetSinglePM(tenant);
+            return tenantPM.CurrencyId;
+        }
+
         private ResultApproveJournalM CheckJournal(MyActions actions, ref List<LedgerTransactionPM> myLedgerTransactionsWithCounters, out List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
             gLAccountAgingDataPMs = new List<GLAccountAgingDataPM>();
@@ -334,6 +371,18 @@ namespace Logitude.Accounting.BL.CoreBL
                     //if (!_ExecAsSP)
                     {
                         FillIdCountersUseNewDBTransaction(myLedgerTransactionsWithCounters);
+                    }
+                    string tenant_curr_id = JournalApproveService.GetTenantCurrencyId(_JournalPM.Tenant);
+                    if (myLedgerTransactionsWithCounters != null && myLedgerTransactionsWithCounters.Count > 0)
+                    {
+                        myLedgerTransactionsWithCounters.ForEach(lt =>
+                        {
+                            if (lt.OpenAmount == 0m &&
+                                    ((lt.LocalAmountDebit == lt.LocalAmountCredit && lt.OpenAmountCurrencyId == tenant_curr_id) ||
+                                     (lt.ForeignAmountDebit == lt.ForeignAmountCredit && lt.OpenAmountCurrencyId != tenant_curr_id)))
+                                lt.IsReconciled = true;
+                            // else the value of lt.IsReconciled is conserved
+                        });
                     }
                 }
                 //scope.Complete();//Please do not commit !!!!
@@ -563,6 +612,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     scope.Complete();
 
                 }
+                catch (Exception e)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
+                    throw e;
+
+                }
                 finally
                 {
                     //logger.ToString();
@@ -576,6 +631,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     LogMessagingUtil.Instance.AppendLine("AccountingStreamingInNewSerializableTransaction:Took:" + sw.Elapsed.ToString());
                 }
+
+                
             }
         }
         public void CreateInterestTransactionsByDate(DateTime date)
@@ -1436,7 +1493,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         SqlCommand cmd = new SqlCommand("[dbo].[usp_AccountingStreaming]", myConnection);
                         cmd.CommandType = CommandType.StoredProcedure;
-
                         SqlParameter journalIdPar = new SqlParameter("@pJournalId", SqlDbType.VarChar);
                         journalIdPar.Direction = ParameterDirection.Input;
                         journalIdPar.Value = _JournalPM.Id;
@@ -1552,6 +1608,26 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     scope.Complete();
                     complete = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(" usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + ex);
+                if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
+                {
+                    try
+                    {
+                        using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))
+                        {
+                            var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
+                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+                            scope.Complete();
+                        }
+                    }
+                    catch (Exception updateEx)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("Failed to update journal status in exception handling. JournalId: " + _JournalPM?.Id + " Err:" + updateEx);
+                    }
                 }
             }
             finally

@@ -42,7 +42,8 @@ namespace WebFreight.Web.Helpers.AmitalAPI
         }
 
         public virtual HttpClienResponse Delete(string token, string id, string user) =>
-            AmitalAPIHelper.SendRequest(token, $"{baseUrl}/{id}", HttpMethod.Delete, null, user);
+             AmitalAPIHelper.SendRequest(token, $"{baseUrl}/{id}", HttpMethod.Delete, null, user);
+
 
         public virtual HttpClienResponse Update(string token, string id, T body, string user) =>
             AmitalAPIHelper.SendRequest(token, $"{baseUrl}/{id}", HttpMethod.Put, body, user);

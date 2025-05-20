@@ -33,7 +33,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-    public RunReportTitle: string;
+    public RunReportTitle: string = 'Run Report';
     CardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
     constructor() {
         super();
@@ -87,8 +87,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
     //#region Filters
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
+        this.SelectedCategory = null;       
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
                 this.SetFilterItem(queryFilterItem);
@@ -323,6 +324,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             this.SetBalanceFilterValue(queryFilterItem);
             this.SetSortFieldFilter(queryFilterItem);
             this.SetSortDirectionFilter(queryFilterItem);
+            this.SetCategoryListFilter(queryFilterItem);
+            this.SetCategoryFilter(queryFilterItem);
+
         }
     }
 
@@ -384,7 +388,41 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             this.SelectedBalanceTypeItem.Code = queryFilterItem.FieldValue;
         }
     }
-
+    SetCategoryListFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CategoryIndex") {
+            this.SelectedCategory = queryFilterItem.FieldValue;
+        }
+        
+    }
+    SetCategoryFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CategoryValue") {
+            switch (this.SelectedCategory) {
+                case 'Category1':
+                    this.SelectedCategory = 'Category 1';
+                    this.Category1 = queryFilterItem.FieldValue;
+                    break;
+                case 'Category2':
+                    this.SelectedCategory = 'Category 2';
+                    this.Category2 = queryFilterItem.FieldValue;
+                    break;
+                case 'Category3':  
+                    this.SelectedCategory = 'Category 3';
+                    this.Category3 = queryFilterItem.FieldValue;
+                    break; 
+                case 'Category4': 
+                    this.SelectedCategory = 'Category 4'; 
+                    this.Category4 = queryFilterItem.FieldValue; 
+                    break;   
+                case 'Category5':  
+                    this.SelectedCategory = 'Category 5';        
+                    this.Category5 = queryFilterItem.FieldValue; 
+                    break;
+                default:
+                    this.SelectedCategory = null;
+                    break;
+            };
+        }
+    }
 
     GetLookUpFieldValue(field) {
         if (field) {
@@ -503,7 +541,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     categoryIndex: any = null;
     categoryValue: any = null;
     SetCategoryIndexAndValueFilters(queryFilterItems: Array<QueryFilterItem>) {
-       this.categoryIndex = this.SelectedCategory? this.SelectedCategory.replace(' ', ''): null;
+       this.categoryIndex = (this.SelectedCategory && typeof this.SelectedCategory === 'string' ) ? this.SelectedCategory.replace(' ', '') : null;
         if (this.categoryIndex)
         this.SetCategoryValueFilter( );
     }
@@ -561,9 +599,18 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
         'Category 4',
         'Category 5'
     ];
-    SelectedCategory: string;
+    SelectedCategory: string = null;
     SelectedItemChanged(item) {
         this.SelectedCategory = item;
+        this.Category1 = null;
+        this.Category2 = null;
+        this.Category3 = null;
+        this.Category4 = null;
+        this.Category5 = null;
+        if(AppTool.IsNullOrEmpty(this.SelectedCategory))
+        {
+            this.UIProperties.SetEnabled("Customer", "GLAccount", true);
+        }
     }
     //#endregion
 

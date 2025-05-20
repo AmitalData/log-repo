@@ -38,11 +38,12 @@ import { ShipmentUnassignedFieldPM } from '../../EntityPMs/ShipmentUnassignedFie
 import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 import { JsonPatchBuilder } from 'Infrastructure/Helpers/JsonPatchBuilder';
 import { AppTool } from 'Infrastructure/Tools';
-import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+ import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationReferantDataPM } from 'Customs/EntityPMs/DeclarationReferantDataPM';
 import { DeclarationReferantDataPMService } from 'Customs/Services/StandardPMs/DeclarationReferantDataPMService';
-
+ import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+ 
 @Injectable()
 
 export class ShipmentPMService {
@@ -51,7 +52,7 @@ export class ShipmentPMService {
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/shipment';
-    }
+            }
 
     get(id: string) {
 
@@ -169,90 +170,60 @@ export class ShipmentPMService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
 
-        // .flatMap((res: Response) => {
-        //    var location = res.headers.get('Location');
-        //    return this._http.get(location);
-        //}).map((res: Response) => res.json()))
-        //.catch(this.handleError)
 
-        /*
-        .flatMap((res: Response) => {
-                var serverTime = res.headers.get('ServerTime');
-                return this._http.get(serverTime);
-            })
-        */
     }
-
     getSingleBySecurityKeyTenantWithoutToken(SecurityKey: string, Tenant: number) {
 
-        var myCustomURL = "https://systemwr.amital.co.il/api/shipment";
-        //var myAuthHeader = new Headers();
-        //myAuthHeader.append('Content-Type', 'application/json');
-        //myAuthHeader.append('Accept', 'application/json');
-        //myAuthHeader.append('token', SessionInfo.Token);
-        //loginService.AuthHeader = myAuthHeader;
-        //loginService.GetGlobalSetting().subscribe(Setting => {
-        //    if (Setting) {
-        //        if (Setting.DeploymentStage == "amitalstorage") {
-        //            var myCustomURL = "http://13.93.36.4/api/shipment";
-        //        }
-        //    }
-        //});
-        if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
-            myCustomURL = this._apiUrl;
-        }
-
-        //var key = PerformanceLogger.AddLogTime();
-        var callTime = new Date();
         return defer(() => {
-            var url = myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
+            return this.GetGlobalSetting().then((response) => {
 
-            if (!AppTool.IsNullOrUndefined(Tenant)) {
-                url += '&tenant=' + Tenant;
-            }
-            return this._http.get(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).pipe(
-                map((response: HttpResponse<any>) => {
+                if(response?.body)
+                     ObjectsLocator.UpdateGlobalSetting(response.body);
+                var myCustomURL = ObjectsLocator?.GlobalSetting?.CustomURL ?? this._apiUrl;
 
-                    //var servertime = response.headers.get('ServerExecutionTime');
-                    //PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Shipment", "getSingleBySecurityKey", SecurityKey);
+                if (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) {
+                    myCustomURL = this._apiUrl;
+                }
 
-                    var pm = response.body;
-                    var entity: ShipmentPM;
-                    if (pm) {
-                        entity = this.MapJsonToEntityPM(pm);
-                    }
-                    var pmresponse: ServiceResponse;
-                    pmresponse = new ServiceResponse();
-                    pmresponse.Result = entity;
-              
-                pmresponse.Data = {};
-                pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
-                pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
+                var url = myCustomURL + '/GetSingleBySecurityKeyWithoutToken?key=' + SecurityKey;
 
-                    return pmresponse;
+                if (!AppTool.IsNullOrUndefined(Tenant)) {
+                    url += '&tenant=' + Tenant;
+                }
+                return this._http.get(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
+                        var entity: ShipmentPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
+                        var pmresponse: ServiceResponse;
+                        pmresponse = new ServiceResponse();
+                        pmresponse.Result = entity;
 
-                }), catchError(ServiceHelper.HandleServiceError));
+                        pmresponse.Data = {};
+                        pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
+                        pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
+
+                        return pmresponse;
+                    }), catchError(ServiceHelper.HandleServiceError)).toPromise();
+            });
         });
 
-        // .flatMap((res: Response) => {
-        //    var location = res.headers.get('Location');
-        //    return this._http.get(location);
-        //}).map((res: Response) => res.json()))
-        //.catch(this.handleError)
 
-        /*
-        .flatMap((res: Response) => {
-                var serverTime = res.headers.get('ServerTime');
-                return this._http.get(serverTime);
-            })
-        */
+
+
     }
-   
+
     getLogoAndUrlWithoutToken(securityKey: string): Promise<UrlAndLogo> {
-        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : "https://systemwr.amital.co.il/api/shipment";
+        const url = (location.href.indexOf('localhost') > -1 || location.href.indexOf('test') > -1) ? this._apiUrl : (ObjectsLocator?.GlobalSetting?.CustomURL ?? this._apiUrl);
         return this._http.get(url + '/GetLogoAndUrlWithoutToken', { params: { securityKey: securityKey } }).toPromise() as Promise<UrlAndLogo>;
     }
+    GetGlobalSetting() {
+        var url = ServiceHelper.GetLogitudeURL() + 'api/GlobalDomain/GetGlobalSettingWithOutToken';
+        return this._http.get(url, ServiceHelper.GetHttpFullHeadersWithoutToken()).toPromise() as Promise<any>;
 
+    }
     getUserIdDetailsByShipmentSecurityKeyWithoutToken(SecurityKey: string, Tenant: number) {
 
 

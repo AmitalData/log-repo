@@ -20,21 +20,24 @@ using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.Customs.BL.AzureSearch;
 using System.Threading.Tasks;
-
-
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Common.RequestParams;
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class CB_CustomsItemExtendedController : ApiController
     {
 
-        public HttpResponseMessage GetCustomsBookMainView(string customsBookType, int Tenant)
+        public HttpResponseMessage GetCustomsBookMainView(string customsBookType, int Tenant, bool IsDiscountCodes = false)
         {
             try
             {
                 Filters filters = new Filters();
                 filters.CustomsBookType = customsBookType;
                 filters.Tenant = Tenant;
-               
+                filters.IsDiscountCodes = IsDiscountCodes;
+
+
                 string token = HttpContext.Current.Request.Headers["Token"];
                 if (token == null)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
@@ -44,7 +47,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
-                List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant);
+                List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant, filters.IsDiscountCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -70,7 +73,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByClassification(filters.CustomsBookType,
-                    filters.SearchFields, filters.Tenant);
+                    filters.SearchFields, filters.Tenant, filters.IsDiscountCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -95,7 +98,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByText(filters.SearchFields,
-                    filters.CustomsBookType, filters.CustomsItemHierarchic, filters.Reamarks, filters.Rules, filters.Tenant);
+                    filters.CustomsBookType, filters.CustomsItemHierarchic, filters.Reamarks, filters.Rules, filters.Tenant, filters.IsDiscountCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -241,11 +244,146 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
+        public HttpResponseMessage GetAllComments(int tenant)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
+                remarksClassificationQuery.InitializeSettings();
+
+                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllComments(tenant);
+
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, remarksClassificationPMList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetCustomItemClassifGuidance(int customsItemId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                GetCustomItemClassifGuidanceRequestParams requestParamsData = new GetCustomItemClassifGuidanceRequestParams()
+                { 
+                    CustomItemId = customsItemId,
+                    ValidToDate = DateTime.Now,
+                    Tenant = tenant
+                };
+                DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService messagingService = new DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService();
+                 CustomItemClassifGuidanceResponseData responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetClassifGuidanceDetails(string classificationGuidanceNumber, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                GetClassifGuidanceDetailsRequestParams requestParamsData = new GetClassifGuidanceDetailsRequestParams()
+                {
+                    ClassificationGuidanceNumber = classificationGuidanceNumber,
+                    Tenant = tenant
+                };
+                DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService messagingService = new DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService();
+                GetClassifGuidanceDetailsResponseData responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        public HttpResponseMessage GetMekachDetails(int customsItemId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                CustomItemMekachRequestParams requestParamsData = new CustomItemMekachRequestParams()
+                {
+                    customsItemId = customsItemId,
+                    Tenant = tenant,
+                    validToDate = DateTime.Now,
+                    languageType = 1
+                };
+                DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService messagingService = new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService();
+                CustomItemMekachResponseData responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         public async Task<HttpResponseMessage> GetFromTypesense(string searchValue, string customsBookType)
         {
             int tenant = HeaderHelper.Authenticate().Tenant;
 
             RemarkAndCustomsBook res = await CustomsBookAzureSearchService.SearchItmesAndRemark(searchValue, customsBookType, tenant);
+
+            return Request.CreateResponse(HttpStatusCode.OK, res);
+        }
+
+        public HttpResponseMessage GetTenantFromCustomsSettings()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                
+                CustomsSettingQueryService customsSettingQueryService = new CustomsSettingQueryService(authToken.Tenant);
+               int tenant = customsSettingQueryService.GetTheFirstTenantWithCustomsAgentId();
+                return Request.CreateResponse(HttpStatusCode.OK, tenant);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        [TokenAutherize]
+        public async Task<HttpResponseMessage> GetClassifications()
+        {
+            Dictionary<string, Dictionary<int, ClassificationCustomsBook>> res = await CustomsBookAzureSearchService.GetClassifications();
 
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
@@ -260,6 +398,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         public string CustomsItemHierarchic { get; set; } = null;
         public bool Reamarks { get; set; } = false;
         public bool Rules { get; set; } = false;
+        public bool IsDiscountCodes { get; set; } = false;
 
     }
 }

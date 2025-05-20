@@ -2,7 +2,6 @@ import {Component, OnInit,ChangeDetectorRef}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {InfraSettings} from '../../../../Infrastructure/Utilities/InfraSettings';
 import {JournalPM} from '../../../EntityPMs/JournalPM';
 import {JournalLinePM} from '../../../EntityPMs/JournalLinePM';
 import {JournalActionTypePM} from '../../../EntityPMs/JournalActionTypePM';
@@ -16,7 +15,6 @@ import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceR
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
-import {CurrencyPM} from '../../../../Common/EntityPMs/CurrencyPM';
 import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
@@ -30,6 +28,7 @@ import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/API
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
+import { GLAccountPMService } from 'Accounting/Services/StandardPMs/GLAccountPMService';
 declare var window: any;
 
 @Component({
@@ -674,7 +673,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             if (confirmWindow.Yes) {
 
                 this.JournalLines.Remove(line);
-                this.EntityPM.JournalLines.splice(line.Line - 1, 1);
+                this.EntityPM.JournalLines = this.EntityPM.JournalLines.filter((journalLine) => journalLine.Line !== line.Line);
                 //var ItemsSource = [];
 
                 // Recalculate line numbers
@@ -945,7 +944,7 @@ class JournalLineModel extends BaseComponent {
     ratesTableExtendedListService: RatesTableExtendedListService;
     _GLAccountExtendedListService: GLAccountExtendedListService;
     private glaccountListService:GLAccountListService;
-    // private CD: ChangeDetectorRef
+    gLAccountPMService: GLAccountPMService = new GLAccountPMService();
 
     public CreditAccountFilterItems: ApiQueryFilters;
     public DebitAccountFilterItems: ApiQueryFilters;
@@ -1045,7 +1044,6 @@ class JournalLineModel extends BaseComponent {
 
         if (this.JournalLinePM.ActionId != value) {
             this.JournalLinePM.ActionId = value;
-            this.parent.CalculateTotals();
         }
        // if (value != null) {
         //    this.CurrencyId = null;
@@ -1091,6 +1089,8 @@ class JournalLineModel extends BaseComponent {
             if (value != null) {
                 this.ActionCode = value.Code;
                 this.ActionName = value.LocalName;
+                this.parent.CalculateTotals();
+
             }
         }
 
@@ -1119,6 +1119,7 @@ class JournalLineModel extends BaseComponent {
                 if(entity){
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
+                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
                 }
             });
         }
@@ -1128,11 +1129,13 @@ class JournalLineModel extends BaseComponent {
     set DebitAccountId(value: string) {
         if (this.JournalLinePM.DebitAccountId != value) {
             this.JournalLinePM.DebitAccountId = value;
-            this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
+            this.gLAccountPMService.get(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
                     this.DebitAccount=entity;
                     this.DebitAccountName=this.DebitAccount.LocalName;
+                    this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
+                    this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
                 }
             });
         }
@@ -1160,10 +1163,12 @@ class JournalLineModel extends BaseComponent {
                     if (this.LocalAmount) {
                         this.isRateCoverted = true;
                         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+                        this.ForeignAmount = Number(this.ForeignAmount.toFixed(2));
                     }
                     else if (this.ForeignAmount) {
                         this.isRateCoverted = true;
                         this.LocalAmount = (this.ForeignAmount * this.currencyRate);
+                        this.LocalAmount = Number(this.LocalAmount.toFixed(2));
                     }
                 }
             }
@@ -1228,9 +1233,11 @@ class JournalLineModel extends BaseComponent {
     }
     CalculateForeignAmount() {
         this.ForeignAmount = (this.LocalAmount / this.currencyRate);
+        this.ForeignAmount = Number(this.ForeignAmount.toFixed(2));
     }
     CalculateLocalAmount() {
         this.LocalAmount = (this.ForeignAmount * this.currencyRate);
+        this.LocalAmount = Number(this.LocalAmount.toFixed(2));
     }
     isRateCoverted: boolean = false;
     isRateManualy: boolean = false;
@@ -1453,16 +1460,16 @@ class JournalLineModel extends BaseComponent {
         this.SetForeignAmountEnabilityForSingleCurrencyAccount();
     }
     SetCurrencyForSingleAccount(account:GLAccountPM,actionCode1:string ,actionCode2:string) {
-        if (!account.IsMultiCurrency) {
-            if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+        if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+            if (!account.IsMultiCurrency) {
                 this.CurrencyId = account.CurrencyId;
                 this.CurrencyCode = account.CurrencyCode;
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+
+            } else {
+                this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+
             }
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-
-        } else {
-            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
-
         }
     }
     SetForeignAmountEnabilityForSingleCurrencyAccount() {

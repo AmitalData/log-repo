@@ -1752,7 +1752,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool isExternalEntity ;
+ 	  private bool isExternalEntity ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -1775,7 +1775,30 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	    }
+ 	  private string bankName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankName  
+	   {
+	    
+	     get
+		{
+		   return bankName;
+		 }
+		 set
+		 {
+		   if(bankName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankName",OldValue=bankName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankName=value;
+		   }
+			
+		 }
+	   }
+ 	    }
    
 }
 	 

@@ -51,6 +51,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AmazedSaint.Elastic">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
@@ -107,13 +140,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
-    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+     <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
       <Link>DependencyValidation1.layerdiagram</Link>
       <Visible>False</Visible>
     </AdditionalFiles>
     <None Include="DBOthers\Procedures\Queue_Peek_list.dxml" />
-    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
+     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataV2OLD.dxml" />
+     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementDataOLD.dxml" />
     <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\usp_CustomsBookRulesDetailsOLD.dxml" />
@@ -131,6 +166,7 @@
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\CooStatusViews.dxml" />
     <None Include="DBOthers\Views\NewCustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\CustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
@@ -151,10 +187,13 @@
     <None Include="DBScripts\Post\202310101100_AddCustomsEnvSettings.sxml" />
     <None Include="DBScripts\Post\202310031714_DeleteDeclarationStatusFieldC.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
-    <None Include="DBScripts\Post\202422051020_UpdateCustomsEnvironmentSettings.sxml" />
+     <None Include="DBScripts\Post\202422051020_UpdateCustomsEnvironmentSettings.sxml" />
     <None Include="DBScripts\Post\20241006_UpdateTransportModeInTables.sxml" />
     <None Include="DBScripts\Post\202408150924_AddDocumentsMetaDataType.sxml" />
-    <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
+     <None Include="DBScripts\Post\202410071313_UpdateAccountingTablesForCustomsModule.sxml" />
+    <None Include="DBScripts\Post\202412121400_GetDataCooConnected.sxml" />
+    <None Include="DBScripts\Post\202410120930_CooInvoicesIsInvoiceConnected.sxml" />
+     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
@@ -243,9 +282,10 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
-    <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
+     <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
     <None Include="DBScripts\Post\20240610_UpdateTransportmodeLocalName.sxml" />
-    <None Include="DBScripts\Pre\202409011314_IsMandatoryDelete.sxml" />
+     <None Include="DBScripts\Pre\202503091425_AddSFTPCustoms.sxml" />
+     <None Include="DBScripts\Pre\202409011314_IsMandatoryDelete.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
@@ -292,6 +332,7 @@
     <None Include="DBTables\CB_CustomsItemLinkage.dxml" />
     <None Include="DBTables\CB_LevyCondition.dxml" />
     <None Include="DBTables\CB_LevyExclusion.dxml" />
+    <None Include="DBTables\CB_Preference.dxml" />
     <None Include="DBTables\CB_PropertiesDetailsHistory.dxml" />
     <None Include="DBTables\CB_Quota.dxml" />
     <None Include="DBTables\CB_QuotaComputedData.dxml" />
@@ -302,6 +343,7 @@
     <None Include="DBTables\CB_RegularityRequirement.dxml" />
     <None Include="DBTables\CB_RequirementComputedData.dxml" />
     <None Include="DBTables\CB_Rule.dxml" />
+    <None Include="DBTables\CB_RuleClassification.dxml" />
     <None Include="DBTables\CB_RuleDetailsHistory.dxml" />
     <None Include="DBTables\CB_Tariff.dxml" />
     <None Include="DBTables\CB_TariffComputedData.dxml" />
@@ -312,6 +354,7 @@
     <None Include="DBTables\CB_Vendor.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificateOfOrigin.dxml" />
+    <None Include="DBTables\CertificateOfOriginConnection.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
     <None Include="DBTables\CertificateOfOriginItem.dxml" />
     <None Include="DBTables\CertificateOfOriginMandatoryFields.dxml" />
@@ -709,14 +752,17 @@
     <None Include="EntityFiles\CB_CustomsItemLinkage.lxml" />
     <None Include="EntityFiles\CB_LevyCondition.lxml" />
     <None Include="EntityFiles\CB_LevyExclusion.lxml" />
+    <None Include="EntityFiles\CB_Preference.lxml" />
     <None Include="EntityFiles\CB_QuotaComputedData.lxml" />
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_RequirementComputedData.lxml" />
+    <None Include="EntityFiles\CB_RuleClassification.lxml" />
     <None Include="EntityFiles\CB_TariffComputedData.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
-    <None Include="EntityFiles\NUnicloud.lxml" />
-    <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
+     <None Include="EntityFiles\NUnicloud.lxml" />
+     <None Include="EntityFiles\CertificateOfOriginConnection.lxml" />
+     <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
     <None Include="EntityFiles\CustomsItemGroup.lxml" />
     <None Include="EntityFiles\RegularityRequirementWarning.lxml" />
     <None Include="EntityFiles\CB_ComputationMethodData.lxml" />

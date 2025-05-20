@@ -18,8 +18,12 @@ namespace Logitude.CargoTracking.BL.APIDataContract
         public DateTime? PaymentDateTime { get; set; }
         public DateTime? CustomsClearanceDateTime { get; set; }
         public bool IsPaymentRequired { get; set; }
+        public string PaymentLink { get; set; }
+
         public string ChargesAmountInNIS { get; set; }
         public bool IsCustomerIDNumberRequired { get; set; }
+        public string CustomerIDNumberLink { get; set; }
+
         public LastMileDetails LastMileDetails { get; set; }
         public List<MilestoneData> ShipmentMilestones { get; set;}
         public List<StatusDetails> StatusDetails { get; set; }

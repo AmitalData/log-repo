@@ -962,9 +962,17 @@ namespace Logitude.Infrastructure.BL
                 Code = "JAM", 
                 Name = "Journal Approval MultiThreading", 
                 SearchFields = "JAM, Journal Approval MultiThreading", 
-                Description = "Journal Approval MultiThreading 2", 
+                Description = "Journal Approval MultiThreading", 
 			});
-			 
+
+            all.Add(new ToggleDetails()
+            {
+                SearchFields = "TXD, Tax Deduction Report by Withholding and Bank Accounts",
+                Code = "TXD",
+                Description = "Tax Deduction Report by Withholding and Bank Accounts",
+                Name = "Tax Deduction Report by Withholding and Bank Accounts",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 SearchFields = "UAD, Update GLA Aging Data using WR", 
@@ -1022,7 +1030,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "LCB,Login Customs Book", 
                 Description = "Customs Book Login For Normal Users", 
 			});
-			
+            all.Add(new ToggleDetails()
+            {
+                Code = "AV2",
+                Name = "Israel Invoices Do Not Activate V2",
+                SearchFields = "AV2,Israel Invoices Do Not Activate V2",
+                Description = "חשבוניות ישראל לא להפעיל V2 ",
+            });
+
             return all;
        }
 

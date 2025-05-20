@@ -598,9 +598,14 @@ export class ShipmentList {
 		NotesSharedWithCustomer: string;
 		Volume: number;
 		IsDocumentsNeedApprove: boolean;
-		ContainersNumbers: string;
+ 		ContainersNumbers: string;
 		ReferantUserId: string;
 		IskaNumber: string;
 		UniCloudShipment: boolean;
 	
-}
+ 	    LockerCode: string;
+		LockerName: string;	
+        LockerCity: string;
+		LockerAddress: string;
+
+ }

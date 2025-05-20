@@ -88,14 +88,18 @@
 
                 </div>
 
-                <div *ngIf="ObjectTableName == 'DefaultAndConfiguration'">
+                 <div *ngIf="ObjectTableName == 'DefaultAndConfiguration'">
                     <div *ngIf="FieldName == 'Value1' || FieldName == 'Value2'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'">
-                            {{FieldValue.replace(';', ',')}}
+                            {{ 
+                                ((FieldName == 'Value1' && Entity['SetValueType1'] === 'System.DateTime') || (FieldName == 'Value2' && Entity['SetValueType2'] === 'System.DateTime')) ? 
+                                    (FieldValue | DateTimePipe:'D') : 
+                                    FieldValue.replace(';', ',')
+                            }}
                         </div>                      
                     </div>
                 </div>
-            </div>
+             </div>
         </td>
     </tr>
 </table>

@@ -6,6 +6,7 @@ using Logitude.Customs.Def.Contracts;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     tenant_def.Id = IdCounter.GetNumber("Customs.GovernmentProcTypeTenant", Tenant);
                     tenant_def.Code = entityPM.Code;
                     tenant_def.UpdateDate = DateTime.Now;
-                    tenant_def.UpdatedByUserId = userId;
+                    tenant_def.UpdatedByUserId = AuthenticationUtil.ResolveUserId(entityPM.Tenant);
                     tenant_def.Tenant = Tenant;
                     definitionRep.Add(tenant_def);
                 }

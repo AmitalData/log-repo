@@ -149,6 +149,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<DepartmentList> GetIQueryableEntityList(IQueryable<Department> iQueryable)
         {
             IQueryable<DepartmentList> result = from department in iQueryable
+                                                where department.InActive == false
                                                 select new DepartmentList()
                                                 {
                                                     EnglishName = department.EnglishName,

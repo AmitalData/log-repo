@@ -167,6 +167,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_LevyExclusionMap());
 	
+            modelBuilder.Configurations.Add(new CB_PreferenceMap());
+	
             modelBuilder.Configurations.Add(new CB_PropertiesDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_QuotaMap());
@@ -187,6 +189,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_RuleMap());
 	
+            modelBuilder.Configurations.Add(new CB_RuleClassificationMap());
+	
             modelBuilder.Configurations.Add(new CB_RuleDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_TariffMap());
@@ -206,6 +210,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginMap());
+	
+            modelBuilder.Configurations.Add(new CertificateOfOriginConnectionMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginInvoiceMap());
 	
@@ -1822,6 +1828,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_Preference> CB_Preferences 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys 
 	 {
 	      get; set;
@@ -1882,6 +1894,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_RuleClassification> CB_RuleClassifications 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys 
 	 {
 	      get; set;
@@ -1937,6 +1955,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificateOfOrigin> CertificateOfOrigins 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginConnection> CertificateOfOriginConnections 
 	 {
 	      get; set;
 	 

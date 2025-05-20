@@ -240,8 +240,10 @@ export class DeclarationList {
 	SecurityFee: number;
 	ComputerFee: number;
 	EffectiveFlight: boolean;
-	SystemConnection: string;
+ 	SystemConnection: string;
 	ShipmentId: string;
-	
+ 	CooStatusName: string;
+	CooStatusCode: string;
+ 	
 }
  

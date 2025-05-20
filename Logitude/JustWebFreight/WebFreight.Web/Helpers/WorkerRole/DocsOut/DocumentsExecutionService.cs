@@ -35,6 +35,7 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
+using System.Collections.Concurrent;
 
 
 namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
@@ -56,7 +57,8 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
         private DocumentsExecutionLog documentsExecutionLog = null;
         private DateTime startDate = DateTime.Now;
         private string childObjectTableName = string.Empty;
-
+        private const string AR_INVOICE = "ARInvoice";
+        private const string AP_INVOICE = "APInvoice";  
         public DocumentsExecutionService(DbQueueService queueService, QueueResponse queueResponse)
         {
             this.queueService = queueService;
@@ -314,7 +316,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             {
                 bool skip = false;
                 string objectTableName = !string.IsNullOrEmpty(exportDocumentArgs.ObjectTableId) ? ObjectTableRepository.GetNameById(exportDocumentArgs.ObjectTableId, exportDocumentArgs.Tenant) : "";
-                if (objectTableName == "ARInvoice" && !string.IsNullOrEmpty(exportDocumentArgs.EntityId))
+                if (objectTableName == AR_INVOICE && !string.IsNullOrEmpty(exportDocumentArgs.EntityId))
                 {
                     ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(exportDocumentArgs.Tenant);
                     var aRInvoice = aRInvoiceQuery.GetSingleARInvoice(exportDocumentArgs.EntityId, exportDocumentArgs.Tenant);
@@ -335,7 +337,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     List<DocumentTypeCopiesDetails> documentTypeCopiesDetails = new List<DocumentTypeCopiesDetails>();
                     string authenticatedUserEmail = GetContactEmailByContactId(exportDocumentArgs.LoggedContactId, exportDocumentArgs.Tenant);
 
-                    if (childObjectTableName == "ARInvoice" || exportDocumentArgs.ObjectTableName == "ARInvoice")
+                    if (childObjectTableName == AR_INVOICE || exportDocumentArgs.ObjectTableName == AR_INVOICE)
                     {
                         DocumentHelper DocumentHelper = new DocumentHelper();
                         IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
@@ -360,11 +362,11 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                                     {
                                         documentTypes.Add(docType);
                                     }
-                                    if (objectTableName == "ARInvoice" && !string.IsNullOrEmpty(exportDocumentArgs.EntityId) && !entityIds.Contains(exportDocumentArgs.EntityId))
+                                    if (objectTableName == AR_INVOICE && !string.IsNullOrEmpty(exportDocumentArgs.EntityId) && !entityIds.Contains(exportDocumentArgs.EntityId))
                                     {
                                         entityIds.Add(exportDocumentArgs.EntityId);
                                     }
-                                    if (childObjectTableName == "ARInvoice" && !string.IsNullOrEmpty(exportDocumentArgs.ChildEntityId) && !entityIds.Contains(exportDocumentArgs.ChildEntityId))
+                                    if (childObjectTableName == AR_INVOICE && !string.IsNullOrEmpty(exportDocumentArgs.ChildEntityId) && !entityIds.Contains(exportDocumentArgs.ChildEntityId))
                                     {
                                         entityIds.Add(exportDocumentArgs.ChildEntityId);
                                     }
@@ -376,7 +378,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                                 List<DocumentsFilingList> documentsFilings = documentsFilingQuery.GetDocumentsFilingListsByDocumentTypeIdsAndEntityId(documentTypes, entityIds, exportDocumentArgs.Tenant);
                                 if (documentsFilings != null && documentsFilings.Count > 0)
                                 {
-                                    List<string> toDelete = new List<string>();
+                                    ConcurrentBag<string> toDelete = new ConcurrentBag<string>();
 
 
                                     Parallel.ForEach(documentsFilings, (documentsFiling) =>
@@ -385,7 +387,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                                         if (!string.IsNullOrEmpty(docId))
                                         {
                                             bool okGotFromStorage = false;
-                                            okGotFromStorage = DocumentHelper.CheckPDFInvoiceInStorage(docId, exportDocumentArgs.Tenant, accountingSettings);
+                                            okGotFromStorage = DocumentHelper.CheckPDFInvoiceInStorage(documentsFiling.Id, exportDocumentArgs.Tenant, accountingSettings);
                                             if (okGotFromStorage)
                                             {
                                                 lock (_locker)
@@ -408,26 +410,35 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                         }
                     }
 
-
+                    ConcurrentBag<DocumentTypeCopiesDetails> localDocumentDetails = new ConcurrentBag<DocumentTypeCopiesDetails>();
                     Parallel.ForEach(exportDocumentArgs.DocumentTypeCopyIdsList, (documentTypeCopyId) =>
                     {
                         AuthenticationUtil.AuthenticatedUserEmail = authenticatedUserEmail;
                         ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                         string result = exportDocumentHelper.ExportDocument2Pdf(exportDocumentArgs, documentTypeCopyId);
-                        lock (_locker)
+
+
+                        localDocumentDetails.Add(new DocumentTypeCopiesDetails
                         {
-                            documentTypeCopiesDetails.Add(new DocumentTypeCopiesDetails() { DocumentTypeCopyId = documentTypeCopyId, DocumentId = result });
-                        }
+                            DocumentTypeCopyId = documentTypeCopyId,
+                            DocumentId = result
+                        });
                     });
+                    lock (_locker)
+                    {
+                        documentTypeCopiesDetails.AddRange(localDocumentDetails);
+                    }
+
+
                     if (exportDocumentArgs.DocumentTypeCopyIdsList != null && exportDocumentArgs.DocumentTypeCopyIdsList.Count > 0)
                     {
 
                         UpdateDocumentOut(exportDocumentArgs);
-                        if (childObjectTableName == "ARInvoice" || exportDocumentArgs.ObjectTableName == "ARInvoice") UpdateARInvoicePrintingDetails(exportDocumentArgs, authenticatedUserEmail);
+                        if (childObjectTableName == AR_INVOICE || exportDocumentArgs.ObjectTableName == AR_INVOICE) UpdateARInvoicePrintingDetails(exportDocumentArgs, authenticatedUserEmail);
 
                         DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
                         documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = exportDocumentArgs.EntityId, ObjectTableName = exportDocumentArgs.ObjectTableName, ChildObjectTableId = exportDocumentArgs.ChildObjectTableId, ChildEntityId = exportDocumentArgs.ChildEntityId, DocumentTypeCode = exportDocumentArgs.CurrentDocumentTypeCode, ProcessType = "Print", Tenant = exportDocumentArgs.Tenant });
-                        if (!(childObjectTableName == "APInvoice" && string.IsNullOrWhiteSpace(exportDocumentArgs.EntityId)))
+                        if (!(childObjectTableName == AP_INVOICE && string.IsNullOrWhiteSpace(exportDocumentArgs.EntityId)))
                         {
                             RunAutomation(exportDocumentArgs, "OnDocumentUpdate", documentTypeCopiesDetails);
                         }
@@ -504,22 +515,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
             }
         }
 
-        private void HandleDocumentsExecutionException(Exception exception)
-        {
-            //ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Document execution log queue worker role start", null, null);
-            if (queueResponse != null)
-            {
-                if (queueResponse.RetryNumber <= 1)
-                {
-                    queueService.DelayAndReturnBackToQueue(new TimeSpan(0, 0, 0, 5), queueResponse.MessageId);
-                }
-                if (queueResponse.RetryNumber >= 2) queueService.CompleteAsFailed();
-            }
-            else queueService.CompleteAsFailed();
 
-            UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() { Exception = exception.InnerException != null ? exception.InnerException : exception });
-            Thread.Sleep(new TimeSpan(0, 0, 0, 0, 250));
-        }
 
         private DocumentsExecutionLog GetDocumentsExecutionLog()
         {

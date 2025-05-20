@@ -468,6 +468,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             default:
                                 break;
                         }
+
+                        Dictionary<string, string> sendStatusDict = new Dictionary<string, string>()
+                        {
+                            { "11","H11" },
+                            { "14","H14" },
+                            { "25","H25" },
+                            { "26","H26" },
+                            { "27","H27" },
+                            { "28","H28" },
+                        };
+                        sendStatusDict.TryGetValue(customResponse.Response.Status[0].NameCode.Value, out string foundStatus);
+                        if (!string.IsNullOrEmpty(foundStatus))
+                        {
+                            RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: foundStatus, versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                        }
+
                         List<string> statusList = new List<string>()
                         {
                             "2","4","22","23","26","35","40","41"

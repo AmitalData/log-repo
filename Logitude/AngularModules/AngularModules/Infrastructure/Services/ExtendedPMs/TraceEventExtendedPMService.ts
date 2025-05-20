@@ -17,7 +17,7 @@ export class TraceEventExtendedPMService {
     PutTraceEventGroup(eventTypeArgs: any) {
         var url = this._apiUrl + '/puttraceeventgroup';
 
-        return defer(() => {
+         return defer(() => {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
@@ -27,4 +27,16 @@ export class TraceEventExtendedPMService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    CreateTraceEvent(tenant: number, entityId: string, tableName: string, eventTypeCode: string, loggedUserEmail: string = '', notes: string = '') {
+        return defer(() => {
+            return this._http.post(
+                this._apiUrl + '/PostTraceEvent', 
+                {tenant, entityId, tableName, eventTypeCode, loggedUserEmail, notes}, 
+                ServiceHelper.GetHttpHeaders()
+            ).pipe(map(() => new ServiceResponse()), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
+
+export enum TraceEventTypeCodes { CREATE = 'CREV', UPDATE = 'UPEV' }

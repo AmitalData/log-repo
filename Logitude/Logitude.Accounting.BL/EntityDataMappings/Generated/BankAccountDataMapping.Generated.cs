@@ -56,7 +56,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         PrintingAccountNumber, 
 	         TotalOpenExternalTransactions, 
 	         TotalOpenPagesLines, 
-	         ChequeCounterSeriesID,
+	         ChequeCounterSeriesID, 
+	         FactoringBank,
 	      }
 
 
@@ -106,7 +107,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         BankCodeLocalName, 
 	         TotalOpenExternalTransactions, 
 	         TotalOpenPagesLines, 
-	         ChequeCounterSeriesID,
+	         ChequeCounterSeriesID, 
+	         FactoringBank,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -253,6 +255,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChequeCounterSeriesID))
             {
 				entityPOCO.ChequeCounterSeriesID = entityPM.ChequeCounterSeriesID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactoringBank))
+            {
+				entityPOCO.FactoringBank = entityPM.FactoringBank;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -406,6 +413,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ChequeCounterSeriesID = entityPOCO.ChequeCounterSeriesID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FactoringBank))
+            {
+					entityPM.FactoringBank = entityPOCO.FactoringBank;
+            }
+
 		}
 
 		public void PMToOldPM(BankAccountPM entityPM, BankAccountPM oldEntityPM)
@@ -550,6 +562,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChequeCounterSeriesID))
             {
                 oldEntityPM.ChequeCounterSeriesID = entityPM.ChequeCounterSeriesID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FactoringBank))
+            {
+                oldEntityPM.FactoringBank = entityPM.FactoringBank;
             }
 			
 		}

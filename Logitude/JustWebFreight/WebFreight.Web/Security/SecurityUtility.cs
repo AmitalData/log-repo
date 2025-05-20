@@ -323,11 +323,7 @@ namespace WebFreight.Web.Security
                 /*string */
                 email = HttpContext.Current.User.Identity.Name;
             }
-            else if (AuthenticationUtil.AuthenticatedUserEmail != null)
-            {
-                email = AuthenticationUtil.AuthenticatedUserEmail;
-            }
-            else if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            else if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
             {
                 email = AuthenticationUtil.AuthenticatedUserEmail;
             }

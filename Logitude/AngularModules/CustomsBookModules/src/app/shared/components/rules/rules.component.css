@@ -31,6 +31,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+    width: 100%;
 }
 
 .detailsSlide_commentsTitle {
@@ -187,7 +188,8 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 }
 
 .rulesItem_DDown.shown {
-    max-height: 900px;
+    /* max-height: 900px; */
+    max-height: 100%;
 }
 
 .rulesItem_DDown[aria-hidden="false"] {
@@ -202,20 +204,28 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     font-size: 14px;
 }
 
+/* #114428 TODO: check sanity for this */
 .rulesList {
     counter-reset: section;
-    max-height: 400px;
+    /* max-height: 400px; */
+    max-height: 600px;
     overflow: auto;
     padding: 0 10px;
 }
 
-.parentLine{
-    position: relative;
-    left: 60px;
+.parentLine {
+    /* position: relative;
+    left: 60px; */
 }
 
 .boxRuleDataChild {
     /* margin-right: 20px; */
+}
+/*#114428 fix responsive:*/
+.boxRuleDataChild>tr {
+    max-width: 68%;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
 }
 
 .boxRuleData {
@@ -227,7 +237,7 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 }
 
 .boxRuleData>tr {
-    margin: 5px 0;
+    margin: 5px 0px;
 }
 
 .boxRuleData>tr>:nth-child(1) {
@@ -247,6 +257,18 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 
 .rulesItem_DDown .rulesItem_section p {
     padding-top: 4px;
+}
+/*#114428 fix responsive:*/
+#detailsSlide_ddown01 > section > ul > li:nth-child(2) > div.rulesItem_DDown.shown > div > table > tr > td {
+  max-width: 67%;
+  white-space: pre-wrap;
+  text-overflow: ellipsis;
+}
+/*#114428 fix responsive:*/
+#detailsSlide_ddown01>section>ul>li>div.rulesItem_DDown.shown>div>table>tr {
+    max-width: 70%;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
 }
 
 * {
@@ -277,7 +299,8 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
 
 .detailsSlide_comments {
     padding: 10px;
-    height: 500px;
+    /* height: 500px; */
+    max-height: 665px;
     transition: all 0.4s ease-in-out;
 }
 
@@ -288,10 +311,12 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     margin-bottom: 0px;
 }
 
-/* ::-webkit-scrollbar {
+/* #114428 TODO: check sanity for this */
+::-webkit-scrollbar {
     width: 0px;
-    background: transparent; 
-} */
+    background: transparent;
+}
+
 .commentsList {
     overflow-y: scroll;
     scrollbar-width: thin;
@@ -309,11 +334,11 @@ a.detailsSlide_commentsPinned[aria-checked='true'] i:nth-child(2) {
     justify-content: space-between;
 }
 
-.detailsSlide_commentsTitle {
+/* .detailsSlide_commentsTitle {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
+} */
 
 a.detailsSlide_commentsPinned {
     display: block;
@@ -321,10 +346,6 @@ a.detailsSlide_commentsPinned {
     width: 20px;
     height: 20px;
     text-align: center;
-}
-
-a.detailsSlide_commentsPinned i:nth-child(2) {
-    display: none;
 }
 
 .detailsSlide_commentsTitle h3 {
@@ -384,4 +405,95 @@ li {
     word-wrap: break-word;
     white-space: normal;
     text-align: right;
+}
+
+tr {
+    display: flex;
+}
+
+a.detailsSlide_commentsPinned {
+    display: block;
+    text-decoration: none;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+}
+
+.detailsSlide_ddown {
+    padding: 17px 20px 20px;
+    border-top: 1px solid var(--blue);
+    overflow: hidden;
+    min-height: fit-content;
+    transition: all 0.4s ease-in-out;
+
+    &.active {
+        padding: 0;
+        height: 0;
+        border-top: none;
+        border-top: 0px solid var(--white);
+    }
+}
+
+.detailsSlide_ddown.initial {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.detailsSlide_ddown.shown {
+    max-height: 900px;
+}
+
+.detailsSlide_ddown section {
+    padding: 0px 0px 0px 0px;
+}
+
+.detailsSlide_ddown section+section {
+    padding-top: 22px;
+}
+
+.detailsSlide_ddown section h4 {
+    font-size: 14px;
+    margin: 0;
+    padding-bottom: 5px;
+    display: flex;
+}
+
+.detailsSlide_toggle h3 {
+    height: 100%;
+    font-size: 16px;
+}
+
+.detailsSlide_toggle a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0px 20px 0px 0px;
+    text-decoration: none;
+}
+
+.detailsSlide_toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    height: 48px;
+}
+
+.toggle {
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    width: 26px;
+    height: 26px;
+    font-size: 12px;
+    border-radius: 100%;
+
+    &.active {
+        transform: rotate(90deg);
+    }
 }

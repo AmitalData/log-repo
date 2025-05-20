@@ -50,9 +50,15 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                 return "To month is greater than from month";
             }
 
-            if (accountingIntegrityInParam.ToMonthInclusive.Subtract(accountingIntegrityInParam.FromMonthInclusive) > TimeSpan.FromDays(365))
+            //if (accountingIntegrityInParam.ToMonthInclusive.Subtract(accountingIntegrityInParam.FromMonthInclusive) > TimeSpan.FromDays(365))
+            //{
+            //    return "day  Subtract  > 365 ";
+            //}
+            DateTime oneYearLater = accountingIntegrityInParam.FromMonthInclusive.AddYears(1);
+            bool isWithinOneYear = accountingIntegrityInParam.ToMonthInclusive <= oneYearLater;
+            if (!isWithinOneYear)
             {
-                return "day  Subtract  > 365 ";
+                return "day Subtract > 365 ";
             }
             return "";
 

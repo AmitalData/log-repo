@@ -45,9 +45,9 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 					
 					                          Steps = a.Steps,
 
-                                              CreatedByUserName = a.CreatedByUser.Contact.EnglishName != null? a.CreatedByUser.Contact.EnglishName: "",
+                                              CreatedByUserName = a.CreatedByUser.Contact.EnglishName != null? a.CreatedByUser.Contact.EnglishName: null,
 
-                                              UpdatedByUserName = a.UpdatedByUser.Contact.EnglishName != null ? a.UpdatedByUser.Contact.EnglishName :""
+                                              UpdatedByUserName = a.UpdatedByUser.Contact.EnglishName != null ? a.UpdatedByUser.Contact.EnglishName :null
                                               
                                             });
             return query;

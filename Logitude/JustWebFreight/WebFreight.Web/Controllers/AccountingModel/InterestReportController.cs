@@ -10,6 +10,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Infrastructure.BL.EntityPMs;
@@ -188,9 +189,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-     
- 
-     
+        public HttpResponseMessage PutSendSignedInvoices(string[] selectList)
+        {
+            try
+            {
+                 int tenant = AuthinticateTenant();
+                 DocumentHelper documentHelper= new DocumentHelper();
+                 documentHelper.SendSignInterestInvoices(selectList, tenant);
+                  
+                  return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
         public HttpResponseMessage GetInterestLastBatchServiceByTenant()
         {
             try

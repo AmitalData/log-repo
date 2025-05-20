@@ -70,6 +70,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_CustomsItemLinkage> CB_CustomsItemLinkages { get; }
 		 IDbSet<CB_LevyCondition> CB_LevyConditions { get; }
 		 IDbSet<CB_LevyExclusion> CB_LevyExclusions { get; }
+		 IDbSet<CB_Preference> CB_Preferences { get; }
 		 IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys { get; }
 		 IDbSet<CB_Quota> CB_Quotas { get; }
 		 IDbSet<CB_QuotaComputedData> CB_QuotaComputedDatas { get; }
@@ -80,6 +81,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_RegularityRequirement> CB_RegularityRequirements { get; }
 		 IDbSet<CB_RequirementComputedData> CB_RequirementComputedDatas { get; }
 		 IDbSet<CB_Rule> CB_Rules { get; }
+		 IDbSet<CB_RuleClassification> CB_RuleClassifications { get; }
 		 IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys { get; }
 		 IDbSet<CB_Tariff> CB_Tariffs { get; }
 		 IDbSet<CB_TariffComputedData> CB_TariffComputedDatas { get; }
@@ -90,6 +92,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_Vendor> CB_Vendors { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
 		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
+		 IDbSet<CertificateOfOriginConnection> CertificateOfOriginConnections { get; }
 		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
 		 IDbSet<CertificateOfOriginItem> CertificateOfOriginItems { get; }
 		 IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss { get; }

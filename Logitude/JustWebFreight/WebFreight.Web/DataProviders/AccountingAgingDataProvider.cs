@@ -84,16 +84,29 @@ namespace WebFreight.Web.DataProviders
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
-        public string AccountContactName { get; set; }
+         public string AccountContactName { get; set; }
         public string AccountContactEmail { get; set; }
         public string AccountContactPhone { get; set; }
+  
 		public decimal AccountingBalance { get; set; }
 		public decimal CreditLimit { get; set; }
 
 
 		public decimal ExternalTransactionsTotal { get; set; }
 
-		public decimal TotalToCollect { get { return AccountingBalance + (decimal)(TotalOpenShipments); } }
+		public decimal TotalToCollect { get {
+                try
+                {
+                    return AccountingBalance + Convert.ToDecimal(TotalOpenShipments);
+
+                }
+                catch (Exception)
+                {
+                   
+                    throw;
+                }
+              
+            } }
 		public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
 		public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal; } }
 		public decimal? CreditUsed { get { return CreditLimit - Obligo; } }
@@ -106,7 +119,8 @@ namespace WebFreight.Web.DataProviders
 
 
 	}
-
+ 
+    
 
 	public class AgingPeriodTotal
     {

@@ -266,6 +266,14 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.ChargeableWeightUnitCode).HasColumnName("ChargeableWeightUnitCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.IncotermName).HasColumnName("IncotermName").HasMaxLength(40).IsUnicode(false);
+
+            this.Property(t => t.LockerAddress).HasColumnName("LockerAddress").HasMaxLength(1000).IsUnicode(false);
+
+            this.Property(t => t.LockerCity).HasColumnName("LockerCity").HasMaxLength(1000).IsUnicode(false);
+
+            this.Property(t => t.LockerName).HasColumnName("LockerName").HasMaxLength(1000).IsUnicode(true);
+
+            this.Property(t => t.LockerCode).HasColumnName("LockerCode").HasMaxLength(100).IsUnicode(false);
         }
     }
 }

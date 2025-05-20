@@ -100,7 +100,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM securedPM = new ShipmentPM();
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
-                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant); 
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
                     var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
                                      where a.Id == shipment.Id
@@ -1402,7 +1402,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.House = shipment.House;
             shipmentPM.HAWBDate = shipment.HAWBDate;
 
-            /* Ayman */
+
             shipmentPM.Id = shipment.Id;
             shipmentPM.IncotermId = shipment.IncotermId;
             if (shipment.IncotermId != null)
@@ -2575,10 +2575,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             }
             #endregion
 
-            // Edited by Ayman
+
             if (shipmentPM.ShipmentPackages != null)
             {
-                // By Samar: for message variables
+                // for message variables
                 MapShipmentPackagesDetails(shipmentPM);
                 // end 
 
@@ -2724,8 +2724,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipmentPM.PickupPlace = shipment.PickupPlace;
             shipmentPM.SealNo = shipment.SealNo;
             shipmentPM.HSCode = shipment.HSCode;
-            //ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
-            //returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), shipmentPM, tenant);
+            shipmentPM.LockerAddress = shipment.LockerAddress;
+            shipmentPM.LockerName = shipment.LockerName;
+            shipmentPM.LockerCity = shipment.LockerCity;
+            shipmentPM.LockerCode = shipment.LockerCode;
 
             return shipmentPM;
         }
@@ -4040,7 +4042,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
             }
 
-            // Edited by Ayman
             if (shipmentPM.ShipmentPackages != null)
             {
                 var myGroup = (from a in shipmentPM.ShipmentPackages
@@ -4495,7 +4496,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPM securedPM = new ShipmentPM();
             SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
-            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant); 
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
             return returnShipment;
@@ -4516,7 +4517,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPM securedPM = new ShipmentPM();
             securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
-            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
             return returnShipment;
@@ -4657,7 +4658,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ShipmentPM securedPM = new ShipmentPM();
                 securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
-                ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+                ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant); 
                 returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
                 #region Documents Filing Lists
@@ -4696,7 +4697,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 ShipmentPM securedPM = new ShipmentPM();
                 securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
-                ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+                ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant); 
                 returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
 
                 return returnShipment;
@@ -4889,7 +4890,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentPM securedPM = new ShipmentPM();
             SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
-            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+            ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant); 
             returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
             var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
                              where a.Id == shipment.Id
@@ -5379,6 +5380,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                         PickupPlace = s.PickupPlace,
                                                         SealNo = s.SealNo,
                                                         HSCode = s.HSCode,
+                                                        LockerAddress=s.LockerAddress,
+                                                        LockerName = s.LockerName,
+                                                        LockerCity = s.LockerCity,
+                                                        LockerCode = s.LockerCode,
                                                     };
 
             List<ShipmentPM> securedShipmentPMs = new List<ShipmentPM>();
@@ -5676,8 +5681,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     #region ShipmentAdditionalCloudDatas
                     shipmentPM.IsImporterApprovalRequired = GetIsImporterApprovalRequried(shipment.Id, shipment.Tenant, shipmentAdditionalCloudDataLists);
                     #endregion
-
-                    //   }
 
 
                     ShipmentPM securedPM = new ShipmentPM();
@@ -6010,12 +6013,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ShipmentPM shipmentPM = new ShipmentPM();
 
                     shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true);
-                    //shipmentPM.ToCountryCode = !string.IsNullOrEmpty(shipmentPM.MainCarriageFinalDestinationPortCountryCode) ? shipmentPM.MainCarriageFinalDestinationPortCountryCode : shipmentPM.ToPortCountryCode,
-                    //shipmentPM.FromCountryCode = f.ShipmentLevelCode == "H" && string.IsNullOrEmpty(f.MasterShipmentDataId) ? f.FromPortCountryCode : f.MainCarriageFromPortCountryCode,
                     ShipmentPM securedPM = new ShipmentPM();
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
 
-                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);//securedPM;
+                    ShipmentPM returnShipment = BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
                     returnShipment = ProductPermitionsFilter.AddUserProductRestrictionFilters(new QueryOperations(), securedPM, tenant);
                     var CLoudData = (from a in repository.context.ShipmentAdditionalCloudDatas
                                      where a.Id == shipment.Id
@@ -6208,7 +6209,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             shipments = ProductPermitionsFilter.AddUserProductRestrictionFilters<Shipment>(new QueryOperations(), shipments, currentTenant);
 
             List<DashBoardClass> resulList = null;
-            // int lastDays;
+
             DateTime fiXedDateDays;
 
             int days = 0;
@@ -6306,7 +6307,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 {
                     d.DateRange = startOfWeek.Day + "/" + startOfWeek.Month;
 
-                    //  d.DateRange=d.Date.Day+"/"+d.Date.Month+" - "+
                 }
             }
 
@@ -6613,24 +6613,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     }
                 }
 
-                //else if (d.FullDate >= dates[6] && d.FullDate <= dates[7])
-                //{
-                //    DatePeriod = dates[6].Value.Day + "/" + dates[6].Value.Month + (AddYearFlag == true ? "/" + dates[6].Value.Year + "" : "") + "-" + dates[7].Value.Day + "/" + dates[7].Value.Month+ (AddYearFlag == true ? "/" + dates[7].Value.Year + "" : "") ;
-                //    if (!Listt.ContainsKey(DatePeriod))
-                //    {
-                //        Listt.Add(DatePeriod, d);
-                //    }
-                //    else
-                //    {
-                //        Listt[DatePeriod].total += d.total;
-                //        Listt[DatePeriod].sumChargeableWeight += d.sumChargeableWeight != null ? d.sumChargeableWeight : 0;
-                //        Listt[DatePeriod].sumGrossWeight += d.sumGrossWeight != null ? d.sumGrossWeight : 0;
-                //        Listt[DatePeriod].totalProfitInLocalCurrency += d.totalProfitInLocalCurrency != null ? d.totalProfitInLocalCurrency : 0;
-                //        Listt[DatePeriod].totalProfitInProfitCurrency += d.totalProfitInProfitCurrency != null ? d.totalProfitInProfitCurrency : 0;
-                //        Listt[DatePeriod].ReceivablesInLocalCurrency += d.ReceivablesInLocalCurrency != null ? d.ReceivablesInLocalCurrency : 0;
-                //        Listt[DatePeriod].ReceivablesInProfitCurrency += d.ReceivablesInProfitCurrency != null ? d.ReceivablesInProfitCurrency : 0;
-                //    }
-                //}           
+        
             }
             resulList = new List<DashBoardClass>();
 
@@ -7049,7 +7032,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                             else
                             {
-                                unionList = resultList.OrderByDescending(d => d.sumGrossWeight).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                                unionList = resultList.OrderByDescending(d => d.sumGrossWeight).ToList();
                             }
                         }
                         else
@@ -7114,7 +7097,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                             else
                             {
-                                unionList = resultList.OrderByDescending(d => d.sumGrossWeight).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                                unionList = resultList.OrderByDescending(d => d.sumGrossWeight).ToList();
                             }
                         }
 
@@ -7194,7 +7177,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                             else
                             {
-                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();
                             }
 
                         }
@@ -7267,7 +7250,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                             else
                             {
-                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();
                             }
                         }
 
@@ -8275,7 +8258,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                             else
                             {
-                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();
                             }
                         }
                         else
@@ -8348,7 +8331,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             }
                             else
                             {
-                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();//ResulList;//ResulListMonth.Union(ResulList);
+                                unionList = resultList.OrderByDescending(d => d.totalProfitInLocalCurrency).ToList();
                             }
                         }
 
@@ -10864,64 +10847,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         }
 
 
-        /* DashBoard Top 10 Customers */
-        //public List<DashBoardClass> GetTop10DashBoardCustom(string type, DateTime? FromDate, DateTime? ToDate, int measurment, int currentTenant, int top, bool includeOthers)
-        //{
-        //    if (top < 0)
-        //    {
-        //        top = 0;
-        //    }         
 
-        //    List<DashBoardClass> datalist = null;
-        //    List<ShipmentsCustomersDashboardView> shipments = repository.GetShipmentDataViewsForCustomersDashboard(currentTenant).Take(top).ToList();
-
-        //    Dictionary<string, DashBoardClass> Listt = new Dictionary<string, DashBoardClass>();
-
-        //    foreach (ShipmentsCustomersDashboardView d in shipments)
-        //    {
-        //        string Index = "";
-        //        Index = d.CustomerId;                
-        //        if (!Listt.ContainsKey(Index))
-        //        {
-        //            DashBoardClass Item = new DashBoardClass();
-        //            Item.countryName = d.CustomerName;
-        //            Item.sumChargeableWeight = d.ChargeableWeightInKG;
-        //            Item.sumGrossWeight = d.GrossWeightInKG;
-        //            Item.totalProfitInLocalCurrency = d.ProfitInLocalCurrency;
-        //            Item.totalProfitInProfitCurrency = d.ProfitInProfitCurrency;
-        //            Item.ReceivablesInLocalCurrency = d.OpenReceivablesInLocalCurrency;
-        //            Item.ReceivablesInProfitCurrency = d.OpenReceivablesInProfitCurrency;
-        //            Item.directionID = d.DirectionId;
-        //            Item.transportModeID = d.TransportModeId;
-        //            Item.total = 1;
-        //            Listt.Add(Index, Item);
-        //        }
-        //        else
-        //        {
-        //            Listt[Index].countryName = d.CustomerName;
-        //            Listt[Index].sumChargeableWeight += d.ChargeableWeightInKG != null ? d.ChargeableWeightInKG : 0;
-        //            Listt[Index].sumGrossWeight += d.GrossWeightInKG != null ? d.GrossWeightInKG : 0;
-        //            Listt[Index].totalProfitInLocalCurrency += d.ProfitInLocalCurrency != null ? d.ProfitInLocalCurrency : 0;
-        //            Listt[Index].totalProfitInProfitCurrency += d.ProfitInProfitCurrency != null ? d.ProfitInProfitCurrency : 0;
-        //            Listt[Index].ReceivablesInLocalCurrency += d.OpenReceivablesInLocalCurrency != null ? d.OpenReceivablesInLocalCurrency : 0;
-        //            Listt[Index].ReceivablesInProfitCurrency += d.OpenReceivablesInProfitCurrency != null ? d.OpenReceivablesInProfitCurrency : 0;
-        //            Listt[Index].directionID = d.DirectionId;
-        //            Listt[Index].transportModeID = d.TransportModeId;
-        //            Listt[Index].total = Listt[Index].total + 1;
-
-
-        //        }
-        //    }
-
-        //    datalist = new List<DashBoardClass>();
-
-        //    for (int i = 0; i < Listt.Count; i++)
-        //    {
-        //        datalist.Add(Listt.Values.ElementAt(i));
-        //    }
-        //    return datalist;
-
-        //}
 
 
 
@@ -11300,8 +11226,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             ShipmentsSummary myResult = new ShipmentsSummary() { Id = 1 };
 
             IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            //IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
-            //ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+
 
             IQueryable<Shipment> iQueryable_Shipments = (from f in shipmentsContext.Shipments where f.Tenant == tenant && f.IsCancelled == false select f);
 
@@ -11540,7 +11465,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return count;
         }
 
-        //-----------------------
         private int GetOperationalOpenCount_ETD(int tenant, IQueryable<Shipment> iQueryable_Shipments, IShipmentsContext shipmentsContext)
         {
             int count = 0;
@@ -11548,7 +11472,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime lastWeekDate = todayDate.AddDays(-7);
 
-            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
             IWebFreightContext myFreightContext = WebFreightContext.GetContext(tenant);
 
 
@@ -11588,7 +11511,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         {
             int count = 0;
             var ExpectedDeparturesNotTransmittedCount = "ExpectedDeparturesNotTransmittedCount" + tenant;
-            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
 
             var iQueryableData = (from myShipment in iQueryable_Shipments
                                   join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
@@ -11621,7 +11543,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var EBookingInProgressCount = "EBookingInProgressCount" + tenant;
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
             DateTime lastWeekDate = todayDate.AddDays(-7);
-            //IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
 
             var iQueryableData = (from myShipment in iQueryable_Shipments
                                   join db_Masters in shipmentsContext.ShipmentMasterDatas on myShipment.MasterShipmentDataId equals db_Masters.Id into ShipmentsMasters
@@ -11647,7 +11568,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return count;
         }
 
-        //-----------------------
         private int GetShippingInstructionsLast7DaysCount(int tenant, IQueryable<Shipment> iQueryable_Shipments)
         {
             int count = 0;
@@ -11849,8 +11769,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        DirectionId = r.DirectionId,
                        TransportModeId = r.TransportModeId,
                        CarrierId = !string.IsNullOrEmpty(r.MainCarriageCarrierId) ? r.MainCarriageCarrierId : "No_Data",
-                       //CarrierCode = !string.IsNullOrEmpty(r.MainCarriageCarrierCode) ? r.MainCarriageCarrierCode : "No_Data",
-                       //CarrierName = !string.IsNullOrEmpty(r.MainCarriageCarrierName) ? r.MainCarriageCarrierName : "No_Data",
                        CarrierNumber = !string.IsNullOrEmpty(r.MainCarriageCarrierNumber) ? r.MainCarriageCarrierNumber : "No_Data",
                        ExpectedDate = r.MainCarriageFinalDestinationETA,
                        ActualDate = r.MainCarriageFinalDestinationATA,
@@ -11870,8 +11788,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      DirectionId = r.DirectionId,
                      TransportModeId = r.TransportModeId,
                      CarrierId = !string.IsNullOrEmpty(r.MainCarriageCarrierId) ? r.MainCarriageCarrierId : "No_Data",
-                     //CarrierCode = !string.IsNullOrEmpty(r.MainCarriageCarrierCode) ? r.MainCarriageCarrierCode : "No_Data",
-                     //CarrierName = !string.IsNullOrEmpty(r.MainCarriageCarrierName) ? r.MainCarriageCarrierName : "No_Data",
                      CarrierNumber = !string.IsNullOrEmpty(r.MainCarriageCarrierNumber) ? r.MainCarriageCarrierNumber : "No_Data",
                      ExpectedDate = r.MainCarriageETD,
                      ActualDate = r.MainCarriageATD,
@@ -11892,8 +11808,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      DirectionId = r.DirectionId,
                      TransportModeId = r.TransportModeId,
                      CarrierId = !string.IsNullOrEmpty(r.MainCarriageCarrierId) ? r.MainCarriageCarrierId : "No_Data",
-                     //CarrierCode = !string.IsNullOrEmpty(r.MainCarriageCarrierCode) ? r.MainCarriageCarrierCode : "No_Data",
-                     //CarrierName = !string.IsNullOrEmpty(r.MainCarriageCarrierName) ? r.MainCarriageCarrierName : "No_Data",
                      CarrierNumber = !string.IsNullOrEmpty(r.TruckNumber) ? r.TruckNumber : "No_Data",
                      ExpectedDate = r.MainCarriageETD,
                      ActualDate = r.MainCarriageATD,
@@ -11915,8 +11829,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                      DirectionId = r.DirectionId,
                      TransportModeId = r.TransportModeId,
                      CarrierId = !string.IsNullOrEmpty(r.MainCarriageCarrierId) ? r.MainCarriageCarrierId : "No_Data",
-                     //CarrierCode = !string.IsNullOrEmpty(r.MainCarriageCarrierCode) ? r.MainCarriageCarrierCode : "No_Data",
-                     //CarrierName = !string.IsNullOrEmpty(r.MainCarriageCarrierName) ? r.MainCarriageCarrierName : "No_Data",
                      CarrierNumber = !string.IsNullOrEmpty(r.TruckNumber) ? r.TruckNumber : "No_Data",
                      ExpectedDate = r.MainCarriageETA,
                      ActualDate = r.MainCarriageATA,
@@ -11980,7 +11892,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 DateTime? lastWeekDate = todayDate.Value.AddDays(-7);
                 DateTime? nextWeekDate = todayDate.Value.AddDays(7);
 
-                //queryableData.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) >= date1 && System.Data.Entity.DbFunctions.TruncateTime(d.MainCarriageATD) <= date2);
                 if (date.Value.Date == todayDate)
                 {
                     myResult = "TOD";
@@ -12208,7 +12119,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                  on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
                  from jd in JoinedData.DefaultIfEmpty()
                  from m in shipmentJoin.DefaultIfEmpty()
-                 where shipment.Tenant == tenant && shipment.TransportModeId == "O" //&& (shipment.ShipmentLevelCode == "D" || shipment.ShipmentLevelCode == "C")
+                 where shipment.Tenant == tenant && shipment.TransportModeId == "O"  
                  select new ShipmentJoinPackageList()
                  {
                      Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
@@ -12844,7 +12755,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          LocalCustomsTransmissionsStatusError = s.LocalCustomsTransmissionsStatusError,
                                                          LocalCustomsTransmissionsStatusDate = s.LocalCustomsTransmissionsStatusDate,
                                                          LocalCustomsSentByUserId = s.LocalCustomsSentByUserId,
-                                                         LocalCustomsSentByUserName = s.LocalCustomsSentByUser != null ? s.LocalCustomsSentByUser.Contact != null ? s.LocalCustomsSentByUser.Contact.EnglishName : "" : "",
+                                                         LocalCustomsSentByUserName = s.LocalCustomsSentByUser != null ? s.LocalCustomsSentByUser.Contact != null ? s.LocalCustomsSentByUser.Contact.EnglishName : null : null,
                                                          ISFDate = s.ISFDate,
                                                          ISFNumber = s.ISFNumber,
                                                          ITDate = s.ITDate,
@@ -12916,6 +12827,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          PickupPlace = s.PickupPlace,
                                                          SealNo = s.SealNo,
                                                          HSCode = s.HSCode,
+                                                         LockerAddress = s.LockerAddress,
+                                                         LockerName = s.LockerName,
+                                                         LockerCity = s.LockerCity,
+                                                         LockerCode = s.LockerCode,
+
                                                      };
 
             return shipmentsList;
@@ -12986,34 +12902,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                  where shipment.Tenant == tenant && master.MAWBOBLDate != null && shipment.ShipmentLevelCode != "C"
                  select new ShipmentJoinPayablesList()
                  {
-                     //Id = shipment.Id + (!string.IsNullOrEmpty(jd.Id) ? jd.Id : ""),
-                     //ShipmentId = shipment.Id,
-                     //DirectionId = shipment.DirectionId,
-                     //ShipmentNumber = shipment.ShipmentNumber,
-                     //CreateDateTime = shipment.CreateDateTime,
-                     //MainCarriageETD = m.MainCarriageETD,
-                     //CustomerId = shipment.CustomerId,
-                     //CustomerName = shipment.CustomerCard != null ? shipment.CustomerCard.EnglishName : null,
-                     //AgentName = shipment.AgentCard != null ? shipment.AgentCard.EnglishName : null,
-                     //MainCarriageFromPortName = m.MainCarriageFromPort.EnglishName,
-                     //MainCarriageFinalDestinationPortName = m.MainCarriageFinalDestinationPort != null ? m.MainCarriageFinalDestinationPort.EnglishName : null,
-                     //ShipperName = shipment.ShipperCard != null ? shipment.ShipperCard.EnglishName : null,
-                     //MainCarriageCarrierName = m.MainCarriageCarrierCard != null ? m.MainCarriageCarrierCard.EnglishName : null,
-                     //ContainerNumber = jd.ContainerNumber,
-                     //ShipmentTypeId = shipment.ShipmentTypeId,
-                     //ShipmentTypeName = shipment.ShipmentType != null ? shipment.ShipmentType.Name : null,
-                     //MainCarriageFinalDestinationETA = m.MainCarriageFinalDestinationETA,
-                     //MasterNumber = m.Master,
-                     //Vessel_Voyage = m.MainCarriageCarrierNumber,
-                     //StatusName = shipment.EntityStatus.Name,
-                     //AgentReference1 = shipment.AgentReference1,
-                     //AgentReference2 = shipment.AgentReference2,
-                     //ContainerCode = jd.PackageType != null ? jd.PackageType.PrintAs : null,
-                     //TransportModeId = shipment.TransportModeId,
-                     //MainCarriageCarrierPrefix = m.MainCarriageCarrierPrefix,
-                     //AgentId = shipment.AgentId,
-                     //ShipmentLevelCode = shipment.ShipmentLevelCode,
-                     //VesselId = m.MainCarriageVesselId,
+
                  });
 
             return dataList;
@@ -13261,7 +13150,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Field69 = f.Field69,
                                Field70 = f.Field70,
                                CarrierTransportDocumentNumber = f.CarrierTransportDocumentNumber,
-                               ShipperReference1 = f.ShipperReference1/*, Master = f.Master*/,
+                               ShipperReference1 = f.ShipperReference1,
                                ShipperCountryCode = f.ShipperCountryCode,
                                ConsigneeCountryCode = f.ConsigneeCountryCode,
                                Master = f.Master,
@@ -13286,7 +13175,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                NextETA = f.NextETA,
                                NextETD = f.NextETD,
                                NextLegName = f.NextLegName,
-                               Routing = f.Routing,//(f.DirectionId!="D"&&f.TransportModeId!="I")?((f.PreCarriageFromPortCode != null ? f.PreCarriageFromPortCode + " > " : "") + (f.MasterShipmentDataId != null ? (f.MainCarriageFromPortCode != null ? f.MainCarriageFromPortCode + " > " : "") + (f.MainCarriageFinalDestinationPortCode != null ? (f.OnCarriageToPortCode != null ? f.MainCarriageFinalDestinationPortCode + " > " + f.OnCarriageToPortCode : f.MainCarriageFinalDestinationPortCode) : "") : ((f.FromPortCode != null ? f.FromPortCode + " > " : "") + (f.ToPortCode != null ? (f.OnCarriageToPortCode != null ? f.ToPortCode + " > " + f.OnCarriageToPortCode : f.ToPortCode) : "")))):(""),
+                               Routing = f.Routing,
                                FromPortId = f.FromPortId,
                                ToPortId = f.ToPortId,
 
@@ -13352,7 +13241,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                CarrierNumber = f.CarrierNumber,
                                AgentId = f.AgentId,
                                AgentComputed = f.AgentComputed,
-                               // ComputedShipmentNumber = f.ComputedShipmentNumber,
                                ARInvoiceIssued = f.ARInvoiceIssued,
                                CreditNoteIssued = f.CreditNoteIssued,
                                CustomFileNumber = f.CustomFileNumber,
@@ -13415,7 +13303,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                MainHarmonize = f.MainHarmonize,
                                StatusId = f.StatusId,
                                StatusDate = f.StatusDate,
-                               //StatusName = f.StatusName,
                                StatusLocation = f.StatusLocation,
                                LongMaster = f.LongMaster,
                                PartnerLogoId = f.PartnerLogoId,
@@ -13823,7 +13710,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                Field69 = f.Field69,
                                Field70 = f.Field70,
                                CarrierTransportDocumentNumber = f.CarrierTransportDocumentNumber,
-                               ShipperReference1 = f.ShipperReference1/*, Master = f.Master*/,
+                               ShipperReference1 = f.ShipperReference1,
                                ShipperAddressCountryCode = f.ShipperAddressCountryCode,
                                ConsigneeAddressCountryCode = f.ConsigneeAddressCountryCode,
                                Master = f.Master,
@@ -14378,7 +14265,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ChargeableWeightInKG = f.ChargeableWeightInKG,
                     ChargeableWeight = f.ChargeableWeight,
                     GrossWeight = f.GrossWeight,
-                    ShipperReference1 = f.ShipperReference1/*, Master = f.Master*/,
+                    ShipperReference1 = f.ShipperReference1,
                     Master = f.Master,
                     OpenReceivablesInLocalCurrency = f.OpenReceivablesInLocalCurrency,
                     OpenReceivablesInProfitCurrency = f.OpenReceivablesInProfitCurrency,
@@ -14401,7 +14288,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     NextETA = f.NextETA,
                     NextETD = f.NextETD,
                     NextLegName = f.NextLegName,
-                    Routing = f.Routing,//(f.DirectionId!="D"&&f.TransportModeId!="I")?((f.PreCarriageFromPortCode != null ? f.PreCarriageFromPortCode + " > " : "") + (f.MasterShipmentDataId != null ? (f.MainCarriageFromPortCode != null ? f.MainCarriageFromPortCode + " > " : "") + (f.MainCarriageFinalDestinationPortCode != null ? (f.OnCarriageToPortCode != null ? f.MainCarriageFinalDestinationPortCode + " > " + f.OnCarriageToPortCode : f.MainCarriageFinalDestinationPortCode) : "") : ((f.FromPortCode != null ? f.FromPortCode + " > " : "") + (f.ToPortCode != null ? (f.OnCarriageToPortCode != null ? f.ToPortCode + " > " + f.OnCarriageToPortCode : f.ToPortCode) : "")))):(""),
+                    Routing = f.Routing,
                     FromPortId = f.FromPortId,
                     ToPortId = f.ToPortId,
                     FromPort = f.FromPort,
@@ -14466,7 +14353,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     CarrierNumber = f.CarrierNumber,
                     AgentId = f.AgentId,
                     AgentComputed = f.AgentComputed,
-                    //ComputedShipmentNumber = f.ComputedShipmentNumber,
 
                     ARInvoiceIssued = f.ARInvoiceIssued,
                     CreditNoteIssued = f.CreditNoteIssued,
@@ -14529,7 +14415,6 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     MainCarriageToPortName = f.MainCarriageToPortName,
                     StatusId = f.StatusId,
                     StatusDate = f.StatusDate,
-                    //StatusName = f.StatusName,
                     StatusLocation = f.StatusLocation,
                     LongMaster = f.LongMaster,
                     PartnerLogoId = f.PartnerLogoId,
@@ -14893,7 +14778,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     ChargeableWeightInKG = f.ChargeableWeightInKG,
                     ChargeableWeight = f.ChargeableWeight,
                     GrossWeight = f.GrossWeight,
-                    ShipperReference1 = f.ShipperReference1/*, Master = f.Master*/,
+                    ShipperReference1 = f.ShipperReference1,
                     Master = f.Master,
                     OpenReceivablesInLocalCurrency = f.OpenReceivablesInLocalCurrency,
                     OpenReceivablesInProfitCurrency = f.OpenReceivablesInProfitCurrency,
@@ -14915,14 +14800,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     NextETA = f.NextETA,
                     NextETD = f.NextETD,
                     NextLegName = f.NextLegName,
-                    Routing = f.Routing,//(f.DirectionId!="D"&&f.TransportModeId!="I")?((f.PreCarriageFromPortCode != null ? f.PreCarriageFromPortCode + " > " : "") + (f.MasterShipmentDataId != null ? (f.MainCarriageFromPortCode != null ? f.MainCarriageFromPortCode + " > " : "") + (f.MainCarriageFinalDestinationPortCode != null ? (f.OnCarriageToPortCode != null ? f.MainCarriageFinalDestinationPortCode + " > " + f.OnCarriageToPortCode : f.MainCarriageFinalDestinationPortCode) : "") : ((f.FromPortCode != null ? f.FromPortCode + " > " : "") + (f.ToPortCode != null ? (f.OnCarriageToPortCode != null ? f.ToPortCode + " > " + f.OnCarriageToPortCode : f.ToPortCode) : "")))):(""),
+                    Routing = f.Routing,
                     FromPortId = !string.IsNullOrEmpty(f.MainCarriageFromPortId) ? f.MainCarriageFromPortId : f.FromPortId,
                     ToPortId = !string.IsNullOrEmpty(f.MainCarriageToPortId) ? f.MainCarriageToPortId : f.ToPortId,
                     FromPort = !string.IsNullOrEmpty(f.MainCarriageFromPortCode) ? f.MainCarriageFromPortCode : f.FromPortCode,
                     FromPortName = !string.IsNullOrEmpty(f.MainCarriageFromPortName) ? f.MainCarriageFromPortName : f.FromPortName,
                     FromPortCountry = f.MainCarriageFromPortCountryName,
-
-                    //ToPort = !string.IsNullOrEmpty(f.MainCarriageFinalDestinationPortCode) ? f.MainCarriageFinalDestinationPortCode : f.ToPortCode,
 
                     // Column: To
                     ToPort = (f.TransportModeId == "I" && f.DirectionId == "D") ? f.MainCarriageToCity : f.ToPort,
@@ -15768,6 +15651,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          PickupPlace = s.PickupPlace,
                                                          SealNo = s.SealNo,
                                                          HSCode = s.HSCode,
+                                                         LockerAddress = s.LockerAddress,
+                                                         LockerName = s.LockerName,
+                                                         LockerCity = s.LockerCity,
+                                                         LockerCode = s.LockerCode,
+
                                                      };
 
             return shipmentsList;

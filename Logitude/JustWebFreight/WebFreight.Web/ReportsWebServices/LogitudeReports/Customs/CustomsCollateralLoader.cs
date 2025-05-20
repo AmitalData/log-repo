@@ -72,6 +72,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                  join d in context.Declarations
                                  on a.DeclarationId equals d.Id into dJoin
                                  from declaration in dJoin.DefaultIfEmpty()
+                                  join cc in context.CustomsCollateralsConditions
+                                  on new { a.Id, Tenant = tenant } equals new {Id = cc.CustomsCollateralId, cc.Tenant } into ccJoin
+                                 from cond in ccJoin.DefaultIfEmpty()
                                  join ca in context.CustomsCollateralsAnswers
                                 .Include(a => a.CollateralAnswerType)
                                 .Include(a => a.AnswerEntityType)
@@ -102,10 +105,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     AnswerEntityTypeName = answer != null && answer.AnswerEntityType != null ? answer.AnswerEntityType.LocalName : null,
                                     CustomsTapgFile = answer != null  ? answer.CustomsTapgFile : null,
                                     CustomsNumeral = answer != null  ? answer.CustomsNumeral : null,
-                                    
-                                    
-                                });
+                                    RequestedAmount = cond != null ? cond.RequestedAmount : null,
 
+                                });
 
             #region  ApplyCustomFilters
 
@@ -151,7 +153,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 c.EntityIdKey1,
                 c.RequestValidityDate,
                 c.CollateralValidityDate,
-                c.CollateralRequestStatusName
+                c.CollateralRequestStatusName,
+               c.RequestedAmount
             })
             .Select(g => new CustomsCollateral()
             {
@@ -161,6 +164,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 RequestValidityDate = g.Key.RequestValidityDate,
                 CollateralValidityDate = g.Key.CollateralValidityDate,
                 CollateralRequestStatusName = g.Key.CollateralRequestStatusName,
+                RequestedAmount = g.Key.RequestedAmount ,
                 CustomsCollateralsAnswers = g.Select(d => new CustomsCollateralsAnswers()
                 {
                     RequestFileTypeName = d.RequestFileTypeName,

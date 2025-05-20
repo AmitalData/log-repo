@@ -541,8 +541,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             CargoTrackingSearchService.CreateSearchReferencesForShipment(dataRow, bulkDataPreperation, tableName);
             if (dataRow != null) {
-               // NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AddValidRecoredToDataTable!!!   ShipmentNumber: " + dataRow["ShipmentNumber"] + ",Tenant: " + dataRow["Tenant"]);
-            }
+             }
 
 
             bulkDataPreperation.MainDataTable.Rows.Add(dataRow);

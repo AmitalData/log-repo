@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using System;
+ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+ using System;
 using System.Linq;
 
 namespace Logitude.BL.Helpers
@@ -47,10 +48,9 @@ namespace Logitude.BL.Helpers
             {
                 if (string.IsNullOrWhiteSpace(value) || string.IsNullOrWhiteSpace(typeString))
                     return null;
-                
-                Type type = Type.GetType(typeString) ?? AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetType(typeString) != null)?.GetType(typeString);
-                if(type == null)
-                    throw new Exception("Type not found: " + typeString);
+                 Type type = Type.GetType(typeString) ?? AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetType(typeString) != null)?.GetType(typeString);
+                 if(type == null)
+                     throw new Exception("Type not found: " + typeString);
 
                 if (type == typeof(string))
                     return value;
@@ -90,8 +90,8 @@ namespace Logitude.BL.Helpers
                 return deserializedObject is Array array ? array : deserializedObject;
             }
             catch (Exception e)
-            {                
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "An error occurred while deserializing value: " + value + ", type: " + typeString);
+             {                
+                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "An error occurred while deserializing value: " + value + ", type: " + typeString);
                 return null;
             }
         }

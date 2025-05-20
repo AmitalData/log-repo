@@ -57,15 +57,15 @@ import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/Custo
 import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
 import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
 import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
- import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
+import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
 import { CityNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate';
 import { CodeListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate';
 import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate';
 import { OcrDefaultsSettingsComponent } from './Components/Maintenance/OcrDefaultsSettingsComponent';
 import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
 import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
-import { ReportExecutionLogListActionBarComponent } from './Components/ListActionBar/ReportExecutionLogListActionBarComponent';
-
+ import { ReportExecutionLogListActionBarComponent } from './Components/ListActionBar/ReportExecutionLogListActionBarComponent';
+ 
   export const Components =
     [
         CustomerHelperComponent,
@@ -133,9 +133,9 @@ import { ReportExecutionLogListActionBarComponent } from './Components/ListActio
         CityNameListHeaderTemplate,
         EnglishNameListHeaderTemplate,
         StartWorkingListHeaderTemplate,         
-        HostScreenComponent,
-        ReportExecutionLogListActionBarComponent
-    ];
+         HostScreenComponent,
+         ReportExecutionLogListActionBarComponent
+     ];
   
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -212,8 +212,8 @@ export class ModuleDeclarations {
             case "StartWorkingListHeaderTemplate": { myResult = StartWorkingListHeaderTemplate; break; }
             case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
             case "HostScreenComponent": { myResult = HostScreenComponent; break; }
-            case "ReportExecutionLogListActionBarComponent": { myResult = ReportExecutionLogListActionBarComponent; break; }
-
+             case "ReportExecutionLogListActionBarComponent": { myResult = ReportExecutionLogListActionBarComponent; break; }
+ 
         }
  
         return myResult;

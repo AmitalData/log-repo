@@ -1,4 +1,5 @@
 ﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
         public DefaultAndConfiguration GetSingleDefaultAndConfiguration(string id)
-        {           
+        {
             return (from a in context.DefaultAndConfigurations
                     where a.Id == id
                     select a).FirstOrDefault();

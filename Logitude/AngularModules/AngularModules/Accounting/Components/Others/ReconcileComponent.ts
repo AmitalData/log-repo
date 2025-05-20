@@ -5,14 +5,9 @@ import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorR
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { ReconciliationPM } from '../../EntityPMs/ReconciliationPM';
-import { JournalPM } from '../../EntityPMs/JournalPM';
-
-import { ReconciliationLinePM } from '../../EntityPMs/ReconciliationLinePM';
-import { LedgerTransactionList } from '../../EntityLists/LedgerTransactionList';
 import { AutomaticReconcileMethodList } from '../../EntityLists/AutomaticReconcileMethodList';
 import { LedgerTransactionPM } from '../../EntityPMs/LedgerTransactionPM';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -25,18 +20,17 @@ import { ReconcileExcelDataArgs, ReconciliationExtendedPMService } from '../../S
 import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-
-
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
-import { count, delay, expand, takeLast } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { delay, expand, takeLast } from 'rxjs/operators';
+import { EMPTY} from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -45,6 +39,7 @@ export class LineModel extends BaseComponent {
     public DataContext = this;
     public isRTL: boolean = false;
     public Title: string = '';
+
     IsAccountingActivated: boolean = false;
     constructor(
         public ledgerTransaction: LedgerTransactionPM,
@@ -60,7 +55,7 @@ export class LineModel extends BaseComponent {
             this.AmountToReconcile = this.ledgerTransaction.OpenAmount;
         this.RowIndex = myRowIndex;
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
-        
+
 
         this.OddEven = this.ColorMe();
 
@@ -92,9 +87,13 @@ export class LineModel extends BaseComponent {
         if (this.LedgerTransactionPM.AmountToReconcile != value) {
             this.LedgerTransactionPM.AmountToReconcile = value;
 
-            //if (this.parent.IsEntityValid) {
-
-            if (this.OpenAmount < 0) { // debit
+            if (value == 0 && (this.OpenAmount < 0 || this.OpenAmount > 0))
+            {
+                this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.ZeroNotAllowed"));
+                this.parent.IsEntityValid = false;
+                this.isLineValid = false;
+            }
+            else if (this.OpenAmount < 0) { // debit
                 if (value < this.OpenAmount || value > 0) {
                     this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
                     this.parent.IsEntityValid = false;
@@ -119,7 +118,7 @@ export class LineModel extends BaseComponent {
             }
 
             //WI26522
-            if (this.parent.IsEntityValid) {
+            if (this.isLineValid && this.parent.IsEntityValid) {
                 if (Math.abs(value) > Math.abs(this.OpenAmount)) {
                     this.UIProperties.SetValidity("AmountToReconcile", this.parent.ObjectTableName, false, TextCodeTranslator.Translate("Reconciliations.O.AmountMustBSmaller2OpenAmount"));
                     this.parent.IsEntityValid = false;
@@ -215,7 +214,7 @@ export class LineModel extends BaseComponent {
     }
     //#endregion
 
-    CalculatOriginalCurruncy() {
+    CalculateOriginalCurrency() {
         //
         // [i] copied from list template
         //
@@ -280,6 +279,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public entityListService: EntityListService = new EntityListService();
     public IsComponentDestroyed: boolean = false;
     public IsMultiWithReconcileMethodCodeEqualOne = false;
+    public isMark: boolean = false;
+    public autoReconil: boolean = false;
+    public firstMark: boolean = true;
+    public yelloMessage: string = '';
     SessionEvent;
     showInternalReconcileAPPaymentAlert = false;
     createdPaymentNumber;
@@ -287,6 +290,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public NumberOfselectedlines = 0;
     public NumberOfFilteredlines = 0;
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
+    _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
+
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
     constructor(public CD: ChangeDetectorRef) {
@@ -309,9 +314,48 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.InitEntity();
 
         this.InitFilters();
+
+
+    }
+    now: Date = null;
+    private Mark() {
+        
+        if (this.GLAccountPM.MarkDate) {
+            this.now = new Date()
+            this.now.setHours(this.now.getHours() - 1);
+            this.isMark = new Date(this.GLAccountPM.MarkDate) > this.now;
+            this.yelloMessage =this.isMark? TextCodeTranslator.Translate("Reconciliations.O.isMatched"):'';
+        }
+
+
+    }
+    public RefreshEntity() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.UpdateIsMark();
     }
 
+    UpdateIsMark() {
+        this._GLAccountExtendedPMService.SetGLAccountIsMark(this.GLAccountPM?.Id).subscribe((myResult: any) => {
+            if (!myResult.HasError) {
+                this.now = new Date()
+                this.now.setHours(this.now.getHours() - 1);
+                this.GLAccountPM.MarkDate = myResult?.Result?.wasNull ? myResult?.Result?.MarkDate : this.GLAccountPM.MarkDate;
+                this.isMark = !myResult?.Result?.wasNull ;
+                this.yelloMessage =this.isMark ? TextCodeTranslator.Translate("Reconciliations.O.isMatched"):'' ;
+                this.CurrentSession.StopBusyIndicator();
+            }
+           
 
+        });
+    }
+    UndoMark() {
+        this.GLAccountPM.MarkDate = null;
+        this.isMark = false;
+        this.yelloMessage = '';
+        this._GLAccountExtendedPMService.UndoMark(this.GLAccountPM?.Id).subscribe((myResult: any) => {
+            
+        });
+    }
     windowArgs;
     SetWindowArgs(args: any) {
 
@@ -342,7 +386,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
             this.CheckIfThereIsDraftReconcile();
             this.DisableDates();
-
+            this.Mark()
         }
 
         this.SetTitle();
@@ -424,7 +468,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.EntityPM = new LedgerTransactionPM();
         this.EntityPM.Tenant = this.TenantPM.Id;
         this.CurrencyId = this.EntityPM.CurrencyId;
-        this.CurrentSession.entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => {;});
+        this.CurrentSession.entityResourceService.getEntityResourceByTableName("TaxDeductionReport").subscribe((response: any) => { 
+            this.CurrentSession.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { ; });
+         });
+       
+
     }
 
     public InitFilters() {
@@ -610,9 +658,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     public set isAllSelected(v: boolean) {
         this._isAllSelected = v;
         if (v) {
-            //this.GetFirst5000LedgerForReconciliation();
-
-            // Take selcted lines by defualt = 500 ; if toggle feature is active = 2000
+           
+            if (this.firstMark) {
+                this.firstMark = false;
+                this.UpdateIsMark();
+            }
             this.GetFirstXLedgerForReconciliationByParam();
             if (this.isFullAccounting) {
                 this.NumberOfselectedlines = this.DataSource.rowCount;
@@ -770,9 +820,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
     }
     OpenAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
-        
+
         if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.OpenAmountSelectedOperator)) {
-           console.log(searchtext+"!!!!!!!!!!!!!!!!!!!!")
+            console.log(searchtext + "!!!!!!!!!!!!!!!!!!!!")
             this.timerToken = setTimeout(() => {
                 var OpenAmountFilterOperator = this.OpenAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (OpenAmountFilterOperator == "Equals") {
@@ -833,8 +883,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     //#endregion
 
     //#region Buttons Handlers
-    ReconcilButton() {
-
+    IsReconcileButtonClicked: boolean = false;
+    ReconcilButton(auto: boolean = false) {
+        if (!auto) this.IsReconcileButtonClicked = true;
         var errors: string[] = [];
         this.ValidationErrorsList = errors;
 
@@ -857,48 +908,54 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         //     return;
         // }
 
-        if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
-            if (this.IsMultiWithReconcileMethodCodeEqualOne) {
-                errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
-            }
-        }
-        this.ValidationErrorsList = errors;
-        if (this.ValidationErrorsList.length == 0) {
+        //if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
+            // if (this.IsMultiWithReconcileMethodCodeEqualOne) {
+            //     errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
+            // }
+        //}
 
-            //Adjust
-            if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+        var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
+        this.CurrentSession.StartBusyIndicatorSaving();
+            this.CurrentSession.StopBusyIndicator();
+           
+                this.ValidationErrorsList = errors;
+                if (this.ValidationErrorsList.length == 0) {
+        
+                    //Adjust
+                    if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
 
-                //var chartType = this.GLAccountPM.ChartOfAccountsTypeCode; // 6 == Works
-                //if (chartType == "6") {
-                //    var confirmWindow = new ConfirmWindow();
-                //    confirmWindow.Width = 390;
-                //    confirmWindow.IsYesEnabled = false;
-                //    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileNoAdjusment"));
-                //    confirmWindow.WindowClosed.subscribe((event: any) => {
-                //    });
-                //} else {
-                    //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
-                    //this.AdjustButton();
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Width = 390;
-                    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.AdjustWithNewJournalScreen();
-                        } else if (confirmWindow.No) {
-                        }
+
+                if (auto) {
+                    this.ValidationErrorsList.push("TotalDifference");
+                    return
+                }
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Width = 390;
+                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.AdjustWithNewJournalScreen();
+                    } else if (confirmWindow.No) {
+                    }
                     });
-                //}
-                return;
+                        //}
+                        return;
+                    }
 
-            }
-            //
+                    //
+        
+                    this.CurrentSession.StartBusyIndicatorSaving();
+                    var entity = this.CreateReconciliation();
+                    this.SubmitChanges(entity);
+        
+                }
+        
+           
+           
+        
 
-            this.CurrentSession.StartBusyIndicatorSaving();
-            var entity = this.CreateReconciliation();
-            this.SubmitChanges(entity);
 
-        }
+
     }
     IsAutoRecClicked: boolean = false;
     AutomaticReconcileButton() {
@@ -1027,6 +1084,15 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.ValidationErrorsList = [noTransactionsSelectedMSG];
     }
 
+    private ShowDraftTransactionsFaiorMessage(error) {
+        var msg = new MessageWindow();
+        msg.IsMessageMultiLine = true;
+        msg.ShowErrorIcon = true;
+        msg.RTL = this.isRTL;
+        msg.Width = 400;
+        msg.Show(error);
+    }
+
     private SubmitDraftLedgerTransactions() {
         var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
 
@@ -1078,7 +1144,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     AdjustWithNewJournalScreen() {
         //this.ReloadScreen();
-        if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
+        if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
 
             //this.ToSend()
             var next = true;
@@ -1091,10 +1157,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
-                            "GLAccountPMId": this.GLAccountPM.Id,
-                            TotalDifference: this.TotalsDeference,
+                            "SourceGLAccountPM": this.GLAccountPM,
+                            TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
-                            TotalDebit: this.TotalDebit
+                            TotalDebit: this.TotalDebit,
+                            IsMultiWithReconcileMethodCodeEqualOne : this.IsMultiWithReconcileMethodCodeEqualOne
                         };
                         logitudeWindow.Show('./Accounting/Components/Others/JournalReconcileComponent');
                         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -1115,13 +1182,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         } else {
             var myMessageWindow = new MessageWindow();
             myMessageWindow.RTL = this.isRTL;
-            myMessageWindow.Show("!(this.SelectedLines.Length > 0 && this.TotalsDeference) ");
+            myMessageWindow.Show("!(this.SelectedLines.Length > 0 && this.TotalDifference) ");
         }
 
     }
 
     onRowSelected($event) {
+
+        if (this.firstMark) {
+            this.firstMark = false;
+            this.UpdateIsMark();
+        }
         if ($event && GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
+
             const row = $event.rowData;
             const rowId = row.Id;
             const RowIndex = $event.rowIndex;
@@ -1138,13 +1211,18 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.NumberOfselectedlines = this.SelectedLines.Length;
                 this.NumberOfFilteredlines = this.DataSource.rowCount;
             }
+
+
             this.SetUIProperty();
         }
     }
 
     CancelButtonClicked() {
+        if(!this.isMark)
+           this.UndoMark();
         this.CurrentSession.CloseCurrentWindow();
     }
+
     //#endregion
 
     //#region Grid Data Source
@@ -1394,6 +1472,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNotes", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
+
             if (!AppTool.IsNullOrEmpty($event)) {
                 if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
                     return;
@@ -1429,9 +1508,31 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
     MustIgnoreItems: any[] = [];
     onDataLoaded() {
-        //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
+        if (this.SelectedLines?.Collection && this.SelectedLines.Collection.length > 0) {
+            this.SelectedLines.Collection.forEach(row => {
+                if (this.IsReconcileButtonClicked && row?.rowData?.IsChecked) {
+                    row.rowData.IsChecked = false;
+                }
+                if (row?.rowData?.IsChecked) {
+                    this.PushLine(row?.rowData, row?.rowIndex);
+                }
+            });
+        }
+        if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
         this.MarkIsChecked.emit({ SelectedLines: this.SelectedLines });
         this.RaiseEvent();
+
+        if (this.autoReconil) {
+            this.autoReconil = false;
+            this.ReconcilButton(true);
+            const index = this.ValidationErrorsList.findIndex(c => c === "TotalDifference");
+            var tetx=TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ")
+            this.yelloMessage = this.ValidationErrorsList.length > 0 ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ").split(",")[0] + " -" + TextCodeTranslator.Translate("Reconciliations.O.ReviewAndCompleteReconcile.") :TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ").split(",")[0] + " -"+TextCodeTranslator.Translate("Reconciliations.O.ReconciledForOpenTransactions");
+            if (index !== -1) {
+                this.ValidationErrorsList.splice(index, 1);
+            }
+            this.CurrentSession.StopBusyIndicator();
+        }
     }
     DataSource = {
         pageSize: 30,
@@ -1498,7 +1599,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             if (selectMoreLines) {
                 countLines = 2000;
             }
-            
+
             // update select all checkbox
             if (this.SelectedLines.Length >= this.DataSource.rowCount || this.SelectedLines.Length >= countLines)
                 this._isAllSelected = true;
@@ -1523,6 +1624,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     CheckBoxValueChanged(Row) {
+
         this.PopLine(Row.LedgerTransactionPM.Id);
         this.FireCheckBoxChecked.emit({ rowData: Row.LedgerTransactionPM, IsChecked: false, RowIndex: Row.myRowIndex, ById: true });
     }
@@ -1553,8 +1655,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     ReloadScreen() {
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-        //this.SelectedLines = [];
-        // this.SelectedLines.Clear();
+
         this.CalculateTotals();
     }
     //#endregion
@@ -1562,17 +1663,47 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     //#region Totals Work
     TotalCredit: number = 0;
     TotalDebit: number = 0;
-    TotalsDeference: number = 0;
+    TotalDifference: number = 0;
+
+    TotalCurrCredit: number = 0;
+    TotalCurrDebit: number = 0;
+    TotalCurrDifference: number = 0;
+
     OriginalDifference: number = 0;
+
     CalculateTotals() {
         this.TotalCredit = 0;
         this.TotalDebit = 0;
-        for (let line of this.SelectedLines.Collection) {
+        this.TotalDifference = 0;
 
-            if (line.AmountToReconcile < 0)
-                this.TotalCredit += +line.AmountToReconcile * -1; //cast number
+        this.TotalCurrCredit = 0;
+        this.TotalCurrDebit = 0;
+        this.TotalCurrDifference = 0;
+
+        this.OriginalDifference = 0;
+        
+        for (let line of this.SelectedLines.Collection) {
+            let rate: number = +line.ledgerTransaction.ExchangeRate;;
+            let lineCurrAmountToReconcile: number = 0;  // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => lineCurrAmountToReconcile is in GLAccountPM.CurrencyId 
+            if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "0" // NIS
+                && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
+                lineCurrAmountToReconcile = +line.AmountToReconcile / rate;  // lineCurrAmountToReconcile in USD, because GLAcc is USD, so all lines are
+            }
+            else if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "1" // let's say, USD
+                && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
+                lineCurrAmountToReconcile = line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
+            }
             else
+                lineCurrAmountToReconcile = +line.AmountToReconcile;
+
+            if (line.AmountToReconcile < 0) {
+                this.TotalCredit += +line.AmountToReconcile * -1; //cast number
+                this.TotalCurrCredit += +lineCurrAmountToReconcile * -1; //cast number
+            }
+            else {
                 this.TotalDebit += +line.AmountToReconcile;
+                this.TotalCurrDebit += +lineCurrAmountToReconcile;
+            }
 
             //if (line.OpenAmount < 0)
             //    this.TotalCredit += +line.OpenAmount * -1; //cast number
@@ -1582,12 +1713,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
             this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
             this.TotalCredit = AppTool.Round(this.TotalCredit, 2);
+            this.TotalCurrDebit = AppTool.Round(this.TotalCurrDebit, 2);
+            this.TotalCurrCredit = AppTool.Round(this.TotalCurrCredit, 2);
 
 
         }
-        var def = (this.TotalCredit - this.TotalDebit)
-        this.OriginalDifference = def * -1;
-        this.TotalsDeference = def < 0 ? def * -1 : def
+        var dif = (this.TotalCredit - this.TotalDebit)
+        var currdif = (this.TotalCurrCredit - this.TotalCurrDebit)
+        this.OriginalDifference = dif * -1;
+        this.TotalDifference = dif < 0 ? dif * -1 : dif;
+        this.TotalCurrDifference = currdif < 0 ? currdif * -1 : currdif; // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => TotalCurrDifference is in GLAccountPM.CurrencyId 
     }
     //#endregion
 
@@ -1698,6 +1833,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
+            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;
@@ -1718,6 +1854,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             var _callback: RecoCallback = mm.Result;
 
             if (_callback && _callback.communicationLogId && _callback.communicationLogId != null) {
+                if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 this.getReconciliationCommunicationLog(_callback);
             }
@@ -1747,13 +1884,30 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 }
 
                 else {
-                    this.ValidationErrorsList = mm.ErrorsArray;
-                    this.CurrentSession.StopBusyIndicator();
+                    if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
+
+                                       
+                    this.ValidationErrorsList = mm.ErrorsArray;  
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                  
+                    if (mm.ErrorsArray.length > 0 && mm.ErrorsArray.some(e => e.includes("GLAccounts.O.MarkedByAnother"))) {
+                        this.ValidationErrorsList = mm.ErrorsArray.map(error =>
+                            error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ") : error
+                        );
+                        this.SelectedLines.Clear();
+                        this.ReloadScreen()
+                        this.autoReconil = true
+                    }
+
+
+
+
                 }
             }
 
         });
     }
+
     getReconciliationCommunicationLog(_callback: RecoCallback) {
         SessionLocator.SelectedSession.StartBusyIndicator("Reconciliation in progress");
         this._ReconciliationExtendedPMService
@@ -1815,6 +1969,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             });
 
     }
+
     OpenJournal(id) {
         if (!AppTool.IsNullOrEmpty(id)) {
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -2046,6 +2201,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else
                 this.dateFilter = null;
+            this._isAllSelected = false;
             this.ReloadScreen();
         }
     }
@@ -2059,6 +2215,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 this.dateFilter = new FilterItem(this.SelectedDateType.FieldName, new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
             else
                 this.dateFilter = null;
+            this._isAllSelected = false;
             this.ReloadScreen();
         }
     }
@@ -2099,7 +2256,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     public get EnableCreateAPPaymentButton(): boolean {
-        return this.TotalsDeference >= 0 && this.SelectedLines.Length > 0;
+        return this.TotalDifference >= 0 && this.SelectedLines.Length > 0;
     }
 
     CreatePaymentButtonClicked() {
@@ -2108,7 +2265,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("APPayment.M.InvalidSelectedTransctionsDifference"));
         }
 
-        if (this.GLAccountPM.CardId === undefined && this.GLAccountPM.ParentCurrencyGLAccountCardId === undefined) {
+        if (AppTool.IsNullOrEmpty(this.GLAccountPM.CardId) && AppTool.IsNullOrEmpty(this.GLAccountPM.ParentCurrencyGLAccountCardId)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("TaxDeductionReport.O.AccountWithoutVendor"));
         }
 
@@ -2119,12 +2276,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     NewAPPaymentMethod() {
         var newApPaymentPM: APPaymentPM = new APPaymentPM();
+        let paymcurr: string = this.CurrencyId != null ? this.CurrencyId : this.TenantPM.CurrencyId;
+
+        // let recocurr: string = this.TenantPM.CurrencyId;
+        // if (!AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "1")
+        //     recocurr = this.GLAccountPM.CurrencyId;  
+
         newApPaymentPM.ReconcileInternalTrans = this.GetSelectedPageLines();
         newApPaymentPM.StatusCode = "DR";
         newApPaymentPM.StatusName = "Draft";
         console.log('this.GLAccountPM', this.GLAccountPM);
         newApPaymentPM.VendorId = this.GLAccountPM.CardId != null ? this.GLAccountPM.CardId : this.GLAccountPM.ParentCurrencyGLAccountCardId;
-        newApPaymentPM.AmountInPaymentCurrency = this.TotalsDeference;
+        newApPaymentPM.AmountInLocalCurrency = this.TotalDifference;
+        newApPaymentPM.AmountInPaymentCurrency = paymcurr != this.TenantPM.CurrencyId ? this.TotalCurrDifference : this.TotalDifference;
         newApPaymentPM.Tenant = this.TenantPM.Id;
         newApPaymentPM.IsClosed = false;
         newApPaymentPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -2135,8 +2299,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newApPaymentPM.LocalCurrencyId = this.TenantPM.CurrencyId;
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
-        newApPaymentPM.DontDisplayAPInvoices=true;
-        newApPaymentPM.PaymentCurrencyId = this.CurrencyId != null ? this.CurrencyId : this.TenantPM.CurrencyId;
+        newApPaymentPM.DontDisplayAPInvoices = true;
+        newApPaymentPM.PaymentCurrencyId = paymcurr;
         newApPaymentPM.IsFromReconcilePage = true;
         newApPaymentPM.IsMultiCurrency = this.GLAccountPM.IsMultiCurrency;
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {

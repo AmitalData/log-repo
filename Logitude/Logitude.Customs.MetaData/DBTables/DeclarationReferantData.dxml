@@ -274,7 +274,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
+   <Column
     Name="MawbDate"
     Type="date">
     <Constraints
@@ -308,7 +308,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
+   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="CustomsVendors"
     ReferencedColumn="Id"
@@ -348,7 +348,7 @@
     ReferencedTable="PackingTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  <Relation
+   <Relation
     ForeignKeyColumn="Vessel"
     ReferencedTable="Vessels"
     ReferencedColumn="Id"
@@ -358,7 +358,7 @@
     ReferencedTable="Airlines"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Index
+   <Index
     Columns="IsClosedForFollowUp" />
   <Index
     Columns="FollowUpDate" />

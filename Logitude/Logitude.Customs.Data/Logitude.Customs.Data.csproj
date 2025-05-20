@@ -51,6 +51,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
      <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
@@ -269,6 +302,7 @@
     <Compile Include="EntityKeys\CB_CustomsItemLinkageKeys.cs" />
     <Compile Include="EntityKeys\CB_LevyConditionKeys.cs" />
     <Compile Include="EntityKeys\CB_LevyExclusionKeys.cs" />
+    <Compile Include="EntityKeys\CB_PreferenceKeys.cs" />
     <Compile Include="EntityKeys\CB_PropertiesDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CB_QuotaComputedDataKeys.cs" />
     <Compile Include="EntityKeys\CB_QuotaDetailsHistoryKeys.cs" />
@@ -278,6 +312,7 @@
     <Compile Include="EntityKeys\CB_RegularityRequiredCertificateKeys.cs" />
     <Compile Include="EntityKeys\CB_RegularityRequirementKeys.cs" />
     <Compile Include="EntityKeys\CB_RequirementComputedDataKeys.cs" />
+    <Compile Include="EntityKeys\CB_RuleClassificationKeys.cs" />
     <Compile Include="EntityKeys\CB_RuleDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CB_RuleKeys.cs" />
     <Compile Include="EntityKeys\CB_TariffComputedDataKeys.cs" />
@@ -287,6 +322,7 @@
     <Compile Include="EntityKeys\CB_TradeAgreementKeys.cs" />
     <Compile Include="EntityKeys\CB_TradeLevyKeys.cs" />
     <Compile Include="EntityKeys\CB_VendorKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginConnectionKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginInvoiceKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginItemKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginKeys.cs" />
@@ -503,6 +539,7 @@
     <Compile Include="EntityListQueryServices\CB_CustomsItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_LevyConditionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_LevyExclusionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CB_PreferenceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_PropertiesDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_QuotaComputedDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_QuotaDetailsHistoryListQueryService.cs" />
@@ -512,6 +549,7 @@
     <Compile Include="EntityListQueryServices\CB_RegularityRequiredCertificateListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RegularityRequirementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RequirementComputedDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CB_RuleClassificationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RuleDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RuleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_TariffComputedDataListQueryService.cs" />
@@ -521,6 +559,7 @@
     <Compile Include="EntityListQueryServices\CB_TradeAgreementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_TradeLevyListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_VendorListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginConnectionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginInvoiceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginListQueryService.cs" />
@@ -652,6 +691,7 @@
     <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_LevyConditionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_LevyExclusionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CB_PreferenceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_PropertiesDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_QuotaComputedDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_QuotaDetailsHistoryListQueryService.Generated.cs" />
@@ -661,6 +701,7 @@
     <Compile Include="EntityListQueryServices\Generated\CB_RegularityRequiredCertificateListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RegularityRequirementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RequirementComputedDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CB_RuleClassificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RuleDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RuleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_TariffComputedDataListQueryService.Generated.cs" />
@@ -670,6 +711,7 @@
     <Compile Include="EntityListQueryServices\Generated\CB_TradeAgreementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_TradeLevyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_VendorListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginConnectionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginInvoiceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginListQueryService.Generated.cs" />
@@ -947,6 +989,7 @@
     <Compile Include="EntityLists\Generated\CB_CustomsItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_LevyConditionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_LevyExclusionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CB_PreferenceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_PropertiesDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_QuotaComputedDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_QuotaDetailsHistoryList.Generated.cs" />
@@ -956,6 +999,7 @@
     <Compile Include="EntityLists\Generated\CB_RegularityRequiredCertificateList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RegularityRequirementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RequirementComputedDataList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CB_RuleClassificationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RuleDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RuleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_TariffComputedDataList.Generated.cs" />
@@ -965,6 +1009,7 @@
     <Compile Include="EntityLists\Generated\CB_TradeAgreementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_TradeLevyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_VendorList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginConnectionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginInvoiceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginList.Generated.cs" />
@@ -1206,6 +1251,7 @@
     <Compile Include="EntityMapping\CB_CustomsItemMap.cs" />
     <Compile Include="EntityMapping\CB_LevyConditionMap.cs" />
     <Compile Include="EntityMapping\CB_LevyExclusionMap.cs" />
+    <Compile Include="EntityMapping\CB_PreferenceMap.cs" />
     <Compile Include="EntityMapping\CB_PropertiesDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CB_QuotaComputedDataMap.cs" />
     <Compile Include="EntityMapping\CB_QuotaDetailsHistoryMap.cs" />
@@ -1215,6 +1261,7 @@
     <Compile Include="EntityMapping\CB_RegularityRequiredCertificateMap.cs" />
     <Compile Include="EntityMapping\CB_RegularityRequirementMap.cs" />
     <Compile Include="EntityMapping\CB_RequirementComputedDataMap.cs" />
+    <Compile Include="EntityMapping\CB_RuleClassificationMap.cs" />
     <Compile Include="EntityMapping\CB_RuleDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CB_RuleMap.cs" />
     <Compile Include="EntityMapping\CB_TariffComputedDataMap.cs" />
@@ -1224,6 +1271,7 @@
     <Compile Include="EntityMapping\CB_TradeAgreementMap.cs" />
     <Compile Include="EntityMapping\CB_TradeLevyMap.cs" />
     <Compile Include="EntityMapping\CB_VendorMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginConnectionMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginInvoiceMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginItemMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginMandatoryFieldsMap.cs" />
@@ -1440,6 +1488,7 @@
     <Compile Include="EntityPOCOs\CB_CustomsItemLinkage.cs" />
     <Compile Include="EntityPOCOs\CB_LevyCondition.cs" />
     <Compile Include="EntityPOCOs\CB_LevyExclusion.cs" />
+    <Compile Include="EntityPOCOs\CB_Preference.cs" />
     <Compile Include="EntityPOCOs\CB_PropertiesDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CB_Quota.cs" />
     <Compile Include="EntityPOCOs\CB_QuotaComputedData.cs" />
@@ -1450,6 +1499,7 @@
     <Compile Include="EntityPOCOs\CB_RegularityRequirement.cs" />
     <Compile Include="EntityPOCOs\CB_RequirementComputedData.cs" />
     <Compile Include="EntityPOCOs\CB_Rule.cs" />
+    <Compile Include="EntityPOCOs\CB_RuleClassification.cs" />
     <Compile Include="EntityPOCOs\CB_RuleDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CB_Tariff.cs" />
     <Compile Include="EntityPOCOs\CB_TariffComputedData.cs" />
@@ -1459,6 +1509,7 @@
     <Compile Include="EntityPOCOs\CB_TradeLevy.cs" />
     <Compile Include="EntityPOCOs\CB_Vendor.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOrigin.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginConnection.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginInvoice.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginItem.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginMandatoryFields.cs" />
@@ -1675,6 +1726,7 @@
     <Compile Include="Repsitories\CB_CustomsItemRepository.cs" />
     <Compile Include="Repsitories\CB_LevyConditionRepository.cs" />
     <Compile Include="Repsitories\CB_LevyExclusionRepository.cs" />
+    <Compile Include="Repsitories\CB_PreferenceRepository.cs" />
     <Compile Include="Repsitories\CB_PropertiesDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CB_QuotaComputedDataRepository.cs" />
     <Compile Include="Repsitories\CB_QuotaDetailsHistoryRepository.cs" />
@@ -1684,6 +1736,7 @@
     <Compile Include="Repsitories\CB_RegularityRequiredCertificateRepository.cs" />
     <Compile Include="Repsitories\CB_RegularityRequirementRepository.cs" />
     <Compile Include="Repsitories\CB_RequirementComputedDataRepository.cs" />
+    <Compile Include="Repsitories\CB_RuleClassificationRepository.cs" />
     <Compile Include="Repsitories\CB_RuleDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CB_RuleRepository.cs" />
     <Compile Include="Repsitories\CB_TariffComputedDataRepository.cs" />
@@ -1693,6 +1746,7 @@
     <Compile Include="Repsitories\CB_TradeAgreementRepository.cs" />
     <Compile Include="Repsitories\CB_TradeLevyRepository.cs" />
     <Compile Include="Repsitories\CB_VendorRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginConnectionRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginInvoiceRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginItemRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginMandatoryFieldsRepository.cs" />
@@ -1700,6 +1754,7 @@
     <Compile Include="Repsitories\CertificateOfOriginStatusCodeEnumRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginTypeCodeEnumRepository.cs" />
     <Compile Include="Repsitories\ChangeTypeRepository.cs" />
+    <Compile Include="Repsitories\CheckHealthRepository.cs" />
     <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />
@@ -1824,6 +1879,7 @@
     <Compile Include="Repsitories\Generated\CB_CustomsItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_LevyConditionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_LevyExclusionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CB_PreferenceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_PropertiesDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_QuotaComputedDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_QuotaDetailsHistoryRepository.Generated.cs" />
@@ -1833,6 +1889,7 @@
     <Compile Include="Repsitories\Generated\CB_RegularityRequiredCertificateRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RegularityRequirementRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RequirementComputedDataRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CB_RuleClassificationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RuleDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RuleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_TariffComputedDataRepository.Generated.cs" />
@@ -1842,6 +1899,7 @@
     <Compile Include="Repsitories\Generated\CB_TradeAgreementRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_TradeLevyRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_VendorRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginConnectionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginInvoiceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginMandatoryFieldsRepository.Generated.cs" />

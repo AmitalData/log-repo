@@ -46,7 +46,10 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.CommonDataModel.EntityQueries;
-
+ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+ using DocumentFormat.OpenXml.Wordprocessing;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+ 
 namespace Logitude.CustomsMessaging.RequestServices
 {
     public class DF_MSG10000_ImportDeclarationRequestService : RequestServiceBase<DF_MSG10000_ImportDeclaration, GenericRequestParams>
@@ -55,6 +58,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationPM _DeclarationPM;
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
+        private ForbiddenSignsUtil _ForbiddenSignsUtil = new ForbiddenSignsUtil();
+        private string _forbiddenSigns = "";
         public bool IsFromOpenNewAmendment = false;
         public bool FeatureExcludeManifest = false;
         public bool IsSendWithManifest = false;
@@ -194,15 +199,21 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private void CreateDeclarationPM(GenericRequestParams requestParams)
         {
+         
+           
+
             if (this._context == null) this._context = CustomContext.GetContext(requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
+
+        
         }
 
 
         public override void PostGetRequest(DF_MSG10000_ImportDeclaration customRequest, GenericRequestParams requestParams)
         {
+           
             if (this._context == null)
             {
                 this._context = CustomContext.GetContext(requestParams.Tenant);
@@ -215,12 +226,15 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(_DeclarationPM.Id, true, false);
                 if (currentDeclarationCourierStatusPM == null)
                 {
+                   
                     currentDeclarationCourierStatusPM = new DeclarationCourierStatusPM()
                     {
                         DeclarationId = _DeclarationPM.Id,
                         Tenant = _DeclarationPM.Tenant,
                         IsClosedForFollowUp = false,
                         IsCourierMissingClassification = false,
+                        ImporterName = _DeclarationPM.ImporterName,
+                        CargoDescription =_DeclarationPM.CargoDescription,
                     };
                     currentDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Insert;
                 }
@@ -232,22 +246,22 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
             }
 
-           
-                if(_DeclarationPM.IsCourierDeclaration)
-                {
-                    FeatureQuery featureQuery = new FeatureQuery();
-                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
-                    var feature = features.Features.FirstOrDefault(x => x.Code == "SendL2UFromSendDeclaration");
-                    if (feature != null)
-                        OpenUnifreighTask(_DeclarationPM, "L2U", null, false, "");
-                }
-                else
-                {
-                    OpenUnifreighTask(_DeclarationPM, "L2U", "INR", true, "");
 
-                }
-                return;
-           
+            if (_DeclarationPM.IsCourierDeclaration)
+            {
+                FeatureQuery featureQuery = new FeatureQuery();
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
+                var feature = features.Features.FirstOrDefault(x => x.Code == "SendL2UFromSendDeclaration");
+                if (feature != null)
+                    OpenUnifreighTask(_DeclarationPM, "L2U", null, false, "");
+            }
+            else
+            {
+                OpenUnifreighTask(_DeclarationPM, "L2U", "INR", true, "");
+
+            }
+            return;
+
             ///moran please updat event "INR"
             //string loggingUserId = AuthenticationUtil.ResolveUserId(requestParams.Tenant);
             string loggingUserId = null;
@@ -260,124 +274,128 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private void OpenUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {
+            var mySetting = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant);
+
+            if (mySetting.StandAlone)
+                return;
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
-            bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
-           
+            bool isConnectedToUnifreight = mySetting.IsConnectedToUniFreight;
+
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
                 scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
             }
             try
             {
-                   if (dirtyDeclarationPM.Direction == "E")
-                     return;
-                   //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var requestData = "";
-                    var addStatus = ""; // moran 17.9.15 - Task 15458
-                    var comment = ""; // moran 20.9.15 - Task 15458
-                    var addComment = ""; // moran 20.9.15 - Task 15458
-              
+                if (dirtyDeclarationPM.Direction == "E")
+                    return;
+                //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                var requestData = "";
+                var addStatus = ""; // moran 17.9.15 - Task 15458
+                var comment = ""; // moran 20.9.15 - Task 15458
+                var addComment = ""; // moran 20.9.15 - Task 15458
 
-                    _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
-                    var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
-                    var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
-                    myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
-                    if (myCCUQUELOCK == null)
-                    {
-                        var myCCUQUELOCKPM = new CCUQUELOCKPM()
-                        {
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            ENTNAME = "CFIFILEM",
-                            FILENO = dirtyDeclarationPM.CustomFileNo,
-                        };
-                        myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
-                    }
 
-                
-                    var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-
-                    var myGGGQPM = new Unifreight.BL.EntityPMs.GGGQPM()
+                _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
+                var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
+                var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
+                myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
+                if (myCCUQUELOCK == null)
+                {
+                    var myCCUQUELOCKPM = new CCUQUELOCKPM()
                     {
                         ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
                         ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D"
+                        FILENO = dirtyDeclarationPM.CustomFileNo,
                     };
-                    if (!isConnectedToUnifreight)
-                    {
-                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
-                    }
-                    myGGGQUpdateService.Update(myGGGQPM, true);
-                
-                 
+                    myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
+                }
 
-                    //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                    string unifreightUser = null;
-                    if (RequestSheetContext.Current != null)
+
+                var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
+                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+
+                var myGGGQPM = new Unifreight.BL.EntityPMs.GGGQPM()
+                {
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ORIGINQUE = "LGT", //LugitudeRequest
+                    STATUS = "1",
+                    EXPTASKTIME = 5,
+                    EXECDATE = DateTime.Now,
+                    TRY = 9,
+                    PRIORITY = 8,
+                    ENTNAME = "CFIFILEM",
+                    PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                    FORMID = "LGT_UPDATE_FCI",
+                    DEBUG = "F",
+                    DONEOPERATION = "D"
+                };
+                if (!isConnectedToUnifreight)
+                {
+                    myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                }
+                myGGGQUpdateService.Update(myGGGQPM, true);
+
+
+
+                //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                string unifreightUser = null;
+                if (RequestSheetContext.Current != null)
+                {
+                    var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
                     {
-                        var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-                        if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
+                        UserRepository userRep = new UserRepository(dirtyDeclarationPM.Tenant);
+                        User user = userRep.GetSingleUser(loggingUserIdFromRS, dirtyDeclarationPM.Tenant, true);
+                        if (user != null)
                         {
-                            UserRepository userRep = new UserRepository(dirtyDeclarationPM.Tenant);
-                            User user = userRep.GetSingleUser(loggingUserIdFromRS, dirtyDeclarationPM.Tenant, true);
-                            if (user != null)
+                            if (!String.IsNullOrWhiteSpace(user.Code))
                             {
-                                if (!String.IsNullOrWhiteSpace(user.Code))
-                                {
-                                    unifreightUser = user.Code;
-                                }
+                                unifreightUser = user.Code;
                             }
                         }
                     }
-                    if (String.IsNullOrWhiteSpace(unifreightUser))
-                    {
-                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                    }
+                }
+                if (String.IsNullOrWhiteSpace(unifreightUser))
+                {
+                    unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                }
 
-                    if (raiseStatus == true)
+                if (raiseStatus == true)
+                {
+                    string loggingUserId = null;
                     {
-                        string loggingUserId = null;
+                        ICommonDataContext dbContext = CommonDataContext.GetContext(dirtyDeclarationPM.Tenant);
+                        UserRepository userRepository = new UserRepository(dbContext);
+                        var user = userRepository.GetSingleUserByCode("MEHES", dirtyDeclarationPM.Tenant, true);
+                        if (user != null)
                         {
-                            ICommonDataContext dbContext = CommonDataContext.GetContext(dirtyDeclarationPM.Tenant);
-                            UserRepository userRepository = new UserRepository(dbContext);
-                            var user = userRepository.GetSingleUserByCode("MEHES", dirtyDeclarationPM.Tenant, true);
-                            if (user != null)
-                            {
-                                loggingUserId = user.Id;
-                            }
-                        }
-                        var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, loggingUserId);
-                        requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, comment, xmlStatus, DateTime.Now, true);
-                        if (!String.IsNullOrWhiteSpace(addStatus))
-                        {
-                            var requestData2 = myDeclarationUpdateService.GetMyFUStatusXML(addStatus, addStatus, addComment, xmlStatus, DateTime.Now, true);
-                            requestData = string.Concat(requestData, requestData2);
+                            loggingUserId = user.Id;
                         }
                     }
-                    
-                    var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
+                    var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, loggingUserId);
+                    requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, comment, xmlStatus, DateTime.Now, true);
+                    if (!String.IsNullOrWhiteSpace(addStatus))
                     {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                        PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority(taskType),
-                        TYPE = taskType,
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F"
-                    };
+                        var requestData2 = myDeclarationUpdateService.GetMyFUStatusXML(addStatus, addStatus, addComment, xmlStatus, DateTime.Now, true);
+                        requestData = string.Concat(requestData, requestData2);
+                    }
+                }
+
+                var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    STATUS = "W",
+                    REQUESTDATA = requestData,
+                    ENTNAME = "CFIFILEM",
+                    PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                    PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority(taskType),
+                    TYPE = taskType,
+                    USRCODE = unifreightUser,
+                    ARCHIVE = "F"
+                };
                 if (!isConnectedToUnifreight)
                 {
                     myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
@@ -386,16 +404,16 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myYCULTASKUpdateService.DontAddTransaction = true;
                 myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
-                
-                
+
+
 
 
 
                 if (scope != null)
-                    {
-                        scope.Complete();
-                    }
-               
+                {
+                    scope.Complete();
+                }
+
             }
             finally
             {
@@ -410,7 +428,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_MSG10000_ImportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-         
+            if(!IsFromOpenNewAmendment)
+              _forbiddenSigns = _ForbiddenSignsUtil.GetForbiddenSigns(requestParams.Tenant);
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
@@ -479,7 +498,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 /// due isAccurate
                 //queryService.GetOnlyParent();//  work with parent only !!!!!  
             }
-           
+
             //#endif
             bool fromMevaker = false;
             if (!string.IsNullOrWhiteSpace(requestParams.UnifreightListOnServerOnly))
@@ -2056,13 +2075,13 @@ namespace Logitude.CustomsMessaging.RequestServices
         private List<DeclarationGoodsShipmentConsignment> GetDeclarationConsignment(DeclarationPM declarationPM)
         {
             var declarationConsignmentList = new List<DeclarationGoodsShipmentConsignment>();
-            for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
+             for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
             {
                 var consignmentPM = declarationPM.Consignments[consignmentSeq];
                 var declarationConsignment = new DeclarationGoodsShipmentConsignment();
                 declarationConsignment.SequenceNumeric = consignmentSeq + 1;
                 declarationConsignment.SequenceNumericSpecified = true;
-
+          
                 ///if (!String.IsNullOrWhiteSpace(consignmentPM.ManifestNumber) || !String.IsNullOrWhiteSpace(consignmentPM.CargoTypeCode))
                 //{
                 declarationConsignment.TransportContractDocument = new DeclarationGoodsShipmentConsignmentTransportContractDocument()
@@ -2105,11 +2124,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                         ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
                     };
                 }
-				if (this.IsSendWithManifest) {
-                   declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
-                   {
-                       ID = SetIDTypeValue<LoadingLocationIdentificationIDType>(consignmentPM.LoadingPortCode) // new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
-                   };
+                if (this.IsSendWithManifest)
+                {
+                    declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentConsignmentLoadingLocation()
+                    {
+                        ID = SetIDTypeValue<LoadingLocationIdentificationIDType>(consignmentPM.LoadingPortCode) // new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
+                    };
                 }
                 declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
@@ -2123,10 +2143,11 @@ namespace Logitude.CustomsMessaging.RequestServices
         private DeclarationGoodsShipmentConsignmentDMExtensions GetDMExtensionsConsignment(ConsignmentPM consignmentPM)
         {
             var DMExtensions = new DeclarationGoodsShipmentConsignmentDMExtensions();
-          
-                DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = consignmentPM.CargoDescription };
+
            
-                //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
+            DMExtensions.CargoDescription = new DeclarationGoodsShipmentConsignmentDMExtensionsCargoDescription() { Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(consignmentPM.CargoDescription, _forbiddenSigns) };
+
+            //DMExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType() { Value = consignmentPM.IsLastReleaseFromWarehous };
             if (consignmentPM.IsLastReleaseFromWarehous == "T") // temporary treatment - Task 9683
             {
                 //mohammad temp treatment due to the change of task 9684
@@ -2234,7 +2255,6 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     declarationConsignmentPackage.GrossMassMeasure = SetMeasureTypeValue<DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureGrossMassMeasure>(consignmentPackagePM.GrossMassMeasureTypeCode, consignmentPackagePM.GrossMassMeasure.Value);
                 }
-
                 declarationConsignmentPackage.TypeCode = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureTypeCode() { Value = consignmentPackagePM.PackageTypeCode };
                 declarationConsignmentPackage.MarksNumbers = new DeclarationGoodsShipmentConsignmentDMExtensionsPackagesMeasureMarksNumbers() { Value = consignmentPackagePM.MarksNumbers };
 
@@ -2247,7 +2267,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationImporter GetDeclarationImporterRole6(DeclarationPM declarationPM)
         {
-
+            
             //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
             //var declarationImporter = new DeclarationImporter();
             // Task 6440 - add ImporterCode fields check
@@ -2266,8 +2286,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             //Yuval Chalup 15.11.2016 TASK-24438 --->
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
-                Address = declarationPM.EntitleImporterAddress,
-                Name = declarationPM.EntitleImporterName,
+                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars( declarationPM.EntitleImporterAddress, _forbiddenSigns),
+                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.EntitleImporterName, _forbiddenSigns),
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.ImporterEntitlementTypeCode
@@ -2292,18 +2312,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationImporter GetDeclarationImporterRole5(DeclarationPM declarationPM)
         {
-            //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
-            //var declarationImporter = new DeclarationImporter();
-            // Task 6440 - add ImporterCode fields check
-            //if (!String.IsNullOrWhiteSpace(declarationPM.TransferImporterId))
-            //{
-            //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(GetImporterCode(declarationPM.TransferImporterId), declarationPM.TransferImporterTypeCode); // new ImporterIdentificationIDType()  // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode
-            //}
-            // else
-            //{
-            //    declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(declarationPM.TransferImporterCode, declarationPM.TransferImporterTypeCode); // moran 24.3.15 - Task 11461 - add declarationPM.ImporterTypeCode // Mirit 15/11/15 - Change to TransferImporterCode
-            //}
-            //TO:
+          
             var ImporterId = ImportersCheck("מעביר", declarationPM.TransferImporterCode, declarationPM.TransferImporterId, declarationPM.TransferImporterTypeCode, declarationPM.TransferImporterName, declarationPM.TransferImporterAddress, declarationPM.TransferPassportNumber, declarationPM.TransferImporterCountryCode);
             var declarationImporter = new DeclarationImporter();
             declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.TransferImporterTypeCode);
@@ -2311,8 +2320,8 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
-                Address = declarationPM.TransferImporterAddress,
-                Name = declarationPM.TransferImporterName,
+                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.TransferImporterName, _forbiddenSigns),
+                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationPM.TransferImporterAddress, _forbiddenSigns),
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.TransImporterEntitleTypeCode
@@ -2332,30 +2341,16 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationImporter GetDeclarationImporterRole4(DeclarationPM declarationPM)
         {
-            //<--- Yuval Chalup 15.11.2016 TASK-24438 - CHANGED FROM:
-            //var ImporterId = GetImporterCode(declarationPM.ImporterId);
-            //if (String.IsNullOrWhiteSpace(ImporterId)) // Task 6440 - add ImporterCode fields check
-            //{
-            //    ImporterId = GetImporterCode(declarationPM.ImporterCode);
-            //}
-            //if (String.IsNullOrWhiteSpace(ImporterId))
-            //{
-            //    throw new BusinessErrorException("Importer is empty");
-            //}
-            //TO:
-            //ImporterId = GetImporterCode(declarationPM.ImporterId);
+            
             var ImporterId = ImportersCheck("", declarationPM.ImporterCode, declarationPM.ImporterId, declarationPM.ImporterTypeCode, declarationPM.ImporterName, declarationPM.ImporterAddress, declarationPM.ImporterPassportNumber, declarationPM.ImporterPassCountryCode);
-            //if (!string.IsNullOrWhiteSpace(errorMessage))
-            //{
-            //    throw new BusinessErrorException(errorMessage);
-            //}
-            //Yuval Chalup 15.11.2016 TASK-24438 --->
+          
 
             var declarationImporter = new DeclarationImporter();
             declarationImporter.ID = SetIDTypeValue<ImporterIdentificationIDType>(ImporterId, declarationPM.ImporterTypeCode); // new ImporterIdentificationIDType() // moran 24.3.15 - Task 11461 - use declarationPM.ImporterTypeCode instead of hard coded "1"
 
             string importerAddress = null;
             string importerName = null;
+         
             if (string.IsNullOrWhiteSpace(ImporterId))//task 45505
             {
                 if (!string.IsNullOrWhiteSpace(declarationPM.ImporterAddress)) { importerAddress = declarationPM.ImporterAddress; }
@@ -2363,10 +2358,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             declarationImporter.DMExtensions = new DeclarationImporterDMExtensions()
             {
-                //                Address = declarationPM.ImporterAddress,
-                //Name = declarationPM.ImporterName,
-                Address = importerAddress,//task 45505
-                Name = importerName,
+                
+                Address = _ForbiddenSignsUtil.ReplaceForbiddenChars(importerAddress, _forbiddenSigns),
+                Name = _ForbiddenSignsUtil.ReplaceForbiddenChars(importerName, _forbiddenSigns),
                 EntitlementTypeCode = new EntitlementTypeCodeType()
                 {
                     Value = declarationPM.MainImporterEntitlemntTypeCode

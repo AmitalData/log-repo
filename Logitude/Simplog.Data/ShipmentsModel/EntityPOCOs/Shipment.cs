@@ -333,6 +333,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? OrderChargeableWeight { get; set; }
         public bool OrderGrossWeightEdited { get; set; }
         public bool OrderChargeableWeightEdited { get; set; }
+        public string LockerCode { get; set; }
+        public string LockerName { get; set; }
+        public string LockerCity { get; set; }
+        public string LockerAddress { get; set; }
+
         #endregion
 
         #region AWB

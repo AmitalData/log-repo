@@ -107,7 +107,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              HasExecutedRecord = a.HasExecutedRecord,
                              ObjectTableId = a.ObjectTableId,
                              ExecutionTime = a.ExecutionTime,
-                             CreateByUserName = a.CreateByUser != null ? a.CreateByUser.Contact.EnglishName : "",
+                             CreateByUserName = a.CreateByUser != null ? a.CreateByUser.Contact.EnglishName : null,
                              FollowUpAutomationFailedXml = a.FollowUpAutomationFailedXml,
                              FollowUpAutomationSsucceedXml = a.FollowUpAutomationSsucceedXml,
                              SetSLAAutomationFailedXml = a.SetSLAAutomationFailedXml,

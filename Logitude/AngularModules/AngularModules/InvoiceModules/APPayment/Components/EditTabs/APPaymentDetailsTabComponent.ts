@@ -911,7 +911,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.LoadData();
             this.EntityPM.VendorPartnerTypeId = null;
         }
-        else {
+        else if(AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.CurrentSession.StartBusyIndicatorLoading();
             this.CardListService.getSingle(this.EntityPM.VendorId).subscribe((myResult: any) => {
                 var myResponse: ServiceResponse = myResult;
@@ -940,6 +940,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.VendorBankAccountNumber = null;
             this.EntityPM.VendorSwift = null;
             this.EntityPM.VendorBankName = null;
+            this.EntityPM.VendorCountry = null
         }
         else {
             this.GLAccountId = list.GLAccountId;
@@ -949,6 +950,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.EntityPM.VendorBankAccountNumber = list.AccountNumber;
             this.EntityPM.VendorSwift = list.Swift;
             this.EntityPM.VendorBankName = list.BankName;
+            this.EntityPM.VendorCountry = list.CountryCode;
+
             if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                 this.PaymentCurrencyId = list.InvoiceCurrencyId;
             }
@@ -1550,7 +1553,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             result = TextCodeTranslator.Translate("APPayment.S.Details.Cheque");
         }
         else if (this.PaymentMethodCode == "BT") {
-            result = TextCodeTranslator.Translate("APPayment.S.Details.BankTransfer") + "lil";
+            result = TextCodeTranslator.Translate("APPayment.S.Details.BankTransfer") ;
         }
         else if (this.PaymentMethodCode == "CC") {
             result = TextCodeTranslator.Translate("APPayment.S.Details.CreditCard");

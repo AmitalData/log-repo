@@ -1,13 +1,14 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
     public class DefaultAndConfigurationMapping
     {
         public static void MapEntity(DefaultAndConfigurationPM entityPM, DefaultAndConfiguration entityPOCO, bool isNewEntity)
-        { 
+        {
             entityPOCO.Id = isNewEntity ? IdCounter.GetNumber("DefaultAndConfiguration", entityPM.Tenant) : entityPM.Id;
             entityPOCO.Tenant = entityPM.Tenant;
             entityPOCO.CreateDate = entityPM.CreateDate;

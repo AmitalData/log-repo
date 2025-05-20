@@ -52,6 +52,35 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
@@ -834,8 +863,9 @@
     <Compile Include="DataContracts\VisionContainerStatus.cs" />
     <Compile Include="ExternalService\IEntityAutomationMappingPMFields.cs" />
     <Compile Include="GlobalModel\Tools\EntityService\TenantHybridPartnerService.cs" />
-    <Compile Include="Helpers\AmitalCloudActivityLog.cs" />
-    <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
+     <Compile Include="Helpers\AmitalCloudActivityLog.cs" />
+     <Compile Include="GlobalModel\Tools\TraceEvents\TenantManagementTraceEventNotes.cs" />
+     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
     <Compile Include="Helpers\APICaller.cs" />
     <Compile Include="Helpers\BaseClasses\BaseInstance.cs" />
     <Compile Include="Helpers\CacheHelper.cs" />
@@ -844,8 +874,9 @@
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\ContainerTrackingHelper.cs" />
     <Compile Include="Helpers\CopyPortHelper.cs" />
-    <Compile Include="Helpers\DefaultAndConfiguration_Ext.cs" />
-    <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
+     <Compile Include="Helpers\DefaultAndConfiguration_Ext.cs" />
+    <Compile Include="Helpers\DefaultService.cs" />
+     <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
     <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
     <Compile Include="Helpers\ExportServer\ExportServerService.cs" />
@@ -878,6 +909,8 @@
     <Compile Include="InfrastructureModel\DataContracts\ObjectCustomFieldDataContractPM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EntityStatusAM.cs" />
     <Compile Include="InfrastructureModel\EntityAMs\EventTypeAM.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EventRemarkList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\CustomFieldsMainObjectList.cs" />
@@ -892,6 +925,8 @@
     <Compile Include="InfrastructureModel\EntityLists\ReferenceCustomObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ScreenSectionList.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ChildEntitiesCustomFieldPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\EventRemarkPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildEntity.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\CustomChildObjectPM.cs" />
@@ -909,6 +944,8 @@
     <Compile Include="InfrastructureModel\EntityPMs\ReferenceCustomObjectPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ScreenSectionPM.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ChildEntitiesCustomFieldQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\EventRemarkQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomChildObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\CustomFieldsMainObjectQuery.cs" />
@@ -980,6 +1017,8 @@
     <Compile Include="InfrastructureModel\Services\PartnersObjectFieldService.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomChildObjectMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\CustomFieldsMainObjectMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackagesVersionMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DeploymentPackageMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\DataCustomObjectMapping.cs" />
@@ -998,6 +1037,8 @@
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\CustomFieldsMainObjectService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackagesVersionService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DeploymentPackageService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\DataCustomObjectService.cs" />
@@ -1084,6 +1125,7 @@
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\QBOGlobalTaxCalculationQuery.cs" />
+    <Compile Include="InvoiceModel\Enums\APInvoiceStatusCodes.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceAmountDueBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceFieldsBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\Behaviours\APInvoiceBehaviours\APInvoiceLinesBehavior.cs" />

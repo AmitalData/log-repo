@@ -11,9 +11,13 @@ namespace WebFreight.Web.DataProviders
         public MonthlyBalancesReportDataProvider()
         {
             ChartOfAccountLine = new List<ChartOfAccountLine>();
+
+            Year = DateTime.Now.Year;
+
         }
            
          public List<ChartOfAccountLine> ChartOfAccountLine { get; set; }
+         public int Year { get; set; }
     }
 
 
@@ -32,7 +36,6 @@ namespace WebFreight.Web.DataProviders
         public decimal QuantityForOctober { get; set; }
         public decimal QuantityForNovember { get; set; }
         public decimal QuantityForDecember { get; set; }
-        public decimal? ForeignOpenBalance { get; set; }
         public decimal? LocalOpenBalance { get; set; }
         public string GLAcountLocalName { get; set; }
         public string GLAcountNumber { get; set; }
@@ -57,7 +60,6 @@ namespace WebFreight.Web.DataProviders
         public decimal QuantityForOctober { get; set; }
         public decimal QuantityForNovember { get; set; }
         public decimal QuantityForDecember { get; set; }
-        public decimal? ForeignOpenBalance { get; set; }
         public decimal? LocalOpenBalance { get; set; }
         public string GLAcountLocalName { get; set; }
         public string GLAcountNumber { get; set; }

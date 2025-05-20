@@ -10,13 +10,13 @@ function getBaseUrl(): string {
 }
 
 export const BASE_URL = new InjectionToken<string>('BaseURL', {
-	providedIn: 'root',
-	factory: () => getBaseUrl()
+    providedIn: 'root',
+    factory: () => getBaseUrl()
 });
 
 @Component({
     selector: 'app-reset-password',
-	standalone: true,
+    standalone: true,
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.css'],
     imports: [FormsModule, CommonModule],
@@ -42,11 +42,11 @@ export class ResetPasswordComponent implements OnInit {
         private loginExtendedService: LoginExtendedService,
         private authService: AuthService,
         @Inject(BASE_URL) baseUrl: string) {
-            this.CustomerURL = baseUrl;    
+        this.CustomerURL = baseUrl;
     }
 
     SetContactEmail(contactEmail: string) {
-        if(!contactEmail || contactEmail.length == 0) return;
+        if (!contactEmail || contactEmail.length == 0) return;
         this.ContactEmail = 'mailto:' + contactEmail;
     }
 
@@ -90,14 +90,18 @@ export class ResetPasswordComponent implements OnInit {
         else {
             this.ErrorMessage = "";
             this.Succeeded = false;
+            let url = this.CustomerURL;
+            if (url && url.includes('customs-book/')) {
+                url = url.replace('customs-book/', '');
+            }
 
             let params = {
                 Email: this.Email,
                 IsChampLogin: false,
                 CaptchaCode: this.CaptchaCode,
                 CaptchaKey: this.CaptchaKey,
-                PageName: "changepassword",
-                Domain: this.CustomerURL + this.authService.DefaultPageCustomsBook,
+                PageName: "passwordchangepage.aspx",
+                Domain: url,
                 BrandingTenant: this.Tenant ? this.Tenant.toString() : "",
             }
 
@@ -139,10 +143,9 @@ export class ResetPasswordComponent implements OnInit {
 
     public BackToLoginClicked() {
         //this.Tenant = this.route.snapshot.queryParams?.tenant;
-        if(this.Tenant)
-
-            this.router.navigate(["customs-book/login"]);//,{ queryParams: {tenant: this.Tenant}}
+        if (this.Tenant)
+            this.router.navigate(["/login"]);//,{ queryParams: {tenant: this.Tenant}}
         else
-            this.router.navigate(["customs-book/login"]);
+            this.router.navigate(["/login"]);//,{ queryParams: {tenant: this.Tenant}}
     }
 }

@@ -2,14 +2,25 @@
 	<div class="headerFlex">
 		<!-- logo area -->
 		<div class="headerLeft">
+			<!-- Settings of colors level: -->
+			<app-preference-menu class="preference_menu_box"></app-preference-menu>
+			<!-- logo: -->
 			<div class="headerLogo">
-				<a href="#"><img class="logoImage" src="assets/images/amital.png" alt="UNIFREIGHT" /></a>
+				<a href=""><img class="logoImage" src="assets/images/amital.png" alt="UNIFREIGHT" /></a>
 			</div>
-			
 		</div>
 		<!-- Search area -->
-		<div>
-			<app-page-top (searchClick)="SearchByText($event)"></app-page-top>
+		<div class="page-top-box">
+			<app-page-top class="app-page-top-box" (searchClick)="SearchByText($event)"></app-page-top>
+		</div>
+		<!-- discountCodes area -->
+		<div class="togglediscountCodes"  *ngIf="selected != 'אוטונומיה'">
+			<ul role="discountCodesTab">
+				<li [class.checked]="IsDiscountCodes">
+					<label><input (click)="updateIsDiscountCodes()" type="radio" name="pageSearch_toggle" [checked]="IsDiscountCodes"
+							class="fst-btn" aria-controls="sectionSelect1" /><span>{{discountCodes}}</span></label>
+				</li>
+			</ul>
 		</div>
 		<!-- header area -->
 		<div class="headerToggle">
@@ -22,11 +33,10 @@
 					<label><input type="radio" checked="" name="pageSearch_toggle" [checked]="selected === 'יצוא'"
 							class="fst-btn" aria-controls="sectionSelect1" /><span>יצוא</span></label>
 				</li>
-				<li (click)="selectState('יבוא')" [class.checked]="selected === 'יבוא'">
+				<li class="importBox" (click)="selectState('יבוא')" [class.checked]="selected === 'יבוא'">
 					<label><input type="radio" checked="" name="pageSearch_toggle" [checked]="selected === 'יבוא'"
 							class="fst-btn" aria-controls="sectionSelect1" /><span>יבוא</span></label>
 				</li>
 			</ul>
 		</div>
 	</div>
-</div>

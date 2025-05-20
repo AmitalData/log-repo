@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DefaultAndConfigurationUpdateClass
    {  		
-		public const string HashString = "923a901cbdb405348588621c32da7d5e";
+		public const string HashString = "e71d6b1e9c4a119020157e344dcc02a2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -99,7 +99,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    IsNew =  true,
 			      				    DBTableName =  "DefaultAndConfigurations",
 			      				    ObjectTableSingular =  "Default And Configuration",
-			      				    ObjectTablePlural =  "DefaultAndConfiguration",
+			      				    ObjectTablePlural =  "DefaultAndConfigurations",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,

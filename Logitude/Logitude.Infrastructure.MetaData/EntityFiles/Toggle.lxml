@@ -43,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;69e6&quot;"
+   Code="&quot;69e6&quot;"
    Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -575,12 +575,12 @@
       SearchFields="&quot;LCP,Lock Counter Procedure&quot;"
       Description="&quot;Lock Counter Procedure&quot;"
       Code="&quot;LCP&quot;" />
-     <Record
+    <Record
       Code="&quot;TCR&quot;"
       Name="&quot;Toggle OCR&quot;"
       SearchFields="&quot;TOCR&quot;"
       Description="&quot;Toggle for OCR&quot;" />
-     <Record
+    <Record
       Code="&quot;CPT&quot;"
       Name="&quot;Carta Porte&quot;"
       Description="&quot;Carta Porte&quot;"
@@ -999,7 +999,12 @@
       Code="&quot;JAM&quot;"
       Name="&quot;Journal Approval MultiThreading&quot;"
       SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
-      Description="&quot;Journal Approval MultiThreading 2&quot;" />
+      Description="&quot;Journal Approval MultiThreading&quot;" />
+    <Record
+      Code="&quot;TXD&quot;"
+      Name="&quot;Tax Deduction Report by Withholding and Bank Accounts&quot;"
+      SearchFields="&quot;TXD, Tax Deduction Report by Withholding and Bank Accounts&quot;"
+      Description="&quot;Tax Deduction Report by Withholding and Bank Accounts&quot;" />
     <Record
       SearchFields="&quot;UAD, Update GLA Aging Data using WR&quot;"
       Code="&quot;UAD&quot;"
@@ -1025,12 +1030,16 @@
       Name="&quot;Invoice Status According To Ledger Open Amount&quot;"
       SearchFields="&quot;ILO,Invoice Status According To Ledger Open Amount&quot;"
       Description="&quot;Invoice Status According To Ledger Open Amount&quot;" />
-   </Records>
     <Record
       Code="&quot;LCB&quot;"
       Name="&quot;Login Customs Book&quot;"
       SearchFields="&quot;LCB,Login Customs Book&quot;"
       Description="&quot;Customs Book Login For Normal Users&quot;" />
+    <Record
+      Code="&quot;AV2&quot;"
+      Name="&quot;Israel Invoices Do Not Activate V2&quot;"
+      Description="&quot;חשבוניות ישראל לא להפעיל V2&quot;"
+      SearchFields="&quot;AV2 ,Israel Invoices Do Not Activate V2&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

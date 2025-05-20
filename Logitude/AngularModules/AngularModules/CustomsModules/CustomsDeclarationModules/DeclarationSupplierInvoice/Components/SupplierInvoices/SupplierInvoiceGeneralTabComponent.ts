@@ -4189,6 +4189,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     }
                 }
                 else{
+                    this.Send8314();
                     this.InvoiceQuantityType=null;
                     this.QunatityTypeCode=null;
                 }

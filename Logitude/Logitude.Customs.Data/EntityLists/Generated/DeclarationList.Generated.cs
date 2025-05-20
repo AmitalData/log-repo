@@ -485,11 +485,15 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? ComputerFee  { get; set; }
        [DataMember]
        public bool EffectiveFlight  { get; set; }
-       [DataMember]
+        [DataMember]
        public string SystemConnection  { get; set; }
        [DataMember]
        public string ShipmentId  { get; set; }
-   }
+        [DataMember]
+       public string CooStatusName  { get; set; }
+       [DataMember]
+       public string CooStatusCode  { get; set; }
+    }
 
 }
 	 

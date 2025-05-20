@@ -1,4 +1,5 @@
-﻿using Logitude.Customs.Data.AzureSearch.Repo;
+﻿using Logitude.Customs.Data.AzureSearch.Entities;
+using Logitude.Customs.Data.AzureSearch.Repo;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using NLog;
@@ -42,7 +43,18 @@ namespace CustomsBook
 
         public static async Task ReCreateCustomsBookTable()
         {
-            List<CB_CustomsItemComputedData> allData = new CB_CustomsItemComputedDataRepository(0).GetAll().ToList();
+            List<CustomsItemASEntity> allData = 
+                new CB_CustomsItemComputedDataRepository(0).GetAll()
+                .OrderBy(x => x.ItemHierarchicLocationID).ToList()
+                .Select(x => new CustomsItemASEntity(x)).ToList();
+
+            allData.ForEach(item =>
+                item.BaseCustomsItemID =
+                    item.CI_Parent_CustomsItemIDNum == 0 ?
+                        item.CustomsItemID :
+                        allData.Find(x => x.CustomsItemID == item.CI_Parent_CustomsItemIDNum && x.CI_CustomsBookTypeIDNum == item.CI_CustomsBookTypeIDNum)?.BaseCustomsItemID ?? 0
+            );
+
             DataTable customsBookTable = ConvertQueryableToDataTable(allData);
             await new CustomsBookAzureSearchRepo(AzureSearchData.Instance.ServiceName, AzureSearchData.Instance.ApiKey).ReCreateAsync(customsBookTable);
         }

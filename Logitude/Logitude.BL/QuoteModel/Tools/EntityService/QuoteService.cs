@@ -676,9 +676,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         }
         public void ValidateQuoteChargesCostPrice(QuotePM entityPM)
         {
-            if (entityPM.QuoteCharges.Any(qc => !qc.CostUnitPrice.HasValue))
+            if (entityPM.QuoteCharges.Any(qc => !qc.CostUnitPrice.HasValue && qc.SaleUnitPrice.HasValue))
             {
-                throw new InvalidOperationException("One or more QuoteCharges have an empty CostUnitPrice.");
+                throw new InvalidOperationException("One or more Cost Prices are missing in charges screen.");
             }
         }
 

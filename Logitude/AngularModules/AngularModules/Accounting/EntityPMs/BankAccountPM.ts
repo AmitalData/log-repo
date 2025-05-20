@@ -279,7 +279,12 @@ export class BankAccountPM {
         }
     }
     //public ChequeCounterSerials: Array<ChequeCounterSerialPM>= [];
- 
+     private factoringBank: boolean;
+    public get FactoringBank() { return this.factoringBank; }
+    public set FactoringBank(newValue: boolean) { if (this.factoringBank != newValue) { this.factoringBank = newValue; this.MarkAsDirty("FactoringBank"); } }
+       
+	 
+
     public OldEntityPM: BankAccountPM;
 		
     public IsDirty: boolean;

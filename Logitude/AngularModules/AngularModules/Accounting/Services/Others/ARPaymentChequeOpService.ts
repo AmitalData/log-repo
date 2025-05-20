@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer } from 'rxjs';
+import { defer, Observable } from 'rxjs';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 
@@ -23,7 +23,7 @@ export class ARPaymentChequeOperationsService {
         return defer(() => {
             return this._http
                 .post(url,{}, ServiceHelper.GetHttpHeaders())
-                .pipe(map(response => {
+            .pipe(map(response => {
 
                 var result = response;
                 var serviceResponse: ServiceResponse;
@@ -35,4 +35,23 @@ export class ARPaymentChequeOperationsService {
         });
     }
 
+    GetCountOpenChequesByBankAccount(tenant: number, bankId: string){
+        const url = this._apiUrl + '/GetCountOpenChequesByBankAccount' +
+        `?Tenant=${tenant}&bankId=${encodeURIComponent(bankId)}`;
+        return defer(() => {
+            return this._http
+                .get(url, ServiceHelper.GetHttpHeaders())
+                .pipe(map(response => {
+                   return response
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+     
+    CheckARPaymentChequeAlreadyExists(bank: string, bankBranch: string, bankAccount: string, chequeOrPaymentRef: string): Observable<any> {
+        const url = `${this._apiUrl}/CheckARPaymentChequeAlreadyExists?bank=${bank}&bankBranch=${bankBranch}&bankAccount=${bankAccount}&chequeOrPaymentRef=${chequeOrPaymentRef}`;
+        return this._http.get(url,ServiceHelper.GetHttpHeaders());
+    }
+
+   
+  
 }

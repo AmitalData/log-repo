@@ -1,9 +1,10 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
-    public class RoleFeature
+    public class RoleFeature :ICloneable
     {
         [Key]
         public string Id { get; set; }
@@ -22,5 +23,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         [ForeignKey("FeatureAccessLevelCode")]
         public FeatureAccessLevel FeatureAccessLevel { get; set; }
+
+        public object Clone() => new RoleFeature { Id = this.Id, Tenant = Tenant, Feature = Feature, FeatureAccessLevel = FeatureAccessLevel, FeatureAccessLevelCode =FeatureAccessLevelCode, FeatureId =FeatureId , FeatureUniqeCode =FeatureUniqeCode , IsDeleted =IsDeleted , Role =Role , RoleId=RoleId};
+
+
     }
 }

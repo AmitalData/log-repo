@@ -148,6 +148,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return mappedInvoicePM;
         }
 
+        public List<string> GetInvoiceNumberByAPPaymentId(string APPaymentId, int tenant)
+        {
+            return repository.GetInvoiceNumberByAPPaymentId(APPaymentId, tenant);
+        }
+
         private IQueryable<APInvoicePM> GetAPInvoiceIQueryable()
         {
             var query = (from a in repository.context.APInvoices.Include("Status").Include("LocalCurrency").Include("InvoiceCurrency").Include("TransferStatus").Include("VendorCard").Include("PaymentTerm").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("CreatedByUser").Include("CreatedByUser.Contact")
@@ -1421,8 +1426,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             }).ToList();
 
             return invoicePMs;
+        } 
+      public List<APInvoiceLine> GetAPInvoiceLinesByChargeTypeId(string ChargesTypeId, int tenant)
+        {
+            List<APInvoiceLine> APInvoiceLines = (from a in repository.context.APInvoices
+                                                  join line in repository.context.APInvoiceLines on a.Id equals line.APInvoiceId
+                                                  where a.Tenant == tenant && a.StatusCode == "WA" && line.ChargesTypeId == ChargesTypeId
+                                                  select line).ToList();
+            return APInvoiceLines;
         }
-
         public List<APInvoicePM> GetVoidedAPInvoicesByIds(List<string> Ids, int tenant, DateTime taxReportDate)
         {
             DateTime beginOfMonthOfTaxReportDate = new DateTime(taxReportDate.Year, taxReportDate.Month, 1);

@@ -1,14 +1,14 @@
-import { PackagePMService } from '../../Common/Services/StandardPMs/PackagePMService';
+// import { PackagePMService } from '../../Common/Services/StandardPMs/PackagePMService';
 import { BusinessHoursHolidayPM } from '../EntityPMs/BusinessHoursHolidayPM';
 import { ClassLevelValidator } from '../Validators/ClassLevelValidator';
-import { DWQueryData } from '../../Common/DataContracts/DWQueryData';
+// import { DWQueryData } from '../../Common/DataContracts/DWQueryData';
 import { CustomFieldClass } from '../DataContracts/CustomFieldClass'; 
 import { FeatureToggleList } from '../EntityLists/FeatureToggleList';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { TasksSchedulerPM } from '../EntityPMs/TasksSchedulerPM';
 import { FeatureLocator } from '../Utilities/FeatureLocator';
 import { BusinessHourPM } from '../EntityPMs/BusinessHourPM';
-import { PackagePM } from '../../Common/EntityPMs/PackagePM';
+// import { PackagePM } from '../../Common/EntityPMs/PackagePM';
 import { ServiceHelper } from '../Utilities/ServiceHelper';
 import { FeatureList } from '../EntityLists/FeatureList';
 import { BIReportPM } from '../EntityPMs/BIReportPM';
@@ -19,12 +19,15 @@ import { Injectable } from '@angular/core';
 import { Guid } from '../Utilities/Guid';
 import { defer, of } from 'rxjs';
 
-@Injectable()
+
+@Injectable({
+    providedIn: 'root',
+})
 export class InfrastructureDomainService {
-    private _http: HttpClient;
+    // private _http: HttpClient;
     private _apiUrl: string;
-    constructor() {
-        this._http = ServiceHelper.HttpClient;
+    constructor(private _http: HttpClient) {
+        // this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/InfrastructureDomain';
     }
 
@@ -117,7 +120,7 @@ export class InfrastructureDomainService {
                     var entity: FeaturePM;
                     entity = this.MapJsonToFeaturePM(listJason[key]);
                     _mappedArray.push(entity);
-                }
+              }
 
                 FeatureLocator.Features = _mappedArray;
 
@@ -158,19 +161,19 @@ export class InfrastructureDomainService {
             return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var listJason = response;
 
-                var _mappedArray: Array<PackagePM> = [];
+                // var _mappedArray: Array<PackagePM> = [];
 
-                var myPackagePMService = new PackagePMService();
+                // var myPackagePMService = new PackagePMService();
 
-                for (var key in listJason) {
+                // for (var key in listJason) {
 
-                    var entity: PackagePM = myPackagePMService.MapJsonToEntityPM(listJason[key]);
-                    _mappedArray.push(entity);
-                }
+                //     var entity: PackagePM = myPackagePMService.MapJsonToEntityPM(listJason[key]);
+                //     _mappedArray.push(entity);
+                // }
 
-                var myResponse = new ServiceResponse();
-                myResponse.Result = _mappedArray;
-                return myResponse;
+                // var myResponse = new ServiceResponse();
+                // myResponse.Result = _mappedArray;
+                // return myResponse;
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
@@ -464,80 +467,80 @@ export class InfrastructureDomainService {
             if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
                 continue;
             }
-            var newBusinessHoursHolidayPM: BusinessHoursHolidayPM;
+            // var newBusinessHoursHolidayPM: BusinessHoursHolidayPM;
 
-            if (mapParent) {
-                newBusinessHoursHolidayPM = new BusinessHoursHolidayPM(entityPM);
-            }
-            else {
-                newBusinessHoursHolidayPM = new BusinessHoursHolidayPM(null);
-            }
+            // if (mapParent) {
+            //     newBusinessHoursHolidayPM = new BusinessHoursHolidayPM(entityPM);
+            // }
+            // else {
+            //     newBusinessHoursHolidayPM = new BusinessHoursHolidayPM(null);
+            // }
 
-            var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-                    continue;
-                }
-                var pmProperty = pmKeysArray[pmKey];
-                newBusinessHoursHolidayPM[pmProperty] = jItem[pmProperty];
-            }
-            newBusinessHoursHolidayPM.IsDirty = false;
+            // var pmKeysArray = Object.keys(jItem);
+            // for (var pmKey in pmKeysArray) {
+            //     if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+            //         continue;
+            //     }
+            //     var pmProperty = pmKeysArray[pmKey];
+            //     newBusinessHoursHolidayPM[pmProperty] = jItem[pmProperty];
+            // }
+            // newBusinessHoursHolidayPM.IsDirty = false;
 
-            if (mapParent) {
-                newBusinessHoursHolidayPM.UniqueKey = Guid.newGuid();
-                newBusinessHoursHolidayPM.ChangeSetOp = "None";
-                jItem.ChangeSetOp = "None";
-                newBusinessHoursHolidayPM.OldEntityPM = this.clone(newBusinessHoursHolidayPM);
-
-
-            }
-            else {
-                if (newBusinessHoursHolidayPM.UniqueKey) {
-
-                    if (jItem.IsDirty)
-                        newBusinessHoursHolidayPM.ChangeSetOp = "Update";
-                }
-                else {
-                    newBusinessHoursHolidayPM.ChangeSetOp = "Insert";
-                }
-
-                newBusinessHoursHolidayPM.OldEntityPM = null;
-                newBusinessHoursHolidayPM.EntityParentPM = null;
-            }
+            // if (mapParent) {
+            //     newBusinessHoursHolidayPM.UniqueKey = Guid.newGuid();
+            //     newBusinessHoursHolidayPM.ChangeSetOp = "None";
+            //     jItem.ChangeSetOp = "None";
+            //     newBusinessHoursHolidayPM.OldEntityPM = this.clone(newBusinessHoursHolidayPM);
 
 
-            entityPM.BusinessHoursHolidays.push(newBusinessHoursHolidayPM);
+            // }
+            // else {
+            //     if (newBusinessHoursHolidayPM.UniqueKey) {
+
+            //         if (jItem.IsDirty)
+            //             newBusinessHoursHolidayPM.ChangeSetOp = "Update";
+            //     }
+            //     else {
+            //         newBusinessHoursHolidayPM.ChangeSetOp = "Insert";
+            //     }
+
+            //     newBusinessHoursHolidayPM.OldEntityPM = null;
+            //     newBusinessHoursHolidayPM.EntityParentPM = null;
+            // }
+
+
+            // entityPM.BusinessHoursHolidays.push(newBusinessHoursHolidayPM);
         }
         if (oldBusinessHoursHolidays) {
 
-            for (var itemKey in oldBusinessHoursHolidays) {
-                if (entityPM.BusinessHoursHolidays.filter(p => p.UniqueKey === oldBusinessHoursHolidays[itemKey].UniqueKey).length === 0) {
+            // for (var itemKey in oldBusinessHoursHolidays) {
+            //     if (entityPM.BusinessHoursHolidays.filter(p => p.UniqueKey === oldBusinessHoursHolidays[itemKey].UniqueKey).length === 0) {
 
-                    if (oldBusinessHoursHolidays[itemKey]) {
-                        //oldBusinessHoursHolidays[itemKey].ChangeSetOp = "Delete";
-                        //entityPM.BusinessHoursHolidays.push(oldBusinessHoursHolidays[itemKey]);
-                        var oldItemJson = oldBusinessHoursHolidays[itemKey];
-                        var deletedPM: BusinessHoursHolidayPM = new BusinessHoursHolidayPM(null);
-                        var pmKeys = Object.keys(oldItemJson);
-                        for (var key in pmKeys) {
+            //         if (oldBusinessHoursHolidays[itemKey]) {
+            //             //oldBusinessHoursHolidays[itemKey].ChangeSetOp = "Delete";
+            //             //entityPM.BusinessHoursHolidays.push(oldBusinessHoursHolidays[itemKey]);
+            //             var oldItemJson = oldBusinessHoursHolidays[itemKey];
+            //             var deletedPM: BusinessHoursHolidayPM = new BusinessHoursHolidayPM(null);
+            //             var pmKeys = Object.keys(oldItemJson);
+            //             for (var key in pmKeys) {
 
-                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
-                                continue;
-                            }
+            //                 if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+            //                     continue;
+            //                 }
 
-                            var property = pmKeys[key];
-                            deletedPM[property] = oldItemJson[property];
-                        }
+            //                 var property = pmKeys[key];
+            //                 deletedPM[property] = oldItemJson[property];
+            //             }
 
 
-                        deletedPM.IsDirty = false;
-                        deletedPM.ChangeSetOp = "Delete";
+            //             deletedPM.IsDirty = false;
+            //             deletedPM.ChangeSetOp = "Delete";
 
-                        deletedPM.OldEntityPM = null;
-                        entityPM.BusinessHoursHolidays.push(deletedPM);
-                    }
-                }
-            }
+            //             deletedPM.OldEntityPM = null;
+            //             entityPM.BusinessHoursHolidays.push(deletedPM);
+            //         }
+            //     }
+            // }
         }
     }
 
@@ -898,7 +901,8 @@ export class BusinessRecordsSummary {
 
 export class BIReportXMLData {
     public BIReportId: string;
-    public DWQueryData: DWQueryData; 
+    // public DWQueryData: DWQueryData; 
+    public DWQueryData: any; 
     public BIReportPM: BIReportPM;
     public BITabularViewSettings: BITabularViewSettings;
     public UserId: string;

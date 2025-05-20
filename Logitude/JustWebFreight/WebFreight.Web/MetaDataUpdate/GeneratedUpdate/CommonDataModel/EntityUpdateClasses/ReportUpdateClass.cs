@@ -88,8 +88,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportUpdateClass
    {  		
-		public const string HashString = "b9f1f3f5ac3ef1412418481cd5e79e22";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 		public const string HashString = "0bc013feb3ab96ee8f062bc393e9978c";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -212,6 +212,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -278,6 +279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -344,6 +346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -950,6 +953,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1014,6 +1018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1078,6 +1083,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1142,6 +1148,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1208,6 +1215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1274,6 +1282,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1338,6 +1347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1466,6 +1476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1485,13 +1496,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1507,7 +1519,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Report",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -1516,8 +1528,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AvailableForScheduling",
 					  						DefaultText =  "Available For Scheduling",
+					  						FullLocalDefaultText =  "Available For Scheduling",
 					  						ListFieldLable =  "AvailableForSchedulingListLable",
 					  						ListLableDefaultText =  "Available For Scheduling",
+					  						ListLocalDefaultText =  "Available For Scheduling",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1588,6 +1602,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1717,6 +1732,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -1790,7 +1806,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	   		  
 	      
 
-	         Screen ReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen ReportGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Report.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ReportObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 6, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField ReportReportGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -1801,6 +1817,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
              ScreenField ReportReportGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.FilterControlName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ReportReportGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ReportReportGeneralTabScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 5, ScreenId = ReportGeneralTabScreenScreen1.Id,ScreenCode = ReportGeneralTabScreenScreen1.Code, ObjectFieldCode = "Report.AvailableForScheduling", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
@@ -1814,16 +1832,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature ReportGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReportObjectTable);
  
                  
-			   TextCode ReportReportTemplateTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Template", DefaultText = "Report Template",LocalDefaultText = null, ObjectTableId = ReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ReportReportTemplateFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TEMPLATE", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Template", NameTextCodeDefaultText = "Report Template", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReportObjectTable);
+			   TextCode ReportVariablesTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Variables", DefaultText = "Variables",LocalDefaultText = "משתנים", ObjectTableId = ReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ReportVariablesFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Tab.Variables", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportFeatures.VR", NameTextCodeDefaultText = "Variables", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReportObjectTable);
  
                  
-			   TextCode ReportEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ReportEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReportObjectTable);
+			   TextCode ReportReportTemplateTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Template", DefaultText = "Report Template",LocalDefaultText = null, ObjectTableId = ReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ReportReportTemplateFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TEMPLATE", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Template", NameTextCodeDefaultText = "Report Template", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReportObjectTable);
  
                  
-			   TextCode ReportVariablesTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Variables", DefaultText = "Variables",LocalDefaultText = "משתנים", ObjectTableId = ReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ReportVariablesFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Report.Tab.Variables", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportFeatures.VR", NameTextCodeDefaultText = "Variables", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReportObjectTable);
+			   TextCode ReportEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Report.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ReportEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportObjectTable.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ReportObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -1831,11 +1849,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPGC",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportGeneralFeature_TH0.Id,FeatureUniqeCode = ReportGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportGeneralTextCode_TH0.Id, TabNameTextCodeCode = ReportGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPTP",HtmlComponentName = "ReportTemplateComponent",HtmlComponentUrl = "./Report/Components/ReportTemplateComponent", FeatureId = ReportReportTemplateFeature_TH1.Id,FeatureUniqeCode = ReportReportTemplateFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportReportTemplateTextCode_TH1.Id, TabNameTextCodeCode = ReportReportTemplateTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VR",HtmlComponentName = "ReportVariablesComponent",HtmlComponentUrl = "./Report/Components/ReportVariablesComponent", FeatureId = ReportVariablesFeature_TH1.Id,FeatureUniqeCode = ReportVariablesFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportVariablesTextCode_TH1.Id, TabNameTextCodeCode = ReportVariablesTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportEventsFeature_TH2.Id,FeatureUniqeCode = ReportEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportEventsTextCode_TH2.Id, TabNameTextCodeCode = ReportEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPTP",HtmlComponentName = "ReportTemplateComponent",HtmlComponentUrl = "./Report/Components/ReportTemplateComponent", FeatureId = ReportReportTemplateFeature_TH2.Id,FeatureUniqeCode = ReportReportTemplateFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportReportTemplateTextCode_TH2.Id, TabNameTextCodeCode = ReportReportTemplateTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "VR",HtmlComponentName = "ReportVariablesComponent",HtmlComponentUrl = "./Report/Components/ReportVariablesComponent", FeatureId = ReportVariablesFeature_TH3.Id,FeatureUniqeCode = ReportVariablesFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Reports.ReportTemplateControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportVariablesTextCode_TH3.Id, TabNameTextCodeCode = ReportVariablesTextCode_TH3.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "RPEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ReportEventsFeature_TH3.Id,FeatureUniqeCode = ReportEventsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ReportObjectTable.Id, TabNameTextCodeId = ReportEventsTextCode_TH3.Id, TabNameTextCodeCode = ReportEventsTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2008,8 +2026,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 		   Feature ReportFeature_CustomsCollateralReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CustomsCollateralReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.CustomsCollateralReport", NameTextCodeDefaultText = @"Customs Collateral Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
 
-		   Feature ReportFeature_ShipmentFormReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentFormReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ShipmentFormReport", NameTextCodeDefaultText = @"Shipment Form Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
-
+ 		   Feature ReportFeature_ShipmentFormReport = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ShipmentFormReport", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "Report.Features.ShipmentFormReport", NameTextCodeDefaultText = @"Shipment Form Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportObjectTable);
+ 
    
 	    
 		}

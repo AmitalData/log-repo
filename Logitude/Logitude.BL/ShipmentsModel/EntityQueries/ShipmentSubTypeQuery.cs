@@ -48,8 +48,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         CreatedByUserId = a.CreatedByUserId,
                         UpdatedByUserId = a.UpdatedByUserId,
                         Inactive = a.Inactive,
-                        CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-                        UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                        CreatedByUserName = a.CreatedByUser == null ?null : (a.CreatedByUser.Contact == null ?null : a.CreatedByUser.Contact.EnglishName),
+                        UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                         IsManuallyAdded = a.IsManuallyAdded,
                     }).FirstOrDefault();
         }
@@ -71,8 +71,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                             CreatedByUserId = a.CreatedByUserId,
                                                             UpdatedByUserId = a.UpdatedByUserId,
                                                             Inactive = a.Inactive,
-                                                            CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
-                                                            UpdatedByUserName = a.UpdatedByUser == null ? "" : (a.UpdatedByUser.Contact == null ? "" : a.UpdatedByUser.Contact.EnglishName),
+                                                            CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                                                            UpdatedByUserName = a.UpdatedByUser == null ? null : (a.UpdatedByUser.Contact == null ? null : a.UpdatedByUser.Contact.EnglishName),
                                                             IsManuallyAdded = a.IsManuallyAdded,
                                                         };
             return result;

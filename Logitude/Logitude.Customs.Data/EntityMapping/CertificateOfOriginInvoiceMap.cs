@@ -51,6 +51,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.DescriptionOfInvoice).HasColumnName("DescriptionOfInvoice").HasMaxLength(256).IsUnicode(true);
 
             this.Property(t => t.IsInvoicesForPrint).HasColumnName("IsInvoicesForPrint");
+
+            this.Property(t => t.IsInvoiceConnected).HasColumnName("IsInvoiceConnected");
         }
     }
 }

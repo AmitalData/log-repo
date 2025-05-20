@@ -54,6 +54,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -326,6 +359,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\CustomsBookMainView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\UserFreelancerGroup.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\FreelancerGroupType.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\CooStatusView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\RequestSheetInQueueMesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DecTaxesByTaxTypeCodeView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\DecCourierStatusesView.cs" />
@@ -373,6 +407,8 @@
     <Compile Include="Helpers\DocumentOutCopyArgs.cs" />
     <Compile Include="Helpers\FieldValueValidator.cs" />
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EventRemark.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CustomChildObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
@@ -814,6 +850,8 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\RuleUpdateHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SchedulerProcedure.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\EventRemarkMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\CustomChildObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
@@ -842,6 +880,8 @@
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SchedulerProcedureMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\EventRemarkRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\CustomChildObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />
@@ -894,6 +934,7 @@
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATTransferStatus.cs" />
+    <Compile Include="InvoiceModel\Enums\ARInvoiceSignedStatusValues.cs" />
     <Compile Include="InvoiceModel\Mapping\ConfirmationNumberStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ConfirmationNumberDefaultMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentTransferStatusMap.cs" />

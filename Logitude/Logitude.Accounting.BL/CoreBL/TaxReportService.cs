@@ -49,6 +49,7 @@ using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
 using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
 using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 
+
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class TaxReportService
@@ -94,6 +95,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return true; // All characters are '9'
         }
+
+
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant, bool recalculateData = false)
         {
 
@@ -152,14 +155,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         transmitStatus = SetTransmitStaus(invoice.InvoiceDate.Value, taxReport.TaxReportMonth, setting);
                         VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
                         InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
-                        //if (invoice.InvoiceNumber.Length > 9)
-                        //{
-                        //    outputreference = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 9);
-                        //}
-                        //else
-                        //{
+
                         outputreference = invoice.CustomerRef != null ? invoice.CustomerRef : invoice.InvoiceNumber;
-                        //}
+
 
                         if (!string.IsNullOrEmpty(invoice.VatNumber))
                         {
@@ -209,7 +207,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             line.LineTypeCode = "S";
                         }
                         reportLinesList.Add(line);
-                        //  UpdateJournalAdditionalDataRecord(line, null);
+
                     }
                 }
             }
@@ -217,6 +215,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
             //inputs
             ledgerTransactons = ledgerTransactionRepository.GetLedgerTransactionsForTaxReport(taxReport.TaxReportMonth, tenant);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Create TaxReport with ledgerTransactons : " + ledgerTransactons);
 
             List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
             List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
@@ -239,11 +239,6 @@ namespace Logitude.Accounting.BL.CoreBL
             glAccountIds.AddRange(oppositeglAccountIds);
             glAccountIds.AddRange(parentGLAccounts.Select(d => d.Id).ToList());
             cards = cardRepository.GetCardsByGLAccountIds(glAccountIds, tenant).ToList();
-
-            //List<string> ids = new List<string>();
-            //ids = apinvoicesNotInTaxMonthAndNotVoided.Select(d => d.Id).ToList();
-            //totalvats = new List<APInvoiceTotalVATPM>();
-            //totalvats = myTotalVATQuery.GetTotalVATs(ids, tenant);
 
 
 
@@ -313,7 +308,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     OutputOrInput = "I",
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
                     VatAmountRound = InputVatAmount.Value - Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
-                    VatableInvoiceAmount = 0,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
+                    VatableInvoiceAmount = 0, 
                     TotalInvoiceAmount = Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
                     SubTotalInLocalCurrency = Math.Round(((double)InputInvoiceAmount.Value), MidpointRounding.AwayFromZero),
                     IsEquipment = aPInvoicePM != null ? aPInvoicePM.IsEquipment : account != null ? account.IsEquipmentVendor : false,
@@ -411,7 +406,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
                 reportLinesList.Add(inputReportLine);
-                //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
+                
 
 
             }
@@ -423,7 +418,7 @@ namespace Logitude.Accounting.BL.CoreBL
             taxReport.OutputTaxAmountWithDiffPercent = 0;
 
 
-            taxReport.StatusCode = "D";
+            taxReport.StatusCode = VatReportStatusValues.Draft;
 
             DateTime stopLogAt = new DateTime(2023, 06, 01);
             string text = "TaxReportService.CreateTaxReportLines(*1*): " + taxReport.Id + " taxReport.StatusCode : " + taxReport.StatusCode;
@@ -538,10 +533,8 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private static void MarkCreatedDuplicateLines(TaxReportPM taxReportPM, List<TaxReportLinePM> taxReportLines)
         {
-            // For a similar code see TaxReportUpdateService.MarkDuplicateLines() 
-
-            //List<TaxReportLinePM> taxReportLines = GetTaxReportLines(taxReportPM.Id, taxReportPM.Tenant);
-            if (taxReportLines != null && taxReportLines.Count > 0)
+ 
+             if (taxReportLines != null && taxReportLines.Count > 0)
             {
                 int i = 1;
                 taxReportLines.ForEach(l =>
@@ -572,66 +565,65 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         VatNumber = g.Key.VatNumber,
                         Reference = g.Key.Reference,
-                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line),
+                         LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line),
                         JournalIds = g.OrderBy(x => x.Line).Select(x => x.JournalId).ToList(),
-                    })
+                        IsStornoPair = false,
+                     })
                     .Where(r => r.LineNumbers.Count() >= 1).ToList();
                 }
 
-
-                //    List<TaxReportLinePM> removeDupLines = new List<TaxReportLinePM>();
 
 
                 if (duplicates != null && duplicates.Count > 0)
                 {
 
-                    List<int> all_dup_line_nos = new List<int>();
-                    foreach (var item in duplicates)
-                    {
-                        all_dup_line_nos.AddRange(item.LineNumbers);
-                    }
+                    List<int> all_dup_line_nos = duplicates.SelectMany(item => item.LineNumbers).ToList();
 
+                    List<string> all_dup_line_jIds = duplicates.SelectMany(item => item.JournalIds).ToList();
 
-                    List<string> all_dup_line_jIds = new List<string>();
-                    foreach (var item in duplicates)
-                    {
-                        all_dup_line_jIds.AddRange(item.JournalIds);
-                    }
                     List<int> voidedLineNumbers = new List<int>();
                     JournalQueryService journalQueryService = new JournalQueryService(taxReportPM.Tenant);
                     List<JournalPM> jPMs = journalQueryService.GetJournalPMs(all_dup_line_jIds, taxReportPM.Tenant);
                     if (jPMs != null && jPMs.Count > 0)
                     {
+                        Dictionary<string, List<JournalPM>> journalLookup = jPMs
+                                .GroupBy(j => j.Id)
+                                .ToDictionary(g => g.Key, g => g.OrderByDescending(j => j.StatusCode).ToList());
                         foreach (var item in duplicates)
                         {
-                            List<JournalPM> oneDupItemJournalPMs = jPMs.Where(j => item.JournalIds.Contains(j.Id)).OrderByDescending(j => j.StatusCode).ToList();
-                            if (oneDupItemJournalPMs != null && oneDupItemJournalPMs.Count == 2)
+                            if (journalLookup.TryGetValue(item.JournalIds.FirstOrDefault(), out var oneDupItemJournalPMs))
+                            if (oneDupItemJournalPMs.Count == 2)
                             {
-                                if ((oneDupItemJournalPMs[0].StatusCode == JournalStatuses.Voided || (oneDupItemJournalPMs[0].IsVoided.HasValue && oneDupItemJournalPMs[0].IsVoided.Value)) &&
+                                if ((oneDupItemJournalPMs[0].StatusCode == JournalStatuses.Voided || (oneDupItemJournalPMs[0].IsVoided ?? false)) &&
                                     oneDupItemJournalPMs[1].OriginalJournalId == oneDupItemJournalPMs[0].Id &&
                                     oneDupItemJournalPMs[0].VoidedByJournalId == oneDupItemJournalPMs[1].Id)
                                 {
+                                    item.IsStornoPair = true;
                                     voidedLineNumbers.AddRange(item.LineNumbers);
                                 }
                             }
                         }
                     }
-
-                    //       List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
-
+ 
                     foreach (var oneLine in taxReportLines)
                     {
-                        if (all_dup_line_nos.Contains(oneLine.Line))
+                        if (all_dup_line_nos.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
-                            //  oneLine.ChangeSetOp = ChangeSetOperation.Update;
                             oneLine.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
-                            //   duplicateLines.Add(oneLine);
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            //   oneLine.ChangeSetOp = ChangeSetOperation.Update;
-                            oneLine.StatusCode = "6";
-                            //    removeDupLines.Add(oneLine);
+                            oneLine.StatusCode = "6"; // Ready for transmit 
+                        }
+
+                        else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                        {
+                            oneLine.StatusCode = "6"; // Ready for transmit 
+                        }
+
+                        if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                        {
+                            oneLine.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
                         }
                         if (voidedLineNumbers.Contains(oneLine.Line))
                         {
@@ -640,31 +632,20 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                     }
-
-                    //   if (duplicateLines.Count > 0 || removeDupLines.Count > 0)
-                    //   {
-                    //  accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-                    //  taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-                    //  if (duplicateLines.Count > 0) taxReportLineUpdateService.UpdateMulti(duplicateLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    //  if (removeDupLines.Count > 0) taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    //   }
                 }
-                else // no duplicates 
-                {
+                 else // no duplicates 
+                 {
                     foreach (var linePM in taxReportLines)
                     {
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
                             linePM.StatusCode = "6";
-                            //     removeDupLines.Add(linePM);
+                        }
+                        else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
+                        {
+                            linePM.StatusCode = "6"; // Ready for transmit 
                         }
                     }
-                    //      if (removeDupLines.Count > 0)
-                    //      {
-                    // accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
-                    // taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
-                    // taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
-                    //      }
 
                 }
 
@@ -682,8 +663,9 @@ namespace Logitude.Accounting.BL.CoreBL
             public string VatNumber { get; set; }
             public string Reference { get; set; }
             public IEnumerable<int> LineNumbers { get; set; }
-            public List<string> JournalIds { get; set; }
-
+             public List<string> JournalIds { get; set; }
+            public bool IsStornoPair { get; set; }
+ 
         }
         private static string SetTransmitStaus(DateTime invoiceDate, DateTime taxReportMonth, FullAccountingSetting setting)
         {
@@ -906,8 +888,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             InputVatAmount = report.LocalAmountDebit;
 
-            //if (card != null && card.PartnerTypeId == PartnerTypeValues.Vendor)
-            //    VatNumber = card.VatNumber;
 
             var transactionSum = journalsTransactions.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
             InputInvoiceAmount = transactionSum - InputVatAmount;
@@ -1118,7 +1098,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
                     IQueryable<TaxReportLineList> linesIQ = trLineQS.GetReportLines(taxReport.Id, tenant);
-                    List<TaxReportLineList> lines = linesIQ.Where(a => a.TransmitStatusCode == "1").OrderBy(d => d.Line).ToList();
+                    List<TaxReportLineList> lines = linesIQ.Where(a => a.TransmitStatusCode == "1" || a.TransmitStatusCode == "4").OrderBy(d => d.Line).ToList();
 
                     foreach (TaxReportLineList lineList in lines)
                     {
@@ -1160,22 +1140,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
-                    //// write to a file
-                    //using (System.IO.StreamWriter file = new System.IO.StreamWriter(FilePath))
-                    //{
-                    //    foreach (string line in linesArray)
-                    //    {
-                    //        file.WriteLine(line);
 
-                    //    }
-                    //}
 
                     //update entity
                     TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReport.ChangeSetOp = ChangeSetOperation.Update;
-                    if (taxReport.StatusCode != "J")
+                    if (taxReport.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal)
                     {
-                        taxReport.StatusCode = "T"; // T- Transmitted
+                        taxReport.StatusCode = VatReportStatusValues.Transmitted;
 
                         DateTime stopLogAt = new DateTime(2023, 06, 01);
                         string text = "TaxReportService.CreatePNC874File(*1*): " + taxReport.Id + " taxReport.StatusCode : " + taxReport.StatusCode;
@@ -1192,9 +1164,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     TaxReportUpdateService updateService = new TaxReportUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
                     taxReport.ChangeSetOp = ChangeSetOperation.Update;
                     taxReport.NeedsRebulid = true;
-                    if (taxReport.StatusCode != "J")
+                    if (taxReport.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal)
                     {
-                        taxReport.StatusCode = "T"; // T- Transmitted
+                        taxReport.StatusCode = VatReportStatusValues.Transmitted;
 
                         DateTime stopLogAt = new DateTime(2023, 06, 01);
                         string text = "TaxReportService.CreatePNC874File(*2*): " + taxReport.Id + " taxReport.StatusCode : " + taxReport.StatusCode;
@@ -1212,45 +1184,6 @@ namespace Logitude.Accounting.BL.CoreBL
                 return docOut;
             }
         }
-        //public static TaxReportPM CreatetTaxReportLine(TaxReportPM taxReport)
-        //{
-        //    IAccountingContext context = AccountingContext.GetContext(taxReport.Tenant);
-
-        //    TaxReportLineListQueryService reportLineListQueryService = new TaxReportLineListQueryService(context);
-        //    List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReport.Id, taxReport.Tenant).ToList();
-        //    int count = lines.Count;
-        //    TaxReportLinePM taxReportLine = new TaxReportLinePM()
-        //    {
-        //        IsExternalLine = true,
-        //        VatNumber = VatNumber,
-        //        Reference = reference,
-        //        ReferenceDate = DateTime.Today,
-        //        ReferecneGroup = referenceGroup,
-        //        Line =++count,
-        //        OutputOrInput = "O",
-        //        VatAmount =(decimal?) 200,// Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
-        //        VatableInvoiceAmount =(decimal?) 17,// Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
-        //        IsEquipment = true,
-        //        IsManuallyChanged = true,
-        //        TaxReportId = taxReport.Id,
-        //        ChangeSetOp = ChangeSetOperation.Insert,
-        //        LastUpdateDateTime = DateTime.Now,
-        //        UpdatedByUserId = taxReport.UpdatedByUserId,
-        //        Tenant = taxReport.Tenant,
-        //        TransmitStatusCode = "1",
-        //        TaxReportDate = taxReport.TaxReportMonth
-        //    };
-        //    TaxReportUpdateService updateService = new TaxReportUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
-        //    TaxReportLineUpdateService lineUpdateService = new TaxReportLineUpdateService(context, new Dictionary<string, IContext>(), taxReport.Tenant);
-        //    taxReportLine.ChangeSetOp = ChangeSetOperation.Insert;
-        //    taxReportLine.UpdatedByUserId = taxReport.UpdatedByUserId;
-        //    lineUpdateService.Update(taxReportLine, true, TimeSpan.FromMinutes(60));//the problem is here it loops on more than 3000  lines and updates them one by one ,each update will have to get single tenant and get single currency along with multible db gets which make the db to time out for the opened transaction
-
-        //    taxReport.ChangeSetOp = ChangeSetOperation.Update;
-        //    updateService.Update(taxReport, true, TimeSpan.FromMinutes(60));
-        //    return taxReport;
-        //}
-
 
         public static void CalculateReportTotals(TaxReportPM taxReportPM, List<TaxReportLinePM> lines)
         {
@@ -1269,24 +1202,25 @@ namespace Logitude.Accounting.BL.CoreBL
                 var vatTypePrecentage = vatTypePM.VatTypePercentages.OrderByDescending(v => v.FromDate).First(v => v.FromDate <= maxDateInTaxMonth);
                 var precentage = vatTypePrecentage.Percentage.Value / 100;
                 // OUTPUT
-                taxReportPM.OutputTaxAmount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
-                                                                     d.VatAmount != 0).Sum(d => d.VatAmount);
-                var taxableOutputAmount = Math.Round(taxReportPM.OutputTaxAmount.Value / (decimal)precentage);
+                 taxReportPM.OutputTaxAmount = outputLines.Where(d => (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) &&
+                                                                      d.VatAmount != 0).Sum(d => d.VatAmount);
+                 var taxableOutputAmount = Math.Round(taxReportPM.OutputTaxAmount.Value / (decimal)precentage);
                 taxReportPM.TaxableOutputAmount = taxableOutputAmount;
 
-                taxReportPM.OutputTaxAmountRound = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
-                                                                     d.VatAmountRound != 0).Sum(d => d.VatAmountRound);
-                taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Sum(d => d.TotalInvoiceAmount - d.VatableInvoiceAmount);
-                taxReportPM.OutputLinesCount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Count();
+
+                taxReportPM.OutputTaxAmountRound = outputLines.Where(d => (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) &&
+ 
+                taxReportPM.ExemptTaxableOutput = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate).Sum(d => d.TotalInvoiceAmount - d.VatableInvoiceAmount);
+                taxReportPM.OutputLinesCount = outputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate).Count();
 
                 // INPUTS
-                taxReportPM.InputsTaxAmountRound = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit
+                taxReportPM.InputsTaxAmountRound = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate
                                                                          ).Sum(d => d.VatAmountRound);
-                taxReportPM.OtherInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
+                taxReportPM.OtherInputsTaxAmount = inputLines.Where(d => (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) &&
                                                                          d.IsEquipment == false).Sum(d => d.VatAmount);
-                taxReportPM.EquipmentInputsTaxAmount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit &&
+                taxReportPM.EquipmentInputsTaxAmount = inputLines.Where(d => (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate) &&
                                                                              d.IsEquipment == true).Sum(d => d.VatAmount);
-                taxReportPM.InputLinesCount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Count();
+                taxReportPM.InputLinesCount = inputLines.Where(d => d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate).Count();
 
                 taxReportPM.AmountForPayRefund = taxReportPM.OutputTaxAmount - (taxReportPM.OtherInputsTaxAmount + taxReportPM.EquipmentInputsTaxAmount);
                 if (taxReportPM.AmountForPayRefund == null) taxReportPM.AmountForPayRefund = 0;
@@ -1482,7 +1416,6 @@ namespace Logitude.Accounting.BL.CoreBL
             if (str.Length > wordSize)
             {
                 str = str.Substring(str.Length - wordSize);
-                //throw new ApplicationException("There is a string with big value!");
             }
 
             //padding left
@@ -1539,7 +1472,6 @@ namespace Logitude.Accounting.BL.CoreBL
     }
     public class PNCFileArgs
     {
-        //public TaxReportPM ReportPM { get; set; }
         public string ReportId { get; set; }
         public int Tenant { get; set; }
         public bool TestingMode { get; set; }

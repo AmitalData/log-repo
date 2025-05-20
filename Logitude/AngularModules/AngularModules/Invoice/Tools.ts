@@ -242,34 +242,30 @@ export class InvoiceTool {
                                 }
 
                                 if (myComparativeDate != null) {
-                                    var dateYear = myComparativeDate.getUTCFullYear();
-                                    var dateMonth = myComparativeDate.getUTCMonth() + 1;
-                                    var dateDay = myComparativeDate.getUTCDate();
-
-                                    if (list.EndOfMonth) {
-                                        dateMonth += list.NumberOfMonths;
-                                        dateDay = 0;
-                                    }
-                                    else {
-                                        dateMonth -= 1;
-                                    }
                                     var myDate = new Date();
-                                    myDate.setUTCMonth(0);
-                                    myDate.setUTCDate(1);
-                                    myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth);
-                                    myDate.setUTCDate(dateDay);
+
+                                    var dateYear = myComparativeDate.getUTCFullYear();
+                                    var dateMonth = myComparativeDate.getUTCMonth(); 
+                                    var dateDay = myComparativeDate.getUTCDate();
+                                    
+                                    if (list.EndOfMonth) {
+                                        myDate = new Date(Date.UTC(dateYear, dateMonth + 1, 0)); 
+                                    } else {
+                                        myDate = new Date(Date.UTC(dateYear, dateMonth, dateDay));
+                                    }
+                                    
+                                    myDate.setUTCMonth(myDate.getUTCMonth() + list.NumberOfMonths);
+                                    
+                                    myDate.setUTCDate(myDate.getUTCDate() + list.Days);
+                                    
+
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
                                     myDate.setUTCSeconds(0);
                                     myDate.setUTCMilliseconds(0);
 
                                     myComparativeDate = myDate;
-
-                                    if (!AppTool.IsNullOrZero(list.Days)) {
-                                        myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
-                                    }
-
+                                   
                                     if (entityPM.DueDate != myComparativeDate) {
                                         entityPM.DueDate = myComparativeDate;
                                     }
@@ -319,34 +315,30 @@ export class InvoiceTool {
                                 }
 
                                 if (myComparativeDate != null) {
-                                    var dateYear = myComparativeDate.getUTCFullYear();
-                                    var dateMonth = myComparativeDate.getUTCMonth() + 1;
-                                    var dateDay = myComparativeDate.getUTCDate();
-
-                                    if (list.EndOfMonth) {
-                                        dateMonth += list.NumberOfMonths;
-                                        dateDay = 0;
-                                    }
-                                    else {
-                                        dateMonth -= 1;
-                                    }
-
                                     var myDate = new Date();
-                                    myDate.setUTCMonth(0);
-                                    myDate.setUTCDate(1);
-                                    myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth);
-                                    myDate.setUTCDate(dateDay);
+
+                                    var dateYear = myComparativeDate.getUTCFullYear();
+                                    var dateMonth = myComparativeDate.getUTCMonth(); 
+                                    var dateDay = myComparativeDate.getUTCDate();
+                                    
+                                    if (list.EndOfMonth) {
+                                        myDate = new Date(Date.UTC(dateYear, dateMonth + 1, 0)); 
+                                    } else {
+                                        myDate = new Date(Date.UTC(dateYear, dateMonth, dateDay));
+                                    }
+                                    
+                                    myDate.setUTCMonth(myDate.getUTCMonth() + list.NumberOfMonths);
+                                    
+                                    myDate.setUTCDate(myDate.getUTCDate() + list.Days);
+                                    
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
                                     myDate.setUTCSeconds(0);
                                     myDate.setUTCMilliseconds(0);
-
+                                    
                                     myComparativeDate = myDate;
-
-                                    if (!AppTool.IsNullOrZero(list.Days)) {
-                                        myComparativeDate.setUTCDate(myComparativeDate.getUTCDate() + list.Days);
-                                    }
+                                    
+                                   
 
                                     if (entityPM.DueDate != myComparativeDate) {
                                         entityPM.DueDate = myComparativeDate;

@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Xml.Linq;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -76,34 +77,100 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private void EnsureAbilityToCreateClosingJournal()
         {
+            bool skip_other_checks = false;
+            int reco_cancelled = 0;
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
             List<TaxReportLineForErrors> reconciledLines = null;
             var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant, ref reconciledLines);
             if (!canHaveClosingJournal)
             {
-                string error_text = TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage", tenant);
                 if (reconciledLines != null && reconciledLines.Count > 0)
                 {
-                    reconciledLines = reconciledLines.OrderBy(rl => rl.JournalNumber).ThenBy(rl => rl.Line).ToList();
-                    const int MAX = 5;
-                    if (reconciledLines.Count > MAX)
+
+                    int recocount = 0;
+                    JournalQueryService journalQueryService = new JournalQueryService(tenant);
+                    JournalPM closingJournalPM = journalQueryService.GetByAccountingEntityIdAndAccountingEntityCode(taxReportId, "13", tenant); // 13 is tax report;
+                    if (closingJournalPM != null)
                     {
-                        reconciledLines = reconciledLines.Take(MAX).ToList();
+                        // First, get all recos of the closingJournalPM
+                        IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                        LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
+                        List<ReconciliationPM> Reconciliations = transactionsQuery.GetReconciliationsByJournalId(closingJournalPM.Id, tenant);
+                        if (Reconciliations != null && Reconciliations.Count > 0)
+                        {
+                            // Then, cancel those recos
+                            recocount = Reconciliations.Count;
+                            ReconciliationUpdateService service = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                            foreach (var item in Reconciliations)
+                            {
+                                if (item != null && !item.IsCancelled)
+                                {
+                                    try
+                                    {
+                                        List<string> refs = item.SearchFields.Split(',').ToList();
+                                        if (refs != null && refs.Count > 2
+                                            && refs.ElementAt(1).Trim() == closingJournalPM.JournalNumber
+                                            && refs.ElementAt(2).Trim() == taxReportPM.TaxReportNumber)
+                                        {
+                                            item.IsCancelled = true;
+                                            service.InitializeEntityPM(item);
+                                            item.ChangeSetOp = ChangeSetOperation.Update;
+                                            service.Update(item, true);
+                                            reco_cancelled += 1;
+                                        }
+                                    }
+                                    catch (Exception)
+                                    {
+                                        throw;
+                                    }
+                                }
+                            }
+                        }
+
+                        List<string> jIds = reconciledLines.Select(rl => rl.JournalId).Distinct().ToList();
+                        if (jIds != null && jIds.Count > 0)  
+                        {
+                            if (!jIds.Any(id => id != closingJournalPM.Id) && reco_cancelled == recocount) // no other journals in reconciledLines, and we just cancelled all the recos
+                            {
+                                skip_other_checks = true;
+                            }
+                        }
                     }
-                    string lines = String.Join(",", reconciledLines.Select(rl => rl.Line)); 
-
-                    string journals = String.Join(",", reconciledLines.Select(rl => rl.JournalNumber));
-
-                    string problem = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem", tenant);
-                    if (String.IsNullOrEmpty(problem)) problem = @"הבעיה מצויה בשורה";
-
-                    string problem_2 = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem_2", tenant);
-                    if (String.IsNullOrEmpty(problem)) problem_2 = @"בדוח זה בפקודת יומן מספר";
-
-                    error_text += ". " + problem + " " + lines; 
-                    error_text += " " + problem_2 + " " + journals;
                 }
-                throw new ApplicationException(error_text);
+            }
+            if (!skip_other_checks)
+            {
+                if (reco_cancelled > 0)
+                {
+                    reconciledLines = null;
+                    canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant, ref reconciledLines);
+                }
+                if (!canHaveClosingJournal)
+                {
+                    string error_text = TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage", tenant);
+                    if (reconciledLines != null && reconciledLines.Count > 0)
+                    {
+                        reconciledLines = reconciledLines.OrderBy(rl => rl.JournalNumber).ThenBy(rl => rl.Line).ToList();
+                        const int MAX = 5;
+                        if (reconciledLines.Count > MAX)
+                        {
+                            reconciledLines = reconciledLines.Take(MAX).ToList();
+                        }
+                        string lines = String.Join(",", reconciledLines.Select(rl => rl.Line));
+
+                        string journals = String.Join(",", reconciledLines.Select(rl => rl.JournalNumber));
+
+                        string problem = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem", tenant);
+                        if (String.IsNullOrEmpty(problem)) problem = @"הבעיה מצויה בשורה";
+
+                        string problem_2 = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem_2", tenant);
+                        if (String.IsNullOrEmpty(problem)) problem_2 = @"בדוח זה בפקודת יומן מספר";
+
+                        error_text += ". " + problem + " " + lines;
+                        error_text += " " + problem_2 + " " + journals;
+                    }
+                    throw new ApplicationException(error_text);
+                }
             }
         }
 
@@ -176,10 +243,13 @@ namespace Logitude.Accounting.BL.CoreBL
             var Reconciliations = transactionsQuery.GetReconciliationsByJournalId(journalPM.Id, tenant);
             ReconciliationUpdateService service = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
             foreach (var item in Reconciliations) {
-                item.IsCancelled = true;
-                service.InitializeEntityPM(item);
-                item.ChangeSetOp = ChangeSetOperation.Update;
-                service.Update(item, true);
+                if (item != null && !item.IsCancelled)
+                {
+                    item.IsCancelled = true;
+                    service.InitializeEntityPM(item);
+                    item.ChangeSetOp = ChangeSetOperation.Update;
+                    service.Update(item, true);
+                }
             }
         }
 
@@ -488,7 +558,8 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<TaxReportLine> GetTaxReportLines(string taxReportLineType)
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType && d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).ToList();
+            return taxReportQueryService.GetReportLines(taxReportId, tenant).Where(d => d.OutputOrInput == taxReportLineType 
+            && (d.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit || d.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)).ToList();
         }
 
         private List<LedgerTransaction> GetLedgerTransactionsForOutputTaxReportLines(List<TaxReportLine> taxReportLines)
@@ -496,7 +567,8 @@ namespace Logitude.Accounting.BL.CoreBL
             LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(tenant);
             var journalIds = taxReportLines.Select(x => x.JournalId).ToList();
             List<LedgerTransaction> ltList = ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
-            List<LedgerTransaction> rv = ltList.Where(lt => lt.IsReconciled != true && lt.InReconcileProgress != true).ToList();
+            List<LedgerTransaction> rv = ltList.Where(lt => (lt.IsReconciled != true && lt.InReconcileProgress != true) 
+                           || (lt.IsReconciled == true && lt.LocalAmountDebit == 0m && lt.LocalAmountCredit == 0m)).ToList(); // zero lines are reconciled; those are good for the condition (ltList.Count > rv.Count) only; see below
             if (ltList.Count > rv.Count) {
                 var ErrorsInltList = ltList.Where(lt => lt.IsReconciled != false || lt.InReconcileProgress != false).ToList();
                 var reconiledLines = taxReportLines.Where(taxReportLine => ErrorsInltList.Any(error => taxReportLine.JournalId == error.JournalId)).ToList();
@@ -508,6 +580,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 throw new ApplicationException(errorText);
             }
+            rv = rv.Where(lt => lt.IsReconciled != true).ToList(); // Remove reconciled lines, see above: reconciled zero lines 
             return rv;
         }
 

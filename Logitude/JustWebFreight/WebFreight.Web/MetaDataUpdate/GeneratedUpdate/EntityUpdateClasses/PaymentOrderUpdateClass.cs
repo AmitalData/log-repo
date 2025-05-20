@@ -21,8 +21,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentOrderUpdateClass
    {  		
-		public const string HashString = "7ff31800064359846f5e26ed83657824";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 		public const string HashString = "96167a3e87e7dfa6da9b0b579d938122";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -261,10 +261,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentNumber",
 					  						DefaultText =  "Payment Number",
-					  						FullLocalDefaultText =  "מספר הוראת תשלום",
+					  						FullLocalDefaultText =  "מספר הורםת תשלום",
 					  						ListFieldLable =  "PaymentNumberListLable",
 					  						ListLableDefaultText =  "Payment Number",
-					  						ListLocalDefaultText =  "מספר הוראת תשלום",
+					  						ListLocalDefaultText =  "מספר הורםת תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -396,10 +396,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastPayDate",
 					  						DefaultText =  "Last Pay Date",
-					  						FullLocalDefaultText =  "תאריך אחרון לתשלום",
+					  						FullLocalDefaultText =  "תםריך םחרון לתשלום",
 					  						ListFieldLable =  "LastPayDateListLable",
 					  						ListLableDefaultText =  "Last Pay Date",
-					  						ListLocalDefaultText =  "תאריך אחרון לתשלום",
+					  						ListLocalDefaultText =  "תםריך םחרון לתשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -462,10 +462,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reason",
 					  						DefaultText =  "Reason",
-					  						FullLocalDefaultText =  "סיבת הוראת תשלום",
+					  						FullLocalDefaultText =  "סיבת הורםת תשלום",
 					  						ListFieldLable =  "ReasonListLable",
 					  						ListLableDefaultText =  "Reason",
-					  						ListLocalDefaultText =  "סיבת הוראת תשלום",
+					  						ListLocalDefaultText =  "סיבת הורםת תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -667,10 +667,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentOrderTypeCode",
 					  						DefaultText =  "Payment Order ",
-					  						FullLocalDefaultText =  "סוג הוראת תשלום",
+					  						FullLocalDefaultText =  "סוג הורםת תשלום",
 					  						ListFieldLable =  "PaymentOrderTypeCodeListLable",
 					  						ListLableDefaultText =  "Payment Order Type",
-					  						ListLocalDefaultText =  "סוג הוראת תשלום",
+					  						ListLocalDefaultText =  "סוג הורםת תשלום",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PaymentOrderType",
 					  						NavigationPropertyName =  "PaymentOrderType",
@@ -805,10 +805,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentStatusCode",
 					  						DefaultText =  "Status ",
-					  						FullLocalDefaultText =  "סטאטוס הוראה",
+					  						FullLocalDefaultText =  "סטםטוס הורםה",
 					  						ListFieldLable =  "PaymentStatusCodeListLable",
 					  						ListLableDefaultText =  "Status ",
-					  						ListLocalDefaultText =  "סטאטוס הוראה",
+					  						ListLocalDefaultText =  "סטםטוס הורםה",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PaymentOrderStatus",
 					  						NavigationPropertyName =  "PaymentStatus",
@@ -944,10 +944,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActualPayDate",
 					  						DefaultText =  "Actual Pay Date",
-					  						FullLocalDefaultText =  "תאריך התשלום",
+					  						FullLocalDefaultText =  "תםריך התשלום",
 					  						ListFieldLable =  "ActualPayDateListLable",
 					  						ListLableDefaultText =  "Actual Pay Date",
-					  						ListLocalDefaultText =  "תאריך התשלום",
+					  						ListLocalDefaultText =  "תםריך התשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1077,10 +1077,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירת הוראה",
+					  						FullLocalDefaultText =  "תםריך יצירת הורםה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירת הוראה",
+					  						ListLocalDefaultText =  "תםריך יצירת הורםה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1144,10 +1144,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון",
+					  						FullLocalDefaultText =  "תםריך עדכון",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון",
+					  						ListLocalDefaultText =  "תםריך עדכון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1172,7 +1172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.PaymentOrder",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  2000,
+					  						MaxLength =  4000,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -1180,7 +1180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  2000,
+					  						SystemMaxLength =  4000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -1209,10 +1209,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search by Payment Number / First Entity / Second Entity / Third Entity ",
-					  						FullLocalDefaultText =  "מספר הוראת תשלום/ מזהה מטען ראשון/מזהה מטען שני/ מזהה מטען שלישי",
+					  						FullLocalDefaultText =  "מספר הורםת תשלום/ מזהה מטען רםשון/מזהה מטען שני/ מזהה מטען שלישי",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search",
-					  						ListLocalDefaultText =  "מספר הוראת תשלום, מזהה מטען ראשון, מזהה מטען שני ,  מזהה מטען שלישי",
+					  						ListLocalDefaultText =  "מספר הורםת תשלום, מזהה מטען רםשון, מזהה מטען שני ,  מזהה מטען שלישי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1593,10 +1593,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentOrderTypeName",
 					  						DefaultText =  "Payment Order Type ",
-					  						FullLocalDefaultText =  "סוג הוראה",
+					  						FullLocalDefaultText =  "סוג הורםה",
 					  						ListFieldLable =  "PaymentOrderTypeNameListLable",
 					  						ListLableDefaultText =  "Payment Order Type Name",
-					  						ListLocalDefaultText =  "סוג הוראה",
+					  						ListLocalDefaultText =  "סוג הורםה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1791,10 +1791,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstEntityID",
 					  						DefaultText =  "First Entity ",
-					  						FullLocalDefaultText =  "מזהה מטען ראשון",
+					  						FullLocalDefaultText =  "מזהה מטען רםשון",
 					  						ListFieldLable =  "FirstEntityIDListLable",
 					  						ListLableDefaultText =  "First Entity ",
-					  						ListLocalDefaultText =  "מזהה מטען ראשון",
+					  						ListLocalDefaultText =  "מזהה מטען רםשון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1987,10 +1987,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterId",
 					  						DefaultText =  "Importer",
-					  						FullLocalDefaultText =  "מזהה יבואן",
+					  						FullLocalDefaultText =  "מזהה יבוםן",
 					  						ListFieldLable =  "ImporterIdListLable",
 					  						ListLableDefaultText =  "Importer ",
-					  						ListLocalDefaultText =  "מזהה יבואן",
+					  						ListLocalDefaultText =  "מזהה יבוםן",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Client",
 					  						NavigationPropertyName =  "Client",
@@ -2054,10 +2054,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterName",
 					  						DefaultText =  "Importer Name",
-					  						FullLocalDefaultText =  "שם יבואן",
+					  						FullLocalDefaultText =  "שם יבוםן",
 					  						ListFieldLable =  "ImporterNameListLable",
 					  						ListLableDefaultText =  "Importer Name",
-					  						ListLocalDefaultText =  "שם יבואן",
+					  						ListLocalDefaultText =  "שם יבוםן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2930,10 +2930,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentPaymentId",
 					  						DefaultText =  "Document Payment Id",
-					  						FullLocalDefaultText =  "מסמך הוראת תשלום",
+					  						FullLocalDefaultText =  "מסמך הורםת תשלום",
 					  						ListFieldLable =  "DocumentPaymentIdListLable",
 					  						ListLableDefaultText =  "Document Payment Id",
-					  						ListLocalDefaultText =  "מסמך הוראת תשלום",
+					  						ListLocalDefaultText =  "מסמך הורםת תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3034,15 +3034,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode PaymentOrderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.Q.OpenPaymentOrderQuery", DefaultText = @"Open Payment Orders",LocalDefaultText = "הוראות תשלום פתוחות", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode PaymentOrderTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.Q.OpenPaymentOrderQuery", DefaultText = @"Open Payment Orders",LocalDefaultText = "הורםות תשלום פתוחות", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature PaymentOrderFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENPAYMENTORDERS", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.OpenPaymnetOrders", NameTextCodeDefaultText = "Open Payment Order", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PaymentOrderObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode PaymentOrderTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.Q.ClosedPaymentOrderQuery", DefaultText = @"Closed Payment Orders",LocalDefaultText = "הוראות תשלום סגורות", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode PaymentOrderTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.Q.ClosedPaymentOrderQuery", DefaultText = @"Closed Payment Orders",LocalDefaultText = "הורםות תשלום סגורות", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature PaymentOrderFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDPAYMENTORDERS", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.ClosedPaymnetOrders", NameTextCodeDefaultText = "Closed Payment Order", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PaymentOrderObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode PaymentOrderTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.Q.PaymentOrderQuery", DefaultText = @"Payment Orders",LocalDefaultText = "כל הוראות התשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode PaymentOrderTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.Q.PaymentOrderQuery", DefaultText = @"Payment Orders",LocalDefaultText = "כל הורםות התשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature PaymentOrderFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PAYMENTORDERS", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.PaymentOrders", NameTextCodeDefaultText = "Payment Orders", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,PaymentOrderObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -3170,7 +3170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature PaymentOrderGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentOrderObjectTable);
  
                  
-			   TextCode PaymentOrderEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode PaymentOrderEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature PaymentOrderEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentOrderObjectTable);
  
                  
@@ -3231,7 +3231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "POP",
                 EnglishName =  "Payment Order Paid",
-                LocalName =  "הוראת תשלום שולמה",
+                LocalName =  "הורםת תשלום שולמה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -3250,7 +3250,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "POC",
                 EnglishName =  "Payment Order Cancelled",
-                LocalName =  "הוראת תשלום בוטלה",
+                LocalName =  "הורםת תשלום בוטלה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -3269,7 +3269,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "POU",
                 EnglishName =  "Payment Order Updated",
-                LocalName =  "הוראת תשלום עודכנה",
+                LocalName =  "הורםת תשלום עודכנה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -3288,7 +3288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "POR",
                 EnglishName =  "Payment Order Created",
-                LocalName =  "הוראת תשלום נוצרה",
+                LocalName =  "הורםת תשלום נוצרה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -3307,7 +3307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "DFN",
                 EnglishName =  "Deposit Customs Request",
-                LocalName =  "הודעה בגין התראה ראשונה ללקוח-חוב בהתראה",
+                LocalName =  "הודעה בגין התרםה רםשונה ללקוח-חוב בהתרםה",
                 IsManualEntry =  false,
                 ShortView =  false,
                 EventTypeCategoryCode =  "LOG",
@@ -3442,7 +3442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB00.Id,
 						Style = null,
-						LocalDefaultText = "סגירת הוראה",
+						LocalDefaultText = "סגירת הורםה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB00.FeatureUniqeCode,
@@ -3462,7 +3462,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB01.Id,
 						Style = null,
-						LocalDefaultText = "ביטול סגירת הוראה",
+						LocalDefaultText = "ביטול סגירת הורםה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB01.FeatureUniqeCode,
@@ -3482,7 +3482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  PaymentOrderFeature_MB02.Id,
 						Style = null,
-						LocalDefaultText = "הדפס הוראת תשלום",
+						LocalDefaultText = "הדפס הורםת תשלום",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  PaymentOrderFeature_MB02.FeatureUniqeCode,
@@ -3539,23 +3539,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOTotal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Total", DefaultText = "Total",LocalDefaultText = @"סה”כ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOClosePaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ClosePaymentOrder", DefaultText = "Close Payment Order?",LocalDefaultText = @"לסגור את הוראת התשלום ? ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOClosePaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ClosePaymentOrder", DefaultText = "Close Payment Order?",LocalDefaultText = @"לסגור םת הורםת התשלום ? ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOReOpenPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ReOpenPaymentOrder", DefaultText = "Reopen  payment order ?",LocalDefaultText = @"לפתוח מחדש את הוראת התשלום ? ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOReOpenPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ReOpenPaymentOrder", DefaultText = "Reopen  payment order ?",LocalDefaultText = @"לפתוח מחדש םת הורםת התשלום ? ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOFileNumberDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.FileNumberDoesNotExist", DefaultText = "File Number Does Not Exist",LocalDefaultText = @"לא נמצא תיק שמספרו ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOFileNumberDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.FileNumberDoesNotExist", DefaultText = "File Number Does Not Exist",LocalDefaultText = @"לם נמצם תיק שמספרו ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOTotalSumToPayDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.TotalSumToPayDifference", DefaultText = "The difference between amount and total sum to pay must be 0!",LocalDefaultText = @"קיימים הפרשים בין הסכום לתשלום בהוראה לבין הסכום שהוזן בפועל ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOTotalSumToPayDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.TotalSumToPayDifference", DefaultText = "The difference between amount and total sum to pay must be 0!",LocalDefaultText = @"קיימים הפרשים בין הסכום לתשלום בהורםה לבין הסכום שהוזן בפועל ", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOPaymentOrderLeftAmountDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.PaymentOrderLeftAmountDifference", DefaultText = "Sum of payment method not equal to payment order left amount",LocalDefaultText = @"סכום אמצעי תשלום שונה מסכום שנותר לתשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOPaymentOrderLeftAmountDifference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.PaymentOrderLeftAmountDifference", DefaultText = "Sum of payment method not equal to payment order left amount",LocalDefaultText = @"סכום םמצעי תשלום שונה מסכום שנותר לתשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOAccountingCustomFileMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.AccountingCustomFileMissing", DefaultText = "Please Enter Custom File Or Accounting Card",LocalDefaultText = @"יש להזין תיק עמילות או כרטיס מעבר לחיוב", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOAccountingCustomFileMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.AccountingCustomFileMissing", DefaultText = "Please Enter Custom File Or Accounting Card",LocalDefaultText = @"יש להזין תיק עמילות םו כרטיס מעבר לחיוב", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderONoAccountingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.NoAccountingCard", DefaultText = "No Accounting Card Defined in Customs Settings",LocalDefaultText = @"לא הוגדר כרטיס מעבר בהגדרות המערכת", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderONoAccountingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.NoAccountingCard", DefaultText = "No Accounting Card Defined in Customs Settings",LocalDefaultText = @"לם הוגדר כרטיס מעבר בהגדרות המערכת", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderONoPayWithRAccountingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.NoPayWithRAccountingCard", DefaultText = "Please Enter Custom File Or Accounting Card",LocalDefaultText = @"לא ניתן לשלם הוראת תשלום עם רשימון שלא אותר, נא להזין מספר תיק שונה או מספר כרטיס מעבר", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderONoPayWithRAccountingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.NoPayWithRAccountingCard", DefaultText = "Please Enter Custom File Or Accounting Card",LocalDefaultText = @"לם ניתן לשלם הורםת תשלום עם רשימון שלם םותר, נם להזין מספר תיק שונה םו מספר כרטיס מעבר", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOPaymentOrders = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.PaymentOrders", DefaultText = "Payment Orders",LocalDefaultText = @"הוראות תשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOPaymentOrders = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.PaymentOrders", DefaultText = "Payment Orders",LocalDefaultText = @"הורםות תשלום", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.Lines", DefaultText = "Lines",LocalDefaultText = @"קווים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -3567,9 +3567,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOConnectedEntities = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ConnectedEntities", DefaultText = "Connected Entities",LocalDefaultText = @"ישויות הקשורות", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderODepositConditions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.DepositConditions", DefaultText = "Deposit Conditions",LocalDefaultText = @"תנאי פיקדון", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderODepositConditions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.DepositConditions", DefaultText = "Deposit Conditions",LocalDefaultText = @"תנםי פיקדון", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOClosedPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ClosedPaymentOrder", DefaultText = "Payment Order is closed - Display only",LocalDefaultText = @"הוראת תשלום סגורה - לא ניתן לבצע שינויים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode PaymentOrderTextCode_CustomsPaymentOrderOClosedPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PaymentOrder.O.ClosedPaymentOrder", DefaultText = "Payment Order is closed - Display only",LocalDefaultText = @"הורםת תשלום סגורה - לם ניתן לבצע שינויים", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

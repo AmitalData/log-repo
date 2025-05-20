@@ -181,6 +181,7 @@
                                                                                         [ObjectTableName]="'Customs.SupplierInvoiceItem'"
                                                                                         [DataContext]="DataContext"
                                                                                         [HideColumns]="true"
+                                                                                        [SelectedValue]="ClaimReasonCode"
                                                                                         [LookUpTableName]="'Customs.ClaimReasonType'">
                                                                                     </LogLov>
                                                                                 </td>
@@ -209,6 +210,7 @@
                                                                                         [ObjectTableName]="'Customs.SupplierInvoiceItem'"
                                                                                         [DataContext]="DataContext"
                                                                                         [HideColumns]="true"
+                                                                                        [SelectedValue]="TransactionNatureCode"
                                                                                         [LookUpTableName]="'Customs.TransactionNatureType'">
                                                                                     </LogLov>
                                                                                 </td>
@@ -238,6 +240,7 @@
                                                                                         [HideColumns]="true"
                                                                                         [LookUpTableName]="'Customs.ItemGovernmentProcedureType'"
                                                                                         [FocusOnMe]="true"
+                                                                                        [SelectedValue]="ProcessTypeCode"
                                                                                         [QueryFilterItems]="ProcessTypeCodeFilterItems">
                                                                                     </LogLov>
 

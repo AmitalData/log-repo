@@ -73,11 +73,11 @@ $spacing: 0px;
     border-bottom: $border-width solid $border-color;
 }
 
-.AddressBox {
+.LogTextBoxMultiLine {
     padding-bottom: 11px !important;
 }
 
-::ng-deep .AddressBox .InputDiv {
+::ng-deep .LogTextBoxMultiLine .InputDiv {
     height: 55px !important;
 }
 

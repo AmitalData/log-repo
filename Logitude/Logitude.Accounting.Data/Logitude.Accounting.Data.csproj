@@ -39,6 +39,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
@@ -286,6 +304,7 @@
     <Compile Include="EntityLists\Generated\TenantIdleStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UserDefinedReportList.Generated.cs" />
     <Compile Include="EntityLists\Generated\VatReportStatusList.Generated.cs" />
+    <Compile Include="EntityLists\LedgerTransactionDeductionDTO.cs" />
     <Compile Include="EntityLists\LedgerTransactionJournalLineLT.cs" />
     <Compile Include="EntityMapping\AccountingEntityJournalMap.cs" />
     <Compile Include="EntityMapping\AccountingIntegrityCheckMap.cs" />
@@ -365,6 +384,7 @@
     <Compile Include="EntityPOCOs\JournalAdditionalData.cs" />
     <Compile Include="EntityPOCOs\JournalExternalReconcile.cs" />
     <Compile Include="EntityPOCOs\JournalMoreData.cs" />
+    <Compile Include="EntityPOCOs\LedgerTransactionsDeductionView.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReport.cs" />
     <Compile Include="EntityPOCOs\OpenFormatReportStatus.cs" />
     <Compile Include="EntityPOCOs\RevaluationStatus.cs" />
@@ -382,8 +402,11 @@
     <Compile Include="Enums\AccountingEntityCodes.cs" />
     <Compile Include="Enums\ChartOfAccountsTypes.cs" />
     <Compile Include="Enums\GLAccountTypes.cs" />
+    <Compile Include="Enums\InputsTaxReportLineTypes.cs" />
     <Compile Include="Enums\InterestEntityTypes.cs" />
     <Compile Include="Enums\InterestReportStatusCodes.cs" />
+    <Compile Include="Enums\OpenFormatDocumentTypes.cs" />
+    <Compile Include="Enums\JournalActionTypes.cs" />
     <Compile Include="Enums\RevaluationStatusEnum.cs" />
     <Compile Include="Repositories\AccountingEntityJournalRepository.cs" />
     <Compile Include="Repositories\ARPaymentsJournalRepository.cs" />

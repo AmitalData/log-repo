@@ -468,6 +468,38 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return entityId;
         }
 
+        public string GetCardIdByCodePartnerTypes(string code, int tenant, List<string> partnerTypes = null)
+        {
+            string entityId = null;
+            if (!string.IsNullOrEmpty(code))
+            {
+                string entityName = "Card_CachedId" + code + tenant;
+
+
+
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+
+                    entityId = (from a in context.Cards
+                                where a.Tenant == tenant && a.Code == code && partnerTypes.Contains(a.PartnerTypeId)
+                                select a.Id).FirstOrDefault();
+
+                    if (CacheManager.CacheWrapper.Get(entityName) == null && entityId != null)
+                    {
+                        CacheManager.CacheWrapper.Insert(entityName, entityId, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
+                }
+                else
+                {
+                    entityId = (string)CacheManager.CacheWrapper.Get(entityName);
+                }
+
+
+            }
+
+            return entityId;
+        }
+
         public string GetCardIdByExternalId(string externalId, int tenant)
         {
             string entityId = null;

@@ -6,9 +6,12 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AppTool } from '../Tools';
 
-@Injectable()
+
+@Injectable({
+    providedIn: 'root',
+})
 export class LoginService {
-    private _http: HttpClient;
+    // private _http: HttpClient;
     logitudeURL: string = null;
     baseUrlApi: string = null;
     baseMetaUrlApi: string = null;
@@ -18,15 +21,17 @@ export class LoginService {
     public AuthHeader;
     public LoggedUserId: string;
     public LoggedUserEmail: string;
-    constructor() {
-        this._http = ServiceHelper.HttpClient;
+    constructor(private _http: HttpClient) {
+        // this._http = ServiceHelper.HttpClient;
+
         this.logitudeURL = AppTool.GetLogitudeURL();
         this.baseUrlApi = this.logitudeURL + "api/";
         this.baseMetaUrlApi = this.logitudeURL + "api/ngMetaData";
+        this.CurrentTenant = SessionInfo.LoggedUserTenant;
     }
 
     GetOneUsePassword() {
-        var url = this.logitudeURL + "api/OneTimePassword?id=" + SessionLocator.ExternalParams.OneTimePasswordId 
+        var url = this.logitudeURL + "api/OneTimePassword?id=" + SessionLocator.ExternalParams.OneTimePasswordId
 
         return this._http.get(url).pipe(map(response => {
             return response;
@@ -76,7 +81,7 @@ export class LoginService {
         if (twoFactorKey) {
             httpOptions.headers.append('TwoFactorkey', twoFactorKey);
         }
-        
+
         return this._http.post(url, JSON.stringify(loginParameters), httpOptions).pipe(map(response => {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
@@ -209,8 +214,7 @@ export class LoginService {
     }
 
     GetObjectTables() {
-        var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&objecttables=dummy';
-
+      var url = this.baseMetaUrlApi + '?tenant=' + this.CurrentTenant + '&objecttables=dummy';       
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
@@ -270,7 +274,7 @@ export class LoginService {
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
-    }   
+    }
 
     GetCustomsInterfaceSetting() {
         var url = this.baseMetaUrlApi + '?InterfaceId=' + this.CurrentTenant + '&textcodetranslations=dummy';;
@@ -285,7 +289,7 @@ export class LoginService {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
     }
-    
+
     GetAccountingSystem(AccountingSystemCode: string) {
         var url = this.logitudeURL + 'api/GlobalDomain/GetAccountingSystem?AccountingSystemCode=' + AccountingSystemCode;
 
@@ -341,7 +345,7 @@ export class LoginService {
             return response;
         }), catchError(ServiceHelper.HandleServiceError));
     }
- 
+
     GetSignOut() {
         var url = this.logitudeURL + 'api/Authentication/GetSignOut';
         return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {

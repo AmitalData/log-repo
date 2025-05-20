@@ -2,7 +2,7 @@ declare var window: any;
 import {AppTool} from '../Tools';
 import {FeaturePM} from '../EntityPMs/FeaturePM';
 import {SessionLocator} from './SessionLocator';
-import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
+// import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 
 export class FeatureLocator {
@@ -202,7 +202,7 @@ export class FeatureLocator {
 
                             if (showwindow) {
                                 //message = "You have no permission to add a new entity of this type.";
-                                this.ShowNoPermessionWindow(windowHeader, objectTable.Name, message);
+                                // this.ShowNoPermessionWindow(windowHeader, objectTable.Name, message);
                             }
 
                         }
@@ -212,7 +212,7 @@ export class FeatureLocator {
                         haspermession = false;
                         message = "Your package doesn't include this module..";
                         if (showwindow) {
-                            this.ShowNoPermessionWindow("General.O.NewEntity", objectTable.Name, message);
+                            // this.ShowNoPermessionWindow("General.O.NewEntity", objectTable.Name, message);
                         }
                     }
                 }
@@ -223,17 +223,17 @@ export class FeatureLocator {
 
         return haspermession;
     }
-    public static ShowNoPermessionWindow(headercode: string, objecttablename: string, messsage: string) {
-        var window = new ConfirmWindow();
-        window.Width = 450;
-        window.Height = 190;
-        var str = TextCodeTranslator.Translate(headercode);
-        str = str.replace("%Entity", TextCodeTranslator.TranslateTable(objecttablename));
-        window.Title = str;
-        window.YesButtonText = "Ok";
-        window.ShowNoButton = false;
-        window.Show(messsage);
-    }
+    // public static ShowNoPermessionWindow(headercode: string, objecttablename: string, messsage: string) {
+    //     var window = new ConfirmWindow();
+    //     window.Width = 450;
+    //     window.Height = 190;
+    //     var str = TextCodeTranslator.Translate(headercode);
+    //     str = str.replace("%Entity", TextCodeTranslator.TranslateTable(objecttablename));
+    //     window.Title = str;
+    //     window.YesButtonText = "Ok";
+    //     window.ShowNoButton = false;
+    //     window.Show(messsage);
+    // }
 
     public static HasFeaturePermession(objectTableName: string, featureCode: string) {
         var myResult = true;

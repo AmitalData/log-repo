@@ -364,7 +364,11 @@ export class TaxReportMenuButtonsHandler {
                     messageWindow.Width = 500;
                     messageWindow.IsMessageMultiLine = true;
                     let message: string = TextCodeTranslator.Translate(TextCode.TaxReportCantBeClosedValidationMessage);
-                    message += '\n(' + reconciledTaxReportLines + ')'
+                    message += '\n';
+                    reconciledTaxReportLines.forEach((line) => {
+                        message += `${TextCodeTranslator.Translate(TextCode.ErrorInTaxReportLine)}: ${line.Line}, ${TextCodeTranslator.Translate(TextCode.ErrorInTaxReportLineReconciliation)}: ${line.ReconsileNumber}\n`;
+                    });
+                    
                     messageWindow.Show(message);
                 }
             });
@@ -388,7 +392,7 @@ export class TaxReportMenuButtonsHandler {
                     message.Show(TextCodeTranslator.Translate(TextCode.TaxReportCloseJournalRunInBackground));
                 }
             }, (error) => {
-                new MessageWindow().Show(error || 'Something wrong happened!');
+                 new MessageWindow().Show(error || 'Somthing wrong happend!');
             });
     }
 
@@ -433,7 +437,7 @@ export class TaxReportMenuButtonsHandler {
                     }
                 });
             }
-        });
+         });
     }
 
 
@@ -486,8 +490,12 @@ enum TextCode {
     TaxReportCloseJournalNotSupported = "TaxReport.O.CloseJournalNotSupported",
     TaxReportCloseJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
     TaxReportCancelClosingJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
-    TaxReportOCancelLaterReports = "TaxReport.O.CancelLaterReports",
-}
+     TaxReportOCancelLaterReports = "TaxReport.O.CancelLaterReports",
+      ErrorInTaxReportLine = "TaxReportLine.F.Line",
+     ErrorInTaxReportLineReconciliation = "Reconciliation",
+ 
+
+ }
 function CloneDeep(EntityPM: TaxReportPM) {
     throw new Error('Function not implemented.');
 }

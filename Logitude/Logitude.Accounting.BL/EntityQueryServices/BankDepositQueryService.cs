@@ -24,6 +24,9 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -75,9 +78,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //   Debit Cashbook and Credit Bank -See Here
             //   Debit Customer Credit Cashbook - See here
             //   Refresh the page
-
-            bool isValid = CheckCheque(arpChequeId, tenant);
-            if (!isValid) return;
+            //cancel by  TASK 112261
+            //bool isValid = CheckCheque(arpChequeId, tenant);
+            //if (!isValid) return;
 
             if (returnType == "Cashbook")
             {
@@ -141,7 +144,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
             ARPaymentQuery paymentQuery = new ARPaymentQuery(tenant);
             ARPaymentPM paymentPM = paymentQuery.GetSinglePM(chequePM.PaymentId, tenant);
-
+            
             // 2- Update StatusCode.ARPaymentCheques = 4 - Cheque out of deposit
             chequePM.StatusCode = "4"; // 4- Returned From Bank
             chequePM.ChangeSetOp = ChangeSetOperation.Update;
@@ -219,8 +222,29 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //    Notes = chequePM.ChequeNumber,
 
             //});
+            DateTime accountingDate = DateTime.Now;
 
-            // 9- create journal
+            var typeregular = "1"; //1 Regular רגיל        1,Regular,רגיל   0
+            var accountingPeriodQueryService = new AccountingPeriodQueryService(tenant);
+            var accountingPeriodsByTypeRegular = accountingPeriodQueryService.GetAccountingPeriodByType(typeregular, tenant); ;
+
+            
+           if(! JournalValidatorNotStatic
+                 .IsMonthOpenForAccountingDate(
+                accountingPeriodsByTypeRegular.AsQueryable(),
+                 new DateTime(accountingDate.Year, accountingDate.Month, 1)
+                 ))
+            {
+                var accountingPeriod = accountingPeriodsByTypeRegular.Where(a=>a.OpenMonth!=null).OrderByDescending(a=>a.Year).FirstOrDefault();
+                if (accountingPeriod!=null) {
+                    var lastDayOfMonth = DateTime.DaysInMonth(accountingPeriod.Year, accountingPeriod.OpenMonth);
+                    accountingDate = new DateTime(accountingPeriod.Year, accountingPeriod.OpenMonth, lastDayOfMonth);
+                }
+
+            }
+                
+
+            
             JournalPM journalPM = new JournalPM()
             {
                 Tenant = tenant,
@@ -234,7 +258,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 IsVoided = false,
                 QueueId = null,
 
-                AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
+                AccountingDate = accountingDate,                //depositPM.AccountingDate,
                 TypeCode = "0",                     // 0- Manual
                 StatusCode = "6",                   // 2- Approved
                 AccountingEntityCode = "6",         // 6- Deposit
@@ -265,7 +289,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ActionCode = "1", // 1- Credit
                 Notes = notes,
 
-                AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
+                AccountingDate = accountingDate,                //depositPM.AccountingDate,
                 DueDate = depositLinePM.DueDate,
                 DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,
@@ -328,7 +352,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ActionCode = "2", // 2- Debit
                 Notes = notes,
 
-                AccountingDate = DateTime.Now,                //depositPM.AccountingDate,
+                AccountingDate = accountingDate,                //depositPM.AccountingDate,
                 DueDate = depositLinePM.DueDate,
                 DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,
