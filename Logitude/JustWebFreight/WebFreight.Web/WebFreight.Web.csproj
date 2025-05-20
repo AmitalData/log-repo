@@ -991,6 +991,7 @@
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\MagayaCommunicationLogViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\MagayaStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\MagayaStepViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
@@ -4354,6 +4355,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticActionResponseReqSUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticPermitUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticsReferenceTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MagayaCommunicationLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MagayaStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MagayaStepUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanSpecialActionStatusUpdateClass.cs" />

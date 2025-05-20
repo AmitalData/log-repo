@@ -87,6 +87,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<JournalStatusType> JournalStatusTypes { get; }
 		 IDbSet<JournalType> JournalTypes { get; }
 		 IDbSet<LedgerTransaction> LedgerTransactions { get; }
+		 IDbSet<MagayaCommunicationLog> MagayaCommunicationLogs { get; }
 		 IDbSet<MagayaStatus> MagayaStatuses { get; }
 		 IDbSet<MagayaStep> MagayaSteps { get; }
 		 IDbSet<OpenFormatReport> OpenFormatReports { get; }
