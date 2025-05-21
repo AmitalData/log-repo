@@ -144,7 +144,7 @@ namespace Logitude.Accounting.BL.Utils
                     CommunicationId = communicationId,
                     CreateDate = DateTime.Now,
                     StatusCode = InvoiceApiStatusEnum.Created,
-                    Step = InvoiceApiStepEnum.OpenMagayaSession,
+                    Step = InvoiceApiStepEnum.OpenInvoiceApiSession,
                     SearchFields = guid + "," + tenant,
 
                 };
