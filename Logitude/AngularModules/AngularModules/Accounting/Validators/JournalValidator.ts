@@ -95,18 +95,21 @@ export class JournalValidator
     public static ValidateJournalLinesCountry(lines: any ) {
         var errors = [];
         var vendorList = "";
+        const vendorSet = new Set<string>();
+
+
         for (let line of lines) {
             if((line.ActionCode === '2' || line.ActionCode === '3')  && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
                 const vendorValidator: VendorValidator = new VendorValidator();
                 const vendorEntry = line.DebitAccountNumber + "/" + line.DebitAccountName;
-                if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode) && !vendorList.includes(vendorEntry)) {
-                    vendorList += vendorEntry + " ,";
-                    
+                if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode)) {
+                    vendorSet.add(vendorEntry); 
                 }
             }
         }
-        if(!AppTool.IsNullOrEmpty(vendorList)){
-            errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor") +" :"+ vendorList); 
+        if(vendorSet.size > 0) {
+            const vendorList = Array.from(vendorSet).join(", ");
+            errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor") +":"+ vendorList); 
         }
         return errors;
     }
