@@ -28,7 +28,7 @@ export class JournalValidator
     }
 
 
-    public static ValidateJournalLines(line: any , isApprove : boolean = false) {
+    public static ValidateJournalLines(line: any ) {
         var errors = [];
         if (line) {
             if (line.ActionCode == null || line.ActionCode == undefined) {
@@ -59,13 +59,7 @@ export class JournalValidator
                 }
                
                
-                if((line.ActionCode === '2' || line.ActionCode === '3') && isApprove && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
-                    const vendorValidator: VendorValidator = new VendorValidator();
-                    const noAddressToVendor = TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
-                    if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode)) {
-                        errors.push(noAddressToVendor);
-                    }
-                }
+               
 
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
@@ -98,7 +92,24 @@ export class JournalValidator
         return errors;
     }
 
-
+    public static ValidateJournalLinesCountry(lines: any ) {
+        var errors = [];
+        var vendorList = "";
+        for (let line of lines) {
+            if((line.ActionCode === '2' || line.ActionCode === '3')  && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
+                const vendorValidator: VendorValidator = new VendorValidator();
+                const vendorEntry = line.DebitAccountNumber + "/" + line.DebitAccountName;
+                if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode) && !vendorList.includes(vendorEntry)) {
+                    vendorList += vendorEntry + " ,";
+                    
+                }
+            }
+        }
+        if(!AppTool.IsNullOrEmpty(vendorList)){
+            errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor") +" :"+ vendorList); 
+        }
+        return errors;
+    }
     public static ValidateTotals(entityPM: JournalPM) {
 
         var errors = [];
@@ -173,10 +184,17 @@ export class JournalValidator
 
         for (var line in entityPM.JournalLines) {
             var journalLine = entityPM.JournalLines[line];
-            result = JournalValidator.ValidateJournalLines(journalLine ,entityPM.StatusCode =="6");
+            result = JournalValidator.ValidateJournalLines(journalLine);
             this.FillErrorList(result);
         }
+        if(entityPM.StatusCode === "6"){
+          result = JournalValidator.ValidateJournalLinesCountry(entityPM.JournalLines); 
+          this.FillErrorList(result);
+        }
 
+        
+        
+        
 
         result = JournalValidator.ValidateTotals(entityPM)
         this.FillErrorList(result);
