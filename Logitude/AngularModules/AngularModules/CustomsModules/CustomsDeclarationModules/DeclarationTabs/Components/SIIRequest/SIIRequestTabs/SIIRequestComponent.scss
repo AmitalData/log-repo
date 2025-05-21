@@ -15,7 +15,15 @@
 }
 
 .ClassificationListContainter {
-    height: 24vh;
+    height: 42vh;
+}
+
+.LogTextBoxMultiLine {
+    padding-bottom: 11px !important;
+}
+
+::ng-deep .LogTextBoxMultiLine .InputDiv {
+    height: 55px !important;
 }
 
 .GrayBox:hover {}
@@ -40,6 +48,20 @@
     cursor: pointer;
     margin-bottom: 25px;
 
+}
+
+.tickImg {
+    position: absolute;
+    top: -2px;
+    padding-top: 3px;
+    left: 1px;
+    opacity: 0.8;
+}
+
+.tickImg:hover,
+.certOkImg:hover,
+.certNoImg:hover {
+    opacity: 1 !important;
 }
 
 .CertTicket:active:not(.Selected) {

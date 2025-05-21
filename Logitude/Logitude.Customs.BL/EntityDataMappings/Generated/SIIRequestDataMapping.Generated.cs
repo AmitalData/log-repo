@@ -259,10 +259,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.WareHouseAddress = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.WareHouseAddress));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.WareHouseCity)) //T4 find type == nText 
-            {
-                entityPM.WareHouseCity = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.WareHouseCity));
-            }
             if (!String.IsNullOrWhiteSpace(entityPM.Remarks)) //T4 find type == nText 
             {
                 entityPM.Remarks = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Remarks));
