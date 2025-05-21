@@ -220,8 +220,7 @@ public partial class LogitudeCustomsFile
 	private string flightVoyageNumberField;
 	private string carrierCodeField;
 	private string originCountryCodeRefField;
-     private string vesselField;
- 
+  
 	/// <remarks/>
 	public string CustomFileNo
     {
@@ -1288,17 +1287,7 @@ public partial class LogitudeCustomsFile
 			this.arrivalDateField = value;
 		}
 	}
-	public string Vessel
-	{
-		get
-		{
-			return this.vesselField;
-		}
-		set
-		{
-			this.vesselField = value;
-		}
-	}
+ 
 	public string FlightVoyageNumber
 	{
 		get

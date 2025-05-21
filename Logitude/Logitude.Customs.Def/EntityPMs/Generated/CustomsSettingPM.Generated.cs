@@ -878,7 +878,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private string courierDocToken ;
+	  private string courierDocToken ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -901,7 +901,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private string forbiddenSigns ;
+	  private string forbiddenSigns ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -924,7 +924,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	    }
+	    }
    
 }
 	 

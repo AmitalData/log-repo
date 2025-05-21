@@ -451,12 +451,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         EffectiveFlight, 
 	         AutoSending, 
 	         DiamondsDeclarationFilter, 
- 	         SystemConnection, 
+	         CooStatusName, 
+	         CooStatusCode, 
+	         SystemConnection, 
 	         IsFromUpdateShipment, 
 	         ShipmentId,
- 	         CooStatusName, 
-	         CooStatusCode,
- 	      }
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();

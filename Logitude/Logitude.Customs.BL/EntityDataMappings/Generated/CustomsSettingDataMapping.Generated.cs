@@ -62,9 +62,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
 	         MaxSISendInteractive, 
- 	         CourierDocToken,
- 	         ForbiddenSigns,
- 	      }
+	         CourierDocToken, 
+	         ForbiddenSigns,
+	      }
 
 
 	      public enum PMPropertyNames
@@ -107,9 +107,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OcrToken, 
 	         MaxItemsSendInteractive, 
 	         MaxSISendInteractive, 
- 	         CourierDocToken,
- 	         ForbiddenSigns,
- 	      }
+	         CourierDocToken, 
+	         ForbiddenSigns,
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -282,15 +282,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
 			}
 			
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
             {
 				entityPOCO.CourierDocToken = entityPM.CourierDocToken;
 			}
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
             {
 				entityPOCO.ForbiddenSigns = entityPM.ForbiddenSigns;
 			}
- 			
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -470,15 +471,14 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocToken))
             {
 					entityPM.CourierDocToken = entityPOCO.CourierDocToken;
-             }
- 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForbiddenSigns))
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ForbiddenSigns))
             {
 					entityPM.ForbiddenSigns = entityPOCO.ForbiddenSigns;
             }
 
 		}
- 
-		 
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
         {
@@ -652,14 +652,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocToken))
             {
                 oldEntityPM.CourierDocToken = entityPM.CourierDocToken;
-             }
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ForbiddenSigns))
             {
                 oldEntityPM.ForbiddenSigns = entityPM.ForbiddenSigns;
             }
 			
-	 
- 			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CustomsSettingPM entityPM)

@@ -1994,9 +1994,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 } else {
                     resolve(false);
                 }
-         }
-        
-    }}
+         });
+        });
+    } 
 
     arPaymentChequeOperationsService: ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService()
 

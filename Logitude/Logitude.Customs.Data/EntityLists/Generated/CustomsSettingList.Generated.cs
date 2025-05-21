@@ -77,11 +77,11 @@ namespace Logitude.Customs.Data.EntityLists
        public bool StandAlone  { get; set; }
        [DataMember]
        public string OcrToken  { get; set; }
-        [DataMember]
+       [DataMember]
        public string CourierDocToken  { get; set; }
-        [DataMember]
+       [DataMember]
        public string ForbiddenSigns  { get; set; }
-    }
+   }
 
 }
 	 

@@ -110,7 +110,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DeclarationIdToDisplay).HasColumnName("DeclarationIdToDisplay").HasMaxLength(15).IsUnicode(false);
 
-             this.Property(t => t.MawbDate).HasColumnName("MawbDate");
+            this.Property(t => t.MawbDate).HasColumnName("MawbDate");
 
             this.Property(t => t.Vessel).HasColumnName("Vessel").HasMaxLength(15).IsUnicode(false);
 
@@ -119,7 +119,7 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CarrierCode).HasColumnName("CarrierCode").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.OriginCountryCode).HasColumnName("OriginCountryCode").HasMaxLength(2).IsUnicode(false);
-         }
+        }
     }
 }
 	 

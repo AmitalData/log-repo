@@ -65,7 +65,7 @@ namespace AmitalCustomsWindowsService
         {
 
             Program.ThreadStartStaticIsMustB4UsingTheDB();
-            if (!HaveDB() || IsOldDB())
+            if (!HaveDB())
             {
                 StopThreads();
                 return;
@@ -86,12 +86,7 @@ namespace AmitalCustomsWindowsService
         {
             try
             {
-
-                //var myP19R03_0000_PatchDist = new P19R03_0001_PatchDist();
-                //myP19R03_0000_PatchDist.Enshure_SeedDbMigrateTable();
-
-                var _PatchDistributionManager = new PatchDistributionManager();
-                _PatchDistributionManager.Check_PatchDistributionListAreValid();
+ 
 
 
 

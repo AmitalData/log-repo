@@ -304,11 +304,6 @@ export class DeclarationReferantDataPM {
     public set VesselName(newValue: string) { if (this.vesselName != newValue) { this.vesselName = newValue; this.MarkAsDirty("VesselName"); } }
        
 	 
-    private vessel: string;
-    public get Vessel() { return this.vessel; }
-    public set Vessel(newValue: string) { if (this.vessel != newValue) { this.vessel = newValue; this.MarkAsDirty("Vessel"); } }
-       
-	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		
@@ -337,4 +332,4 @@ export class DeclarationReferantDataPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
