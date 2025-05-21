@@ -1628,7 +1628,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                     if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", tenant))
                                     {
                                         sendHybridM = false;
-                                        if (extDocPM.ExternalEntityName == "CFIFILEM")
+                                        if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud)
                                         {
                                             SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                         }
