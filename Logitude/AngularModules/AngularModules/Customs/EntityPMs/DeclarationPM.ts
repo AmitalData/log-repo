@@ -1579,7 +1579,17 @@ export class DeclarationPM {
     public set DiamondsDeclarationFilter(newValue: string) { if (this.diamondsDeclarationFilter != newValue) { this.diamondsDeclarationFilter = newValue; this.MarkAsDirty("DiamondsDeclarationFilter"); } }
        
 	 
-     private systemConnection: string;
+    private cooStatusName: string;
+    public get CooStatusName() { return this.cooStatusName; }
+    public set CooStatusName(newValue: string) { if (this.cooStatusName != newValue) { this.cooStatusName = newValue; this.MarkAsDirty("CooStatusName"); } }
+       
+	 
+    private cooStatusCode: string;
+    public get CooStatusCode() { return this.cooStatusCode; }
+    public set CooStatusCode(newValue: string) { if (this.cooStatusCode != newValue) { this.cooStatusCode = newValue; this.MarkAsDirty("CooStatusCode"); } }
+       
+	 
+    private systemConnection: string;
     public get SystemConnection() { return this.systemConnection; }
     public set SystemConnection(newValue: string) { if (this.systemConnection != newValue) { this.systemConnection = newValue; this.MarkAsDirty("SystemConnection"); } }
        
@@ -1592,15 +1602,7 @@ export class DeclarationPM {
     private shipmentId: string;
     public get ShipmentId() { return this.shipmentId; }
     public set ShipmentId(newValue: string) { if (this.shipmentId != newValue) { this.shipmentId = newValue; this.MarkAsDirty("ShipmentId"); } }
-     private cooStatusName: string;
-    public get CooStatusName() { return this.cooStatusName; }
-    public set CooStatusName(newValue: string) { if (this.cooStatusName != newValue) { this.cooStatusName = newValue; this.MarkAsDirty("CooStatusName"); } }
        
-	 
-    private cooStatusCode: string;
-    public get CooStatusCode() { return this.cooStatusCode; }
-    public set CooStatusCode(newValue: string) { if (this.cooStatusCode != newValue) { this.cooStatusCode = newValue; this.MarkAsDirty("CooStatusCode"); } }
-        
 	 
 
     public OldEntityPM: DeclarationPM;
@@ -1630,4 +1632,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

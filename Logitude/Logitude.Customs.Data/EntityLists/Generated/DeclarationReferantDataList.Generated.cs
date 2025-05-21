@@ -209,8 +209,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string OriginCountryCode  { get; set; }
        [DataMember]
        public string VesselName  { get; set; }
-       [DataMember]
-       public string Vessel  { get; set; }
    }
 
 }

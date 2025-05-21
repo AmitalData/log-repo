@@ -151,7 +151,7 @@ namespace Logitude.Customs.Data.Repsitories
                     allDecSameFile = qAllCustomFileNo.ToList();
                 }
                 var qGetAcceptDeclarationAmendment = (from a in allDecSameFile
-                                                      where ( (a.Id == id && a.AmendmentDontDisplayInList == false && a.IsAmendment != true) ||
+                                                      where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.IsAmendment != true) ||
                                                       (a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
                             (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
                             && a.Tenant == tenant
@@ -260,17 +260,17 @@ namespace Logitude.Customs.Data.Repsitories
                     select a.CourierHAWB).FirstOrDefault();
 
         }
-		public string GetIntegratorCodeById(string courierMasterID, int tenant)
-		{
-			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
-			return (from a in context.CourierMasters
-					where a.Id == courierMasterID
-					where a.Tenant == tenant
-					select a.IntegratorCode).FirstOrDefault();
+        public string GetIntegratorCodeById(string courierMasterID, int tenant)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+            return (from a in context.CourierMasters
+                    where a.Id == courierMasterID
+                    where a.Tenant == tenant
+                    select a.IntegratorCode).FirstOrDefault();
 
-		}
+        }
 
-		public Declaration GetAcceptDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
+        public Declaration GetAcceptDeclarationAmendmentByCustomsFile(string customFileNo, int tenant)
         {
 
             //SELECT * FROM AMINEt_MAIN.Declarations Extent1 WHERE((Extent1.DeclarationNumber = :p__linq__0) OR ((Extent1.DeclarationNumber IS NULL) AND(:p__linq__0 IS NULL))) AND(Extent1.Tenant = :p__linq__1)
@@ -290,7 +290,7 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant && a.IsCancelled == false
                     select a).FirstOrDefault();
         }
-     
+
         public int GetDeclarationMaxCancelRequestNumber(int tenant)
         {
             // && a.Id==id
@@ -373,7 +373,7 @@ namespace Logitude.Customs.Data.Repsitories
                  a.Tenant == tenant &&
                  a.CreateDateTime >= monthAgo
                  select a);
- 
+
 
             var qLastMonthTotDecStandAlone =
                 (
@@ -556,7 +556,7 @@ namespace Logitude.Customs.Data.Repsitories
             return
                   (
                   from rec in context.Declarations
-                  where (rec.CustomFileNo == ExternalEntityReference && rec.Tenant == tenant)|| (rec.ExportFile == ExternalEntityReference && rec.Tenant == tenant)
+                  where (rec.CustomFileNo == ExternalEntityReference && rec.Tenant == tenant) || (rec.ExportFile == ExternalEntityReference && rec.Tenant == tenant)
                   select rec.Id
                   )
                   .FirstOrDefault();
@@ -735,20 +735,20 @@ namespace Logitude.Customs.Data.Repsitories
             if (isExportClose)
             {
                 var declaration = (from a in context.Declarations
-                                           where functionalReferenceID == a.ExportCloseAmendRequestNumber && a.Tenant == tenant
-                                           select a).ToList();
+                                   where functionalReferenceID == a.ExportCloseAmendRequestNumber && a.Tenant == tenant
+                                   select a).ToList();
                 return declaration;
 
             }
             else
-             {
-                  List<Declaration> declaration = (from a in context.Declarations
-                                        where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant 
-                                        select a).ToList();
+            {
+                List<Declaration> declaration = (from a in context.Declarations
+                                                 where functionalReferenceID == a.AmendmentRequestNumber && a.Tenant == tenant
+                                                 select a).ToList();
 
-             return declaration;
+                return declaration;
 
-         }
+            }
         }
 
 
@@ -992,12 +992,12 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
-        public Declaration GetDeclarationByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant,string ExternalEntityName)
+        public Declaration GetDeclarationByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant, string ExternalEntityName)
         {
             if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            if(ExternalEntityName == "CFIFILEM")
+            if (ExternalEntityName == "CFIFILEM")
             {
                 return
                  (
@@ -1017,8 +1017,8 @@ namespace Logitude.Customs.Data.Repsitories
                                 )
                                 .FirstOrDefault();
             }
-           
-           
+
+
         }
         public Declaration GetLastDeclarationByDeclarationId(string id, int tenant, bool isExport = false, bool? IsDCA = false)
         {
@@ -1029,17 +1029,17 @@ namespace Logitude.Customs.Data.Repsitories
                 return
                  (
                  from rec in context.Declarations
-                 where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "6" || rec.AmendmentStatus == null)) ||(IsDCA == false && rec.AmendmentStatus == null))
+                 where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "6" || rec.AmendmentStatus == null)) || (IsDCA == false && rec.AmendmentStatus == null))
                  select rec
                  ).OrderBy(x => x.AmendmentStatus == "6" ? 0 : 1)
-				  .ThenByDescending(x => x.CreateDateTime)
-				 .FirstOrDefault();
+                  .ThenByDescending(x => x.CreateDateTime)
+                 .FirstOrDefault();
             }
             return
                   (
                   from rec in context.Declarations
                   where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "1" || rec.AmendmentStatus == null)) || (IsDCA == false))
-				  select rec
+                  select rec
                   ).OrderBy(x => x.AmendmentStatus == "1" ? 0 : 1)
                   .ThenByDescending(x => x.CreateDateTime)
                   .FirstOrDefault();
@@ -1254,7 +1254,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public DeclarationConsignments GetDeclarationConsignment(string exportFile,int tenant)
+        public DeclarationConsignments GetDeclarationConsignment(string exportFile, int tenant)
         {
             var declarationsQ = (from d in context.Declarations
                                  where d.ExportFile == exportFile && d.Tenant == tenant && !d.AmendmentDontDisplayInList
@@ -1268,8 +1268,9 @@ namespace Logitude.Customs.Data.Repsitories
                                  on d.Id equals c.DeclarationId into cjoin
                                  from cj in cjoin.DefaultIfEmpty()
 
-                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList && d.Tenant == tenant select cj
-                              ); 
+                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList && d.Tenant == tenant
+                                 select cj
+                              );
             List<Consignment> consignments = consignmentsQ.ToList();
 
             var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile && !d.AmendmentDontDisplayInList && d.Tenant == tenant).Take(1)
@@ -1509,7 +1510,7 @@ namespace Logitude.Customs.Data.Repsitories
 
             return ExportReports2;
 
-        }    
+        }
 
         public List<string> GetDisplayOnly(string[] declarationsId, int tenant, string[] sheetStatusInProcessId)
         {
@@ -1517,14 +1518,14 @@ namespace Logitude.Customs.Data.Repsitories
                     join c in context.CustomsRequestsSheets on d.CustomFileNo equals c.CustomFileNo into cJoin
                     from cd in cJoin.DefaultIfEmpty()
 
-                    where d.Tenant == tenant &&                        
+                    where d.Tenant == tenant &&
                         declarationsId.Contains(d.Id) &&
                         cd.Tenant == tenant &&
                     (
                         d.PaymentDate.HasValue == true
                         || d.IsConvertedDeclaration == true
                         || new string[] { "10", "11" }.Contains(d.DeclarationStatusTypeCode)
-                        || 
+                        ||
                         (
                             sheetStatusInProcessId.Contains(cd.RequestStatusCode)
                             && new string[] { "2750", "2754", "2755", "8211", "8212", "8214", "8215", "8216", "8227", "US2L01" }.Contains(cd.InterfaceTypeCode)
@@ -1538,42 +1539,42 @@ namespace Logitude.Customs.Data.Repsitories
         public string GetDeclaratNumberByCustomFileNo(int tenant, string customFileNo, string direction)
         {
             var decNum = (from a in context.Declarations
-                       where a.CustomFileNo == customFileNo && a.DeclarationNumber != null && a.Direction == direction && a.Tenant == tenant
-                       select a.DeclarationNumber).FirstOrDefault();
+                          where a.CustomFileNo == customFileNo && a.DeclarationNumber != null && a.Direction == direction && a.Tenant == tenant
+                          select a.DeclarationNumber).FirstOrDefault();
             return decNum;
 
         }
-		public string GetSignedByUserIdByCustomFileNo(int tenant, string customFileNo)
-		{
-			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+        public string GetSignedByUserIdByCustomFileNo(int tenant, string customFileNo)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-			var decSignedByUserId = (from a in context.Declarations
-						  where a.Tenant == tenant && a.CustomFileNo == customFileNo && !string.IsNullOrEmpty(a.SignedByUserId)
-						  select a.SignedByUserId).FirstOrDefault();
-			return decSignedByUserId;
+            var decSignedByUserId = (from a in context.Declarations
+                                     where a.Tenant == tenant && a.CustomFileNo == customFileNo && !string.IsNullOrEmpty(a.SignedByUserId)
+                                     select a.SignedByUserId).FirstOrDefault();
+            return decSignedByUserId;
 
-		}
-		public List<Declaration> GetDeclarationsByExportFileNotClose(int tenant,string exportFile)
-		{
-			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+        }
+        public List<Declaration> GetDeclarationsByExportFileNotClose(int tenant, string exportFile)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-			List<Declaration> declarations = (from a in context.Declarations
-											  where a.Tenant == tenant && a.ExportFile == exportFile && !string.IsNullOrEmpty(a.DeclarationNumber) && a.DeclarationStatusTypeCode != "36"
-											  select a).ToList();
+            List<Declaration> declarations = (from a in context.Declarations
+                                              where a.Tenant == tenant && a.ExportFile == exportFile && !string.IsNullOrEmpty(a.DeclarationNumber) && a.DeclarationStatusTypeCode != "36"
+                                              select a).ToList();
 
-			return declarations;
-		}
+            return declarations;
+        }
 
         public IQueryable<ExportDeclarationForReport> GetExportDeclarationsForReport(int tenant, DateTime? fromDate, DateTime? toDate)
         {
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             IQueryable<ExportDeclarationForReport> declarations = (from a in context.Declarations
-                                                                   .Include(a=> a.TransportMode)
-                                                                   .Include(a=> a.DeclarationType)
-                                                                   .Include(a=> a.GovernmentProcedureCurrent)
-                                                                   .Include(a=> a.CustomsCountry)
-                                                                   .Include(a=> a.DeclarationStatusType)
+                                                                   .Include(a => a.TransportMode)
+                                                                   .Include(a => a.DeclarationType)
+                                                                   .Include(a => a.GovernmentProcedureCurrent)
+                                                                   .Include(a => a.CustomsCountry)
+                                                                   .Include(a => a.DeclarationStatusType)
                                                                    join de in context.DeclarationExportRecipients
                                                                    .Select(x => new { x.DeclarationId, x.RecipientName })
                                                                    on a.Id equals de.DeclarationId into deJoin
@@ -1586,7 +1587,7 @@ namespace Logitude.Customs.Data.Repsitories
                                                                    .Select(x => new { x.DeclarationId, x.FinalCargoTypeCode, x.FinalManifestNumber, x.FinalSecondCargoId, x.FinalThirdCargoId, x.FinalCargoType.LocalName })
                                                                    on a.Id equals c.DeclarationId into cJoin
                                                                    from closing in cJoin.DefaultIfEmpty()
-                                                                   
+
                                                                        //join con in context.Consignments on a.Id equals con.DeclarationId into conJoin
                                                                        //from consignment in conJoin.DefaultIfEmpty()
                                                                        //join cp in context.ConsignmentPackages on new { DeclarationId = a.Id, LineNumber = consignment.ConsignmentNumber } equals new { DeclarationId = cp.DeclarationId, LineNumber = cp.ConsignmentNumber } into cpJoin
@@ -1640,19 +1641,19 @@ namespace Logitude.Customs.Data.Repsitories
                                                                        //                        }).ToList()
                                                                        //    }
                                                                        //} : null
-                                                                   }); 
+                                                                   });
 
             var ka = declarations.ToList();
 
-            
+
             return declarations;
-		}
+        }
 
         public int GetTenantByDeclarationId(string declarationId)
         {
             int tenant = (from a in context.Declarations
-                                     where a.Id == declarationId
-                                     select a.Tenant).FirstOrDefault();
+                          where a.Id == declarationId
+                          select a.Tenant).FirstOrDefault();
             return tenant;
         }
         public Declaration GetDeclarationsByExportFile(int tenant, string exportFile)
@@ -1660,34 +1661,35 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             Declaration declaration = (from a in context.Declarations
-                                              where a.Tenant == tenant && a.ExportFile == exportFile
-                                              select a).FirstOrDefault();
+                                       where a.Tenant == tenant && a.ExportFile == exportFile
+                                       select a).FirstOrDefault();
 
             return declaration;
         }
-        public Declaration GetDeclarationAmendmentByAmendmentRequestNumber(int tenant,string requestNumber)
+        public Declaration GetDeclarationAmendmentByAmendmentRequestNumber(int tenant, string requestNumber)
         {
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             Declaration declaration = (from a in context.Declarations
-                                              where a.Tenant == tenant && a.AmendmentRequestNumber == requestNumber
+                                       where a.Tenant == tenant && a.AmendmentRequestNumber == requestNumber
                                        select a).FirstOrDefault();
 
             return declaration;
         }
 
-		public Declaration GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
-		{
-			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+        public Declaration GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-			Declaration declaration = (from d in context.Declarations
+            Declaration declaration = (from d in context.Declarations
                                        join cd in context.CourierDeclarations on d.Id equals cd.DeclarationId
-									   join cm in context.CourierMasters on cd.CourierMasterId equals cm.Id
-									   where d.Tenant == tenant && d.CourierHAWB == hawb && cm.IntegratorCode == IntegratorCode
-									   select d).FirstOrDefault();
+                                       join cm in context.CourierMasters on cd.CourierMasterId equals cm.Id
+                                       where d.Tenant == tenant && d.CourierHAWB == hawb && cm.IntegratorCode == IntegratorCode
+                                       select d).FirstOrDefault();
+            return declaration;
 
-	
-	}
+        }
+    }
 
 
     public class ExportReport1

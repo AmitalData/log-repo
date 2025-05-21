@@ -68,12 +68,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Hawb, 
 	         ImporterApproval, 
 	         DeclarationIdToDisplay, 
- 	         MawbDate, 
+	         MawbDate, 
 	         Vessel, 
 	         FlightVoyageNumber, 
 	         CarrierCode, 
 	         OriginCountryCode,
-  	      }
+	      }
 
 
 	      public enum PMPropertyNames
@@ -129,13 +129,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsCloseOrOpenFromUser, 
 	         OccuredStatus, 
 	         NotOccuredStatus, 
- 	         MawbDate, 
+	         MawbDate, 
 	         Vessel, 
 	         FlightVoyageNumber, 
 	         CarrierCode, 
-	         OriginCountryCode,
+	         OriginCountryCode, 
 	         VesselName,
- 	      }
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -338,7 +338,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
 			}
 			
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
             {
 				entityPOCO.MawbDate = entityPM.MawbDate;
 			}
@@ -362,7 +362,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
 				entityPOCO.OriginCountryCode = entityPM.OriginCountryCode;
 			}
- 			
+			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
@@ -569,7 +569,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.DeclarationIdToDisplay = entityPOCO.DeclarationIdToDisplay;
             }
 
- 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MawbDate))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MawbDate))
             {
 					entityPM.MawbDate = entityPOCO.MawbDate;
             }
@@ -594,7 +594,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OriginCountryCode = entityPOCO.OriginCountryCode;
             }
 
- 		}
+		}
 
 		public void PMToOldPM(DeclarationReferantDataPM entityPM, DeclarationReferantDataPM oldEntityPM)
         {
@@ -795,7 +795,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.DeclarationIdToDisplay = entityPM.DeclarationIdToDisplay;
             }
 			
- 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
             {
                 oldEntityPM.MawbDate = entityPM.MawbDate;
             }
@@ -820,7 +820,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.OriginCountryCode = entityPM.OriginCountryCode;
             }
 			
- 		}
+		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationReferantDataPM entityPM)
         {

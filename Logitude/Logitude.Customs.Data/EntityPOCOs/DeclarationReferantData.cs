@@ -130,7 +130,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool ImporterApproval { get; set; }
         [Column("DeclarationIdToDisplay")]
 	    public string DeclarationIdToDisplay { get; set; }
-         [Column("MawbDate")]
+        [Column("MawbDate")]
 	    public DateTime? MawbDate { get; set; }
         [ForeignKey("VesselCode")]
         [Column("Vessel")]
@@ -146,6 +146,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual Airline AirlineCode { get; set; }
         [Column("OriginCountryCode")]
 	    public string OriginCountryCode { get; set; }
-     }
+    }
 }
 	 

@@ -173,9 +173,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                             {
- 
 
-                      
+
+
                                 if (declarationPM.Direction == "E")
                                 {
                                     RaiseEvent(declarationPM, user?.Id, status_id: "HTR", status_DateTime: statusDateTime);
@@ -183,8 +183,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     SendSoyStatusToUnifreight(declarationPM, user?.Id);
 
                                 }
-                           
 
+                            }
 
 
                             if (declarationPM.IsCourierDeclaration)

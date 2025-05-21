@@ -21,8 +21,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
- 		public const string HashString = "bf01aa1a2fa53db8b727595d0563bf58";
- 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+		public const string HashString = "c9c20591b0b98cbfc314c661b1eabc27";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -1181,10 +1181,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CourierMasterId",
 					  						DefaultText =  "Courier Master Id",
-					  						FullLocalDefaultText =  "קוד בלדר רםשי",
+					  						FullLocalDefaultText =  "קוד בלדר ראשי",
 					  						ListFieldLable =  "CourierMasterIdListLable",
 					  						ListLableDefaultText =  "Courier Master Id",
-					  						ListLocalDefaultText =  "קוד בלדר רםשי",
+					  						ListLocalDefaultText =  "קוד בלדר ראשי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2879,10 +2879,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SpecialActionsErrorXml",
 					  						DefaultText =  "Special Actions Error Xml",
-					  						FullLocalDefaultText =  "שגיםות פ.מ",
+					  						FullLocalDefaultText =  "שגיאות פ.מ",
 					  						ListFieldLable =  "SpecialActionsErrorXmlListLable",
 					  						ListLableDefaultText =  "Special Actions Error Xml",
-					  						ListLocalDefaultText =  "שגיםות פ.מ",
+					  						ListLocalDefaultText =  "שגיאות פ.מ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3272,10 +3272,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastMileStatusDate",
 					  						DefaultText =  "Last Mile Status Date",
-					  						FullLocalDefaultText =  "תםריך סטטוס הפצה",
+					  						FullLocalDefaultText =  "תאריך סטטוס הפצה",
 					  						ListFieldLable =  "LastMileStatusDateListLable",
 					  						ListLableDefaultText =  "Last Mile Status Date",
-					  						ListLocalDefaultText =  "תםריך סטטוס הפצה",
+					  						ListLocalDefaultText =  "תאריך סטטוס הפצה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3473,10 +3473,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StorageSiteErrorText",
 					  						DefaultText =  "Storage Site Error",
-					  						FullLocalDefaultText =  "שגיםות מסר ש.מ.ב ממסוף מטען",
+					  						FullLocalDefaultText =  "שגיאות מסר ש.מ.ב ממסוף מטען",
 					  						ListFieldLable =  "StorageSiteErrorTextListLable",
 					  						ListLableDefaultText =  "Storage Site Error",
-					  						ListLocalDefaultText =  "שגיםות מסר ש.מ.ב ממסוף מטען",
+					  						ListLocalDefaultText =  "שגיאות מסר ש.מ.ב ממסוף מטען",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3806,10 +3806,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MAWB",
 					  						DefaultText =  "MAWB",
-					  						FullLocalDefaultText =  "שטר מטען רםשי",
+					  						FullLocalDefaultText =  "שטר מטען ראשי",
 					  						ListFieldLable =  "MAWBListLable",
 					  						ListLableDefaultText =  "MAWB",
-					  						ListLocalDefaultText =  "שטר מטען רםשי",
+					  						ListLocalDefaultText =  "שטר מטען ראשי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3874,10 +3874,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MasterGrossMassMeasure",
 					  						DefaultText =  "Gross Weight",
-					  						FullLocalDefaultText =  "משקל םריזות",
+					  						FullLocalDefaultText =  "משקל אריזות",
 					  						ListFieldLable =  "MasterGrossMassMeasureListLable",
 					  						ListLableDefaultText =  "Gross Weight",
-					  						ListLocalDefaultText =  "משקל םריזות",
+					  						ListLocalDefaultText =  "משקל אריזות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3940,10 +3940,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MasterPackageQuantity",
 					  						DefaultText =  "Package Quantity",
-					  						FullLocalDefaultText =  "כמות םריזות",
+					  						FullLocalDefaultText =  "כמות אריזות",
 					  						ListFieldLable =  "MasterPackageQuantityListLable",
 					  						ListLableDefaultText =  "Package Quantity",
-					  						ListLocalDefaultText =  "כמות םריזות",
+					  						ListLocalDefaultText =  "כמות אריזות",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4006,10 +4006,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MasterCreateDateTime",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תםריך יצירה",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "MasterCreateDateTimeListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4142,10 +4142,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MasterEstimatedArrivalDate",
 					  						DefaultText =  "Estimated Arrivel Date",
-					  						FullLocalDefaultText =  "תםריך הגעה משוער",
+					  						FullLocalDefaultText =  "תאריך הגעה משוער",
 					  						ListFieldLable =  "MasterEstimatedArrivalDateListLable",
 					  						ListLableDefaultText =  "Estimated Arrivel Date",
-					  						ListLocalDefaultText =  "תםריך הגעה משוער",
+					  						ListLocalDefaultText =  "תאריך הגעה משוער",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4209,10 +4209,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MasterStorageSiteCode",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "םתר םחסון",
+					  						FullLocalDefaultText =  "אתר אחסון",
 					  						ListFieldLable =  "MasterStorageSiteCodeListLable",
 					  						ListLableDefaultText =  "Storage Site Code",
-					  						ListLocalDefaultText =  "םתר םחסון",
+					  						ListLocalDefaultText =  "אתר אחסון",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DeliverySiteType",
 					  						NavigationPropertyName =  "DeliverySiteType",
@@ -4866,10 +4866,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DistributionArea",
 					  						DefaultText =  "Distribution Area",
-					  						FullLocalDefaultText =  "םזור הפצה",
+					  						FullLocalDefaultText =  "אזור הפצה",
 					  						ListFieldLable =  "DistributionAreaListLable",
 					  						ListLableDefaultText =  "DistributionArea",
-					  						ListLocalDefaultText =  "םזור הפצה",
+					  						ListLocalDefaultText =  "אזור הפצה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4931,10 +4931,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CrateNumber",
 					  						DefaultText =  "Crate Number",
-					  						FullLocalDefaultText =  "מס' םרגז",
+					  						FullLocalDefaultText =  "מס' ארגז",
 					  						ListFieldLable =  "CrateNumberListLable",
 					  						ListLableDefaultText =  "Crate Number",
-					  						ListLocalDefaultText =  "מס' םרגז",
+					  						ListLocalDefaultText =  "מס' ארגז",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4994,7 +4994,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmendmentDontDisplayInList",
-					  						DefaultText =  "הצהרה רםשית",
+					  						DefaultText =  "הצהרה ראשית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5248,10 +5248,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeclarationStorageSiteCode",
 					  						DefaultText =  "Storage Site",
-					  						FullLocalDefaultText =  "םתר םחסון",
+					  						FullLocalDefaultText =  "אתר אחסון",
 					  						ListFieldLable =  "DeclarationStorageSiteCodeListLable",
 					  						ListLableDefaultText =  "Storage Site Code",
-					  						ListLocalDefaultText =  "םתר םחסון",
+					  						ListLocalDefaultText =  "אתר אחסון",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DeliverySiteType",
 					  						NavigationPropertyName =  "DeliverySiteType",
@@ -5315,10 +5315,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TerminalReleaseDate",
 					  						DefaultText =  "TerminalReleaseDate",
-					  						FullLocalDefaultText =  "תםריך יציםה ממסוף",
+					  						FullLocalDefaultText =  "תאריך יציאה ממסוף",
 					  						ListFieldLable =  "TerminalReleaseDateListLable",
 					  						ListLableDefaultText =  "TerminalReleaseDate",
-					  						ListLocalDefaultText =  "תםריך יציםה ממסוף",
+					  						ListLocalDefaultText =  "תאריך יציאה ממסוף",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5509,10 +5509,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CargoDescription",
 					  						DefaultText =  "Cargo Description",
-					  						FullLocalDefaultText =  "תםור טובין",
+					  						FullLocalDefaultText =  "תאור טובין",
 					  						ListFieldLable =  "CargoDescriptionListLable",
 					  						ListLableDefaultText =  "Cargo Description",
-					  						ListLocalDefaultText =  "תםור טובין",
+					  						ListLocalDefaultText =  "תאור טובין",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5642,7 +5642,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Hatra Date",
 					  						ListFieldLable =  "HatraDateListLable",
 					  						ListLableDefaultText =  "Hatra Date",
-					  						ListLocalDefaultText =  "תםריך התרה",
+					  						ListLocalDefaultText =  "תאריך התרה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5707,7 +5707,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Casual Supplier Address",
 					  						ListFieldLable =  "CasualSupplierAddressListLable",
 					  						ListLableDefaultText =  "Casual Supplier Address",
-					  						ListLocalDefaultText =  "כתובת יבוםן",
+					  						ListLocalDefaultText =  "כתובת יבואן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5772,7 +5772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Casual Importer City",
 					  						ListFieldLable =  "CasualImporterCityListLable",
 					  						ListLableDefaultText =  "Casual Importer City",
-					  						ListLocalDefaultText =  "עיר יבוםן",
+					  						ListLocalDefaultText =  "עיר יבואן",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5903,7 +5903,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Inco Term",
 					  						ListFieldLable =  "IncoTermCodeListLable",
 					  						ListLableDefaultText =  "Inco Term",
-					  						ListLocalDefaultText =  "תנםי מכר",
+					  						ListLocalDefaultText =  "תנאי מכר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6412,10 +6412,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IntegratorName",
 					  						DefaultText =  "Integrator",
-					  						FullLocalDefaultText =  "םינטגרטור",
+					  						FullLocalDefaultText =  "אינטגרטור",
 					  						ListFieldLable =  "IntegratorNameListLable",
 					  						ListLableDefaultText =  "Integrator",
-					  						ListLocalDefaultText =  "םינטגרטור",
+					  						ListLocalDefaultText =  "אינטגרטור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6478,10 +6478,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClassificationApproved",
 					  						DefaultText =  "ClassificationApproved",
-					  						FullLocalDefaultText =  "םישור סיווג",
+					  						FullLocalDefaultText =  "אישור סיווג",
 					  						ListFieldLable =  "ClassificationApprovedListLable",
 					  						ListLableDefaultText =  "ClassificationApproved",
-					  						ListLocalDefaultText =  "םישור סיווג",
+					  						ListLocalDefaultText =  "אישור סיווג",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6707,21 +6707,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable DeclarationCourierStatusObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.DeclarationCourierStatus" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromDateLanding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromDateLanding", DefaultText = "From Date Landing",LocalDefaultText = @"מתםריך נחיתה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromDateLanding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromDateLanding", DefaultText = "From Date Landing",LocalDefaultText = @"מתאריך נחיתה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateLanding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateLanding", DefaultText = "ToDateLanding",LocalDefaultText = @"עד תםריך נחיתה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateLanding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateLanding", DefaultText = "ToDateLanding",LocalDefaultText = @"עד תאריך נחיתה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOIntegrator = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.Integrator", DefaultText = "Integrator",LocalDefaultText = @"םינטגרטור", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOIntegrator = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.Integrator", DefaultText = "Integrator",LocalDefaultText = @"אינטגרטור", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOReportType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ReportType", DefaultText = "Report Type",LocalDefaultText = @"סוג דוח", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromLastMile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromLastMile", DefaultText = "From Date LastMile",LocalDefaultText = @"מתםריך הפצה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromLastMile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromLastMile", DefaultText = "From Date LastMile",LocalDefaultText = @"מתאריך הפצה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateLastMile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateLastMile", DefaultText = "From Date LastMile",LocalDefaultText = @"עד תםריך הפצה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateLastMile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateLastMile", DefaultText = "From Date LastMile",LocalDefaultText = @"עד תאריך הפצה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateHatra = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateHatra", DefaultText = "To Date Hatra",LocalDefaultText = @" עד תםריך התרה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOToDateHatra = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.ToDateHatra", DefaultText = "To Date Hatra",LocalDefaultText = @" עד תאריך התרה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromDateHatra = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromDateHatra", DefaultText = "From Date Hatra",LocalDefaultText = @"מתםריך התרה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOFromDateHatra = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.FromDateHatra", DefaultText = "From Date Hatra",LocalDefaultText = @"מתאריך התרה", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOTrucker = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.Trucker", DefaultText = "Trucker",LocalDefaultText = @"מפיץ", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -6729,11 +6729,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOCourierHawb = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.CourierHawb", DefaultText = "CourierHawb",LocalDefaultText = @"ש.מ.ר", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusONotCheckDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.NotCheckDeclarations", DefaultText = "Not Check declarations",LocalDefaultText = @"לם נבחרו הצהרות", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusONotCheckDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.NotCheckDeclarations", DefaultText = "Not Check declarations",LocalDefaultText = @"לא נבחרו הצהרות", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOCity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.City", DefaultText = "City",LocalDefaultText = @"עיר", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOMultipleStorageSitesConfirmation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.MultipleStorageSitesConfirmation", DefaultText = "There are declarations with different storage sites, should still proceed with submitting a payment?",LocalDefaultText = @"יש הצהרות עם םתרי םחסון שונים, הםם בכל זםת להמשיך עם הגשת תשלום?", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOMultipleStorageSitesConfirmation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.MultipleStorageSitesConfirmation", DefaultText = "There are declarations with different storage sites, should still proceed with submitting a payment?",LocalDefaultText = @"יש הצהרות עם אתרי אחסון שונים, האם בכל זאת להמשיך עם הגשת תשלום?", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
