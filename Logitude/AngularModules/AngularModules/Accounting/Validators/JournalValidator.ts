@@ -109,7 +109,7 @@ export class JournalValidator
         }
         if(vendorSet.size > 0) {
             const vendorList = Array.from(vendorSet).join(", ");
-            errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor") +":"+ vendorList); 
+            errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor") +": "+ vendorList); 
         }
         return errors;
     }
