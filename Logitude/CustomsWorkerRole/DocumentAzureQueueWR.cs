@@ -154,7 +154,9 @@ namespace CustomsWorkerRole
 
 						#region Filing the document in the filing system by CreateNewFiling
 						string filePath = res.Result.filepath;
-						Dictionary<string, string> outParams;
+						Dictionary<string, string> outParams = new Dictionary<string, string>();
+						outParams.Add("COM_ID", string.Empty);
+
 						bool fatal_error = false;
 						string message = string.Empty;
 
@@ -163,10 +165,13 @@ namespace CustomsWorkerRole
 						inParams.Add("base64data", "true");
 						byte[] filedataByte  = File.ReadAllBytes(filePath);
 						string filedata = Convert.ToBase64String(filedataByte);
-						logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message,isFromCloud: true);
-						logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						#endregion
+						if (CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
+						{
+							logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+						    UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message,isFromCloud: true);
+						    logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+						}
+					    #endregion
 						if (!fatal_error)
 						{
 							#region Save document and metadata
