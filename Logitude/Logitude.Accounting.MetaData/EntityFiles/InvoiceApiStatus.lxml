@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Invoice Api Status&quot;"
-  Code="&quot;bf70&quot;"
+  Code="&quot;7a28&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;StatusCode&quot;"
   CloseTableName="&quot;StatusName&quot;"

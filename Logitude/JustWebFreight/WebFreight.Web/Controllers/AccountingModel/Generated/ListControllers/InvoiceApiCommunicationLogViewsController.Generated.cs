@@ -42,6 +42,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
