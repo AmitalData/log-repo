@@ -22,44 +22,44 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 { 
-   public partial class MagayaStepUpdateService:EntityUpdateService<MagayaStep,MagayaStepPM,EntityPM>
+   public partial class InvoiceApiStepUpdateService:EntityUpdateService<InvoiceApiStep,InvoiceApiStepPM,EntityPM>
    {
    
-        MagayaStepRepository entityRepository;
-        public MagayaStepUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        InvoiceApiStepRepository entityRepository;
+        public InvoiceApiStepUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             IAccountingContext  context = mainContext as AccountingContext;
             context = context ??mainContext as IAccountingContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new MagayaStepDataMapping();
-            Repository = new MagayaStepRepository(context);
+            Mapping = new InvoiceApiStepDataMapping();
+            Repository = new InvoiceApiStepRepository(context);
         }
 
        
         private IAccountingContext currentContext;
-        public MagayaStepUpdateService(int tenant)
+        public InvoiceApiStepUpdateService(int tenant)
         {
             currentContext = AccountingContext.GetContext(tenant);
         }
 
-        public MagayaStepUpdateService(IAccountingContext context)
+        public InvoiceApiStepUpdateService(IAccountingContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(MagayaStepPM entityPM)
+		protected override EntityKeyFields GetKeys(InvoiceApiStepPM entityPM)
         {
-            MagayaStepKeys entityKeys = new MagayaStepKeys() { Code = entityPM.Code };
+            InvoiceApiStepKeys entityKeys = new InvoiceApiStepKeys() { Code = entityPM.Code };
             return entityKeys;
         }
 
 		
-	    protected override void FillDefaultValuesOnCreate(MagayaStepPM entityPM)
+	    protected override void FillDefaultValuesOnCreate(InvoiceApiStepPM entityPM)
         {
  
 		}
-		protected override void FillDefaultValuesOnUpdate(MagayaStepPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(InvoiceApiStepPM entityPM)
 		{
  
 		}

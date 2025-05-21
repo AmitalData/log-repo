@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Accounting.Data.EntityKeys
 {
-   public partial class MagayaStepKeys : EntityKeyFields
+   public partial class InvoiceApiStepKeys : EntityKeyFields
    {
    	  public string Code  { get; set; }
 	  
@@ -26,7 +26,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "MagayaStepPM";
+          return "InvoiceApiStepPM";
       }
 	 
    }

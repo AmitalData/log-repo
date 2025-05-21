@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace CommunicationWorkerRole.Tasks
 {
-    public class MagayaInvoicesQueryTask : TaskManagerBase
+    public class InvoiceApiQueryTask : TaskManagerBase
     {
 
         private StringBuilder stringBuilder;
 
-        public MagayaInvoicesQueryTask(string Id, int tenant) : base(Id, tenant)
+        public InvoiceApiQueryTask(string Id, int tenant) : base(Id, tenant)
         {
             stringBuilder = new StringBuilder();
         }

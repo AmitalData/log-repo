@@ -23,19 +23,19 @@ using WebFreight.Web.Helpers.WorkerRoleHelpers;
 
 namespace CommunicationWorkerRole
 {
-    class MagayaWorkerRole : WorkerEntryPoint
+    class InvoiceApiWorkerRole : WorkerEntryPoint
     {
 
         DbQueueService queueService;
         QueueResponse response = null;
-        MagayaService magayaService;
+        InvoiceApiService magayaService;
         MagayaCommunicationLogPM magayaCommunicationLog = null;
         CommunicationLog communicationLog = null;
 
         int tenant = 0;
 
 
-        public MagayaWorkerRole()
+        public InvoiceApiWorkerRole()
         {
 
         }
@@ -158,7 +158,7 @@ namespace CommunicationWorkerRole
         {
             try
             {
-               magayaService = new MagayaService();
+               magayaService = new InvoiceApiService();
                ProcessStep();
                 queueService.Complete();
             }
@@ -178,26 +178,26 @@ namespace CommunicationWorkerRole
            
             switch (magayaCommunicationLog.Step)
             {
-                case MagayaStepEnum.OpenMagayaSession:
+                case InvoiceApiStepEnum.OpenMagayaSession:
                     OpenMagayaSession();
                     break;
               
-                case MagayaStepEnum.GetMagayaInvoice:
+                case InvoiceApiStepEnum.GetMagayaInvoice:
                     GetInvoice();
                     break;
-                case MagayaStepEnum.CloseMagayaSession:
+                case InvoiceApiStepEnum.CloseMagayaSession:
                     CloseMagayaSession();
                     break;
-                case MagayaStepEnum.GenerateInvoice:
+                case InvoiceApiStepEnum.GenerateInvoice:
                     GenerateInvoice(null);
                     break;
-                case MagayaStepEnum.GetConfirmationNumber:
+                case InvoiceApiStepEnum.GetConfirmationNumber:
                     SetConfirmationNumberStatusInvoice(null,null);
                     break;
-                case MagayaStepEnum.ApproveInvoice:
+                case InvoiceApiStepEnum.ApproveInvoice:
                     ApproveInvoice(null,null);
                     break;
-                case MagayaStepEnum.PrintOrSendInvoice:
+                case InvoiceApiStepEnum.PrintOrSendInvoice:
                     PrintOrSendInvoice(null,tenant);
                     break;
                 
@@ -210,25 +210,25 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.InProgress);
-                magayaService = new MagayaService();
+                UpdateCommunicationStatus(InvoiceApiStepEnum.OpenMagayaSession, MagayaStatusEnum.InProgress);
+                magayaService = new InvoiceApiService();
 
                 var success = magayaService.OpenConnection("", "");
                 if (!success) {
-                    UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.Failed, "OpenConnection Failed");
+                    UpdateCommunicationStatus(InvoiceApiStepEnum.OpenMagayaSession, MagayaStatusEnum.Failed, "OpenConnection Failed");
                     queueService.CompleteAsFailed();
 
                 }
 
                 else
                 {
-                    UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.Done);
+                    UpdateCommunicationStatus(InvoiceApiStepEnum.OpenMagayaSession, MagayaStatusEnum.Done);
                     GetInvoice();
                 }
             }
             catch (Exception ex)
             {
-                UpdateCommunicationStatus(MagayaStepEnum.OpenMagayaSession, MagayaStatusEnum.Failed, ex.Message);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.OpenMagayaSession, MagayaStatusEnum.Failed, ex.Message);
                 queueService.CompleteAsFailed();
 
             }
@@ -238,17 +238,17 @@ namespace CommunicationWorkerRole
 
             try
             {
-                UpdateCommunicationStatus(MagayaStepEnum.GetMagayaInvoice, MagayaStatusEnum.InProgress);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GetMagayaInvoice, MagayaStatusEnum.InProgress);
                 var (success, xml) = magayaService.GetTransaction(response.MessageValues["Type"], 1, response.MessageValues["Guid"]);
                 if (!success || string.IsNullOrWhiteSpace(xml))
                     throw new Exception("GetTransaction failed or returned empty XML");
-                UpdateCommunicationStatus(MagayaStepEnum.GetMagayaInvoice, MagayaStatusEnum.Done);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GetMagayaInvoice, MagayaStatusEnum.Done);
 
                 CloseMagayaSession();
             }
             catch (Exception ex)
             {
-                UpdateCommunicationStatus(MagayaStepEnum.GetMagayaInvoice, MagayaStatusEnum.Failed, ex.Message);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GetMagayaInvoice, MagayaStatusEnum.Failed, ex.Message);
 
                 queueService.CompleteAsFailed();
             }
@@ -259,14 +259,14 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                UpdateCommunicationStatus(MagayaStepEnum.CloseMagayaSession, MagayaStatusEnum.InProgress);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.CloseMagayaSession, MagayaStatusEnum.InProgress);
                 magayaService.EndSession();
-                UpdateCommunicationStatus(MagayaStepEnum.CloseMagayaSession, MagayaStatusEnum.Done);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.CloseMagayaSession, MagayaStatusEnum.Done);
                 GenerateInvoice(null);
             }
             catch (Exception ex)
             {
-                UpdateCommunicationStatus(MagayaStepEnum.CloseMagayaSession, MagayaStatusEnum.Failed, ex.Message);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.CloseMagayaSession, MagayaStatusEnum.Failed, ex.Message);
                 queueService.CompleteAsFailed();
 
             }
@@ -274,7 +274,7 @@ namespace CommunicationWorkerRole
         private void GenerateInvoice(string xml) {
 
             try {
-                UpdateCommunicationStatus(MagayaStepEnum.GenerateInvoice, MagayaStatusEnum.InProgress);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, MagayaStatusEnum.InProgress);
                 ARInvoicePM aRInvoicePM = MapXmlToArinvoice(xml);
                 if (aRInvoicePM == null)
                 {
@@ -284,14 +284,14 @@ namespace CommunicationWorkerRole
                 ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
                 service.Create(aRInvoicePM);
 
-                UpdateCommunicationStatus(MagayaStepEnum.GenerateInvoice, MagayaStatusEnum.Done);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, MagayaStatusEnum.Done);
 
                 SetConfirmationNumberStatusInvoice(aRInvoicePM, service);
 
             }
             catch (Exception ex)
             {
-                UpdateCommunicationStatus(MagayaStepEnum.GenerateInvoice, MagayaStatusEnum.Failed,ex.Message);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, MagayaStatusEnum.Failed,ex.Message);
 
                 queueService.CompleteAsFailed();
             }
@@ -301,23 +301,23 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                UpdateCommunicationStatus(MagayaStepEnum.GetConfirmationNumber, MagayaStatusEnum.InProgress);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GetConfirmationNumber, MagayaStatusEnum.InProgress);
 
                 service.SetConfirmationNumberStatus();
-                UpdateCommunicationStatus(MagayaStepEnum.GetConfirmationNumber, MagayaStatusEnum.Done);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GetConfirmationNumber, MagayaStatusEnum.Done);
 
                 ApproveInvoice(aRInvoicePM, service);
              }
             catch (Exception ex)
             {
-                UpdateCommunicationStatus(MagayaStepEnum.GetConfirmationNumber,MagayaStatusEnum.Failed,ex.Message);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.GetConfirmationNumber,MagayaStatusEnum.Failed,ex.Message);
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error setting confirmation number status", null, null);
             }
         }
         private void ApproveInvoice(ARInvoicePM aRInvoicePM, ARInvoiceService service) {
             try
             {
-                UpdateCommunicationStatus(MagayaStepEnum.ApproveInvoice, MagayaStatusEnum.InProgress);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.ApproveInvoice, MagayaStatusEnum.InProgress);
 
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ARInvoiceApproveWR", tenant);
@@ -331,7 +331,7 @@ namespace CommunicationWorkerRole
             }
             catch (Exception ex)
             {
-                UpdateCommunicationStatus(MagayaStepEnum.ApproveInvoice, MagayaStatusEnum.Failed, ex.Message);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.ApproveInvoice, MagayaStatusEnum.Failed, ex.Message);
 
                 queueService.CompleteAsFailed();
             }

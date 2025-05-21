@@ -12,67 +12,67 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.Data.Repositories
 {
-   public partial class MagayaStepRepository:IRepository<MagayaStep>
+   public partial class InvoiceApiStepRepository:IRepository<InvoiceApiStep>
    {
    
         private IAccountingContext currentContext;
-        public MagayaStepRepository(int tenant)
+        public InvoiceApiStepRepository(int tenant)
         {
             currentContext = AccountingContext.GetContext(tenant);
         }
 
-        public MagayaStepRepository(IAccountingContext context)
+        public InvoiceApiStepRepository(IAccountingContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  MagayaStep GetSingle(string code)
+		public  InvoiceApiStep GetSingle(string code)
         {
-            return (from a in context.MagayaSteps
+            return (from a in context.InvoiceApiSteps
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<MagayaStep> GetAll()
+        public IQueryable<InvoiceApiStep> GetAll()
         {
-            return from a in context.MagayaSteps  
+            return from a in context.InvoiceApiSteps  
                    select a;
         }
 				 
-        public MagayaStep GetSingle(EntityKeyFields entityKeys)
+        public InvoiceApiStep GetSingle(EntityKeyFields entityKeys)
         {
-            MagayaStepKeys keys = entityKeys as MagayaStepKeys;
-            return (from a in context.MagayaSteps
+            InvoiceApiStepKeys keys = entityKeys as InvoiceApiStepKeys;
+            return (from a in context.InvoiceApiSteps
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
 		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(MagayaStep entity)
+        public void Add(InvoiceApiStep entity)
         {
             onAdd();
-            context.MagayaSteps.Add(entity);
+            context.InvoiceApiSteps.Add(entity);
         }
 
-        public void Remove(MagayaStep entity)
+        public void Remove(InvoiceApiStep entity)
         {
-            context.MagayaSteps.Attach(entity);
-            context.MagayaSteps.Remove(entity);
+            context.InvoiceApiSteps.Attach(entity);
+            context.InvoiceApiSteps.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(MagayaStep entity)
+        public void Update(InvoiceApiStep entity)
         {
             onUpdate();
-            context.MagayaSteps.Attach(entity);
+            context.InvoiceApiSteps.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<MagayaStep> All()
+        public List<InvoiceApiStep> All()
         {
-            return context.MagayaSteps.ToList();
+            return context.InvoiceApiSteps.ToList();
         }
 
         private IAccountingContext context

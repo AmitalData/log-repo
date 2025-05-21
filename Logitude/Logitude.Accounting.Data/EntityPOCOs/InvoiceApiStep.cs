@@ -14,7 +14,7 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 namespace Logitude.Accounting.Data.EntityPOCOs
 {
    
-    public class MagayaStep
+    public class InvoiceApiStep
     {
 	 string dbms;
 

@@ -17,48 +17,48 @@ using Logitude.Accounting.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Accounting.BL.EntityQueryServices
 { 
-   public partial class MagayaStepQueryService: EntityQueryService<MagayaStep,MagayaStepKeys,MagayaStepPM,object,MagayaStepKeys>
+   public partial class InvoiceApiStepQueryService: EntityQueryService<InvoiceApiStep,InvoiceApiStepKeys,InvoiceApiStepPM,object,InvoiceApiStepKeys>
    {
    
-        MagayaStepRepository repository;
+        InvoiceApiStepRepository repository;
 		IAccountingContext  context;
-        public MagayaStepQueryService(int tenant)
+        public InvoiceApiStepQueryService(int tenant)
         {
 		    context = AccountingContext.GetContext(tenant);
             MainContext = context;
-            repository = new MagayaStepRepository(context);
+            repository = new InvoiceApiStepRepository(context);
             Repository = repository;
-            mapping = new MagayaStepDataMapping();
+            mapping = new InvoiceApiStepDataMapping();
         }
 
-        public MagayaStepQueryService(MagayaStepRepository repository)
+        public InvoiceApiStepQueryService(InvoiceApiStepRepository repository)
         {
             this.repository = repository;
             Repository = repository;
-            mapping = new MagayaStepDataMapping();
+            mapping = new InvoiceApiStepDataMapping();
         }
 
-        public MagayaStepQueryService(IAccountingContext context)
+        public InvoiceApiStepQueryService(IAccountingContext context)
         {
-            this.repository = new MagayaStepRepository(context);
+            this.repository = new InvoiceApiStepRepository(context);
             this.context = context;
 
             MainContext = context;
             Repository = repository;
-            mapping = new MagayaStepDataMapping();
+            mapping = new InvoiceApiStepDataMapping();
         }
 		 
-		public  MagayaStepPM GetSingle(string code,bool getComposition, bool getFromCache)
+		public  InvoiceApiStepPM GetSingle(string code,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new MagayaStepKeys(){ Code = code };
+             EntityKeys = new InvoiceApiStepKeys(){ Code = code };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
 
        
-	    protected override EntityKeyFields GetKeys(MagayaStep entityPOCO)
+	    protected override EntityKeyFields GetKeys(InvoiceApiStep entityPOCO)
         {
-            MagayaStepKeys entityKeys = new MagayaStepKeys() { Code = entityPOCO.Code,  };
+            InvoiceApiStepKeys entityKeys = new InvoiceApiStepKeys() { Code = entityPOCO.Code,  };
             return entityKeys;
         }
      

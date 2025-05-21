@@ -16,7 +16,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 {
    [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
    [DataContract]
-   public partial class MagayaStepPM : EntityPM
+   public partial class InvoiceApiStepPM : EntityPM
    {
    	  private string code ;
 	  

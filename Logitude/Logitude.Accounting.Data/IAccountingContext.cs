@@ -77,6 +77,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<InterestReportsConnectInvoice> InterestReportsConnectInvoices { get; }
 		 IDbSet<InterestReportStatuse> InterestReportStatuses { get; }
 		 IDbSet<InterestTransaction> InterestTransactions { get; }
+		 IDbSet<InvoiceApiStep> InvoiceApiSteps { get; }
 		 IDbSet<Journal> Journals { get; }
 		 IDbSet<JournalActionType> JournalActionTypes { get; }
 		 IDbSet<JournalAdditionalData> JournalAdditionalDatas { get; }
@@ -89,7 +90,6 @@ namespace Logitude.Accounting.Data
 		 IDbSet<LedgerTransaction> LedgerTransactions { get; }
 		 IDbSet<MagayaCommunicationLog> MagayaCommunicationLogs { get; }
 		 IDbSet<MagayaStatus> MagayaStatuses { get; }
-		 IDbSet<MagayaStep> MagayaSteps { get; }
 		 IDbSet<OpenFormatReport> OpenFormatReports { get; }
 		 IDbSet<OpenFormatReportStatus> OpenFormatReportStatuses { get; }
 		 IDbSet<PaymentCheque> PaymentCheques { get; }

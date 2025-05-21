@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                var magayaService = new MagayaService();
+                var magayaService = new InvoiceApiService();
                 if (!magayaService.OpenConnection("user", "password"))
                     throw new Exception("Failed to connect to Magaya API");
 
@@ -147,7 +147,7 @@ namespace Logitude.Accounting.BL.Utils
                     CommunicationId = communicationId,
                     CreateDate = DateTime.Now,
                     StatusCode = MagayaStatusEnum.Created,
-                    Step = MagayaStepEnum.OpenMagayaSession,
+                    Step = InvoiceApiStepEnum.OpenMagayaSession,
                     SearchFields = guid + "," + tenant,
 
                 };

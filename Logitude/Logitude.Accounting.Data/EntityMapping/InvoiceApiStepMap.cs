@@ -14,12 +14,12 @@ using Logitude.Accounting.Data;
 namespace Logitude.Accounting.Data.EntityMapping
 {
  
-    public class MagayaStepMap : EntityTypeConfiguration<MagayaStep>
+    public class InvoiceApiStepMap : EntityTypeConfiguration<InvoiceApiStep>
     {
 	    string dbms;
-        public MagayaStepMap()
+        public InvoiceApiStepMap()
         { 
-				this.ToTable("MagayaSteps");
+				this.ToTable("InvoiceApiSteps");
 		
 		    this.HasKey(t => new { t.Code });
 	 

@@ -12,10 +12,10 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.Data.Repositories
 {
-   public partial class MagayaStepRepository:IRepository<MagayaStep>
+   public partial class InvoiceApiStepRepository:IRepository<InvoiceApiStep>
    {
         
-		public List<MagayaStep> GetMulti(EntityKeyFields entityKeys)
+		public List<InvoiceApiStep> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();

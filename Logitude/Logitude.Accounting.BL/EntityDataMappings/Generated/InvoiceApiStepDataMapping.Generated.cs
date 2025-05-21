@@ -17,7 +17,7 @@ using Logitude.Accounting.Data;
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
    
-   public partial class MagayaStepDataMapping: IMapping<MagayaStepPM, MagayaStep>,IMappingEncodeBase64NVARCHARFields<MagayaStepPM>
+   public partial class InvoiceApiStepDataMapping: IMapping<InvoiceApiStepPM, InvoiceApiStep>,IMappingEncodeBase64NVARCHARFields<InvoiceApiStepPM>
    {
           public enum POCOPropertyNames
           { 
@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
-	    public void PMToPOCO(MagayaStepPM entityPM, MagayaStep entityPOCO)
+	    public void PMToPOCO(InvoiceApiStepPM entityPM, InvoiceApiStep entityPOCO)
         {
 			 
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EnglishName))
@@ -60,7 +60,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			}
 			}
 
-		public void POCOToPM(MagayaStepPM entityPM, MagayaStep entityPOCO)
+		public void POCOToPM(InvoiceApiStepPM entityPM, InvoiceApiStep entityPOCO)
         {
 			 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Code))
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 		}
 
-		public void PMToOldPM(MagayaStepPM entityPM, MagayaStepPM oldEntityPM)
+		public void PMToOldPM(InvoiceApiStepPM entityPM, InvoiceApiStepPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
@@ -106,7 +106,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			
 		}
 
-	    public void EncodeBase64NVARCHARFields(MagayaStepPM entityPM)
+	    public void EncodeBase64NVARCHARFields(InvoiceApiStepPM entityPM)
         {
             if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
             {

@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="MagayaSteps"
+  Name="InvoiceApiStatuses"
+  OldNames="MagayaStatuses"
   Schema="dbo"
   DBType="Main"
   Module="Accounting">
   <Column
-    Name="Code"
+    Name="StatusCode"
     Type="varchar"
     Size="3">
     <Constraints
@@ -13,23 +14,10 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="EnglishName"
+    Name="StatusName"
     Type="varchar"
     Size="60">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsAllowResend"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
 </Table>

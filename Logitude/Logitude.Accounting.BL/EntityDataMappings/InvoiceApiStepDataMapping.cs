@@ -14,15 +14,15 @@ using Logitude.Accounting.Data;
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
    
-   public partial class MagayaStepDataMapping: IMapping<MagayaStepPM, MagayaStep>
+   public partial class InvoiceApiStepDataMapping: IMapping<InvoiceApiStepPM, InvoiceApiStep>
    {
 
-        public void CustomPMToPOCO(MagayaStepPM entityPM, MagayaStep entityPOCO)
+        public void CustomPMToPOCO(InvoiceApiStepPM entityPM, InvoiceApiStep entityPOCO)
         {
             //throw new NotImplementedException();
         }
 
-        public void CustomPOCOToPM(MagayaStepPM entityPM, MagayaStep entityPOCO)
+        public void CustomPOCOToPM(InvoiceApiStepPM entityPM, InvoiceApiStep entityPOCO)
         {
             //throw new NotImplementedException();
         }

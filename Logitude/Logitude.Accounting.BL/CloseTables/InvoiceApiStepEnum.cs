@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Logitude.Accounting.BL.CloseTables
 {
 
-    public struct MagayaStepEnum
+    public struct InvoiceApiStepEnum
     {
         public const string OpenMagayaSession = "1";
         public const string CloseMagayaSession = "2";

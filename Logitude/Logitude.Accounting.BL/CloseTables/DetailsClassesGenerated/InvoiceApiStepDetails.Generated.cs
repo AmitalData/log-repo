@@ -16,44 +16,44 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL
 {
-   public class MagayaStepDetails : MagayaStep, ICloseTable<MagayaStep, MagayaStepDetails>
+   public class InvoiceApiStepDetails : InvoiceApiStep, ICloseTable<InvoiceApiStep, InvoiceApiStepDetails>
    {
-       public List<MagayaStepDetails> GetAll()
+       public List<InvoiceApiStepDetails> GetAll()
        {
-		    var all = new List<MagayaStepDetails>();  
-            all.Add(new MagayaStepDetails()
+		    var all = new List<InvoiceApiStepDetails>();  
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "1", 
-                EnglishName = "Open Magaya Session", 
-                LocalName = "פתיחת סשן Magaya", 
+                EnglishName = "Open Session", 
+                LocalName = "פתיחת סשן", 
                 IsAllowResend = false, 
 			});
 			 
-            all.Add(new MagayaStepDetails()
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "2", 
-                EnglishName = "Close Magaya Session", 
-                LocalName = "סגירת סשן Magaya", 
+                EnglishName = "Close Session", 
+                LocalName = "סגירת סשן", 
                 IsAllowResend = false, 
 			});
 			 
-            all.Add(new MagayaStepDetails()
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "3", 
-                EnglishName = "Get Magaya Invoices List", 
-                LocalName = "Magaya קבלת רשימת חשבוניות", 
+                EnglishName = "Get Invoices List", 
+                LocalName = "קבלת רשימת חשבוניות", 
                 IsAllowResend = false, 
 			});
 			 
-            all.Add(new MagayaStepDetails()
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "4", 
-                EnglishName = "Get Magaya Invoice", 
-                LocalName = "Magaya קבלת חשבונית", 
+                EnglishName = "Get Invoice", 
+                LocalName = "קבלת חשבונית", 
                 IsAllowResend = false, 
 			});
 			 
-            all.Add(new MagayaStepDetails()
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "5", 
                 EnglishName = "Generate Invoice", 
@@ -61,7 +61,7 @@ namespace Logitude.Accounting.BL
                 IsAllowResend = false, 
 			});
 			 
-            all.Add(new MagayaStepDetails()
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "6", 
                 EnglishName = "Get Confirmation Number", 
@@ -69,7 +69,7 @@ namespace Logitude.Accounting.BL
                 IsAllowResend = false, 
 			});
 			 
-            all.Add(new MagayaStepDetails()
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "7", 
                 EnglishName = "Approve Invoice", 
@@ -77,7 +77,7 @@ namespace Logitude.Accounting.BL
                 IsAllowResend = false, 
 			});
 			 
-            all.Add(new MagayaStepDetails()
+            all.Add(new InvoiceApiStepDetails()
             {    
                 Code = "8", 
                 EnglishName = "Print Or Send Invoice", 
@@ -88,7 +88,7 @@ namespace Logitude.Accounting.BL
             return all;
        }
 
-	    public void MapPoco(MagayaStep newPoco)
+	    public void MapPoco(InvoiceApiStep newPoco)
         {   
 		    newPoco.Code = this.Code;  
 		    newPoco.EnglishName = this.EnglishName;  
@@ -96,7 +96,7 @@ namespace Logitude.Accounting.BL
 		    newPoco.IsAllowResend = this.IsAllowResend;   
         }
 
-		public string GetSearchFields(MagayaStep rec)
+		public string GetSearchFields(InvoiceApiStep rec)
         {   
            return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",",rec.IsAllowResend,",");
         }

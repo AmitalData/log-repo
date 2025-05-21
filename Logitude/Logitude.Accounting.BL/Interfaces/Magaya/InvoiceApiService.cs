@@ -6,7 +6,7 @@ using System;
 
 namespace Logitude.Accounting.BL.Interfaces.Magaya
 {
-    public class MagayaService
+    public class InvoiceApiService
     {
      //   private CSSoapServiceClient _client;
         private int _accessKey;

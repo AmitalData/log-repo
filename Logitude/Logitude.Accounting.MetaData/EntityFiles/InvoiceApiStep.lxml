@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <entity
   Id="&quot;7feda91a-f7d9-4a22-8ee0-34c827fb09cf&quot;"
-  ObjectTableName="&quot;MagayaStep&quot;"
+  ObjectTableName="&quot;InvoiceApiStep&quot;"
   IsNew="true"
-  DBTableName="&quot;MagayaSteps&quot;"
-  DBTableOldNames="MagayaSteps"
-  ObjectTableSingular="&quot;MagayaStep&quot;"
-  ObjectTablePlural="&quot;MagayaSteps&quot;"
+  DBTableName="&quot;InvoiceApiSteps&quot;"
+  DBTableOldNames="MagayaSteps,InvoiceApiSteps"
+  ObjectTableSingular="&quot;InvoiceApiStep&quot;"
+  ObjectTablePlural="&quot;InvoiceApiSteps&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="false"
@@ -39,8 +39,8 @@
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
-  DefaultText="&quot;Magaya Step&quot;"
-  Code="&quot;6820&quot;"
+  DefaultText="&quot;Invoice Api Step&quot;"
+  Code="&quot;b8e5&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -74,7 +74,7 @@
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;MagayaStep&quot;"
+    ObjectTableName="&quot;InvoiceApiStep&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="3"
@@ -104,7 +104,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;MagayaStep&quot;"
+    ValidForQuerySection1="&quot;InvoiceApiStep&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -151,7 +151,7 @@
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;MagayaStep&quot;"
+    ObjectTableName="&quot;InvoiceApiStep&quot;"
     FieldsDataType="&quot;Text&quot;"
     MinLength="0"
     MaxLength="60"
@@ -181,7 +181,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;MagayaStep&quot;"
+    ValidForQuerySection1="&quot;InvoiceApiStep&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -228,7 +228,7 @@
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;MagayaStep&quot;"
+    ObjectTableName="&quot;InvoiceApiStep&quot;"
     FieldsDataType="&quot;nText&quot;"
     MinLength="0"
     MaxLength="60"
@@ -258,7 +258,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;MagayaStep&quot;"
+    ValidForQuerySection1="&quot;InvoiceApiStep&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -305,7 +305,7 @@
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
-    ObjectTableName="&quot;MagayaStep&quot;"
+    ObjectTableName="&quot;InvoiceApiStep&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"
     MaxLength="0"
@@ -335,7 +335,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
-    ValidForQuerySection1="&quot;MagayaStep&quot;"
+    ValidForQuerySection1="&quot;InvoiceApiStep&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -377,10 +377,10 @@
     EnableFullscreenTextBox="false" />
   <Screen
     Name="&quot;HeaderScreen&quot;"
-    ObjectTableName="&quot;MagayaStep&quot;"
+    ObjectTableName="&quot;InvoiceApiStep&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;MagayaStatus.HeaderScreen&quot;"
+    Code="&quot;InvoiceApiSteps.HeaderScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="2">
     <ScreenFields>
@@ -398,10 +398,10 @@
   </Screen>
   <Screen
     Name="&quot;GeneralTabScreen&quot;"
-    ObjectTableName="&quot;MagayaStep&quot;"
+    ObjectTableName="&quot;InvoiceApiStep&quot;"
     IsReadOnly="false"
     IsHeaderScreen="false"
-    Code="&quot;MagayaStatus.GeneralTabScreen&quot;"
+    Code="&quot;InvoiceApiSteps.GeneralTabScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="4">
     <ScreenFields>
@@ -429,10 +429,10 @@
   </Screen>
   <Tab
     TabName="&quot;General&quot;"
-    ObjectTableName="&quot;MagayaStep&quot;"
+    ObjectTableName="&quot;InvoiceApiStep&quot;"
     Code="&quot;MSGT&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
-    TextCode="&quot;MagayaStep.TH.General&quot;"
+    TextCode="&quot;InvoiceApiStep.TH.General&quot;"
     IsPackagable="false"
     IndexOrder="0"
     IsSpellChecked="false"
@@ -440,7 +440,7 @@
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
-      ObjectTableName="&quot;MagayaStep&quot;"
+      ObjectTableName="&quot;InvoiceApiStep&quot;"
       EnglishName="&quot;Created&quot;"
       LocalName="&quot;Created&quot;"
       IsManualEntry="false"
@@ -453,7 +453,7 @@
       IsFollowUp="false" />
     <EventType
       Code="&quot;UPEV&quot;"
-      ObjectTableName="&quot;MagayaStep&quot;"
+      ObjectTableName="&quot;InvoiceApiStep&quot;"
       EnglishName="&quot;Updated&quot;"
       LocalName="&quot;Updated&quot;"
       IsManualEntry="false"
@@ -468,23 +468,23 @@
   <Records>
     <Record
       Code="&quot;1&quot;"
-      EnglishName="&quot;Open Magaya Session&quot;"
-      LocalName="&quot;פתיחת סשן Magaya&quot;"
+      EnglishName="&quot;Open Session&quot;"
+      LocalName="&quot;פתיחת סשן&quot;"
       IsAllowResend="false" />
     <Record
       Code="&quot;2&quot;"
-      EnglishName="&quot;Close Magaya Session&quot;"
-      LocalName="&quot;סגירת סשן Magaya&quot;"
+      EnglishName="&quot;Close Session&quot;"
+      LocalName="&quot;סגירת סשן&quot;"
       IsAllowResend="false" />
     <Record
       Code="&quot;3&quot;"
-      EnglishName="&quot;Get Magaya Invoices List&quot;"
-      LocalName="&quot;Magaya קבלת רשימת חשבוניות&quot;"
+      EnglishName="&quot;Get Invoices List&quot;"
+      LocalName="&quot;קבלת רשימת חשבוניות&quot;"
       IsAllowResend="false" />
     <Record
       Code="&quot;4&quot;"
-      EnglishName="&quot;Get Magaya Invoice&quot;"
-      LocalName="&quot;Magaya קבלת חשבונית&quot;"
+      EnglishName="&quot;Get Invoice&quot;"
+      LocalName="&quot;קבלת חשבונית&quot;"
       IsAllowResend="false" />
     <Record
       Code="&quot;5&quot;"
@@ -509,7 +509,7 @@
   </Records>
   <DataContracts>
     <DataContract
-      Name="&quot;MagayaStep&quot;"
+      Name="&quot;InvoiceApiStep&quot;"
       Version="&quot;ApiV1&quot;"
       IncludeTenant0Data="false">
       <DCField

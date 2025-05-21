@@ -17,12 +17,12 @@ using Logitude.Accounting.Data.EntityLists;
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
 
-    public partial class MagayaStepListQueryService
+    public partial class InvoiceApiStepListQueryService
     {
-	    private IQueryable<MagayaStepList> GetIqueryableList(IQueryable<MagayaStep> iQueryable)
+	    private IQueryable<InvoiceApiStepList> GetIqueryableList(IQueryable<InvoiceApiStep> iQueryable)
         {
-		IQueryable<MagayaStepList> query = (from a in iQueryable
-                                            select new MagayaStepList()
+		IQueryable<InvoiceApiStepList> query = (from a in iQueryable
+                                            select new InvoiceApiStepList()
 											{
                      
 					                          Code = a.Code,
@@ -37,11 +37,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<MagayaStep> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<MagayaStep> iQueryable)
+		private IQueryable<InvoiceApiStep> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<InvoiceApiStep> iQueryable)
         {
 			throw new NotImplementedException();
 		}
-				private IQueryable<MagayaStep> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<MagayaStep> iQueryable)
+				private IQueryable<InvoiceApiStep> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InvoiceApiStep> iQueryable)
         {
 			return iQueryable;
 		}
