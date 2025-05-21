@@ -225,6 +225,9 @@
     <None Include="DBTables\InterestReportsConnectedInvoice.dxml" />
     <None Include="DBTables\InterestReportStatuse.dxml" />
     <None Include="DBTables\InterestTransaction.dxml" />
+    <None Include="DBTables\InvoiceApiCommunicationLog.dxml" />
+    <None Include="DBTables\InvoiceApiStatus.dxml" />
+    <None Include="DBTables\InvoiceApiStep.dxml" />
     <None Include="DBTables\Journal.dxml" />
     <None Include="DBTables\JournalActionType.dxml" />
     <None Include="DBTables\JournalAdditionalData.dxml" />
@@ -235,8 +238,6 @@
     <None Include="DBTables\JournalStatusType.dxml" />
     <None Include="DBTables\JournalType.dxml" />
     <None Include="DBTables\LedgerTransaction.dxml" />
-    <None Include="DBTables\MagayaCommunicationLog.dxml" />
-    <None Include="DBTables\MagayaStatus.dxml" />
     <None Include="DBTables\OpenFormatReport.dxml" />
     <None Include="DBTables\OpenFormatReportStatus.dxml" />
     <None Include="DBTables\PaymentCheque.dxml" />
@@ -313,7 +314,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\BankPageEntryType.lxml" />
-    <None Include="EntityFiles\MagayaCommunicationLog.lxml" />
+    <None Include="EntityFiles\InvoiceApiCommunicationLog.lxml" />
     <None Include="EntityFiles\InvoiceApiStatus.lxml" />
     <None Include="EntityFiles\InvoiceApiStep.lxml" />
     <None Include="EntityFiles\OpenFormatReport.lxml" />

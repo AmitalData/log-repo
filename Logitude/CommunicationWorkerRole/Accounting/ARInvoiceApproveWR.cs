@@ -206,7 +206,7 @@ namespace CommunicationWorkerRole
         {
 
             string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
-            bool isMagaya = response.MessageValues["IsMagaya"].ToString() == "true" ;
+            bool isInvoiceApi = response.MessageValues["IsInvoiceApi"].ToString() == "true" ;
             int tenant = 0;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
 
@@ -224,7 +224,7 @@ namespace CommunicationWorkerRole
                     invoiceService.Update(aRInvoicePM, true);
                    
                     _DbQueueService.Complete();
-                    if (isMagaya)
+                    if (isInvoiceApi)
                     {
                         try
                         {

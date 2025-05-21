@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Scheduler Procedure&quot;"
-  Code="&quot;d453&quot;"
+  Code="&quot;be35&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -632,11 +632,11 @@
       Description="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
       IsInternallyDefined="false" />
     <Record
-      Code="&quot;MagayaInvoicesQueryTask&quot;"
-      Name="&quot;MagayaInvoicesQueryTask&quot;"
-      SearchFields="&quot;MagayaInvoicesQueryTask&quot;"
+      Code="&quot;InvoiceApiQueryTask&quot;"
+      Name="&quot;InvoiceApiQueryTask&quot;"
+      SearchFields="&quot;InvoiceApiQueryTask&quot;"
       IsInternallyDefined="false"
-      Description="&quot;MagayaInvoicesQueryTask&quot;" />
+      Description="&quot;InvoiceApiQueryTask&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

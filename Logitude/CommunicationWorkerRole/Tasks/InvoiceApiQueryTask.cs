@@ -28,13 +28,13 @@ namespace CommunicationWorkerRole.Tasks
             {
 
 
-                Log("MagayaInvoicesQueryTask:Start", "Start");
+                Log("InvoiceApiQueryBatch:Start", "Start");
                 try
                    {
-                        MagayaInvoicesQueryBatch magayaInvoicesQueryBatch = new MagayaInvoicesQueryBatch();
+                        InvoiceApiQueryBatch invoiceApiQueryBatch = new InvoiceApiQueryBatch();
                         int tenant = this.Task != null ? this.Task.Tenant : 0 ;
-                        magayaInvoicesQueryBatch.RunMagayaInvoicesQuery(this.Task.StartDateTimeUTC.ToString(), DateTime.Now.ToString(), tenant);
-                        string responseText = magayaInvoicesQueryBatch.ResponseText();
+                       invoiceApiQueryBatch.RunInvoiceApiInvoicesQuery(this.Task.StartDateTimeUTC.ToString(), DateTime.Now.ToString(), tenant);
+                        string responseText = invoiceApiQueryBatch.ResponseText();
 
                         Log(responseText, "responseText:");
                     }
@@ -42,7 +42,7 @@ namespace CommunicationWorkerRole.Tasks
                     {
                         failed = true;
                        Log(ex.Message, "Exception:");
-                       ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", $"MagayaInvoicesQueryTask()", null);
+                       ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", $"InvoiceApiQueryBatch()", null);
                     }
 
                
