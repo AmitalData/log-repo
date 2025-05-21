@@ -62,9 +62,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             IQueryable<CustomsHouseTypeList> query = (from a in iQueryable
 
-                                                      join d in context.CustomsHouseTypeAdditionals.Include("TransportMode").Include("UnloadingSiteType")
-                                                      on a.Code equals d.Code
-                                                      where d.Tenant  == Tenant
+                                                      join d in context.CustomsHouseTypeAdditionals.Where(x => x.Tenant == Tenant).Include("TransportMode").Include("UnloadingSiteType")
+                                                      on a.Code equals d.Code into addl
+                                                      from d in addl.DefaultIfEmpty()
                                                       select new CustomsHouseTypeList()
                                                       {
                                                           Code = a.Code,
