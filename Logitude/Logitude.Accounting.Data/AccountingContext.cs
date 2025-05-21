@@ -204,6 +204,12 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new InterestTransactionMap());
 	
+            modelBuilder.Configurations.Add(new InvoiceApiCommunicationLogMap());
+	
+            modelBuilder.Configurations.Add(new InvoiceApiStatusMap());
+	
+            modelBuilder.Configurations.Add(new InvoiceApiStepMap());
+	
             modelBuilder.Configurations.Add(new JournalMap());
 	
             modelBuilder.Configurations.Add(new JournalActionTypeMap());
@@ -223,12 +229,6 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new JournalTypeMap());
 	
             modelBuilder.Configurations.Add(new LedgerTransactionMap());
-	
-            modelBuilder.Configurations.Add(new MagayaCommunicationLogMap());
-	
-            modelBuilder.Configurations.Add(new MagayaStatusMap());
-	
-            modelBuilder.Configurations.Add(new MagayaStepMap());
 	
             modelBuilder.Configurations.Add(new OpenFormatReportMap());
 	
@@ -1163,6 +1163,24 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<InvoiceApiCommunicationLog> InvoiceApiCommunicationLogs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InvoiceApiStatus> InvoiceApiStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InvoiceApiStep> InvoiceApiSteps 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<Journal> Journals 
 	 {
 	      get; set;
@@ -1218,24 +1236,6 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<LedgerTransaction> LedgerTransactions 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<MagayaCommunicationLog> MagayaCommunicationLogs 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<MagayaStatus> MagayaStatuses 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<MagayaStep> MagayaSteps 
 	 {
 	      get; set;
 	 
