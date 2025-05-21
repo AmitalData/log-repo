@@ -23,6 +23,10 @@ import { SIIRequestListService } from 'Customs/Services/StandardLists/SIIRequest
   providers: [DeclarationExtendedListService]
 })
 export class SIIRequestTabComponent extends BaseComponent implements OnInit {
+  public siiRequestWebService: SIIRequestWebService;
+  public entityResourceService: EntityResourceService = new EntityResourceService();
+  public siiRequestPMService: SIIRequestPMService;
+  public siiRequestListService: SIIRequestListService;
   public ItemsSource: ObservableCollection = new ObservableCollection([]);
   public siiRequestList: SIIRequestPM[] = [];
   public currentDeclaration: DeclarationPM;
@@ -31,13 +35,9 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
   public IsDisplayMessage: string = '';
   public IsDisplayOnly: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
-  public siiRequestWebService: SIIRequestWebService;
   public filterAgrs: ApiQueryFilters;
   public SelectedRow: SIIRequestPM = null;
-  public entityResourceService: EntityResourceService = new EntityResourceService();
   public ObjectTableName: string = null;
-  public siiRequestPMService: SIIRequestPMService;
-  public siiRequestListService: SIIRequestListService;
   public IsLoaded: boolean = false;
   public selectedSIIRequest = new SIIRequestPM();
   public supplierInvoiceItemsForSIIRequest: SupplierInvoiceItemsForSIIRequest[] = [];
@@ -178,7 +178,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     logWindow.Height = 770;
     logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.SIIRequest");
     logWindow.SubTitle = `${this.EntityPM?.CustomFileNo}`;
-    if(!AppTool.IsNullOrEmpty(this.selectedSIIRequest?.ImporterId)) logWindow.SubTitle += ` / ${TextCodeTranslator.Translate("Customs.SIIRequest.F.ImporterId")}: ${this.selectedSIIRequest?.ImporterId}`;
+    if (!AppTool.IsNullOrEmpty(this.selectedSIIRequest?.ImporterId)) logWindow.SubTitle += ` / ${TextCodeTranslator.Translate("Customs.SIIRequest.F.ImporterId")}: ${this.selectedSIIRequest?.ImporterId}`;
     args.isAllowChange = this.IsAllowChange;
     logWindow.WindowArgs = args;
     logWindow.ShowCloseButton = true;

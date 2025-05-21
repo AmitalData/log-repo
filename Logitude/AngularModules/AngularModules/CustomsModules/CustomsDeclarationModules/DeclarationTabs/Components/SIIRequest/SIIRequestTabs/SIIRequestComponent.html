@@ -6,12 +6,12 @@
         <td style="vertical-align:top">
             <div style="vertical-align:top; margin:5px">
                 <!-- Section One -->
-                <table style="width:850px">
+                <table>
                     <!-- First Row -->
                     <tr class="FieldRow">
-                        <td style="width:110px">
+                        <td style="width:50px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactName'" [ObjectFieldName]="'ContactId'"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -21,9 +21,9 @@
                                 [HideColumns]="true" [CustomizedWidth]="300">
                             </LogLov>
                         </td>
-                        <td style="width:110px">
+                        <td style="width:90px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.ManifestNumber'"
                                 [ObjectFieldName]="'ManifestNumber'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
@@ -32,9 +32,9 @@
                             <LogTextBox [ObjectFieldName]="'ManifestNumber'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td style="width:110px">
+                        <td style="width:90px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseAddress'"
                                 [ObjectFieldName]="'WareHouseAddress'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
@@ -43,12 +43,14 @@
                             <LogTextBox [ObjectFieldName]="'WareHouseAddress'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
+                        <td style="width:90px">
+                        </td>
                     </tr>
                     <!-- Second Row -->
                     <tr class="FieldRow">
-                        <td style="width:110px">
+                        <td style="width:50px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactEmail'"
                                 [ObjectFieldName]="'ContactEmail'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
@@ -58,9 +60,9 @@
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"
                                 [Text]="ContactEmail"></LogTextBox>
                         </td>
-                        <td style="width:110px">
+                        <td style="width:90px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.UnloadDate'" [ObjectFieldName]="'UnloadDate'"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -68,9 +70,9 @@
                             <LogDatePicker [ObjectFieldName]="'UnloadDate'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                         </td>
-                        <td style="width:110px">
+                        <td style="width:90px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.WareHouseCity'"
                                 [ObjectFieldName]="'WareHouseCity'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
@@ -82,12 +84,14 @@
                                 (SelectedItemChanged)="SetLocalName($event, 'WareHouseCityName')">
                             </LogLov>
                         </td>
+                        <td style="width:90px">
+                        </td>
                     </tr>
                     <!-- Third Row -->
                     <tr class="FieldRow">
-                        <td style="width:110px">
+                        <td style="width:50px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactTel'" [ObjectFieldName]="'ContactTel'"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -96,9 +100,9 @@
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true" [Text]="ContactTel">
                             </LogTextBox>
                         </td>
-                        <td style="width:110px">
+                        <td style="width:90px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.VesselName'" [ObjectFieldName]="'VesselName'"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
@@ -106,25 +110,27 @@
                             <LogTextBox [ObjectFieldName]="'VesselName'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td style="width:110px">
+                        <td style="width:90px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.Remarks'" [ObjectFieldName]="'Remarks'"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px" class="LogTextBoxMultiLine">
-                            <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
-                                [Text]="Remarks" [ObjectFieldName]="'Remarks'" [HideColumns]="true"
+                            <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true" [Text]="Remarks"
+                                [ObjectFieldName]="'Remarks'" [HideColumns]="true"
                                 [ObjectTableName]="ObjectTableNameSiiRequest" [InputType]="'nText'"
                                 [DataContext]="DataContext" [Direction]="'RTL'">
                             </LogTextBox>
                         </td>
+                        <td style="width:90px">
+                        </td>
                     </tr>
                     <!-- Fourth Row -->
                     <tr class="FieldRow">
-                        <td style="width:110px">
+                        <td style="width:50px">
                         </td>
-                        <td style="width:160px">
+                        <td style="width:88px">
                             <LogLabel [TextCode]="'Customs.SIIRequest.F.ContactCellPhone'"
                                 [ObjectFieldName]="'ContactCellPhone'" [ObjectTableName]="ObjectTableNameSiiRequest"
                                 [DataContext]="DataContext"></LogLabel>
@@ -135,6 +141,7 @@
                                 [HideColumns]="true"></LogTextBox>
                         </td>
                     </tr>
+                    <tr class="FieldRow"> </tr>
                 </table>
                 <table>
                     <tr>
@@ -416,9 +423,33 @@
                                                                                 class="CellSeparator floatRight"></span>
                                                                             <div class="editButtonContainer">
                                                                                 <IconButton [Name]="'Edit'"
+                                                                                    [Title]="TooltipEdit"
                                                                                     [IsSmall]="true"
+                                                                                    *ngIf="item.IsCompletedStatus === isUnCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithGreenTick.png" />
                                                                                 </IconButton>
+                                                                                <button class="Button"
+                                                                                    title={{TooltipEdit}}
+                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    id="Edit_Additional"
+                                                                                    *ngIf="item.IsCompletedStatus === isFullyCompleted"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)"
+                                                                                    tabindex="-1">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithGreenTick.png" />
+                                                                                </button>
+                                                                                <button class="Button"
+                                                                                    title={{TooltipEdit}}
+                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    id="Edit_Additional"
+                                                                                    *ngIf="item.IsCompletedStatus === isPartiallyCompleted"
+                                                                                    (click)="onEditSupplierInvoiceItemRequest(item)"
+                                                                                    tabindex="-1">
+                                                                                    <img class="tickImg"
+                                                                                        src="./Images/Buttons/EditWithX.png" />
+                                                                                </button>
                                                                             </div>
                                                                         </log-cell-template>
                                                                     </ng-template>
@@ -462,5 +493,4 @@
             </div>
         </td>
     </tr>
-    <tr style="height:50%"></tr>
 </table>

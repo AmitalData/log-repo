@@ -5,6 +5,7 @@ import { defer } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CompleteStatuses } from 'CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestComponent';
 @Injectable()
 
 export class SIIRequestWebService {
@@ -68,4 +69,5 @@ export class SupplierInvoiceItemsForSIIRequest {
     OriginCountryCode: string;
     OriginCountryName: string;
     ReqConfirmationTypeCode: string;
+    IsCompletedStatus: number;
 }

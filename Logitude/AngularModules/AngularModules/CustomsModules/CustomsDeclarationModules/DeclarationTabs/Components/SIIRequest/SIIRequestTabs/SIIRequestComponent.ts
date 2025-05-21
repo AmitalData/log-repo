@@ -31,15 +31,15 @@ import { SupplierInvoiceItemLine } from 'CustomsModules/CustomsDeclarationModule
 
 
 export class SIIRequestComponent extends BaseComponent implements OnInit {
-    private declarationWebService: DeclarationWebService = new DeclarationWebService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    public DataContext = this;
-    public ObjectTableName: string = "Customs.Declaration";
-    public ObjectTableNameSiiRequest: string = "Customs.SIIRequests";
+    private declarationWebService: DeclarationWebService = new DeclarationWebService;
     public siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
     public userPmService: UserPMService = new UserPMService();
     public supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
     public entityResourceService: EntityResourceService = new EntityResourceService();
+    public DataContext = this;
+    public ObjectTableName: string = "Customs.Declaration";
+    public ObjectTableNameSiiRequest: string = "Customs.SIIRequests";
     private CurrentSession = SessionLocator.SelectedSession;
     public DecalarationData: DeclarationPM;
     public IsNewOrEdit: SiiRequestMode;
@@ -59,6 +59,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public filterOptionsInvoice: FilterOptions = FilterOptions.Invoice;
     public filterOptionsDeclarationConect: FilterOptions = FilterOptions.DeclarationConect;
     public isOpen: boolean;
+    public isUnCompleted: CompleteStatuses = CompleteStatuses.UnCompleted;
+    public isPartiallyCompleted: CompleteStatuses = CompleteStatuses.PartiallyCompleted;
+    public isFullyCompleted: CompleteStatuses = CompleteStatuses.FullyCompleted;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -213,7 +216,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     openLogWindow() {
         let args: any = {
-            Decalaration: this.EntityPM,
+            Decalaration: this.DecalarationData,
             SIIRequest: this.entityPM,
             invoiceItemReq: this.SelectedRow,
             IsNewOrEdit: SiiRequestMode.IsEdit,
@@ -583,10 +586,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     Parent: SIIRequestComponent;
+
     constructor(EntityPM: SupplierInvoiceItemsForSIIRequest, parent: SIIRequestComponent) {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
+        this.IsCompletedStatus = CompleteStatuses.UnCompleted;
     }
     private isSelected: boolean;
     public get IsSelected() { return this.isSelected };
@@ -605,6 +610,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     }
     public set InvoiceNumber(newValue: string) {
         this.entityPM.InvoiceNumber = newValue;
+    }
+    public get IsCompletedStatus(): number {
+        return this.entityPM.IsCompletedStatus;
+    }
+    public set IsCompletedStatus(newValue: number) {
+        this.entityPM.IsCompletedStatus = newValue;
     }
     public get LineNumber(): number {
         return this.entityPM.LineNumber;
@@ -701,6 +712,7 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set ReqConfirmationTypeCode(newValue: string) {
         this.entityPM.ReqConfirmationTypeCode = newValue;
     }
+
 }
 
 export enum FilterOptions {
@@ -713,4 +725,9 @@ export enum DemandStateFilterOptions {
     FirstCertificate = "401",
     SecondCertificate = "402",
     ThirdCertificate = "403",
+}
+export enum CompleteStatuses {
+    UnCompleted = 0,
+    PartiallyCompleted = 1,
+    FullyCompleted = 2
 }
