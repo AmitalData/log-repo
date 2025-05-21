@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using Logitude.Accounting.BL.Interfaces.Magaya;
 
 namespace CommunicationWorkerRole
 {
