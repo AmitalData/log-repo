@@ -423,7 +423,6 @@
                                                                                 class="CellSeparator floatRight"></span>
                                                                             <div class="editButtonContainer">
                                                                                 <IconButton [Name]="'Edit'"
-                                                                                    [Title]="TooltipEdit"
                                                                                     [IsSmall]="true"
                                                                                     *ngIf="item.IsCompletedStatus === isUnCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)">
@@ -431,7 +430,6 @@
                                                                                         src="./Images/Buttons/EditWithGreenTick.png" />
                                                                                 </IconButton>
                                                                                 <button class="Button"
-                                                                                    title={{TooltipEdit}}
                                                                                     style="height:18px; width: 18px;right:2px;"
                                                                                     id="Edit_Additional"
                                                                                     *ngIf="item.IsCompletedStatus === isFullyCompleted"
@@ -441,7 +439,6 @@
                                                                                         src="./Images/Buttons/EditWithGreenTick.png" />
                                                                                 </button>
                                                                                 <button class="Button"
-                                                                                    title={{TooltipEdit}}
                                                                                     style="height:18px; width: 18px;right:2px;"
                                                                                     id="Edit_Additional"
                                                                                     *ngIf="item.IsCompletedStatus === isPartiallyCompleted"
