@@ -16,6 +16,8 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct SIIRequestStatusValues
     {
+        public const string תקין = "0";
+        public const string נכשל = "100";
     }
  }
  
