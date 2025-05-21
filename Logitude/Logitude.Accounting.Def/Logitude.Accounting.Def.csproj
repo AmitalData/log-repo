@@ -152,6 +152,9 @@
     <Compile Include="EntityPMs\Generated\InterestReportsConnectInvoicePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterestReportStatusePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\InterestTransactionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InvoiceApiCommunicationLogPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InvoiceApiStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\InvoiceApiStepPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalActionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalExternalReconcilePM.Generated.cs" />
@@ -162,8 +165,6 @@
     <Compile Include="EntityPMs\Generated\JournalStatusTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\JournalTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LedgerTransactionPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\MagayaStatusPM.Generated.cs" />
-    <Compile Include="EntityPMs\Generated\MagayaStepPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OpenFormatReportPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OpenFormatReportStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PaymentChequeLinePM.Generated.cs" />

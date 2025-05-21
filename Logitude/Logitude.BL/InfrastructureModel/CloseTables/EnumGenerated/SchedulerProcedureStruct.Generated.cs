@@ -43,7 +43,7 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string DeleteOldBIReportsExecutionLogsTask = "DeleteOldBIReportsExecutionLogsTask";  
        public const string DeleteOldReportExecutionLogsTask = "DeleteOldReportExecutionLogsTask";  
        public const string DeleteOldDocumentsExecutionLogsTask = "DeleteOldDocumentsExecutionLogsTask";
-        public const string MagayaInvoicesQueryTask = "MagayaInvoicesQueryTask";
+        public const string InvoiceApiQueryTask = "InvoiceApiQueryTask";
 
     }
 }

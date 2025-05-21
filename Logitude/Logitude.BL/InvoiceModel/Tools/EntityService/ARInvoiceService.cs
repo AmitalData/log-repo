@@ -5296,6 +5296,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        public void PrintOrSendInvoice(string id, int tenant) {
+        }
 
         public class ConfirmationNumberAPI
         {

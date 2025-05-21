@@ -1,0 +1,80 @@
+
+   
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Data;
+
+namespace Logitude.Accounting.BL
+{
+   public class InvoiceApiStatusDetails : InvoiceApiStatus, ICloseTable<InvoiceApiStatus, InvoiceApiStatusDetails>
+   {
+       public List<InvoiceApiStatusDetails> GetAll()
+       {
+		    var all = new List<InvoiceApiStatusDetails>();  
+            all.Add(new InvoiceApiStatusDetails()
+            {    
+                StatusCode = "1", 
+                StatusName = "Created", 
+			});
+			 
+            all.Add(new InvoiceApiStatusDetails()
+            {    
+                StatusCode = "2", 
+                StatusName = "Pending", 
+			});
+			 
+            all.Add(new InvoiceApiStatusDetails()
+            {    
+                StatusCode = "3", 
+                StatusName = "In Progress", 
+			});
+			 
+            all.Add(new InvoiceApiStatusDetails()
+            {    
+                StatusCode = "4", 
+                StatusName = "Done", 
+			});
+			 
+            all.Add(new InvoiceApiStatusDetails()
+            {    
+                StatusCode = "5", 
+                StatusName = "Failed", 
+			});
+			
+            return all;
+       }
+
+	    public void MapPoco(InvoiceApiStatus newPoco)
+        {   
+		    newPoco.StatusCode = this.StatusCode;  
+		    newPoco.StatusName = this.StatusName;   
+        }
+
+		public string GetSearchFields(InvoiceApiStatus rec)
+        {   
+           return String.Concat(rec.StatusCode,",",rec.StatusName,",");
+        }
+		public string Code
+        {
+            get
+            {
+                return StatusCode;//throw new NotImplementedException();
+            }
+            set
+            {
+                StatusCode = value;//throw new NotImplementedException();
+            }
+        }
+   }
+}
+

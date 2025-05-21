@@ -670,7 +670,6 @@
     <Compile Include="IndexSearchWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
-    <Compile Include="MagayaWorkerRole.cs" />
     <Compile Include="RestRequestExecutor\ApiCommunicationLog.cs" />
     <Compile Include="RestRequestExecutor\ApiException.cs" />
     <Compile Include="RestRequestExecutor\ApiRequest.cs" />
@@ -679,6 +678,7 @@
     <Compile Include="RestRequestExecutor\CommunicationConstants.cs" />
     <Compile Include="RestRequestExecutor\RestRequestExecutor.cs" />
     <Compile Include="RestRequestExecutor\StatusTypeCommunication.cs" />
+    <Compile Include="InvoiceApiWorkerRole.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
     <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
@@ -712,7 +712,7 @@
     <Compile Include="Services\Logbox\LogboxExceptionHandler.cs" />
     <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
     <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
-    <Compile Include="Tasks\MagayaInvoicesQueryTask.cs" />
+    <Compile Include="Tasks\InvoiceApiQueryTask.cs" />
     <Compile Include="Tasks\QueryReport.cs" />
     <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
     <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />

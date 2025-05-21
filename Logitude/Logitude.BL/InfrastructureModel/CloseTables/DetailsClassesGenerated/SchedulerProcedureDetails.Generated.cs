@@ -280,10 +280,10 @@ namespace Logitude.BL.InfrastructureModel
 
             all.Add(new SchedulerProcedureDetails()
             {
-                Code = "MagayaInvoicesQueryTask",
-                Name = "MagayaInvoicesQueryTask",
-                SearchFields = "MagayaInvoicesQueryTask",
-                Description = "MagayaInvoicesQueryTask",
+                Code = "InvoiceApiQueryTask",
+                Name = "InvoiceApiQueryTask",
+                SearchFields = "InvoiceApiQueryTask",
+                Description = "InvoiceApiQueryTask",
             });
             return all;
        }
