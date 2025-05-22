@@ -3163,7 +3163,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             #endregion
 
             Feature AccountingIntegrityCheckMenuFeature = tenantFeatures.Where(d => d.Code == "AccountingIntegrityCheck.Features.Menu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-            Feature InvoiceApiCommunicationLogMenuFeature = tenantFeatures.Where(d => d.Code == "InvoiceApiCommunicationLogMenu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature InvoiceApiCommunicationLogMenuFeature = tenantFeatures.Where(d => d.Code == "InvoiceApiCommunicationLog.Features.Menu" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
 
             #endregion

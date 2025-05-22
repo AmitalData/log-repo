@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InvoiceApiCommunicationLogUpdateClass
    {  		
-		public const string HashString = "3c6e4fa45eef626aba85036fa8949846";
+		public const string HashString = "a99ba55626018d5a8c51bddf9d6ea09a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -698,31 +698,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode InvoiceApiCommunicationLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.Q.TodayInvoiceApiCommunicationLog", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature InvoiceApiCommunicationLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Q.TodayInvoiceApiCommunicationLog", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.TodayInvoiceApiCommunicationLog", NameTextCodeDefaultText = "Today Invoice Ap iCommunication Log", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode InvoiceApiCommunicationLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.Q.TodayInvoiceApi", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InvoiceApiCommunicationLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Q.TodayInvoiceApi", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.TodayInvoiceApi", NameTextCodeDefaultText = "Today Invoice Api", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode InvoiceApiCommunicationLogTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.Q.AllInvoiceApiCommunicationLog", DefaultText = @"All Invoice Api Communication Log",LocalDefaultText = null, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature InvoiceApiCommunicationLogFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Q.AllInvoiceApiCommunicationLog", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.AllInvoiceApiCommunicationLog", NameTextCodeDefaultText = "All Invoice Api Communication Log", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode InvoiceApiCommunicationLogTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.Q.AllInvoiceApi", DefaultText = @"All Invoice Api",LocalDefaultText = null, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature InvoiceApiCommunicationLogFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Q.AllInvoiceApi", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.AllInvoiceApi", NameTextCodeDefaultText = "All Invoice Api", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TodayInvoiceApiCommunicationLogQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_0.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_0.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "Today Invoice Ap iCommunication Log",  QueryGroupCode = "e2e4", IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_0.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query TodayInvoiceApiQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_0.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_0.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "Today Invoice Api",  QueryGroupCode = "e2e4", IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_0.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn TodayInvoiceApiCommunicationLogQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiCommunicationLogQuery.Id,QueryCode = TodayInvoiceApiCommunicationLogQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TodayInvoiceApiCommunicationLogQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiCommunicationLogQuery.Id,QueryCode = TodayInvoiceApiCommunicationLogQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.CommunicationId" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.CommunicationId" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TodayInvoiceApiCommunicationLogQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiCommunicationLogQuery.Id,QueryCode = TodayInvoiceApiCommunicationLogQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusCode" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusCode" , ColumnWidth = 50 }, addedQueryColumns);
 
-             AdvancedQueryFilter TodayInvoiceApiCommunicationLogQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayInvoiceApiCommunicationLogQuery.Id,QueryCode = TodayInvoiceApiCommunicationLogQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter TodayInvoiceApiQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query AllInvoiceApiCommunicationLogQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_1.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_1.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "All Invoice Api Communication Log",  QueryGroupCode = "e2e4", IndexOrder = 1, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_1.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllInvoiceApiQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_1.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_1.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "All Invoice Api",  QueryGroupCode = "e2e4", IndexOrder = 1, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_1.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 				SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -775,7 +775,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional Features <--------------\\
 
-		   Feature InvoiceApiCommunicationLogFeature_InvoiceApiCommunicationLogMenu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLogMenu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLog.Features.InvoiceApiCommunicationLogMenu", NameTextCodeDefaultText = @"Invoice Api Communication Log Menu" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InvoiceApiCommunicationLogObjectTable);
+		   Feature InvoiceApiCommunicationLogFeature_InvoiceApiCommunicationLog_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLog.Features.InvoiceApiCommunicationLog.Features.Menu", NameTextCodeDefaultText = @"InvoiceApiCommunicationLogMenu" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,InvoiceApiCommunicationLogObjectTable);
 
    
 	    
@@ -833,7 +833,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable InvoiceApiCommunicationLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "InvoiceApiCommunicationLog" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode InvoiceApiCommunicationLogTextCode_GeneralMCACInvoiceApiCommunicationLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.AC.InvoiceApiCommunicationLog", DefaultText = "Invoice Ap iCommunication Log",LocalDefaultText = @"Invoice Api Communication Log", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InvoiceApiCommunicationLogTextCode_GeneralMCACInvoiceApiCommunicationLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.AC.InvoiceApiCommunicationLog", DefaultText = "Invoice Api Communication Log",LocalDefaultText = @"Invoice Api Communication Log", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
