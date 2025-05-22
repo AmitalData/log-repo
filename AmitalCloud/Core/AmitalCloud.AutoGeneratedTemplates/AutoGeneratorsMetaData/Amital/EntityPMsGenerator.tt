@@ -236,6 +236,18 @@ namespace <#= pmnamespacestring #>
 					}
 				   else
 					{
+                         if(type == "string")
+					     {
+ if( field.TableRelatedPM.GetType() == typeof(string) && field.TableRelatedPM != null && field.FieldRelatedPM.GetType() == typeof(string) && field.FieldRelatedPM != null)  
+						{ 
+							
+					string tableRelatedPM = field.TableRelatedPM.ToString().Trim('"');
+                    string fieldRelatedPM = field.FieldRelatedPM.ToString().Trim('"');
+#>
+		_<#= privatepropname #> = entity.<#= tableRelatedPM.Trim('"') #> != null ? entity.<#= tableRelatedPM.Trim('"') #>.<#= fieldRelatedPM.Trim('"') #> : null;
+<#+							
+						}
+                         }
 
 						continue;
 #>
@@ -316,6 +328,11 @@ if(field.IsForeignKey.GetType() == typeof(string) && field.NavigationPropertyNam
 					{
 						if(field.HasDataBaseField == "false")
 						{
+                         if(type == "string" && field.TableRelatedPM.GetType() == typeof(string) && field.TableRelatedPM != null && field.FieldRelatedPM.GetType() == typeof(string)  && field.FieldRelatedPM != null)
+                         {
+                          WritePMProperty(field);
+                           continue;	
+                         } 
                         if(field.NoMetaDataField.GetType() == typeof(string) && field.NoMetaDataField.ToString() == "true")
                         {
                              continue;

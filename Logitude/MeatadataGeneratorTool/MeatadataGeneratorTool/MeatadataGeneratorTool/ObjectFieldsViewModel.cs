@@ -1022,8 +1022,19 @@ namespace MeatadataGeneratorTool
             get { return isPMField; }
             set { isPMField = value; FirePropertyChanged("IsPMField"); FirePropertyChanged("IsPMFieldEnabled"); FirePropertyChanged("IsPMFontWeight"); }
         }
-
-        private bool enableAutoFill;
+		string tableRelatedPM;
+		public string TableRelatedPM
+		{
+			get { return tableRelatedPM; }
+			set { tableRelatedPM = value; FirePropertyChanged("TableRelatedPM"); }
+		}
+		string fieldRelatedPM;
+		public string FieldRelatedPM
+		{
+			get { return fieldRelatedPM; }
+			set { fieldRelatedPM = value; FirePropertyChanged("FieldRelatedPM"); }
+		}
+		private bool enableAutoFill;
         public bool EnableAutoFill
         {
             get 

@@ -1335,9 +1335,12 @@ namespace MeatadataGeneratorTool
 
                 SetAttribute("HasDataBaseField", f.IsDBField.ToString().ToLower(), fieldElement, null);
                 SetAttribute("HasPMField", f.IsPMField.ToString().ToLower(), fieldElement, null);
-
-
-                SetAttribute("ThisKey", GetStringValue(f.ThisKey), fieldElement, null);
+                if (f.IsPMField && !string.IsNullOrEmpty(f.TableRelatedPM) && !string.IsNullOrEmpty(f.FieldRelatedPM))
+                {
+                    SetAttribute("TableRelatedPM", f.TableRelatedPM.ToString(), fieldElement, null);
+                    SetAttribute("FieldRelatedPM", f.FieldRelatedPM.ToString(), fieldElement, null);
+                }
+				SetAttribute("ThisKey", GetStringValue(f.ThisKey), fieldElement, null);
                 SetAttribute("OtherKey", GetStringValue(f.OtherKey), fieldElement, null);
                 SetAttribute("AssociationName", GetStringValue(f.AssociationName), fieldElement, null);
                 SetAttribute("IsComposition", f.IsComposition.ToString().ToLower(), fieldElement, null);
