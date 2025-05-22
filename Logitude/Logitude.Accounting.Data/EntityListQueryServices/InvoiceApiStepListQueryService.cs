@@ -39,9 +39,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<InvoiceApiStep> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<InvoiceApiStep> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<InvoiceApiStep> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InvoiceApiStep> iQueryable)
+            return iQueryable;
+        }
+        private IQueryable<InvoiceApiStep> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InvoiceApiStep> iQueryable)
         {
 			return iQueryable;
 		}
