@@ -54,10 +54,10 @@ stages:
             reasoning_effort = "low"
             [pr_code_suggestions]
             structured_output_format = "json"
-            extra_instructions = """
-            Return ONLY valid YAML. For every code suggestion include:
-            suggestion_content:
-            """
+            # extra_instructions = """
+            # Return ONLY valid YAML. For every code suggestion include:
+            # suggestion_content:
+            # """
             [pr_reviewer]                     # <-- same section name the /review
             enabled               = true      # tool uses in its comment shortcut
             model                 = "gemini/gemini-2.0-flash"  # or bedrock/claude-3-sonnet … etc.
