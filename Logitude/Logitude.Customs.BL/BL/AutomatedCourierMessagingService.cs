@@ -149,6 +149,7 @@ namespace Logitude.Customs.BL.BL
 
                 string unifreightList = SetBankIdInUnifreightListOnServerOnly(bankIds[0]);
 
+                var futureSendTime = DateTime.Now.AddMinutes(5);
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
                     var requestParams2755 = new GenericRequestParams()
@@ -163,9 +164,9 @@ namespace Logitude.Customs.BL.BL
                         LoggingUserId = userId,
                         RequestVIA = SendRequestVIA.WebServiceBatch,
                         UnifreightListOnServerOnly = unifreightList,
-                        FutureSendDateTime = DateTime.Now.AddMinutes(5),
+                        FutureSendDateTime = futureSendTime,
                     };
-                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false);
+                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, futureSendTime);
 
                     scopeNewCRS.Complete();
                 }
