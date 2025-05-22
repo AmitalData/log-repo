@@ -53,6 +53,7 @@ stages:
             gemini_api_key = "${GEMINI_KEY}"
             reasoning_effort = "low"
             [pr_code_suggestions]
+            structured_output_format = "json"
             extra_instructions = """
             Return ONLY valid YAML. For every code suggestion include:
             suggestion_content:
