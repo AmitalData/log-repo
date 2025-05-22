@@ -28,7 +28,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreatedByUserId, 
 	         SearchFields, 
 	         TableName, 
-	         CreatedByUserName,
+	         CreatedByUserName, 
+	         AlwaysEnabled,
 	      }
 
 
@@ -41,7 +42,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreatedByUserId, 
 	         SearchFields, 
 	         TableName, 
-	         CreatedByUserName,
+	         CreatedByUserName, 
+	         AlwaysEnabled,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -78,6 +80,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserName))
             {
 				entityPOCO.CreatedByUserName = entityPM.CreatedByUserName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AlwaysEnabled))
+            {
+				entityPOCO.AlwaysEnabled = entityPM.AlwaysEnabled;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -121,6 +128,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.CreatedByUserName = entityPOCO.CreatedByUserName;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AlwaysEnabled))
+            {
+					entityPM.AlwaysEnabled = entityPOCO.AlwaysEnabled;
+            }
+
 		}
 
 		public void PMToOldPM(CopyFromTenant0PM entityPM, CopyFromTenant0PM oldEntityPM)
@@ -155,6 +167,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedByUserName))
             {
                 oldEntityPM.CreatedByUserName = entityPM.CreatedByUserName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AlwaysEnabled))
+            {
+                oldEntityPM.AlwaysEnabled = entityPM.AlwaysEnabled;
             }
 			
 		}

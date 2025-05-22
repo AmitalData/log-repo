@@ -47,11 +47,16 @@
   </Column>
   <Column
     Name="CreatedByUserName"
-    
     Type="nvarchar"
     Size="-1">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="AlwaysEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

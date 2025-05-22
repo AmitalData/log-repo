@@ -141,7 +141,6 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
                             element.CreatedByUserId = value.CreatedByUserId;
                             element.CreatedByUserName = value.CreatedByUserName;
                         }
-
                     });
                 }
                 this.listCopyFromTenant0.sort(function(a, b){return (a.Id < b.Id ? -1 : 1)});
