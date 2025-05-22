@@ -1633,7 +1633,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 }
                                 bool sendHybridM = true;
 
-                                if (extDocPM.ExternalEntityName == "CFIFILEM")
+                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud)
                                 {
                                     sendHybridM = false;
                                     SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
