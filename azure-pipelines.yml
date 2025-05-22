@@ -115,7 +115,7 @@ stages:
         echo "Running PR Agent action step"
 
         # Construct PR_URL
-        PR_URL="${SYSTEM_COLLECTIONURI}${SYSTEM_TEAMPROJECT}/_git/${BUILD_REPOSITORY_NAME}/pullrequest/${SYSTEM_PULLREQUEST_PULLREQUESTID}"
+        #PR_URL="${SYSTEM_COLLECTIONURI}${SYSTEM_TEAMPROJECT}/_git/${BUILD_REPOSITORY_NAME}/pullrequest/${SYSTEM_PULLREQUEST_PULLREQUESTID}"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5152"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5156"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5122"
