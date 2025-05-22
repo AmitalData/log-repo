@@ -27,7 +27,7 @@ using UnifreightIIG.Common.MessageLib.PhysicalCheck190;
 using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using UnifreightIIG.Common.TheGateway;
+
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
