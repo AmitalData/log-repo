@@ -117,7 +117,10 @@ namespace Logitude.Accounting.Data.Repositories
         public string CheckARPaymentChequeAlreadyExists(string ChequeNumber, string BankId, string BankAccount, string BankBranch, int tenant ,bool useLocal, string arPaymentId = null)
         {
             var existingCheques = new StringBuilder();
-          
+
+            // temporary canceled until spec will be fixed
+            return existingCheques.ToString();
+
             var existingCheque = context.ARPaymentCheques
                 .FirstOrDefault(a => a.Tenant == tenant &&
                                      a.ChequeNumber == ChequeNumber &&
