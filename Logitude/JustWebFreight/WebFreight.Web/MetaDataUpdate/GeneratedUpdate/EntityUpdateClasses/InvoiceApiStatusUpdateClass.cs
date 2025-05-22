@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InvoiceApiStatusUpdateClass
    {  		
-		public const string HashString = "6c171d402b8133b55989cc773ce9dc47";
+		public const string HashString = "2127c6c57d6ad2bbda4fb304969797e3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository, int contextTenant = 0)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Invoice Api Status",
-			      				    Code =  "5950",
+			      				    Code =  "bf70",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "StatusCode",
 			      				    CloseTableName =  "StatusName",

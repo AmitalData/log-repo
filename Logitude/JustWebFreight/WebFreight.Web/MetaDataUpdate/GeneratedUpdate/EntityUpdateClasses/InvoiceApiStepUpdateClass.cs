@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InvoiceApiStepUpdateClass
    {  		
-		public const string HashString = "0362eb03ce4667b7cd6d42863b476437";
+		public const string HashString = "919b1ae94e1e384952311ff2af274a66";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository, int contextTenant = 0)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Invoice Api Step",
-			      				    Code =  "b8e5",
+			      				    Code =  "ad34",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
@@ -264,10 +264,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם באנגלית",
+					  						FullLocalDefaultText =  "שם בםנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם באנגלית",
+					  						ListLocalDefaultText =  "שם בםנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -396,10 +396,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsAllowResend",
 					  						DefaultText =  "Is Allow Resend",
-					  						FullLocalDefaultText =  "האם לאפשר שליחה חוזרת",
+					  						FullLocalDefaultText =  "הםם לםפשר שליחה חוזרת",
 					  						ListFieldLable =  "IsAllowResendListLable",
 					  						ListLableDefaultText =  "Is Allow Resend",
-					  						ListLocalDefaultText =  "האם לאפשר שליחה חוזרת",
+					  						ListLocalDefaultText =  "הםם לםפשר שליחה חוזרת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
