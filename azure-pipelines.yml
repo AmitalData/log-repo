@@ -28,7 +28,8 @@ stages:
             # Custom prompt for the automatic /review tool
             # ------------------------------------------------------------------
             [config]
-            model = "gemini/gemini-2.5-flash-preview-04-17"   # official model ID
+            #model = "gemini/gemini-2.5-flash-preview-04-17"   # official model ID
+            model = "gemini/gemini-2.0-flash"   # official model ID
             custom_model_max_tokens = 24000  # keep CI bills predictable
             EOF
 
@@ -135,7 +136,7 @@ stages:
         # export config__fallback_models='["gemini/gemini-2.0-flash"]'
         # Provide your Gemini API key from Google AI Studio
         export config__model="gemini/gemini-2.0-flash"
-        export config__fallback_models='["gemini/gemini-2.0-flash"]'
+        export config__fallback_models='["o4-mini"]'
         export google_ai_studio__gemini_api_key="$GEMINI_KEY"
 
         pr-agent --pr_url="$PR_URL" describe
@@ -143,7 +144,7 @@ stages:
         pr-agent --pr_url="$PR_URL" improve
       env:
         azure_devops__pat: $(azure_devops_pat)
-        #openai__key: $(OPENAI_KEY)
+        openai__key: $(OPENAI_KEY)
         GOOGLE_AI_STUDIO__GEMINI_API_KEY: $(GEMINI_KEY)
         model: "gemini/gemini-2.0-flash"
         max__model_tokens: 24000
