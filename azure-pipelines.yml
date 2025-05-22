@@ -31,6 +31,8 @@ stages:
             #model = "gemini/gemini-2.5-flash-preview-04-17"   # official model ID
             model = "gemini/gemini-2.0-flash"   # official model ID
             custom_model_max_tokens = 24000  # keep CI bills predictable
+            [ignore]
+            glob = ['*.xml','*.lxml']
             EOF
 
             mkdir -p ~/.config/pr-agent
@@ -44,7 +46,9 @@ stages:
             [config]
             model = "gemini/gemini-2.0-flash"   # official model ID
             custom_model_max_tokens = 24000  # keep CI bills predictable
-            
+            [ignore]
+            glob = ['*.xml','*.lxml']
+
             [google_ai_studio]
             gemini_api_key = "${GEMINI_KEY}"
             reasoning_effort = "low"
