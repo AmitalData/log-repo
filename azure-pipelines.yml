@@ -50,7 +50,8 @@ stages:
             [pr_code_suggestions]
             extra_instructions = """
             Return ONLY valid YAML. For every code suggestion include:
-            suggestion_content"""
+            suggestion_content
+            """
 
             [pr_reviewer]                     # <-- same section name the /review
             enabled               = true      # tool uses in its comment shortcut
