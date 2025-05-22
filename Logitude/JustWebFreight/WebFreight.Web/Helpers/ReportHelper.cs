@@ -832,7 +832,7 @@ namespace WebFreight.Web.Helpers
 
 			}
 			ExportToExcelHelper exportToExcelHelper = new ExportToExcelHelper();
-			IWorkbook workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue);
+			IWorkbook workbook = exportToExcelHelper.ExportToExcel(reportStimulDataProviderDetails.CurrentBusinessObject.BusinessObjectValue, reportStimulDataProviderDetails.CurrentBusinessObject.Name);
 			
 			MemoryStream memoryStream = new MemoryStream();
 			workbook.Write(memoryStream);
