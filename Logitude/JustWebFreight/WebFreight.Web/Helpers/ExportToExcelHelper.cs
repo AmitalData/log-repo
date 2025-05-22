@@ -1490,10 +1490,11 @@ namespace WebFreight.Web.Helpers
 				LogitudeSettings.HandleLogMe(msg, false, "ExportToExcel", date);
 			}
 		}
-		public NPOI.SS.UserModel.IWorkbook ExportToExcel(object data)
+		public NPOI.SS.UserModel.IWorkbook ExportToExcel(object data,string name = null)
 		{
-		    DataTable dataTable = FlattenToDataTable(data);
-			return ConvertDataTableToWorkbook(dataTable, "Report");
+			FillTranslation();
+			DataTable dataTable = FlattenToDataTable(data);
+			return ConvertDataTableToWorkbook(dataTable, name);
 		}
 
 	
@@ -1692,18 +1693,30 @@ namespace WebFreight.Web.Helpers
 			boolStyle.CloneStyleFrom(defaultStyle);
 
 			IRow headerRow = sheet.CreateRow(0);
-			for (int i = 0; i < dataTable.Columns.Count; i++)
+			for (int i = 0,j=0; i < dataTable.Columns.Count; i++)
 			{
-				ICell cell = headerRow.CreateCell(i);
-				cell.SetCellValue(dataTable.Columns[i].ColumnName);
+				if(sheetName == "ExportDeclarationDataProvider" && !keyValueTranslate.ContainsKey(dataTable.Columns[i].ColumnName))
+				{
+					continue;
+				}
+				string coulmName = sheetName == "ExportDeclarationDataProvider" ? keyValueTranslate[dataTable.Columns[i].ColumnName] : dataTable.Columns[i].ColumnName;
+
+				ICell cell = headerRow.CreateCell(j);
+				cell.SetCellValue(coulmName);
 				cell.CellStyle = headerStyle;
+				j++;
 			}
 
 			for (int r = 0; r < dataTable.Rows.Count; r++)
 			{
+
 				IRow dataRow = sheet.CreateRow(r + 1);
-				for (int c = 0; c < dataTable.Columns.Count; c++)
+				for (int c = 0, j = 0; c < dataTable.Columns.Count; c++)
 				{
+					if (sheetName == "ExportDeclarationDataProvider" && !keyValueTranslate.ContainsKey(dataTable.Columns[c].ColumnName))
+					{
+						continue;
+					}
 					object cellValue = dataTable.Rows[r][c];
 
 					if (cellValue != null && cellValue != DBNull.Value)
@@ -1711,50 +1724,51 @@ namespace WebFreight.Web.Helpers
 
 						if (cellValue is double num)
 						{
-							ICell cell = dataRow.CreateCell(c, CellType.Numeric);
+							ICell cell = dataRow.CreateCell(j, CellType.Numeric);
 							cell.SetCellValue(num);
 							cell.CellStyle = numberStyle;
 						}
 						else if (cellValue is int integer)
 						{
-							ICell cell = dataRow.CreateCell(c, CellType.Numeric);
+							ICell cell = dataRow.CreateCell(j, CellType.Numeric);
 							cell.SetCellValue((double)(integer));
 							cell.CellStyle = intStyle;
 						}
 						else if (cellValue is decimal numDecimal)
 						{
-							ICell cell = dataRow.CreateCell(c, CellType.Numeric);
+							ICell cell = dataRow.CreateCell(j, CellType.Numeric);
 							cell.SetCellValue((double)numDecimal);
 							cell.CellStyle = numberStyle;
 						}
 						else if (cellValue is DateTime date)
 						{
-							ICell cell = dataRow.CreateCell(c, CellType.Numeric); 
+							ICell cell = dataRow.CreateCell(j, CellType.Numeric); 
 							cell.SetCellValue(date);
 							cell.CellStyle = dateStyle;
 						}
 						else if (cellValue is bool boolean)
 						{
-							ICell cell = dataRow.CreateCell(c, CellType.Boolean);
+							ICell cell = dataRow.CreateCell(j, CellType.Boolean);
 							cell.SetCellValue(boolean);
 							cell.CellStyle = boolStyle;
 						}
 						else
 						{
-							ICell cell = dataRow.CreateCell(c, CellType.String);
+							ICell cell = dataRow.CreateCell(j, CellType.String);
 							cell.SetCellValue(cellValue.ToString());
 							cell.CellStyle = defaultStyle;
 						}
 					}
 					else
 					{
-						ICell cell = dataRow.CreateCell(c, CellType.Blank);
+						ICell cell = dataRow.CreateCell(j, CellType.Blank);
 						cell.CellStyle = defaultStyle;
 					}
+					j++;
 				}
 			}
 
-			for (int i = 0; i < dataTable.Columns.Count; i++)
+			for (int i = 0; i <= dataTable.Columns.Count; i++)
 			{
 				sheet.AutoSizeColumn(i);
 			}
@@ -1762,10 +1776,50 @@ namespace WebFreight.Web.Helpers
 
 			return workbook;
 		}
+
+		#region Translate Report ExportDeclaration
+		public static Dictionary<string, string> keyValueTranslate;
+
+		public void FillTranslation()
+		{
+			keyValueTranslate = new Dictionary<string, string>();
+
+			keyValueTranslate.Add("ExportDeclaration_TaxationDateTime", "תאריך חישוב");
+			keyValueTranslate.Add("ExportDeclaration_ExportFile", "תיק תפעולי");
+			keyValueTranslate.Add("ExportDeclaration_TransportModeName", "סוג הובלה");
+			keyValueTranslate.Add("ExportDeclaration_CustomFileNo", "תיק מכס");
+			keyValueTranslate.Add("ExportDeclaration_DeclarationNumber", "מספר הצהרה");
+			keyValueTranslate.Add("ExportDeclaration_DeclarationTypeName", "סוג הצהרה");	
+			keyValueTranslate.Add("ExportDeclaration_ProcedureCurrentName", "קוד סוג תהליך");
+			keyValueTranslate.Add("ExportDeclaration_ExporterImporterName", "שם יצואן");
+			keyValueTranslate.Add("ExportDeclaration_RecipientName", "שם מקבל");
+			keyValueTranslate.Add("ExportDeclaration_DestinationCountryName", "שם ארץ יעד");
+			keyValueTranslate.Add("ExportDeclaration_DeclarationStatusTypeName", "סטטוס הצהרה");
+
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceNumber", "מספר חשבון");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceIssueDate", "תאריך חשבון");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceIncotermCode", "תנאי מכר");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceCurrencyTypeName", "מטבע");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceAmount", "ערך סחורה");
+
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceItemCode", "תיאור פריט");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceItemClassificationCode", "פרט מכס");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceItemPackageQuantity", "כמות יחידות");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceItemInvoiceQuantityType", "יחידת מידה");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceItemPrice", "ערך במטח");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceItemOriginCountryName", "ארץ מקור");
+			keyValueTranslate.Add("ExportDeclaration_SupplierInvoiceItemTransactionNatureName", "סוג תהליך");
+
+			keyValueTranslate.Add("ExportDeclaration_ConsignmentType", "סוג משלוח");
+			keyValueTranslate.Add("ExportDeclaration_ConsignmentCargoTypeName", "סוג מזהה מטען");
+			keyValueTranslate.Add("ExportDeclaration_ConsignmentManifestNumber", "מזהה מטען 1");
+			keyValueTranslate.Add("ExportDeclaration_ConsignmentSecondCargoID", "מזהה מטען 2");
+			keyValueTranslate.Add("ExportDeclaration_ConsignmentThirdCargoID", "מזהה מטען 3");
+			keyValueTranslate.Add("ExportDeclaration_ConsignmentCargoDescription", "תיאור טובין");
+			keyValueTranslate.Add("ExportDeclaration_ConsignmentFinalDestinationPortName", "שם יעד");
+		}
+		#endregion
 	}
-
-
-
 }
 
 

@@ -347,7 +347,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         if (!this.ShowBusyIndicator) {
             this.ShowBusyIndicator = true;
             this.ReportFliter = this.FillReportFilter(filter);
-            if (this.IsUsedExportToExel)
+            if (this.IsUsedExportToExel || this.ReportFliter.ReportCode == "EXDE")
             {
                this.StartBusyIndicator("ExportToExel...");
                this.ExportToExcel(this.ReportFliter);
