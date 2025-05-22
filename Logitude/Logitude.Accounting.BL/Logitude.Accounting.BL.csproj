@@ -386,6 +386,8 @@
     <Compile Include="CloseTables\EnumGenerated\IntegrityCheckStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\InterestEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\InterestReportStatuseStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InvoiceApiStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InvoiceApiStepStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\OpenFormatReportStatusStruct.Generated.cs" />
@@ -974,6 +976,7 @@
     <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomerDebtNotificationsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InvoiceApiCommunicationLogUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InvoiceApiStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InvoiceApiStepUpdateService.Generated.cs" />
