@@ -36,7 +36,7 @@ stages:
             mv .configuration.toml ~/.config/pr-agent/configuration.toml
       displayName: 'Generate .configuration.toml'    
     - script: |
-            cat > .configuration.toml <<EOF
+            cat > .secrets.toml <<EOF
             # ------------------------------------------------------------------
             # Custom prompt for the automatic /review tool
             # ------------------------------------------------------------------
@@ -52,7 +52,6 @@ stages:
             Return ONLY valid YAML. For every code suggestion include:
             suggestion_content
             """
-
             [pr_reviewer]                     # <-- same section name the /review
             enabled               = true      # tool uses in its comment shortcut
             model                 = "gemini/gemini-2.0-flash"  # or bedrock/claude-3-sonnet … etc.
@@ -108,8 +107,8 @@ stages:
             EOF
 
             mkdir -p ~/.config/pr-agent
-            mv .configuration.toml ~/.config/pr-agent/configuration.toml
-      displayName: 'Generate .configuration.toml'    
+            mv .secrets.toml ~/.config/pr-agent/secrets.toml
+      displayName: 'Generate .secrets.toml'    
 
     - script: |
         echo "Running PR Agent action step"
