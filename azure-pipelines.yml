@@ -36,7 +36,7 @@ stages:
             mv .configuration.toml ~/.config/pr-agent/configuration.toml
       displayName: 'Generate .configuration.toml'    
     - script: |
-            cat > .secrets.toml <<EOF
+            cat > .pr_agent.toml <<EOF
             # ------------------------------------------------------------------
             # Custom prompt for the automatic /review tool
             # ------------------------------------------------------------------
@@ -51,8 +51,8 @@ stages:
             [pr_reviewer]                     # <-- same section name the /review
             enabled               = true      # tool uses in its comment shortcut
             model                 = "gemini/gemini-2.0-flash"  # or bedrock/claude-3-sonnet … etc.
-            max_model_tokens = 32000
-            custom_model_max_tokens = 32000
+            max_model_tokens = 24000
+            custom_model_max_tokens = 24000
 
             # 1. Full system prompt (replaces the built-in one)
             system_prompt = """
@@ -98,13 +98,13 @@ stages:
             # 3. Optional token / file filters (helps stay within context limits)
             file_patterns_include = ["**/*.cs", "**/*.csproj", "**/*.ts", "**/*.html", "**/*.scss"]
             file_patterns_exclude = ["**/*.md", "**/package-lock.json", "**/yarn.lock"]
-            max_tokens          = 32000        # keeps the model from blowing CI minutes
+            max_tokens          = 24000        # keeps the model from blowing CI minutes
 
             EOF
 
             mkdir -p ~/.config/pr-agent
-            mv .secrets.toml ~/.config/pr-agent/secrets.toml
-      displayName: 'Generate .secrets.toml'    
+            mv .pr_agent.toml ~/.config/pr-agent/pr_agent.toml
+      displayName: 'Generate .pr_agent.toml'    
 
     - script: |
         echo "Running PR Agent action step"
@@ -115,6 +115,7 @@ stages:
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5156"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5122"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5189"
+        PR_URL= "https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5230"
         echo "PR_URL=$PR_URL"
 
         # Extract organization URL from System.CollectionUri
@@ -141,5 +142,5 @@ stages:
         #openai__key: $(OPENAI_KEY)
         GOOGLE_AI_STUDIO__GEMINI_API_KEY: $(GEMINI_KEY)
         model: "gemini/gemini-2.0-flash"
-        max__model_tokens: 32000
+        max__model_tokens: 24000
       displayName: 'Run Qodo Merge'
