@@ -1145,7 +1145,7 @@ export class LoginComponent implements OnInit {
             });
 
         this._userLastLoginPMService
-            .GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant)
+            .GetUserLastLogin(SessionInfo.LoggedUserId)
             .subscribe((response: any) => {
                 if (!response.HasError && response.Result) {
                     var lastloginPM: UserLastLoginPM = response.Result;

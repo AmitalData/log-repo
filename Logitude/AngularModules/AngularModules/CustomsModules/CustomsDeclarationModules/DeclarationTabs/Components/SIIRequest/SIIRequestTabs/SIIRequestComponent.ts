@@ -31,15 +31,15 @@ import { SupplierInvoiceItemLine } from 'CustomsModules/CustomsDeclarationModule
 
 
 export class SIIRequestComponent extends BaseComponent implements OnInit {
-    private declarationWebService: DeclarationWebService = new DeclarationWebService; // TODO: Delete after test
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    private declarationWebService: DeclarationWebService = new DeclarationWebService;
+    public siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
+    public userPmService: UserPMService = new UserPMService();
+    public supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
+    public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext = this;
     public ObjectTableName: string = "Customs.Declaration";
     public ObjectTableNameSiiRequest: string = "Customs.SIIRequests";
-    siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
-    userPmService: UserPMService = new UserPMService();
-    supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
-    public entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     public DecalarationData: DeclarationPM;
     public IsNewOrEdit: SiiRequestMode;
@@ -58,6 +58,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public filterOptionsWithResponse: FilterOptions = FilterOptions.WithResponse;
     public filterOptionsInvoice: FilterOptions = FilterOptions.Invoice;
     public filterOptionsDeclarationConect: FilterOptions = FilterOptions.DeclarationConect;
+    public isOpen: boolean;
+    public isUnCompleted: CompleteStatuses = CompleteStatuses.UnCompleted;
+    public isPartiallyCompleted: CompleteStatuses = CompleteStatuses.PartiallyCompleted;
+    public isFullyCompleted: CompleteStatuses = CompleteStatuses.FullyCompleted;
 
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
@@ -67,6 +71,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     ngOnInit(): void {
         this.initiallizeComponent();
     }
+
     initiallizeComponent() {
         this.entityResourceService.getEntityResourceByTableName("Customs.SIIRequest").subscribe((response: any) => {
             this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItemsReqList").subscribe((response: any) => {
@@ -106,33 +111,101 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.supplierInvoiceItemsForSIIRequest = args.supplierInvoiceItemsForSIIRequest;
         this.supplierInvoiceItemsCollection = new ObservableCollection([]);
         this.originalSupplierInvoiceItemsCollection = new ObservableCollection([]);
+        this.initFullData();
+    }
+
+    initFullData() {
         this.buildSupplierInvoiceItemsCollection();
+        this.DemandStateFilterItemClicked(this.filterOptionsWithResponse);
+        if (!AppTool.IsNullOrEmpty(this.entityPM?.ContactId)) this.getUserData(this.entityPM.ContactId);
     }
 
     // #region Actions:
     CancelSaveSiiRequest() {
-        this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
-        this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
+        this.RefreshEntity();
         this.CurrentSession.CloseCurrentWindow();
         console.log(this.entityPM);
         console.log(this.SelectedRowsCheckBox.length);
     }
 
+    //#region SaveSiiRequest
     SaveSiiRequest() {
-        this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
-        this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
-        this.CurrentSession.CloseCurrentWindow();
-        console.log(this.entityPM);
-        console.log(this.SelectedRowsCheckBox.length);
+        if (this.IsNewOrEdit === SiiRequestMode.IsNew) {
+            this.siiRequestPMService.insert(this.entityPM).subscribe((response: ServiceResponse) => {
+                if (response.ErrorsArray.length === 0 && response?.Result) {
+                    this.entityPM = response.Result;
+                    this.IsNewOrEdit = SiiRequestMode.IsEdit;
+                    this.IsDisplayOnly = false;
+                    this.isAllowChange = true;
+                    this.RefreshEntity();
+                    this.CurrentSession.CloseCurrentWindow();
+                }
+                else if (response.ErrorsArray.length > 0) {
+                    this.validationErrors = response.ErrorsArray;
+                    this.checkMandatoryCustomsFields(this.validationErrors);
+                }
+            });
+        }
+        else if (this.IsNewOrEdit === SiiRequestMode.IsEdit) {
+            this.siiRequestPMService.update(this.entityPM).subscribe((response: ServiceResponse) => {
+                if (response?.Result) {
+                    this.entityPM = response.Result;
+                    this.RefreshEntity();
+                    this.CurrentSession.CloseCurrentWindow();
+                }
+                else if (response.ErrorsArray.length > 0) {
+                    this.validationErrors = response.ErrorsArray;
+                    this.checkMandatoryCustomsFields(this.validationErrors);
+                }
+            });
+        }
     }
 
+    checkMandatoryCustomsFields(ValidationErrors: any[]) {
+        let windowArgs: any = {};
+        windowArgs.Errors = ValidationErrors;
+        windowArgs.Warning = null;
+        windowArgs.NoButtonVisibility = false;
+        windowArgs.CancelButtonVisibility = true;
+        windowArgs.SaveButtonText = "אשר";
+        windowArgs.CancelButtonText = "בטל";
+        windowArgs.ComponentHeight = '328px';
+        let windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.Errors");
+        let logWindow = new LogitudeWindow(this.CurrentSession);
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            return this.taxationWindowClosed($event) ? true : false; // TODO: change to return action like save function when true
+        });
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+    validationErrors: string[] = [];
+    taxationWindowClosed(event) {
+        this.validationErrors = [];
+        switch (event) {
+            case "ok": {
+                return true;
+            }
+            case "cancel": {
+                return false;
+            }
+        }
+    }
+    //#endregion SaveSiiRequest
+
+    //#region SendSiiRequest
     SendSiiRequest(event: any) {
-        this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
-        this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
+        this.RefreshEntity();
         this.CurrentSession.CloseCurrentWindow();
         console.log(this.entityPM);
         console.log(this.SelectedRowsCheckBox.length);
     }
+    //#endregion SendSiiRequest
     //#endregion Actions
 
     //#region complete data reqItem:
@@ -140,19 +213,17 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.SelectedRow = item;
         this.openLogWindow()
     }
-    public isOpen: boolean;
 
     openLogWindow() {
         let args: any = {
-            Decalaration: this.EntityPM,
+            Decalaration: this.DecalarationData,
             SIIRequest: this.entityPM,
             invoiceItemReq: this.SelectedRow,
-            // TODO: change to more and add mode edit or getand edit
-            IsNewOrEdit: true,
+            IsNewOrEdit: SiiRequestMode.IsEdit,
             filterAgrs: this.initfilterAgrs,
             isAllowChange: this.isAllowChange,
         };
-        
+
         if (this.isOpen) return;
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
@@ -164,31 +235,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestCopmleteDataItem/SIIRequestCopmleteDataItemComponent');
         args.logWindow = logWindow;
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             this.RefreshEntity();
             this.isOpen = false;
         });
     }
-
     //#endregion complete data reqItem
-
-
-    public SearchFilterChangedEvent: any;
-    SearchText: string = "";
-    Search(SearchText: string) {
-        this.SearchText = AppTool.IsNullOrEmpty(SearchText) ? "" : SearchText.toLowerCase();
-        const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
-        let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
-        if (this.SearchText === "")
-            filtered = original;
-        else
-            filtered = original.filter(i => i.ClassificationCode.toLowerCase().includes(this.SearchText) || i.ItemCode.toLowerCase().includes(this.SearchText));
-
-        this.supplierInvoiceItemsCollection.Clear();
-        if (filtered.length > 0 || this.SearchText === "") {
-            filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
-        }
-    }
 
     SetPropertiesEnabled() {
         let enabled: boolean = !this.IsDisplayOnly;
@@ -216,42 +267,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("ManifestNumber", this.ObjectTableNameSiiRequest, !enabled);
     }
 
-    CreateMethod() {
-        var windowArgs: any = {};
-        windowArgs.Parent = this;
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "SIIRequestCopmleteDataItemComponent";
-        logWindow.Width = 400;
-        logWindow.Height = 800;
-        logWindow.ShowCloseButton = false;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            if ($event == "ok") {
-                this.CD.reattach();
-                this.RefreshEntity();
-            }
-        });
-        this.CD.detach();
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestCopmleteDataItemComponent');
-    }
-
-    MoveMethod() {
-        var windowArgs: any = {};
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.SubmitForApproval");
-        logWindow.Width = 900;
-        logWindow.Height = 600;
-        logWindow.ShowCloseButton = false;
-        logWindow.WindowArgs = windowArgs;
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            this.CD.reattach();
-            this.RefreshEntity();
-        });
-        this.CD.detach();
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestCopmleteDataItemComponent');
-    }
-
-
+    //#region  SelectedRow/SelectedRows: 
     SelectedRow: SupplierInvoiceItemsForSIIRequestLine = new SupplierInvoiceItemsForSIIRequestLine(new SupplierInvoiceItemsForSIIRequest(), this);
     SelectedRowsCheckBox: SupplierInvoiceItemsForSIIRequestLine[] = [];
     public SelectedInvoiceItemsReqList: ObservableCollection;
@@ -275,35 +291,72 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.isSelected = value;
         this.OnRowSelectedRowsCheckBox(value ? this.supplierInvoiceItemsCollection?.Collection : []);
     }
+    //#endregion SelectedRow/SelectedRows
 
     //#region Properties Filter Methods
     private SelectedCounterKey: number = null;
-    private DemandState: string = null;
     private selectedInvoiceNumber: string = null;
     public get SelectedInvoiceNumber() { return this.selectedInvoiceNumber }
     public set SelectedInvoiceNumber(newValue: string) {
         this.selectedInvoiceNumber = newValue;
     }
-    //#endregion
+
+    public SearchFilterChangedEvent: any;
+    SearchText: string = "";
+    Search(SearchText: string) {
+        this.SearchText = AppTool.IsNullOrEmpty(SearchText) ? "" : SearchText.toLowerCase();
+        const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
+        let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            filtered = original.filter(i => i.ClassificationCode.toLowerCase().includes(this.SearchText) || i.ItemCode.toLowerCase().includes(this.SearchText));
+            this.supplierInvoiceItemsCollection.Clear();
+            if (filtered.length > 0) {
+                filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+            }
+        }
+        else this.DemandStateFilterItemClicked(this.DemandStateFilterSelectedValue, true);
+    }
+    //#endregion Properties Filter Methods
 
     //#region DemandState Filter Methods
-    public DemandStateFilterSelectedValue: string = this.filterOptionsWithResponse;
-    DemandStateFilterItemClicked(itemValue: string) {
-        if (this.DemandStateFilterSelectedValue != itemValue) {
+    public DemandStateFilterSelectedValue: string = this.filterOptionsAll;
+    DemandStateFilterItemClicked(itemValue: string, isSearched: boolean = false) {
+        if (this.DemandStateFilterSelectedValue !== itemValue || isSearched) {
             this.DemandStateFilterSelectedValue = itemValue;
-            this.DemandState = itemValue === this.filterOptionsAll ? null : itemValue;
+            const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
+            let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
+            filtered = itemValue === this.filterOptionsAll ? original : original.filter(i => this.isValidDemandState(i.ReqConfirmationTypeCode));
+
+            if (this.LevelSelectionFilterSelectedValue === this.filterOptionsInvoice) {
+                this.InvoicesSelectionChanged(this.currentSelectedItem);
+                return;
+            }
+            this.supplierInvoiceItemsCollection.Clear();
+            if (filtered.length > 0)
+                filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
         }
     }
+
+    private isValidDemandState(value: string): boolean {
+        return (Object.values(DemandStateFilterOptions) as string[]).includes(value);
+    }
+    //#endregion DemandState Filter Methods
+
     //#region Invoice ComboBox
     SelectedInvoiceReqConfirmation: string;
     filterSupplierInvoiceItemsForSIIRequestLineByInvoiceNumber: SupplierInvoiceItemsForSIIRequestLine[] = [];
+    currentSelectedItem: SupplierInvoiceItemLine;
 
     InvoicesSelectionChanged(selectedItem) {
+        this.currentSelectedItem = selectedItem;
         if (!selectedItem) return;
         this.SelectedInvoiceNumber = selectedItem.InvoiceNumber;
         this.SelectedCounterKey = selectedItem.InvoiceCounterKey;
         this.SelectedInvoiceReqConfirmation = selectedItem.ReqConfirmationTypeCode;
-        const items = this.originalSupplierInvoiceItemsCollection.Collection.filter(i => i.InvoiceNumber === selectedItem.InvoiceNumber);
+        let items = this.originalSupplierInvoiceItemsCollection.Collection.filter(i => i.InvoiceNumber === selectedItem.InvoiceNumber);
+        // Filter by DemandState and InvoiceNumber:
+        const original: SupplierInvoiceItemsForSIIRequestLine[] = items;
+        items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => this.isValidDemandState(i.ReqConfirmationTypeCode));
         if (!items.length) return;
         this.supplierInvoiceItemsCollection.Clear();
         items.forEach(item => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this)));
@@ -317,24 +370,30 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     this.InvoicesNumbersList = response?.Result;
             });
     }
-    //#endregion
+    //#endregion Invoice ComboBox
 
     //#region LevelSelection Filter Methods
     public LevelSelectionFilterSelectedValue: string = this.filterOptionsDeclarationConect;
     LevelSelectionFilterItemClicked(itemValue: string) {
-        if (this.LevelSelectionFilterSelectedValue != itemValue) {
+        if (this.LevelSelectionFilterSelectedValue !== itemValue) {
             this.LevelSelectionFilterSelectedValue = itemValue;
             if (itemValue !== this.filterOptionsInvoice) {
                 this.SelectedInvoiceNumber = null;
                 this.SelectedCounterKey = null;
+                let items: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
+                // Filter by DemandState and InvoiceNumber:
+                if (this.LevelSelectionFilterSelectedValue === this.filterOptionsDeclarationConect) {
+                    const original: SupplierInvoiceItemsForSIIRequestLine[] = items;
+                    items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => this.isValidDemandState(i.ReqConfirmationTypeCode));
+                }
                 this.supplierInvoiceItemsCollection.Clear();
-                this.originalSupplierInvoiceItemsCollection.Collection.forEach((item) => {
+                items.forEach((item) => {
                     this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
                 });
             }
         }
     }
-    //#endregion
+    //#endregion LevelSelection Filter Methods   
 
     //#region user data
     getUserData(userId: string) {
@@ -397,18 +456,23 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.entityPM.WareHouseCity = newValue;
     }
 
+    public get WareHouseCityName(): string {
+        return this.entityPM?.WareHouseCityName;
+    }
+    public set WareHouseCityName(newValue: string) {
+
+        this.entityPM.WareHouseCityName = newValue;
+    }
+
+    SetLocalName(entity, fieldName) {
+        this.entityPM[fieldName] = !AppTool.IsNullOrEmpty(entity) ? entity?.LocalName : null;
+    }
+
     public get IsClosed(): boolean {
         return this.entityPM.IsClosed ?? false;
     }
     public set IsClosed(newValue: boolean) {
         this.entityPM.IsClosed = newValue;
-    }
-
-    public get WareHouseCityName(): string {
-        return this.entityPM?.WareHouseCityName;
-    }
-    public set WareHouseCityName(newValue: string) {
-        this.entityPM.WareHouseCityName = newValue;
     }
 
     public get SupplierInvoiceItemsReqLists(): SupplierInvoiceItemsReqListPM[] {
@@ -514,94 +578,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.DecalarationData.CustomFileNo = newValue;
     }
     //#endregion declaration properties
-
 }
-
-
-
-//#region SupplierInvoiceItemsReqListLine properties
-export class SupplierInvoiceItemsReqListLine extends BaseComponent {
-    public entityPM: SupplierInvoiceItemsReqListPM;
-    public ObjectTableName: string = "Customs.CertificateOfOriginItem";
-    public DataContext = this;
-    Parent: SIIRequestComponent;
-    constructor(EntityPM: SupplierInvoiceItemsReqListPM, parent: SIIRequestComponent) {
-        super();
-        this.entityPM = EntityPM;
-        this.Parent = parent;
-    }
-
-    public get LineNumber(): number {
-        return this.entityPM.LineNumber;
-    }
-    public set LineNumber(newValue: number) {
-        this.entityPM.LineNumber = newValue;
-    }
-
-    public get SIIRequestID(): string {
-        return this.entityPM.SIIRequestID;
-    }
-    public set SIIRequestID(newValue: string) {
-        this.entityPM.SIIRequestID = newValue;
-    }
-
-    public get InvoiceCounterKey(): number {
-        return this.entityPM.InvoiceCounterKey;
-    }
-    public set InvoiceCounterKey(newValue: number) {
-        this.entityPM.InvoiceCounterKey = newValue;
-    }
-
-    public get InvoiceItemLineNumber(): number {
-        return this.entityPM.InvoiceItemLineNumber;
-    }
-    public set InvoiceItemLineNumber(newValue: number) {
-        this.entityPM.InvoiceItemLineNumber = newValue;
-    }
-
-    public get RequestType(): string {
-        return this.entityPM.RequestType;
-    }
-    public set RequestType(newValue: string) {
-        this.entityPM.RequestType = newValue;
-    }
-
-    public get ProductFileNumber(): string {
-        return this.entityPM.ProductFileNumber;
-    }
-    public set ProductFileNumber(newValue: string) {
-        this.entityPM.ProductFileNumber = newValue;
-    }
-
-    public get ManufactureCountryCode(): string {
-        return this.entityPM.ManufactureCountryCode;
-    }
-    public set ManufactureCountryCode(newValue: string) {
-        this.entityPM.ManufactureCountryCode = newValue;
-    }
-
-    public get ManufactureCountryName(): string {
-        return this.entityPM.ManufactureCountryName;
-    }
-    public set ManufactureCountryName(newValue: string) {
-        this.entityPM.ManufactureCountryName = newValue;
-    }
-
-    public get ManufacturerName(): string {
-        return this.entityPM.ManufacturerName;
-    }
-    public set ManufacturerName(newValue: string) {
-        this.entityPM.ManufacturerName = newValue;
-    }
-
-    public get Remarks(): string {
-        return this.entityPM.Remarks;
-    }
-    public set Remarks(newValue: string) {
-        this.entityPM.Remarks = newValue;
-    }
-}
-//#endregion SupplierInvoiceItemsReqListLine properties
 
 //#region SupplierInvoiceItemsForSIIRequestLine properties:
 export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
@@ -609,10 +586,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     Parent: SIIRequestComponent;
+
     constructor(EntityPM: SupplierInvoiceItemsForSIIRequest, parent: SIIRequestComponent) {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
+        this.IsCompletedStatus = CompleteStatuses.UnCompleted;
     }
     private isSelected: boolean;
     public get IsSelected() { return this.isSelected };
@@ -631,6 +610,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     }
     public set InvoiceNumber(newValue: string) {
         this.entityPM.InvoiceNumber = newValue;
+    }
+    public get IsCompletedStatus(): number {
+        return this.entityPM.IsCompletedStatus;
+    }
+    public set IsCompletedStatus(newValue: number) {
+        this.entityPM.IsCompletedStatus = newValue;
     }
     public get LineNumber(): number {
         return this.entityPM.LineNumber;
@@ -720,6 +705,14 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set OriginCountryName(newValue: string) {
         this.entityPM.OriginCountryName = newValue;
     }
+
+    public get ReqConfirmationTypeCode(): string {
+        return this.entityPM.ReqConfirmationTypeCode;
+    }
+    public set ReqConfirmationTypeCode(newValue: string) {
+        this.entityPM.ReqConfirmationTypeCode = newValue;
+    }
+
 }
 
 export enum FilterOptions {
@@ -727,4 +720,14 @@ export enum FilterOptions {
     WithResponse = "withResponse",
     Invoice = "Invoice",
     DeclarationConect = "DeclarationConect"
+}
+export enum DemandStateFilterOptions {
+    FirstCertificate = "401",
+    SecondCertificate = "402",
+    ThirdCertificate = "403",
+}
+export enum CompleteStatuses {
+    UnCompleted = 0,
+    PartiallyCompleted = 1,
+    FullyCompleted = 2
 }

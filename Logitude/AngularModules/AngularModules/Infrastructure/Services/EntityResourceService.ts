@@ -95,7 +95,7 @@ export class EntityResourceService {
           //    });
           //}).pipe(share());
 
-          var observable = this.GetResourcesFile(objectTableName, tenant).pipe(flatMap((response: any) => {
+          var observable = this.GetResourcesFile(objectTableName).pipe(flatMap((response: any) => {
             var filejson = response;
             if (filejson) {
               if (EntityResourceService.ServerTablesUnzipQueue[objectTableName]) {
@@ -178,8 +178,8 @@ export class EntityResourceService {
     //  }
   }
 
-  private GetResourcesFile(objectTableName: string, tenant: number) {
-    var url = this._apiUrl + '?objectTableName=' + objectTableName + '&tenant=' + tenant;
+  private GetResourcesFile(objectTableName: string) {
+    var url = this._apiUrl + '?objectTableName=' + objectTableName;
 
     return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(share());
   }

@@ -84,6 +84,12 @@ namespace Logitude.Customs.Data.Repsitories
              into ccJoin
         from country in ccJoin.DefaultIfEmpty()
 
+        join cert in context.SupplierInvioceItemCertificats
+            on new { itm.DeclarationId, itm.LineNumber, CounterKey = itm.CounterKey }
+            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
+            into certJoin
+        from certificate in certJoin.DefaultIfEmpty()
+
         select new SupplieInvoiceItemsForSIIRequest
         {
             InvoiceNumber = si.InvoiceNumber,
@@ -103,7 +109,8 @@ namespace Logitude.Customs.Data.Repsitories
             ItemPriceCurrencyCode = itm.ItemPriceCurrencyCode,
 
             OriginCountryCode = itm.OriginCountryCode,
-            OriginCountryName = country.LocalName
+            OriginCountryName = country.LocalName,
+            ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode
 
         };
 

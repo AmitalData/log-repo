@@ -17,7 +17,7 @@
             <td>{{'Customer.TH.Billing' | TextCodeTranslationPipe}}</td>
         </tr>
 
-        <tr style="height: 1px;">
+        <tr style="height: 1px;" *ngIf="isDataLoaded">
             <td>
                 <div style="width: 100%; position: relative;">
                     <div #BillingChild></div>

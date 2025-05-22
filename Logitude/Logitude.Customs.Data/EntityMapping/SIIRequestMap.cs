@@ -44,7 +44,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.WareHouseAddress).HasColumnName("WareHouseAddress").HasMaxLength(60).IsUnicode(true);
 
-            this.Property(t => t.WareHouseCity).HasColumnName("WareHouseCity").HasMaxLength(4).IsUnicode(true);
+            this.Property(t => t.WareHouseCity).HasColumnName("WareHouseCity").HasMaxLength(5).IsUnicode(false);
 
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
 

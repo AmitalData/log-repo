@@ -154,7 +154,7 @@ export class ObjectTableRulePMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetObjectTableRulePMsByTenant?' + 'tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
+            return this._http.get(this._apiUrl + '/GetObjectTableRulePMsByTenant', ServiceHelper.GetHttpFullHeaders())
                 .pipe(
                     map((response: HttpResponse<any>) => {
                 var result = response.body;

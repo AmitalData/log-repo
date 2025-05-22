@@ -17,10 +17,10 @@ export class ReportService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/Report';
     }
 
-    GetReportListsByGroupId(groupId: string, tenant: number) {
+    GetReportListsByGroupId(groupId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '?groupId=' + groupId + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '?groupId=' + groupId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response;
@@ -137,22 +137,26 @@ export class ReportService {
         }
         );
     }
-    GetExcel(filter: ReportFliter) : Promise<any>{
-        var authHeader = new Headers();
+    GetExcel(filter: ReportFliter): Promise<any> {
+        const authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
+
+        const filterString = encodeURIComponent(JSON.stringify(filter));
+
         return defer(() => {
-            return this._http.put(this._apiUrl+ "/GetExcel", JSON.stringify(filter),{ 
-                headers:ServiceHelper.GetHttpHeaders().headers,
+            return this._http.get(`${this._apiUrl}/GetExcel?filter=${filterString}`, {
+                headers: ServiceHelper.GetHttpHeaders().headers,
                 responseType: 'blob'
-            }).pipe(map(response => {             
-                 return response;
-            }),catchError(ServiceHelper.HandleServiceError));
+            }).pipe(
+                map(response => {
+                    return response;
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
         }).toPromise() as Promise<any>;
-
-        
-
     }
+
 }
 
 export class CustomersDataProvider {

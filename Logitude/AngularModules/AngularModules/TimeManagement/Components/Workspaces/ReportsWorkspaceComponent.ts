@@ -97,7 +97,7 @@ export class ReportsGrpupClass {
 
     LoadData() {
         var myService = new ReportService();
-        myService.GetReportListsByGroupId(this.list.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
+        myService.GetReportListsByGroupId(this.list.Id).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.ItemsSource = [];
 

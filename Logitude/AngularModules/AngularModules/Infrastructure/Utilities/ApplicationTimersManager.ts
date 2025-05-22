@@ -166,7 +166,7 @@ export class ApplicationTimersManager {
     IsUserUnlock: boolean = false;
 
     private CheckUserLastLogin() {
-        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe((response: any) => {
+        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id).subscribe((response: any) => {
             if (!response.HasError && response.Result) {
                 let lastloginPM: UserLastLoginPM = response.Result;
                 this.HandleComputerIdChangedForLoggedUser(lastloginPM);

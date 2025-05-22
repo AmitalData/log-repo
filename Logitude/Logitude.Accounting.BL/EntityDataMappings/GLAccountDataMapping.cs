@@ -300,6 +300,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     List<string> partnerTypes = new List<string>() { "AC", "CS", "AG", "AL", "CG", "SG", "SL", "TR", "VD", "WH" };
                     Card card = repo.GetCardByGLAccountId(gLAccountCurrency.MainGLAccountId, entityPOCO.Tenant, false, partnerTypes);
                     entityPM.ParentCurrencyGLAccountCardId = card?.Id;
+                    if (string.IsNullOrEmpty(entityPM.CardCountryCode))
+                    {
+                        entityPM.CardCountryCode = card.CountryCode;
+                    }
                 }
 
                 //if (entityPOCO.ClientId != null)

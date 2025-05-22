@@ -8559,7 +8559,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
-    DisplayInRequiredFields="false"
+     DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -8567,7 +8567,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <field
+   <field
     Id="&quot;ff7f5526-7e01-4d80-975a-3f276d1afa9e&quot;"
     FieldName="&quot;VendorCountry&quot;"
     OldNames="VendorCountry"
