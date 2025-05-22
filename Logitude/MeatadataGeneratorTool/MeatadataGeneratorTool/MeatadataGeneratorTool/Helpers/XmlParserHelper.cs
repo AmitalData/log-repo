@@ -235,7 +235,9 @@ namespace MeatadataGeneratorTool.Helpers
 
             field.IsMulti = GetAttributeBoolValue(fieldNode.Attributes["IsMulti"]);
             field.IsPMField = GetAttributeBoolValue(fieldNode.Attributes["HasPMField"]);
-            field.IsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["IsPrimaryKey"]);
+			field.TableRelatedPM = GetAttributeStringValue(fieldNode.Attributes["TableRelatedPM"]);
+			field.FieldRelatedPM = GetAttributeStringValue(fieldNode.Attributes["FieldRelatedPM"]);
+			field.IsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["IsPrimaryKey"]);
             if (fieldNode.Attributes["OldIsPrimaryKey"] != null)
             {
                 field.OldIsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["OldIsPrimaryKey"]);
