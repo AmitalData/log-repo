@@ -17,8 +17,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     container:
-      #image: codiumai/pr-agent:latest
-      image: ghcr.io/qodo-ai/pr-agent:latest
+      image: codiumai/pr-agent:latest
       options: --entrypoint ""
     variables:
       - group: pr_agent
@@ -48,6 +47,10 @@ stages:
             [google_ai_studio]
             gemini_api_key = "${GEMINI_KEY}"
             reasoning_effort = "low"
+            [pr_code_suggestions]
+            extra_instructions = """
+            Return ONLY valid YAML. For every code suggestion include:
+            suggestion_content"""
 
             [pr_reviewer]                     # <-- same section name the /review
             enabled               = true      # tool uses in its comment shortcut
