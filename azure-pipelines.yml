@@ -44,7 +44,7 @@ stages:
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5156"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5122"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5189"
-        PR_URL= "https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5233"
+        PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5233"
         echo "PR_URL=$PR_URL"
 
         # Extract organization URL from System.CollectionUri
