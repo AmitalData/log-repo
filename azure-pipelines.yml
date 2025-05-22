@@ -17,7 +17,8 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     container:
-      image: codiumai/pr-agent:latest
+      #image: codiumai/pr-agent:latest
+      image: ghcr.io/qodo-ai/pr-agent:latest
       options: --entrypoint ""
     variables:
       - group: pr_agent
