@@ -56,6 +56,12 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Remarks { get; set; }
         [Column("DutchRequested")]
 	    public bool DutchRequested { get; set; }
+        [Column("RequestRequiredStatus")]
+	    public string RequestRequiredStatus { get; set; }
+        [Column("ItemNo ")]
+	    public string ItemNo  { get; set; }
+        [Column("ItemName ")]
+	    public string ItemName  { get; set; }
     }
 }
 	 

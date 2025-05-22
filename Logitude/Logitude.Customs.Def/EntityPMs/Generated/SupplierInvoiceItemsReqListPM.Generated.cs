@@ -348,6 +348,167 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string requestRequiredStatus ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RequestRequiredStatus  
+	   {
+	    
+	     get
+		{
+		   return requestRequiredStatus;
+		 }
+		 set
+		 {
+		   if(requestRequiredStatus != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestRequiredStatus",OldValue=requestRequiredStatus,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   requestRequiredStatus=value;
+		   }
+			
+		 }
+	   }
+	  private string itemNo  ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ItemNo   
+	   {
+	    
+	     get
+		{
+		   return itemNo ;
+		 }
+		 set
+		 {
+		   if(itemNo  != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemNo ",OldValue=itemNo ,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   itemNo =value;
+		   }
+			
+		 }
+	   }
+	  private string itemName  ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ItemName   
+	   {
+	    
+	     get
+		{
+		   return itemName ;
+		 }
+		 set
+		 {
+		   if(itemName  != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemName ",OldValue=itemName ,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   itemName =value;
+		   }
+			
+		 }
+	   }
+	  private decimal? invoiceQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? InvoiceQuantity  
+	   {
+	    
+	     get
+		{
+		   return invoiceQuantity;
+		 }
+		 set
+		 {
+		   if(invoiceQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceQuantity",OldValue=invoiceQuantity,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   invoiceQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceQuantityType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceQuantityType  
+	   {
+	    
+	     get
+		{
+		   return invoiceQuantityType;
+		 }
+		 set
+		 {
+		   if(invoiceQuantityType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceQuantityType",OldValue=invoiceQuantityType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceQuantityType=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? statisticQuantity ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? StatisticQuantity  
+	   {
+	    
+	     get
+		{
+		   return statisticQuantity;
+		 }
+		 set
+		 {
+		   if(statisticQuantity != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatisticQuantity",OldValue=statisticQuantity,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   statisticQuantity=value;
+		   }
+			
+		 }
+	   }
+	  private string statisticQuantityType ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatisticQuantityType  
+	   {
+	    
+	     get
+		{
+		   return statisticQuantityType;
+		 }
+		 set
+		 {
+		   if(statisticQuantityType != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatisticQuantityType",OldValue=statisticQuantityType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statisticQuantityType=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
