@@ -205,9 +205,9 @@ export class JournalMenuButtonsHandler {
 
     }
 
-    public MenuButtonClick(menuButton: MenuButtonPM) {
+    public async MenuButtonClick(menuButton: MenuButtonPM) {
 
-        //this.copyAccountingDates();
+       
 
         switch (menuButton.EventCode) {
             case "JournalSave": // save and close
@@ -225,7 +225,14 @@ export class JournalMenuButtonsHandler {
                           x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
                         }
                       });
-                    
+                    const journalValidator: JournalValidator = new JournalValidator();
+
+                    const validationErrors = await journalValidator.ValidateJournalLinesCountry(this.EntityPM.JournalLines);
+
+                   if (validationErrors.length > 0) {
+                      this.entityArgs.EditComponent.ValidationErrorsList = validationErrors;                                     
+                       return;
+                    }
                     this.SaveChenges();    
 
                     this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {

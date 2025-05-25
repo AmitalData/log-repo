@@ -92,17 +92,16 @@ export class JournalValidator
         return errors;
     }
 
-    public static ValidateJournalLinesCountry(lines: any ) {
+    public  async ValidateJournalLinesCountry(lines: any ) {
         var errors = [];
-        var vendorList = "";
         const vendorSet = new Set<string>();
-
-
+ 
+ 
         for (let line of lines) {
             if((line.ActionCode === '2' || line.ActionCode === '3')  && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
                 const vendorValidator: VendorValidator = new VendorValidator();
                 const vendorEntry = line.DebitAccountNumber + "/" + line.DebitAccountName;
-                if (!vendorValidator.IsVendorCountryValid(line.DebitAccountCountryCode)) {
+                 if (!await vendorValidator.IsVendorCountryValid(line.DebitAccountId,line.DebitAccountCountryCode,)) {
                     vendorSet.add(vendorEntry); 
                 }
             }
@@ -190,14 +189,8 @@ export class JournalValidator
             result = JournalValidator.ValidateJournalLines(journalLine);
             this.FillErrorList(result);
         }
-        if(entityPM.StatusCode === "6"){
-          result = JournalValidator.ValidateJournalLinesCountry(entityPM.JournalLines); 
-          this.FillErrorList(result);
-        }
+       
 
-        
-        
-        
 
         result = JournalValidator.ValidateTotals(entityPM)
         this.FillErrorList(result);
