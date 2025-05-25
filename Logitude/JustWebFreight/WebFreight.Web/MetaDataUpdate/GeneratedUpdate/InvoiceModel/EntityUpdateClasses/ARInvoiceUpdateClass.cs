@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
- 		public const string HashString = "339fa79e1f1562f92e64c6480de12dee";
+ 		public const string HashString = "539fa79e1f1562f92e64c6480de12de8";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -16122,11 +16122,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
 		   Feature ARInvoiceFeature_ConfirmationForAutoCreditForCreditNotes = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationForAutoCreditForCreditNotes", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.ConfirmationForAutoCreditForCreditNotes", NameTextCodeDefaultText = @"Confirmation For Auto Credit For CreditNotes" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
-   
-	    
-		}
+           Feature ARInvoiceFeature_InvoiceReferenceDate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceReferenceDate", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.InvoiceReferenceDate", NameTextCodeDefaultText = @"Invoice Reference Date" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ARInvoiceObjectTable);
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+
+
+        }
+
+        public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable ARInvoiceObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ARInvoice" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()

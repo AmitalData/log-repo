@@ -301,6 +301,16 @@
                                                     <LogTextBox [ObjectFieldName]="'ConfirmationNumberStatusName'" [InputType]="'text'" [Text]="ConfirmationNumberStatusName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                             </tr>
+                                            <!-- Reference date -->
+                                            <tr *ngIf="ShowReferenceDate" class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'ReferenceDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [IsDisabled]="!(IsDatesFieldEnabledWhileCrediting || IsEditingEnabled)" [ObjectFieldName]="'ReferenceDate'" [SelectedDateValue]="ReferenceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+                                            </tr>
                                             <td>
                                                 <div></div>
                                             </td>

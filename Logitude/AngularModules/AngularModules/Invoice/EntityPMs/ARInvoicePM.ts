@@ -1261,7 +1261,11 @@ export class ARInvoicePM {
 	  private aPIResponseToConfirmation: string;
     public get APIResponseToConfirmation() { return this.aPIResponseToConfirmation; }
     public set APIResponseToConfirmation(newValue: string) { if (this.aPIResponseToConfirmation != newValue) { this.aPIResponseToConfirmation = newValue; this.MarkAsDirty("APIResponseToConfirmation"); } }
-       
+
+    private referenceDate: Date;
+    public get ReferenceDate() { return this.referenceDate; }
+    public set ReferenceDate(newValue: Date) { if (this.referenceDate != newValue) { this.referenceDate = newValue; this.MarkAsDirty("ReferenceDate"); } }
+
 
     public OldEntityPM: ARInvoicePM;
 		
