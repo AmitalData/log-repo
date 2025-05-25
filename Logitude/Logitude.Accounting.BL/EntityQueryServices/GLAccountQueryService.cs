@@ -596,12 +596,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pm;
         }
 
-        public List<GLAccountPM> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
+        public List<GLAccount> GetByRevaluationEnabled_OtherParams(bool? revaluationEnabled, string chartOfAccountsTypeCode, string chartOfAccountsId, string accountTypeCode, string gLAccountId, string accountingCurrencyId, int tenant)
         {
             List<GLAccount> gLAccountPOCOs = null;
             gLAccountPOCOs = repository.GetByRevaluationEnabled_OtherParams(revaluationEnabled, chartOfAccountsTypeCode, chartOfAccountsId, accountTypeCode, gLAccountId, accountingCurrencyId, tenant);
-            List<GLAccountPM> pms = gLAccountPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
-            return pms;
+            return gLAccountPOCOs;
         }
 
         public List<GLAccountPM> GetChildAccounts(string GLAccountId, int tenant)
@@ -688,7 +687,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
 
-        public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccountPM gLAccountPM, DateTime revaluationDate, int tenant)
+        public List<GLAccountCurrencyBalance> GetCurrencyBalances(GLAccount gLAccountPM, DateTime revaluationDate, int tenant)
         {
             if (gLAccountPM == null)
             {
