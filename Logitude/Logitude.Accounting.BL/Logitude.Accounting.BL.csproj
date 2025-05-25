@@ -976,7 +976,6 @@
     <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
-    <Compile Include="EntityUpdateServices\Generated\CustomerDebtNotificationsUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InvoiceApiCommunicationLogUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InvoiceApiStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InvoiceApiStepUpdateService.Generated.cs" />

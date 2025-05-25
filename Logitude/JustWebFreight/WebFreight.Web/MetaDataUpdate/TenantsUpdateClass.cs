@@ -527,7 +527,6 @@ namespace WebFreight.Web.MetaDataUpdate
                                 accountingUpdate.LoadObjectTableHelperControls();
                                 accountingUpdate.LoadMenustables();
                                 accountingUpdate.LoadEventTypes();
-                                accountingUpdate.CreateCounters(tenant);
                                 //Booking
                                 BookingLibUpdateClass bookingLibUpdateClass = new BookingLibUpdateClass();
                                 bookingLibUpdateClass.LoadObjectTablesMetadata(context, false);
