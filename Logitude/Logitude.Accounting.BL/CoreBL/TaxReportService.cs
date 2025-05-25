@@ -1449,7 +1449,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 		public static void ValidationJournalAdditinalData(int tenant, string taxReportId, List<TaxReportLinePM> lines)
 		{
-			var journalIds = lines.Where(x => x.Tenant == tenant && x.TransmitStatusCode == "1").Select(x => x.JournalId).ToHashSet();
+			var journalIds = lines.Where(x => x.Tenant == tenant && x.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit).Select(x => x.JournalId).ToHashSet();
 
 			JournalAdditionalDataQueryService journalAdditionalDataQueryService = new JournalAdditionalDataQueryService(tenant);
 			bool isExist = journalAdditionalDataQueryService.ValidationJournalAdditinalData(tenant, journalIds, taxReportId);

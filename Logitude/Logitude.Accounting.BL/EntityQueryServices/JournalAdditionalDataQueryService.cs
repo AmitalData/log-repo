@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 		public bool ValidationJournalAdditinalData(int tenant, HashSet<string> journalIds, string taxReportId)
 		{
 			var exists = context.JournalAdditionalDatas.Any(a => a.Tenant == tenant &&
-									  journalIds.Contains(a.JournalId) && (a.TaxReportId != taxReportId || a.TaxReportTransmitStatusCode == "0")
+									  journalIds.Contains(a.JournalId) && (a.TaxReportId != taxReportId || a.TaxReportTransmitStatusCode == TaxReportLineTransmitStatusValues.WithoutTransmit)
 								 );
 
 			return exists;
