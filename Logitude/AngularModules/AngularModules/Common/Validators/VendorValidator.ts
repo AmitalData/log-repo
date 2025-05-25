@@ -11,15 +11,17 @@ export class VendorValidator {
     gLAccountPMService: GLAccountPMService = new GLAccountPMService();
 
     public async IsVendorCountryValid(value: string,VendorCountry:string): Promise<boolean> {
-        let isValid = true;
+        let isValid = false;
 
         try {
-            if(!(!AppTool.IsNullOrUndefined(VendorCountry) && VendorCountry !== "1" && VendorCountry !== "--" && !AppTool.IsNullOrEmpty(VendorCountry))){
+            if(!this.ValidateVendorCountry(VendorCountry)){
                 const result: ServiceResponse = await this.gLAccountPMService.get(value).toPromise();
-                const entity = result.Result;
+                const entity = result?.Result;
                 if (entity) {
-                    const VendorCountry = entity.CardCountryCode;
-                    isValid = !AppTool.IsNullOrUndefined(VendorCountry) && VendorCountry !== "1" && VendorCountry !== "--" && !AppTool.IsNullOrEmpty(VendorCountry);
+                    if(!AppTool.IsNullOrEmpty(entity.CardId) ||  !AppTool.IsNullOrEmpty(entity.ParentCurrencyGLAccountCardId)){
+                       const VendorCountry = entity.CardCountryCode;
+                       isValid = this.ValidateVendorCountry(VendorCountry);
+                    }
                 }
             }
            
@@ -31,6 +33,8 @@ export class VendorValidator {
 
         return isValid;
     }
-
+    public ValidateVendorCountry(VendorCountry:string) {
+        return !AppTool.IsNullOrUndefined(VendorCountry) && VendorCountry !== "1" && VendorCountry !== "--" && !AppTool.IsNullOrEmpty(VendorCountry);
+    }
 
 }
