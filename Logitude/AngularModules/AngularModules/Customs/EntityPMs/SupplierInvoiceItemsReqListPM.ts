@@ -99,6 +99,41 @@ export class SupplierInvoiceItemsReqListPM {
     public set DutchRequested(newValue: boolean) { if (this.dutchRequested != newValue) { this.dutchRequested = newValue; this.MarkAsDirty("DutchRequested"); } }
        
 	 
+    private requestRequiredStatus: string;
+    public get RequestRequiredStatus() { return this.requestRequiredStatus; }
+    public set RequestRequiredStatus(newValue: string) { if (this.requestRequiredStatus != newValue) { this.requestRequiredStatus = newValue; this.MarkAsDirty("RequestRequiredStatus"); } }
+       
+	 
+    private itemNo : string;
+    public get ItemNo () { return this.itemNo ; }
+    public set ItemNo (newValue: string) { if (this.itemNo  != newValue) { this.itemNo  = newValue; this.MarkAsDirty("ItemNo "); } }
+       
+	 
+    private itemName : string;
+    public get ItemName () { return this.itemName ; }
+    public set ItemName (newValue: string) { if (this.itemName  != newValue) { this.itemName  = newValue; this.MarkAsDirty("ItemName "); } }
+       
+	 
+    private invoiceQuantity: number;
+    public get InvoiceQuantity() { return this.invoiceQuantity; }
+    public set InvoiceQuantity(newValue: number) { if (this.invoiceQuantity != newValue) { this.invoiceQuantity = newValue; this.MarkAsDirty("InvoiceQuantity"); } }
+       
+	 
+    private invoiceQuantityType: string;
+    public get InvoiceQuantityType() { return this.invoiceQuantityType; }
+    public set InvoiceQuantityType(newValue: string) { if (this.invoiceQuantityType != newValue) { this.invoiceQuantityType = newValue; this.MarkAsDirty("InvoiceQuantityType"); } }
+       
+	 
+    private statisticQuantity: number;
+    public get StatisticQuantity() { return this.statisticQuantity; }
+    public set StatisticQuantity(newValue: number) { if (this.statisticQuantity != newValue) { this.statisticQuantity = newValue; this.MarkAsDirty("StatisticQuantity"); } }
+       
+	 
+    private statisticQuantityType: string;
+    public get StatisticQuantityType() { return this.statisticQuantityType; }
+    public set StatisticQuantityType(newValue: string) { if (this.statisticQuantityType != newValue) { this.statisticQuantityType = newValue; this.MarkAsDirty("StatisticQuantityType"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemsReqListPM;
 	

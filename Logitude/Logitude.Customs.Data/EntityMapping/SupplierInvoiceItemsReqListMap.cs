@@ -55,6 +55,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Remarks).HasColumnName("Remarks").HasMaxLength(200).IsUnicode(true);
 
             this.Property(t => t.DutchRequested).HasColumnName("DutchRequested");
+
+            this.Property(t => t.RequestRequiredStatus).HasColumnName("RequestRequiredStatus").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ItemNo ).HasColumnName("ItemNo ").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.ItemName ).HasColumnName("ItemName ").HasMaxLength(256).IsUnicode(true);
         }
     }
 }

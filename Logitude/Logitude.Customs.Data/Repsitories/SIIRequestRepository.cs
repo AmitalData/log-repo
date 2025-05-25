@@ -11,6 +11,7 @@ using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity;
 using Logitude.Customs.Data.DataContracts;
+using System.Diagnostics.PerformanceData;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -64,7 +65,7 @@ namespace Logitude.Customs.Data.Repsitories
               && itm.Tenant == tenant
               && !itm.IsParent                     
         join inv in context.SupplierInvoices
-             on new { itm.DeclarationId, CounterKey = itm.CounterKey }
+             on new { itm.DeclarationId, itm.CounterKey }
              equals new { inv.DeclarationId, CounterKey = inv.InvoiceCounterKey }
              into invJoin
         from si in invJoin.DefaultIfEmpty()
@@ -74,26 +75,33 @@ namespace Logitude.Customs.Data.Repsitories
             into taJoin
         from trade in taJoin.DefaultIfEmpty()
 
-        join mu in context.MeasurmentUnits           // unit-of-measure table
+        join mu in context.MeasurmentUnits          
              on itm.InvoiceQuantityType equals mu.Code
              into muJoin
         from unit in muJoin.DefaultIfEmpty()
 
-        join cc in context.CustomsCountries          // countries table
+        join cc in context.CustomsCountries         
              on itm.OriginCountryCode equals cc.Code
              into ccJoin
         from country in ccJoin.DefaultIfEmpty()
 
         join cert in context.SupplierInvioceItemCertificats
-            on new { itm.DeclarationId, itm.LineNumber, CounterKey = itm.CounterKey }
+            on new { itm.DeclarationId, itm.LineNumber,  itm.CounterKey }
             equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
             into certJoin
         from certificate in certJoin.DefaultIfEmpty()
+
+        join cert in context.SupplierInvoiceItemsReqLists
+            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
+            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
+            into reqJoin
+        from requestList in reqJoin.DefaultIfEmpty()
 
         select new SupplieInvoiceItemsForSIIRequest
         {
             InvoiceNumber = si.InvoiceNumber,
             LineNumber = itm.LineNumber,
+            CounterKey = itm.LineNumber,
             ItemCode = itm.ItemCode,
             ItemDescription = itm.ItemDescription,
             ClassificationCode = itm.ClassificationCode,
@@ -110,7 +118,8 @@ namespace Logitude.Customs.Data.Repsitories
 
             OriginCountryCode = itm.OriginCountryCode,
             OriginCountryName = country.LocalName,
-            ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode
+            ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
+            RequestRequiredStatus = requestList.RequestRequiredStatus,
 
         };
 
