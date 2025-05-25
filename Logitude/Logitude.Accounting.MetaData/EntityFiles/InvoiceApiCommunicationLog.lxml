@@ -677,7 +677,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;Today Invoice Ap iCommunication Log&quot;"
+    Code="&quot;Today Invoice Api&quot;"
     TextCode="&quot;Today&quot;"
     QueryGroupCode="&quot;e2e4&quot;"
     IndexOrder="0"
@@ -690,24 +690,24 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;Today Invoice Ap iCommunication Log&quot;"
+        QueryCode="&quot;Today Invoice Api&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;Today Invoice Ap iCommunication Log&quot;"
+        QueryCode="&quot;Today Invoice Api&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CommunicationId&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;Today Invoice Ap iCommunication Log&quot;"
+        QueryCode="&quot;Today Invoice Api&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;StatusCode&quot;"
         ColumnWidth="50" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;Today Invoice Ap iCommunication Log&quot;"
+        QueryCode="&quot;Today Invoice Api&quot;"
         PredefinedValue="&quot;Today&quot;"
         ObjectFieldName="&quot;CreateDate&quot;"
         IsPredefined="true"
@@ -716,8 +716,8 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;All Invoice Api Communication Log&quot;"
-    TextCode="&quot;All Invoice Api Communication Log&quot;"
+    Code="&quot;All Invoice Api&quot;"
+    TextCode="&quot;All Invoice Api&quot;"
     QueryGroupCode="&quot;e2e4&quot;"
     IndexOrder="1"
     QuerySection="&quot;InvoiceApiCommunicationLog&quot;"
@@ -792,9 +792,10 @@
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
-      Code="&quot;InvoiceApiCommunicationLogMenu&quot;"
+      Code="&quot;InvoiceApiCommunicationLog.Features.Menu&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
-      FeatureDefaultText="&quot;Invoice Api Communication Log Menu&quot;"
+      FeatureTextCodeCode="&quot;InvoiceApiCommunicationLog.Features.InvoiceApiCommunicationLog.Features.Menu&quot;"
+      FeatureDefaultText="&quot;InvoiceApiCommunicationLogMenu&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
