@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ExternalLinkPM } from 'Common/EntityPMs/ExternalLinkPM';
 import { ExternalLinkPMService } from 'Common/Services/StandardPMs/ExternalLinkPMService';
 import { LogitudeWindowTemplateComponent } from 'Controls/Windows/LogitudeWindow';
@@ -39,6 +39,11 @@ import { Observable } from 'rxjs';
             width: 50px;
             margin: 0 5px;
         }
+
+        .disable-button {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     `]
 })
 export class ExternalLinkComponent {
@@ -48,6 +53,7 @@ export class ExternalLinkComponent {
     dataReady: boolean = false;
     tableDataInit: boolean = false;
     errors: string[] = [];
+    isTenant0 : boolean = SessionLocator.Tenant === 0;
 
     constructor(entityArgs: EntityArgs) {
         this.initObjectTable();
@@ -79,6 +85,9 @@ export class ExternalLinkComponent {
     }
 
     async initExistsData(externalLinkPM: ExternalLinkPM): Promise<void> {        
+        if(externalLinkPM.Tenant !== SessionLocator.Tenant) 
+            externalLinkPM.IsDirty = true;
+            
         await this.initData(externalLinkPM);        
     }
 

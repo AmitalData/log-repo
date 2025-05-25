@@ -1,12 +1,11 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
-using Logitude.BL.ShipmentsModel.EntityLists;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
-using Syncfusion.XlsIO.Implementation.XmlSerialization.Constants;
 using System;
 using System.Linq;
 using System.Web;
@@ -16,6 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class ExternalLinkQuery
     {
         ExternalLinkRepository repository;
+        const string tableName = "ExternalLink";
 
         public ExternalLinkQuery(int tenant)
         {
@@ -27,23 +27,22 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             this.repository = repository;
         }
 
-        public ExternalLinkPM GetSinglePM(string id, int tenant) => GetSinglePM(id);
-        public ExternalLinkPM GetSinglePM(string id, bool fromCache = true)
+        public ExternalLinkPM GetSinglePM(string id, int tenant, bool fromCache = false)
         {
             if (!fromCache)
             {
-                ExternalLink externalLink = repository.GetSingle(id);
+                ExternalLink externalLink = repository.GetSingleExternalLink(id, tenant);
                 if (externalLink == null)
-                    return null;
+                    return tenant != 0 ? GetSinglePM(id, 0, false) : null;
                 return ExternalLinkMapping.MapPM(externalLink);
             }
 
-            string cacheKey = "ExternalLink_" + id;
+            string cacheKey = tableName + "_" + id;
 
             if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
                 return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
 
-            ExternalLinkPM externalLinkPM = GetSinglePM(id, fromCache: false);
+            ExternalLinkPM externalLinkPM = GetSinglePM(id, tenant, false);
             if (externalLinkPM == null)
                 return null;
             CacheManager.CacheWrapper.Insert(cacheKey, externalLinkPM, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
@@ -51,23 +50,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return externalLinkPM;
         }
 
-        public ExternalLinkPM GetSinglePMByRef(string Ref, bool fromCache = true)
+        public ExternalLinkPM GetSinglePMByRef(string Ref, int tenant, bool fromCache = true)
         {
             if (!fromCache)
             {
-                ExternalLink externalLink = repository.GetSingleExternalLinkByRef(Ref);
+                ExternalLink externalLink = repository.GetSingleExternalLinkByRef(Ref, tenant);
                 if (externalLink == null)
                     return null;
 
                 return ExternalLinkMapping.MapPM(externalLink);
             }
 
-            string cacheKey = "ExternalLink_" + Ref;
+            string cacheKey = tableName +"_" + Ref;
 
             if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
                 return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
 
-            ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref, false);
+            ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref, tenant, false);
             if (externalLinkPM == null)
                 return null;
             CacheManager.CacheWrapper.Insert(cacheKey, externalLinkPM, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
@@ -75,45 +74,110 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return externalLinkPM;
         }
 
-        public string GetExternalLink(string Ref, string param, int tenant)
+        public string AddExternalLink(string Ref, string param, int tenant)
         {
+            if(string.IsNullOrEmpty(Ref))
+                throw new ArgumentNullException(nameof(Ref), "Ref can not be null or empty");
+            if (string.IsNullOrEmpty(param))
+                throw new ArgumentNullException(nameof(param), "param can not be null or empty");
+
             AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(tenant);
-            ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref);
-            AuthenticationToken token = new AuthenticationToken()
-            {
-                Token = Guid.NewGuid().ToString(),
-                Tenant = tenant,
-                Email = "",
-                Password = "",
-                CreateDate = DateTime.UtcNow,
-                APIToken = true,
-                InActive = false,
-                LinkId = externalLinkPM.Id,
-                Params = param,
-                ExpirationDate = DateTime.UtcNow.AddDays(externalLinkPM.ExpirationDate),
-                ClientType = AuthenticationTokenRepository.ExternalLink
-            };
+            ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref, tenant);
+            if (externalLinkPM == null)
+                throw new Exception($"not found settings of external link, ref: {Ref}, tenant: {tenant}");
+            AuthenticationToken authenticationToken = authenticationTokenRepository.GetSingleToken(tenant, externalLinkPM.Id, AuthenticationTokenRepository.ExternalLink);
 
-            authenticationTokenRepository.Add(token);
+            if(authenticationToken == null)
+            {
+                authenticationToken = new AuthenticationToken()
+                {
+                    Token = Guid.NewGuid().ToString(),
+                    Tenant = tenant,
+                    Email = "",
+                    Password = "",
+                    CreateDate = DateTime.UtcNow,
+                    APIToken = true,
+                    InActive = false,
+                    LinkId = externalLinkPM.Id,
+                    Params = JsonConvert.SerializeObject(new AuthenticationTokenParams() { Link = param, Ref = Ref }),
+                    ExpirationDate = DateTime.UtcNow.AddDays(externalLinkPM.ExpirationDate),
+                    ClientType = AuthenticationTokenRepository.ExternalLink
+                };
+
+                authenticationTokenRepository.Add(authenticationToken);
+            }
+            else
+            {
+                authenticationToken.ExpirationDate = DateTime.UtcNow.AddDays(externalLinkPM.ExpirationDate);
+                authenticationTokenRepository.Update(authenticationToken);                
+            }
+
             authenticationTokenRepository.SubmitChanges();
 
-            return externalLinkPM.Link.Replace("{token}", token.Token);
+            string link = $"/Angular/index.html?Menu=REDI&Token={authenticationToken.Token}";
+            link = AddDomain(link, externalLinkPM);
+            return link;
         }
 
-        public IQueryable<ExternalLinkList> GetIQueryableEntityList(IQueryable<ExternalLink> iQueryable)
+        public IQueryable<ExternalLinkList> GetIQueryableEntityList(IQueryable<ExternalLink> iQueryable) =>
+            iQueryable.Select(a => new ExternalLinkList()
+            {
+                Id = a.Id,
+                Ref = a.Ref,
+                ExpirationDate = a.ExpirationDate,
+                ActivityLog = a.ActivityLog,
+                Params = a.Params
+            });
+        
+        public string GetFormToken(AuthenticationToken authenticationToken)
         {
-            IQueryable<ExternalLinkList> result = (from a in iQueryable
-                                                   select new ExternalLinkList()
-                                                   {
-                                                       Id = a.Id,
-                                                       Ref = a.Ref,
-                                                       Link = a.Link,
-                                                       ExpirationDate = a.ExpirationDate,
-                                                       ActivityLog = a.ActivityLog,
-                                                       Params = a.Params
+            if (authenticationToken == null)
+                throw new ArgumentNullException(nameof(authenticationToken), "authenticationToken can not be null");
+            string token = authenticationToken.Token;
+            if (string.IsNullOrEmpty(token))
+                throw new ArgumentNullException(nameof(token), "token can not be null or empty");
+            if(string.IsNullOrEmpty(authenticationToken.Params))
+                throw new ArgumentNullException(nameof(authenticationToken.Params), "Params can not be null or empty");
 
-                                                   });
-            return result;
+            AuthenticationTokenParams parmas = JsonConvert.DeserializeObject<AuthenticationTokenParams>(authenticationToken.Params);
+            ExternalLinkPM externalLinkPM = GetSinglePMByRef(parmas.Ref, authenticationToken.Tenant);
+            if (externalLinkPM == null)
+                throw new ArgumentNullException(nameof(externalLinkPM), $"externalLinkPM not found for ref: {parmas.Ref}, tenant: {authenticationToken.Tenant},");
+
+            string link = AddDomain(parmas.Link, externalLinkPM);
+            return link;
         }
+
+        public string AddDomain(string link, ExternalLinkPM externalLinkPM)
+        {
+            if(string.IsNullOrEmpty(link))
+                throw new ArgumentNullException(nameof(link), "link can not be null or empty");
+            if (externalLinkPM == null)
+                throw new ArgumentNullException(nameof(externalLinkPM), "externalLinkPM can not be null");
+
+            if (!string.IsNullOrEmpty(externalLinkPM.Params))
+            {                
+                JObject jsonObj = JsonConvert.DeserializeObject<JObject>(externalLinkPM.Params);
+                string domain = jsonObj?["domain"]?.ToString();
+                
+                if (!string.IsNullOrEmpty(domain))
+                    return domain + link;
+            }
+
+            string host = HttpContext.Current.Request.Url.Host;
+            if (host == "localhost")
+            {
+                host += ":4200";
+                link = link.Replace("/Angular/index.html", "");
+            }
+
+            return $"{HttpContext.Current.Request.Url.Scheme}://{host}{link}";
+        }
+
+        private class AuthenticationTokenParams
+        {
+            public string Link { get; set; }
+            public string Ref { get; set; }
+        }        
     }
 }

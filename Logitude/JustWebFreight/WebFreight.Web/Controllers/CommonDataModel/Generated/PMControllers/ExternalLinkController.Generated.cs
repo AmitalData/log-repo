@@ -57,8 +57,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-                SecurityUtility.CheckContactFeature("ExternalLink", "READ", authToken.Tenant);
                 ExternalLinkQuery externalLinkQuery = new ExternalLinkQuery(authToken.Tenant);
                 ExternalLinkPM externalLinkPM = externalLinkQuery.GetSinglePM(id, authToken.Tenant);
                 
@@ -89,8 +87,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("ExternalLink", "NEW", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("ExternalLink", entityPM.Tenant, authToken.Tenant);
                 
                         ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                         ExternalLinkService service = new ExternalLinkService(MyContext, entityPM.Tenant);
@@ -137,8 +133,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("ExternalLink", "UPDATE", authToken.Tenant);
-                        SecurityUtility.AuthenticationOnEntityTenant("ExternalLink", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ExternalLink" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ExternalLinkPM" + entityPM.Id + entityPM.Tenant;

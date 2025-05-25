@@ -1,10 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 {
@@ -14,7 +9,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
         {            
             poco.Id = entityPM.Id;
             poco.Ref = entityPM.Ref;
-            poco.Link = entityPM.Link;
             poco.ExpirationDate = entityPM.ExpirationDate;
             poco.ActivityLog = entityPM.ActivityLog;
             poco.Params = entityPM.Params;
@@ -29,7 +23,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             entityPM.Id = poco.Id;
             entityPM.Ref = poco.Ref;
-            entityPM.Link = poco.Link;
             entityPM.ExpirationDate = poco.ExpirationDate;
             entityPM.ActivityLog = poco.ActivityLog;
             entityPM.Params = poco.Params;
