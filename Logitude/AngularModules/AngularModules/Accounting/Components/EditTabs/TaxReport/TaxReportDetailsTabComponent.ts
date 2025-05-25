@@ -741,12 +741,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
 
 
-    Rebuild(){
-        this.ConfirmRecalculatingReport();
-    } 
-
-
-    ConfirmRecalculatingReport() {
+    Recalculation() {
 
         this.CurrentSession.StartBusyIndicator("Refreshing ...");
         this.EntityPM.IsEdited = false;
