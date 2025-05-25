@@ -1559,6 +1559,7 @@
     <Compile Include="EntityQueryServices\CB_PreferenceQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleDetailsHistoryQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SIIRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
