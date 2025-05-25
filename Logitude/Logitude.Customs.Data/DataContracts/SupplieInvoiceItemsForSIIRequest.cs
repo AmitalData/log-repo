@@ -10,7 +10,8 @@ namespace Logitude.Customs.Data.DataContracts
 	{
 		public string InvoiceNumber { get; set; }
 		public int LineNumber { get; set; }
-		public string ItemCode { get; set; }
+		public int CounterKey { get; set; }
+        public string ItemCode { get; set; }
 		public string ItemDescription { get; set; }
 		public string ClassificationCode { get; set; }
 		public string TradeAgreementCode { get; set; }
@@ -23,6 +24,7 @@ namespace Logitude.Customs.Data.DataContracts
 		public string TradeAgreementName { get; set; }
 		public string OriginCountryName { get; set; }
 		public string ReqConfirmationTypeCode { get; set; }
+		public string RequestRequiredStatus { get; set; }
 
     }
 }
