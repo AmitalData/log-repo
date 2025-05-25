@@ -188,6 +188,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool alwaysEnabled ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AlwaysEnabled  
+	   {
+	    
+	     get
+		{
+		   return alwaysEnabled;
+		 }
+		 set
+		 {
+		   if(alwaysEnabled != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AlwaysEnabled",OldValue=alwaysEnabled,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   alwaysEnabled=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
