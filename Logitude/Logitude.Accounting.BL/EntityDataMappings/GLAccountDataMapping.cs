@@ -302,30 +302,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.ParentCurrencyGLAccountCardId = card?.Id;
                     if (string.IsNullOrEmpty(entityPM.CardCountryCode))
                     {
-                        entityPM.CardCountryCode = card.CountryCode;
+                        entityPM.CardCountryCode = card?.CountryCode;
                     }
                 }
 
-                //if (entityPOCO.ClientId != null)
-                //{
-                //    Card clientCard = CardRepository.GetSingleCard(entityPOCO.ClientId, entityPOCO.Tenant, true);
-                //    if (clientCard != null)
-                //    {
-                //        entityPM.ClientName = clientCard.LocalName;
-                //        entityPM.ClientCode = clientCard.Code;
-                //    }
-                //}
-
-                //if (entityPOCO.VendorId != null)
-                //{
-                //    Card vendorCard = CardRepository.GetSingleCard(entityPOCO.ClientId, entityPOCO.Tenant, true);
-                //    if (vendorCard != null)
-                //    {
-                //        entityPM.VendorName = vendorCard.LocalName;
-                //        entityPM.VendorCode = vendorCard.Code;
-                //    }
-                //}
-
+              
 
                 if (entityPOCO.Inactive == true)
                 {
