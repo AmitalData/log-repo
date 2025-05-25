@@ -157,12 +157,12 @@ namespace Logitude.Accounting.BL.Utils
                                 }
                                 revaluationDiffAccountId = diffAccountId;
                             }
-                            List<GLAccountPM> gLAccountPMList = gLAccountQueryService.GetByRevaluationEnabled_OtherParams(revaluation.RevaluationEnabled, null, revaluation.ChartOfAccountsId, null, revaluation.GLAccountId, accountingCurrencyId, tenant);
+                            List<GLAccount> gLAccountPMList = gLAccountQueryService.GetByRevaluationEnabled_OtherParams(revaluation.RevaluationEnabled, null, revaluation.ChartOfAccountsId, null, revaluation.GLAccountId, accountingCurrencyId, tenant);
                             if (gLAccountPMList != null)
                             {
                                 IQueryable<string> gLAccountIDList = gLAccountPMList.Select(l => l.Id).AsQueryable();
                                 //bool have = AnyAccountingQueued(gLAccountIDList, tenant, context);
-                                foreach (GLAccountPM gLAccountPM in gLAccountPMList)
+                                foreach (GLAccount gLAccountPM in gLAccountPMList)
                                 {
                                     RunOneAccount(gLAccountPM, gLAccountQueryService, journalUpdateService, ratesTableQuery, revaluation.RevaluationDate,
                                                     accountingCurrencyId, revaluationDiffAccountId, ratesList, lineList, revaluation, scope, createRevaluationJournalinDetail);
@@ -274,7 +274,7 @@ namespace Logitude.Accounting.BL.Utils
         }
 
 
-        private static void RunOneAccount(GLAccountPM gLAccountPM, GLAccountQueryService gLAccountQueryService, JournalUpdateService journalUpdateService,
+        private static void RunOneAccount(GLAccount gLAccountPM, GLAccountQueryService gLAccountQueryService, JournalUpdateService journalUpdateService,
             RatesTableQuery ratesTableQuery, DateTime revaluationDate, string accountingCurrencyId, string diffAccountId,
             List<RatesTablePM> ratesList, List<JournalLineList> lineList, RevaluationList revaluation, TransactionScope scope, bool createRevaluationJournalinDetail)
         {
@@ -407,7 +407,7 @@ namespace Logitude.Accounting.BL.Utils
             service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
 
-        private static JournalPM WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation, GLAccountPM gLAccountPM = null)
+        private static JournalPM WriteJournal(JournalUpdateService journalUpdateService, List<JournalLineList> lineList, RevaluationList revaluation, GLAccount gLAccountPM = null)
         {
             // Start
             JournalPM newJournal = new JournalPM();
