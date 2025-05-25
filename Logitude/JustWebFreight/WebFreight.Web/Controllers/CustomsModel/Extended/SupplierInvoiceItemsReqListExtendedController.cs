@@ -24,6 +24,7 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
