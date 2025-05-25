@@ -71,6 +71,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public BillToFilter: ApiQueryFilters;
     public PartnerTypeComboBoxIsDisabled: boolean = true;
  public GLAccountsFilterItems: ApiQueryFilters;
+    public ShowReferenceDate: boolean = false;
 
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
    
@@ -240,6 +241,9 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         if (hideVatTypesFeature) {
             this.AllowVatTypes = false;
         }
+
+        const invoiceReferenceDate = FeatureLocator.Features.filter(f => (f.Code == "InvoiceReferenceDate") && f.ObjectTableId == table.Id);
+        this.ShowReferenceDate = (invoiceReferenceDate?.length > 0 && this.EntityPM?.ARInvoiceTypeCode != "IT");
     }
 
     public LocalAmountHeader: string = null;
@@ -324,8 +328,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ConfirmationNumberStatusName", this.ObjectTableName, false);
-
         this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
+        this.UIProperties.SetEnabled("ReferenceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, isEditingEnabled);
         this.PartnerTypeComboBoxIsDisabled = !isEditingEnabled;
 
@@ -689,6 +693,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
+    get ReferenceDate() { return this.EntityPM.ReferenceDate; }
+    set ReferenceDate(newValue: Date) {
+        if (this.ShowReferenceDate && this.EntityPM.ReferenceDate != newValue) {
+            this.EntityPM.ReferenceDate = newValue;
+        }
+    }
+
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
         if (this.EntityPM.PaymentTermId != newValue) {
@@ -728,6 +739,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             InvoiceTool.ComputeARInvoiceDueDate(this.EntityPM);
             this.ComputeRelativeRateDate();
             this.UpdateData();
+
+            if (!this.ReferenceDate) {
+                this.ReferenceDate = this.EntityPM.InvoiceDate;
+            }
         }
     }
 
