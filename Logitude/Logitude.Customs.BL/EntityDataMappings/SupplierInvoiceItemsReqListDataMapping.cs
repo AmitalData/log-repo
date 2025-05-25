@@ -38,10 +38,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(SupplierInvoiceItemsReqListPM entityPM, SupplierInvoiceItemsReqList entityPOCO)
         {
-            CustomMappedPMProperties.Add(PMPropertyNames.ManufactureCountryName);
             CustomMappedPMProperties.AddRange(new[]
             {
                 PMPropertyNames.ManufactureCountryName,
+                PMPropertyNames.ItemNo,
+                PMPropertyNames.ItemName,
                 PMPropertyNames.InvoiceQuantity,
                 PMPropertyNames.InvoiceQuantityType,
                 PMPropertyNames.StatisticQuantity,
@@ -54,6 +55,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 CustomsCountryPM customsCountry = customsCountryQueryService.GetSingle(entityPOCO.ManufactureCountryCode, false, true);
                 entityPM.ManufactureCountryName = customsCountry.LocalName;
             }
+
             var ctx = CustomContext.GetContext(entityPOCO.Tenant);
             var item = ctx.SupplierInvoiceItems.FirstOrDefault(i =>
                        i.Tenant == entityPOCO.Tenant &&
@@ -61,6 +63,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
                        i.CounterKey == entityPOCO.InvoiceCounterKey &&
                        i.LineNumber == entityPOCO.InvoiceItemLineNumber);
             if (item == null) return;
+
+            bool isNewEntity = string.IsNullOrWhiteSpace(entityPOCO.SIIRequestID);
+
+            if (isNewEntity)
+            {
+                entityPM.ItemNo = item.ItemCode;
+                entityPM.ItemName = item.ItemDescription;
+            }
+            else
+            {
+                entityPM.ItemNo = entityPOCO.ItemNo;
+                entityPM.ItemName = entityPOCO.ItemName;
+            }
             entityPM.InvoiceQuantity = item.InvoiceQuantity;
             entityPM.StatisticQuantity = item.StatisticQuantity;
             var muQS = new MeasurmentUnitQueryService(entityPOCO.Tenant);
