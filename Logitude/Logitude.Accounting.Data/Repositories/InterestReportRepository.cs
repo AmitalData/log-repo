@@ -89,30 +89,50 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glAccountId)
+        
+
+        public decimal GetInterestReportOpenBalance(DateTime inputDate, string glAccountId, int tenant)
         {
-            var gLAccount = context.GLAccounts
-                  .SingleOrDefault(ga => ga.Tenant == tenant && ga.Id == glAccountId);
+            var firstOfMonth = new DateTime(inputDate.Year, inputDate.Month, 1);
+           
+            
+            var openBalance =  context.LedgerTransactions
+                .Where(x => x.AccountId == glAccountId && x.AccountingDate < firstOfMonth && x.Tenant == tenant)
+                .Sum(x => (decimal?)(x.LocalAmountDebit - x.LocalAmountCredit)) ?? 0;
 
-            // If a matching GLAccount doesn't exist, return 0
-            if (gLAccount == null)
-                return 0m;
 
-            decimal? closedBalance = context.InterestReports
-                .Where(a => a.Tenant == tenant
-                     && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
-                         || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
-                     && a.GLAccountId == glAccountId
-                     && (gLAccount.InterestCalculationStartDate == null
-                         || a.InterestCalculationDate >= gLAccount.InterestCalculationStartDate))
-                .OrderByDescending(a => a.InterestCalculationDate)
-                .Select(a => a.CloseBalance)
-                .FirstOrDefault();
+            var step2Query =  context.InterestTransactions
+             .Join(context.Journals,
+             it => new { it.EntityId, it.AccountingEntityCode, it.Tenant },
+             j => new { EntityId = j.AccountingEntityId, j.AccountingEntityCode, j.Tenant },
+             (it, j) => new { it, j })
+              .Join(context.GLAccounts,
+        x => new { GLAccountId = x.it.GLAccountId, x.it.Tenant },
+        ga => new { GLAccountId = ga.Id, ga.Tenant },
+        (x, ga) => new { x.it, x.j, ga })
+             .Where(x => x.it.GLAccountId == glAccountId
+             && x.j.AccountingDate < firstOfMonth
+             &&  (x.ga == null || x.j.AccountingDate >= x.ga.InterestCalculationStartDate)
+             && x.j.Tenant == tenant
+             )
+             .Select(x => new
+             {
+                 InterestAfterValueDate = (x.it.InterestValueDate >= firstOfMonth) ? x.it.LocalAmount : 0,
+                 InterestBeforeValueDateWithoutReport = (x.it.InterestValueDate < firstOfMonth && x.it.InterestReportId == null) ? x.it.LocalAmount : 0
+             })
+             .ToList();
 
-            return closedBalance ?? gLAccount.InterestOpenBalance ?? 0;
+
+            decimal interestAfterValueDate = step2Query.Sum(x => x.InterestAfterValueDate);
+            decimal interestBeforeValueDateWithoutReport = step2Query.Sum(x => x.InterestBeforeValueDateWithoutReport);
+
+            decimal interestOpenBalance = openBalance - interestAfterValueDate - interestBeforeValueDateWithoutReport;
+            return interestOpenBalance;
+
+
+
+
         }
-
-
 
         public CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
         {
