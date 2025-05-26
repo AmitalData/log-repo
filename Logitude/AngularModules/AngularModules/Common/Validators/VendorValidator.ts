@@ -22,6 +22,9 @@ export class VendorValidator {
                        const VendorCountry = entity.CardCountryCode;
                        isValid = this.ValidateVendorCountry(VendorCountry);
                     }
+                    else{
+                        isValid = true;
+                    }
                 }
             }
            
