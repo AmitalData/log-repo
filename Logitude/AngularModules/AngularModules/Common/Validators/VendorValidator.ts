@@ -25,6 +25,9 @@ export class VendorValidator {
                 }
             }
            
+            else{
+                isValid = true;
+            }
            
         } catch (error) {
             console.error("Error validating vendor country:", error);

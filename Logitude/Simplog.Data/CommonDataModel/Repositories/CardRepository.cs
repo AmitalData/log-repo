@@ -182,10 +182,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             if (fromCache)
             {
                 string key = $"GetCardByGLAccountId({id},{tenant})";
-                return CacheManager.GetOrInsertNewObject<Card>(key, () =>
-                {
-                    return GetCardByGLAccountId(id, tenant);
-                }, fromCache);
+                return CacheManager.GetOrInsertNewObject<Card>(key, () => GetCardByGLAccountId(id, tenant));
+
+                
             }
 
             return GetCardByGLAccountId(id, tenant);
