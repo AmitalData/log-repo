@@ -653,8 +653,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     _MyDeclarationPM.IsExportClosed = false;
                     _MyDeclarationPM.IsClose = false;
-                    this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-                    myDeclarationUpdateService.Update(this._MyDeclarationPM, true);
                 }
 
                 if ((!isExportClose && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")) || MyResponseData.IsExportCloseApprove)
