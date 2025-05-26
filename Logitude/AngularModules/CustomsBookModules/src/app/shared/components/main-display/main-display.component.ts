@@ -223,7 +223,7 @@ export class MainDisplayComponent implements OnInit {
 				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-				if (this.searchService.selectSearchBy === SearchBy.searchBy_form01)
+				if (this.defualtCbCollapseSearchHierarchy && this.searchService.selectSearchBy === SearchBy.searchBy_form01)
 					this.toggleVisibilitySearch(true, this.data);
 				else
 					this.toggleVisibility(true, this.data);
