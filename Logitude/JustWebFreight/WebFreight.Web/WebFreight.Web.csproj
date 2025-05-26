@@ -1084,6 +1084,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\GLAccountRecocileDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\JournalAdditionalDataController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\TenantIdleStatusController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\SupplierInvoiceItemsReqListExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarEngineVolumeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_CustomsItemComputedDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_QuotaComputedDataViewsController.Generated.cs" />

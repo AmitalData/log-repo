@@ -94,6 +94,29 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="RequestRequiredStatus"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ItemNo"
+    OldNames="ItemNo "
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ItemName"
+    OldNames="ItemName "
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber"
     ReferencedTable="SupplierInvoiceItems"
