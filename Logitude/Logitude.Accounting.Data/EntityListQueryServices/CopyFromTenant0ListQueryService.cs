@@ -37,7 +37,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          TableName = a.TableName,
 					                          CreatedByUserName=a.CreatedByUserName,
-		                    	            });
+                                                AlwaysEnabled = a.AlwaysEnabled,
+                                            });
             return query;
 		}
 
