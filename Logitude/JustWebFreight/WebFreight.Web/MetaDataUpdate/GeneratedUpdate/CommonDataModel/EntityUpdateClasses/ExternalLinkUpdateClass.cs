@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ExternalLinkUpdateClass
    {  		
-		public const string HashString = "937f63160286f6d5c38ab5404c2e5a76";
+		public const string HashString = "b8f67b8cd940fa7fcdaa903fbdb73f18";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -61,7 +61,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
+			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -219,70 +219,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Link",
-					  						ObjectTableName =  "ExternalLink",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  true,
-					  						Operator =  "Contains",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Link",
-					  						ListPropertyPath =  "Link",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "ExternalLink",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Link",
-					  						DefaultText =  "Link",
-					  						ListFieldLable =  "LinkListLable",
-					  						ListLableDefaultText =  "Link",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
 					 						FieldName =  "ExpirationDate",
 					  						ObjectTableName =  "ExternalLink",
 					  						FieldsDataType =  "Integer",
@@ -323,9 +259,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExpirationDate",
-					  						DefaultText =  "Expiration Date",
+					  						DefaultText =  "Expiration Date (Days)",
 					  						ListFieldLable =  "ExpirationDateListLable",
-					  						ListLableDefaultText =  "Expiration Date",
+					  						ListLableDefaultText =  "Expiration Date (Days)",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -338,6 +274,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ActivityLog",
+					  						ObjectTableName =  "ExternalLink",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  true,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ActivityLog",
+					  						ListPropertyPath =  "ActivityLog",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ExternalLink",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ActivityLog",
+					  						DefaultText =  "Activity Log",
+					  						ListFieldLable =  "ActivityLogListLable",
+					  						ListLableDefaultText =  "Activity Log",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -499,8 +499,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ExternalLinkQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalLinkTextCode_0.Id, NameTextCodeCode = ExternalLinkTextCode_0.Code, ObjectTableName = "ExternalLink", Code = "ExternalLink",  QueryGroupCode = "6ec8", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalLinkObjectTable.Id, QuerySection = "ExternalLink", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ExternalLinkFeature_0.Id,FeatureUniqeCode= ExternalLinkFeature_0.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
-	
+			  Query ExternalLinkQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalLinkTextCode_0.Id, NameTextCodeCode = ExternalLinkTextCode_0.Code, ObjectTableName = "ExternalLink", Code = "ExternalLink",  QueryGroupCode = "6ec8", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalLinkObjectTable.Id, QuerySection = "ExternalLink", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalLinkFeature_0.Id,FeatureUniqeCode= ExternalLinkFeature_0.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries,contextTenant);
+
 			 QueryColumn ExternalLinkQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ExternalLink.Id" , ColumnWidth = 50 }, addedQueryColumns,contextTenant);
 
 			 QueryColumn ExternalLinkQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ExternalLink.Ref" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
@@ -544,12 +544,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                  
 			   TextCode ExternalLinkGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalLink.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature ExternalLinkGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink.Tab.General", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalLinkFeatures.EXLG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalLinkObjectTable,contextTenant);
+ 
+                 
+			   TextCode ExternalLinkEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalLink.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ExternalLinkEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink.Tab.Events", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalLinkFeatures.EXEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalLinkObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EXLG",HtmlComponentName = "",HtmlComponentUrl = "./CommonOthers/Components/ExternalLink/ExternalLinkComponent", FeatureId = ExternalLinkGeneralFeature_TH0.Id,FeatureUniqeCode = ExternalLinkGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "./CommonOthers/Components/ExternalLink/ExternalLinkComponent", ObjectTableId = ExternalLinkObjectTable.Id, TabNameTextCodeId = ExternalLinkGeneralTextCode_TH0.Id, TabNameTextCodeCode = ExternalLinkGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "EXEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ExternalLinkEventsFeature_TH1.Id,FeatureUniqeCode = ExternalLinkEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = ExternalLinkObjectTable.Id, TabNameTextCodeId = ExternalLinkEventsTextCode_TH1.Id, TabNameTextCodeCode = ExternalLinkEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -610,7 +616,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ExternalLinkObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalLink" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ExternalLinkTextCode_GeneralOGetSupportEmail = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GetSupportEmail", DefaultText = "The link is not valid. Please contact us at",LocalDefaultText = @"הלינק לם בתוקף יש ליצור קשר עם הכתובת", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

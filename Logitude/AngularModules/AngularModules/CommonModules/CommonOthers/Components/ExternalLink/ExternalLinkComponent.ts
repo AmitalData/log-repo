@@ -40,6 +40,11 @@ import { Observable } from 'rxjs';
             width: 50px;
             margin: 0 5px;
         }
+
+        .disable-button {
+            pointer-events: none;
+            opacity: 0.5;
+        }
     `]
 })
 export class ExternalLinkComponent {
@@ -49,6 +54,7 @@ export class ExternalLinkComponent {
     dataReady: boolean = false;
     tableDataInit: boolean = false;
     errors: string[] = [];
+    isTenant0 : boolean = SessionLocator.Tenant === 0;
 
     constructor(entityArgs: EntityArgs) {
         this.initObjectTable();
@@ -82,6 +88,9 @@ export class ExternalLinkComponent {
 
     async initExistsData(externalLinkPM: ExternalLinkPM): Promise<void> {        
         SessionLocator.SelectedSession.StartBusyIndicator('');
+        if(externalLinkPM.Tenant !== SessionLocator.Tenant) 
+            externalLinkPM.IsDirty = true;
+            
         await this.initData(externalLinkPM);        
     }
 

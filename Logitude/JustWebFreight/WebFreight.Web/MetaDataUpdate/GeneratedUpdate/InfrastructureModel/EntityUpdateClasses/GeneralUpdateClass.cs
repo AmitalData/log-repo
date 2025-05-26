@@ -678,6 +678,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_FASTSEARCH = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "FASTSEARCH", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.FASESEARCH", NameTextCodeDefaultText = @"Fast Search" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable,contextTenant);
 
+		   Feature GeneralFeature_ExternalLink = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink", FeatureTypeCode = "MENU", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.MC.Others.ExternalLink", NameTextCodeDefaultText = @"External Links" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+
    
 	    
 		}
@@ -2853,6 +2855,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralOSendParameters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SendParameters", DefaultText = "Send Parameters",LocalDefaultText = @"פרמטרים לשליחה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_GeneralOFastSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.FastSearch", DefaultText = "Fast Search",LocalDefaultText = @"חיפוש מהיר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GeneralTextCode_GeneralMCOthersExternalLink = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.ExternalLink", DefaultText = "External Links",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
