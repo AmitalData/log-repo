@@ -493,11 +493,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SystemConnection { get; set; }
 	      
         public virtual NUnicloud SystemConnectionCode { get; set; }
-        [ForeignKey("Shipment")]
         [Column("ShipmentId")]
 	    public string ShipmentId { get; set; }
-	      
-        public virtual Shipment Shipment { get; set; }
     }
 }
 	 

@@ -2027,7 +2027,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 }
              }, (err) => {
                 console.error(err);
-                reject(new Error("Error checking for duplicate entity"));
+                //reject(new Error("Error checking for duplicate entity"));
             });
         });
      }
