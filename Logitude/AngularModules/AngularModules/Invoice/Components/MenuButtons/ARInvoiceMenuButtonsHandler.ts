@@ -60,7 +60,7 @@ export class ARInvoiceMenuButtonsHandler {
                     switch (button.EventCode) {
                         case "SaveAsDraft": {
                             
-                            if (this.EntityPM.ARInvoiceTypeCode == 'IT' || this.EntityPM.IsAutoCredit) {
+                            if (this.EntityPM.ARInvoiceTypeCode == 'IT' || this.EntityPM.IsAutoCredit || this.EntityPM.StatusCode == "PR") {
                                 myButtonIsDisabled = true;
                                 button.IsHidden = true;
                             }
@@ -229,7 +229,7 @@ export class ARInvoiceMenuButtonsHandler {
                                 myButtonIsDisabled = true;
                                 button.IsHidden = this.EntityPM.IsConstituentInvoice;
                                 if (!AppTool.IsNullOrEmpty(this.EntityPM.Id) && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode)) {
-                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD") {
+                                    if (this.EntityPM.StatusCode != "DR" && this.EntityPM.StatusCode != "VD" && this.EntityPM.StatusCode != "PR") {
                                         if (this.EntityPM.TransferStatusCode == "TR") {
                                             myButtonIsDisabled = false;
                                         }
@@ -914,7 +914,7 @@ export class ARInvoiceMenuButtonsHandler {
     ProceedToApprove(msg: string) {
         
         this.EntityPM.SetVoided = false;
-        this.EntityPM.SetApproved = true;
+        this.EntityPM.StatusCode = 'PR';
         this.EntityPM.SetReTransfer = false;
         this.EntityPM.SetCancelDraft = false;
         this.EntityPM.SetReSendQBO = false;

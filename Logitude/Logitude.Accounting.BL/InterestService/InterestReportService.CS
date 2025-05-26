@@ -61,7 +61,7 @@ namespace Logitude.Accounting.BL.InterestService
             return interestTransactionsWithTotal;
         }
 
-        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string ARInvoiceId = null, string InvoiceNumber = null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null)
+        public InterestReportPM PutConfirmCreateInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string ARInvoiceId = null, string InvoiceNumber = null, double? AmountInLocalCurrency = null, string InvoiceEntitiId = null, string invoiceStatus = null)
         {
             if (MainContext == null)
             {
@@ -70,10 +70,10 @@ namespace Logitude.Accounting.BL.InterestService
 
             if (interestReportPM == null)
             {
-                interestReportPM = GetSingleInterestReportPM(MainContext, Tenant, InvoiceEntitiId, AmountInLocalCurrency, ARInvoiceId, InvoiceNumber);
+                interestReportPM = GetSingleInterestReportPM(MainContext, Tenant, InvoiceEntitiId, AmountInLocalCurrency, ARInvoiceId, InvoiceNumber, invoiceStatus);
             }
 
-            interestReportPM = CloseInterestReportWithoutInvoice(interestReportPM, Tenant, MainContext);  
+            interestReportPM = CloseInterestReportWithoutInvoice(interestReportPM, Tenant, MainContext, invoiceStatus);  
 
             return interestReportPM;
         }
@@ -361,7 +361,7 @@ namespace Logitude.Accounting.BL.InterestService
             return interestTransactionLists.JournalNumber;
         }
    
-        private InterestReportPM CloseInterestReportWithoutInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext)
+        private InterestReportPM CloseInterestReportWithoutInvoice(InterestReportPM interestReportPM, int Tenant, IAccountingContext MainContext, string invoiceStatus)
         {
             ContactQuery contactQuery = new ContactQuery(Tenant);
             ContactPM contact = GetLoggedContact(Tenant) ?? new ContactPM();
@@ -369,17 +369,8 @@ namespace Logitude.Accounting.BL.InterestService
 
 
             InterestReportUpdateService InterestReportUpdate = new InterestReportUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-
-            //interestReportPM.CloseBalance = 0;
-            //if (interestReportPM.OpenBalance != null)
-            //{
-            //    interestReportPM.CloseBalance += interestReportPM.OpenBalance;
-            //}
-            //if (interestReportPM.TotalAmount != null)
-            //{
-            //    interestReportPM.CloseBalance += interestReportPM.TotalAmount;
-            //}
-            if (interestReportPM.InterestReportStatusCode != invoiced)
+           
+            if (invoiceStatus !="PR"  && interestReportPM.InterestReportStatusCode != invoiced)
             {
                 interestReportPM.InterestReportStatusCode = closedWithoutInvoice;
             }
@@ -398,14 +389,14 @@ namespace Logitude.Accounting.BL.InterestService
             return interestReportPM;
         }
 
-        private InterestReportPM GetSingleInterestReportPM(IAccountingContext MainContext ,int Tenant, string InvoiceEntitiId, double? AmountInLocalCurrency, string ARInvoiceId , string InvoiceNumber)
+        private InterestReportPM GetSingleInterestReportPM(IAccountingContext MainContext ,int Tenant, string InvoiceEntitiId, double? AmountInLocalCurrency, string ARInvoiceId , string InvoiceNumber, string invoiceStatus = null)
         {
             InterestReportRepository interestReportRepository = new InterestReportRepository(MainContext);
             InterestReport interestReport = interestReportRepository.GetSingle(InvoiceEntitiId, Tenant);
             InterestReportPM interestReportPM = new InterestReportPM()
             {
                 Id = interestReport.Id,
-                InterestReportStatusCode = "2",
+                InterestReportStatusCode = invoiceStatus == "PR" ?  "8"  :  "2",
                 ARinvoiceId = ARInvoiceId,
                 ARInvoiceNumber = InvoiceNumber,
                 OpenBalance = interestReport.OpenBalance,

@@ -1112,7 +1112,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
 
                     var isValidatingChronological = false;
-                    if (entityPM.SetApproved)
+                    if (entityPM.SetApproved || entityPM.StatusCode == "PR")
                     {
                         isValidatingChronological = true;
                     }
@@ -1124,7 +1124,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                     if (isValidatingChronological)
                     {
-                        if (loggedTenant.AccountingSetting.IsARInvoiceChronologicalDates && !entityPM.IsExternalEntity)
+                        if (!entityPM.IsExternalEntity)
                         {
                             bool HasInterestFeature = entityPM.HasInterestFeature;
 
@@ -1133,6 +1133,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                              && a.IsInvoiceNumberManuallySet == false
                                                              && a.IsExternalEntity == false
                                                              && a.StatusCode != "DR"
+                                                             && a.StatusCode != "PR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
                                                              && (HasInterestFeature? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")

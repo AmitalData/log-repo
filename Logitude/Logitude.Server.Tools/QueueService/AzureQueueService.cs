@@ -67,7 +67,7 @@ namespace Logitude.Server.Tools.QueueService
             }
         }
 
-        public QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null)
+        public QueueResponse ReceiveDetailsByTenant(string objectTable, TimeSpan? serverWaitTime = null)
         {
             throw new NotImplementedException();
         }
