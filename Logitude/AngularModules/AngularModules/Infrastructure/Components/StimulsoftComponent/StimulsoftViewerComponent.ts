@@ -976,14 +976,6 @@ ResetEditableField(field: EditableFieldPosition){
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
 
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-
-                        var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
-
-                        this.LoadReportTemplate(defultTemplateId, true);
-
-                    });
-
                     cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
                         if (isSaveSuccess) {
                             var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
