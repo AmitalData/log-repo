@@ -131,5 +131,31 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
                 throw ex;
             }
         }
+
+
+        public bool IsMultiByInternal(string internalNumber, int Tenant)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(internalNumber))
+                    throw new ArgumentException("Internal Number cannot be null or empty.", nameof(internalNumber));
+
+                if (Tenant <= 0)
+                    throw new ArgumentException("Invalid Tenant ID.", nameof(Tenant));
+
+
+                accountingContext = AccountingContext.GetContext(Tenant);
+                var isMultiCurrency = accountingContext.GLAccounts
+                    .Where(a => a.InternalNumber == internalNumber && a.Tenant == Tenant)
+                    .Select(a => a.IsMultiCurrency)
+                    .FirstOrDefault();
+
+                return isMultiCurrency ?? false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while checking if the account is multi-currency. ", ex);
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';

@@ -2410,7 +2410,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                DeclarationConsignments res = new DeclarationRepository(authToken.Tenant).GetDeclarationConsignment(exportFile);
+                int tenant=0;
+                if(authToken != null)
+                {
+                    tenant=authToken.Tenant;
+                }
+                DeclarationConsignments res = new DeclarationRepository(authToken.Tenant).GetDeclarationConsignment(exportFile, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }

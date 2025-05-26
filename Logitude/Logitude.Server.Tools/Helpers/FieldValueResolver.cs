@@ -37,8 +37,10 @@ namespace Logitude.Server.Tools.Helpers
                             }
                             else
                             {
-                                DateTime date = Convert.ToDateTime(value);
-                                return date;
+								DateTime date = value.EndsWith("Z")
+								   ? DateTime.Parse(value, null, System.Globalization.DateTimeStyles.RoundtripKind)
+								   : Convert.ToDateTime(value);
+								return date;
                             }
                         }
 

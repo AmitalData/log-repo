@@ -1025,7 +1025,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
                 this.SubmitChanges(ControlAccountId);
             }
         });
-        confirmWindow.Show("םנם םשר שמירה והוספה של חשבון מרכז");
+        confirmWindow.Show("אנא אשר שמירה והוספה של חשבון מרכז");
     }
     FullAccountingAddControl(ControlAccountId: string) {
         var windowTitle = TextCodeTranslator.Translate("TaxReport.B.Download");

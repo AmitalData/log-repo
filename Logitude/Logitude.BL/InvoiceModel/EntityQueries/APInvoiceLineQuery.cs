@@ -11,6 +11,10 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -175,6 +179,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 Tenant = a.Tenant,
                                 EntityId = a.EntityId,
                                 EntityPayableId = a.EntityPayableId,
+                                PayableDebitGLAcountId = a.PayableDebitGLAcountId,
+
                                 RefundAmount = a.RefundAmount,
                                 ForiegnCurrencyId = a.ForiegnCurrencyId,
                                 ForiegnExchangeRate = a.ForiegnExchangeRate,
@@ -193,6 +199,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(tenant);
                 APInvoiceTotalVATRepository invoiceTotalVatRepository = new APInvoiceTotalVATRepository(tenant);
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(tenant);
 
                 List<APInvoiceTotalVAT> totalVats = invoiceTotalVatRepository.GetInvoiceTotalVatsByInvoiceId(invoiceId, tenant).ToList();
 
@@ -225,7 +232,18 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             item.VendorName = vendorCard.EnglishName;
                         }
                     }
+                    else
+                    {
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+                        CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
+                        Currency foreignCurrency = currencyRepository.GetSingleCurrency(item.ForiegnCurrencyId, tenant);
+                        if (foreignCurrency != null)
+                        {
+                            item.ForiegnCurrencyCode = foreignCurrency.Code;
+                        }
+                    }
 
+                   
                     if (!string.IsNullOrEmpty(item.VatTypeId))
                     {
                         VatType vatType = VatTypeRepository.GetSingleVatType(item.VatTypeId, tenant, true);
@@ -240,11 +258,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     if (!string.IsNullOrEmpty(item.ChargesTypeId))
                     {
                         ChargesType chargesType = ChargesTypeRepository.GetSingleChargesType(item.ChargesTypeId, tenant, true);
+                        
                         if (chargesType != null)
                         {
                             item.ChargesTypeCode = chargesType.Code;
                             item.ChargesTypeName = chargesType.EnglishName;
+                            if (!string.IsNullOrEmpty(chargesType.PayableDebitGLAcountId) && string.IsNullOrEmpty(item.PayableDebitGLAcountId))
+                            {
+                                item.PayableDebitGLAcountId = chargesType.PayableDebitGLAcountId;
+                            }
                         }
+                    }
+
+                    GLAccount PayableDebitGLAcount = gLAccountRepository.GetSingle(item.PayableDebitGLAcountId, tenant);
+                    if (PayableDebitGLAcount != null)
+                    {
+                        item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
+
+
                     }
                 }
             }

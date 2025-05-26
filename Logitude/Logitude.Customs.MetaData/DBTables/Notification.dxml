@@ -179,6 +179,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SenderName"
+    Type="nvarchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="NotificationDefinitionCode"
     ReferencedTable="NotificationDefinitions"
@@ -235,12 +242,12 @@
     Columns="BadjCount" />
   <Index
     Columns="IsClosedByAssignee" />
-	<Index
-   Columns="Tenant,BadjCount,AssigneToId,IsClosedByAssignee" />
-	<Index
-	  Columns="Tenant,BadjCount" />
-	<Index
-	  Columns="Tenant,IsClosedByAssignee" />
   <Index
-	  Columns="Tenant,EntityId,Reference1Number" />
+    Columns="Tenant,BadjCount,AssigneToId,IsClosedByAssignee" />
+  <Index
+    Columns="Tenant,BadjCount" />
+  <Index
+    Columns="Tenant,IsClosedByAssignee" />
+  <Index
+    Columns="Tenant,EntityId,Reference1Number" />
 </Table>

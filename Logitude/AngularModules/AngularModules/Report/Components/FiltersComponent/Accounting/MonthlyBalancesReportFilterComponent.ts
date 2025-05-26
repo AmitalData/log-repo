@@ -69,7 +69,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
     }
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-      
+        this.DetailedForJobs=false
     }
 
   
@@ -107,6 +107,14 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
     {
         if (this.numberOfYear != value) {
             this.numberOfYear = value;
+        }
+        if(this.numberOfYear!=null){
+            this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, false)
+
+        }
+        else{
+            this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, true)
+
         }
     }
     SetChartOfAccountsFilterProperties(){

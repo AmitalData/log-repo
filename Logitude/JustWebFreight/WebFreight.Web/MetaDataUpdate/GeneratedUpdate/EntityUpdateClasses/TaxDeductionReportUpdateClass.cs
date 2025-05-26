@@ -1551,11 +1551,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   		   //--------------> Additional TextCodes <--------------\\
 
- 		   ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault(); 
+ 		   ObjectTable TaxDeductionReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "TaxDeductionReport" && d.Tenant == 0).FirstOrDefault();
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOAccountWithoutVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.AccountWithoutVendor", DefaultText = "is not connected to Card",LocalDefaultText = @"כרטיס הנהח לא מקושר לכרטיס ספק תפעולי", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode TaxDeductionReportTextCode_TaxDeductionReportOAccountWithoutVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.AccountWithoutVendor", DefaultText = "is not connected to Card", LocalDefaultText = @"כרטיס הנהח לא מקושר לכרטיס ספק תפעולי", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOCardWithoutVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.CardWithoutVatNumber", DefaultText = "GLAccount connected to a card without Vat Number ",LocalDefaultText = @" כרטיס תפעולי ללא חפ", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode TaxDeductionReportTextCode_TaxDeductionReportOVendorWithoutAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.VendorWithoutAccount", DefaultText = " Vendor Card is not connected to Account", LocalDefaultText = @" כרטיס ספק תפעולי לא מקושר לכרטיס הנה”ח", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode TaxDeductionReportTextCode_TaxDeductionReportOPaymentOrder = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.PaymentOrder", DefaultText = "Payment Order ", LocalDefaultText = @"הוראת תשלום ", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode TaxDeductionReportTextCode_TaxDeductionReportOCardWithoutVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.CardWithoutVatNumber", DefaultText = "GLAccount connected to a card without Vat Number ",LocalDefaultText = @" כרטיס תפעולי ללא חפ", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOCardWithoutAddress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.CardWithoutAddress", DefaultText = "GLAccount connected to a card without Address",LocalDefaultText = @"כרטיס תפועלי ללא כתובת", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

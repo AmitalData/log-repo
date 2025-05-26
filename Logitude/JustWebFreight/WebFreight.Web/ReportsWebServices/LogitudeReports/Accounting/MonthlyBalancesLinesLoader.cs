@@ -40,6 +40,8 @@ using Simplog.Server.Infrastructure;
 using System.Data.Common;
 using System.Transactions;
 using static Logitude.Customs.BL.Messaging.Amital.UnifreightQInvoiceList;
+using NPOI.SS.Formula.Functions;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -90,17 +92,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(tenant);
             List<ChartOfAccount> chartOfAccountList =chartOfAccountRepository.GetAllByTenant(tenant);
             QueryFilterItem ChartOfAccountsIdList = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
-			if (ChartOfAccountsIdList != null)
+            QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
+            var year = int.Parse(reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfYear").FirstOrDefault()?.FieldValue?.ToString());
+
+            if (!string.IsNullOrEmpty((string)ChartOfAccountsIdList?.FieldValue))
 			{
                 string[] ChartOfAccountsIdArray = ChartOfAccountsIdList.FieldValue.ToString().Split(',');
 				 chartOfAccountList = chartOfAccountList.Where(a => ChartOfAccountsIdArray.Contains(a.Id)).ToList();
 			 }
-            var year = int.Parse(reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfYear").FirstOrDefault()?.FieldValue?.ToString());
             List<MonthlyBalancesLine> monthlyBalancesLine=GetMonthlyBalancesReportByYearAndTenant(tenant, year);
             dataProvider.ChartOfAccountLine=new List<ChartOfAccountLine>();
+			dataProvider.Year = year;
+
             for (int i = 0; i < chartOfAccountList?.Count(); i++)
             {
-                QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
                 List<MonthlyBalancesLine> monthlyBalancesLineOfChartOfAccount= monthlyBalancesLine.Where(a=>a.ChartOfAccount == chartOfAccountList[i].Id).ToList();
 
                 ChartOfAccountLine chartOfAccountLine = 
@@ -122,8 +127,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     GLAcountLocalName = chartOfAccountList[i].LocalName,
                                     GLAcountNumber = chartOfAccountList[i].Code,
                                     GLAcountEnglishName = chartOfAccountList[i].EnglishName,
-									MonthlyBalancesLine= (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount: new List<MonthlyBalancesLine>()
-
+									MonthlyBalancesLine= (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount: new List<MonthlyBalancesLine>(),
+									LocalOpenBalance= monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.LocalOpenBalance) : 0,
 
                                 };
 				dataProvider.ChartOfAccountLine.Add(chartOfAccountLine);
@@ -153,7 +158,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     {
                         while (reader.Read())
                         {
-                            var result = new MonthlyBalancesLine
+                            MonthlyBalancesLine result = new MonthlyBalancesLine
                             {
                                 QuantityForJanuary = reader["MONTH1"] != DBNull.Value ? (decimal)reader["MONTH1"] : 0,
                                 QuantityForFebruary = reader["MONTH2"] != DBNull.Value ? (decimal)reader["MONTH2"] : 0,
@@ -167,19 +172,21 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 QuantityForOctober = reader["MONTH10"] != DBNull.Value ? (decimal)reader["MONTH10"] : 0,
                                 QuantityForNovember = reader["MONTH11"] != DBNull.Value ? (decimal)reader["MONTH11"] : 0,
                                 QuantityForDecember= reader["MONTH12"] != DBNull.Value ? (decimal)reader["MONTH12"] : 0,
-                                TotalReport = reader["MONTH12"] != DBNull.Value ? (decimal)reader["TOTAL_MONTHS"] : 0,
+                                TotalReport = reader["TOTAL_MONTHS"] != DBNull.Value ? (decimal)reader["TOTAL_MONTHS"] : 0,
 								GLAcountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
 								GLAcountNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
                                 GLAcountEnglishName= reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 ChartOfAccount = reader["chartOfAccount"] != DBNull.Value ? (string)reader["chartOfAccount"] : null,
+                                AccountId = reader["AccountId"] != DBNull.Value ? (string)reader["AccountId"] : null,
 
+                                LocalOpenBalance = reader["LocalOpenBalance"] != DBNull.Value ? (decimal)reader["LocalOpenBalance"] : 0
                             };
                             results.Add(result);
                         }
                     }
                     connection.Close();
                 }
-
+               
                 return results;
             }
 
