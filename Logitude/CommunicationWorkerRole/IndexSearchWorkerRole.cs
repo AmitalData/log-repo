@@ -83,7 +83,7 @@ namespace CommunicationWorkerRole
             Scheduler(() => RemoveOldIndexDataAsync(CancellationToken.None), TimeSpan.FromHours(removeOldIndexDataIntervalHours).TotalMilliseconds, nameof(RemoveOldIndexDataAsync));
 
             removeOldSearchDataIntervalHours = GetValueFromConfig(nameof(removeOldSearchDataIntervalHours), removeOldSearchDataIntervalHours);
-            Scheduler(() => RemoveOldSearchDataAsync(CancellationToken.None), TimeSpan.FromHours(removeOldSearchDataIntervalHours).TotalMilliseconds, nameof(RemoveOldSearchData));
+            Scheduler(() => RemoveOldSearchDataAsync(CancellationToken.None), TimeSpan.FromHours(removeOldSearchDataIntervalHours).TotalMilliseconds, nameof(RemoveOldSearchDataAsync));
         }
 
         private double GetValueFromConfig(string configKey, double defaultValue)
@@ -253,7 +253,7 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception e)
                 {
-                    logger.WriteFatal(e, "error on Schdule action " + actionName);
+                    logger.WriteFatal(e, "error on scheduled  action " + actionName);
                 }
                 finally
                 {
