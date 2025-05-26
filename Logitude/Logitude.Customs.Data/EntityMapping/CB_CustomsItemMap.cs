@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.EntityMapping
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.CustomsItemHierarchicLocationID).HasColumnName("CustomsItemHierarchicLocationI").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.CustomsItemHierarchicLocationID).HasColumnName("CustomsItemHierarcLocationID").HasMaxLength(2).IsUnicode(false);
 			}
 			else
 			{
