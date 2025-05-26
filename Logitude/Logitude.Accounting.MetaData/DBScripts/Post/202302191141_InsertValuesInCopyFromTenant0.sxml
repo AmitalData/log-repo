@@ -6,10 +6,10 @@ SELECT *
 FROM (
     VALUES
     ('9999-10', 0, 'Chart Of Accounts', 0),
-    ('9999-20', 0, 'GLAccounts, 0'),
-    ('9999-30', 0, 'Automatic Reconcile Methods, 0'),
-    ('9999-40', 0, 'VatTypes, 0'),
-    ('9999-50', 0, 'Computing Partners, 0'),
+    ('9999-20', 0, 'GLAccounts', 0),
+    ('9999-30', 0, 'Automatic Reconcile Methods', 0),
+    ('9999-40', 0, 'VatTypes', 0),
+    ('9999-50', 0, 'Computing Partners', 0),
     ('9999-60', 0, 'Vat settings', 0),
     ('9999-70', 0, 'Tasks Scheduler', 0),
     ('9999-80', 0, 'CountryCities', 0),
@@ -24,6 +24,7 @@ WHERE NOT EXISTS (
 	OR CopyFromTenant0.Id = S.Id
 );
 
+update CopyFromTenant0 set alwaysEnabled = 1 where id in ('9999-90', '9999-91');
 
 
      ]]>
