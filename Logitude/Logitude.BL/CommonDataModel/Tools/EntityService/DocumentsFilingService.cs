@@ -1634,7 +1634,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                         }
                                     }
                                 }
-                                if (sendHybridM)
+                                if (sendHybridM && !extDocPM.IsFromCloud)
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 
