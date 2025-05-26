@@ -1639,7 +1639,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                     SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                 }
 
-                                if (sendHybridM)
+                                if (sendHybridM && !extDocPM.IsFromCloud)
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 
