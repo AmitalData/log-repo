@@ -132,6 +132,15 @@ export class MainDisplayComponent implements OnInit {
 
 	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
+		// TODO: move it to external function, test for now
+		this.API_MainService.GetDefaultCB_CollapseSearchHierarchy(SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+			console.log(data);
+			debugger
+			
+			if (!data.body) return; // TODO: add error message
+		});
+
+		
 		this.isLoadingMode.next(true);
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
