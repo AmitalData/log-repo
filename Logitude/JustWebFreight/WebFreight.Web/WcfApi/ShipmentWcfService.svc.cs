@@ -494,11 +494,15 @@ namespace WebFreight.Web.WcfApi
                     if (!string.IsNullOrEmpty(entityPM.QuoteNumber))
                     {
                         QuoteRepository quoteRepository = new QuoteRepository(entityPM.Tenant);
-                        string quoteentityId = quoteRepository.GetQuoteId(entityPM.QuoteNumber, entityPM.Tenant);
-                        if (quoteentityId != null)
+						Quote quoteEntity = quoteRepository.GetQuoteByNumber(entityPM.QuoteNumber, entityPM.Tenant);
+                        if (quoteEntity != null)
                         {
-                            entityPM.QuoteId = quoteentityId;
-                        }
+                            entityPM.QuoteId = quoteEntity.Id;
+
+                            quoteEntity.ShipmentNumber = entityPM.ShipmentNumber;
+                            quoteRepository.Update(quoteEntity);
+                            quoteRepository.SubmitChanges();
+						}
                         else
                         {
                             ExceptionHandler.HandleException(new Exception("QuoteNumber field doesn't exist in the database"), DateTime.Now, entityPM.Tenant, 
