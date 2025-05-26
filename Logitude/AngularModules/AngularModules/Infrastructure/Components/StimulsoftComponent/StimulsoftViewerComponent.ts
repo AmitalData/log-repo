@@ -98,6 +98,7 @@ export class StimulsoftViewerComponent implements OnInit {
     public reportService: ReportService;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsEnableReportTemplateExcel: boolean = false;
+    IsEnableButtonExcel: boolean = false;
 
     SelectedFontSize: number;
     FontSizeLists: number[] = [];
@@ -181,7 +182,12 @@ export class StimulsoftViewerComponent implements OnInit {
 
             }
         }
-
+        
+        const disabledCodes = ["COO", "COOC", "ECCR", "EXDE"];
+        if (!disabledCodes.includes(this.EntityPM.Code)) {
+           this.IsEnableButtonExcel = true;
+        }
+    
         if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.StimulsoftArgData.IsExcelReportAllowed == true) {
             this.IsEnableReportTemplateExcel = true;
         }
