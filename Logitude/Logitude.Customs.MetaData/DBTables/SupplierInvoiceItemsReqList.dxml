@@ -102,14 +102,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ItemNo "
+    Name="ItemNo"
+    OldNames="ItemNo "
     Type="varchar"
     Size="30">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ItemName "
+    Name="ItemName"
+    OldNames="ItemName "
     Type="nvarchar"
     Size="256">
     <Constraints
