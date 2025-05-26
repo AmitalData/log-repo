@@ -270,7 +270,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
 
                     CardRepository repo = new CardRepository(entityPOCO.Tenant);
-                    Card card = repo.GetCardByGLAccountId(entityPOCO.Id, entityPOCO.Tenant, true);
+                    Card card = repo.GetCardByGLAccountId(entityPOCO.Id, entityPOCO.Tenant, false);
                     if (card != null)
                     {
                         entityPM.VatNumber = card.VatNumber;
