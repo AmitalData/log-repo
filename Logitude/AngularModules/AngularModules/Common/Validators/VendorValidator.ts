@@ -26,6 +26,9 @@ export class VendorValidator {
                         isValid = true;
                     }
                 }
+                else {  
+                    isValid = true;
+                }
             }
            
             else{
