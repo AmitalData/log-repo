@@ -68,9 +68,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
-                // add default check:
-                var dedaultDataResult = DefaultService.Instance.Get(6, "CB_CollapseSearchHierarchy", "CB_SearchHierarchy")?.Value1;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                // Add default check of customs book::
+                var dedaultDataResult = DefaultService.Instance.Get(authToken.Tenant, "CB_CollapseSearchHierarchy", "CB_CollapseSearchHierarchyAdditionalKey")?.Value1;
                 return Request.CreateResponse(HttpStatusCode.OK, dedaultDataResult);
             }
             catch (Exception ex)
