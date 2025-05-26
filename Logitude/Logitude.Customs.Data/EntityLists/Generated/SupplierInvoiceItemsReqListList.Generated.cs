@@ -54,7 +54,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool DutchRequested  { get; set; }
        [DataMember]
-       public string ItemNo   { get; set; }
+       public string ItemNo  { get; set; }
        [DataMember]
        public decimal? InvoiceQuantity  { get; set; }
        [DataMember]

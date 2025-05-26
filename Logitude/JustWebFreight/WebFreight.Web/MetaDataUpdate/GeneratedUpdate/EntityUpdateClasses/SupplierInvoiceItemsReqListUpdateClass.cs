@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "212211bec235db160d6ab9b0be8aaf5d";
+		public const string HashString = "46e31b29aa000cc2d5de126718c2d51c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -72,7 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "רשימת בקשות",
 			      				    LocalDefaultText =  "BS64:Iteo16nXmdee16og15HXp9ep15XXqiI=",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "27ef",
+			      				    Code =  "1441",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1076,7 +1076,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ItemNo ",
+					 						FieldName =  "ItemNo",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsReqList",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1095,8 +1095,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ItemNo ",
-					  						ListPropertyPath =  "ItemNo ",
+					  						PMPropertyPath =  "ItemNo",
+					  						ListPropertyPath =  "ItemNo",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1114,10 +1114,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ItemNo ",
+					  						FullFieldLable =  "ItemNo",
 					  						DefaultText =  "Item No ",
 					  						FullLocalDefaultText =  "קוד דגם/מק\"ט  ",
-					  						ListFieldLable =  "ItemNo ListLable",
+					  						ListFieldLable =  "ItemNoListLable",
 					  						ListLableDefaultText =  "Item No ",
 					  						ListLocalDefaultText =  "קוד דגם/מק\"ט  ",
 					  						IsForeignKey =  false,
@@ -1141,7 +1141,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ItemName ",
+					 						FieldName =  "ItemName",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsReqList",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1160,8 +1160,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ItemName ",
-					  						ListPropertyPath =  "ItemName ",
+					  						PMPropertyPath =  "ItemName",
+					  						ListPropertyPath =  "ItemName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1178,7 +1178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ItemName ",
+					  						FullFieldLable =  "ItemName",
 					  						DefaultText =  "Item Description",
 					  						FullLocalDefaultText =  "תאור הדגם  ",
 					  						IsForeignKey =  false,
@@ -1483,6 +1483,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StatisticQuantityType",
 					  						ListPropertyPath =  "StatisticQuantityType",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

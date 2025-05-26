@@ -104,14 +104,14 @@ export class SupplierInvoiceItemsReqListPM {
     public set RequestRequiredStatus(newValue: string) { if (this.requestRequiredStatus != newValue) { this.requestRequiredStatus = newValue; this.MarkAsDirty("RequestRequiredStatus"); } }
        
 	 
-    private itemNo : string;
-    public get ItemNo () { return this.itemNo ; }
-    public set ItemNo (newValue: string) { if (this.itemNo  != newValue) { this.itemNo  = newValue; this.MarkAsDirty("ItemNo "); } }
+    private itemNo: string;
+    public get ItemNo() { return this.itemNo; }
+    public set ItemNo(newValue: string) { if (this.itemNo != newValue) { this.itemNo = newValue; this.MarkAsDirty("ItemNo"); } }
        
 	 
-    private itemName : string;
-    public get ItemName () { return this.itemName ; }
-    public set ItemName (newValue: string) { if (this.itemName  != newValue) { this.itemName  = newValue; this.MarkAsDirty("ItemName "); } }
+    private itemName: string;
+    public get ItemName() { return this.itemName; }
+    public set ItemName(newValue: string) { if (this.itemName != newValue) { this.itemName = newValue; this.MarkAsDirty("ItemName"); } }
        
 	 
     private invoiceQuantity: number;
