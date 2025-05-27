@@ -80,7 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public string AddExternalLink(string Ref, string param, int tenant)
         {
-            if(string.IsNullOrEmpty(Ref))
+            if (string.IsNullOrEmpty(Ref))
                 throw new ArgumentNullException(nameof(Ref), "Ref can not be null or empty");
             if (string.IsNullOrEmpty(param))
                 throw new ArgumentNullException(nameof(param), "param can not be null or empty");
@@ -92,7 +92,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 throw new Exception($"not found settings of external link, ref: {Ref}, tenant: {tenant}");
             AuthenticationToken authenticationToken = authenticationTokenRepository.GetSingleToken(tenant, externalLinkPM.Id, AuthenticationTokenRepository.ExternalLink);
 
-            if(authenticationToken == null)
+            if (authenticationToken == null)
             {
                 authenticationToken = new AuthenticationToken()
                 {
@@ -114,7 +114,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             else
             {
                 authenticationToken.ExpirationDate = DateTime.UtcNow.AddDays(externalLinkPM.ExpirationDate);
-                authenticationTokenRepository.Update(authenticationToken);                
+                authenticationTokenRepository.Update(authenticationToken);
             }
 
             authenticationTokenRepository.SubmitChanges();
@@ -141,7 +141,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             string token = authenticationToken.Token;
             if (string.IsNullOrEmpty(token))
                 throw new ArgumentNullException(nameof(token), "token can not be null or empty");
-            if(string.IsNullOrEmpty(authenticationToken.Params))
+            if (string.IsNullOrEmpty(authenticationToken.Params))
                 throw new ArgumentNullException(nameof(authenticationToken.Params), "Params can not be null or empty");
 
             AuthenticationTokenParams parmas = JsonConvert.DeserializeObject<AuthenticationTokenParams>(authenticationToken.Params);
@@ -155,16 +155,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public string AddDomain(string link, ExternalLinkPM externalLinkPM)
         {
-            if(string.IsNullOrEmpty(link))
+            if (string.IsNullOrEmpty(link))
                 throw new ArgumentNullException(nameof(link), "link can not be null or empty");
             if (externalLinkPM == null)
                 throw new ArgumentNullException(nameof(externalLinkPM), "externalLinkPM can not be null");
 
             if (!string.IsNullOrEmpty(externalLinkPM.Params))
-            {                
+            {
                 JObject jsonObj = JsonConvert.DeserializeObject<JObject>(externalLinkPM.Params);
                 string domain = jsonObj?["domain"]?.ToString();
-                
+
                 if (!string.IsNullOrEmpty(domain))
                     return domain + link;
             }
@@ -183,6 +183,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             public string Link { get; set; }
             public string Ref { get; set; }
-        }        
+        }
     }
 }
