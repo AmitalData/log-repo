@@ -3,7 +3,7 @@ using System;
 using System.Threading.Tasks;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
-namespace CommunicationWorkerRole.RestRequestExecutor
+namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class ApiCommunicationLog
     {              
