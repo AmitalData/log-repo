@@ -11,30 +11,17 @@ using System.Linq;
 using System.Web;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
     public class ExternalLinkService
     {
-        bool isNewEntity = false;
         private readonly int tenant;
         private const string CACHE_KEY_FORMAT = "ExternalLink_{0}";
-
-        public ExternalLink Poco { get; set; }
-
-        public ICommonDataContext ObjectContext
-        {
-            get { return objectContext; }
-            private set { objectContext = value; }
-        }
-
-        private ExternalLinkPM entityPM;
-        private ICommonDataContext objectContext;
-        const string tableName = "ExternalLink";        
+        const string tableName = "ExternalLink";
         private ExternalLinkRepository entityRepository;
-
         public readonly ICommonDataContext ObjectContext;
-
 
         public ExternalLinkService(ICommonDataContext objectContext, int tenant)
         {
@@ -75,11 +62,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 return;
             }
 
-            ExternalLink Poco = entityRepository.GetSingleExternalLink(entityPM.Id, tenant);
+            ExternalLink Poco = entityRepository.GetSingleExternalLink(entityPM.Id, entityPM.Tenant);
             if(Poco == null)
-                throw new ArgumentNullException(nameof(Poco), $"external link not found, id: {entityPM.Id}, tenant: {tenant}");
+                throw new ArgumentNullException(nameof(Poco), $"external link not found, id: {entityPM.Id}, tenant: {entityPM.Tenant}");
 
-            TraceChangeOfDays(entityPM, Poco.ExpirationDate);
+            TraceChangeOfDays(Poco, entityPM.ExpirationDate);
             ExternalLinkMapping.MapEntity(entityPM, Poco, false);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
@@ -89,7 +76,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 CacheManager.CacheWrapper.Remove(cacheKey);
         }
 
-        private void TraceChangeOfDays(ExternalLinkPM previousEntity, int nextDays)
+        private void TraceChangeOfDays(ExternalLink previousEntity, int nextDays)
         {
             if (previousEntity.ExpirationDate == nextDays) return;
 
@@ -97,7 +84,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 Tenant = previousEntity.Tenant,
                 EventTypeCode = "UPEV",
-                UserId = new LoggedContactUtil().GetLoggedContact(tenant)?.Id,
+                UserId = new LoggedContactUtil().GetLoggedContact(previousEntity.Tenant)?.Id,
                 EntityId = previousEntity.Id,
                 ObjectTableName = nameof(ExternalLink),
                 Notes = $"Expiration days changed from {previousEntity.ExpirationDate} to {nextDays} days",

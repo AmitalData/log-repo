@@ -5,9 +5,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -121,6 +118,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return authenticationToken;
         }
+
+        public AuthenticationToken GetSingleToken(int tenant, string linkId, string clientType) =>
+           context.AuthenticationTokens.FirstOrDefault(x => x.Tenant == tenant && x.LinkId == linkId && x.ClientType == clientType);
 
         public class AutenticationException : Exception
         {

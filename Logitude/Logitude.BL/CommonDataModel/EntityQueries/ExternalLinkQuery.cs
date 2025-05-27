@@ -5,10 +5,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
-using Syncfusion.XlsIO.Implementation.XmlSerialization.Constants;
 using System;
 using System.Linq;
 using System.Web;
@@ -19,7 +17,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         readonly ExternalLinkRepository repository;
         private static readonly string CACHE_KEY_FORMAT = "ExternalLink_{0}";
-        const string tableName = "ExternalLink";
 
         public ExternalLinkQuery(int tenant)
         {
