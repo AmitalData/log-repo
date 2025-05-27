@@ -3893,8 +3893,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;TaxReport.O.ReportIsEdited&quot;"
-      DefaultText="&quot;Report in editing - needs to be rebuilt&quot;"
-      LocalDefaultTextBack_up="&quot;דוח בעריכה - יש לבצע בניה מחדש&quot;"
+      DefaultText="&quot;Report in editing - click to recalculate&quot;"
+      LocalDefaultTextBack_up="&quot;דוח בעריכה - לחץ לחישוב מחדש&quot;"
       LocalDefaultText="&quot;BS64:IteT15XXlyDXkdei16jXmdeb15QgLSDXmdepINec15HXpteiINeR16DXmdeUINee15fXk9epIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
@@ -3903,6 +3903,7 @@
       DefaultText="&quot;Fix Duplicates&quot;"
       LocalDefaultTextBack_up="&quot;טיפול בכפולים&quot;"
       LocalDefaultText="&quot;BS64:IteY15nXpNeV15wg15HXm9ek15XXnNeZ150i&quot;"
+
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

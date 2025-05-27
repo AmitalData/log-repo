@@ -26,8 +26,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "6507ef81828e0d82c172f364f1ee5ee4";
+		public const string HashString = "1d3934968847ca85fe1f2ff5ae83fbf2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
+
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -3465,9 +3466,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxReportTextCode_TaxReportODefaultDifferencesGLAccountIdIsNull = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.DefaultDifferencesGLAccountIdIsNull", DefaultText = "AccountingSettings - DefaultDifferencesGLAccountId is null",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXlNeg15TXnNeqINeX16nXkdeV16DXldeqIC0g15zXkCDXnteV15bXnyDXoteo15og15HXm9eo15jXmdehINeR16jXmdeo16og157Xl9eT15wg15zXlNek16jXqdeZ150i", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxReportTextCode_TaxReportOReportIsEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ReportIsEdited", DefaultText = "Report in editing - needs to be rebuilt",LocalDefaultText = @"BS64:IteT15XXlyDXkdei16jXmdeb15QgLSDXmdepINec15HXpteiINeR16DXmdeUINee15fXk9epIg==", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxReportTextCode_TaxReportOReportIsEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ReportIsEdited", DefaultText = "Report in editing - click to recalculate",LocalDefaultText = @"דוח בעריכה - לחץ לחישוב מחדש", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode TaxReportTextCode_AccountingOFixDuplicates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.FixDuplicates", DefaultText = "Fix Duplicates",LocalDefaultText = @"BS64:IteY15nXpNeV15wg15HXm9ek15XXnNeZ150i", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
 
    
 	    
