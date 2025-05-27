@@ -48,7 +48,7 @@ namespace WebFreight.Web.DataProviders
          public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
          public decimal? CreditLimit { get; set; }
-         public decimal? TotalToCollect { get { return AccountingBalance + TotalOpenShipments; } }
+         public decimal? TotalToCollect { get { return BalanceInLocalCurrency + TotalOpenShipments; } }
         public decimal? AccountingBalance { get; set; }
         public decimal? Minus30Days { get; set; }
         public decimal? Minus60Days { get; set; }
