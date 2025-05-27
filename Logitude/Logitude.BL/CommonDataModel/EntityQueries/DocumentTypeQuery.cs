@@ -38,7 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentTypeQuery(int tenant)
         {
             repository = new DocumentTypeRepository(tenant);
-            isFullAccounting = IsFullAccountingActivated(tenant);
+            isFullAccounting = false;// IsFullAccountingActivated(tenant);
         }
 
         public DocumentTypeQuery(DocumentTypeRepository repository)
