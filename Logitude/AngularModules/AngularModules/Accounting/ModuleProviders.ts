@@ -153,6 +153,9 @@ import { ARPaymentChequeOperationsService } from './Services/Others/ARPaymentChe
 import { InterestTransactionListService } from './Services/StandardLists/InterestTransactionListService';
 import { ARPaymentChequeListService } from './Services/StandardLists/ARPaymentChequeListService';
 import { ARPaymentChequeStatusListService } from './Services/StandardLists/ARPaymentChequeStatusListService';
+import { InvoiceApiCommunicationLogPMService } from './Services/StandardPMs/InvoiceApiCommunicationLogPMService';
+import { InvoiceApiCommunicationLogListService } from './Services/StandardLists/InvoiceApiCommunicationLogListService';
+import { InvoiceApiStepListService } from './Services/StandardLists/InvoiceApiStepLogListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -261,6 +264,7 @@ export class ModuleProviders {
             case "InterestReportStatuseListService": { myResult = new InterestReportStatuseListService(); break; }
             case "InterestReportLinesByDateListService": { myResult = new InterestReportLinesByDateListService(); break; }
             case "CalculatedChartsLineTypeListService": { myResult = new CalculatedChartsLineTypeListService(); break; }
+            case "InvoiceApiCommunicationLogPMService": { myResult = new InvoiceApiCommunicationLogPMService(); break; }
 
             case "TaxReportStatusListService": { myResult = new TaxReportStatusListService(); break; }
             case "TaxReportLineTypeListService": { myResult = new TaxReportLineTypeListService(); break; }
@@ -276,6 +280,8 @@ export class ModuleProviders {
             case "InterestBasesPeriodPMService": { myResult = new InterestBasesPeriodPMService(); break; }
             case "InterestBasesTypePMService": { myResult = new InterestBasesTypePMService(); break; }
             case "InterestTransactionListService": { myResult = new InterestTransactionListService(); break; }
+            case "InvoiceApiCommunicationLogListService": { myResult = new InvoiceApiCommunicationLogListService(); break; }
+            case "InvoiceApiStepListService": { myResult = new InvoiceApiStepListService(); break; }
 
             //#endregion
 
