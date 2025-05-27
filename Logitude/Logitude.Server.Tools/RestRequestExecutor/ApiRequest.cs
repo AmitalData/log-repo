@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CommunicationWorkerRole.RestRequestExecutor
+namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class ApiRequest<T>
     {

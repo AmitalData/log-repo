@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommunicationWorkerRole.RestRequestExecutor
+namespace Logitude.Server.Tools.RestRequestExecutor
 {   
     public enum StatusTypeCommunication
     {        

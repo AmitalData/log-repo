@@ -9,7 +9,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace CommunicationWorkerRole.RestRequestExecutor
+namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class RestRequestExecutor
     {
