@@ -23,6 +23,7 @@ using Logitude.Customs.BL.AzureSearch;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.BL.Helpers;
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class CB_CustomsItemExtendedController : ApiController
@@ -53,6 +54,27 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDefaultCB_CollapseSearchHierarchy(int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                // Add default check of customs book::
+                var defaultDataResult = DefaultService.Instance.Get(authToken.Tenant, "CB_CollapseSearchHierarchy", "CB_CollapseSearchHierarchyAdditionalKey")?.Value1;
+                return Request.CreateResponse(HttpStatusCode.OK, defaultDataResult);
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));

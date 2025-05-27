@@ -269,25 +269,18 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
 
         this._SelectedLedgerTransactionIdList = winArgs.LedgerTransactionIdList;
 
-        //this._SelectedLines.Collection.forEach(r => {
-        //    let myReconcileExternalPageLinePM: ReconcileExternalPageLinePM = r.PageLinePM;
-        //    if (AppTool.IsNullOrEmpty(this.Notes)) {
-        //        this.Notes = myReconcileExternalPageLinePM.Notes;
-        //    }
-            
-        //});
+        
     }
-    FillErrors() {
+    async FillErrors() {
         this.ValidationErrorsList = [];
         if (this.glAccount !== null && this.glAccount.ChartOfAccountsTypeCode === "4") {
             const noAddressToVendor=TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
             var vendorValidator: VendorValidator = new VendorValidator();
-            if (!vendorValidator.IsVendorCountryValid(this.glAccount.CardCountryCode)) {
+            if (!await vendorValidator.IsVendorCountryValid(this.glAccount.Id,this.glAccount.CardCountryCode)) {
                 this.ValidationErrorsList.push(noAddressToVendor);
             }
         }
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
-            //this.Year = new Date().getFullYear();
             this.ValidationErrorsList.push("GLAccount is Required");
         }
         else if (this._BankAccountPMId == this.glAccount.Id) {
@@ -299,8 +292,8 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
 
         } 
     }
-    OkButtonClicked() {
-        this.FillErrors();
+    async OkButtonClicked() {
+        await  this.FillErrors();
         if (this.ValidationErrorsList.length > 0) {
             return;
         }

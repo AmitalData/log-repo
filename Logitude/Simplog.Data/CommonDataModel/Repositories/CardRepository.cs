@@ -179,20 +179,23 @@ namespace Simplog.Data.CommonDataModel.Repositories
                              && a.GLAccountId == id && partnerTypes.Contains(a.PartnerTypeId)
                              select a).FirstOrDefault();
             }
-            string key = $"GetCardByGLAccountId({id},{tenant})";
-            var cardFromCache = CacheManager.GetOrInsertNewObject<Card>(key, () =>
+            if (fromCache)
             {
-                Card card = (from a in context.Cards
-                             where a.Tenant == tenant
-                             && a.GLAccountId == id
-                             select a).FirstOrDefault();
-                return card;
-            }, fromCache);
+                string key = $"GetCardByGLAccountId({id},{tenant})";
+                return CacheManager.GetOrInsertNewObject<Card>(key, () => GetCardByGLAccountId(id, tenant));
 
+                
+            }
 
-            return cardFromCache;
+            return GetCardByGLAccountId(id, tenant);
         }
-
+        public Card GetCardByGLAccountId(string id, int tenant)
+        {
+            return (from a in context.Cards
+                    where a.Tenant == tenant
+                    && a.GLAccountId == id
+                    select a).FirstOrDefault();
+        }
 
         public List<Card> GetCardsByGLAccountIds(List<string> glaccountIds, int tenant)
         {

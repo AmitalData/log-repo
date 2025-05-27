@@ -45,9 +45,11 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ECILSWSHAWB_Splited = "ECILSWSHAWB+P";//EC = E-Commerce
         public const string InterfaceName_ImportAddOwner = "IMPORT_ADD_OWNER";
         public const string InterfaceName_ImportPrintTracking = "IMPORT_PRINT_TRACKING";
+        public const string InterfaceName_SIIProductFileCheck = "SII_PRODUCT_FILE_CHECK";
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
+        public const string PartnerCode_SII = "SII";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
 
@@ -369,6 +371,14 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+            },
+            new InterfaceDetails()
+            {
+                Code= InterfaceName_SIIProductFileCheck,
+                Name = "מכון תקנים - איתור תיק מוצר",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_SII,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
             }
             };
             ///
@@ -399,6 +409,7 @@ namespace Logitude.Customs.BL.CloseTables
             all.Add(new KeyValuePair<string, string>(PartnerCode_Mamam, "Mamam"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_ILOVS, "Overseas"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_ILSWS, "Swissport"));
+            all.Add(new KeyValuePair<string, string>(PartnerCode_SII, "SII"));
             return all;
         }
 
@@ -545,6 +556,7 @@ namespace Logitude.Customs.BL.CloseTables
         public string ServiceUrl { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
+        public string CustomerUniqueCode { get; set; }
 
     }
 

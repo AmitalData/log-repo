@@ -38,7 +38,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(SupplierInvoiceItemsReqListPM entityPM, SupplierInvoiceItemsReqList entityPOCO)
         {
-            CustomMappedPMProperties.Add(PMPropertyNames.ManufactureCountryName);
+            CustomMappedPMProperties.AddRange(new[]
+            {
+                PMPropertyNames.ManufactureCountryName,
+                PMPropertyNames.ItemNo,
+                PMPropertyNames.ItemName,
+                PMPropertyNames.InvoiceQuantity,
+                PMPropertyNames.InvoiceQuantityType,
+                PMPropertyNames.StatisticQuantity,
+                PMPropertyNames.StatisticQuantityType  
+            });
+
             if (entityPOCO.ManufactureCountryCode != null)
             {
                 CustomsCountryQueryService customsCountryQueryService = new CustomsCountryQueryService(entityPOCO.Tenant);
@@ -46,6 +56,41 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.ManufactureCountryName = customsCountry.LocalName;
             }
 
+            var ctx = CustomContext.GetContext(entityPOCO.Tenant);
+            var item = ctx.SupplierInvoiceItems.FirstOrDefault(i =>
+                       i.Tenant == entityPOCO.Tenant &&
+                       i.DeclarationId == entityPOCO.DeclarationId &&
+                       i.CounterKey == entityPOCO.InvoiceCounterKey &&
+                       i.LineNumber == entityPOCO.InvoiceItemLineNumber);
+            if (item == null) return;
+
+            bool isNewEntity = string.IsNullOrWhiteSpace(entityPOCO.SIIRequestID);
+
+            if (isNewEntity)
+            {
+                entityPM.ItemNo = item.ItemCode;
+                entityPM.ItemName = item.ItemDescription;
+            }
+            else
+            {
+                entityPM.ItemNo = entityPOCO.ItemNo;
+                entityPM.ItemName = entityPOCO.ItemName;
+            }
+            entityPM.InvoiceQuantity = item.InvoiceQuantity;
+            entityPM.StatisticQuantity = item.StatisticQuantity;
+            var muQS = new MeasurmentUnitQueryService(entityPOCO.Tenant);
+
+            if (!string.IsNullOrWhiteSpace(item.InvoiceQuantityType))
+            {
+                entityPM.InvoiceQuantityType =
+                    muQS.GetSingle(item.InvoiceQuantityType, false, true)?.LocalName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(item.StatisticQuantityType))
+            {
+                entityPM.StatisticQuantityType =
+                    muQS.GetSingle(item.StatisticQuantityType, false, true)?.LocalName;
+            }
         }
     }
 

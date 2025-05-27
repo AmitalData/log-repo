@@ -16,7 +16,7 @@ export class APPaymentValidator {
         Validator.TryValidateObject(entityPm, null, validationResults);
 
         var isNegativeAmountEnabled: boolean = ObjectsLocator.AccountingSettingPM.EnableNegativeOffsetAPPayments && entityPm.PaymentMethodCode == "FS" ? true : false;
-
+       
         if (entityPm.RegisterDate == null) {
             validationResults.push(msg.replace("%FieldName", "Register Date"));
         }
@@ -99,13 +99,7 @@ export class APPaymentValidator {
                 validationResults.push("Credit Card Type Field is required");
             }
         }
-        if (entityPm.SetApproved) {
-            const vendorValidator: VendorValidator = new VendorValidator();
-            const noAddressToVendor = TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
-            if (!vendorValidator.IsVendorCountryValid(entityPm.VendorCountry)) {
-                validationResults.push(noAddressToVendor);
-            }
-        }
+        
         return validationResults;
     }
 }

@@ -53,6 +53,16 @@ namespace Logitude.Customs.Data.EntityLists
        public string Remarks  { get; set; }
        [DataMember]
        public bool DutchRequested  { get; set; }
+       [DataMember]
+       public string ItemNo  { get; set; }
+       [DataMember]
+       public decimal? InvoiceQuantity  { get; set; }
+       [DataMember]
+       public string InvoiceQuantityType  { get; set; }
+       [DataMember]
+       public decimal? StatisticQuantity  { get; set; }
+       [DataMember]
+       public string StatisticQuantityType  { get; set; }
    }
 
 }

@@ -381,12 +381,12 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         this.TotalDebit = winArgs.TotalDebit;
         this.IsMultiWithReconcileMethodCodeEqualOne = winArgs.IsMultiWithReconcileMethodCodeEqualOne && this.SelectedLines.Collection[0].CurrencyId != this.defaultCurrencyId;
     }
-    FillErrors(isSplitJournal: boolean) {
+    async FillErrors(isSplitJournal: boolean) {
         this.ValidationErrorsList = [];
         if (this.SourceGLAccountPM !== null  && this.glAccount !== null && this.glAccount.ChartOfAccountsTypeCode === "5" && this.SourceGLAccountPM?.ChartOfAccountsTypeCode === "4") {
             const noAddressToVendor=TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
             var vendorValidator: VendorValidator = new VendorValidator();
-            if (!vendorValidator.IsVendorCountryValid(this.SourceGLAccountPM.CardCountryCode)) {
+            if (!await vendorValidator.IsVendorCountryValid(this.SourceGLAccountPM.Id,this.SourceGLAccountPM.CardCountryCode)) {
                 this.ValidationErrorsList.push(noAddressToVendor);
             }
         }
@@ -422,9 +422,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    OkButtonClicked(isSplitJournal: boolean) {
+    async OkButtonClicked(isSplitJournal: boolean) {
 
-        this.FillErrors(isSplitJournal);
+        await this.FillErrors(isSplitJournal);
 
         if (this.ValidationErrorsList.length > 0) {
             return;
