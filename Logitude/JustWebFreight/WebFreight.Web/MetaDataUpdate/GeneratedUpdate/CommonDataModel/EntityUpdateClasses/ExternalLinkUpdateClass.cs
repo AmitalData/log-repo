@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ExternalLinkUpdateClass
    {  		
-		public const string HashString = "b8f67b8cd940fa7fcdaa903fbdb73f18";
+		public const string HashString = "0862de96433d255913e2b150b878ccce";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,8 +98,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "ExternalLink",
 			      				    IsNew =  true,
 			      				    DBTableName =  "ExternalLinks",
-			      				    ObjectTableSingular =  "ExternalLink",
-			      				    ObjectTablePlural =  "ExternalLinks",
+			      				    ObjectTableSingular =  "External Link",
+			      				    ObjectTablePlural =  "External Links",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  true,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -566,17 +566,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			  Query ExternalLinkQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ExternalLinkTextCode_0.Id, NameTextCodeCode = ExternalLinkTextCode_0.Code, ObjectTableName = "ExternalLink", Code = "ExternalLink",  QueryGroupCode = "6ec8", IndexOrder = 0, Tenant = 0, ObjectTableId = ExternalLinkObjectTable.Id, QuerySection = "ExternalLink", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ExternalLinkFeature_0.Id,FeatureUniqeCode= ExternalLinkFeature_0.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ExternalLinkQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ExternalLink.Id" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn ExternalLinkQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ExternalLink.Ref" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExternalLinkQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ExternalLink.Ref" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExternalLinkQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ExternalLink.ExpirationDate" , ColumnWidth = 200 }, addedQueryColumns);
 
-			 QueryColumn ExternalLinkQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ExternalLink.Link" , ColumnWidth = 200 }, addedQueryColumns);
+			 QueryColumn ExternalLinkQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ExternalLink.ActivityLog" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ExternalLinkQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ExternalLink.ExpirationDate" , ColumnWidth = 50 }, addedQueryColumns);
-
-			 QueryColumn ExternalLinkQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ExternalLink.ActivityLog" , ColumnWidth = 50 }, addedQueryColumns);
-
-			 QueryColumn ExternalLinkQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ExternalLink.Params" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExternalLinkQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExternalLinkQuery.Id,QueryCode = ExternalLinkQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ExternalLink.Params" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -608,11 +604,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   ObjectTable ExternalLinkObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalLink" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode ExternalLinkGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalLink.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ExternalLinkGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink.Tab.General", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalLinkFeatures.EXLG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalLinkObjectTable);
+			   Feature ExternalLinkGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink.Tab.General", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalLinkFeatures.EXLG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalLinkObjectTable);
  
                  
 			   TextCode ExternalLinkEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalLink.TH.Events", DefaultText = "Events",LocalDefaultText = null, ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature ExternalLinkEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink.Tab.Events", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalLinkFeatures.EXEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalLinkObjectTable);
+			   Feature ExternalLinkEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExternalLink.Tab.Events", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, NameTextCodeCode = "ExternalLinkFeatures.EXEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ExternalLinkObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -687,7 +683,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   ObjectTable ExternalLinkObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ExternalLink" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ExternalLinkTextCode_GeneralOGetSupportEmail = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GetSupportEmail", DefaultText = "The link is not valid. Please contact us at",LocalDefaultText = @"הלינק לא בתוקף יש ליצור קשר עם הכתובת", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ExternalLinkTextCode_GeneralOGetSupportEmail = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GetSupportEmail", DefaultText = "The link is not valid. Please contact us at",LocalDefaultText = @"BS64:IteU15zXmdeg16cg15zXkCDXkdeq15XXp9ejINeZ16kg15zXmdem15XXqCDXp9ep16gg16LXnSDXlNeb16rXldeR16oi", ObjectTableId = ExternalLinkObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

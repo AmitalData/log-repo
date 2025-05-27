@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { LoginService } from './Services/LoginService';
 import { AppTool } from './Tools'
 import { ChildDirective } from './Directives/ChildDirective';
+import { RootService } from './RootService';
 declare var IsMobileDetected;
 
 @Component({
@@ -152,7 +153,9 @@ export class RootComponent_Cust implements AfterViewInit {
       }
     } else if(SessionLocator?.ExternalParams?.Menu?.startsWith("IdentityShaamLandingPage"))
       SessionLocator.DynamicLoader.Load("./Infrastructure/Components/IdentityShaamLandingPageComponent/IdentityShaamLandingPageComponent", this.Child.Location).then()
-    else {
+      else if (RootService.redirectToExternalLink()) 
+        return;
+      else {
       SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.Child.Location)
         .then(cmpRef => {
 

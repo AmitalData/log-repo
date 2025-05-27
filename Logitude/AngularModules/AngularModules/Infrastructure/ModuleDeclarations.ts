@@ -212,6 +212,7 @@ import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Cus
 import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 import { TreeComponent } from './Components/LogitudeComponents/tree';
+import { LandingPageComponent } from './Components/LandingPage/LandingPageComponent';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -433,6 +434,7 @@ export const Components = [
     GridScreenSectionComponent,
     AddEditChildEntityComponent,
     NewCustomObjectComponent,
+    LandingPageComponent,
  ];
  
 export class ModuleDeclarations {
@@ -568,6 +570,7 @@ export class ModuleDeclarations {
                 myResult = SatisfactionSurveyComponent;
                 break;
             }
+            case 'LandingPageComponent': { myResult = LandingPageComponent; }
         }
  
         return myResult;
