@@ -72,6 +72,16 @@ namespace WebFreight.Web
     {
         static public  string DB = @"<root>
 <OCC>
+<DAT name=""CODE"">A80</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>PrepareCourierDefault</DAT>
+<DAT name=""REFERENCE"">GGGQWBLOGITUDE.Lp_PrepareCourierDefault</DAT>
+<DAT name=""PARAMETERS"">CODE=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select * from %%vTable%%%s where code = '@CODE'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select * from @CLOSE_TABLE where code = @CODE</DAT>
+<DAT name=""EXAMPLE_RESULT"">1</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">false</DAT>
+</OCC>
+<OCC>
 <DAT name=""CODE"">A68</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select InvoiceCounterKey, InvoiceItemLineNumber from SupplierInvoiceItemVehicles</DAT>
 <DAT name=""REFERENCE"">CENFMAIN.Lp_UpdateCars</DAT>

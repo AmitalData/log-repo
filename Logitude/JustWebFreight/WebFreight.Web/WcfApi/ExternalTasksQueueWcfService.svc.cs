@@ -390,6 +390,10 @@ namespace WebFreight.Web.WcfApi
                     sqlQuery = sqlQuery.Replace("@NEXTNUM", queryParams["NEXTNUM"]);
                     sqlQuery = sqlQuery.Replace("@OFFSETNUM", queryParams["OFFSETNUM"]);
                 }
+                if (sqlQuery.IndexOf("@CLOSE_TABLE") > -1)
+                {
+                    sqlQuery = sqlQuery.Replace("@CLOSE_TABLE", queryParams["CLOSE_TABLE"]);
+                }
                 using (SqlConnection connection = new SqlConnection())
                 {
                     if (from_global)
