@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "0c3778f4e6ac98961d7850795e367281";
+		public const string HashString = "7e20fb47a898a2eb18b4d59f4f3fa355";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת בקשות",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "27ef",
+			      				    Code =  "2898",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1126,7 +1126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ItemNo ",
+					 						FieldName =  "ItemNo",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsReqList",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -1145,8 +1145,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ItemNo ",
-					  						ListPropertyPath =  "ItemNo ",
+					  						PMPropertyPath =  "ItemNo",
+					  						ListPropertyPath =  "ItemNo",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1164,10 +1164,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ItemNo ",
+					  						FullFieldLable =  "ItemNo",
 					  						DefaultText =  "Item No ",
 					  						FullLocalDefaultText =  "קוד דגם/מק\"ט  ",
-					  						ListFieldLable =  "ItemNo ListLable",
+					  						ListFieldLable =  "ItemNoListLable",
 					  						ListLableDefaultText =  "Item No ",
 					  						ListLocalDefaultText =  "קוד דגם/מק\"ט  ",
 					  						IsForeignKey =  false,
@@ -1191,7 +1191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ItemName ",
+					 						FieldName =  "ItemName",
 					  						ObjectTableName =  "Customs.SupplierInvoiceItemsReqList",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -1210,8 +1210,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ItemName ",
-					  						ListPropertyPath =  "ItemName ",
+					  						PMPropertyPath =  "ItemName",
+					  						ListPropertyPath =  "ItemName",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1228,7 +1228,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ItemName ",
+					  						FullFieldLable =  "ItemName",
 					  						DefaultText =  "Item Description",
 					  						FullLocalDefaultText =  "תאור הדגם  ",
 					  						IsForeignKey =  false,
@@ -1533,6 +1533,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "StatisticQuantityType",
 					  						ListPropertyPath =  "StatisticQuantityType",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1555,6 +1556,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "StatisticQuantityTypeListLable",
 					  						ListLableDefaultText =  "Statistic Quantity Type",
 					  						ListLocalDefaultText =  "יחידת מידה מוצהרת  ",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "OriginCountryCode",
+					  						ObjectTableName =  "Customs.SupplierInvoiceItemsReqList",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsCountry",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "OriginCountryCode",
+					  						ListPropertyPath =  "OriginCountryCode",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "OriginCountryCode",
+					  						DefaultText =  "Origin Country",
+					  						FullLocalDefaultText =  "ארץ מקור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

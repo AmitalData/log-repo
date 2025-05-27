@@ -8,6 +8,8 @@ import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { SIIRequestWebService } from 'Customs/Services/WebServices/SIIRequestWebService';
+import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 
 @Component({
@@ -22,6 +24,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public siiRequestWebService: SIIRequestWebService;
+    public supplierInvoiceItemsReqListWebService: SupplierInvoiceItemsReqListWebService;
     public currentSiiRequest: SIIRequestPM = new SIIRequestPM();
     public entityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
     public DecalarationData: DeclarationPM;
@@ -38,6 +41,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     constructor(public entityArgs: EntityArgs) {
         super();
         this.siiRequestWebService = new SIIRequestWebService();
+        this.supplierInvoiceItemsReqListWebService = new SupplierInvoiceItemsReqListWebService();
     }
 
     ngOnInit(): void {
@@ -74,15 +78,13 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     //#region search product file number by API request:
     SearchProductFileNumber() {
-        console.log(this.ProductFileNumber);
-
-        // TODO: Activate the API request after adding the function in the backend:
-        // this.siiRequestWebService.searchApiByProductFileNumber(value).then((response) => {
-        // }).catch((error) => {
-        //     console.error("Error fetching product file number:", error);
-        // });
+        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(this.ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
+            let myResponse: ServiceResponse = myResult;
+            if (!myResponse?.HasError && myResponse?.Result) {
+                // WHAT TO DO WITH THE ANSWER?
+            }
+        });
     }
-    //#endregion search product file number by API request
 
     //#region acations methods:
     SaveSupplierInvoiceItemsReqList() {

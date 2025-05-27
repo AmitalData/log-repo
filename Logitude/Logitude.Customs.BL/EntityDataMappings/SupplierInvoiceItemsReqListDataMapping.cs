@@ -46,7 +46,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 PMPropertyNames.InvoiceQuantity,
                 PMPropertyNames.InvoiceQuantityType,
                 PMPropertyNames.StatisticQuantity,
-                PMPropertyNames.StatisticQuantityType  
+                PMPropertyNames.StatisticQuantityType,
+                PMPropertyNames.OriginCountryCode,
+                
             });
 
             if (entityPOCO.ManufactureCountryCode != null)
@@ -78,6 +80,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             entityPM.InvoiceQuantity = item.InvoiceQuantity;
             entityPM.StatisticQuantity = item.StatisticQuantity;
+            entityPM.OriginCountryCode = item.OriginCountryCode;
             var muQS = new MeasurmentUnitQueryService(entityPOCO.Tenant);
 
             if (!string.IsNullOrWhiteSpace(item.InvoiceQuantityType))

@@ -24,6 +24,9 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.Customs.Data.EntityPOCOs;
+using static Logitude.Customs.BL.Messaging.SIIRequest.WebAPISendMessage2SIIRequestService;
+using Logitude.Customs.BL.Messaging;
+using Logitude.Customs.BL.Messaging.SIIRequest;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -63,6 +66,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                        ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetProductFileExists(string modelCode,string importerNumber,string originCountry)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
 
-    }
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken =
+                    AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        }
 }
