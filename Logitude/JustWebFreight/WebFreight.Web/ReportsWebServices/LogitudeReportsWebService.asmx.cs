@@ -11983,15 +11983,15 @@ namespace WebFreight.Web.ReportsWebServices
                     if (parent != null)
                     {
                         fict.LocalCloseBalance = parent.LocalCloseBalance;
-                        fict.LocalCloseBalance = parent.LocalCredit;
-                        fict.LocalCloseBalance = parent.LocalDebit;
-                        fict.LocalCloseBalance = parent.LocalOpenBalance;
-                        fict.LocalCloseBalance = parent.ForeignCloseBalance;
-                        fict.LocalCloseBalance = parent.ForeignCredit;
-                        fict.LocalCloseBalance = parent.ForeignDebit;
-                        fict.LocalCloseBalance = parent.ForeignOpenBalance;
+                        fict.LocalCredit = parent.LocalCredit;
+                        fict.LocalDebit = parent.LocalDebit;
+                        fict.LocalOpenBalance = parent.LocalOpenBalance;
+                        fict.ForeignCloseBalance = parent.ForeignCloseBalance;
+                        fict.ForeignCredit = parent.ForeignCredit;
+                        fict.ForeignDebit = parent.ForeignDebit;
+                        fict.ForeignOpenBalance = parent.ForeignOpenBalance;
 
-                        fict.LocalCloseBalance = parent.Balance = 0m;
+                        fict.Balance = parent.Balance = 0m;
                     }
                     fict.Type = null;
                 });

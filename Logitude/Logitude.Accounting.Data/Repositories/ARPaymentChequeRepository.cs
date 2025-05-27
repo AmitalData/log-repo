@@ -117,7 +117,10 @@ namespace Logitude.Accounting.Data.Repositories
         public string CheckARPaymentChequeAlreadyExists(string ChequeNumber, string BankId, string BankAccount, string BankBranch, int tenant ,bool useLocal, string arPaymentId = null)
         {
             var existingCheques = new StringBuilder();
-          
+
+            // temporary canceled until spec will be fixed
+            return existingCheques.ToString();
+
             var existingCheque = context.ARPaymentCheques
                 .FirstOrDefault(a => a.Tenant == tenant &&
                                      a.ChequeNumber == ChequeNumber &&
@@ -130,23 +133,26 @@ namespace Logitude.Accounting.Data.Repositories
             {
                 var invoiceContext = InvoiceContext.GetContext(tenant);
 
-                var paymentNumber = invoiceContext.ARPayments
-                   .Where(a => a.Tenant == tenant && a.Id == existingCheque.PaymentId)
+                 var paymentNumber = invoiceContext.ARPayments
+                   .Where(a => a.Tenant == tenant && a.Id == existingCheque.PaymentId && a.StatusCode != "VD" )
                    .Select(a => a.PaymentNo)
                    .FirstOrDefault();
 
-
-        string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant, useLocal);
-                string textCodeAlreadyExist = msg.Replace("ChequeNumber", existingCheque.ChequeNumber)
-                    .Replace("PaymentNumber", paymentNumber)
-                    .Replace("LocalAmount", existingCheque.LocalAmount.ToString(AmountFormat));
-
-                if (existingCheque.ValueDate != null)
+                if(!string.IsNullOrWhiteSpace(paymentNumber))
                 {
-                    textCodeAlreadyExist = textCodeAlreadyExist.Replace("ValueDate", existingCheque.ValueDate.ToString(DateFormat) ?? " " );
-                }
+                    string msg = TranslateTextsClass.Translate("ARPaymentCheque.O.ChequeAlreadyexists", tenant, useLocal);
+                    string textCodeAlreadyExist = msg.Replace("ChequeNumber", existingCheque.ChequeNumber)
+                        .Replace("PaymentNumber", paymentNumber)
+                        .Replace("LocalAmount", existingCheque.LocalAmount.ToString(AmountFormat));
 
-                existingCheques.AppendLine(textCodeAlreadyExist);
+                    if (existingCheque.ValueDate != null)
+                    {
+                        textCodeAlreadyExist = textCodeAlreadyExist.Replace("ValueDate", existingCheque.ValueDate.ToString(DateFormat) ?? " ");
+                    }
+
+                    existingCheques.AppendLine(textCodeAlreadyExist);
+                }
+               
             }
 
             return existingCheques.ToString();

@@ -270,7 +270,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
 
                     CardRepository repo = new CardRepository(entityPOCO.Tenant);
-                    Card card = repo.GetCardByGLAccountId(entityPOCO.Id, entityPOCO.Tenant, true);
+                    Card card = repo.GetCardByGLAccountId(entityPOCO.Id, entityPOCO.Tenant, false);
                     if (card != null)
                     {
                         entityPM.VatNumber = card.VatNumber;
@@ -289,28 +289,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     List<string> partnerTypes = new List<string>() { "AC", "CS", "AG", "AL", "CG", "SG", "SL", "TR", "VD", "WH" };
                     Card card = repo.GetCardByGLAccountId(gLAccountCurrency.MainGLAccountId, entityPOCO.Tenant, false, partnerTypes);
                     entityPM.ParentCurrencyGLAccountCardId = card?.Id;
+                    if (string.IsNullOrEmpty(entityPM.CardCountryCode))
+                    {
+                        entityPM.CardCountryCode = card?.CountryCode;
+                    }
                 }
 
-                //if (entityPOCO.ClientId != null)
-                //{
-                //    Card clientCard = CardRepository.GetSingleCard(entityPOCO.ClientId, entityPOCO.Tenant, true);
-                //    if (clientCard != null)
-                //    {
-                //        entityPM.ClientName = clientCard.LocalName;
-                //        entityPM.ClientCode = clientCard.Code;
-                //    }
-                //}
-
-                //if (entityPOCO.VendorId != null)
-                //{
-                //    Card vendorCard = CardRepository.GetSingleCard(entityPOCO.ClientId, entityPOCO.Tenant, true);
-                //    if (vendorCard != null)
-                //    {
-                //        entityPM.VendorName = vendorCard.LocalName;
-                //        entityPM.VendorCode = vendorCard.Code;
-                //    }
-                //}
-
+              
 
                 if (entityPOCO.Inactive == true)
                 {
