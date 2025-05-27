@@ -10,7 +10,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.Infrastructure.BL.Validators;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CommonDataModel
 {
@@ -58,9 +58,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel
                 if (string.IsNullOrEmpty(link))
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Link not found");
 
-                response.Headers.Location = new Uri(link);
-
-                return response;
+                return Request.CreateResponse(link);
             }
             catch (AutenticationException e)
             {
@@ -69,7 +67,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel
                 {
                     authToken = new AuthenticationTokenRepository().GetSingleToken(token);
                     string supportEmail = new TenantManagementQuery().GetSinglePM(authToken.Tenant)?.EcommerceSupportEmail;
-                    msg = InfrastructureTranslateTextsClass.Translate("General.O.GetSupportEmail", authToken.Tenant) + supportEmail;
+                    msg = new TextCodeRepository(authToken.Tenant).GetTextCodeByTenantAndCode("General.O.GetSupportEmail", authToken.Tenant)?.LocalDefaultText + " " + supportEmail;
+                    return Request.CreateResponse(HttpStatusCode.BadGateway, msg);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.Unauthorized, msg);

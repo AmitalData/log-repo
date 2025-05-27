@@ -33,23 +33,15 @@ import { SATInterfaceSettingPMService } from '../../../Invoice/Services/Standard
 import { DateTool } from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
-declare var changeFavicon: any;
-declare var changeTitle: any;
 import { RulesValidator } from '../../Validators/RulesValidator';
 import { Environment } from '../../Locators/Environment';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
-//import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 import { v4 as uuidv4 } from 'uuid';
-
-import {
-    AuthenticateService,
-    LogitudeTokensService,
-    AuthorizedUser,
-} from 'collaboration-tool-core';
+import { AuthenticateService, LogitudeTokensService, AuthorizedUser } from 'collaboration-tool-core';
 import { SessionInfo as CToolSessionInfo } from 'collaboration-tool-core';
   
 @Component({
@@ -254,13 +246,6 @@ export class LoginComponent implements OnInit {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
                     var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
-                    const token: string = new URLSearchParams(window.location.search).get('Token');
-                    
-                    if (menuName === 'redi' && token) {
-                        const origin: string = window.location.origin.replace('localhost:4200', 'localhost:9996');
-                        location.href = origin + '/api/ExternalLink/GetForward?Token=' + token;
-                        return;
-                    }
                     
                     if (
                         menuName == 'logbox' ||

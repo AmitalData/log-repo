@@ -19,7 +19,15 @@ import { Observable } from 'rxjs';
         }
         
         .data-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        LogLabel, LogTextBox {
             width: 200px;
+            display: inline-block;
         }
 
         BooleanFilter {
