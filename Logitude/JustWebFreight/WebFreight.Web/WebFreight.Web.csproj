@@ -85,15 +85,15 @@
       <HintPath>..\..\packages\Autofac.WebApi.3.1.0\lib\net40\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
-     <Reference Include="AutoMapper, Version=2.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+    <Reference Include="AutoMapper, Version=2.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
-</Reference>
-     <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+    </Reference>
+    <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Azure.Core.1.44.1\lib\net472\Azure.Core.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Portable.BouncyCastle.1.8.9\lib\net40\BouncyCastle.Crypto.dll</HintPath>
-     </Reference>
+    </Reference>
     <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
     </Reference>
@@ -107,13 +107,23 @@
       <HintPath>..\..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\EF6\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\EF6\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Design, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\EF6\Devart.Data.Oracle.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Vs, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Library\EF6\Devart.Data.Oracle.Vs.dll</HintPath>
     </Reference>
     <Reference Include="DevDefined.OAuth">
       <HintPath>..\..\packages\DevDefined.OAuth.0.2\lib\DevDefined.OAuth.dll</HintPath>
@@ -304,12 +314,12 @@
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
     </Reference>
-     <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=8.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=8.0.0.1, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Configuration.Binder.8.0.1\lib\net462\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
-  </Reference>
-     <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.35.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.IdentityModel.Abstractions.6.35.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
-     </Reference>
+    </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.FileExtensions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Extensions.Configuration.FileExtensions.8.0.0\lib\net462\Microsoft.Extensions.Configuration.FileExtensions.dll</HintPath>
     </Reference>
@@ -688,13 +698,13 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
-     <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
     </Reference>
-     <Reference Include="System.ClientModel, Version=1.1.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+    <Reference Include="System.ClientModel, Version=1.1.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.ClientModel.1.1.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
     </Reference>
-     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <Private>True</Private>
     </Reference>
@@ -713,7 +723,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
-     <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.DiagnosticSource.6.0.1\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Diagnostics.TraceSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -730,7 +740,7 @@
       <HintPath>..\..\packages\System.Globalization.Calendars.4.0.1\lib\net46\System.Globalization.Calendars.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
-     </Reference>
+    </Reference>
     <Reference Include="System.Diagnostics.EventLog, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.EventLog.8.0.0\lib\net462\System.Diagnostics.EventLog.dll</HintPath>
     </Reference>
@@ -761,10 +771,10 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-       <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
@@ -806,13 +816,13 @@
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
-     <Reference Include="System.Memory.Data, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Memory.Data, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Memory.Data.8.0.0\lib\net462\System.Memory.Data.dll</HintPath>
     </Reference>
-     <Reference Include="System.Memory.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Memory.Data, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Memory.Data.6.0.0\lib\net461\System.Memory.Data.dll</HintPath>
     </Reference>
-     <Reference Include="System.Net">
+    <Reference Include="System.Net">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -955,13 +965,13 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-     <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Channels.8.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
     </Reference>
-     <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
     </Reference>
-     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -1084,18 +1094,18 @@
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
-     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\DeclarationPaymentWebServiceController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ShipmentExtendedController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\FreightForwarderReferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_PreferenceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginConnectionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\CB_PreferenceController.cs" />
-     <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
+    <Compile Include="Controllers\HybridModel\AccountingPartnerHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityDWHybridController.cs" />
     <Compile Include="Controllers\HybridModel\ActivityHybridController.cs" />
     <Compile Include="Controllers\HybridModel\AddressHybridController.cs" />
@@ -1166,14 +1176,14 @@
     <Compile Include="Controllers\HybridModel\VendorHybridController.cs" />
     <Compile Include="Controllers\HybridModel\VesselHybridController.cs" />
     <Compile Include="Controllers\HybridModel\WarehouseHybridController.cs" />
-     <Compile Include="Controllers\InfrastructureModel\Extended\NLogController.cs" />
-     <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\NLogController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleClassificationController.Generated.cs" />
-        <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
-     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
-     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
-     <Compile Include="Controllers\AccountingModel\Redempt_a_ChequeController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
+    <Compile Include="Controllers\AccountingModel\Redempt_a_ChequeController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
     <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
@@ -1248,10 +1258,10 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentReferanceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
-     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FreightForwarderReferenceController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\FreightForwarderReferenceController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentReferanceController.Generated.cs" />
     <Compile Include="Controllers\WebServices\MamanWebServiceController.cs" />
-     <Compile Include="Controllers\Texas\TaxesController.cs" />
+    <Compile Include="Controllers\Texas\TaxesController.cs" />
     <Compile Include="Controllers\WebServices\SatisfactionSurveyController.cs" />
     <Compile Include="Controllers\WebServices\Services\MamanService.cs" />
     <Compile Include="Controllers\WebServices\WindWardWebServiceController.cs" />
@@ -2151,11 +2161,11 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
-     <Compile Include="DataProviders\ShipmentFormDataProvider.cs" />
+    <Compile Include="DataProviders\ShipmentFormDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginCountDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginDataProvider.cs" />
-     <Compile Include="DataProviders\NewAccountingAgingDataProvider.cs" />
-     <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
+    <Compile Include="DataProviders\NewAccountingAgingDataProvider.cs" />
+    <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
     <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
     <Compile Include="DataProviders\ControlForInvoiceLinesDataProvider.cs" />
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
@@ -6953,8 +6963,8 @@
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\MonthlyConversionManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
-     <Compile Include="ReportsWebServices\LogitudeReports\Customs\CustomsCollateralLoader.cs" />
-     <Compile Include="ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Customs\CustomsCollateralLoader.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\ShipmentFormLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\CertificateOfOriginCountLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Customs\CertificateOfOriginLoader.cs" />
@@ -8494,8 +8504,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-     <OutputPath>..\Library\Bin\</OutputPath>
-   </PropertyGroup>
+    <OutputPath>..\Library\Bin\</OutputPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\</OutputPath>
@@ -8524,7 +8534,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
     <OutputPath>bin\</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
-   </PropertyGroup>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

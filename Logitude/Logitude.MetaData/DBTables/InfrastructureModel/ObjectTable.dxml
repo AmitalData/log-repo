@@ -112,6 +112,7 @@
   </Column>
   <Column
     Name="EditableFromAutoCompleteWindow"
+    ShortName="EditableFromAutoCompleteWin"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -500,18 +501,18 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="AvailableInDocumentTypes"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="DBTableShortName"
     OldNames="DBTableShortName1"
     Type="varchar"
     Size="30">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="AvailableInDocumentTypes"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
