@@ -47,9 +47,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 		private IQueryable<InvoiceApiCommunicationLog> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<InvoiceApiCommunicationLog> iQueryable, int tenant)
         {
-			throw new NotImplementedException();
-		}
-				private IQueryable<InvoiceApiCommunicationLog> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InvoiceApiCommunicationLog> iQueryable, int tenant)
+            return iQueryable;
+        }
+        private IQueryable<InvoiceApiCommunicationLog> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<InvoiceApiCommunicationLog> iQueryable, int tenant)
         {
 			return iQueryable;
 		}
