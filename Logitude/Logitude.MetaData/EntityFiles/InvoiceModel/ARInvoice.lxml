@@ -18213,7 +18213,7 @@
            CanAutomateSetValue="false"
            DisplayInAutomationAsEnitity="false"
            DisplayInRequiredFields="false"
-           HasTemplate="true"
+           HasTemplate="false"
            IsCustom="false"
            IsSpellCheckedFullFieldLable="false"
            IsSpellCheckedHelpLocalDefaultText="false"
