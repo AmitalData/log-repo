@@ -21,6 +21,11 @@ export class SupplierInvoiceItemsReqListList {
 	ManufacturerName: string;
 	Remarks: string;
 	DutchRequested: boolean;
+	ItemNo: string;
+	InvoiceQuantity: number;
+	InvoiceQuantityType: string;
+	StatisticQuantity: number;
+	StatisticQuantityType: string;
 	
 }
  

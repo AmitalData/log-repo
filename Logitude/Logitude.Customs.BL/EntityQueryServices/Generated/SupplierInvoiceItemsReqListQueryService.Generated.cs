@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class SupplierInvoiceItemsReqListQueryService: EntityQueryService<SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListKeys,SupplierInvoiceItemsReqListPM,SupplierInvoiceItemPM,SupplierInvoiceItemKeys>
+   public partial class SupplierInvoiceItemsReqListQueryService: EntityQueryService<SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListKeys,SupplierInvoiceItemsReqListPM,object,SupplierInvoiceItemsReqListKeys>
    {
    
         SupplierInvoiceItemsReqListRepository repository;
