@@ -10,6 +10,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.RestRequestExecutor;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -66,14 +67,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-
                 string token = HttpContext.Current.Request.Headers["Token"];
-                var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
                 string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
 
-                var factory = new SIIRequestApiRequestFactory(auth.Tenant);
+                var factory = new SIIRequestApiRequestFactory(authToken.Tenant);
                 var credentials = factory.BuildCredentials(interfaceName, partnerCode);
 
                 var dto = new ProductFileRequestDto
@@ -99,7 +100,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                           apiResp.Result.productFiles.Count > 0;
 
 
-                SecurityUtility.AuthenticationOnTenant(auth.Tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, fileExists);
