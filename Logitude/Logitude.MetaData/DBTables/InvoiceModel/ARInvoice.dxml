@@ -884,6 +884,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsApprovalDone"
+    Type="bit"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
