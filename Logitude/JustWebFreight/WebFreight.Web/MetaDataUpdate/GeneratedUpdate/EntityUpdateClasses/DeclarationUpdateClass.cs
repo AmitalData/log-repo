@@ -21,7 +21,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "8f6c7702a4e3fc7635fceb2075ac8f9a";
+		public const string HashString = "fb3a8174b4255c738bb73082427f5384";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -20536,16 +20536,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen DeclarationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Declaration.HeaderScreen", Name = "Header Screen", ObjectTableId = DeclarationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
+	         Screen DeclarationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Declaration.HeaderScreen", Name = "Header Screen", ObjectTableId = DeclarationObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 2, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DeclarationNumberandVersionId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.ExternalDeclarationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.TaxationDateTime", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.HatraDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DeclarationStatusTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationHeaderScreenScreenField7 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 1, ScreenId = DeclarationHeaderScreenScreen0.Id,ScreenCode = DeclarationHeaderScreenScreen0.Code, ObjectFieldCode = "Customs.Declaration.DepartmentName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
 		    DeclarationObjectTable.HeaderScreenId = DeclarationHeaderScreenScreen0.Id;
 		    DeclarationObjectTable.HeaderScreenCode = DeclarationHeaderScreenScreen0.Code;
 
 	   		  
 	      
 
-	         Screen DeclarationGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Declaration.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DeclarationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = false }, screensRepository, tenantScreens);
-        
+	         Screen DeclarationGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "Customs.Declaration.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = DeclarationObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.CustomFileNo", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.CustomerId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.DeclarationOfficeCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.ImporterId", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsDeclarationCustomsDeclarationGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = DeclarationGeneralTabScreenScreen1.Id,ScreenCode = DeclarationGeneralTabScreenScreen1.Code, ObjectFieldCode = "Customs.Declaration.ProcedureCurrentCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

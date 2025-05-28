@@ -24965,9 +24965,50 @@
     IsReadOnly="true"
     IsHeaderScreen="true"
     Code="&quot;Customs.Declaration.HeaderScreen&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    NumberOfColumns="4"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;DeclarationNumberandVersionId&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;ProcedureCurrentName&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="1"
+        Row="0"
+        ObjectFieldName="&quot;ExternalDeclarationNumber&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="1"
+        Row="1"
+        ObjectFieldName="&quot;DeclarationOfficeName&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="2"
+        Row="0"
+        ObjectFieldName="&quot;TaxationDateTime&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="2"
+        Row="1"
+        ObjectFieldName="&quot;HatraDate&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="3"
+        Row="0"
+        ObjectFieldName="&quot;DeclarationStatusTypeName&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="3"
+        Row="1"
+        ObjectFieldName="&quot;DepartmentName&quot;"
+        ScreenName="Header Screen" />
+    </ScreenFields>
   </Screen>
   <Screen
     Name="&quot;General Tab Screen&quot;"
@@ -24975,9 +25016,35 @@
     IsReadOnly="false"
     IsHeaderScreen="false"
     Code="&quot;Customs.Declaration.GeneralTabScreen&quot;"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    NumberOfColumns="1"
+    NumberOfRows="5">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;CustomFileNo&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;CustomerId&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;DeclarationOfficeCode&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;ImporterId&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;ProcedureCurrentCode&quot;"
+        ScreenName="General Tab Screen" />
+    </ScreenFields>
   </Screen>
   <Tab
     TabName="&quot;Corrections&quot;"
