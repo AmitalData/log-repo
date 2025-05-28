@@ -176,6 +176,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TransferError).HasColumnName("TransferError");
             this.Property(t => t.IsTransferStarted).HasColumnName("IsTransferStarted");
             this.Property(t => t.IsApprovalFailed).HasColumnName("IsApprovalFailed");
+            this.Property(t => t.IsApprovalDone).HasColumnName("IsApprovalDone");
             this.Property(t => t.TransferStatusCode).HasColumnName("TransferStatusCode");
             this.Property(t => t.AccountingExternalCode).HasColumnName("AccountingExternalCode");
             this.Property(t => t.ApprovedDate).HasColumnName("ApprovedDate");

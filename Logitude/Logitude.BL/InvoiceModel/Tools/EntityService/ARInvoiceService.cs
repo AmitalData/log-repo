@@ -380,6 +380,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.InvoiceEntities != null && entityPM.InvoiceEntities.Count > 0) logtext += ", Interest Report Id" + entityPM.InvoiceEntities[0].EntityId;
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
                 if (CheckIfReportConnectedToInvoice(entityPM))
                 {
                     string status = "2";
@@ -392,6 +393,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
                 this.UpdateInterestReportFields(entityPM);
+
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
 

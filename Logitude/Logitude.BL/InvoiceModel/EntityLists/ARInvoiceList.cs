@@ -225,6 +225,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string InvoiceSeries { get; set; }
         public bool IsApprovalFailed { get; set; }
         public DateTime? ReferenceDate { get; set; }
+        public bool IsApprovalDone { get; set; }
 
 
     }

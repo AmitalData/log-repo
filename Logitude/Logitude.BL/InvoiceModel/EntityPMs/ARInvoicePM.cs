@@ -18,6 +18,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string AutoCreditedByARInvoiceId { get; set; }
         public bool IsApprovalFailed { get; set; }
+        public bool IsApprovalDone { get; set; }
         public string AutoCreditedByARInvoiceNumber { get; set; }
 
         public string InvoiceNumber { get; set; }

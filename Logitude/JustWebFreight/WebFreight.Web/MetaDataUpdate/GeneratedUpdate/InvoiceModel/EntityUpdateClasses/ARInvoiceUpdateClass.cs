@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
- 		public const string HashString = "25e442ef49661ce8daa0f3b41f75a7d1";
+ 		public const string HashString = "9f8b4580bab3c2529ca0c3cc004ce429";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
 
         {                     
@@ -14939,9 +14939,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsApprovalFailed",
 					  						DefaultText =  "Is Approval Failed ",
-					  						ListFieldLable =  "IsApprovalFailedListLable",
+											FullLocalDefaultText = "אישור החשבונית נכשל",
+											ListFieldLable =  "IsApprovalFailedListLable",
 					  						ListLableDefaultText =  "IsApprovalFailed ",
-					  						IsForeignKey =  false,
+											ListLocalDefaultText = "אישור החשבונית נכשל",
+											IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -15157,8 +15159,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 											EnableFullscreenTextBox = false,
 						
                }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
- 
-	    }
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "IsApprovalDone",
+                ObjectTableName = "ARInvoice",
+                FieldsDataType = "Boolean",
+                MinLength = 0,
+                MaxLength = 0,
+                IsRequired = false,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 0,
+                DisplayInList = true,
+                IsCustomFilter = false,
+                IsListFilter = false,
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "IsApprovalDone",
+                ListPropertyPath = "IsApprovalDone",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "ARInvoice",
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "IsApprovalDone",
+                DefaultText = "IsApprovalDone",
+                ListFieldLable = "IsApprovalDoneListLable",
+                ListLableDefaultText = "IsApprovalDone",
+                IsForeignKey = false,
+                IsMaxLength = false,
+                NoMetaDataField = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                DisplayInRequiredFields = false,
+                HasTemplate = false,
+                IsCustom = false,
+                EnableFullscreenTextBox = false,
+
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
+        }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
 	    {  
@@ -17112,9 +17175,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceODigitalInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.DigitalInvoice", DefaultText = "Digital invoice",LocalDefaultText = @"חשבונית דיגטלית", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-   
-	    
-}
+            TextCode ARInvoiceTextCode_ARInvoiceOReconfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.Reconfirm", DefaultText = "Reconfirm", LocalDefaultText = @"אשר מחדש", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+
+        }
 
     
 
