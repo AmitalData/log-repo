@@ -35,7 +35,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext ctx = CustomContext.GetContext(authToken.Tenant);
                 var qs = new SupplierInvoiceItemsReqListQueryService(ctx);
-                qs.InitializeSettings();
 
                 SupplierInvoiceItemsReqListPM pm;
 

@@ -15,7 +15,7 @@ using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-    public partial class SupplierInvoiceItemsReqListQueryService : EntityQueryService<SupplierInvoiceItemsReqList, SupplierInvoiceItemsReqListKeys, SupplierInvoiceItemsReqListPM, SupplierInvoiceItemPM, SupplierInvoiceItemKeys>
+    public partial class SupplierInvoiceItemsReqListQueryService : EntityQueryService<SupplierInvoiceItemsReqList, SupplierInvoiceItemsReqListKeys, SupplierInvoiceItemsReqListPM, object, SupplierInvoiceItemsReqListKeys>
     {
         public SupplierInvoiceItemsReqListPM GetSinglePM(string siiRequestId, string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,int tenant)
         {
