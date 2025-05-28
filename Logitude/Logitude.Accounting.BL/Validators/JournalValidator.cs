@@ -1186,7 +1186,7 @@ accountingValidationContextServiceProvider
                 }
                 if (tenantFullAccountingSettingPM.CustomerControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, "CustomerControlAccountId", tenant));
                 }
 
                 if (tenantFullAccountingSettingPM.FileControlAccountId == glAccId)
@@ -1325,6 +1325,26 @@ accountingValidationContextServiceProvider
 
 
         }
+
+        private string TranslateSimilarAccountId(bool isCreditAccount, string fullAcountingSetting, int tenant)
+        {
+            var accountFieldName = isCreditAccount ? "CreditAccountId": "DebitAccountId";
+
+            bool useLocal = ToUseLocalText(tenant);
+
+
+            string accountTranslation = TranslateTextsClass.Translate($"JournalLine.F.{accountFieldName}", tenant, useLocal) ?? accountFieldName;
+            string fullAcountingSettingTransalation = TranslateTextsClass.Translate($"FullAccountingSetting.F.{fullAcountingSetting}", tenant, useLocal) ?? fullAcountingSetting;
+
+            string error = TranslateTextsClass.Translate($"JournalLine.O.AccountIdenticalToFullAccountingSetting", tenant, useLocal)
+                .Replace("{account}", accountTranslation)
+                .Replace("{setting}", fullAcountingSettingTransalation);
+
+            error += " " + _JLineNumberTExt;
+
+            return error;
+        }
+
         private void CheckGLAccountThin(
     bool isCreditSide,
     MyList<string> errorsList,

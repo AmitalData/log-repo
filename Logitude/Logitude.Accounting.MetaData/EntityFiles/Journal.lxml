@@ -5530,6 +5530,13 @@
       LocalDefaultText="&quot;תיקון דורש הרשאת על. נא לפנות לעמיטל&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.AccountIdenticalToFullAccountingSetting&quot;"
+      DefaultText="&quot;{account} is identical to {setting} in the full accounting settings&quot;"
+      LocalDefaultTextBack_up="&quot;{account} זהה ל {setting} שבהגדרות הנהלת חשבונות&quot;"
+      LocalDefaultText="&quot;BS64:InthY2NvdW50fSDXlteU15Qg15wge3NldHRpbmd9INep15HXlNeS15PXqNeV16og15TXoNeU15zXqiDXl9ep15HXldeg15XXqiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
