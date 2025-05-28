@@ -526,6 +526,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string fromApplicationId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FromApplicationId  
+	   {
+	    
+	     get
+		{
+		   return fromApplicationId;
+		 }
+		 set
+		 {
+		   if(fromApplicationId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromApplicationId",OldValue=fromApplicationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fromApplicationId=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

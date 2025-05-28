@@ -134,6 +134,11 @@ export class SIIRequestPM {
     public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
        
 	 
+    private fromApplicationId: string;
+    public get FromApplicationId() { return this.fromApplicationId; }
+    public set FromApplicationId(newValue: string) { if (this.fromApplicationId != newValue) { this.fromApplicationId = newValue; this.MarkAsDirty("FromApplicationId"); } }
+       
+	 
 
     public OldEntityPM: SIIRequestPM;
 		

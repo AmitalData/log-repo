@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         WareHouseCity, 
 	         IsClosed, 
 	         Remarks, 
-	         ContactId,
+	         ContactId, 
+	         FromApplicationId,
 	      }
 
 
@@ -60,7 +61,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ContactTel, 
 	         ContactCellPhone, 
 	         ContactFax, 
-	         ContactId,
+	         ContactId, 
+	         FromApplicationId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -117,6 +119,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
             {
 				entityPOCO.ContactId = entityPM.ContactId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromApplicationId))
+            {
+				entityPOCO.FromApplicationId = entityPM.FromApplicationId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -180,6 +187,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ContactId = entityPOCO.ContactId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromApplicationId))
+            {
+					entityPM.FromApplicationId = entityPOCO.FromApplicationId;
+            }
+
 		}
 
 		public void PMToOldPM(SIIRequestPM entityPM, SIIRequestPM oldEntityPM)
@@ -234,6 +246,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
             {
                 oldEntityPM.ContactId = entityPM.ContactId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromApplicationId))
+            {
+                oldEntityPM.FromApplicationId = entityPM.FromApplicationId;
             }
 			
 		}

@@ -50,6 +50,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ContactId { get; set; }
 	      
         public virtual User User { get; set; }
+        [Column("FromApplicationId")]
+	    public string FromApplicationId { get; set; }
     }
 }
 	 
