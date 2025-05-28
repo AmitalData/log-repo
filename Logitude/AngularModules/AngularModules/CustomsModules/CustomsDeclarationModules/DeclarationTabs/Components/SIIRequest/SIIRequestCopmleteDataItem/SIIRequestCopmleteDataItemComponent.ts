@@ -7,9 +7,11 @@ import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
-import { SIIRequestWebService } from 'Customs/Services/WebServices/SIIRequestWebService';
+import { SIIRequestWebService, SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
 import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { SupplierInvoiceItemsReqListPMService } from 'Customs/Services/StandardPMs/SupplierInvoiceItemsReqListPMService';
+import { SupplierInvoiceItemsForSIIRequestLine } from '../SIIRequestTabs/SIIRequestComponent';
 
 
 @Component({
@@ -25,8 +27,9 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public siiRequestWebService: SIIRequestWebService;
     public supplierInvoiceItemsReqListWebService: SupplierInvoiceItemsReqListWebService;
+    public supplierInvoiceItemsReqListPMService: SupplierInvoiceItemsReqListPMService = new SupplierInvoiceItemsReqListPMService();
     public currentSiiRequest: SIIRequestPM = new SIIRequestPM();
-    public entityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
+    public entityPM: SupplierInvoiceItemsReqListPM;
     public DecalarationData: DeclarationPM;
     public DataContext = this;
     public ObjectTableName: string = "Customs.SupplierInvoiceItemsReqList";
@@ -42,6 +45,9 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         super();
         this.siiRequestWebService = new SIIRequestWebService();
         this.supplierInvoiceItemsReqListWebService = new SupplierInvoiceItemsReqListWebService();
+        // this.supplierInvoiceItemsReqListPMService = new SupplierInvoiceItemsReqListPMService();
+        this.entityPM = new SupplierInvoiceItemsReqListPM();
+
     }
 
     ngOnInit(): void {
@@ -54,15 +60,17 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.SetPropertiesEnabled();
     }
 
+    invoiceItemReq: SupplierInvoiceItemsForSIIRequestLine;
     SetWindowArgs(args: any) {
         this.currentSiiRequest = args.SIIRequest;
         this.DecalarationData = args.Decalaration;
+        this.invoiceItemReq = args.invoiceItemReq;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
         this.filterAgrs = args.filterAgrs;
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
-        this.entityPM = new SupplierInvoiceItemsReqListPM(this.currentSiiRequest);
+        this.entityPM = args.entityPMSupplierInvoiceItemsReqListPM;
         console.log(this.entityPM);
     }
 
@@ -79,34 +87,34 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     //#region search product file number by API request:
     SearchProductFileNumber(ProductFileNumber: string = '') {
         let productFileExists: boolean = false;
-        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
-            let myResponse: ServiceResponse = myResult;
-            if (!myResponse?.HasError && myResponse?.Result) {
-                // TODO:
-                // 1. Handle the response data:
-                // if exist propduct file - return true
-                //  else false and reset this.ProductFileNumber = '' (cannot save product file are not exist)
+        this.SaveSupplierInvoiceItemsReqList();
+
+        // this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
+        //     let myResponse: ServiceResponse = myResult;
+        //     if (!myResponse?.HasError && myResponse?.Result) {
+        //         // TODO:
+        //         // 1. Handle the response data:
+        //         // if exist propduct file - return true
+        //         //  else false and reset this.ProductFileNumber = '' (cannot save product file are not exist)
 
 
-                // TODO: 2. check mandatory fields and display error alert:
-                this.checkMandatoryFields();
+        //         // TODO: 2. check mandatory fields and display error alert:
+        //         this.checkMandatoryFields();
 
-                //TODO: 3.change to real response check
-                // update productFileExists based on the response
-                if (productFileExists) {
-                    // this.DutchGroupItem = 0;
-                    this.SaveSupplierInvoiceItemsReqList();
-                }
-                else {
-                    // this.DutchGroupItem = 1;
-                    this.entityPM.ProductFileNumber = '';
-                    // TODO: Display a warning alert and ask the user if they still want to save the data even though the product file does not exist
-                    // if yes- call to this.SaveSupplierInvoiceItemsReqList();
-                    // else- close or stay in the screen
+        //         //TODO: 3.change to real response check
+        //         // update productFileExists based on the response
+        //         if (productFileExists) {
+        //             this.SaveSupplierInvoiceItemsReqList();
+        //         }
+        //         else {
+        //             this.entityPM.ProductFileNumber = '';
+        //             // TODO: Display a warning alert and ask the user if they still want to save the data even though the product file does not exist
+        //             // if yes- call to this.SaveSupplierInvoiceItemsReqList();
+        //             // else- close or stay in the screen
 
-                }
-            }
-        });
+        //         }
+        //     }
+        // });
     }
 
     //#region acations methods:
@@ -115,9 +123,24 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
     SaveSupplierInvoiceItemsReqList() {
         // TODO 4. Update RequestRequiredStatus to 0/1/2 base on the missing mandatory fields
-                
-  
         // TODO: save entityPM data to the server
+        this.entityPM.DeclarationId = this.DecalarationData?.Id;
+        this.entityPM.InvoiceCounterKey = this.invoiceItemReq.CounterKey;
+        this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.LineNumber;
+
+        this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
+            let myResponse: ServiceResponse = myResult;
+            console.log(myResponse);
+            debugger
+            if (!myResponse?.HasError && myResponse?.Result) {
+                console.log(myResponse?.Result);
+
+            }
+        }, error => {
+            console.error('Error saving SupplierInvoiceItemsReqList:', error);
+        });
+
+
     }
 
     CancelSupplierInvoiceItemsReqList() {
@@ -197,11 +220,12 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityPM.StatisticQuantityType = newValue;
     }
     public get DutchRequested(): boolean {
+        // this.entityPM.EntityParentPM.DisableMarkAsDirty = true;
         return this.entityPM?.DutchRequested;
     }
     public set DutchRequested(newValue: boolean) {
         this.entityPM.DutchRequested = newValue;
-        this.entityPM.EntityParentPM.DisableMarkAsDirty = true;
+        // this.entityPM.EntityParentPM.DisableMarkAsDirty = true;
     }
     // public get DutchGroupItem(): boolean {
     //     return this.entityPM?.DutchGroupItem;

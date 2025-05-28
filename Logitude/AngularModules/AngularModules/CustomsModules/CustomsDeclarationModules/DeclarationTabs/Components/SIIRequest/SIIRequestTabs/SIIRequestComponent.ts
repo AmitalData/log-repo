@@ -21,6 +21,7 @@ import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollect
 import { SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
 import { UserPMService } from 'Common/Services/StandardPMs/UserPMService';
 import { SupplierInvoiceItemLine } from 'CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
+import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
 
 @Component({
     selector: 'SIIRequestComponent',
@@ -34,6 +35,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     public siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
+    public supplierInvoiceItemsReqListWebService: SupplierInvoiceItemsReqListWebService;
     public userPmService: UserPMService = new UserPMService();
     public supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
     public entityResourceService: EntityResourceService = new EntityResourceService();
@@ -66,6 +68,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     constructor(public entityArgs: EntityArgs, public CD: ChangeDetectorRef) {
         super();
         this.SelectedInvoiceItemsReqList = new ObservableCollection([]);
+        this.supplierInvoiceItemsReqListWebService = new SupplierInvoiceItemsReqListWebService();
+
     }
 
     ngOnInit(): void {
@@ -220,11 +224,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             Decalaration: this.DecalarationData,
             SIIRequest: this.entityPM,
             invoiceItemReq: this.SelectedRow,
+            entityPMSupplierInvoiceItemsReqListPM: new SupplierInvoiceItemsReqListPM(),
             IsNewOrEdit: SiiRequestMode.IsEdit,
             filterAgrs: this.initfilterAgrs,
             isAllowChange: this.isAllowChange,
         };
-
         if (this.isOpen) return;
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
@@ -233,6 +237,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.Title = TextCodeTranslator.Translate("Customs.SIIRequest.O.CompletData");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
+
+        //TODO: get by ids if exists and send data:
+        //this.supplierInvoiceItemsReqListWebService
+
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestCopmleteDataItem/SIIRequestCopmleteDataItemComponent');
         args.logWindow = logWindow;
         logWindow.WindowClosed.subscribe(($event: any) => {
