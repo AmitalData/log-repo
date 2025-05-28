@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("SupplierInvoiceItemsReqLists", "Customs");
 		
-		    this.HasKey(t => new { t.DeclarationId, t.LineNumber, t.InvoiceCounterKey, t.InvoiceItemLineNumber });
+		    this.HasKey(t => new { t.DeclarationId, t.LineNumber, t.SIIRequestID, t.InvoiceCounterKey, t.InvoiceItemLineNumber });
 	 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 

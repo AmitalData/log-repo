@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "8023365ce61d1ac5ba115c53966d86ae";
+		public const string HashString = "1dd70609da7a712d721443648bb2d359";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת בקשות",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "db48",
+			      				    Code =  "dafe",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

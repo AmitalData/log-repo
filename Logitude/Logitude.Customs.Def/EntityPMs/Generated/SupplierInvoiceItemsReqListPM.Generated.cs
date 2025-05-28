@@ -115,7 +115,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string sIIRequestID ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
