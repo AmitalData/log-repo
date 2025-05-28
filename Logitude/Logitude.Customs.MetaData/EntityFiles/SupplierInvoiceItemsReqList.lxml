@@ -423,7 +423,7 @@
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
-    IsPrimaryKey="false"
+    IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"

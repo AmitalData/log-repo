@@ -38,6 +38,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("LineNumber" ,Order = 4)]
 	    public int LineNumber { get; set; }
+     [Key]
         [Column("SIIRequestID")]
 	    public string SIIRequestID { get; set; }
      [Key]
