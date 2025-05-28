@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
- 		public const string HashString = "25e442ef49661ce8daa0f3b41f75a7d1";
+ 		public const string HashString = "85e442ef49661ce8daa0f3b41f75a7d1";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15283,7 +15283,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 											CanAutomateSetValue = false,
 											DisplayInAutomationAsEnitity = false,
 											DisplayInRequiredFields = false,
-											HasTemplate = true,
+											HasTemplate = false,
 											IsCustom = false,
 											HelpTextCode = "ReferenceDate",
 											EnableFullscreenTextBox = false,
