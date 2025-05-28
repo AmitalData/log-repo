@@ -67,10 +67,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestRequiredStatus, 
 	         ItemNo, 
 	         ItemName, 
+	         DutchGroupItem, 
 	         InvoiceQuantity, 
 	         InvoiceQuantityType, 
 	         StatisticQuantity, 
-	         StatisticQuantityType,
+	         StatisticQuantityType, 
+	         OriginCountryCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

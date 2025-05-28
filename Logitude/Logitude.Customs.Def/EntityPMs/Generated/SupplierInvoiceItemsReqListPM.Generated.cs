@@ -424,6 +424,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int dutchGroupItem ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int DutchGroupItem  
+	   {
+	    
+	     get
+		{
+		   return dutchGroupItem;
+		 }
+		 set
+		 {
+		   if(dutchGroupItem != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DutchGroupItem",OldValue=dutchGroupItem,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   dutchGroupItem=value;
+		   }
+			
+		 }
+	   }
 	  private decimal? invoiceQuantity ;
 	  	  
        
@@ -512,6 +535,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatisticQuantityType",OldValue=statisticQuantityType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   statisticQuantityType=value;
+		   }
+			
+		 }
+	   }
+	  private string originCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginCountryCode  
+	   {
+	    
+	     get
+		{
+		   return originCountryCode;
+		 }
+		 set
+		 {
+		   if(originCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryCode",OldValue=originCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originCountryCode=value;
 		   }
 			
 		 }

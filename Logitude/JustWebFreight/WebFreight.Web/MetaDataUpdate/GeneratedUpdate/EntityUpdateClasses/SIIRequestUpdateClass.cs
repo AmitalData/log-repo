@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "b31f96056ec3df6828ea3d642602c3b0";
+		public const string HashString = "98d20c49c090a60efc958e188358ee61";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "f7c8",
+			      				    Code =  "69ca",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -78,6 +78,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -785,6 +786,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.SIIRequest",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -795,6 +797,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SupplierInvoiceItemsReqLists",
 					  						DefaultText =  "Supplier Invoice Items Req Lists",
+					  						ListFieldLable =  "SupplierInvoiceItemsReqListsListLable",
+					  						ListLableDefaultText =  "SupplierInvoiceItemsReqLists",
 					  						IsForeignKey =  false,
 					  						ThisKey =  "DeclarationId,CounterKey,LineNumber",
 					  						OtherKey =  "DeclarationId,InvoiceCounterKey,InvoiceItemLineNumber",
@@ -1325,10 +1329,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactEmail",
 					  						DefaultText =  "Email",
-					  						FullLocalDefaultText =  "אימייל",
+					  						FullLocalDefaultTextBack_up =  "אימייל",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXnteZ15nXnCI=",
 					  						ListFieldLable =  "ContactEmailListLable",
 					  						ListLableDefaultText =  "Email",
-					  						ListLocalDefaultText =  "אימייל",
+					  						ListLocalDefaultTextBack_up =  "אימייל",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXnteZ15nXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1758,6 +1764,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Confirm", DefaultText = "Confirm",LocalDefaultText = @"BS64:IteQ15nXqdeV16gi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"BS64:IteR15nXmNeV15wi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRquestOErrorNoItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRquest.O.ErrorNoItems", DefaultText = "Error in getting supplier invoice items for SII request",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qg15HXp9eR15zXqiDXpNeo15nXmNeZINeX16nXkdeV16DXmdeqINeh16TXpyDXoteR15XXqCDXkden16nXqiBTSUki", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
