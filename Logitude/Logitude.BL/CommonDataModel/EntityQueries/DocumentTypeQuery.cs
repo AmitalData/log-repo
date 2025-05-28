@@ -39,7 +39,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentTypeQuery(int tenant)
         {
             repository = new DocumentTypeRepository(tenant);
-            isFullAccounting = IsFullAccountingActivated(tenant);
+            isFullAccounting =  IsFullAccountingActivated(tenant);
         }
 
         public DocumentTypeQuery(DocumentTypeRepository repository)
@@ -1444,9 +1444,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         private bool IsFullAccountingActivated(int tenant)
         {
             TenantRepository tenantRepository = new TenantRepository(tenant);
-            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            if (tenantPOCO == null) return false;
-            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            bool isFullAccountingActivated = tenantRepository.GetTenantAccountingActivated(tenant);
             return isFullAccountingActivated;
         }
 

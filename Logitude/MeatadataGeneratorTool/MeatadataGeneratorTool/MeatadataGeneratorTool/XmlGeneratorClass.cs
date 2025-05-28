@@ -2520,7 +2520,17 @@ namespace MeatadataGeneratorTool
 
             if (foreignEntityLXMLFilePath != null)
             {
-                XDocument xmlDocument = XDocument.Load(foreignEntityLXMLFilePath);
+                XDocument xmlDocument = new XDocument();
+                try
+                {
+                      xmlDocument = XDocument.Load(foreignEntityLXMLFilePath);
+
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show(foreignEntityLXMLFilePath);
+                   
+                }
 
                 string referencedTable = xmlDocument.Root.Attribute("DBTableName") == null ? null : xmlDocument.Root.Attribute("DBTableName").Value.Split('"')[1].Split('"')[0];
                 string referencedTableSchema = xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode") == null ? null : xmlDocument.Root.Attribute("DxmlDatabaseSchemaCode").Value;

@@ -274,6 +274,8 @@ public void WriteEntityMapProperty(dynamic field)
 {
 
     dynamic fieldName = GetEntityMapPropertyName(field.FieldName);
+	 dynamic shortFieldName =  field.ShortName.ToString();
+
     dynamic dBfieldName = fieldName;
 	
 	string dBfieldNameTrim = dBfieldName;
@@ -283,6 +285,13 @@ public void WriteEntityMapProperty(dynamic field)
 		dBfieldNameTrim = dBfieldName.Substring(0,30);
 		isTrimmedField = true;
     }
+
+	if(!string.IsNullOrEmpty(shortFieldName) && shortFieldName !="AmazedSaint.Elastic.Lib.ElasticObject")
+    {
+		dBfieldNameTrim = shortFieldName;
+		isTrimmedField = true;
+    }
+
 
 string type = GetEntityMapDataType(field);
 string mapstring = BuildEntityMapString(field);
