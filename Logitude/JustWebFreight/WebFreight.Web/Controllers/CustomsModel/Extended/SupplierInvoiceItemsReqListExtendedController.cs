@@ -41,7 +41,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 if (!string.IsNullOrWhiteSpace(siirequestid) && siirequestid != "null")
                 {
-                    pm = qs.GetSingle(declarationid, linenumber, invoicecounterkey, invoiceitemlinenumber, true, false);
+                    pm = qs.GetSingle(declarationid, linenumber,siirequestid, invoicecounterkey, invoiceitemlinenumber, true, false);
                 }
                 else
                 {
