@@ -373,6 +373,7 @@
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
+    <Compile Include="BL\SIIRequest\SIIRequestApiRequestFactory.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
@@ -3131,6 +3132,7 @@
   <ItemGroup>
     <Folder Include="DummyData\" />
     <Folder Include="Messaging\Customs\Save\" />
+    <Folder Include="Messaging\SIIRequest\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>

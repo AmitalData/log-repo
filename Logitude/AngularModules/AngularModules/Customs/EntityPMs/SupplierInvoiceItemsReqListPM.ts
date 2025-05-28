@@ -112,6 +112,11 @@ export class SupplierInvoiceItemsReqListPM {
     public set ItemName(newValue: string) { if (this.itemName != newValue) { this.itemName = newValue; this.MarkAsDirty("ItemName"); } }
        
 	 
+    private dutchGroupItem: number;
+    public get DutchGroupItem() { return this.dutchGroupItem; }
+    public set DutchGroupItem(newValue: number) { if (this.dutchGroupItem != newValue) { this.dutchGroupItem = newValue; this.MarkAsDirty("DutchGroupItem"); } }
+       
+	 
     private invoiceQuantity: number;
     public get InvoiceQuantity() { return this.invoiceQuantity; }
     public set InvoiceQuantity(newValue: number) { if (this.invoiceQuantity != newValue) { this.invoiceQuantity = newValue; this.MarkAsDirty("InvoiceQuantity"); } }

@@ -417,6 +417,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int dutchGroupItem ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int DutchGroupItem  
+	   {
+	    
+	     get
+		{
+		   return dutchGroupItem;
+		 }
+		 set
+		 {
+		   if(dutchGroupItem != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DutchGroupItem",OldValue=dutchGroupItem,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   dutchGroupItem=value;
+		   }
+			
+		 }
+	   }
 	  private decimal? invoiceQuantity ;
 	  	  
        

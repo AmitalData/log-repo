@@ -1,14 +1,19 @@
 ﻿
+using Logitude.Customs.BL.BL.SIIRequest;
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.RestRequestExecutor;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
@@ -19,7 +24,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class SupplierInvoiceItemsReqListExtendedController : ApiController
     {
-        public HttpResponseMessage GetSingle(string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,string siirequestid)
+        public HttpResponseMessage GetSingle(string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber, string siirequestid)
         {
             try
             {
@@ -36,7 +41,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 if (!string.IsNullOrWhiteSpace(siirequestid) && siirequestid != "null")
                 {
-                    pm = qs.GetSingle(declarationid,linenumber,invoicecounterkey,invoiceitemlinenumber, true, false);
+                    pm = qs.GetSingle(declarationid, linenumber, invoicecounterkey, invoiceitemlinenumber, true, false);
                 }
                 else
                 {
@@ -53,18 +58,52 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                        ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetProductFileExists(string modelCode,string importerNumber,string originCountry)
+
+        public HttpResponseMessage GetProductFileExists(
+            string modelCode,
+            string importerNumber,
+            string originCountry)
         {
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
 
                 string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken =
-                    AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
+                string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
+
+                var factory = new SIIRequestApiRequestFactory(auth.Tenant);
+                var credentials = factory.BuildCredentials(interfaceName, partnerCode);
+
+                var dto = new ProductFileRequestDto
+                {
+                    credentials = credentials,
+                    importerNumber = importerNumber,
+                    modelCode = modelCode,
+                    originCountry = originCountry,
+                };
+
+                var apiRequest = factory.Create(interfaceName, partnerCode, dto);
+
+                var executor = new RestRequestExecutor();
+                var apiResp = Task.Run(() =>
+                    executor.ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest))
+                    .GetAwaiter()
+                    .GetResult();
+
+                bool fileExists = apiResp != null &&
+                          apiResp.Success &&
+                          apiResp.Result != null &&
+                          apiResp.Result.productFiles != null &&
+                          apiResp.Result.productFiles.Count > 0;
+
+
+                SecurityUtility.AuthenticationOnTenant(auth.Tenant);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+
+                return Request.CreateResponse(HttpStatusCode.OK, fileExists);
             }
             catch (Exception ex)
             {
@@ -74,7 +113,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-
-
-        }
+    }
 }
