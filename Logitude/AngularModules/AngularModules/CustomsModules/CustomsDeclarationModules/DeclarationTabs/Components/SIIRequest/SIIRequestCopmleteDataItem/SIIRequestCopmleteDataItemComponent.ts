@@ -77,22 +77,55 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     // #endregion initialization data
 
     //#region search product file number by API request:
-    SearchProductFileNumber() {
-        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(this.ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
+    SearchProductFileNumber(ProductFileNumber: string = '') {
+        let productFileExists: boolean = false;
+        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
             if (!myResponse?.HasError && myResponse?.Result) {
-                // WHAT TO DO WITH THE ANSWER?
+                // TODO:
+                // 1. Handle the response data:
+                // if exist propduct file - return true
+                //  else false and reset this.ProductFileNumber = '' (cannot save product file are not exist)
+
+
+                // TODO: 2. check mandatory fields and display error alert:
+                this.checkMandatoryFields();
+
+                //TODO: 3.change to real response check
+                // update productFileExists based on the response
+                if (productFileExists) {
+                    // this.DutchGroupItem = 0;
+                    this.SaveSupplierInvoiceItemsReqList();
+                }
+                else {
+                    // this.DutchGroupItem = 1;
+                    this.entityPM.ProductFileNumber = '';
+                    // TODO: Display a warning alert and ask the user if they still want to save the data even though the product file does not exist
+                    // if yes- call to this.SaveSupplierInvoiceItemsReqList();
+                    // else- close or stay in the screen
+
+                }
             }
         });
     }
 
     //#region acations methods:
+    SaveAndSearchSupplierInvoiceItemsReqList(ProductFileNumber: string = '') {
+        this.SearchProductFileNumber(ProductFileNumber);
+    }
     SaveSupplierInvoiceItemsReqList() {
-
+        // TODO 4. Update RequestRequiredStatus to 0/1/2 base on the missing mandatory fields
+                
+  
+        // TODO: save entityPM data to the server
     }
 
     CancelSupplierInvoiceItemsReqList() {
+        // TODO: cancel the operation and reset the form
+    }
 
+    checkMandatoryFields() {
+        // TODO: check if all mandatory fields are filled
     }
     //#endregion acations methods
 
@@ -103,7 +136,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public set ProductFileNumber(newValue: string) {
         this.entityPM.ProductFileNumber = newValue;
     }
-
     public get ManufactureCountryCode(): string {
         return this.entityPM?.ManufactureCountryCode;
     }
@@ -116,7 +148,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public set ManufactureCountryName(newValue: string) {
         this.entityPM.ManufactureCountryName = newValue;
     }
-
     public get ManufacturerName(): string {
         return this.entityPM?.ManufacturerName;
     }
@@ -129,62 +160,54 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public set Remarks(newValue: string) {
         this.entityPM.Remarks = newValue;
     }
-    // TODO: Delete after adding the property to the entity
-    private _IsAggravationGroup1Req: boolean = false;
-    public get IsAggravationGroup1Req(): boolean {
-        return this._IsAggravationGroup1Req;
+    public get ItemNo(): string {
+        return this.entityPM?.ItemNo;
     }
-    public set IsAggravationGroup1Req(newValue: boolean) {
-        this._IsAggravationGroup1Req = newValue;
+    public set ItemNo(newValue: string) {
+        this.entityPM.ItemNo = newValue;
     }
-
-    // TODO: Uncomment after adding the property to the entity 
-    // public get ItemNo(): string {
-    //     return this.entityPM?.ItemNo;
+    public get ItemName(): string {
+        return this.entityPM?.ItemName;
+    }
+    public set ItemName(newValue: string) {
+        this.entityPM.ItemName = newValue;
+    }
+    public get InvoiceQuantity(): number {
+        return this.entityPM?.InvoiceQuantity;
+    }
+    public set InvoiceQuantity(newValue: number) {
+        this.entityPM.InvoiceQuantity = newValue;
+    }
+    public get InvoiceQuantityType(): string {
+        return this.entityPM?.InvoiceQuantityType;
+    }
+    public set InvoiceQuantityType(newValue: string) {
+        this.entityPM.InvoiceQuantityType = newValue;
+    }
+    public get StatisticQuantity(): number {
+        return this.entityPM?.StatisticQuantity;
+    }
+    public set StatisticQuantity(newValue: number) {
+        this.entityPM.StatisticQuantity = newValue;
+    }
+    public get StatisticQuantityType(): string {
+        return this.entityPM?.StatisticQuantityType;
+    }
+    public set StatisticQuantityType(newValue: string) {
+        this.entityPM.StatisticQuantityType = newValue;
+    }
+    public get DutchRequested(): boolean {
+        return this.entityPM?.DutchRequested;
+    }
+    public set DutchRequested(newValue: boolean) {
+        this.entityPM.DutchRequested = newValue;
+        this.entityPM.EntityParentPM.DisableMarkAsDirty = true;
+    }
+    // public get DutchGroupItem(): boolean {
+    //     return this.entityPM?.DutchGroupItem;
     // }
-    // public set ItemNo(newValue: string) {
-    //     this.entityPM.ItemNo = "newValue";
-    // }
-
-    // public get ItemName(): string {
-    //     return this.entityPM?.ItemName;
-    // }
-    // public set ItemName(newValue: string) {
-    //     this.entityPM.ItemName = newValue;
-    // }
-
-    // public get InvoiceQuantity(): number {
-    //     return this.entityPM?.InvoiceQuantity;
-    // }
-    // public set InvoiceQuantity(newValue: number) {
-    //     this.entityPM.InvoiceQuantity = newValue;
-    // }
-
-    // public get InvoiceQuantityType(): string {
-    //     return this.entityPM?.InvoiceQuantityType;
-    // }
-    // public set InvoiceQuantityType(newValue: string) {
-    //     this.entityPM.InvoiceQuantityType = newValue;
-    // }
-
-    // public get StatisticQuantity(): number {
-    //     return this.entityPM?.StatisticQuantity;
-    // }
-    // public set StatisticQuantity(newValue: number) {
-    //     this.entityPM.StatisticQuantity = newValue;
-    // }
-
-    // public get StatisticQuantityType(): string {
-    //     return this.entityPM?.StatisticQuantityType;
-    // }
-    // public set StatisticQuantityType(newValue: string) {
-    //     this.entityPM.StatisticQuantityType = newValue;
-    // }
-    // public get IsAggravationGroup1Req(): string {
-    //     return this.entityPM?.IsAggravationGroup1Req;
-    // }
-    // public set IsAggravationGroup1Req(newValue: string) {
-    //     this.entityPM.IsAggravationGroup1Req = newValue;
+    // public set DutchGroupItem(newValue: boolean) {
+    //     this.entityPM.DutchGroupItem = newValue;
     // }
 
     //#endregion SiiRequest properties

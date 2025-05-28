@@ -228,8 +228,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         if (this.isOpen) return;
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
-        logWindow.Width = 500;
-        logWindow.Height = 650;
+        logWindow.Width = 450;
+        logWindow.Height = 500;
         logWindow.Title = TextCodeTranslator.Translate("Customs.SIIRequest.O.CompletData");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
