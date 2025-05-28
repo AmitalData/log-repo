@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 
-namespace CommunicationWorkerRole.RestRequestExecutor
+namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class ApiRequestHeader
     {

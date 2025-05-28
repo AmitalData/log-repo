@@ -15,16 +15,16 @@ using System.Diagnostics.PerformanceData;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class SIIRequestRepository:IRepository<SIIRequest>
-   {
-        
-		public List<SIIRequest> GetMulti(EntityKeyFields entityKeys)
+    public partial class SIIRequestRepository : IRepository<SIIRequest>
+    {
+
+        public List<SIIRequest> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
-       
+
         public SiiAgg GetAggregateForSii(int tenant, string declarationId)
         {
             return (from d in context.Declarations
@@ -63,7 +63,7 @@ namespace Logitude.Customs.Data.Repsitories
         from itm in context.SupplierInvoiceItems
         where itm.DeclarationId == declarationId
               && itm.Tenant == tenant
-              && !itm.IsParent                     
+              && !itm.IsParent
         join inv in context.SupplierInvoices
              on new { itm.DeclarationId, itm.CounterKey }
              equals new { inv.DeclarationId, CounterKey = inv.InvoiceCounterKey }
@@ -75,18 +75,18 @@ namespace Logitude.Customs.Data.Repsitories
             into taJoin
         from trade in taJoin.DefaultIfEmpty()
 
-        join mu in context.MeasurmentUnits          
+        join mu in context.MeasurmentUnits
              on itm.InvoiceQuantityType equals mu.Code
              into muJoin
         from unit in muJoin.DefaultIfEmpty()
 
-        join cc in context.CustomsCountries         
+        join cc in context.CustomsCountries
              on itm.OriginCountryCode equals cc.Code
              into ccJoin
         from country in ccJoin.DefaultIfEmpty()
 
         join cert in context.SupplierInvioceItemCertificats
-            on new { itm.DeclarationId, itm.LineNumber,  itm.CounterKey }
+            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
             equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
             into certJoin
         from certificate in certJoin.DefaultIfEmpty()
@@ -119,8 +119,7 @@ namespace Logitude.Customs.Data.Repsitories
             OriginCountryCode = itm.OriginCountryCode,
             OriginCountryName = country.LocalName,
             ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
-            RequestRequiredStatus = requestList.RequestRequiredStatus,
-
+            RequestRequiredStatus = String.IsNullOrEmpty(requestList.RequestRequiredStatus) ? "0" : requestList.RequestRequiredStatus,
         };
 
             return list.ToList();
@@ -135,7 +134,7 @@ namespace Logitude.Customs.Data.Repsitories
             public string ManifestNumber { get; set; }
             public DateTime? UnloadDate { get; set; }
         }
-
+       
     }
 
 

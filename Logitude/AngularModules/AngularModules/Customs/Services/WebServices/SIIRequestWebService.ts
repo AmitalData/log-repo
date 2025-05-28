@@ -55,19 +55,19 @@ export class SIIRequestWebService {
 export class SupplierInvoiceItemsForSIIRequest {
     InvoiceNumber: string;
     LineNumber: number;
+    CounterKey: number;
     ItemCode: string;
-    ItemName: string;
     ItemDescription: string;
     ClassificationCode: string;
     TradeAgreementCode: string;
-    TradeAgreementName: string;
     InvoiceQuantityType: string;
-    InvoiceQuantityTypeName: string;
     InvoiceQuantity: string;
     ItemPrice: string;
     ItemPriceCurrencyCode: string;
     OriginCountryCode: string;
+    InvoiceQuantityTypeName: string;
+    TradeAgreementName: string;
     OriginCountryName: string;
     ReqConfirmationTypeCode: string;
-    IsCompletedStatus: number;
+    RequestRequiredStatus: string;
 }

@@ -2079,6 +2079,12 @@
       LocalDefaultText="&quot;BS64:IteR15nXmNeV15wi&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRquest.O.ErrorNoItems&quot;"
+      DefaultText="&quot;Error in getting supplier invoice items for SII request&quot;"
+      LocalDefaultText="&quot;שגיאה בקבלת פריטי חשבונית ספק עבור בקשת SII&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

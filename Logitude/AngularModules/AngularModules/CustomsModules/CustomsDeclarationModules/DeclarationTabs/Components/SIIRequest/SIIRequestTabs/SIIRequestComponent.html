@@ -4,6 +4,9 @@
 <table *ngIf="DecalarationData != null && IsLoaded">
     <tr style="height: 100%;">
         <td style="vertical-align:top">
+            <div *ngIf="ErrorsList?.length > 0">
+                <ValidationSummary [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+            </div>
             <div style="vertical-align:top; margin:5px">
                 <!-- Section One -->
                 <table>
@@ -272,7 +275,7 @@
                                                                     </ng-template>
                                                                 </log-column>
                                                                 <log-column
-                                                                    [header]="'Customs.SupplierInvoiceItem.F.LineNumber' | TextCodeTranslationPipe"
+                                                                    [header]="'Customs.SupplierInvoiceItemsReqList.F.LineNumber' | TextCodeTranslationPipe"
                                                                     [binding]="'LineNumber'" [width]="'30'"
                                                                     [Alignment]="'right'">
                                                                     <ng-template let-item>
@@ -424,7 +427,7 @@
                                                                             <div class="editButtonContainer">
                                                                                 <IconButton [Name]="'Edit'"
                                                                                     [IsSmall]="true"
-                                                                                    *ngIf="item.IsCompletedStatus === isUnCompleted"
+                                                                                    *ngIf="item.RequestRequiredStatus === isUnCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)">
                                                                                     <img class="tickImg"
                                                                                         src="./Images/Buttons/EditWithGreenTick.png" />
@@ -432,7 +435,7 @@
                                                                                 <button class="Button"
                                                                                     style="height:18px; width: 18px;right:2px;"
                                                                                     id="Edit_Additional"
-                                                                                    *ngIf="item.IsCompletedStatus === isFullyCompleted"
+                                                                                    *ngIf="item.RequestRequiredStatus === isFullyCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)"
                                                                                     tabindex="-1">
                                                                                     <img class="tickImg"
@@ -441,7 +444,7 @@
                                                                                 <button class="Button"
                                                                                     style="height:18px; width: 18px;right:2px;"
                                                                                     id="Edit_Additional"
-                                                                                    *ngIf="item.IsCompletedStatus === isPartiallyCompleted"
+                                                                                    *ngIf="item.RequestRequiredStatus === isPartiallyCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)"
                                                                                     tabindex="-1">
                                                                                     <img class="tickImg"

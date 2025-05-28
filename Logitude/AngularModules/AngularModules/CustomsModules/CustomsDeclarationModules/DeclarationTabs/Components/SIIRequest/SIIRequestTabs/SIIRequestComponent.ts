@@ -98,12 +98,13 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
-
+    ErrorsList: string[] = [];
     SetWindowArgs(args: any) {
         this.entityPM = args.SIIRequest;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
+        this.ErrorsList = args.errorMassage ? args.errorMassage : [];
         this.initfilterAgrs = args.filterAgrs;
         this.filterAgrs = this.initfilterAgrs;
         this.entityArgs.EntityPM = this.EntityPM;
@@ -227,8 +228,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         if (this.isOpen) return;
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
-        logWindow.Width = 500;
-        logWindow.Height = 650;
+        logWindow.Width = 450;
+        logWindow.Height = 500;
         logWindow.Title = TextCodeTranslator.Translate("Customs.SIIRequest.O.CompletData");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -591,7 +592,7 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
-        this.IsCompletedStatus = CompleteStatuses.UnCompleted;
+        // this.RequestRequiredStatus = CompleteStatuses.UnCompleted.toString();
     }
     private isSelected: boolean;
     public get IsSelected() { return this.isSelected };
@@ -611,29 +612,23 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set InvoiceNumber(newValue: string) {
         this.entityPM.InvoiceNumber = newValue;
     }
-    public get IsCompletedStatus(): number {
-        return this.entityPM.IsCompletedStatus;
-    }
-    public set IsCompletedStatus(newValue: number) {
-        this.entityPM.IsCompletedStatus = newValue;
-    }
     public get LineNumber(): number {
         return this.entityPM.LineNumber;
     }
     public set LineNumber(newValue: number) {
         this.entityPM.LineNumber = newValue;
     }
+    public get CounterKey(): number {
+        return this.entityPM.CounterKey;
+    }
+    public set CounterKey(newValue: number) {
+        this.entityPM.CounterKey = newValue;
+    }
     public get ItemCode(): string {
         return this.entityPM.ItemCode;
     }
     public set ItemCode(newValue: string) {
         this.entityPM.ItemCode = newValue;
-    }
-    public get ItemName(): string {
-        return this.entityPM.ItemName;
-    }
-    public set ItemName(newValue: string) {
-        this.entityPM.ItemName = newValue;
     }
     public get ItemDescription(): string {
         return this.entityPM.ItemDescription;
@@ -647,31 +642,16 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set ClassificationCode(newValue: string) {
         this.entityPM.ClassificationCode = newValue;
     }
-
     public get TradeAgreementCode(): string {
         return this.entityPM.TradeAgreementCode;
     }
     public set TradeAgreementCode(newValue: string) {
         this.entityPM.TradeAgreementCode = newValue;
     }
-
-    public get TradeAgreementName(): string {
-        return this.entityPM.TradeAgreementName;
-    }
-    public set TradeAgreementName(newValue: string) {
-        this.entityPM.TradeAgreementName = newValue;
-    }
-
     public get InvoiceQuantityType(): string {
         return this.entityPM.InvoiceQuantityType;
     }
     public set InvoiceQuantityType(newValue: string) {
-        this.entityPM.InvoiceQuantityType = newValue;
-    }
-    public get InvoiceQuantityTypeName(): string {
-        return this.entityPM.InvoiceQuantityType;
-    }
-    public set InvoiceQuantityTypeName(newValue: string) {
         this.entityPM.InvoiceQuantityType = newValue;
     }
     public get InvoiceQuantity(): string {
@@ -698,21 +678,36 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set OriginCountryCode(newValue: string) {
         this.entityPM.OriginCountryCode = newValue;
     }
-
+    public get InvoiceQuantityTypeName(): string {
+        return this.entityPM.InvoiceQuantityTypeName;
+    }
+    public set InvoiceQuantityTypeName(newValue: string) {
+        this.entityPM.InvoiceQuantityTypeName = newValue;
+    }
+    public get TradeAgreementName(): string {
+        return this.entityPM.TradeAgreementName;
+    }
+    public set TradeAgreementName(newValue: string) {
+        this.entityPM.TradeAgreementName = newValue;
+    }
     public get OriginCountryName(): string {
         return this.entityPM.OriginCountryName;
     }
     public set OriginCountryName(newValue: string) {
         this.entityPM.OriginCountryName = newValue;
     }
-
     public get ReqConfirmationTypeCode(): string {
         return this.entityPM.ReqConfirmationTypeCode;
     }
     public set ReqConfirmationTypeCode(newValue: string) {
         this.entityPM.ReqConfirmationTypeCode = newValue;
     }
-
+    public get RequestRequiredStatus(): string {
+        return this.entityPM.RequestRequiredStatus;
+    }
+    public set RequestRequiredStatus(newValue: string) {
+        this.entityPM.RequestRequiredStatus = newValue;
+    }
 }
 
 export enum FilterOptions {
@@ -727,7 +722,7 @@ export enum DemandStateFilterOptions {
     ThirdCertificate = "403",
 }
 export enum CompleteStatuses {
-    UnCompleted = 0,
-    PartiallyCompleted = 1,
-    FullyCompleted = 2
+    UnCompleted = "0",
+    PartiallyCompleted = "1",
+    FullyCompleted = "2"
 }
