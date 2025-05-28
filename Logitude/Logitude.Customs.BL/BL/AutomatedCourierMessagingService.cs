@@ -36,8 +36,8 @@ namespace Logitude.Customs.BL.BL
             FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 
-            _featureSendManifest = features.Features.Any(x => x.Code == "SendManifest");
-            _featureSendDeclaration = features.Features.Any(x => x.Code == "SendDeclaration");
+            _featureSendManifest = features.Features.Any(x => x.Code == "AutomatedSendManifest");
+            _featureSendDeclaration = features.Features.Any(x => x.Code == "AutomatedSendDeclaration");
             _featureSendPayment = features.Features.Any(x => x.Code == "SendPaymentOn900Close");
 
         }
