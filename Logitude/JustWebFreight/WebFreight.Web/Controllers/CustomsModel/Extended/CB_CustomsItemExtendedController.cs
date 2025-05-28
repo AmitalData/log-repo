@@ -72,7 +72,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 // Add default check of customs book::
-                var defaultDataResult = DefaultService.Instance.Get(authToken.Tenant, "CB_CollapseSearchHierarchy", "CB_CollapseSearchHierarchyAdditionalKey")?.Value1;
+                DefaultAndConfiguration_Ext defaultData = DefaultService.Instance.Get(authToken.Tenant, "CB_CollapseSearchHierarchy", "CB_CollapseSearchHierarchyAdditionalKey");
+                bool defaultDataResult = defaultData?.Value1 == "true" ? true : false;
                 return Request.CreateResponse(HttpStatusCode.OK, defaultDataResult);
             }
             catch (Exception ex)

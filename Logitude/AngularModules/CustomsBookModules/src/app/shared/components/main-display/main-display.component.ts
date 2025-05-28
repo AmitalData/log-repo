@@ -105,7 +105,7 @@ export class MainDisplayComponent implements OnInit {
 	checkDefaultCB_CollapseSearchHierarchy() {
 		this.API_MainService.GetDefaultCB_CollapseSearchHierarchy(SessionInfo.LoggedUserTenant).subscribe((data: any) => {
 			if (!data?.body) return;
-			this.defualtCbCollapseSearchHierarchy = data?.body.toLowerCase() === "true";
+			this.defualtCbCollapseSearchHierarchy = data?.body === true;
 		});
 	}
 
