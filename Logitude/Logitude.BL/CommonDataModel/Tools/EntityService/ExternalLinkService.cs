@@ -95,6 +95,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken == null)
+                throw new ArgumentNullException(nameof(authToken), "Authentication token not found");
+
             tenant = 0;
 
             if (authToken.Tenant == 0 || entityPM.Tenant != 0)

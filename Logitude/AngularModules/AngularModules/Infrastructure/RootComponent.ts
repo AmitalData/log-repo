@@ -11,7 +11,6 @@ import { environment } from '../environments/environment';
 import { LoginService } from './Services/LoginService';
 import { AppTool } from './Tools';
 import { ChildDirective } from './Directives/ChildDirective';
-import { ObjectsLocator } from './Locators/ObjectsLocator';
 import { RootService } from './RootService';
 declare var IsMobileDetected;
 
