@@ -12,47 +12,7 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-external-link',
     templateUrl: './ExternalLinkComponent.html',
-    styles: [`
-        .view-container {
-            padding: 15px;
-        }
-        
-        .data-row {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        LogLabel, LogTextBox {
-            width: 200px;
-            display: inline-block;
-        }
-
-        BooleanFilter {
-            width: 71px;
-            display: block;
-            margin: 14px 0px;
-        }
-
-        .button-wrapper {
-            direction: ltr;
-            position: absolute;
-            bottom: 16px;
-            left: 23px;
-        }
-
-        .Button {
-            display: inline-block;
-            width: 50px;
-            margin: 0 5px;
-        }
-
-        .disable-button {
-            pointer-events: none;
-            opacity: 0.5;
-        }
-    `]
+    styleUrls: ['./ExternalLinkComponent.scss']
 })
 export class ExternalLinkComponent {
     externalLinkPM: ExternalLinkPM = new ExternalLinkPM();
@@ -61,7 +21,7 @@ export class ExternalLinkComponent {
     dataReady: boolean = false;
     tableDataInit: boolean = false;
     errors: string[] = [];
-    isTenant0 : boolean = SessionLocator.Tenant === 0;
+    isTenant0: boolean = SessionLocator.Tenant === 0;
 
     constructor(entityArgs: EntityArgs) {
         this.initObjectTable();
@@ -78,7 +38,7 @@ export class ExternalLinkComponent {
 
     async initObjectTable() {
         await new Promise<void>(res => new EntityResourceService().getEntityResourceByTableName("ExternalLink").subscribe((myResult: ServiceResponse) => res())),
-        this.tableDataInit = true;
+            this.tableDataInit = true;
     }
 
     SetNewWizardArgs(args: any): void {
@@ -92,11 +52,11 @@ export class ExternalLinkComponent {
         this.initData(externalLinkPM);
     }
 
-    async initExistsData(externalLinkPM: ExternalLinkPM): Promise<void> {        
-        if(externalLinkPM.Tenant !== SessionLocator.Tenant) 
+    async initExistsData(externalLinkPM: ExternalLinkPM): Promise<void> {
+        if (externalLinkPM.Tenant !== SessionLocator.Tenant)
             externalLinkPM.IsDirty = true;
-            
-        await this.initData(externalLinkPM);        
+
+        await this.initData(externalLinkPM);
     }
 
     async initData(externalLinkPM: ExternalLinkPM): Promise<void> {
@@ -113,7 +73,7 @@ export class ExternalLinkComponent {
 
         SessionLocator.SelectedSession?.CloseCurrentWindow();
     }
-    
+
     async sendToServer(): Promise<boolean> {
         SessionLocator.SelectedSession.StartBusyIndicator('');
 

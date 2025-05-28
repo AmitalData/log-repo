@@ -15,7 +15,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel
 {
     public class ExternalLinkController : ApiController
     {
-        public Response GetExternalLink(string Ref, string param)
+        [HttpGet]
+        public IHttpActionResult GetExternalLink(string Ref, string param)
         {            
             AuthenticationToken authToken = HeaderHelper.Authenticate();
 
@@ -35,10 +36,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel
                 response.HasError = true;
             }
 
-            return response;
+            return Ok(response);
         }
 
-        public HttpResponseMessage GetForward(string token)
+        [HttpGet]
+        public IHttpActionResult GetForward(string token)
         {
             AuthenticationToken authToken = null;
 
@@ -47,34 +49,25 @@ namespace WebFreight.Web.Controllers.CommonDataModel
                 authToken = new AuthenticationTokenRepository().GetSingleToken(token);
 
                 if (authToken == null)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, "Token is not valid");
+                    return Unauthorized();
 
                 if (authToken?.ExpirationDate < DateTime.Now)
-                    throw new AutenticationException("Session expired. Please log in again");
-
-                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Redirect);
-                string link = new ExternalLinkQuery(authToken.Tenant).GetFormToken(authToken);
-                if (string.IsNullOrEmpty(link))
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, "Link not found");
-
-                return Request.CreateResponse(link);
-            }
-            catch (AutenticationException e)
-            {
-                string msg = e.Message;
-                if (msg.Contains("Session expired"))
                 {
                     authToken = new AuthenticationTokenRepository().GetSingleToken(token);
                     string supportEmail = new TenantManagementQuery().GetSinglePM(authToken.Tenant)?.EcommerceSupportEmail;
-                    msg = new TextCodeRepository(authToken.Tenant).GetTextCodeByTenantAndCode("General.O.GetSupportEmail", authToken.Tenant)?.LocalDefaultText + " " + supportEmail;
-                    return Request.CreateResponse(HttpStatusCode.BadGateway, msg);
+                    string msg = new TextCodeRepository(authToken.Tenant).GetTextCodeByTenantAndCode("General.O.GetSupportEmail", authToken.Tenant)?.LocalDefaultText;
+                    return Content(HttpStatusCode.BadGateway, $"{msg} {supportEmail}");
                 }
 
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, msg);
+                string link = new ExternalLinkQuery(authToken.Tenant).GetFormToken(authToken);
+                if (string.IsNullOrEmpty(link))
+                    return BadRequest("Link not found");
+
+                return Ok(link);
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(e));
+                return BadRequest(e.Message);
             }
         }
     }

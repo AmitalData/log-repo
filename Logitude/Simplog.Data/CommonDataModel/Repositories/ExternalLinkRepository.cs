@@ -23,8 +23,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public ExternalLink GetSingleExternalLink(string id, int tenant) =>
             Context.ExternalLinks.FirstOrDefault(x => x.Id == id && x.Tenant == tenant);
 
-        public ExternalLink GetSingleExternalLinkByRef(string Ref, int tenant) =>
-            Context.ExternalLinks.FirstOrDefault(x => x.Ref == Ref && x.Tenant == tenant);        
+        public ExternalLink GetSingleExternalLinkByRef(string reference, int tenant) =>
+            Context.ExternalLinks.FirstOrDefault(x => x.Ref == reference && x.Tenant == tenant);        
 
         public IQueryable<ExternalLink> GetExternalLinks(int tenant)
         {

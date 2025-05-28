@@ -38,16 +38,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             string cacheKey = string.Format(CACHE_KEY_FORMAT, id);
-
-            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
-                return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
-
-            ExternalLinkPM externalLinkPM = GetSinglePM(id, tenant, false);
-            if (externalLinkPM == null)
-                return null;
-            CacheManager.CacheWrapper.Insert(cacheKey, externalLinkPM, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
-
-            return externalLinkPM;
+            return GetOrSetCache(cacheKey, () => GetSinglePM(id, tenant, false));
         }
 
         public ExternalLinkPM GetSinglePMByRef(string Ref, int tenant, bool fromCache = true)
@@ -62,16 +53,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             string cacheKey = string.Format(CACHE_KEY_FORMAT, Ref);
-
-            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) != null)
-                return (ExternalLinkPM)CacheManager.CacheWrapper.Get(cacheKey);
-
-            ExternalLinkPM externalLinkPM = GetSinglePMByRef(Ref, tenant, false);
-            if (externalLinkPM == null)
-                return null;
-            CacheManager.CacheWrapper.Insert(cacheKey, externalLinkPM, null, System.DateTime.UtcNow.AddHours(8), TimeSpan.Zero);
-
-            return externalLinkPM;
+            return GetOrSetCache(cacheKey, () => GetSinglePMByRef(Ref, tenant, false));
         }
 
         public string AddExternalLink(string Ref, string param, int tenant)
@@ -173,6 +155,26 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             return $"{HttpContext.Current.Request.Url.Scheme}://{host}{link}";
+        }
+
+        private T GetOrSetCache<T>(string cacheKey, Func<T> factory, TimeSpan? duration = null) where T : class
+        {
+            if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(cacheKey) is T cached)
+                return cached;
+
+            T result = factory();
+            if (result != null && HttpContext.Current != null)
+            {
+                CacheManager.CacheWrapper.Insert(
+                    cacheKey,
+                    result,
+                    null,
+                    DateTime.UtcNow.Add(duration ?? TimeSpan.FromHours(8)),
+                    TimeSpan.Zero
+                );
+            }
+
+            return result;
         }
 
         private class AuthenticationTokenParams
