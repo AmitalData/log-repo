@@ -237,8 +237,10 @@ export class AppTool {
 
 		if (location.href.indexOf('localhost') > -1) {
 			logitude_url = 'http://localhost:9996/'; //test.logitudeworld.com/test/';//
-		} else {
-			logitude_url = 'https://customs.amital.co.il/customsbook/';
+		}
+		else {
+			logitude_url = logitude_url.replace("/customs-book", "");
+			logitude_url = logitude_url.replace("login", "");
 		}
 		return logitude_url;
 	}
