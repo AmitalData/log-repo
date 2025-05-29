@@ -614,7 +614,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception e)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
+					scope.Dispose();
+					NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
                     throw e;
 
                 }
