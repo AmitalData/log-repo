@@ -178,11 +178,9 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
 
         this.entityPM = notificationPM;
         this.parent = trigger;
-        this.NotificationData = this.entityPM.Description;// + Environment.NewLine;
-
-        if (this.entityPM?.SenderName) {
-            this.SenderName = "מעריך: " + this.entityPM?.SenderName ;
-        }
+        this.NotificationData = this.entityPM.Description;// + Environment.NewLine;        
+        let senderName = this.entityPM?.SenderName?.trim();
+        this.SenderName = senderName? `${TextCodeTranslator.Translate('Customs.Notification.O.PrivateName')} ${senderName}`:'';
 
 
         if (this.entityPM.NotificationRplies.length == 0) {
