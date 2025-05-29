@@ -102,6 +102,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
+
     ErrorsList: string[] = [];
     SetWindowArgs(args: any) {
         this.entityPM = args.SIIRequest;
@@ -183,7 +184,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
-            return this.taxationWindowClosed($event) ? true : false; // TODO: change to return action like save function when true
+            return this.taxationWindowClosed($event) ? true : false;
         });
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
         this.CurrentSession.StopBusyIndicator();
@@ -216,19 +217,36 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#region complete data reqItem:
     onEditSupplierInvoiceItemRequest(item: SupplierInvoiceItemsForSIIRequestLine) {
         this.SelectedRow = item;
-        this.openLogWindow()
+        this.getSupplierInvoiceItemsReqListPMDataAndopenLogWindow()
     }
 
-    openLogWindow() {
+    supplierInvoiceItemsReqListPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM();
+    getSupplierInvoiceItemsReqListPMDataAndopenLogWindow() {
         let args: any = {
             Decalaration: this.DecalarationData,
             SIIRequest: this.entityPM,
             invoiceItemReq: this.SelectedRow,
-            entityPMSupplierInvoiceItemsReqListPM: new SupplierInvoiceItemsReqListPM(),
+            entityPMSupplierInvoiceItemsReqListPM: this.supplierInvoiceItemsReqListPM,
             IsNewOrEdit: SiiRequestMode.IsEdit,
             filterAgrs: this.initfilterAgrs,
             isAllowChange: this.isAllowChange,
         };
+
+        this.supplierInvoiceItemsReqListWebService.getBySiiRequest(this.DecalarationData.Id, this.SelectedRow.LineNumber, this.SelectedRow.CounterKey, this.SelectedRow.LineNumber, this.entityPM?.Id).subscribe(myResult => {
+            let myResponse: ServiceResponse = myResult;
+            if (!myResponse?.HasError && myResponse?.Result) {
+                this.supplierInvoiceItemsReqListPM = myResponse.Result;
+                args.entityPMSupplierInvoiceItemsReqListPM = this.supplierInvoiceItemsReqListPM;
+                console.log(this.supplierInvoiceItemsReqListPM);
+
+                args.errorMassage = [];
+
+                this.openLogWindow(args);
+            }
+        });
+    }
+
+    openLogWindow(args) {
         if (this.isOpen) return;
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
@@ -237,10 +255,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.Title = TextCodeTranslator.Translate("Customs.SIIRequest.O.CompletData");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-
-        //TODO: get by ids if exists and send data:
-        //this.supplierInvoiceItemsReqListWebService
-
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestCopmleteDataItem/SIIRequestCopmleteDataItemComponent');
         args.logWindow = logWindow;
         logWindow.WindowClosed.subscribe(($event: any) => {
@@ -482,13 +496,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set IsClosed(newValue: boolean) {
         this.entityPM.IsClosed = newValue;
-    }
-
-    public get SupplierInvoiceItemsReqLists(): SupplierInvoiceItemsReqListPM[] {
-        return this.entityPM?.SupplierInvoiceItemsReqLists ?? [];
-    }
-    public set SupplierInvoiceItemsReqLists(newValue: SupplierInvoiceItemsReqListPM[]) {
-        this.entityPM.SupplierInvoiceItemsReqLists = newValue;
     }
 
     public get Remarks(): string {
