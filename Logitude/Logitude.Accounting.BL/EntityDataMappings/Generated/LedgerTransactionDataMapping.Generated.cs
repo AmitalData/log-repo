@@ -55,7 +55,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         InProgressExternalReconcile, 
 	         UpdateDateTime, 
 	         UpdatedByUserName, 
-	         InternalNote,
+	         InternalNote, 
+	         ProcessStartDate,
 	      }
 
 
@@ -137,9 +138,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxReportId, 
 	         TaxReportNumber, 
 	         AmountInNIS, 
- 	         IsExternalEntity,
- 	         BankName,
- 	      }
+	         IsExternalEntity, 
+	         BankName, 
+	         ProcessStartDate,
+	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
@@ -310,6 +312,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalNote))
             {
 				entityPOCO.InternalNote = entityPM.InternalNote;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessStartDate))
+            {
+				entityPOCO.ProcessStartDate = entityPM.ProcessStartDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -488,6 +495,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.InternalNote = entityPOCO.InternalNote;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ProcessStartDate))
+            {
+					entityPM.ProcessStartDate = entityPOCO.ProcessStartDate;
+            }
+
 		}
 
 		public void PMToOldPM(LedgerTransactionPM entityPM, LedgerTransactionPM oldEntityPM)
@@ -657,6 +669,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InternalNote))
             {
                 oldEntityPM.InternalNote = entityPM.InternalNote;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ProcessStartDate))
+            {
+                oldEntityPM.ProcessStartDate = entityPM.ProcessStartDate;
             }
 			
 		}

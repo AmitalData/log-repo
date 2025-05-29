@@ -33,7 +33,7 @@
   </Column>
   <Column
     Name="CreateDate"
-    Type="datetime">
+    Type="datetime2">
     <Constraints
       Nullable="false" />
   </Column>
@@ -235,6 +235,12 @@
     Name="InternalNote"
     Type="nvarchar"
     Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProcessStartDate"
+    Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
