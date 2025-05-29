@@ -232,7 +232,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             isAllowChange: this.isAllowChange,
         };
 
-        this.supplierInvoiceItemsReqListWebService.getBySiiRequest(this.DecalarationData.Id, this.SelectedRow.LineNumber, this.SelectedRow.CounterKey, this.SelectedRow.LineNumber, this.entityPM?.Id).subscribe(myResult => {
+        this.supplierInvoiceItemsReqListWebService.getBySiiRequest(this.DecalarationData.Id, this.SelectedRow.LineNumber, this.SelectedRow.InvoiceCounterKey, this.SelectedRow.InvoiceLineNumber, this.entityPM?.Id).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
             if (!myResponse?.HasError && myResponse?.Result) {
                 this.supplierInvoiceItemsReqListPM = myResponse.Result;
@@ -633,11 +633,17 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     public set LineNumber(newValue: number) {
         this.entityPM.LineNumber = newValue;
     }
-    public get CounterKey(): number {
-        return this.entityPM.CounterKey;
+    public get InvoiceLineNumber(): number {
+        return this.entityPM.InvoiceLineNumber;
     }
-    public set CounterKey(newValue: number) {
-        this.entityPM.CounterKey = newValue;
+    public set InvoiceLineNumber(newValue: number) {
+        this.entityPM.InvoiceLineNumber = newValue;
+    }
+    public get InvoiceCounterKey(): number {
+        return this.entityPM.InvoiceCounterKey;
+    }
+    public set InvoiceCounterKey(newValue: number) {
+        this.entityPM.InvoiceCounterKey = newValue;
     }
     public get ItemCode(): string {
         return this.entityPM.ItemCode;
