@@ -106,14 +106,17 @@ namespace Logitude.Accounting.BL.Utils
                 _WrongAction = new List<string>();
                 _WrongSumToMatch = new List<string>();
 
-
                 IAccountingContext context = AccountingContext.GetContext(tenant);
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(context);
                 LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(context);
 
-
                 GLAccountPM gLAccountPM = null;
-                if (String.IsNullOrWhiteSpace(myGLAccountId) && String.IsNullOrWhiteSpace(accountTypeCode))
+                if (InterestActivationDate == DateTime.MinValue)
+                {
+                    this.AddErrorRow($"Missing GLAccount Interest Calculation Start Date");
+                    _errors = true;
+                }
+                else if (String.IsNullOrWhiteSpace(myGLAccountId) && String.IsNullOrWhiteSpace(accountTypeCode))
                 {
                     this.AddErrorRow($"GLAccount Id is empty");
                     _errors = true;
