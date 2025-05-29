@@ -45,9 +45,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         super();
         this.siiRequestWebService = new SIIRequestWebService();
         this.supplierInvoiceItemsReqListWebService = new SupplierInvoiceItemsReqListWebService();
-        // this.supplierInvoiceItemsReqListPMService = new SupplierInvoiceItemsReqListPMService();
         this.entityPM = new SupplierInvoiceItemsReqListPM();
-
     }
 
     ngOnInit(): void {

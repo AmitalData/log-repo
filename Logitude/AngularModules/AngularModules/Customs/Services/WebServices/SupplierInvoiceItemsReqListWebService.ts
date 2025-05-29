@@ -31,14 +31,14 @@ export class SupplierInvoiceItemsReqListWebService {
         );
     }
 
-    getBySiiRequest(siiRequestId: string, declarationId: string, lineNumber: number, invoiceCounterKey: number, invoiceItemLineNumber: number) {
+    getBySiiRequest(declarationId: string, lineNumber: number, invoiceCounterKey: number, invoiceItemLineNumber: number, siiRequestId: string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetSingle/?siiRequestId=" + siiRequestId + "&declarationId=" + declarationId + "&lineNumber=" + lineNumber + "&invoiceCounterKey=" + invoiceCounterKey + "&invoiceItemLineNumber=" + invoiceItemLineNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSingle/?declarationid=" + declarationId + "&linenumber=" + lineNumber + "&invoicecounterkey=" + invoiceCounterKey + "&invoiceitemlinenumber=" + invoiceItemLineNumber + "&siirequestid=" + siiRequestId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 let serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;
