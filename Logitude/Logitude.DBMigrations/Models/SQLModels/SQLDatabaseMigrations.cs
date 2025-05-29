@@ -424,6 +424,8 @@ namespace Logitude.DBMigrations.Models
                     return "VARCHAR(" + (size == -1 ? "MAX" : FormatColumnSize(size, type).ToString()) + ")";
                 case "datetime":
                     return "DATETIME";
+                case "datetime2":
+                    return "DATETIME2";
                 case "date":
                     return "DATE";
                 case "time":
