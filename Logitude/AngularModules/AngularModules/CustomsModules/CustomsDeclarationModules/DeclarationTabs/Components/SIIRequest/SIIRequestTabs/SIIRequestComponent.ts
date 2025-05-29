@@ -527,7 +527,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     public get UnloadDate(): Date {
-        return this.entityPM.UnloadDate ?? new Date();
+        return this.entityPM?.UnloadDate ?? new Date();
     }
     public set UnloadDate(newValue: Date) {
         this.entityPM.UnloadDate = newValue;
