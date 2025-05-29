@@ -44,6 +44,7 @@ namespace Simplog.Server.Infrastructure.DataContracts
 
                     case "DateTime":
                     case "Date":
+                    case "DateTime2":
                         {
 
                             DateTime date = Convert.ToDateTime(value);
@@ -130,6 +131,7 @@ namespace Simplog.Server.Infrastructure.DataContracts
                 case "lookup":
                 case "picklist":{  return value.ToString(); }
                 case "datetime":
+                case "datetime2":
                 case "date": { return Convert.ToDateTime(value); }
                 case "decimal":
                 case "unsdecimal":

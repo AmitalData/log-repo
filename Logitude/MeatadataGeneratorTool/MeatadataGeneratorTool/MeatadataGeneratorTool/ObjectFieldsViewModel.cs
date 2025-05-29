@@ -10,7 +10,7 @@ namespace MeatadataGeneratorTool
 {
     public class ObjectFieldsViewModel : PropertyChangedImplementation
     {
-        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]", "BigInteger", "Binary", "Time", "Raw" }; } }
+        public List<string> DataTypesList { get { return new List<string>() { "Boolean", "Constant", "Date", "DateTime","DateTime2", "Decimal", "Double", "Integer", "LookUp", "nText", "PickList", "SigDouble", "Text", "UnsDecimal", "UnsInteger", "List","Emails", "Byte[]", "BigInteger", "Binary", "Time", "Raw" }; } }
         public List<string> DependencyFiltersList { get { return new List<string>() { "Constant", "Path", }; } }
         public List<string> TextCaseList { get { return new List<string>() { "Lower", "Upper", }; } }
         public List<string> OperatorsList { get; set; }
@@ -74,7 +74,7 @@ namespace MeatadataGeneratorTool
             {
                 OperatorsList = new List<string>() { "StartsWith", "Contains", "Equals", };
             }
-            else if (FieldDataType == "Integer" || FieldDataType == "Decimal" || FieldDataType == "Double" || FieldDataType == "DateTime" || FieldDataType == "SigDouble" || FieldDataType == "UnsDecimal" || FieldDataType == "UnsInteger")
+            else if (FieldDataType == "Integer" || FieldDataType == "Decimal" || FieldDataType == "Double" || FieldDataType == "DateTime" || FieldDataType == "DateTime2" || FieldDataType == "SigDouble" || FieldDataType == "UnsDecimal" || FieldDataType == "UnsInteger")
             {
                 OperatorsList = new List<string>() { "Equals", "LargerThan", "LessThan", "GreaterThanOrEqual", "LessThanOrEqual", "Between", };
             }
@@ -1280,7 +1280,7 @@ namespace MeatadataGeneratorTool
             get
             {
                 Visibility result = Visibility.Collapsed;
-                if (FieldDataType == "Date" || FieldDataType == "DateTime")
+                if (FieldDataType == "Date" || FieldDataType == "DateTime" || FieldDataType == "DateTime2")
                 {
                     result = Visibility.Visible;
                 }
