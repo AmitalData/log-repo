@@ -456,7 +456,7 @@ namespace CommunicationWorkerRole
                     documentrepository.Add(document);
                     documentrepository.SubmitChanges();
 
-                    invoiceApiCommunicationLog.CommunicationId = document.Id;
+                    invoiceApiCommunicationLog.DocumentId = document.Id;
                     invoiceApiCommunicationLog.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
 
                     invoiceApiCommunicationLogUpdateService.Update(invoiceApiCommunicationLog, true);
