@@ -17,22 +17,32 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using Logitude.Accounting.BL.Interfaces.Magaya;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
+using Microsoft.Practices.Unity;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
+using Logitude.Server.Tools.StorageService;
+using System.Linq.Expressions;
+using Logitude.Accounting.Data;
 
 namespace CommunicationWorkerRole
 {
-    class InvoiceApiWorkerRole : WorkerEntryPoint
+    class InvoiceApiWR : WorkerEntryPoint
     {
 
         DbQueueService queueService;
         QueueResponse response = null;
         InvoiceApiService invoiceApiService;
         InvoiceApiCommunicationLogPM invoiceApiCommunicationLog = null;
-        CommunicationLog communicationLog = null;
 
         int tenant = 0;
 
 
-        public InvoiceApiWorkerRole()
+        public InvoiceApiWR()
         {
 
         }
@@ -40,7 +50,7 @@ namespace CommunicationWorkerRole
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
-            BatchServiceCode = "InvoiceApiWorkerRole";
+            BatchServiceCode = "InvoiceApiWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
             ConnectClient();
             return base.OnStart();
@@ -74,7 +84,7 @@ namespace CommunicationWorkerRole
 
         public void ExecuteQueue(TimeSpan? timeSpan = null)
         {
-            string selectedQueue = "InvoiceApiQueue";
+            string selectedQueue = "InvoiceApiWR";
             Stopwatch stopwatch = null;
             if (timeSpan != null)
             {
@@ -108,16 +118,16 @@ namespace CommunicationWorkerRole
                     break;
                 }
 
-                if (response != null && response.Tenant != 0 && response.MessageValues!=null)
+                if (response != null  && response.MessageValues!=null)
                 {
                     try
                     {
                        
-                        if (response.MessageValues.ContainsKey("communicationLogId"))
+                        if (response.MessageValues.ContainsKey("InvoiceApiId"))
                         {
-                            string communicationLogId = response.MessageValues["communicationLogId"].ToString();
-                            tenant = response.Tenant;
-                            GetCommunicationLogAndInvoiceApiLog(communicationLogId);
+                            string InvoiceApiId = response.MessageValues["InvoiceApiId"].ToString();
+                            GeInvoiceApiLog(InvoiceApiId);
+                            tenant = invoiceApiCommunicationLog.Tenant;
                              WorkOnce();
                         }
 
@@ -141,7 +151,7 @@ namespace CommunicationWorkerRole
             try
             {
                 queueService = new DbQueueService();
-                queueService.InitializeQueue("InvoiceApiQueue", tenant);
+                queueService.InitializeQueue("InvoiceApiWR", tenant);
 
             }
             catch (Exception ex)
@@ -210,12 +220,10 @@ namespace CommunicationWorkerRole
                 UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.InProgress);
                 invoiceApiService = new InvoiceApiService();
 
-                var success = invoiceApiService.OpenConnection("", "");
+                var success = invoiceApiService.OpenConnection();
                 if (!success) {
-                    UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.Failed, "OpenConnection Failed");
-                    queueService.CompleteAsFailed();
-
-                }
+                    throw new Exception("OpenConnection Failed");
+                  }
 
                 else
                 {
@@ -239,6 +247,7 @@ namespace CommunicationWorkerRole
                 var (success, xml) = invoiceApiService.GetTransaction(response.MessageValues["Type"], 1, response.MessageValues["Guid"]);
                 if (!success || string.IsNullOrWhiteSpace(xml))
                     throw new Exception("GetTransaction failed or returned empty XML");
+                AddDocumentToApiCommunicationLog(System.Text.Encoding.UTF8.GetBytes(xml));
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetInvoiceApiInvoice, InvoiceApiStatusEnum.Done);
 
                 CloseInvoiceApiSession();
@@ -370,10 +379,24 @@ namespace CommunicationWorkerRole
             {
                 if(invoiceApiCommunicationLog != null)
                 {
-                    InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(tenant);
+                    IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                    InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                     invoiceApiCommunicationLog.Step = step;
                     invoiceApiCommunicationLog.StatusCode = status;
-                    invoiceApiCommunicationLog.Exception = exception;
+                    invoiceApiCommunicationLog.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                    if (exception != null)
+                    {
+                        var exceptionDict = new Dictionary<string, object>
+                        {
+                            { "exception", exception },
+                            { "MessageValues", response?.MessageValues }
+                        };
+                        invoiceApiCommunicationLog.Exception = Newtonsoft.Json.JsonConvert.SerializeObject(exceptionDict);
+                    }
+                    else
+                    {
+                        invoiceApiCommunicationLog.Exception = null;
+                    }
                     invoiceApiCommunicationLogUpdateService.Update(invoiceApiCommunicationLog ,true);
 
                 }
@@ -386,28 +409,88 @@ namespace CommunicationWorkerRole
         }
 
 
-        public void GetCommunicationLogAndInvoiceApiLog(string communicationLogId)
+        public void GeInvoiceApiLog(string InvoiceApiId)
         {
             try
             {
-                if (string.IsNullOrEmpty(communicationLogId))
-                    throw new Exception("CommunicationLogId is null or empty");
+                if (string.IsNullOrEmpty(InvoiceApiId))
+                    throw new Exception("InvoiceApiId is null or empty");
 
-                ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
-                communicationLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-
+              
                 InvoiceApiCommunicationLogQueryService invoiceApiCommunicationLogQueryService = new InvoiceApiCommunicationLogQueryService(tenant);
-                invoiceApiCommunicationLog = invoiceApiCommunicationLogQueryService.GetByCommunicationId(communicationLogId, tenant);
+                invoiceApiCommunicationLog = invoiceApiCommunicationLogQueryService.GetSingle(InvoiceApiId, false,false);
                 if (invoiceApiCommunicationLog == null)
-                    throw new Exception("InvoiceApiCommunicationLog not found for communicationLogId: " + communicationLogId);
+                    throw new Exception("InvoiceApiCommunicationLog not found for InvoiceApiId: " + InvoiceApiId);
             }
             catch (Exception ex)
             {
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error getting communication log", null, null);
+                throw ex;
             }
         }
+
+        public void AddDocumentToApiCommunicationLog(byte[] ByteData)
+        {
+            try
+            {
+
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                    UserRepository userRepository = new UserRepository(commonContext);
+                    DocumentRepository documentrepository = new DocumentRepository(commonContext);
+                    ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
+                    InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(tenant);
+
+                    Document document = new Document()
+                    {
+                        CreateDate = DateTime.Now,
+                        Extension = "xml",
+                        FileSize = ByteData.Length,
+                        Tenant = Convert.ToInt32(tenant),
+                        Id = IdCounter.GetNumber("Document", tenant),
+                        HasFile = true,
+                        Folder = "others",
+                    };
+
+                    documentrepository.Add(document);
+                    documentrepository.SubmitChanges();
+
+                    invoiceApiCommunicationLog.CommunicationId = document.Id;
+                    invoiceApiCommunicationLog.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+
+                    invoiceApiCommunicationLogUpdateService.Update(invoiceApiCommunicationLog, true);
+
+
+                    var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+                    string filename = document.Id + "." + document.Extension;
+                    string filePath = "tenant" + tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
+                    BlobFileInfo fileInfo = new BlobFileInfo()
+                    {
+                        FileName = document.Id,
+                        FolderName = document.Folder,
+                        Extension = document.Extension,
+                        Tenant = document.Tenant,
+                        FileSize = ByteData.Length
+                    };
+                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+                    storageservice.Write(ByteData, fileInfo);
+
+
+                    stopwatch.Stop();
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SetBolb:" + filePath + ":Took:" + stopwatch.Elapsed.ToString());
+
+
+                    scope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
-  
+
 
 }

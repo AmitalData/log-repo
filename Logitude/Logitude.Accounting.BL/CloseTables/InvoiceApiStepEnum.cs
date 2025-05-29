@@ -9,10 +9,10 @@ namespace Logitude.Accounting.BL.CloseTables
 
     public struct InvoiceApiStepEnum
     {
-        public const string OpenMagayaSession = "1";
-        public const string CloseMagayaSession = "2";
-        public const string GetMagayaInvoicesList = "3";
-        public const string GetMagayaInvoice = "4";
+        public const string OpenInvoiceApiSession = "1";
+        public const string CloseInvoiceApiSession = "2";
+        public const string GetInvoiceApiInvoicesList = "3";
+        public const string GetInvoiceApiInvoice = "4";
         public const string GenerateInvoice = "5";
         public const string GetConfirmationNumber = "6";
         public const string ApproveInvoice = "7";

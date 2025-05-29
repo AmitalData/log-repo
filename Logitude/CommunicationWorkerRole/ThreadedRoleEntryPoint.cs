@@ -481,7 +481,7 @@ namespace CommunicationWorkerRole
             //    //    }
             //    //}
             //}
-            RemoveSchedular(BatchServicesDefinitionsTemp);
+            //RemoveSchedular(BatchServicesDefinitionsTemp);
             
 
             if (BatchServicesDefinitions == null)
@@ -678,7 +678,7 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
             }
-            RemoveSchedular(BatchServicesDefinitionsTemp);
+            //RemoveSchedular(BatchServicesDefinitionsTemp);
             //}
             return BatchServicesDefinitionsTemp;
         }

@@ -31,12 +31,15 @@ namespace CommunicationWorkerRole.Tasks
                 Log("InvoiceApiQueryBatch:Start", "Start");
                 try
                    {
-                        InvoiceApiQueryBatch invoiceApiQueryBatch = new InvoiceApiQueryBatch();
-                        int tenant = this.Task != null ? this.Task.Tenant : 0 ;
-                       invoiceApiQueryBatch.RunInvoiceApiInvoicesQuery(this.Task.StartDateTimeUTC.ToString(), DateTime.Now.ToString(), tenant);
-                        string responseText = invoiceApiQueryBatch.ResponseText();
+                    InvoiceApiQueryBatch invoiceApiQueryBatch = new InvoiceApiQueryBatch();
+                    int tenant = this.Task != null ? this.Task.Tenant : 0 ;
+                    string startDate = DateTime.UtcNow.AddDays(-1).Date.ToString("yyyy-MM-dd'T'00:00:00");
+                    string endDate = DateTime.UtcNow.Date.AddDays(1).AddSeconds(-1).ToString("yyyy-MM-dd'T'23:59:59");
 
-                        Log(responseText, "responseText:");
+                    invoiceApiQueryBatch.RunInvoiceApiInvoicesQuery(startDate, endDate, tenant);
+                    string responseText = invoiceApiQueryBatch.ResponseText();
+
+                       Log(responseText, "responseText:");
                     }
                     catch (Exception ex)
                     {
