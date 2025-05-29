@@ -7,13 +7,13 @@ import { InvoiceApiStepListService } from 'Accounting/Services/StandardLists/Inv
 import { LogTab } from 'Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
-import { CommunicationLogStepDataViewModel } from 'InfrastructureModules/InfrastructureCommunications/Components/CommunicationLog/ViewModel/CommunicationLogStepDataViewModel';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { InvoiceApiCommunicationLogViewModel } from './InvoiceApiCommunicationLogViewModel';
 import { InvoiceApiStatusListService } from 'Accounting/Services/StandardLists/InvoiceApiStatusListService';
 import { InvoiceApiCommunicationLogListService } from 'Accounting/Services/StandardLists/InvoiceApiCommunicationLogListService';
 import { InvoiceApiCommunicationLogExtendedPMService } from 'Accounting/Services/ExtendedPMs/InvoiceApiCommunicationLogExtendedPMService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { InvoiceApiCommunicationLogPM } from 'Accounting/EntityPMs/InvoiceApiCommunicationLogPM';
 
 
 
@@ -27,7 +27,7 @@ import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 export class InvoiceApiCommunicationLogDetailsTabComponent extends BaseComponent {
 
-    public EntityPM: any;
+    public EntityPM: InvoiceApiCommunicationLogPM;
 
 
     public ObjectTableName: string = "InvoiceApiStep";
@@ -69,9 +69,9 @@ export class InvoiceApiCommunicationLogDetailsTabComponent extends BaseComponent
     ViewXMLClicked() {
 
 
-        if (this.EntityPM.CommunicationId) {
+        if (this.EntityPM.DocumentId) {
 
-            DownloadManager.DownloadPage("1-1000249587");
+            DownloadManager.DownloadPage(this.EntityPM.DocumentId);
         }
        
 
@@ -116,33 +116,7 @@ export class InvoiceApiCommunicationLogDetailsTabComponent extends BaseComponent
             this.cd.detectChanges();
         } 
     }
-    // LoadInvocieApiSteps() {
-        
-    //         this.invoiceApiStepListService.getAll().subscribe((invoiceApiStepRes: any) => {
-
-    //             var pmResponse: ServiceResponse = invoiceApiStepRes;
-    //             if (!pmResponse.HasError) {
-    //                 var result = pmResponse.Result;
-    //                 if (result) {
-    //                     var invoiceApiCommunicationLogViewModel = [];
-
-    //                     result.sort((a, b) => a.Code.localeCompare(b.Code))
-    //                         .forEach((item) => {
-    //                             invoiceApiCommunicationLogViewModel.push(new InvoiceApiCommunicationLogViewModel(item, this.EntityPM,result));
-    //                         });
-    //                     this.InvoiceApiStepList.InsertCollection(invoiceApiCommunicationLogViewModel);
-
-    //                     this.cd.detectChanges();
-
-
-    //                 }
-    //             }
-
-
-    //         });
-        
-    // }
-
+   
 
     LoadInvocieApiSteps() {
         this.invoiceApiStatusListService.getAll().subscribe((statusRes: any) => {

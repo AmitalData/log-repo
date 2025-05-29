@@ -439,7 +439,8 @@ namespace CommunicationWorkerRole
                     UserRepository userRepository = new UserRepository(commonContext);
                     DocumentRepository documentrepository = new DocumentRepository(commonContext);
                     ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
-                    InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(tenant);
+                    IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                    InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
 
                     Document document = new Document()
                     {

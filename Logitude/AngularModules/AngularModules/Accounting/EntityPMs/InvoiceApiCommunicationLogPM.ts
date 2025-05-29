@@ -44,9 +44,9 @@ export class InvoiceApiCommunicationLogPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private communicationId: string;
-    public get CommunicationId() { return this.communicationId; }
-    public set CommunicationId(newValue: string) { if (this.communicationId != newValue) { this.communicationId = newValue; this.MarkAsDirty("CommunicationId"); } }
+    private documentId: string;
+    public get DocumentId() { return this.documentId; }
+    public set DocumentId(newValue: string) { if (this.documentId != newValue) { this.documentId = newValue; this.MarkAsDirty("DocumentId"); } }
        
 	 
     private step: string;

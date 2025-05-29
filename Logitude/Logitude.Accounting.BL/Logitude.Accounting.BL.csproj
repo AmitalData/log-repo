@@ -800,7 +800,6 @@
     <Compile Include="EntityQueryServices\InterestReportLineQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportLinesByDateQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportQueryService.cs" />
-    <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestTransactionQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalAdditionalDataQueryService.cs" />
     <Compile Include="EntityQueryServices\JournalLineLedgerTransactionAccDTO.cs" />

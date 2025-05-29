@@ -2,7 +2,6 @@
 
 
 using Logitude.Accounting.BL.Interfaces.Magaya;
-using Logitude.BL.Security;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;

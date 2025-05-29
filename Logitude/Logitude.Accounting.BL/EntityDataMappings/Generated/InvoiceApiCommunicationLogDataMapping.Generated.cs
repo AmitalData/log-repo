@@ -26,10 +26,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDate, 
 	         SearchFields, 
-	         CommunicationId, 
+	         DocumentId, 
 	         Step, 
 	         StatusCode, 
-	         Exception,
+	         Exception, 
+	         StatusName, 
+	         StepName,
 	      }
 
 
@@ -40,7 +42,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDate, 
 	         SearchFields, 
-	         CommunicationId, 
+	         DocumentId, 
 	         Step, 
 	         StatusCode, 
 	         Exception,
@@ -67,9 +69,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommunicationId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentId))
             {
-				entityPOCO.CommunicationId = entityPM.CommunicationId;
+				entityPOCO.DocumentId = entityPM.DocumentId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step))
@@ -113,9 +115,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CommunicationId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DocumentId))
             {
-					entityPM.CommunicationId = entityPOCO.CommunicationId;
+					entityPM.DocumentId = entityPOCO.DocumentId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Step))
@@ -154,9 +156,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CommunicationId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DocumentId))
             {
-                oldEntityPM.CommunicationId = entityPM.CommunicationId;
+                oldEntityPM.DocumentId = entityPM.DocumentId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Step))

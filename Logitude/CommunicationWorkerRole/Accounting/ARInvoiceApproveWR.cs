@@ -206,7 +206,6 @@ namespace CommunicationWorkerRole
         {
 
             string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
-            bool isInvoiceApi = response.MessageValues["IsInvoiceApi"].ToString() == "true" ;
             int tenant = 0;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
 
@@ -218,6 +217,8 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
+                    bool isInvoiceApi = response.MessageValues["IsInvoiceApi"]?.ToString() == "true";
+
                     aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);

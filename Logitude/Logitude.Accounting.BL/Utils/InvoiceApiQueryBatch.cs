@@ -130,11 +130,12 @@ namespace Logitude.Accounting.BL.Utils
                 InvoiceApiCommunicationLog log = new InvoiceApiCommunicationLog()
                 {
                     Id = IdCounter.GetNumber("InvoiceApiCommunicationLog", tenant),
-                    CommunicationId = null,
+                    DocumentId = null,
                     CreateDate = DateTime.Now,
                     StatusCode = InvoiceApiStatusEnum.Created,
                     Step = InvoiceApiStepEnum.OpenInvoiceApiSession,
                     SearchFields = guid + "," + tenant,
+                    Tenant = tenant
 
                 };
                 InvoiceApiCommunicationLogRepository invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogRepository(tenant);
