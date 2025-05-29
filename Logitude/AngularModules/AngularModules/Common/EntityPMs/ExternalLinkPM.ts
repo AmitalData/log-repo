@@ -35,11 +35,6 @@ export class ExternalLinkPM {
     public set Ref(newValue: string) { if (this.ref != newValue) { this.ref = newValue; this.MarkAsDirty("Ref"); } }
        
 	 
-    private link: string;
-    public get Link() { return this.link; }
-    public set Link(newValue: string) { if (this.link != newValue) { this.link = newValue; this.MarkAsDirty("Link"); } }
-       
-	 
     private expirationDate: number;
     public get ExpirationDate() { return this.expirationDate; }
     public set ExpirationDate(newValue: number) { if (this.expirationDate != newValue) { this.expirationDate = newValue; this.MarkAsDirty("ExpirationDate"); } }
