@@ -62,12 +62,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     CalculateDataForInterestReport();
 
 
-
-                    decimal? sumOfEXReports = SumOfExReports();
-                    if (sumOfEXReports > 0 && interestReportPM.OpenBalance != sumOfEXReports)
-                        throw new ApplicationException("The open balance in the newly created report should be equal to the close balance for the last invoiced report");
-
-
                     scope.Complete();
                 }
             }
