@@ -9,8 +9,8 @@ namespace Logitude.Customs.Data.DataContracts
 	public class SupplieInvoiceItemsForSIIRequest
 	{
 		public string InvoiceNumber { get; set; }
-		public int LineNumber { get; set; }
-		public int CounterKey { get; set; }
+		public int InvoiceLineNumber { get; set; }
+		public int InvoiceCounterKey { get; set; }
         public string ItemCode { get; set; }
 		public string ItemDescription { get; set; }
 		public string ClassificationCode { get; set; }
@@ -25,6 +25,7 @@ namespace Logitude.Customs.Data.DataContracts
 		public string OriginCountryName { get; set; }
 		public string ReqConfirmationTypeCode { get; set; }
 		public string RequestRequiredStatus { get; set; }
+		public int LineNumber { get; set; }
 
     }
 }

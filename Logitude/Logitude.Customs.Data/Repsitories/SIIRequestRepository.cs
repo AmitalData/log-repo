@@ -100,8 +100,8 @@ namespace Logitude.Customs.Data.Repsitories
         select new SupplieInvoiceItemsForSIIRequest
         {
             InvoiceNumber = si.InvoiceNumber,
-            LineNumber = itm.LineNumber,
-            CounterKey = itm.LineNumber,
+            InvoiceLineNumber = itm.LineNumber,
+            InvoiceCounterKey = itm.LineNumber,
             ItemCode = itm.ItemCode,
             ItemDescription = itm.ItemDescription,
             ClassificationCode = itm.ClassificationCode,
@@ -120,6 +120,7 @@ namespace Logitude.Customs.Data.Repsitories
             OriginCountryName = country.LocalName,
             ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
             RequestRequiredStatus = String.IsNullOrEmpty(requestList.RequestRequiredStatus) ? "0" : requestList.RequestRequiredStatus,
+            LineNumber = requestList.LineNumber,
         };
 
             return list.ToList();

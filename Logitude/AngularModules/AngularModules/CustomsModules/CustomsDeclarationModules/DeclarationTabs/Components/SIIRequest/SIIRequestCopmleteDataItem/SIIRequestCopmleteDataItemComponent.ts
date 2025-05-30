@@ -123,8 +123,10 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         // TODO 4. Update RequestRequiredStatus to 0/1/2 base on the missing mandatory fields
         // TODO: save entityPM data to the server
         this.entityPM.DeclarationId = this.DecalarationData?.Id;
-        this.entityPM.InvoiceCounterKey = this.invoiceItemReq.CounterKey;
-        this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.LineNumber;
+        this.entityPM.DeclarationId = this.currentSiiRequest.Id;
+        this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
+        this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
+        this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
 
         this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
@@ -218,21 +220,16 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityPM.StatisticQuantityType = newValue;
     }
     public get DutchRequested(): boolean {
-        // this.entityPM.EntityParentPM.DisableMarkAsDirty = true;
         return this.entityPM?.DutchRequested;
     }
     public set DutchRequested(newValue: boolean) {
         this.entityPM.DutchRequested = newValue;
-        // this.entityPM.EntityParentPM.DisableMarkAsDirty = true;
     }
-    // public get DutchGroupItem(): boolean {
-    //     return this.entityPM?.DutchGroupItem;
-    // }
-    // public set DutchGroupItem(newValue: boolean) {
-    //     this.entityPM.DutchGroupItem = newValue;
-    // }
-
+    public get DutchGroupItem(): number {
+        return this.entityPM?.DutchGroupItem;
+    }
+    public set DutchGroupItem(newValue: number) {
+        this.entityPM.DutchGroupItem = newValue;
+    }
     //#endregion SiiRequest properties
-
-
 }

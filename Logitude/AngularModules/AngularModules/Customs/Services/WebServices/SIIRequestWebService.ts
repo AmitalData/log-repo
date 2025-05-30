@@ -54,8 +54,8 @@ export class SIIRequestWebService {
 
 export class SupplierInvoiceItemsForSIIRequest {
     InvoiceNumber: string;
-    LineNumber: number;
-    CounterKey: number;
+    InvoiceLineNumber: number;
+    InvoiceCounterKey: number;
     ItemCode: string;
     ItemDescription: string;
     ClassificationCode: string;
@@ -70,4 +70,5 @@ export class SupplierInvoiceItemsForSIIRequest {
     OriginCountryName: string;
     ReqConfirmationTypeCode: string;
     RequestRequiredStatus: string;
+    LineNumber: number;
 }

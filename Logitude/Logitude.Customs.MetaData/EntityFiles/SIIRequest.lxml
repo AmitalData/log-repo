@@ -2086,6 +2086,30 @@
       LocalDefaultText="&quot;BS64:Itep15LXmdeQ15Qg15HXp9eR15zXqiDXpNeo15nXmNeZINeX16nXkdeV16DXmdeqINeh16TXpyDXoteR15XXqCDXkden16nXqiBTSUki&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingCommDef&quot;"
+      DefaultText="&quot;Message (%name) – Communication definition not found&quot;"
+      LocalDefaultText="&quot;מסר (%name) - לא נמצא הגדרת תקשורת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingServiceUrl&quot;"
+      DefaultText="&quot;Required field message (%name) – Service URL&quot;"
+      LocalDefaultText="&quot;הינו שדה חובה מסר (%name) - כתובת השירות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingUsername&quot;"
+      DefaultText="&quot;Required field (%name) – Username&quot;"
+      LocalDefaultText="&quot;הינו שדה חובה (%name) - שם משתמש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingPassword&quot;"
+      DefaultText="&quot;Required field (%name) – Password&quot;"
+      LocalDefaultText="&quot;הינו שדה חובה (%name) - סיסמא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

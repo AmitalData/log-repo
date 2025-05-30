@@ -24,7 +24,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 Tenant = tenant,
                 DeclarationId = declarationid,
-                LineNumber = linenumber,
+                LineNumber = 1,  // not clear what linenumber shud be right now so we return 1 for now -- linenumber is key 
                 InvoiceCounterKey = invoicecounterkey,
                 InvoiceItemLineNumber = invoiceitemlinenumber,
             };
