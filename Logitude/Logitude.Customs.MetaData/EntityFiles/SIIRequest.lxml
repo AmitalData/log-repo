@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;בקשות למכון תקנים&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;8439&quot;"
+  Code="&quot;fb98&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2020,6 +2020,30 @@
       Code="&quot;Customs.SIIRquest.O.ErrorNoItems&quot;"
       DefaultText="&quot;Error in getting supplier invoice items for SII request&quot;"
       LocalDefaultText="&quot;שגיאה בקבלת פריטי חשבונית ספק עבור בקשת SII&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingCommDef&quot;"
+      DefaultText="&quot;Message (%name) – Communication definition not found&quot;"
+      LocalDefaultText="&quot;מסר (%name) - לא נמצא הגדרת תקשורת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingServiceUrl&quot;"
+      DefaultText="&quot;Required field message (%name) – Service URL&quot;"
+      LocalDefaultText="&quot;הינו שדה חובה מסר (%name) - כתובת השירות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingUsername&quot;"
+      DefaultText="&quot;Required field (%name) – Username&quot;"
+      LocalDefaultText="&quot;הינו שדה חובה (%name) - שם משתמש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.MissingPassword&quot;"
+      DefaultText="&quot;Required field (%name) – Password&quot;"
+      LocalDefaultText="&quot;הינו שדה חובה (%name) - סיסמא&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "7dc810311393a7e0da08cf8567bbe398";
+		public const string HashString = "c4dd3dabb7c68a01ac8f2855e702a405";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "בקשות למכון תקנים",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "8439",
+			      				    Code =  "fb98",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1789,6 +1789,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"ביטול", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRquestOErrorNoItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRquest.O.ErrorNoItems", DefaultText = "Error in getting supplier invoice items for SII request",LocalDefaultText = @"שגיאה בקבלת פריטי חשבונית ספק עבור בקשת SII", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingCommDef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingCommDef", DefaultText = "Message (%name) – Communication definition not found",LocalDefaultText = @"מסר (%name) - לא נמצא הגדרת תקשורת", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingServiceUrl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingServiceUrl", DefaultText = "Required field message (%name) – Service URL",LocalDefaultText = @"הינו שדה חובה מסר (%name) - כתובת השירות", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingUsername = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingUsername", DefaultText = "Required field (%name) – Username",LocalDefaultText = @"הינו שדה חובה (%name) - שם משתמש", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingPassword", DefaultText = "Required field (%name) – Password",LocalDefaultText = @"הינו שדה חובה (%name) - סיסמא", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
