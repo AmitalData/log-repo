@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "7dc810311393a7e0da08cf8567bbe398";
+		public const string HashString = "46aafe14ce710fa9c46078529bb9db7f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "963b",
+			      				    Code =  "5f9f",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -928,11 +928,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterId",
 					  						DefaultText =  "ImporterId",
-					  						FullLocalDefaultTextBack_up =  "מס' יבוםן ",
+					  						FullLocalDefaultTextBack_up =  "מס' יבואן ",
 					  						FullLocalDefaultText =  "BS64:Itee16EnINeZ15HXldeQ158gIg==",
 					  						ListFieldLable =  "ImporterIdListLable",
 					  						ListLableDefaultText =  "Importer Id",
-					  						ListLocalDefaultTextBack_up =  "מס' יבוםן ",
+					  						ListLocalDefaultTextBack_up =  "מס' יבואן ",
 					  						ListLocalDefaultText =  "BS64:Itee16EnINeZ15HXldeQ158gIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -995,11 +995,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactName",
 					  						DefaultText =  "Contact Name",
-					  						FullLocalDefaultTextBack_up =  "םיש קשר",
+					  						FullLocalDefaultTextBack_up =  "איש קשר",
 					  						FullLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						ListFieldLable =  "ContactNameListLable",
 					  						ListLableDefaultText =  "Contact Name",
-					  						ListLocalDefaultTextBack_up =  "םיש קשר ",
+					  						ListLocalDefaultTextBack_up =  "איש קשר ",
 					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16ggIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1062,11 +1062,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UnloadDate",
 					  						DefaultText =  "Unload Date",
-					  						FullLocalDefaultTextBack_up =  "תםריך הגעה ",
+					  						FullLocalDefaultTextBack_up =  "תאריך הגעה ",
 					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXktei15QgIg==",
 					  						ListFieldLable =  "UnloadDateListLable",
 					  						ListLableDefaultText =  "Unload Date",
-					  						ListLocalDefaultTextBack_up =  "תםריך הגעה ",
+					  						ListLocalDefaultTextBack_up =  "תאריך הגעה ",
 					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXktei15QgIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1196,11 +1196,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VesselName",
 					  						DefaultText =  "Vessel Name",
-					  						FullLocalDefaultTextBack_up =  "שם םוניה ",
+					  						FullLocalDefaultTextBack_up =  "שם אוניה ",
 					  						FullLocalDefaultText =  "BS64:Itep150g15DXldeg15nXlCAi",
 					  						ListFieldLable =  "VesselNameListLable",
 					  						ListLableDefaultText =  "Vessel Name",
-					  						ListLocalDefaultTextBack_up =  "שם םוניה ",
+					  						ListLocalDefaultTextBack_up =  "שם אוניה ",
 					  						ListLocalDefaultText =  "BS64:Itep150g15DXldeg15nXlCAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1263,11 +1263,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactEmail",
 					  						DefaultText =  "Email",
-					  						FullLocalDefaultTextBack_up =  "םימייל",
+					  						FullLocalDefaultTextBack_up =  "אימייל",
 					  						FullLocalDefaultText =  "BS64:IteQ15nXnteZ15nXnCI=",
 					  						ListFieldLable =  "ContactEmailListLable",
 					  						ListLableDefaultText =  "Email",
-					  						ListLocalDefaultTextBack_up =  "םימייל",
+					  						ListLocalDefaultTextBack_up =  "אימייל",
 					  						ListLocalDefaultText =  "BS64:IteQ15nXnteZ15nXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1534,7 +1534,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Contact Id",
 					  						ListFieldLable =  "ContactIdListLable",
 					  						ListLableDefaultText =  "Contact",
-					  						ListLocalDefaultTextBack_up =  "םיש קשר",
+					  						ListLocalDefaultTextBack_up =  "איש קשר",
 					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
@@ -1760,6 +1760,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"BS64:IteR15nXmNeV15wi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRquestOErrorNoItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRquest.O.ErrorNoItems", DefaultText = "Error in getting supplier invoice items for SII request",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qg15HXp9eR15zXqiDXpNeo15nXmNeZINeX16nXkdeV16DXmdeqINeh16TXpyDXoteR15XXqCDXkden16nXqiBTSUki", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingCommDef = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingCommDef", DefaultText = "Message (%name) – Communication definition not found",LocalDefaultText = @"BS64:Itee16HXqCAoJW5hbWUpIC0g15zXkCDXoNee16bXkCDXlNeS15PXqNeqINeq16fXqdeV16jXqiI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingServiceUrl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingServiceUrl", DefaultText = "Required field message (%name) – Service URL",LocalDefaultText = @"BS64:IteU15nXoNeVINep15PXlCDXl9eV15HXlCDXnteh16ggKCVuYW1lKSAtINeb16rXldeR16og15TXqdeZ16jXldeqIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingUsername = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingUsername", DefaultText = "Required field (%name) – Username",LocalDefaultText = @"BS64:IteU15nXoNeVINep15PXlCDXl9eV15HXlCAoJW5hbWUpIC0g16nXnSDXntep16rXntepIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingPassword", DefaultText = "Required field (%name) – Password",LocalDefaultText = @"BS64:IteU15nXoNeVINep15PXlCDXl9eV15HXlCAoJW5hbWUpIC0g16HXmdeh157XkCI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
