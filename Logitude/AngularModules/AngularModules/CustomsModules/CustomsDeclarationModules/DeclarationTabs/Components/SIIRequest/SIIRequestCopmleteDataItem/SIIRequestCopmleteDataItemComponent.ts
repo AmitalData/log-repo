@@ -86,7 +86,19 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     //#region search product file number by API request:
     SearchProductFileNumber(ProductFileNumber: string = '') {
+        let productFileExists: boolean = false;
+        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
+            let myResponse: ServiceResponse = myResult;
+            if (!myResponse?.HasError && myResponse?.Result) {
+                // update productFileExists based on the response
+                if (productFileExists) {
         this.SaveSupplierInvoiceItemsReqList();
+    }
+                else {
+                    this.entityPM.ProductFileNumber = '';
+                }
+            }
+        });
     }
 
     //#region acations methods:
