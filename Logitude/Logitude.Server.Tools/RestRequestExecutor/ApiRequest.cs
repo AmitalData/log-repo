@@ -1,9 +1,11 @@
 ﻿using System;
+using System.CodeDom;
 
 namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class ApiRequest<T>
     {
+        
         public string DeclarationId { get; set; }
         public int Tenant { get; set; }
 
@@ -14,5 +16,7 @@ namespace Logitude.Server.Tools.RestRequestExecutor
 
         public bool IsSoapRequest =>
         Header?.ContentType?.Equals("text/xml", StringComparison.OrdinalIgnoreCase) == true;
+
+        public  ApiCommunicationConstants Communications { get; set; }
     }
 }

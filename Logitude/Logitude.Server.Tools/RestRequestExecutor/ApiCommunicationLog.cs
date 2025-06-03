@@ -7,22 +7,29 @@ namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class ApiCommunicationLog
     {              
-        public async Task<string> AddCommunicationLogAsync(string request, string response, int tenant, StatusTypeCommunication statusTypeCode)
+        public async Task<string> AddCommunicationLogAsync(string request,
+            string response,
+            int tenant,
+            StatusTypeCommunication statusTypeCode,
+            ApiCommunicationConstants communicationsRequest)
         {
             try
             {
+
                 CommunicationsParams logParams = new CommunicationsParams()
                 {
                     Tenant = tenant,
-                    CommunicationLogTypeCode = CommunicationConstants.TypeQueue.ToString(),
+                    CommunicationLogTypeCode = ApiCommunicationConstants.TypeQueue.ToString(),
                     Status = ((char)statusTypeCode).ToString(),
-                    QueueName = $"{CommunicationConstants.DefaultFolder}{tenant}1",
+                    QueueName = $"{ApiCommunicationConstants.DefaultFolder}{tenant}1",
                     Priority = 1,
-                    InOut = CommunicationConstants.InOut.ToString(),
-                    Subject = CommunicationConstants.SubjectCustomerActivation,
-                    FolderName = CommunicationConstants.DefaultFolder,
+                    InOut = ApiCommunicationConstants.InOut.ToString(),
+                    LoggingEntityId = communicationsRequest.EntityId,
+                    LoggingObjectTableId = communicationsRequest.ObjectTableId,                    
+                    Subject = communicationsRequest.Subject,
+                    FolderName = ApiCommunicationConstants.DefaultFolder,
                     ByteData = LogitudeXmlSerializer.SerializeObject(request),
-                    Logs=response                    
+                    Logs = response
                 };                
                 
                 return await Task.Run(() => Communications.AddCommunicationLog(logParams));
