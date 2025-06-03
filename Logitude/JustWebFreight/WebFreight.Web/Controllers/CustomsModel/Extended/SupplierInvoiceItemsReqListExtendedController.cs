@@ -54,7 +54,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        [HttpGet]                                     // or the attribute you already use
+        [HttpGet]                                    
         public async Task<HttpResponseMessage> GetProductFileExists(
             string modelCode,
             string importerNumber,
