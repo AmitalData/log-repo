@@ -51,8 +51,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.UnloadDate);
 
 
-            var repo = new SIIRequestRepository(entityPOCO.Tenant);
-            var agg = repo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
+            var siiRepo = new SIIRequestRepository(entityPOCO.Tenant);
+            var defaultValueQueryService = new DefaultValueQueryService(entityPOCO.Tenant);
+            var userQueryService = new UserQuery(entityPOCO.Tenant);
+
+            var agg = siiRepo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
 
             if (agg != null)
             {
@@ -66,8 +69,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.UnloadDate = agg.UnloadDate.Value;
                 if (entityPOCO.ContactId == null && agg.CustomerId != null)
                 {
-                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(entityPOCO.Tenant);
-                    UserQuery userQueryService = new UserQuery(entityPOCO.Tenant);
                     var customerCard = CardRepository.GetSingleCard(agg.CustomerId, entityPOCO.Tenant, true);
                     if (customerCard != null)
                     {
