@@ -51,10 +51,9 @@ namespace Logitude.Accounting.BL.Utils
             {
                 var InvoiceApiService = new InvoiceApiService();
 
-                if (!InvoiceApiService.OpenConnection())
-                    throw new Exception("Failed to connect to InvoiceApi API");
+                InvoiceApiService.OpenConnection();
 
-                var (success, xml) = InvoiceApiService.QueryLog(
+                var  xml= InvoiceApiService.QueryLog(
                     startDate,
                     endDate,
                     logEntryType: 0x01,
@@ -62,7 +61,7 @@ namespace Logitude.Accounting.BL.Utils
                     flags: 0x00);
                 InvoiceApiService.EndSession();
 
-                if (!success || string.IsNullOrWhiteSpace(xml))
+                if (string.IsNullOrWhiteSpace(xml))
                     throw new Exception("QueryLog failed or returned empty XML");
 
                 var doc = XDocument.Parse(xml);
@@ -139,7 +138,7 @@ namespace Logitude.Accounting.BL.Utils
                     Tenant = tenant
                     
                 };
-                log.ChangeSetOp = ChangeSetOperation.Update;
+                log.ChangeSetOp = ChangeSetOperation.Insert;
                 InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogUpdateService(tenant);
                 invoiceApiCommunicationLogRepository.Update(log,true);
                 return log.Id;
