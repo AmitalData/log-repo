@@ -54,24 +54,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetProductFileExists(
+        [HttpGet]                                     // or the attribute you already use
+        public async Task<HttpResponseMessage> GetProductFileExists(
             string modelCode,
             string importerNumber,
             string originCountry)
         {
             try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
-
                 string token = HttpContext.Current?.Request?.Headers["Token"];
                 if (string.IsNullOrEmpty(token))
                 {
-                    throw new UnauthorizedAccessException("Missing authentication token.");
+                    return Request.CreateResponse(
+                        HttpStatusCode.Unauthorized,
+                        "Missing authentication token.");
                 }
+
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-                string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
-                string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
+                const string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
+                const string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
 
                 var factory = new SIIRequestApiRequestFactory(auth.Tenant);
                 var credentials = factory.BuildCredentials(interfaceName, partnerCode);
@@ -87,15 +89,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var apiRequest = factory.Create(interfaceName, partnerCode, dto);
 
                 var executor = new RestRequestExecutor();
-                var apiResp = executor.ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest)
-                    .GetAwaiter()
-                    .GetResult();
+                var apiResp =
+                    await executor
+                          .ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest)
+                          .ConfigureAwait(false);
 
                 bool fileExists = apiResp?.Success == true &&
-                    apiResp.Result?.productFiles?.Any() == true;
+                                  apiResp.Result?.productFiles?.Any() == true;
 
 
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, fileExists);
             }
             catch (Exception ex)
@@ -105,6 +107,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     ApiExceptionBuilder.BuildException(ex));
             }
         }
+
 
     }
 }
