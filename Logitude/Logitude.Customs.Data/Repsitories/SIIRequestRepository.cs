@@ -120,7 +120,7 @@ namespace Logitude.Customs.Data.Repsitories
             OriginCountryName = country.LocalName,
             ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
             RequestRequiredStatus = String.IsNullOrEmpty(requestList.RequestRequiredStatus) ? "0" : requestList.RequestRequiredStatus,
-            LineNumber = requestList.LineNumber,
+            LineNumber = requestList != null ? (int)requestList.LineNumber : 1,
         };
 
             return list.ToList();
