@@ -21,7 +21,7 @@
                         (click)="RefreshButtonClicked()"></IconButton>
 
                     <button 
-                        style="width:45px" class="Button" (click)="ViewXMLClicked(item)"
+                        style="width:45px" class="Button" (click)="ViewXMLClicked()"
                         [disabled]="!(EntityPM.Step > '4' || (EntityPM.Step === '4' && EntityPM.StatusCode === '4'))">
                         View
                     </button>
