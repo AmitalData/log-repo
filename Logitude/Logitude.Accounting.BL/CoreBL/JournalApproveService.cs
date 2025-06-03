@@ -129,7 +129,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 			catch (Exception ex)
 			{
-				LogMessagingUtil.Instance.AppendLine($"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex}");
+				LogMessagingUtil.Instance.AppendLine($"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex.Message}");
 
 				NetCommonHelper.Logger.DevLog.Instance.WriteError(
 				$"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex}");
@@ -617,7 +617,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 catch (Exception e)
                 {
 					scope.Dispose();
-					LogMessagingUtil.Instance.AppendLine($"AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id={_JournalPM?.Id} | Exception: {e}");
+					LogMessagingUtil.Instance.AppendLine($"AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id={_JournalPM?.Id} | Exception: {e.Message}");
 					NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
                     throw e;
 
@@ -996,7 +996,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception eee)
                 {
-					LogMessagingUtil.Instance.AppendLine($"WorkWithoutQueueStatus4 | Exception: {eee}");
+					LogMessagingUtil.Instance.AppendLine($"WorkWithoutQueueStatus4 | Exception: {eee.Message}");
 
 					OnException(null, null, journalId, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
@@ -1065,7 +1065,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception eee)
                 {
-					LogMessagingUtil.Instance.AppendLine($"WorkWithoutQueue | Exception: {eee}");
+					LogMessagingUtil.Instance.AppendLine($"WorkWithoutQueue | Exception: {eee.Message}");
 
 					OnException(null, null, journalId, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
@@ -1160,7 +1160,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         catch (Exception eee2)
                         {
-							LogMessagingUtil.Instance.AppendLine($"ReturnToQueue journalId= {journalId.ToString()} | Exception: {eee2}");
+							LogMessagingUtil.Instance.AppendLine($"ReturnToQueue journalId= {journalId.ToString()} | Exception: {eee2.Message}");
 
 							NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2,journalId.ToString());
                              Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
@@ -1180,7 +1180,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception eee)
                 {
-					LogMessagingUtil.Instance.AppendLine($"ReturnToQueue2 journalId= {journal?.Id} | Exception: {eee}");
+					LogMessagingUtil.Instance.AppendLine($"ReturnToQueue2 journalId= {journal?.Id} | Exception: {eee.Message}");
 
 					OnException(null, null, journal?.Id, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
@@ -1258,7 +1258,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-				LogMessagingUtil.Instance.AppendLine($"EnqueueDB | Exception: {e}");
+				LogMessagingUtil.Instance.AppendLine($"EnqueueDB | Exception: {e.Message}");
 
 				Logitude.SystemLogs.ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "QueueSendService.Send()" + messageProperties.ToString(), null);
                 throw;
@@ -1280,7 +1280,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-				LogMessagingUtil.Instance.AppendLine($"EnqueueMultiThreadedDB | Exception: {e}");
+				LogMessagingUtil.Instance.AppendLine($"EnqueueMultiThreadedDB | Exception: {e.Message}");
 
 				Logitude.SystemLogs.ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "QueueSendService.Send()" + messageProperties.ToString(), null);
                 throw;
@@ -1336,7 +1336,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (JournalApproveException ex)
             {
-				LogMessagingUtil.Instance.AppendLine($"JournalApproveException {qpJournalId} | Exception: {ex}");
+				LogMessagingUtil.Instance.AppendLine($"JournalApproveException {qpJournalId} | Exception: {ex.Message}");
 
 				switch (ex.WhatTODO)
                 {
@@ -1359,7 +1359,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception ex)
             {
-				LogMessagingUtil.Instance.AppendLine($"ProcessMessage_Db {qpJournalId} | Exception: {ex}");
+				LogMessagingUtil.Instance.AppendLine($"ProcessMessage_Db {qpJournalId} | Exception: {ex.Message}");
 
 				OnException(myDbQueueService, message, qpJournalId, tenant, ex);
                 //LogMessagingUtil.Instance.AppendLine(MessageId.ToString() + " " + ex.Message);
@@ -1609,7 +1609,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception ex)
             {
-				LogMessagingUtil.Instance.AppendLine($"usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id {_JournalPM?.Id} | Err: {ex}");
+				LogMessagingUtil.Instance.AppendLine($"usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id {_JournalPM?.Id} | Err: {ex.Message}");
 
 				NetCommonHelper.Logger.DevLog.Instance.WriteError(" usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + ex);
                 if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
