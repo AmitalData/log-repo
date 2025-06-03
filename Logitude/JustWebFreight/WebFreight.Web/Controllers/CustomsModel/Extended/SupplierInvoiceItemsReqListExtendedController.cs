@@ -11,6 +11,7 @@ using Logitude.Server.Tools.RestRequestExecutor;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,20 +25,24 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class SupplierInvoiceItemsReqListExtendedController : ApiController
     {
-        public HttpResponseMessage GetSingle(string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber, string siirequestid)
+        public HttpResponseMessage GetSingle(string declarationId, int lineNumber, int invoiceCounterKey, int invoiceItemLineNumber, string siiRequestId)
         {
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
+                string token = HttpContext.Current?.Request?.Headers["Token"];
+                if(string.IsNullOrEmpty(token))
+                {
+                    throw new UnauthorizedAccessException("Missing authentication token.");
+                }
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ICustomContext ctx = CustomContext.GetContext(authToken.Tenant);
 
                 var qs = new SupplierInvoiceItemsReqListQueryService(ctx);
-                SupplierInvoiceItemsReqListPM pm = qs.GetOrCreate(null, declarationid, linenumber, invoicecounterkey, invoiceitemlinenumber, authToken.Tenant);
-                
+                SupplierInvoiceItemsReqListPM pm = qs.GetOrCreate(siiRequestId, declarationId, lineNumber, invoiceCounterKey, invoiceItemLineNumber, authToken.Tenant);
+
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, pm);
             }
@@ -58,7 +63,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
 
-                string token = HttpContext.Current.Request.Headers["Token"];
+                string token = HttpContext.Current?.Request?.Headers["Token"];
+                if (string.IsNullOrEmpty(token))
+                {
+                    throw new UnauthorizedAccessException("Missing authentication token.");
+                }
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
@@ -78,21 +87,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var apiRequest = factory.Create(interfaceName, partnerCode, dto);
 
                 var executor = new RestRequestExecutor();
-                var apiResp = Task.Run(() =>
-                    executor.ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest))
+                var apiResp = executor.ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest)
                     .GetAwaiter()
                     .GetResult();
 
-                bool fileExists = apiResp != null &&
-                          apiResp.Success &&
-                          apiResp.Result != null &&
-                          apiResp.Result.productFiles != null &&
-                          apiResp.Result.productFiles.Count > 0;
+                bool fileExists = apiResp?.Success == true &&
+                    apiResp.Result?.productFiles?.Any() == true;
 
 
-                SecurityUtility.AuthenticationOnTenant(auth.Tenant);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
                 return Request.CreateResponse(HttpStatusCode.OK, fileExists);
             }
             catch (Exception ex)
