@@ -7,11 +7,13 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
 using Logitude.XSD.CW_API.ABM;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -47,15 +49,17 @@ namespace Logitude.Accounting.BL.Utils
             try
             {
                 var InvoiceApiService = new InvoiceApiService();
-                if (!InvoiceApiService.OpenConnection("user", "password"))
+
+                if (!InvoiceApiService.OpenConnection())
                     throw new Exception("Failed to connect to InvoiceApi API");
 
                 var (success, xml) = InvoiceApiService.QueryLog(
                     startDate,
                     endDate,
-                    logEntryType: 0,
+                    logEntryType: 0x01,
                     transType: "Invoice",
-                    flags: 0);
+                    flags: 0x00);
+                InvoiceApiService.EndSession();
 
                 if (!success || string.IsNullOrWhiteSpace(xml))
                     throw new Exception("QueryLog failed or returned empty XML");
@@ -74,16 +78,24 @@ namespace Logitude.Accounting.BL.Utils
                     .ToList();
 
                 if (!items.Any())
-                    throw new Exception("No items found in XML");
+                    _ResponseText = "No items found in XML";
 
                 foreach (var item in items)
                 {
-                    string communicationId = AddCommuincationLog(tenant);
-                    AddInvoiceApiCommuicationLog(communicationId, item.Guid, tenant);
-                    SaveInvoiceApiInvoiceInQueue(item.Guid, item.Type, item.LogType, item.LogDate, communicationId, tenant);
+                    string InvoiceApiCommunicationLogId=AddInvoiceApiCommuicationLog(item?.Guid, tenant);
+                    var messageBody = new Dictionary<string, string>
+                    {
+                        { "Guid", item?.Guid },
+                        { "Type", item?.Type },
+                        { "LogType", item ?.LogType },
+                        { "LogDate", item ?.LogDate },
+                        { "InvoiceApiId", InvoiceApiCommunicationLogId},
+                    };
+                    SaveInvoiceApiInvoiceInQueue(messageBody , tenant);
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"SaveInvoiceApiInvoiceInQueue : {item}");
 
                 }
+
             }
             catch (Exception ex)
             {
@@ -94,14 +106,14 @@ namespace Logitude.Accounting.BL.Utils
 
 
 
-        public void SaveInvoiceApiInvoiceInQueue(string guid, string type, string logType, string logDate, string communicationId, int tenant)
+        public void SaveInvoiceApiInvoiceInQueue( Dictionary<string, string> messageBody, int tenant)
         {
             try
             {
 
                 IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("InvoiceApiQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "Guid", guid }, { "Type", type }, { "LogType", logType }, { "LogDate", logDate }, { "communicationId", communicationId } }, tenant, null, null, null, null);
+                queueservice.InitializeQueue("InvoiceApiWR", tenant);
+                queueservice.Send(messageBody, tenant, null, null, null, null);
             }
             catch (Exception ex)
             {
@@ -109,47 +121,27 @@ namespace Logitude.Accounting.BL.Utils
                 throw;
             }
         }
-        public string AddCommuincationLog(int tenant)
-        {
-            try
-            {
+       
 
-                CommunicationsParams logParams = new CommunicationsParams()
-                {
-                    Tenant = tenant,
-                    CommunicationLogTypeCode = "DCBK",
-                    Priority = 1,
-                    InOut = "O",
-                    Status = "W",
-                    Subject = "InvoiceApi Get Invoice API",
-                    FolderName = "InvoiceApiBackup",
-
-                };
-
-                return Communications.AddCommunicationLog(logParams);
-            }
-            catch (Exception ex)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError($"AddCommuincationLog Exception: {ex.Message}");
-                throw;
-            }
-        }
-
-        public void AddInvoiceApiCommuicationLog(string communicationId, string guid, int tenant)
+        public string AddInvoiceApiCommuicationLog( string guid, int tenant)
         {
             try
             {
                 InvoiceApiCommunicationLog log = new InvoiceApiCommunicationLog()
                 {
-                    CommunicationId = communicationId,
+                    Id = IdCounter.GetNumber("InvoiceApiCommunicationLog", tenant),
+                    DocumentId = null,
                     CreateDate = DateTime.Now,
                     StatusCode = InvoiceApiStatusEnum.Created,
                     Step = InvoiceApiStepEnum.OpenInvoiceApiSession,
                     SearchFields = guid + "," + tenant,
+                    Tenant = tenant
 
                 };
                 InvoiceApiCommunicationLogRepository invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogRepository(tenant);
                 invoiceApiCommunicationLogRepository.Add(log);
+                invoiceApiCommunicationLogRepository.SubmitChanges();
+                return log.Id;
 
             }
             catch (Exception ex)

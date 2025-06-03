@@ -1118,6 +1118,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PartyRelationshipTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TransactionNatureTypeController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AdditionalCurrencyRateViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\InvoiceApiCommunicationLogController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\PMControllers\Aur_ItemController.Generated.cs" />
