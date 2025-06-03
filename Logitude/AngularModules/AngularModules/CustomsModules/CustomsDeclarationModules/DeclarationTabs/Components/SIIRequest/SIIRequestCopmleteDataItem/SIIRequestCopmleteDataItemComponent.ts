@@ -189,8 +189,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     generalErrors: string[] = [];
     SaveSupplierInvoiceItemsReqList() {
         this.checkMandatoryFields();
-
-        // TODO 4. Update RequestRequiredStatus to 0/1/2 base on the missing mandatory fields
         this.entityPM.DeclarationId = this.DecalarationData?.Id;
         this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
