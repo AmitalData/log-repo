@@ -2,7 +2,7 @@
 <Table
   Name="DefaultAndConfigurations"
   Schema="dbo"
-  DBType="Main"
+  DBType="Global"
   Module="Infrastructure">
   <Column
     Name="Id"

@@ -35,15 +35,15 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel;
-using Logitude.BL.InfrastructureModel;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.InfrastructureModel.Repositories;
-namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControllers
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel;
+using Logitude.BL.GlobalModel;
+using Logitude.BL.GlobalModel.EntityLists;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.Tools.EntityService;
+using Simplog.Global.Data.GlobalModel.Repositories;
+namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 { 
 
     
@@ -60,7 +60,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 				
-		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+		    	IGlobalContext MyContext = GlobalContext.GetContext();
 				DefaultAndConfigurationRepository  defaultAndConfigurationRepository = new DefaultAndConfigurationRepository(MyContext);
 				DefaultAndConfigurationList entityList = null;
 				DefaultAndConfiguration entityPoco = defaultAndConfigurationRepository.GetSingleDefaultAndConfiguration(id , authToken.Tenant);
@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
 
-				IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+				IGlobalContext MyContext = GlobalContext.GetContext();
 				DefaultAndConfigurationRepository  defaultAndConfigurationRepository = new DefaultAndConfigurationRepository(MyContext);
 				IQueryable<DefaultAndConfiguration> entityPocos = defaultAndConfigurationRepository.GetDefaultAndConfigurations(authToken.Tenant);
 
@@ -224,7 +224,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                  };
 
 								
-                IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
+                IGlobalContext MyContext = GlobalContext.GetContext();
                 DefaultAndConfigurationRepository  defaultAndConfigurationRepository = new DefaultAndConfigurationRepository(MyContext);
                 IQueryable<DefaultAndConfiguration> entityPocos = defaultAndConfigurationRepository.GetDefaultAndConfigurations(tenant);
 

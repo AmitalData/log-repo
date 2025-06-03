@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Simplog.Data.InfrastructureModel.EntityPOCOs
+namespace Logitude.BL.GlobalModel.EntityLists
 {
-    public class DefaultAndConfigurationKey
-    {        
+    public class DefaultAndConfigurationKeyList
+    {
         public int Tenant { get; set; }
-        public DateTime CreateDate { get; set; }        
+        public DateTime CreateDate { get; set; }
         public string SetType1 { get; set; }
         [Key]
         public string SetKey { get; set; }

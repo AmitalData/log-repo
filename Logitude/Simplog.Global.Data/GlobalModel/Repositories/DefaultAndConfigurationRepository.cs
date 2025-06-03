@@ -1,29 +1,27 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Simplog.Data.InfrastructureModel.Repositories
+namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class DefaultAndConfigurationRepository : IRepository<DefaultAndConfiguration>
     {
 
-        IWebFreightContext webFreightContext;
-        public DefaultAndConfigurationRepository(IWebFreightContext context)
+        IGlobalContext globalContext;
+        public DefaultAndConfigurationRepository(IGlobalContext context)
         {
-            webFreightContext = context;
+            globalContext = context;
 
         }
         public DefaultAndConfigurationRepository()
         {
-            webFreightContext = new WebFreightContext();
+            globalContext = new GlobalContext();
         }
         public DefaultAndConfigurationRepository(int tenant)
         {
-            webFreightContext = WebFreightContext.GetContext(tenant);
+            globalContext = GlobalContext.GetContext(tenant);
         }
         public DefaultAndConfiguration GetSingleQueueMessage(string id)
         {
@@ -62,9 +60,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.DefaultAndConfigurations.ToList();
         }
 
-        public IWebFreightContext context
+        public IGlobalContext context
         {
-            get { return webFreightContext; }
+            get { return globalContext; }
         }
 
         public void SubmitChanges()

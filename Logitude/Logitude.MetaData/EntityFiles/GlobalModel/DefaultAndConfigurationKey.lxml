@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -33,6 +34,7 @@
   IsMain="true"
   IsAutoComplete="false"
   EnableEditFromLOV="false"
+  SortingByObjectField="&quot;CreateDate&quot;"
   SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
   IsSaveButtonVisible="false"
@@ -59,6 +61,7 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
+  ShowFastSearch="false"
   Code1="&quot;e67c&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -66,7 +69,7 @@
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
-  DxmlDatabaseTypeCode="Main"
+  DxmlDatabaseTypeCode="Global"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;7310f295-a854-4406-82a9-28910c705daf&quot;"

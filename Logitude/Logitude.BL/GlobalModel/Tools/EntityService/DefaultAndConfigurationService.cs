@@ -1,32 +1,27 @@
-﻿using System;
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.Tools.DataMapping;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.BL.Helpers;
+﻿using Logitude.BL.Helpers;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.BL.GlobalModel.Tools.DataMapping;
 
-namespace Logitude.BL.InfrastructureModel.Tools.EntityService
+namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
     public class DefaultAndConfigurationService
-    {
-        bool isNewEntity;
-        private int tenant;
+    {        
         public DefaultAndConfiguration Poco { get; set; }
 
-        public IWebFreightContext ObjectContext
+        public IGlobalContext ObjectContext
         {
             get { return objectContext; }
             set { objectContext = value; }
         }
 
         private DefaultAndConfigurationPM entityPM;
-        private IWebFreightContext objectContext;
+        private IGlobalContext objectContext;
         private DefaultAndConfigurationRepository entityRepository;
-        public DefaultAndConfigurationService(IWebFreightContext objectContext, int tenant)
+        public DefaultAndConfigurationService(IGlobalContext objectContext, int tenant)
         {
-            this.tenant = tenant;
             this.ObjectContext = objectContext;
             this.entityRepository = new DefaultAndConfigurationRepository(objectContext);
         }

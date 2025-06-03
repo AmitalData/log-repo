@@ -41,10 +41,10 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 
-namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
-{ 
+namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
+{
 
-    
+
     public partial class DataCustomObjectsController : ApiController
     {
 	  

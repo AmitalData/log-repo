@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Simplog.Data.InfrastructureModel.EntityPOCOs
+namespace Logitude.BL.GlobalModel.EntityPMs
 {
-    public class DefaultAndConfiguration
+    public class DefaultAndConfigurationPM
     {
         [Key]
         public string Id { get; set; }
@@ -24,7 +20,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string SetValueType2 { get; set; }
         public string Value2 { get; set; }
         public bool? AllowInheritance { get; set; }
-
 
     }
 }
