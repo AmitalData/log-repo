@@ -25,6 +25,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.InvoiceItemLineNumber);
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.LineNumber);
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SIIRequestID);
+
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
 
