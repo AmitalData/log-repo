@@ -65,8 +65,6 @@ namespace AmitalCustomsWindowsService.Tester
 
             var t = new Thread(GetENV);
             t.Start();
-            //GetENV();an
-            ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
         private static void GetENV()
@@ -293,7 +291,6 @@ namespace AmitalCustomsWindowsService.Tester
             }
 
 
-            //d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
             if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
             {
                 d.OverrideRMQ = textBoxOverrideRMQ.Text;

@@ -30,7 +30,6 @@ namespace AmitalCustomsWindowsService
         // array of worker threads
         List<Thread> _Threads;
         List<IWorkerBaseWorkOnce> _Workers;
-        //private List<IWorkerBaseWorkOnce> _WorkersWorkOnce;
         int _workerId=0;
         private System.Timers.Timer _myTimer;
         
@@ -40,7 +39,6 @@ namespace AmitalCustomsWindowsService
         {
             InitializeComponent();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            //throw new Exception("3333"); 
   
         }
 
@@ -49,7 +47,6 @@ namespace AmitalCustomsWindowsService
             var err = e.ExceptionObject.ToString();
             Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + err, true);
             Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.ToString(), true);
-            //System.Diagnostics.Debugger.Launch();
         }
 
         protected override void OnStart(string[] args)
@@ -246,7 +243,6 @@ namespace AmitalCustomsWindowsService
                 throw new Exception("how change code where is method >public AddWorkerFromAppSettingDB");
             }
             var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
-            ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());

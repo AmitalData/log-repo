@@ -201,9 +201,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
                 if (
-                    (entityPM.DirectionCode == "I")
-                    //|| 
-                    //(entityPM.DirectionCode == "E")
+                    (entityPM.DirectionCode == "I")               
                     )
                     
                 {
