@@ -33,6 +33,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.InvoiceItemLineNumber = entityPM.InvoiceItemLineNumber;
                 entityPOCO.LineNumber = entityPM.LineNumber;
                 entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.SIIRequestID = entityPM.SIIRequestID;
             }
         }
 

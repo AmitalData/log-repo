@@ -143,7 +143,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             var defJson = _ftpDetailsHelper
                           .GetAllInterfaceName()
                           .First(r => r.Key == interfaceName)
-                          .Value;
+                          .Value ?? throw new Exception($"Interface '{interfaceName}' not found.");
 
             return ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defJson);
         }
