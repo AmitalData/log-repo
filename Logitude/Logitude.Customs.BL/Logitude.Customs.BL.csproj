@@ -398,7 +398,10 @@
     <Compile Include="BL\ReferantUnifreightStatuses.cs" />
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
+    <Compile Include="BL\SIIRequest\SIIRequestApiDataMapper.cs" />
+    <Compile Include="BL\SIIRequest\SIIRequestApiRequestBuilder.cs" />
     <Compile Include="BL\SIIRequest\SIIRequestApiRequestFactory.cs" />
+    <Compile Include="BL\SIIRequest\SIIRequestWebApiEndpointConfig.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
     <Compile Include="CloseTables\Codes\EventStatuses.cs" />

@@ -280,7 +280,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.UIProperties.SetEnabled("ListCounter", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("ContactName", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("VesselName", this.ObjectTableNameSiiRequest, enabled);
-        this.UIProperties.SetEnabled("CustomFileNo", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("ImporterId", this.ObjectTableNameSiiRequest, !enabled);
         this.UIProperties.SetEnabled("ContactEmail", this.ObjectTableNameSiiRequest, !enabled);
         this.UIProperties.SetEnabled("ContactTel", this.ObjectTableNameSiiRequest, !enabled);
@@ -585,15 +584,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.entityPM.IsDirty = true;
     }
     //#endregion SiiRequest properties
-
-    //#region  Declaration properties
-    public get CustomFileNo(): string {
-        return this.DecalarationData.CustomFileNo;
-    }
-    public set CustomFileNo(newValue: string) {
-        this.DecalarationData.CustomFileNo = newValue;
-    }
-    //#endregion declaration properties
 }
 
 //#region SupplierInvoiceItemsForSIIRequestLine properties:

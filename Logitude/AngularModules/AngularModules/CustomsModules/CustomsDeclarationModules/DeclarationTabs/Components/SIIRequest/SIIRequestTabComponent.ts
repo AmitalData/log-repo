@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
@@ -170,14 +170,12 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
           else {
             this.supplierInvoiceItemsForSIIRequest = [];
             args.supplierInvoiceItemsForSIIRequest = [];
-            // TODO change to text code translator
             args.errorMassage = ["error in getting supplier invoice items for SII request"];
             this.openLogWindow(siiRequestMode, args);
           }
         });
       }
       else {
-        // TODO change to text code translator:
         args.errorMassage = ["error in getting SII request data"];
       }
     });

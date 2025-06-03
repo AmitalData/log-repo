@@ -24,6 +24,10 @@ using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Customs.BL.BL.SIIRequest;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.Customs.Data.DataContracts.SIIRequest;
+using Logitude.Server.Tools.RestRequestExecutor;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -89,6 +93,56 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        public HttpResponseMessage PostSendSIIRequest(string SIIRequestId,int tenant)
+        
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIISendRequest;
+                string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
+
+                var factory = new SIIRequestApiRequestFactory(auth.Tenant);
+                var credentials = factory.BuildCredentials(interfaceName, partnerCode);
+
+                var dto = new ProductFileRequestDto
+                {
+                    credentials = credentials,
+                };
+
+                var config = factory.GetEndpointConfig(interfaceName, partnerCode);
+                var apiRequest = ApiRequestBuilder.Build(tenant, config, dto);
+
+                var executor = new RestRequestExecutor();
+                var apiResp = Task.Run(() =>
+                    executor.ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest))
+                    .GetAwaiter()
+                    .GetResult();
+
+                bool fileExists = apiResp != null &&
+                          apiResp.Success &&
+                          apiResp.Result != null &&
+                          apiResp.Result.productFiles != null &&
+                          apiResp.Result.productFiles.Count > 0;
+
+
+                SecurityUtility.AuthenticationOnTenant(auth.Tenant);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return Request.CreateResponse(HttpStatusCode.OK, fileExists);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(
+                    HttpStatusCode.BadRequest,
+                    ApiExceptionBuilder.BuildException(ex));
+            }
         }
     }
 }
