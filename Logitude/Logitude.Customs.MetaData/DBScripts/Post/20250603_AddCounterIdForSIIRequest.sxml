@@ -15,6 +15,7 @@
     END
   ]]>
 	</Sql>
+
 	<Oracle Version="1">
 		<![CDATA[
     /* Ensure a counter row for logical table SIIREQUEST */
@@ -22,8 +23,12 @@
     USING (SELECT 'SIIREQUEST' AS TableName FROM dual) s
       ON (t.TableName = s.TableName)
     WHEN NOT MATCHED THEN
-      INSERT (ID, TableName, CurrentValue, LastUpdated)
-      VALUES (SYS_GUID(), s.TableName, 0, SYSDATE);
+      INSERT (ID,            -- NUMBER(10) PK
+              TableName,
+              LastIdNumber)  -- NUMBER(10) counter
+      VALUES (DBIDCOUNTERS_SEQ.NEXTVAL,  -- ⬅️ use your real sequence here
+              s.TableName,
+              0);                        -- starting value
 
     COMMIT;
   ]]>
