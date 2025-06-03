@@ -12,18 +12,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     public partial class InvoiceApiCommunicationLogQueryService
     {
 
-        public InvoiceApiCommunicationLogPM GetByCommunicationId(string communicationId, int tenant)
-        {
-            InvoiceApiCommunicationLog poco = this.repository.GetByCommunicationId(communicationId, tenant);
-            if (poco != null)
-            {
-                return GetEntityPM(poco);
-            }
-            else
-            {
-                return null;
-            }
-        }
+        
 
     }
 }
