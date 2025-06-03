@@ -4,7 +4,6 @@ import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs'
 import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { InvoiceApiStepListService } from 'Accounting/Services/StandardLists/InvoiceApiStepLogListService';
-import { LogTab } from 'Infrastructure/Components/LogitudeComponents/LogTabsComponent';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
@@ -14,6 +13,8 @@ import { InvoiceApiCommunicationLogListService } from 'Accounting/Services/Stand
 import { InvoiceApiCommunicationLogExtendedPMService } from 'Accounting/Services/ExtendedPMs/InvoiceApiCommunicationLogExtendedPMService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { InvoiceApiCommunicationLogPM } from 'Accounting/EntityPMs/InvoiceApiCommunicationLogPM';
+import { InvoiceApiStepList } from 'Accounting/EntityLists/InvoiceApiStepList';
+import { InvoiceApiStatusList } from 'Accounting/EntityLists/InvoiceApiStatusList';
 
 
 
@@ -30,122 +31,122 @@ export class InvoiceApiCommunicationLogDetailsTabComponent extends BaseComponent
     public EntityPM: InvoiceApiCommunicationLogPM;
 
 
-    public ObjectTableName: string = "InvoiceApiStep";
-    public DataContext: any = this;
+    public readonly ObjectTableName: string = "InvoiceApiStep";
     public IsDisplayOnly: boolean = false;
 
-    public columns: any[] = null;
     public invoiceApiStepListService: InvoiceApiStepListService;
     public invoiceApiStatusListService: InvoiceApiStatusListService;
-    public invoiceApiCommunicationLogListService :InvoiceApiCommunicationLogListService;
-    public invoiceApiCommunicationLogExtendedPMService :InvoiceApiCommunicationLogExtendedPMService;
-    private CurrentSession = SessionLocator.SelectedSession;
+    public invoiceApiCommunicationLogListService: InvoiceApiCommunicationLogListService;
+    public invoiceApiCommunicationLogExtendedPMService: InvoiceApiCommunicationLogExtendedPMService;
+    private readonly CurrentSession = SessionLocator.SelectedSession;
 
     public isRTL: boolean = false;
     InvoiceApiStepList: ObservableCollection;
-    private cachedSteps: any[] = []; 
-    private cachedStatuses: any[] = []; 
+    private cachedSteps: InvoiceApiStepList[] = [];
+    private cachedStatuses: InvoiceApiStatusList[] = [];
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {
         super();
         this.invoiceApiStepListService = new InvoiceApiStepListService();
         this.invoiceApiStatusListService = new InvoiceApiStatusListService();
-        this.invoiceApiCommunicationLogListService =new InvoiceApiCommunicationLogListService()
+        this.invoiceApiCommunicationLogListService = new InvoiceApiCommunicationLogListService()
         this.invoiceApiCommunicationLogExtendedPMService = new InvoiceApiCommunicationLogExtendedPMService();
         this.EntityPM = this.entityArgs.EntityPM;
         this.InvoiceApiStepList = new ObservableCollection([]);
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        
-        
+
+
 
     }
     ngOnInit() {
 
-        this.LoadInvocieApiSteps();
+        this.LoadInvoiceApiSteps();
 
     }
+    ngOnDestroy() {
 
+    }
 
     ViewXMLClicked() {
 
 
-        if (this.EntityPM.DocumentId) {
+        if (this.EntityPM?.DocumentId) {
 
             DownloadManager.DownloadPage(this.EntityPM.DocumentId);
         }
-       
+
 
 
     }
     ResendClicked() {
         this.CurrentSession.StartBusyIndicator("Resending communication...");
 
-        this.invoiceApiCommunicationLogExtendedPMService.ReSendCommunication(this.EntityPM.Id).subscribe((response: any) => {
-            this.CurrentSession.StopBusyIndicator();
-
-            if (!response.HasError && response.Result) {
-                this.RefreshButtonClicked();
-                const messageWindow=new MessageWindow
-                messageWindow.ShowSuccessIcon = true;
-                messageWindow.Show("Communication Resent Successfully")
+        this.invoiceApiCommunicationLogExtendedPMService.ReSendCommunication(this.EntityPM.Id).subscribe({
+            next: (response) => {
+                this.CurrentSession.StopBusyIndicator();
+                if (!response.HasError && response.Result) {
+                    this.RefreshButtonClicked();
+                    const messageWindow = new MessageWindow();
+                    messageWindow.ShowSuccessIcon = true;
+                    messageWindow.Show("Communication Resent Successfully");
+                }
+            },
+            error: (err) => {
+                this.CurrentSession.StopBusyIndicator();
+                const messageWindow = new MessageWindow();
+                messageWindow.ShowErrorIcon = true;
+                messageWindow.Show("Failed to resend communication: " + err.message);
             }
-            
+        });
 
-        })
+
 
 
 
     }
     RefreshButtonClicked() {
-        this.invoiceApiCommunicationLogListService.getSingle(this.EntityPM.Id).subscribe((response: any) => {
-            const serviceResponse: ServiceResponse = response;
-            if (!serviceResponse.HasError) {
-                this.EntityPM = serviceResponse.Result;
+        this.invoiceApiCommunicationLogListService.getSingle(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+            if (!response?.HasError) {
+                this.EntityPM = response.Result;
                 this.RefreshSteps();
-            } 
+            }
         })
-        
+
     }
     RefreshSteps() {
         if (this.cachedSteps.length > 0 && this.cachedStatuses.length > 0) {
-           
+
             const invoiceApiCommunicationLogViewModel = this.BuildInvoiceApiStepList(this.cachedSteps);
             this.InvoiceApiStepList.Clear();
             this.InvoiceApiStepList.InsertCollection(invoiceApiCommunicationLogViewModel);
-           
+
             this.cd.detectChanges();
-        } 
+        }
     }
-   
 
-    LoadInvocieApiSteps() {
-        this.invoiceApiStatusListService.getAll().subscribe((statusRes: any) => {
-            const statusResponse: ServiceResponse = statusRes;
-            if (!statusResponse.HasError) {
-                this.cachedStatuses = statusResponse.Result;   
-            }
 
-            this.invoiceApiStepListService.getAll().subscribe((invoiceApiStepRes: any) => {
-                const pmResponse: ServiceResponse = invoiceApiStepRes;
-                if (!pmResponse.HasError) {
-                    const result = pmResponse.Result;
-                    if (result) {
-                        this.cachedSteps = result;
-                        
-                        const invoiceApiCommunicationLogViewModel = this.BuildInvoiceApiStepList(result);
-                        this.InvoiceApiStepList.InsertCollection(invoiceApiCommunicationLogViewModel);
-                        this.cd.detectChanges();
-                    }
-                }
+    LoadInvoiceApiSteps() {
+        this.invoiceApiStatusListService.getAll().subscribe((statusRes: ServiceResponse) => {
+            if (statusRes.HasError) return;
+            this.cachedStatuses = statusRes.Result;
+
+            this.invoiceApiStepListService.getAll().subscribe((stepRes: ServiceResponse) => {
+                if (stepRes.HasError || !stepRes.Result) return;
+                this.cachedSteps = stepRes.Result;
+                const invoiceApiCommunicationLogViewModel = this.BuildInvoiceApiStepList(this.cachedSteps);
+                this.InvoiceApiStepList.InsertCollection(invoiceApiCommunicationLogViewModel);
+                this.cd.detectChanges();
+
+
             });
         });
     }
-    private BuildInvoiceApiStepList(result: any[]): InvoiceApiCommunicationLogViewModel[] {
+    private BuildInvoiceApiStepList(result: InvoiceApiStepList[]): InvoiceApiCommunicationLogViewModel[] {
         const invoiceApiCommunicationLogViewModel = [];
 
         result.sort((a, b) => a.Code.localeCompare(b.Code))
             .forEach((item) => {
-                invoiceApiCommunicationLogViewModel.push(new InvoiceApiCommunicationLogViewModel(item, this.EntityPM,this.cachedStatuses));
+                invoiceApiCommunicationLogViewModel.push(new InvoiceApiCommunicationLogViewModel(item, this.EntityPM, this.cachedStatuses));
             });
 
         return invoiceApiCommunicationLogViewModel;

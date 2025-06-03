@@ -18,16 +18,14 @@ export class InvoiceApiCommunicationLogExtendedPMService {
 
     ReSendCommunication(id: string) {
 
-        return this.httpClient.post(this._apiUrl + '/ReSendCommunication?id=' + id,null, ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.post(`${this._apiUrl}/ReSendCommunication?id=${id}`, null,  ServiceHelper.GetHttpHeaders() ).pipe(
             map(response => {
-                var result = response;
-                var pmresponse: ServiceResponse;
-                pmresponse = new ServiceResponse();
-
-                pmresponse.Result = result;
+                const pmresponse = new ServiceResponse();
+                pmresponse.Result = response;
                 return pmresponse;
             }),
-            catchError(ServiceHelper.HandleServiceError));
+            catchError(ServiceHelper.HandleServiceError)
+        );
 
 
     }

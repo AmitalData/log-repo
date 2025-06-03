@@ -11,7 +11,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
 {
     public class InvoiceApiService
     {
-        private CSSoapService _client;
+        private CSSoapService helper;
         private int _accessKey;
 
         public bool OpenConnection()
@@ -20,15 +20,15 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             {
                 var user = ConfigurationManager.AppSettings["MagayaUser"];
                 var password = ConfigurationManager.AppSettings["MagayaPassword"];
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"OpenConnection Started: user: {user},password: {password} ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OpenConnection Started");
                 if(string.IsNullOrEmpty(user) ||  string.IsNullOrEmpty(password))
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError("OpenConnection Failed: User or Password is not configured.");
                     return false;
                 }
-                _client = new CSSoapService();
+                helper = new CSSoapService();
                 int key;
-                api_session_error result = _client.StartSession(user, password, out key);
+                api_session_error result = helper.StartSession(user, password, out key);
                 if (result == api_session_error.no_error)
                 {
                     _accessKey = key;
@@ -50,10 +50,9 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
         {
             try
             {
-                if (_client == null)
-                    throw new InvalidOperationException("Session not started.");
+                EnsureSessionStarted();
 
-                api_session_error result = _client.EndSession(_accessKey);
+                api_session_error result = helper.EndSession(_accessKey);
                 return result == api_session_error.no_error;
             }
             catch (Exception ex)
@@ -72,10 +71,9 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
         {
             try
             {
-                if (_client == null)
-                    throw new InvalidOperationException("Session not started.");
+                EnsureSessionStarted();
                 string trans_list_xml;
-                api_session_error result = _client.QueryLog(
+                api_session_error result = helper.QueryLog(
                     _accessKey,
                     startDate,
                     endDate,
@@ -107,11 +105,9 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
         {
             try
             {
-                if (_client == null)
-                    throw new InvalidOperationException("Session not started.");
-
+                EnsureSessionStarted();
                 string transXml;
-                api_session_error result = _client.GetTransaction(
+                api_session_error result = helper.GetTransaction(
                     _accessKey,
                     type,
                     flags,
@@ -142,24 +138,25 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             {
                 InvoiceApiCommunicationLogRepository invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogRepository(tenant);
                var communicationLog= invoiceApiCommunicationLogRepository.GetSingle(id, tenant);
-                if(!string.IsNullOrEmpty(communicationLog?.Exception))
+                if(!string.IsNullOrWhiteSpace(communicationLog?.Exception))
                 {
                     var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(communicationLog?.Exception);
-                    if (dict != null && dict.ContainsKey("MessageValues"))
+                    const string messageKey = "MessageValues";
+                    if (dict != null && dict.ContainsKey(messageKey))
                     {
                         Dictionary<string, string> messageValues = null;
-                        if (dict["MessageValues"] is JObject jObject)
+                        if (dict[messageKey] is JObject jObject)
                         {
                             messageValues = jObject.ToObject<Dictionary<string, string>>();
                         }
-                        else if (dict["MessageValues"] is Dictionary<string, string> directDict)
+                        else if (dict[messageKey] is Dictionary<string, string> directDict)
                         {
                             messageValues = directDict;
                         }
                         if (messageValues != null)
                         {
                             invoiceApiQueryBatch.SaveInvoiceApiInvoiceInQueue(messageValues, tenant);
-                            return true;
+                          
                         }
                         return true;
                     }
@@ -171,6 +168,12 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"ReSendQueue Exception: {ex.Message}");
                 return false;
             }
+        }
+
+        private void EnsureSessionStarted()
+        {
+            if (helper == null)
+                throw new InvalidOperationException("Session not started.");
         }
 
 

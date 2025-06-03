@@ -26,7 +26,6 @@ using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Logitude.Server.Tools.StorageService;
-using System.Linq.Expressions;
 using Logitude.Accounting.Data;
 
 namespace CommunicationWorkerRole
@@ -122,8 +121,8 @@ namespace CommunicationWorkerRole
                 {
                     try
                     {
-                       
-                        if (response.MessageValues.ContainsKey("InvoiceApiId"))
+
+                        if (response?.MessageValues?.ContainsKey("InvoiceApiId") == true)
                         {
                             string InvoiceApiId = response.MessageValues["InvoiceApiId"].ToString();
                             GeInvoiceApiLog(InvoiceApiId);
@@ -377,7 +376,7 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                if(invoiceApiCommunicationLog != null)
+                if(invoiceApiCommunicationLog != null && !string.IsNullOrEmpty(status) && !string.IsNullOrEmpty(step))
                 {
                     IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                     InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
@@ -409,25 +408,45 @@ namespace CommunicationWorkerRole
         }
 
 
-        public void GeInvoiceApiLog(string InvoiceApiId)
+        public void GeInvoiceApiLog(string invoiceApiId)
         {
             try
             {
-                if (string.IsNullOrEmpty(InvoiceApiId))
-                    throw new Exception("InvoiceApiId is null or empty");
+                if (string.IsNullOrWhiteSpace(invoiceApiId))
+                    throw new ArgumentException("InvoiceApiId is null or empty", nameof(invoiceApiId));
 
-              
-                InvoiceApiCommunicationLogQueryService invoiceApiCommunicationLogQueryService = new InvoiceApiCommunicationLogQueryService(tenant);
-                invoiceApiCommunicationLog = invoiceApiCommunicationLogQueryService.GetSingle(InvoiceApiId, false,false);
+                var queryService = new InvoiceApiCommunicationLogQueryService(tenant);
+                invoiceApiCommunicationLog = queryService.GetSingle(invoiceApiId, false,false) ??  throw new InvalidOperationException($"Log not found for InvoiceApiId: {invoiceApiId}");
                 if (invoiceApiCommunicationLog == null)
-                    throw new Exception("InvoiceApiCommunicationLog not found for InvoiceApiId: " + InvoiceApiId);
+                    throw new Exception("InvoiceApiCommunicationLog not found for InvoiceApiId: " + invoiceApiId);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+        
+        private void SaveToBlob(byte[] byteData, Document document)
+        {
+            var filename = $"{document.Id}.{document.Extension}";
+            var filePath = $"tenant{tenant}/{StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder)}";
 
+
+            var fileInfo = new BlobFileInfo
+            {
+                FileName = document.Id,
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                Tenant = document.Tenant,
+                FileSize = byteData.Length
+            };
+
+            var blobService = (IBlobService)ContainerAccessor.Container.Resolve(
+                typeof(IBlobService), "StorageService", new ParameterOverride("", 1));
+
+            blobService.Write(byteData, fileInfo);
+            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"SetBlob: {filePath}");
+        }
         public void AddDocumentToApiCommunicationLog(byte[] ByteData)
         {
             try
@@ -463,22 +482,10 @@ namespace CommunicationWorkerRole
 
 
                     var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-                    string filename = document.Id + "." + document.Extension;
-                    string filePath = "tenant" + tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
-                    BlobFileInfo fileInfo = new BlobFileInfo()
-                    {
-                        FileName = document.Id,
-                        FolderName = document.Folder,
-                        Extension = document.Extension,
-                        Tenant = document.Tenant,
-                        FileSize = ByteData.Length
-                    };
-                    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                    storageservice.Write(ByteData, fileInfo);
-
+                   
+                    SaveToBlob(ByteData, document);
 
                     stopwatch.Stop();
-                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SetBolb:" + filePath + ":Took:" + stopwatch.Elapsed.ToString());
 
 
                     scope.Complete();

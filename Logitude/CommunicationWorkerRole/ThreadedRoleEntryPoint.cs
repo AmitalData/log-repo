@@ -192,10 +192,8 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
                 LogitudeSettings.OITenantNumber = setting.OITenantNumber;
                 LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
-                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
-                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
                     LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
 
 
@@ -452,9 +450,7 @@ namespace CommunicationWorkerRole
         {
 
 
-            //BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
-            //BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
-            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp; //BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
+            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp; 
             if (IsManagedProcess)
             {
                 BatchServicesDefinitionsTemp = GetManagedProcessActiveBatchServiceDef();
@@ -463,25 +459,8 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitionsTemp = GetActiveBatchServiceDef();
             }
-            //if (Environment.MachineName == "LogitudeWR2")
-            //{
-            //    BatchServicesDefinitions = BatchServicesDefinitionsTemp;
-            //    //var temp = SpecialBatchCode.Split(',');
-            //    //if (temp.Length > 0)
-            //    //{
-            //    //    var BatchCode = temp[0].ToLower();
-            //    //    var IsActivate = temp[1].ToLower();
-            //    //    if (IsActivate == "true")
-            //    //    {
-            //    //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
-            //    //    }
-            //    //    else
-            //    //    {
-            //    //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
-            //    //    }
-            //    //}
-            //}
-            //RemoveSchedular(BatchServicesDefinitionsTemp);
+         
+          RemoveSchedular(BatchServicesDefinitionsTemp);
             
 
             if (BatchServicesDefinitions == null)
@@ -497,17 +476,7 @@ namespace CommunicationWorkerRole
                     {
                         thread.Abort();
                     }
-                    //while (thread.IsAlive)
-
-
-                    // WWB: Check To Make Sure The Threads Are
-                    // Not Running Before Continuing
-                    //foreach (Thread thread in threads)
-                    //{
-                    //    while (thread.IsAlive)
-                    //        Thread.Sleep(10);
-                    //}
-
+                  
 
                     // WWB: Tell The Workers To Stop Looping
                     foreach (WorkerEntryPoint worker in workers)
@@ -576,8 +545,6 @@ namespace CommunicationWorkerRole
                 }
                 catch(Exception ex)
                 {
-                    //EventLog eventLog = new EventLog();
-                    //eventLog.WriteEntry("LogitudeBatchServices Exception : " + ex.ToString(), EventLogEntryType.Error);
                     ExceptionHandler.HandleException(ex, DateTime.UtcNow, 0, "", "WorkerRole", "ThreadedRoleEntryPoint :  Creating Instance for service: "+ Service?.ClassName, null);
                 }
             }
@@ -650,26 +617,12 @@ namespace CommunicationWorkerRole
                     Services.Add(ServiceDef);
                 }
             }
-            //string SpecialBatchCode = null;
-
-            //var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            //if (iAppSettings != null)
-            //{
-            //    if (iAppSettings["BatchCode"] != null)
-            //    {
-            //        SpecialBatchCode = iAppSettings["BatchCode"].ToString();
-            //    }
-            //}
+         
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
             List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();
-            //.Where(b => b.Code == "EmailOut-EmailQueue")
-            //var temp = SpecialBatchCode.Split(',');
-            //if (temp.Length > 0)
-            //{
-            //    var BatchCode = temp[0].ToLower();
-            //    var IsActivate = temp[1].ToLower();
+          
             if (IgnoreServices)
             {
                 BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => !Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
@@ -678,40 +631,18 @@ namespace CommunicationWorkerRole
             {
                 BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => Services.Select(s => s.SarviceName).Contains(a.Code)).ToList();
             }
-            //RemoveSchedular(BatchServicesDefinitionsTemp);
-            //}
+            RemoveSchedular(BatchServicesDefinitionsTemp);
+          
             return BatchServicesDefinitionsTemp;
         }
         private List<BatchServicesDefinitionPM> GetActiveBatchServiceDef()
         {
-            //string SpecialBatchCode = null;
-
-            //var iAppSettings = System.Configuration.ConfigurationManager.AppSettings;
-            //if (iAppSettings != null)
-            //{
-            //    if (iAppSettings["BatchCode"] != null)
-            //    {
-            //        SpecialBatchCode = iAppSettings["BatchCode"].ToString();
-            //    }
-            //}
+           
 
             BatchServicesDefinitionRepository BatchServicesRepository = new BatchServicesDefinitionRepository();
             BatchServicesDefinitionQuery BatchServicesQuery = new BatchServicesDefinitionQuery(BatchServicesRepository);
-            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();//.Where(b => b.Code == "EmailOut-EmailQueue")
-                                                                                                                                              //var temp = SpecialBatchCode.Split(',');
-                                                                                                                                              //if (temp.Length > 1)
-                                                                                                                                              //{
-                                                                                                                                              //    var BatchCode = temp[0].ToLower();
-                                                                                                                                              //    var IsActivate = temp[1].ToLower();
-                                                                                                                                              //    if (IsActivate == "true")
-                                                                                                                                              //    {
-                                                                                                                                              //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() == BatchCode).ToList();
-                                                                                                                                              //    }
-                                                                                                                                              //    else
-                                                                                                                                              //    {
-                                                                                                                                              //        BatchServicesDefinitionsTemp = BatchServicesDefinitionsTemp.Where(a => a.Code.ToLower() != BatchCode).ToList();
-                                                                                                                                              //    }
-                                                                                                                                              //}
+            List<BatchServicesDefinitionPM> BatchServicesDefinitionsTemp = BatchServicesQuery.GetAllActiveBatchServicesDefinitions().ToList();
+                                                                                                                                           
 
 
             return BatchServicesDefinitionsTemp;
@@ -795,10 +726,8 @@ namespace CommunicationWorkerRole
 
 
 
-                //LogitudeSettings.IsCostomsDeploy = Logitude.Customs.BL.Utils.CustomsSettingUtil.ForceDownloadXapFromIIS();
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
-                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
                     LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
                 }
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
@@ -838,33 +767,7 @@ namespace CommunicationWorkerRole
                 foreach (WorkerEntryPoint worker in workers)
                 {
                     worker.LogStatisticInDB();
-                    //if (!string.IsNullOrEmpty(worker.ThreadId))
-                    //{
-                    //    BatchServiceLogParams logParams = new BatchServiceLogParams()
-                    //    {
-                    //        BatchServiceCode = worker.BatchServiceCode,
-                    //        CreateDate = DateTime.UtcNow,
-                    //        Id = worker.ThreadId,
-                    //        LastActivity = worker.LastActivity,
-                    //        NumberOfDoneItems = worker.NumberOfDoneItems,
-                    //        CPU = worker.CPU
-                    //    };
-
-                    //    if (worker.DoneItemsInRange != null)
-                    //    {
-                    //        DateTime currentDate = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, DateTime.UtcNow.Hour, DateTime.UtcNow.Minute, 0);
-
-                    //        int doneItemsInOneMinute = worker.DoneItemsInRange.Where(d => d.Key <= currentDate && d.Key > currentDate.AddMinutes(-1)).Sum(d => d.Value);
-                    //        int doneItemsInFiveMinutes = worker.DoneItemsInRange.Where(d => d.Key <= currentDate && d.Key > currentDate.AddMinutes(-5)).Sum(d => d.Value);
-                    //        int doneItemsInOneHour = worker.DoneItemsInRange.Where(d => d.Key <= currentDate && d.Key > currentDate.AddMinutes(-60)).Sum(d => d.Value);
-
-                    //        logParams.DoneItemsInFiveMinutes = doneItemsInFiveMinutes;
-                    //        logParams.DoneItemsInOneHour = doneItemsInOneHour;
-                    //        logParams.DoneItemsInOneMinute = doneItemsInOneMinute;
-                    //    }
-
-                    //    BatchServicesLogger.Log(logParams);
-                    //}
+                   
                 }
 
                 batchServiceLogTimer.Start();
