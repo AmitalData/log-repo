@@ -62,12 +62,6 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     CalculateDataForInterestReport();
 
 
-
-                    decimal? sumOfEXReports = SumOfExReports();
-                    if (sumOfEXReports > 0 && interestReportPM.OpenBalance != sumOfEXReports)
-                        throw new ApplicationException("The open balance in the newly created report should be equal to the close balance for the last invoiced report");
-
-
                     scope.Complete();
                 }
             }
@@ -423,8 +417,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private decimal? GetInterestReportOpenBalance()
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            decimal interestReportOpenBalance = interestReportQueryService.GetSumOfExReportsOrInterestOpenBalance(tenant, interestReportPM.GLAccountId);
-            return interestReportOpenBalance;
+            return   interestReportQueryService.GetInterestReportOpenBalance(interestReportPM.InterestCalculationDate,tenant, interestReportPM.GLAccountId);
         }
 
         private decimal? SumOfExReports()
