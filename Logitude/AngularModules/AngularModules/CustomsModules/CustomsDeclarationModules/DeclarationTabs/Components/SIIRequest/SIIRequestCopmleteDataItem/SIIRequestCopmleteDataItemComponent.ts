@@ -95,7 +95,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
     SaveSupplierInvoiceItemsReqList() {
         this.entityPM.DeclarationId = this.DecalarationData?.Id;
-        this.entityPM.DeclarationId = this.currentSiiRequest.Id;
+        this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
         this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
         this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
