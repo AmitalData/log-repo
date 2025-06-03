@@ -385,7 +385,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;LedgerTransaction&quot;"
-    FieldsDataType="&quot;DateTime2&quot;"
+    FieldsDataType="&quot;DateTime&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
