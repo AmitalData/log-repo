@@ -20,8 +20,6 @@ export class SupplierInvoiceItemsReqListWebService {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
-            let serviceResponse: ServiceResponse;
-            serviceResponse = new ServiceResponse();
             return this._http.get(this._apiUrl + "/GetProductFileExists/?modelCode=" + modelCode + "&importerNumber=" + importerNumber + "&originCountry=" + originCountry, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 let serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

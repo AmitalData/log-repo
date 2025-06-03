@@ -12,6 +12,7 @@ import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServi
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SupplierInvoiceItemsReqListPMService } from 'Customs/Services/StandardPMs/SupplierInvoiceItemsReqListPMService';
 import { SupplierInvoiceItemsForSIIRequestLine } from '../SIIRequestTabs/SIIRequestComponent';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     public entityPM: SupplierInvoiceItemsReqListPM;
     public DecalarationData: DeclarationPM;
     public DataContext = this;
+    private CurrentSession = SessionLocator.SelectedSession;
     public ObjectTableName: string = "Customs.SupplierInvoiceItemsReqList";
     public ObjectTableNameDeclaration: string = "Customs.Declaration";
     public ObjectTableNameSiiRequest: string = "Customs.SIIRequests";
@@ -84,35 +86,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     //#region search product file number by API request:
     SearchProductFileNumber(ProductFileNumber: string = '') {
-        let productFileExists: boolean = false;
         this.SaveSupplierInvoiceItemsReqList();
-
-        // this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
-        //     let myResponse: ServiceResponse = myResult;
-        //     if (!myResponse?.HasError && myResponse?.Result) {
-        //         // TODO:
-        //         // 1. Handle the response data:
-        //         // if exist propduct file - return true
-        //         //  else false and reset this.ProductFileNumber = '' (cannot save product file are not exist)
-
-
-        //         // TODO: 2. check mandatory fields and display error alert:
-        //         this.checkMandatoryFields();
-
-        //         //TODO: 3.change to real response check
-        //         // update productFileExists based on the response
-        //         if (productFileExists) {
-        //             this.SaveSupplierInvoiceItemsReqList();
-        //         }
-        //         else {
-        //             this.entityPM.ProductFileNumber = '';
-        //             // TODO: Display a warning alert and ask the user if they still want to save the data even though the product file does not exist
-        //             // if yes- call to this.SaveSupplierInvoiceItemsReqList();
-        //             // else- close or stay in the screen
-
-        //         }
-        //     }
-        // });
     }
 
     //#region acations methods:
@@ -120,8 +94,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.SearchProductFileNumber(ProductFileNumber);
     }
     SaveSupplierInvoiceItemsReqList() {
-        // TODO 4. Update RequestRequiredStatus to 0/1/2 base on the missing mandatory fields
-        // TODO: save entityPM data to the server
         this.entityPM.DeclarationId = this.DecalarationData?.Id;
         this.entityPM.DeclarationId = this.currentSiiRequest.Id;
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
@@ -144,11 +116,13 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
 
     CancelSupplierInvoiceItemsReqList() {
-        // TODO: cancel the operation and reset the form
+        this.RefreshEntity();
+        this.CurrentSession.CloseCurrentWindow();
     }
 
-    checkMandatoryFields() {
-        // TODO: check if all mandatory fields are filled
+    RefreshEntity() {
+        this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
+        this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
     //#endregion acations methods
 
