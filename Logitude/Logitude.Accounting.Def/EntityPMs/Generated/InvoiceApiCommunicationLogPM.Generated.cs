@@ -119,25 +119,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string communicationId ;
+	  private string documentId ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CommunicationId  
+       public string DocumentId  
 	   {
 	    
 	     get
 		{
-		   return communicationId;
+		   return documentId;
 		 }
 		 set
 		 {
-		   if(communicationId != value)
+		   if(documentId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CommunicationId",OldValue=communicationId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DocumentId",OldValue=documentId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   communicationId=value;
+		   documentId=value;
 		   }
 			
 		 }

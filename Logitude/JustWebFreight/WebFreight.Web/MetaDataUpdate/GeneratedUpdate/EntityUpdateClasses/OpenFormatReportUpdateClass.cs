@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpenFormatReportUpdateClass
    {  		
-		public const string HashString = "3d7e67681e0bdc1c76c6ae6c85ac6f74";
+		public const string HashString = "ae4c77890b5e89802c5496fefef56c97";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewOpenFormatReportComponent",
-			      				    LocalDefaultText =  "דוחות מבנה אחיד",
+			      				    LocalDefaultText =  "דוחות מבנה םחיד",
 			      				    DefaultText =  "Open Format Report",
 			      				    Code =  "7d37",
 			      				    Name =  " Query Group",
@@ -264,10 +264,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						FullLocalDefaultText =  "תםריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLocalDefaultText =  "תםריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -399,10 +399,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון ",
+					  						FullLocalDefaultText =  "תםריך עדכון ",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון ",
+					  						ListLocalDefaultText =  "תםריך עדכון ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -594,10 +594,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FromDate",
 					  						DefaultText =  "From",
-					  						FullLocalDefaultText =  "מתאריך",
+					  						FullLocalDefaultText =  "מתםריך",
 					  						ListFieldLable =  "FromDateListLable",
 					  						ListLableDefaultText =  "From",
-					  						ListLocalDefaultText =  "מתאריך",
+					  						ListLocalDefaultText =  "מתםריך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -660,10 +660,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ToDate",
 					  						DefaultText =  "To ",
-					  						FullLocalDefaultText =  "עד תאריך",
+					  						FullLocalDefaultText =  "עד תםריך",
 					  						ListFieldLable =  "ToDateListLable",
 					  						ListLableDefaultText =  "To",
-					  						ListLocalDefaultText =  "עד תאריך",
+					  						ListLocalDefaultText =  "עד תםריך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -793,7 +793,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrorMessage",
 					  						DefaultText =  "Error Message",
-					  						FullLocalDefaultText =  "הערות שגיאה",
+					  						FullLocalDefaultText =  "הערות שגיםה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -1424,7 +1424,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode OpenFormatReportTextCode_OpenFormatReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.O.NewReport", DefaultText = "New open format report",LocalDefaultText = @"BS64:IteT15XXlyDXnteR16DXlCDXkNeX15nXkyDXl9eT16ki", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

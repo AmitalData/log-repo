@@ -3,31 +3,32 @@ using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using System.Web;
 using System;
 using System.Net.Http;
 using System.Net;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace WebFreight.Web.Controllers.CommonDataModel
 {
     public class ExternalLinkController : ApiController
     {
-        public Response GetExternalLink(string Ref, string param)
-        {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        [HttpGet]
+        public IHttpActionResult GetExternalLink(string Ref, string param)
+        {            
+            AuthenticationToken authToken = HeaderHelper.Authenticate();
 
             Response response = new Response();
 
             try
             {
-                string link = new ExternalLinkQuery(authToken.Tenant).GetExternalLink(Ref, param, authToken.Tenant);
+                ExternalLinkQuery externalLinkQuery = new ExternalLinkQuery(authToken.Tenant);
+                string link = externalLinkQuery.AddExternalLink(Ref, param, authToken.Tenant);
                 response.HasError = false;
-                response.Result = AddOrigin(link);
+                response.Result = link;
             }
             catch (Exception e)
             {
@@ -36,48 +37,39 @@ namespace WebFreight.Web.Controllers.CommonDataModel
                 response.HasError = true;
             }
 
-            return response;
+            return Ok(response);
         }
 
-        public HttpResponseMessage GetForward(string token)
+        [HttpGet]
+        public IHttpActionResult GetForward(string token)
         {
             AuthenticationToken authToken = null;
 
             try
             {
                 authToken = new AuthenticationTokenRepository().GetSingleToken(token);
+
+                if (authToken == null)
+                    return Unauthorized();
+
+                if (authToken?.ExpirationDate < DateTime.Now)
+                {
+                    authToken = new AuthenticationTokenRepository().GetSingleToken(token);
+                    string supportEmail = new TenantManagementQuery().GetSinglePM(authToken.Tenant)?.EcommerceSupportEmail;
+                    string msg = new TextCodeRepository(authToken.Tenant).GetTextCodeByTenantAndCode("General.O.GetSupportEmail", authToken.Tenant)?.LocalDefaultText;
+                    return Content(HttpStatusCode.BadGateway, $"{msg} {supportEmail}");
+                }
+
+                string link = new ExternalLinkQuery(authToken.Tenant).GetFormToken(authToken);
+                if (string.IsNullOrEmpty(link))
+                    return BadRequest("Link not found");
+
+                return Ok(link);
             }
             catch (Exception e)
             {
-                if (e is AutenticationException)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, e.Message);
-
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(e));
+                return BadRequest(e.Message);
             }
-
-            if (authToken == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, "Token is not valid");
-
-            if (authToken?.ExpirationDate < DateTime.Now)
-                throw new AutenticationException("Session expired. Please log in again");
-
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Redirect);
-            response.Headers.Location = new Uri(AddOrigin(authToken.Params));
-
-            return response;
-        }
-
-        private static string AddOrigin(string link)
-        {
-            string protocol = HttpContext.Current.Request.Url.Scheme;
-            string host = HttpContext.Current.Request.Url.Host;
-            if (host == "localhost")
-            {
-                host += ":4200";
-                link = link.Replace("/Angular/index.html", "");
-            }
-
-            return $"{protocol}://{host}{link}";
         }
     }
 }

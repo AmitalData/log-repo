@@ -21,7 +21,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<InvoiceApiCommunicationLogList> GetIqueryableList(IQueryable<InvoiceApiCommunicationLog> iQueryable)
         {
-		IQueryable<InvoiceApiCommunicationLogList> query = (from a in iQueryable
+            IQueryable<InvoiceApiCommunicationLogList> query = (from a in iQueryable
                                             select new InvoiceApiCommunicationLogList()
 											{
                      
@@ -33,15 +33,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          SearchFields = a.SearchFields,
 					
-					                          CommunicationId = a.CommunicationId,
+					                          DocumentId = a.DocumentId,
 					
 					                          Step = a.Step,
 					
 					                          StatusCode = a.StatusCode,
 					
 					                          Exception = a.Exception,
-					
-		                    	            });
+
+                                              StatusName = a.InvoiceApiStatus != null ? a.InvoiceApiStatus.StatusName : null,
+
+                                              StepName = a.InvoiceApiStep != null ? a.InvoiceApiStep.EnglishName?? a.InvoiceApiStep.LocalName : null
+
+
+                                            });
             return query;
 		}
 
@@ -54,7 +59,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 			return iQueryable;
 		}
 		
-			}
+	}
 
 
 }

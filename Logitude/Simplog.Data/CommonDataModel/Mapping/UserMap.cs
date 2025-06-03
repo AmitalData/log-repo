@@ -114,7 +114,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             if (dbms == "oracle")
             {
                 this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInMobile");
-                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticateEnabled");
+                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthEnabled");
             }
             //#else
             else

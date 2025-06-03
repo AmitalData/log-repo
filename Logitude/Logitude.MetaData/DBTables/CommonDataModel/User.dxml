@@ -146,7 +146,8 @@
   </Column>
   <Column
     Name="IsTwoFactorAuthenticationEnabled"
-    ShortName="IsTwoFactorAuthenticateEnabled"
+    ShortName="IsTwoFactorAuthEnabled"
+    OldNames="IsTwoFactorAuthenticateEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />

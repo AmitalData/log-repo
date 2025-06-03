@@ -411,7 +411,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                      AccountContactEmail = d.First().AccountContactEmail, 
                     AccountContactName = d.First().AccountContactName,
                     AccountContactPhone = d.First().AccountContactPhone,
-
+ 
 				}).ToList();
             else
                 groupedPeriodsByAccount = result.GroupBy(d => d.AccountId).Select(d => new AgingPeriod()
@@ -469,7 +469,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     AccountContactEmail = d.First().AccountContactEmail,
                     AccountContactPhone = d.First().AccountContactPhone,
 
-				}).ToList();
+ 				}).ToList();
             totalData.AgingPeriods.AddRange(groupedPeriodsByAccount);
             
         }
