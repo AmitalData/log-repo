@@ -72,7 +72,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 }
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant)
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 const string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
                 const string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
