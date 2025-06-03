@@ -42,7 +42,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"OpenConnection Exception: {ex.Message}");
-                return false;
+                throw ex;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"EndSession Exception: {ex.Message}");
-                return false;
+                throw ex;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"QueryLog Exception: {ex.Message}");
-                return (false, null);
+                throw ex;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"GetTransaction Exception: {ex.Message}");
-                return (false, null);
+                throw ex;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             catch (Exception ex)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteError($"ReSendQueue Exception: {ex.Message}");
-                return false;
+                throw ex;
             }
         }
 
