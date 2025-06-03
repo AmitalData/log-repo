@@ -4,6 +4,9 @@
 <table *ngIf="DecalarationData != null && IsLoaded">
     <tr style="height:100%;">
         <td style="vertical-align:top">
+            <div *ngIf="generalErrors?.length > 0">
+                <ValidationSummary [ItemsSource]="generalErrors" [SingleLine]="true"></ValidationSummary>
+            </div>
             <div style="vertical-align:top; margin:5px">
                 <table>
                     <tr class="FieldRow">
@@ -71,7 +74,7 @@
                         </td>
                         <td style="width:200px">
                             <LogTextBox [ObjectFieldName]="'InvoiceQuantity'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
                     </tr>
                     <tr class="FieldRow">
@@ -82,7 +85,7 @@
                         </td>
                         <td style="width:200px">
                             <LogTextBox [ObjectFieldName]="'InvoiceQuantityType'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
                     </tr>
                     <tr class="FieldRow">
@@ -93,7 +96,7 @@
                         </td>
                         <td style="width:200px">
                             <LogTextBox [ObjectFieldName]="'StatisticQuantity'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
                     </tr>
                     <tr class="FieldRow">
@@ -104,7 +107,7 @@
                         </td>
                         <td style="width:200px">
                             <LogTextBox [ObjectFieldName]="'StatisticQuantityType'" [DataContext]="DataContext"
-                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
                     </tr>
                     <tr class="FieldRow">

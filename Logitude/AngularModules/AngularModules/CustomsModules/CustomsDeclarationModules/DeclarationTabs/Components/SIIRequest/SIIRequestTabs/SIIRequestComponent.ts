@@ -173,10 +173,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         windowArgs.Warning = null;
         windowArgs.NoButtonVisibility = false;
         windowArgs.CancelButtonVisibility = true;
-        windowArgs.SaveButtonText = "אשר";
-        windowArgs.CancelButtonText = "בטל";
+        windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Confirm");
+        windowArgs.CancelButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Cancel");
         windowArgs.ComponentHeight = '328px';
-        let windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.Errors");
+        let windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ErrorsFound");
         let logWindow = new LogitudeWindow(this.CurrentSession);
         logWindow.Width = 600;
         logWindow.Height = 400;
@@ -251,7 +251,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
         logWindow.Width = 450;
-        logWindow.Height = 500;
+        logWindow.Height = 515;
         logWindow.Title = TextCodeTranslator.Translate("Customs.SIIRequest.O.CompletData");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -717,7 +717,7 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
         return this.entityPM.RequestRequiredStatus;
     }
     public set RequestRequiredStatus(newValue: string) {
-        this.entityPM.RequestRequiredStatus = newValue;
+        this.entityPM.RequestRequiredStatus = AppTool.IsNullOrEmpty(newValue) ? CompleteStatuses.UnCompleted : newValue;
     }
 }
 

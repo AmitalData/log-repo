@@ -11,8 +11,11 @@ import { SIIRequestWebService, SupplierInvoiceItemsForSIIRequest } from 'Customs
 import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SupplierInvoiceItemsReqListPMService } from 'Customs/Services/StandardPMs/SupplierInvoiceItemsReqListPMService';
-import { SupplierInvoiceItemsForSIIRequestLine } from '../SIIRequestTabs/SIIRequestComponent';
+import { CompleteStatuses, SupplierInvoiceItemsForSIIRequestLine } from '../SIIRequestTabs/SIIRequestComponent';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { AppTool } from 'Infrastructure/Tools';
 
 
 @Component({
@@ -76,55 +79,139 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     SetPropertiesEnabled() {
         let enabled: boolean = !this.IsDisplayOnly;
-        this.UIProperties.SetEnabled("ManufactureCountryCode", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("ItemNo", this.ObjectTableNameSiiRequest, !enabled);
-        this.UIProperties.SetEnabled("ItemName", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("ManufactureCountryCode", this.ObjectTableNameSiiRequest, enabled);
+        this.UIProperties.SetEnabled("ItemNo", this.ObjectTableNameSiiRequest, enabled);
+        this.UIProperties.SetEnabled("ItemName", this.ObjectTableNameSiiRequest, enabled);
         this.UIProperties.SetEnabled("InvoiceQuantity", this.ObjectTableNameSiiRequest, !enabled);
         this.UIProperties.SetEnabled("InvoiceQuantityType", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("StatisticQuantity", this.ObjectTableNameSiiRequest, !enabled);
+        this.UIProperties.SetEnabled("StatisticQuantityType", this.ObjectTableNameSiiRequest, !enabled);
     }
     // #endregion initialization data
 
     //#region search product file number by API request:
     SearchProductFileNumber(ProductFileNumber: string = '') {
         let productFileExists: boolean = false;
+        this.validationErrors = [];
+        this.checkMandatoryFields();
+        if (this.errorsList.length > 0) {
+            this.displayErrorsMsg();
+            return;
+        }
+        this.errorsList = [];
         this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
-            if (!myResponse?.HasError && myResponse?.Result) {
-                // update productFileExists based on the response
+            if (!myResponse?.HasError) {
+                productFileExists = myResponse?.Result;
                 if (productFileExists) {
-        this.SaveSupplierInvoiceItemsReqList();
-    }
+                    this.SaveSupplierInvoiceItemsReqList();
+                    this.entityPM.ProductFileNumber = ProductFileNumber;
+                    this.validationErrors = [];
+                }
                 else {
                     this.entityPM.ProductFileNumber = '';
+                    let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.\n ${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave")}?`;
+                    this.validationErrors = [errorMsg];
+                    this.displayErrorsMsg();
                 }
             }
         });
     }
 
+    //region mandatory fields check:
+    errorsList: string[] = [];
+    checkMandatoryFields() {
+        this.errorsList = [];
+        let missingField: string = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ValueMustBeEntered");
+        let fieldName = 'Customs.SupplierInvoiceItemsReqList.F.';
+        const mandatoryFields = [
+            { field: this.ManufactureCountryCode, name: TextCodeTranslator.Translate(fieldName + "ManufactureCountryCode") },
+            { field: this.ItemNo, name: TextCodeTranslator.Translate(fieldName + "ItemNo") },
+            { field: this.ItemName, name: TextCodeTranslator.Translate(fieldName + "ItemName") },
+            { field: this.InvoiceQuantity, name: TextCodeTranslator.Translate(fieldName + "InvoiceQuantity") },
+            { field: this.InvoiceQuantityType, name: TextCodeTranslator.Translate(fieldName + "InvoiceQuantityType") },
+        ];
+        this.errorsList = mandatoryFields.filter(({ field }) => AppTool.IsNullOrEmpty(field))?.map(({ name }) => `${missingField} ${name}`);
+        if (this.errorsList?.length > 0) {
+            this.entityPM.RequestRequiredStatus = CompleteStatuses.PartiallyCompleted;
+        }
+        else {
+            this.entityPM.RequestRequiredStatus = CompleteStatuses.FullyCompleted;
+        }
+    }
+
+    displayErrorsMsg() {
+        let windowArgs: any = {};
+        windowArgs.Errors = this.errorsList;
+        windowArgs.Warning = this.validationErrors;
+        windowArgs.NoButtonVisibility = false;
+        windowArgs.CancelButtonVisibility = true;
+        windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Confirm");
+        windowArgs.CancelButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Cancel");
+        windowArgs.ComponentHeight = '328px';
+        let windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ErrorsFound");
+        let logWindow = new LogitudeWindow(this.CurrentSession);
+        logWindow.Width = 440;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            return this.taxationWindowClosed($event) ? this.SaveSupplierInvoiceItemsReqList() : false;
+        });
+
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        this.CurrentSession.StopBusyIndicator();
+    }
+
+    validationErrors: string[] = [];
+    taxationWindowClosed(event) {
+        this.validationErrors = [];
+        if (this.errorsList?.length > 0) return false;
+        this.errorsList = [];
+        switch (event) {
+            case "ok": {
+                return true;
+            }
+            case "cancel": {
+                return false;
+            }
+        }
+    }
+    //#endregion mandatory fields check
+
     //#region acations methods:
     SaveAndSearchSupplierInvoiceItemsReqList(ProductFileNumber: string = '') {
         this.SearchProductFileNumber(ProductFileNumber);
     }
+
+    generalErrors: string[] = [];
     SaveSupplierInvoiceItemsReqList() {
+        this.checkMandatoryFields();
+
+        // TODO 4. Update RequestRequiredStatus to 0/1/2 base on the missing mandatory fields
         this.entityPM.DeclarationId = this.DecalarationData?.Id;
         this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
         this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
         this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
+        this.entityPM.RequestRequiredStatus = this.invoiceItemReq.RequestRequiredStatus;
 
         this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
-            console.log(myResponse);
-            debugger
             if (!myResponse?.HasError && myResponse?.Result) {
+                this.generalErrors = [];
                 console.log(myResponse?.Result);
-
+                this.entityPM = myResponse?.Result;
+            }
+            else {
+                this.generalErrors = myResponse?.ErrorsArray;
             }
         }, error => {
+            this.generalErrors = [error?.message];
             console.error('Error saving SupplierInvoiceItemsReqList:', error);
         });
-
-
     }
 
     CancelSupplierInvoiceItemsReqList() {
@@ -136,6 +223,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.CurrentSession?.CurrentEditComponent?.EditComponentController?.ResetMustRefresh();
         this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
     }
+
     //#endregion acations methods
 
     //#region  SiiRequest properties
