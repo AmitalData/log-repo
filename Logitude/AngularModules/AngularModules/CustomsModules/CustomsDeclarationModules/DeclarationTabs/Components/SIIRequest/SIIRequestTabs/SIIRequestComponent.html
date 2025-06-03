@@ -427,7 +427,7 @@
                                                                             <div class="editButtonContainer">
                                                                                 <IconButton [Name]="'Edit'"
                                                                                     [IsSmall]="true"
-                                                                                    *ngIf="item.RequestRequiredStatus === isUnCompleted"
+                                                                                    *ngIf="item.RequestRequiredStatus === isUnCompleted || item?.RequestRequiredStatus === null"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)">
                                                                                     <img class="tickImg"
                                                                                         src="./Images/Buttons/EditWithGreenTick.png" />
