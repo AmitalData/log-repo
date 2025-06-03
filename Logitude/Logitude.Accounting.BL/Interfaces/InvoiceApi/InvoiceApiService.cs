@@ -14,7 +14,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
         private CSSoapService helper;
         private int _accessKey;
 
-        public bool OpenConnection()
+        public void OpenConnection()
         {
             try
             {
@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
                 if(string.IsNullOrEmpty(user) ||  string.IsNullOrEmpty(password))
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError("OpenConnection Failed: User or Password is not configured.");
-                    return false;
+                    throw new InvalidOperationException("OpenConnection Failed: User or Password is not configured");
                 }
                 helper = new CSSoapService();
                 int key;
@@ -32,11 +32,11 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
                 if (result == api_session_error.no_error)
                 {
                     _accessKey = key;
-                    return true;
+                   
                 }
                 else
                 {
-                    return false;
+                    throw new InvalidOperationException($"OpenConnection Failed: {result}");
                 }
             }
             catch (Exception ex)
@@ -46,14 +46,18 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             }
         }
 
-        public bool EndSession()
+        public void EndSession()
         {
             try
             {
                 EnsureSessionStarted();
 
                 api_session_error result = helper.EndSession(_accessKey);
-                return result == api_session_error.no_error;
+                if(!(result == api_session_error.no_error))
+                {
+                    throw new InvalidOperationException($"EndSession Failed: {result}");
+                }
+              
             }
             catch (Exception ex)
             {
@@ -62,7 +66,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             }
         }
 
-        public (bool Success, string LogXml) QueryLog(
+        public  string  QueryLog(
             string startDate,
             string endDate,
             int logEntryType,
@@ -84,11 +88,11 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
 
                 if (result == api_session_error.no_error)
                 {
-                    return (true, trans_list_xml);
+                    return trans_list_xml;
                 }
                 else
                 {
-                    return (false, null);
+                    throw new InvalidOperationException($"QueryLog Failed: {result}");
                 }
             }
             catch (Exception ex)
@@ -98,7 +102,7 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
             }
         }
 
-        public (bool Success, string TransactionXml) GetTransaction(
+        public  string  GetTransaction(
     string type,
     int flags,
     string number)
@@ -116,11 +120,11 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
 
                 if (result == api_session_error.no_error)
                 {
-                    return (true, transXml);
+                    return transXml;
                 }
                 else
                 {
-                    return (false, null);
+                    throw new InvalidOperationException($"GetTransaction Failed: {result}");
                 }
             }
             catch (Exception ex)
