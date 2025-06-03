@@ -51,7 +51,8 @@ namespace Logitude.Customs.Data.Repsitories
                                      ? (rd.VesselCode.LocalName ?? rd.VesselCode.EnglishName)
                                      : null,
                         ManifestNumber = con == null ? null : con.ManifestNumber,
-                        UnloadDate = con == null ? null : (DateTime?)con.UnloadDate
+                        UnloadDate = con == null ? null : (DateTime?)con.UnloadDate,
+                        CustomerId = d.CustomerId,
                     })
                     .AsNoTracking()
                     .FirstOrDefault();
@@ -134,6 +135,7 @@ namespace Logitude.Customs.Data.Repsitories
             public string VesselLocalName { get; set; }
             public string ManifestNumber { get; set; }
             public DateTime? UnloadDate { get; set; }
+            public string CustomerId { get; set; }
         }
        
     }

@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.Helpers;
 using Logitude.BL.Interfaces;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
@@ -44,11 +45,12 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             var dto = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pm.CommunicationDetails);
 
             Validate(dto, def.Name, _tenant);
+            var SIICustomerUniqueCode = DefaultService.Instance.Get(_tenant, "SIICustomerUniqueCode", "SIICustomerUniqueCode")?.Value1;
 
             return new CredentialsDto
             {
                 userId = dto.User,
-                customerUniqueCode = dto.CustomerUniqueCode,
+                customerUniqueCode = SIICustomerUniqueCode,
                 hashPassword = dto.Password
             };
         }

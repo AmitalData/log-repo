@@ -39,7 +39,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         }
 
-       
+
 
         public void CustomPOCOToPM(SIIRequestPM entityPM, SIIRequest entityPOCO)
         {
@@ -62,9 +62,21 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.ManifestNumber = agg.ManifestNumber;
                 if (agg.UnloadDate.HasValue)
                     entityPM.UnloadDate = agg.UnloadDate.Value;
+                if (entityPOCO.ContactId == null && agg.CustomerId != null)
+                {
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(entityPOCO.Tenant);
+                    var customerCard = CardRepository.GetSingleCard(agg.CustomerId, entityPOCO.Tenant, true);
+                    if (customerCard != null)
+                    {
+                        var defaultContact = defaultValueQueryService.GetDefault("ISRAEL", "CGG_CONT_STDI", "NON", customerCard.Code, entityPOCO.Tenant);
+                    }
+                }
             }
-
         }
+
+
+
+
 
         private void BuildSearchFields(SIIRequestPM entityPM, SIIRequest entityPOCO, bool v)
         {
