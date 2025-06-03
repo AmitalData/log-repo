@@ -1,9 +1,8 @@
-﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
-namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
+namespace Logitude.BL.GlobalModel.Tools.DataMapping
 {
     public class DefaultAndConfigurationMapping
     {

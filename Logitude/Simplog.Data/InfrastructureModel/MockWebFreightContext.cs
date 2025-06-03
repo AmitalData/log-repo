@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -8,8 +7,6 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Linq;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
-
-//using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 
 namespace Simplog.Data.InfrastructureModel
@@ -2118,12 +2115,6 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions => throw new NotImplementedException();
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects => throw new NotImplementedException();
         public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs => throw new NotImplementedException();
-
         public IDbSet<EventRemark> EventRemarks => throw new NotImplementedException();
-
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations => throw new NotImplementedException();
-
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey => throw new NotImplementedException();
-
     }
 }

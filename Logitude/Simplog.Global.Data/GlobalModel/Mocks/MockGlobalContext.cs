@@ -300,6 +300,20 @@ namespace WebFreight.Web.GlobalModelDB
             }
         }
 
+        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
+        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

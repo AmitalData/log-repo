@@ -1,63 +1,60 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Simplog.Data.InfrastructureModel.Repositories
+namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class DefaultAndConfigurationKeyRepository : IRepository<DefaultAndConfigurationKey>
     {
 
-        IWebFreightContext webFreightContext;
-        public DefaultAndConfigurationKeyRepository(IWebFreightContext context)
+        IGlobalContext globalContext;
+        public DefaultAndConfigurationKeyRepository(IGlobalContext context)
         {
-            webFreightContext = context;
+            globalContext = context;
 
         }
         public DefaultAndConfigurationKeyRepository()
         {
-            webFreightContext = new WebFreightContext();
+            globalContext = new GlobalContext();
         }
         public DefaultAndConfigurationKeyRepository(int tenant)
         {
-            webFreightContext = WebFreightContext.GetContext(tenant);
+            globalContext = GlobalContext.GetContext(tenant);
         }
         public DefaultAndConfigurationKey GetSingleDefaultAndConfigurationKey(string SetKey, int? tenant = null)
         {
-            return (from a in context.DefaultAndConfigurationKey
+            return (from a in context.DefaultAndConfigurationKeys
                     where a.SetKey == SetKey
                     select a).FirstOrDefault();
         }
 
         public void Add(DefaultAndConfigurationKey entity)
         {
-            context.DefaultAndConfigurationKey.Add(entity);
+            context.DefaultAndConfigurationKeys.Add(entity);
         }
 
         public void Remove(DefaultAndConfigurationKey entity)
         {
-            context.DefaultAndConfigurationKey.Attach(entity);
-            context.DefaultAndConfigurationKey.Remove(entity);
+            context.DefaultAndConfigurationKeys.Attach(entity);
+            context.DefaultAndConfigurationKeys.Remove(entity);
         }
 
         public void Update(DefaultAndConfigurationKey entity)
         {
-            context.DefaultAndConfigurationKey.Attach(entity);
+            context.DefaultAndConfigurationKeys.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<DefaultAndConfigurationKey> All()
         {
-            return context.DefaultAndConfigurationKey.ToList();
+            return context.DefaultAndConfigurationKeys.ToList();
         }
 
-        public IWebFreightContext context
+        public IGlobalContext context
         {
-            get { return webFreightContext; }
+            get { return globalContext; }
         }
 
         public void SubmitChanges()
@@ -77,7 +74,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
         public IQueryable<DefaultAndConfigurationKey> GetDefaultAndConfigurationKeys(int tenant) =>
-            context.DefaultAndConfigurationKey.AsQueryable();
+            context.DefaultAndConfigurationKeys.AsQueryable();
 
         public DefaultAndConfigurationKey GetSingleDefaultAndConfigurationKey(int tenant1, string setkey, int tenant)
         {

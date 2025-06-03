@@ -1,11 +1,10 @@
-﻿using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
+﻿using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Windows.Input;
 
 namespace Logitude.BL.Helpers
 {
@@ -76,7 +75,7 @@ namespace Logitude.BL.Helpers
 
         private List<DefaultAndConfiguration_Ext> FetchByTenant(int tenant)
         {
-            DefaultAndConfigurationRepository repository = new DefaultAndConfigurationRepository(WebFreightContext.GetContext(tenant));
+            DefaultAndConfigurationRepository repository = new DefaultAndConfigurationRepository(GlobalContext.GetContext(tenant));
             List<DefaultAndConfiguration_Ext> result = repository
                 .GetDefaultAndConfigurations(tenant).ToList()
                 .Select(a => new DefaultAndConfiguration_Ext(a)).ToList();

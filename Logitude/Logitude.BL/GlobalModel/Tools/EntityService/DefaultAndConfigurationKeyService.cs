@@ -1,12 +1,10 @@
-﻿using System;
-using Simplog.Data.InfrastructureModel;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.Tools.DataMapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.Tools.DataMapping;
+using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
-namespace Logitude.BL.InfrastructureModel.Tools.EntityService
+namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
     public class DefaultAndConfigurationKeyService
     {
@@ -14,16 +12,16 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private int tenant;
         public DefaultAndConfigurationKey Poco { get; set; }
 
-        public IWebFreightContext ObjectContext
+        public IGlobalContext ObjectContext
         {
             get { return objectContext; }
             set { objectContext = value; }
         }
 
         private DefaultAndConfigurationKeyPM entityPM;
-        private IWebFreightContext objectContext;
+        private IGlobalContext objectContext;
         private DefaultAndConfigurationKeyRepository entityRepository;
-        public DefaultAndConfigurationKeyService(IWebFreightContext objectContext, int tenant)
+        public DefaultAndConfigurationKeyService(IGlobalContext objectContext, int tenant)
         {
             this.tenant = tenant;
             this.ObjectContext = objectContext;

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Linq;

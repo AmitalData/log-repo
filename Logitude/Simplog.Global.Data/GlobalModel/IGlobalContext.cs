@@ -1,5 +1,4 @@
 using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
@@ -47,7 +46,8 @@ namespace Simplog.Global.Data.GlobalModel
         IDbSet<InvalidEmailResetPassword> InvalidEmailResetPasswords { get; }
         IDbSet<WebhookKeys> WebhookKeys { get; }
         IDbSet<BluesnapContractType> BluesnapContractTypes { get; }
-
+        IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; }
+        IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKeys { get; }
 
         string GetCurrentConnection();
         void SetAsModified(object entity);

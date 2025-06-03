@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Logitude.BL.GlobalModel.EntityLists;
+using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityLists;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Logitude.BL.InfrastructureModel.EntityQueries
+namespace Logitude.BL.GlobalModel.EntityQueries
 {
     public class DefaultAndConfigurationKeyQuery
     {
@@ -30,7 +29,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public DefaultAndConfigurationKeyPM GetSinglePM(string setkey, int tenant)
         {
             DefaultAndConfigurationKeyPM result =
-            (from a in repository.context.DefaultAndConfigurationKey
+            (from a in repository.context.DefaultAndConfigurationKeys
              where a.SetKey == setkey && a.Tenant == tenant
              select new DefaultAndConfigurationKeyPM()
              {
@@ -49,7 +48,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeyPMByField1(string SetKey)
         {
             List<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKey
+            (from a in repository.context.DefaultAndConfigurationKeys
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
              {
@@ -87,7 +86,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<DefaultAndConfigurationKeyPM> GetIQueryableDefaultAndConfigurationKeyPMByField1(string SetKey)
         {
             IQueryable<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKey
+            (from a in repository.context.DefaultAndConfigurationKeys
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
              {
@@ -106,7 +105,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableDefaultAndConfigurationKeyPMByField1List(string SetKey)
         {
             IQueryable<DefaultAndConfigurationKeyList> result =
-            (from a in repository.context.DefaultAndConfigurationKey
+            (from a in repository.context.DefaultAndConfigurationKeys
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyList()
              {

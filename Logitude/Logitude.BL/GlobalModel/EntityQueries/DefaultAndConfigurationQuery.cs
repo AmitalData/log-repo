@@ -1,23 +1,12 @@
-﻿using System;
+﻿using Logitude.BL.GlobalModel.EntityLists;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-
-using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
-
-using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 
-using Logitude.BL.InfrastructureModel.EntityLists;
-
-
-namespace Logitude.BL.InfrastructureModel.EntityQueries
+namespace Logitude.BL.GlobalModel.EntityQueries
 {
     public class DefaultAndConfigurationQuery
     {

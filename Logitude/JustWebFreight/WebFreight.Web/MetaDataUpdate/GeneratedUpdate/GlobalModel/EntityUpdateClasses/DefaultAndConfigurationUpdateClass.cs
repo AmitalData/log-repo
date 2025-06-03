@@ -84,11 +84,11 @@ using Logitude.DashboardModule.BL;
 
 
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdateClasses
 {
    public class DefaultAndConfigurationUpdateClass
    {  		
-		public const string HashString = "e71d6b1e9c4a119020157e344dcc02a2";
+		public const string HashString = "53882c3332c87e139bd73d8da1add0ff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -110,7 +110,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
-			      				    IsNewWizard =  true,
+			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "Id",
 			      				    AutoCompleteSearchWindow =  true,
 			      				    IsClosed =  false,
@@ -453,7 +453,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ListLableDefaultText =  "Is Active",
 					  						ShortFieldLable =  "Is_Active",
 					  						ShortFieldLableDefaultText =  "Is_Active",
-					  						ShortLocalDefaultText =  "פעיל",
+					  						ShortLocalDefaultText =  "BS64:Itek16LXmdecIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -520,7 +520,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ListLableDefaultText =  "Store In Cache",
 					  						ShortFieldLable =  "StoreInCache",
 					  						ShortFieldLableDefaultText =  "StoreInCache",
-					  						ShortLocalDefaultText =  "אחסן במטמון",
+					  						ShortLocalDefaultText =  "BS64:IteQ15fXodefINeR157XmNee15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -902,7 +902,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						ListLableDefaultText =  "Allow Inheritance ",
 					  						ShortFieldLable =  "AllowInheritance",
 					  						ShortFieldLableDefaultText =  "AllowInheritance ",
-					  						ShortLocalDefaultText =  "אפשר ירושה",
+					  						ShortLocalDefaultText =  "BS64:IteQ16TXqdeoINeZ16jXldep15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

@@ -32,16 +32,16 @@ using System.Net.Http;
 using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel;
-using Logitude.BL.InfrastructureModel;
-using Logitude.BL.InfrastructureModel.EntityLists;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Simplog.Global.Data.GlobalModel;
+using Logitude.BL.GlobalModel;
+using Logitude.BL.GlobalModel.EntityLists;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.Tools.EntityService;
 
 
-namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
+namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
 { 
 
     
@@ -57,7 +57,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                DefaultAndConfigurationQuery defaultAndConfigurationQuery = new DefaultAndConfigurationQuery(authToken.Tenant);
+                DefaultAndConfigurationQuery defaultAndConfigurationQuery = new DefaultAndConfigurationQuery();
                 DefaultAndConfigurationPM defaultAndConfigurationPM = defaultAndConfigurationQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -88,7 +88,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
-                        IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
+                        IGlobalContext MyContext = GlobalContext.GetContext();
                         DefaultAndConfigurationService service = new DefaultAndConfigurationService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
@@ -145,7 +145,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                             CacheManager.CacheWrapper.Invalidate(entityPmName);
                         }
                 
-                        IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
+                        IGlobalContext MyContext = GlobalContext.GetContext();
                         DefaultAndConfigurationService service = new DefaultAndConfigurationService(MyContext, entityPM.Tenant);
  
                         service.Update(entityPM);
