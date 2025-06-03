@@ -219,16 +219,10 @@ namespace CommunicationWorkerRole
                 UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.InProgress);
                 invoiceApiService = new InvoiceApiService();
 
-                var success = invoiceApiService.OpenConnection();
-                if (!success) {
-                    throw new Exception("OpenConnection Failed");
-                  }
-
-                else
-                {
-                    UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.Done);
-                    GetInvoice();
-                }
+                 invoiceApiService.OpenConnection();
+                  UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.Done);
+                  GetInvoice();
+              
             }
             catch (Exception ex)
             {
@@ -243,8 +237,8 @@ namespace CommunicationWorkerRole
             try
             {
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetInvoiceApiInvoice, InvoiceApiStatusEnum.InProgress);
-                var (success, xml) = invoiceApiService.GetTransaction(response.MessageValues["Type"], 1, response.MessageValues["Guid"]);
-                if (!success || string.IsNullOrWhiteSpace(xml))
+                var  xml = invoiceApiService.GetTransaction(response.MessageValues["Type"], 1, response.MessageValues["Guid"]);
+                if (string.IsNullOrWhiteSpace(xml))
                     throw new Exception("GetTransaction failed or returned empty XML");
                 AddDocumentToApiCommunicationLog(System.Text.Encoding.UTF8.GetBytes(xml));
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetInvoiceApiInvoice, InvoiceApiStatusEnum.Done);
@@ -265,7 +259,7 @@ namespace CommunicationWorkerRole
             try
             {
                 UpdateCommunicationStatus(InvoiceApiStepEnum.CloseInvoiceApiSession, InvoiceApiStatusEnum.InProgress);
-                if(!invoiceApiService.EndSession()) throw new Exception("Failed to CloseSession");
+                invoiceApiService.EndSession();
 
                 UpdateCommunicationStatus(InvoiceApiStepEnum.CloseInvoiceApiSession, InvoiceApiStatusEnum.Done);
                 GenerateInvoice(null);
