@@ -265,7 +265,8 @@ namespace CommunicationWorkerRole
             try
             {
                 UpdateCommunicationStatus(InvoiceApiStepEnum.CloseInvoiceApiSession, InvoiceApiStatusEnum.InProgress);
-                invoiceApiService.EndSession();
+                if(!invoiceApiService.EndSession()) throw new Exception("Failed to CloseSession");
+
                 UpdateCommunicationStatus(InvoiceApiStepEnum.CloseInvoiceApiSession, InvoiceApiStatusEnum.Done);
                 GenerateInvoice(null);
             }

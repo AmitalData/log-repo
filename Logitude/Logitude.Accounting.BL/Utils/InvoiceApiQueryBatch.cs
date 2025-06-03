@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Interfaces.Magaya;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
@@ -127,7 +128,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             try
             {
-                InvoiceApiCommunicationLog log = new InvoiceApiCommunicationLog()
+                InvoiceApiCommunicationLogPM log = new InvoiceApiCommunicationLogPM()
                 {
                     Id = IdCounter.GetNumber("InvoiceApiCommunicationLog", tenant),
                     DocumentId = null,
@@ -136,11 +137,11 @@ namespace Logitude.Accounting.BL.Utils
                     Step = InvoiceApiStepEnum.OpenInvoiceApiSession,
                     SearchFields = guid + "," + tenant,
                     Tenant = tenant
-
+                    
                 };
-                InvoiceApiCommunicationLogRepository invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogRepository(tenant);
-                invoiceApiCommunicationLogRepository.Add(log);
-                invoiceApiCommunicationLogRepository.SubmitChanges();
+                log.ChangeSetOp = ChangeSetOperation.Update;
+                InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogUpdateService(tenant);
+                invoiceApiCommunicationLogRepository.Update(log,true);
                 return log.Id;
 
             }
