@@ -35,19 +35,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ICustomContext ctx = CustomContext.GetContext(authToken.Tenant);
+
                 var qs = new SupplierInvoiceItemsReqListQueryService(ctx);
-
-                SupplierInvoiceItemsReqListPM pm;
-
-                if (!string.IsNullOrWhiteSpace(siirequestid) && siirequestid != "null")
-                {
-                    pm = qs.GetSingle(declarationid, linenumber,siirequestid, invoicecounterkey, invoiceitemlinenumber, true, false);
-                }
-                else
-                {
-                    pm = qs.GetSinglePM(null, declarationid, linenumber, invoicecounterkey, invoiceitemlinenumber, authToken.Tenant);
-                }
-
+                SupplierInvoiceItemsReqListPM pm = qs.GetOrCreate(null, declarationid, linenumber, invoicecounterkey, invoiceitemlinenumber, authToken.Tenant);
+                
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, pm);
             }
