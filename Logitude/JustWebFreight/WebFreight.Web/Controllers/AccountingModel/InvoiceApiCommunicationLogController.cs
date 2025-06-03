@@ -4,6 +4,7 @@
 using Logitude.Accounting.BL.Interfaces.Magaya;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Linq;
 using System.Net;
@@ -27,7 +28,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 if (!HttpContext.Current.Request.Headers.AllKeys.Contains("Token"))
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, "Missing authentication token.");
 
-                string token = HttpContext.Current.Request.Headers["Token"]; AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string token = HttpContext.Current.Request.Headers["Token"]; 
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (string.IsNullOrWhiteSpace(id))
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing or empty ID.");
 
