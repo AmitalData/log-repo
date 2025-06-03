@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "6ce42d1826ec97afaa219f68272e671d";
+		public const string HashString = "c1849392d7afa65fa14325119fd61529";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -4403,13 +4403,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalOViewingNotAuthorized = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ViewingNotAuthorized", DefaultText = "You are not authorized to view Journal No. ",LocalDefaultText = @"אינך מורשה לצפיה בפקודה מספר ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-           TextCode JournalTextCode_JournalOCoefficientForAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CoefficientForAmountsAndCurrencies", DefaultText = "Coefficient",LocalDefaultText = @"מקדם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOCoefficientForAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CoefficientForAmountsAndCurrencies", DefaultText = "Coefficient",LocalDefaultText = @"מקדם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-           TextCode JournalTextCode_JournalOPermissionSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.PermissionSetting", DefaultText = "Permission Setting",LocalDefaultText = @"הגדרת הרשאה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOPermissionSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.PermissionSetting", DefaultText = "Permission Setting",LocalDefaultText = @"הגדרת הרשאה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-           TextCode JournalTextCode_JournalOSuperPermissionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SuperPermissionRequired", DefaultText = "Correction requires super permission. Please contact Amital.",LocalDefaultText = @"תיקון דורש הרשאת על. נא לפנות לעמיטל", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOSuperPermissionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SuperPermissionRequired", DefaultText = "Correction requires super permission. Please contact Amital.",LocalDefaultText = @"תיקון דורש הרשאת על. נא לפנות לעמיטל", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-           TextCode JournalTextCode_JournalOAccountIdenticalToFullAccountingSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIdenticalToFullAccountingSetting", DefaultText = "{account} is identical to {setting} in the full accounting settings",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlteU15Qg15wge3NldHRpbmd9INep15HXlNeS15PXqNeV16og15TXoNeU15zXqiDXl9ep15HXldeg15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOAccountIdenticalToFullAccountingSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIdenticalToFullAccountingSetting", DefaultText = "{account} is identical to {setting} in the full accounting settings",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlteU15Qg15wge3NldHRpbmd9INep15HXlNeS15PXqNeV16og15TXoNeU15zXqiDXl9ep15HXldeg15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

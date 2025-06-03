@@ -19727,12 +19727,7 @@
       LocalDefaultText="&quot;יתרה שונה מ&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-     <TextCode
-      Code="&quot;GLAccounts.O.NoAddressToVendor&quot;"
-      DefaultText="&quot;To Vendor no country specified in default address&quot;"
-      LocalDefaultText="&quot;לספק לא צוינה מדינה בכתובת ברירת המחדל&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
+
   </AdditionalTextCodes>
    <AdditionalFeatures>
     <Feature
