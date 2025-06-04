@@ -118,6 +118,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.supplierInvoiceItemsCollection = new ObservableCollection([]);
         this.originalSupplierInvoiceItemsCollection = new ObservableCollection([]);
         this.initFullData();
+
+        if (this.IsNewOrEdit === SiiRequestMode.IsNew) {
+            this.SaveSiiRequest();
+        }
     }
 
     initFullData() {
@@ -130,8 +134,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     CancelSaveSiiRequest() {
         this.RefreshEntity();
         this.CurrentSession.CloseCurrentWindow();
-        console.log(this.entityPM);
-        console.log(this.SelectedRowsCheckBox.length);
     }
 
     //#region SaveSiiRequest
@@ -144,7 +146,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     this.IsDisplayOnly = false;
                     this.isAllowChange = true;
                     this.RefreshEntity();
-                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else if (response.ErrorsArray.length > 0) {
                     this.validationErrors = response.ErrorsArray;
@@ -152,7 +153,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 }
             });
         }
-        else if (this.IsNewOrEdit === SiiRequestMode.IsEdit) {
+        if (this.IsNewOrEdit === SiiRequestMode.IsEdit) {
             this.siiRequestPMService.update(this.entityPM).subscribe((response: ServiceResponse) => {
                 if (response?.Result) {
                     this.entityPM = response.Result;
@@ -173,10 +174,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         windowArgs.Warning = null;
         windowArgs.NoButtonVisibility = false;
         windowArgs.CancelButtonVisibility = true;
-        windowArgs.SaveButtonText = "אשר";
-        windowArgs.CancelButtonText = "בטל";
+        windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Confirm");
+        windowArgs.CancelButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Cancel");
         windowArgs.ComponentHeight = '328px';
-        let windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.Errors");
+        let windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ErrorsFound");
         let logWindow = new LogitudeWindow(this.CurrentSession);
         logWindow.Width = 600;
         logWindow.Height = 400;
@@ -208,8 +209,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     SendSiiRequest(event: any) {
         this.RefreshEntity();
         this.CurrentSession.CloseCurrentWindow();
-        console.log(this.entityPM);
-        console.log(this.SelectedRowsCheckBox.length);
     }
     //#endregion SendSiiRequest
     //#endregion Actions
@@ -237,10 +236,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             if (!myResponse?.HasError && myResponse?.Result) {
                 this.supplierInvoiceItemsReqListPM = myResponse.Result;
                 args.entityPMSupplierInvoiceItemsReqListPM = this.supplierInvoiceItemsReqListPM;
-                console.log(this.supplierInvoiceItemsReqListPM);
-
                 args.errorMassage = [];
-
                 this.openLogWindow(args);
             }
         });
@@ -251,7 +247,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.isOpen = true;
         let logWindow = new LogitudeWindow();
         logWindow.Width = 450;
-        logWindow.Height = 500;
+        logWindow.Height = 515;
         logWindow.Title = TextCodeTranslator.Translate("Customs.SIIRequest.O.CompletData");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -597,7 +593,6 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
-        // this.RequestRequiredStatus = CompleteStatuses.UnCompleted.toString();
     }
     private isSelected: boolean;
     public get IsSelected() { return this.isSelected };
@@ -717,7 +712,7 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
         return this.entityPM.RequestRequiredStatus;
     }
     public set RequestRequiredStatus(newValue: string) {
-        this.entityPM.RequestRequiredStatus = newValue;
+        this.entityPM.RequestRequiredStatus = AppTool.IsNullOrEmpty(newValue) ? CompleteStatuses.UnCompleted : newValue;
     }
 }
 

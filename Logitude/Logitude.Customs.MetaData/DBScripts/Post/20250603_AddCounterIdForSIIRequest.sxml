@@ -2,28 +2,31 @@
 <Script DBType="Main" Module="Customs">
 	<Sql Version="1">
 		<![CDATA[
-    /* Ensure a counter row for logical table SIIREQUEST */
     IF NOT EXISTS (
         SELECT 1
         FROM   dbo.DBIdCounters
-        WHERE  TableName = 'SIIREQUEST'
+        WHERE  TableName = 'SIIRequest'
     )
     BEGIN
         INSERT INTO dbo.DBIdCounters
               (ROWID, TableName, CurrentValue, LastUpdated)
-        VALUES (NEWID(), 'SIIREQUEST', 0, GETDATE());
+        VALUES (NEWID(), 'SIIRequest', 0, GETDATE());
     END
   ]]>
 	</Sql>
-	<Oracle Version="1">
+
+	<Oracle Version="2">
 		<![CDATA[
-    /* Ensure a counter row for logical table SIIREQUEST */
     MERGE INTO DBIdCounters t
-    USING (SELECT 'SIIREQUEST' AS TableName FROM dual) s
+    USING (SELECT 'SIIRequest' AS TableName FROM dual) s
       ON (t.TableName = s.TableName)
     WHEN NOT MATCHED THEN
-      INSERT (ID, TableName, CurrentValue, LastUpdated)
-      VALUES (SYS_GUID(), s.TableName, 0, SYSDATE);
+      INSERT (ID,            
+              TableName,
+              LastIdNumber)  
+      VALUES (DBIDCOUNTERS_SEQ.NEXTVAL, 
+              s.TableName,
+              0);                        
 
     COMMIT;
   ]]>
