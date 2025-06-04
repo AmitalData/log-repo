@@ -52,7 +52,7 @@ namespace sqltest
                     DateTime toDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, day);
 
                     connection.Open();
-                    string commandText = "select t.Id as 'Tenant',t.Company, count(*) as 'Amount' from shipments as s join Tenants as t on t.Id=s.Tenant where tenant in ({0}) and CreateDateTime >= @fromDate and CreateDateTime < @toDate  group by t.Id,t.Company";
+                    string commandText = "SELECT t.Id AS 'Tenant', t.Company, COUNT(s.Id) AS 'Amount' FROM Tenants AS t LEFT JOIN Shipments AS s ON t.Id = s.Tenant AND s.CreateDateTime >= @fromDate AND s.CreateDateTime <= @toDate WHERE t.Id IN ({0}) GROUP BY t.Id, t.Company";
                     string[]? tenants = querySettings.GetSection("tenants").Get<string[]>();
                     commandText = string.Format(commandText, string.Join(',', tenants));
                     SqlCommand command = new SqlCommand(commandText, connection);
