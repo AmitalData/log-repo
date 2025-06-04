@@ -194,7 +194,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
         this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
         this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
-        debugger;
         this.checkMandatoryFields();
         if (this.oldRequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.oldRequestRequiredStatus === CompleteStatuses.FullyCompleted) {
             this.supplierInvoiceItemsReqListPMService.update(this.entityPM).subscribe(myResult => {
