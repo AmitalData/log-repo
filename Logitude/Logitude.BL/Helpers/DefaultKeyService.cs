@@ -1,11 +1,9 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
+﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.Helpers
 {
@@ -55,7 +53,7 @@ namespace Logitude.BL.Helpers
             {
                 DefaultAndConfigurationKeyRepository repository = new DefaultAndConfigurationKeyRepository();
                 List<DefaultAndConfigurationKey> result =
-                (from a in repository.context.DefaultAndConfigurationKey
+                (from a in repository.context.DefaultAndConfigurationKeys
                  where a.Tenant == tenant
                  select a).ToList();
 

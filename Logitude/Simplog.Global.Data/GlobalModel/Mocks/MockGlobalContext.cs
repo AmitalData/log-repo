@@ -315,5 +315,7 @@ namespace WebFreight.Web.GlobalModelDB
                 throw new NotImplementedException();
             }
         }
+
+        public IDbSet<AuthenticationToken> AuthenticationTokens => throw new NotImplementedException();
     }
 }
