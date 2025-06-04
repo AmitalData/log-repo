@@ -68,7 +68,7 @@ export class SupplierInvoiceItemsForSIIRequest {
     InvoiceQuantityTypeName: string;
     TradeAgreementName: string;
     OriginCountryName: string;
-    ReqConfirmationTypeCode: string;
     RequestRequiredStatus: string;
     LineNumber: number;
+    HasDemandState: boolean;
 }

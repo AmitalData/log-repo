@@ -60,6 +60,10 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, int tenant)
         {
+
+            var validCodes = new[] { "401", "402", "403" };
+
+
             var list =
         from itm in context.SupplierInvoiceItems
         where itm.DeclarationId == declarationId
@@ -87,10 +91,14 @@ namespace Logitude.Customs.Data.Repsitories
         from country in ccJoin.DefaultIfEmpty()
 
         join cert in context.SupplierInvioceItemCertificats
-            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
-            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
-            into certJoin
-        from certificate in certJoin.DefaultIfEmpty()
+         on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
+            equals new
+            {
+                cert.DeclarationId,
+                cert.LineNumber,
+                CounterKey = cert.InvoiceCounterKey
+            }
+         into certGroup
 
         join cert in context.SupplierInvoiceItemsReqLists
             on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
@@ -119,7 +127,7 @@ namespace Logitude.Customs.Data.Repsitories
 
             OriginCountryCode = itm.OriginCountryCode,
             OriginCountryName = country.LocalName,
-            ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
+            HasDemandState = certGroup.Any(c => validCodes.Contains(c.ReqConfirmationTypeCode)),
             RequestRequiredStatus = String.IsNullOrEmpty(requestList.RequestRequiredStatus) ? "0" : requestList.RequestRequiredStatus,
             LineNumber = requestList != null ? (int)requestList.LineNumber : 1,
         };

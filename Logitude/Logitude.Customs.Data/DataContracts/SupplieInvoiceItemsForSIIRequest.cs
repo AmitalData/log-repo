@@ -23,9 +23,11 @@ namespace Logitude.Customs.Data.DataContracts
 		public string InvoiceQuantityTypeName { get; set; }
 		public string TradeAgreementName { get; set; }
 		public string OriginCountryName { get; set; }
-		public string ReqConfirmationTypeCode { get; set; }
 		public string RequestRequiredStatus { get; set; }
 		public int LineNumber { get; set; }
+	    public bool HasDemandState { get; set; }
+
+		
 
     }
 }
