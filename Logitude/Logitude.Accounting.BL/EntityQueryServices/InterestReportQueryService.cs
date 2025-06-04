@@ -26,10 +26,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return interestReportRepository.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant, glaccountId);
         }
 
-        public decimal GetInterestReportOpenBalance(DateTime inputDate ,int tenant, string glAccountId)
+        public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glaccountId)
         {
-            var interestReportRepository = new InterestReportRepository(tenant);
-            return interestReportRepository.GetInterestReportOpenBalance(inputDate, glAccountId, tenant);
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            return interestReportRepository.GetSumOfExReportsOrInterestOpenBalance(tenant, glaccountId);
         }
 
    
