@@ -41,11 +41,11 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 
-namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
-{ 
+namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
+{
 
-    
-    public partial class DefaultAndConfigurationsController : ApiController
+
+    public partial class DataCustomObjectsController : ApiController
     {
 	  
        
@@ -57,12 +57,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                DefaultAndConfigurationQuery defaultAndConfigurationQuery = new DefaultAndConfigurationQuery(authToken.Tenant);
-                DefaultAndConfigurationPM defaultAndConfigurationPM = defaultAndConfigurationQuery.GetSinglePM(id, authToken.Tenant);
+                DataCustomObjectQuery dataCustomObjectQuery = new DataCustomObjectQuery(authToken.Tenant);
+                DataCustomObjectPM dataCustomObjectPM = dataCustomObjectQuery.GetSinglePM(id, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return Request.CreateResponse(HttpStatusCode.OK, defaultAndConfigurationPM);
+                return Request.CreateResponse(HttpStatusCode.OK, dataCustomObjectPM);
 			 
 			}
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
          
 		
 
-        public HttpResponseMessage Post(DefaultAndConfigurationPM entityPM)
+        public HttpResponseMessage Post(DataCustomObjectPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -89,11 +89,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        DefaultAndConfigurationService service = new DefaultAndConfigurationService(MyContext, entityPM.Tenant);
+                        DataCustomObjectService service = new DataCustomObjectService(MyContext, entityPM.Tenant);
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DefaultAndConfiguration", 0, true);
+                        // ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DataCustomObject", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         // ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
@@ -121,7 +121,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
         }
 
 
-        public HttpResponseMessage Put(DefaultAndConfigurationPM entityPM)
+        public HttpResponseMessage Put(DataCustomObjectPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -134,8 +134,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "DefaultAndConfiguration" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "DefaultAndConfigurationPM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "DataCustomObject" + entityPM.Id + entityPM.Tenant;
+                        string entityPmName = "DataCustomObjectPM" + entityPM.Id + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
                             CacheManager.CacheWrapper.Invalidate(entityName);
@@ -146,12 +146,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         }
                 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
-                        DefaultAndConfigurationService service = new DefaultAndConfigurationService(MyContext, entityPM.Tenant);
+                        DataCustomObjectService service = new DataCustomObjectService(MyContext, entityPM.Tenant);
  
                         service.Update(entityPM);
 
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DefaultAndConfiguration", 0, true);
+                        //ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("DataCustomObject", 0, true);
                         //string email = HttpContext.Current.User.Identity.Name;
                         //ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);

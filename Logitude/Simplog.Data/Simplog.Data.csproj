@@ -359,8 +359,6 @@
     <Compile Include="Helpers\ShipmentToShipmentAnalyticMapper.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\AdditionalCurrencyRate.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CurrencyRate.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EventRemark.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\CustomChildObject.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ChildEntitiesCustomField.cs" />
@@ -793,8 +791,6 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\SearchIndexTenantHistory.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
-    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWSubQuery.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
@@ -805,8 +801,6 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\SharedUserQuery.cs" />
     <Compile Include="InfrastructureModel\Mapping\AdditionalCurrencyRateMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\CurrencyRateMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\EventRemarkMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\CustomChildObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ChildEntitiesCustomFieldMap.cs" />
@@ -829,8 +823,6 @@
     <Compile Include="InfrastructureModel\Mapping\SearchIndexTenantHistoryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
-    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
@@ -838,8 +830,6 @@
     <Compile Include="InfrastructureModel\Mapping\SharedUserQueryMap.cs" />
     <Compile Include="InfrastructureModel\Repositories\AdditionalCurrencyRateRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\CurrencyRateRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\EventRemarkRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\CustomChildObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ChildEntitiesCustomFieldRepository.cs" />
@@ -865,8 +855,6 @@
     <Compile Include="InfrastructureModel\Repositories\SearchIndexRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SearchIndexTenantHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
-    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />

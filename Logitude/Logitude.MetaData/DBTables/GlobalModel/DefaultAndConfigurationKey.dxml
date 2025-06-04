@@ -2,7 +2,7 @@
 <Table
   Name="DefaultAndConfigurationKeys"
   Schema="dbo"
-  DBType="Main"
+  DBType="Global"
   Module="Infrastructure">
   <Column
     Name="Tenant"

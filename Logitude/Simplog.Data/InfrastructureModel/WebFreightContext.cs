@@ -1,4 +1,3 @@
-using System;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
@@ -12,16 +11,13 @@ using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.Global
 using Simplog.Data.CommonDataModel.Mapping;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
 using Simplog.Data.ShipmentsModel.Mapping;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Linq;
-//using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel
 {
@@ -1138,18 +1134,6 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<EventRemark> EventRemarks
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations
-        {
-            get;
-            set;
-        }
-
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey
         {
             get;
             set;

@@ -1239,6 +1239,10 @@
     <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleClassificationController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\DefaultAndConfigurationKeyViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\DefaultAndConfigurationViewsController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\PMControllers\DefaultAndConfigurationController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\PMControllers\DefaultAndConfigurationKeyController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
@@ -1300,7 +1304,7 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ObjectTableController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DataCustomObjectViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\ReferenceCustomObjectViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DataCustomObjectController.Generated.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\PMControllers\DataCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ReferenceCustomObjectController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\SatisfactionSurveyController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\ScreenController.Generated.cs" />
@@ -1970,11 +1974,7 @@
     <Compile Include="Controllers\CustomsModel\WebServices\CountryCurrencyController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\VendorCurrencyController.cs" />
     <Compile Include="Controllers\GlobalModel\Extended\AdvancedQueryFiltersExtendedController.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DefaultAndConfigurationKeyViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\DefaultAndConfigurationViewsController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\SharedLogisticsInvitationStatusViewsController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationController.Generated.cs" />
-    <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationKeyController.Generated.cs" />
     <Compile Include="Controllers\Integration\IntegrationTestController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\AgentAPiHelper.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CustomAgentAPiHelper.cs" />
@@ -4714,6 +4714,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapContractUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\BluesnapTransactionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\DefaultAndConfigurationKeyUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\DefaultAndConfigurationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\HelpResourceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\LogitudeLeadUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\GlobalModel\EntityUpdateClasses\PaymentChannelUpdateClass.cs" />
@@ -4740,13 +4742,9 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomFieldsMainObjectsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\CustomPickListUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DataCustomObjectUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DefaultAndConfigurationKeyUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DefaultAndConfigurationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackageExecutionLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackagesVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DeploymentPackageUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DefaultAndConfigurationKeyUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DefaultAndConfigurationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DescriptionOfGoodsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DirectionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InfrastructureModel\EntityUpdateClasses\DWCategoriesUpdateClass.cs" />
