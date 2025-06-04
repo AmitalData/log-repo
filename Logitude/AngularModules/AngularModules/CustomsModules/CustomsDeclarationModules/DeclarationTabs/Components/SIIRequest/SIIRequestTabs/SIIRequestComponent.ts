@@ -355,9 +355,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         }
     }
 
-    // private isValidDemandState(value: string): boolean {
-    //     return (Object.values(DemandStateFilterOptions) as string[]).includes(value);
-    // }
     //#endregion DemandState Filter Methods
 
     //#region Invoice ComboBox
