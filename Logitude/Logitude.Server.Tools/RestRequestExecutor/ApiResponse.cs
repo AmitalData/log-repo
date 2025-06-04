@@ -1,4 +1,4 @@
-﻿namespace CommunicationWorkerRole.RestRequestExecutor
+﻿namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class ApiResponse<T>
     {

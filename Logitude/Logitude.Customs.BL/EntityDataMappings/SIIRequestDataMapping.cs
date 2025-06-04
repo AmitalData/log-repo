@@ -14,6 +14,8 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -39,7 +41,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         }
 
-       
+
 
         public void CustomPOCOToPM(SIIRequestPM entityPM, SIIRequest entityPOCO)
         {
@@ -49,8 +51,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.UnloadDate);
 
 
-            var repo = new SIIRequestRepository(entityPOCO.Tenant);
-            var agg = repo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
+            var siiRepo = new SIIRequestRepository(entityPOCO.Tenant);
+            var defaultValueQueryService = new DefaultValueQueryService(entityPOCO.Tenant);
+            var userQueryService = new UserQuery(entityPOCO.Tenant);
+
+            var agg = siiRepo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
 
             if (agg != null)
             {
@@ -62,9 +67,34 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPM.ManifestNumber = agg.ManifestNumber;
                 if (agg.UnloadDate.HasValue)
                     entityPM.UnloadDate = agg.UnloadDate.Value;
-            }
+                if (entityPOCO.ContactId == null && agg.CustomerId != null)
+                {
+                    var customerCard = CardRepository.GetSingleCard(agg.CustomerId, entityPOCO.Tenant, true);
+                    if (customerCard != null)
+                    {
+                        var defaultContact = defaultValueQueryService.GetDefault("ISRAEL", "CGG_CONT_STDI", "NON", customerCard.Code, entityPOCO.Tenant);
+                        if(defaultContact != null)
+                        {
+                            var userPM = userQueryService.GetSinglePMByCode(defaultContact, entityPOCO.Tenant);
+                            if(userPM != null)
+                            {
+                                entityPM.ContactName = userPM.LocalName;
+                                entityPM.ContactEmail = userPM.Email;
+                                entityPM.ContactCellPhone = userPM.BusinessPhone;
+                                entityPM.ContactFax = userPM.Fax;
+                                entityPM.ContactTel = userPM.BusinessPhone;
+                                entityPM.ContactId = userPM.Id;
+                            }
 
+                        }
+                    }
+                }
+            }
         }
+
+
+
+
 
         private void BuildSearchFields(SIIRequestPM entityPM, SIIRequest entityPOCO, bool v)
         {

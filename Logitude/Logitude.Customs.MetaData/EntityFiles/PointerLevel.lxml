@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Pointer Level&quot;"
-  Code="&quot;f957&quot;"
+  Code="&quot;89da&quot;"
   Name="&quot;Customs.PointerLevel Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -430,6 +430,11 @@
       LocalName="&quot;הצהרה&quot;"
       SearchFields="&quot;D,הצהרה&quot;"
       EnglishName="&quot;Declaration&quot;" />
+    <Record
+      Code="&quot;S&quot;"
+      LocalName="&quot;מכון תקנים&quot;"
+      SearchFields="&quot;מכון תקנים,S&quot;"
+      EnglishName="&quot;SIIRequest&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

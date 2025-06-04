@@ -24,7 +24,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class SupplierInvoiceItemsReqListQueryService: EntityQueryService<POCO.SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListKeys,SupplierInvoiceItemsReqListPM,SupplierInvoiceItemPM,SupplierInvoiceItemKeys>
+   public partial class SupplierInvoiceItemsReqListQueryService: EntityQueryService<POCO.SupplierInvoiceItemsReqList,SupplierInvoiceItemsReqListKeys,SupplierInvoiceItemsReqListPM,object,SupplierInvoiceItemsReqListKeys>
    {
    
         SupplierInvoiceItemsReqListRepository repository;
@@ -55,9 +55,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new SupplierInvoiceItemsReqListDataMapping();
         }
 		 
-		public  SupplierInvoiceItemsReqListPM GetSingle(string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,bool getComposition, bool getFromCache)
+		public  SupplierInvoiceItemsReqListPM GetSingle(string declarationid, int linenumber, string siirequestid, int invoicecounterkey, int invoiceitemlinenumber,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new SupplierInvoiceItemsReqListKeys(){ DeclarationId = declarationid, LineNumber = linenumber, InvoiceCounterKey = invoicecounterkey, InvoiceItemLineNumber = invoiceitemlinenumber };
+             EntityKeys = new SupplierInvoiceItemsReqListKeys(){ DeclarationId = declarationid, LineNumber = linenumber, SIIRequestID = siirequestid, InvoiceCounterKey = invoicecounterkey, InvoiceItemLineNumber = invoiceitemlinenumber };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(POCO.SupplierInvoiceItemsReqList entityPOCO)
         {
-            SupplierInvoiceItemsReqListKeys entityKeys = new SupplierInvoiceItemsReqListKeys() { DeclarationId = entityPOCO.DeclarationId, LineNumber = entityPOCO.LineNumber, InvoiceCounterKey = entityPOCO.InvoiceCounterKey, InvoiceItemLineNumber = entityPOCO.InvoiceItemLineNumber,  };
+            SupplierInvoiceItemsReqListKeys entityKeys = new SupplierInvoiceItemsReqListKeys() { DeclarationId = entityPOCO.DeclarationId, LineNumber = entityPOCO.LineNumber, SIIRequestID = entityPOCO.SIIRequestID, InvoiceCounterKey = entityPOCO.InvoiceCounterKey, InvoiceItemLineNumber = entityPOCO.InvoiceItemLineNumber,  };
             return entityKeys;
         }
      

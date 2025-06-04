@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
-import {SupplierInvoiceItemsReqListPM} from './SupplierInvoiceItemsReqListPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -77,41 +76,7 @@ export class SIIRequestPM {
     public set WareHouseCityName(newValue: string) { if (this.wareHouseCityName != newValue) { this.wareHouseCityName = newValue; this.MarkAsDirty("WareHouseCityName"); } }
        
 	 
-     
-	private supplierInvoiceItemsReqLists: SupplierInvoiceItemsReqListPM[];
-    get  SupplierInvoiceItemsReqLists() {
-        if (this.supplierInvoiceItemsReqLists == null) {
-            this.supplierInvoiceItemsReqLists = [];
-        }
-
-        return this.supplierInvoiceItemsReqLists;
-    }
-    set  SupplierInvoiceItemsReqLists(newValue: SupplierInvoiceItemsReqListPM[]) {
-        if (this.supplierInvoiceItemsReqLists != newValue) {
-            this.supplierInvoiceItemsReqLists = newValue;
-        }
-    }
-    public AddSupplierInvoiceItemsReqList(item: SupplierInvoiceItemsReqListPM) {
-        if (item != null) {
-            var index = this. SupplierInvoiceItemsReqLists.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. SupplierInvoiceItemsReqLists.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveSupplierInvoiceItemsReqList(item: SupplierInvoiceItemsReqListPM) {
-        if (item != null) {
-            var index = this. SupplierInvoiceItemsReqLists.indexOf(item);
-            if (index > -1) {
-                this. SupplierInvoiceItemsReqLists.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public SupplierInvoiceItemsReqLists: Array<SupplierInvoiceItemsReqListPM>= [];
-     private remarks: string;
+    private remarks: string;
     public get Remarks() { return this.remarks; }
     public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
        
@@ -169,6 +134,11 @@ export class SIIRequestPM {
     private contactId: string;
     public get ContactId() { return this.contactId; }
     public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
+       
+	 
+    private fromApplicationId: string;
+    public get FromApplicationId() { return this.fromApplicationId; }
+    public set FromApplicationId(newValue: string) { if (this.fromApplicationId != newValue) { this.fromApplicationId = newValue; this.MarkAsDirty("FromApplicationId"); } }
        
 	 
 

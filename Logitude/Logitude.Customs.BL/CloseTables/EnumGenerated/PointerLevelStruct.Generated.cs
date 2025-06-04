@@ -19,6 +19,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string SupplierInvoice = "I";
         public const string ClassifaicationCode = "P";
         public const string Declaration = "D";
+        public const string SIIRequest = "S";
     }
  }
  

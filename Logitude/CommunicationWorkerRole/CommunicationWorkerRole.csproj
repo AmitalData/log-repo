@@ -396,12 +396,6 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Polly, Version=8.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Polly.8.5.2\lib\net472\Polly.dll</HintPath>
-    </Reference>
-    <Reference Include="Polly.Core, Version=8.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Polly.Core.8.5.2\lib\net472\Polly.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Profact4.0.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
     </Reference>
@@ -670,14 +664,6 @@
     <Compile Include="IndexSearchWorkerRole.cs" />
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
-    <Compile Include="RestRequestExecutor\ApiCommunicationLog.cs" />
-    <Compile Include="RestRequestExecutor\ApiException.cs" />
-    <Compile Include="RestRequestExecutor\ApiRequest.cs" />
-    <Compile Include="RestRequestExecutor\ApiRequestHeader.cs" />
-    <Compile Include="RestRequestExecutor\ApiResponse.cs" />
-    <Compile Include="RestRequestExecutor\CommunicationConstants.cs" />
-    <Compile Include="RestRequestExecutor\RestRequestExecutor.cs" />
-    <Compile Include="RestRequestExecutor\StatusTypeCommunication.cs" />
     <Compile Include="InvoiceApiWR.cs" />
     <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />

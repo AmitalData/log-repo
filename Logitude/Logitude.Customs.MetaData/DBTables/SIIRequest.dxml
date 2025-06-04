@@ -80,6 +80,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FromApplicationId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Status"
     ReferencedTable="SIIRequestStatuses"

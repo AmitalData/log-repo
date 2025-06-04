@@ -12,7 +12,6 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Def.EntityPMs;
-using CWXSD;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {

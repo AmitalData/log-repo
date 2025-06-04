@@ -15,16 +15,16 @@ using System.Diagnostics.PerformanceData;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class SIIRequestRepository:IRepository<SIIRequest>
-   {
-        
-		public List<SIIRequest> GetMulti(EntityKeyFields entityKeys)
+    public partial class SIIRequestRepository : IRepository<SIIRequest>
+    {
+
+        public List<SIIRequest> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            throw new NotImplementedException();
         }
 
-       
+
         public SiiAgg GetAggregateForSii(int tenant, string declarationId)
         {
             return (from d in context.Declarations
@@ -51,7 +51,8 @@ namespace Logitude.Customs.Data.Repsitories
                                      ? (rd.VesselCode.LocalName ?? rd.VesselCode.EnglishName)
                                      : null,
                         ManifestNumber = con == null ? null : con.ManifestNumber,
-                        UnloadDate = con == null ? null : (DateTime?)con.UnloadDate
+                        UnloadDate = con == null ? null : (DateTime?)con.UnloadDate,
+                        CustomerId = d.CustomerId,
                     })
                     .AsNoTracking()
                     .FirstOrDefault();
@@ -59,11 +60,15 @@ namespace Logitude.Customs.Data.Repsitories
 
         public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, int tenant)
         {
+
+            var validCodes = new[] { "401", "402", "403" };
+
+
             var list =
         from itm in context.SupplierInvoiceItems
         where itm.DeclarationId == declarationId
               && itm.Tenant == tenant
-              && !itm.IsParent                     
+              && !itm.IsParent
         join inv in context.SupplierInvoices
              on new { itm.DeclarationId, itm.CounterKey }
              equals new { inv.DeclarationId, CounterKey = inv.InvoiceCounterKey }
@@ -75,21 +80,25 @@ namespace Logitude.Customs.Data.Repsitories
             into taJoin
         from trade in taJoin.DefaultIfEmpty()
 
-        join mu in context.MeasurmentUnits          
+        join mu in context.MeasurmentUnits
              on itm.InvoiceQuantityType equals mu.Code
              into muJoin
         from unit in muJoin.DefaultIfEmpty()
 
-        join cc in context.CustomsCountries         
+        join cc in context.CustomsCountries
              on itm.OriginCountryCode equals cc.Code
              into ccJoin
         from country in ccJoin.DefaultIfEmpty()
 
         join cert in context.SupplierInvioceItemCertificats
-            on new { itm.DeclarationId, itm.LineNumber,  itm.CounterKey }
-            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
-            into certJoin
-        from certificate in certJoin.DefaultIfEmpty()
+         on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
+            equals new
+            {
+                cert.DeclarationId,
+                cert.LineNumber,
+                CounterKey = cert.InvoiceCounterKey
+            }
+         into certGroup
 
         join cert in context.SupplierInvoiceItemsReqLists
             on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
@@ -100,8 +109,8 @@ namespace Logitude.Customs.Data.Repsitories
         select new SupplieInvoiceItemsForSIIRequest
         {
             InvoiceNumber = si.InvoiceNumber,
-            LineNumber = itm.LineNumber,
-            CounterKey = itm.LineNumber,
+            InvoiceLineNumber = itm.LineNumber,
+            InvoiceCounterKey = itm.LineNumber,
             ItemCode = itm.ItemCode,
             ItemDescription = itm.ItemDescription,
             ClassificationCode = itm.ClassificationCode,
@@ -118,9 +127,9 @@ namespace Logitude.Customs.Data.Repsitories
 
             OriginCountryCode = itm.OriginCountryCode,
             OriginCountryName = country.LocalName,
-            ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
-            RequestRequiredStatus = requestList.RequestRequiredStatus,
-
+            HasDemandState = certGroup.Any(c => validCodes.Contains(c.ReqConfirmationTypeCode)),
+            RequestRequiredStatus = String.IsNullOrEmpty(requestList.RequestRequiredStatus) ? "0" : requestList.RequestRequiredStatus,
+            LineNumber = requestList != null ? (int)requestList.LineNumber : 1,
         };
 
             return list.ToList();
@@ -134,8 +143,9 @@ namespace Logitude.Customs.Data.Repsitories
             public string VesselLocalName { get; set; }
             public string ManifestNumber { get; set; }
             public DateTime? UnloadDate { get; set; }
+            public string CustomerId { get; set; }
         }
-
+       
     }
 
 
