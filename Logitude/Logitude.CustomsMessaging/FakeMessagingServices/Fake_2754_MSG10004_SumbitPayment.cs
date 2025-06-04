@@ -1,5 +1,7 @@
 ﻿using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.RequestServices;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.ImportDeclarationServiceReference;
 using DF_NG_2754_MSG10004_ImportDeclarationResponse = UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponse;
@@ -8,9 +10,16 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 {
     public class Fake_2754_MSG10004_SumbitPayment : Fake_ImportDeclaration_Response
     {
+        int paymentOrderNumber;
         public Fake_2754_MSG10004_SumbitPayment(GenericRequestParams requestParams) : base(requestParams) { }
     public ResponseHeader CallWS(out DF_NG_2754_MSG10004_ImportDeclarationResponse response, GenericRequestParams requestParams)
         {
+            dynamic params1 = JObject.Parse(requestParams.TestCase.Param1);
+            if(params1?.PaymentOrderNumber != null)
+            {                
+                paymentOrderNumber=int.TryParse(params1.PaymentOrderNumber.Value, out int result) ? result : -1;                
+            }            
+
             UpdateDeclaration(requestParams,99);
             UpdateStatus("5");
             response = cast(fakeRespond);
@@ -69,7 +78,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             // fill the right info
             var paymentDetails = new UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponseDeclarationPaymentDetails
             {
-                PaymentOrderNumber = 455993854, // ???
+                PaymentOrderNumber = paymentOrderNumber, // ???
                 PaymentOrderStatus = 3
             };
             return paymentDetails;
