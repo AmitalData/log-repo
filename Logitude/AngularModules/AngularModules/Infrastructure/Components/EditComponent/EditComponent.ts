@@ -67,7 +67,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @Output() TabSelected: EventEmitter<string> = new EventEmitter<string>();
     @Output() TabChanged: EventEmitter<string> = new EventEmitter<string>();
     @Output() SaveAndCloseCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() SaveARInvoiceCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() SaveARInvoiceCompleted: EventEmitter<string> = new EventEmitter<string>();
 
     @Output() OnFirstTimeAfterSingleDataLoaded: EventEmitter<string> = new EventEmitter<string>();
     public ComponentRef: ComponentRef<EditComponent>;
