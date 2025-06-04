@@ -69,7 +69,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             // fill the right info
             var paymentDetails = new UnifreightIIG.Common.ImportDeclarationSubmitRequestServiceReference.DF_NG_2754_MSG10004_ImportDeclarationResponseDeclarationPaymentDetails
             {
-                PaymentOrderNumber = 455993853, // ???
+                PaymentOrderNumber = 455993854, // ???
                 PaymentOrderStatus = 3
             };
             return paymentDetails;
