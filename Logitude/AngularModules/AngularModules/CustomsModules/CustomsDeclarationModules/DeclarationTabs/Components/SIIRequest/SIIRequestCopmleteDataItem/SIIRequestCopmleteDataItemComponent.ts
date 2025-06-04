@@ -74,7 +74,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
         this.entityPM = args.entityPMSupplierInvoiceItemsReqListPM;
-        console.log(this.entityPM);
     }
 
     SetPropertiesEnabled() {
@@ -93,6 +92,8 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     SearchProductFileNumber(ProductFileNumber: string = '') {
         let productFileExists: boolean = false;
         this.validationErrors = [];
+
+        this.ManufactureCountryCode = 'IL';// TODO: delete after testing
         this.checkMandatoryFields();
         if (this.errorsList.length > 0) {
             this.displayErrorsMsg();
@@ -103,13 +104,14 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             let myResponse: ServiceResponse = myResult;
             if (!myResponse?.HasError) {
                 productFileExists = myResponse?.Result;
+                // productFileExists = true; // TODO: delete after testing
                 if (productFileExists) {
                     this.SaveSupplierInvoiceItemsReqList();
                     this.entityPM.ProductFileNumber = ProductFileNumber;
                     this.validationErrors = [];
                 }
                 else {
-                    this.entityPM.ProductFileNumber = '';
+                    this.ProductFileNumber = null;
                     let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.\n ${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave")}?`;
                     this.validationErrors = [errorMsg];
                     this.displayErrorsMsg();
@@ -132,12 +134,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             { field: this.InvoiceQuantityType, name: TextCodeTranslator.Translate(fieldName + "InvoiceQuantityType") },
         ];
         this.errorsList = mandatoryFields.filter(({ field }) => AppTool.IsNullOrEmpty(field))?.map(({ name }) => `${missingField} ${name}`);
-        if (this.errorsList?.length > 0) {
-            this.entityPM.RequestRequiredStatus = CompleteStatuses.PartiallyCompleted;
-        }
-        else {
-            this.entityPM.RequestRequiredStatus = CompleteStatuses.FullyCompleted;
-        }
+        this.RequestRequiredStatus = this.errorsList?.length === 0 && !AppTool.IsNullOrEmpty(this.ProductFileNumber) ? CompleteStatuses.FullyCompleted : this.errorsList?.length > 0 ? CompleteStatuses.PartiallyCompleted : CompleteStatuses.UnCompleted;
     }
 
     displayErrorsMsg() {
@@ -168,7 +165,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     validationErrors: string[] = [];
     taxationWindowClosed(event) {
         this.validationErrors = [];
-        if (this.errorsList?.length > 0) return false;
         this.errorsList = [];
         switch (event) {
             case "ok": {
@@ -188,28 +184,43 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     generalErrors: string[] = [];
     SaveSupplierInvoiceItemsReqList() {
-        this.checkMandatoryFields();
         this.entityPM.DeclarationId = this.DecalarationData?.Id;
         this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
         this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
         this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
-        this.entityPM.RequestRequiredStatus = this.invoiceItemReq.RequestRequiredStatus;
 
-        this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
-            let myResponse: ServiceResponse = myResult;
-            if (!myResponse?.HasError && myResponse?.Result) {
-                this.generalErrors = [];
-                console.log(myResponse?.Result);
-                this.entityPM = myResponse?.Result;
-            }
-            else {
-                this.generalErrors = myResponse?.ErrorsArray;
-            }
-        }, error => {
-            this.generalErrors = [error?.message];
-            console.error('Error saving SupplierInvoiceItemsReqList:', error);
-        });
+        this.checkMandatoryFields();
+        if (this.RequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.RequestRequiredStatus === CompleteStatuses.FullyCompleted) {
+            this.supplierInvoiceItemsReqListPMService.update(this.entityPM).subscribe(myResult => {
+                let myResponse: ServiceResponse = myResult;
+                if (!myResponse?.HasError && myResponse?.Result) {
+                    this.generalErrors = [];
+                    this.entityPM = myResponse?.Result;
+                }
+                else this.generalErrors = myResponse?.ErrorsArray;
+                this.RefreshEntity();
+                this.CurrentSession.CloseCurrentWindow();
+            }, error => {
+                this.generalErrors = [error?.message];
+                console.error('Error updating SupplierInvoiceItemsReqList:', error);
+            });
+        }
+        else {
+            this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
+                let myResponse: ServiceResponse = myResult;
+                if (!myResponse?.HasError && myResponse?.Result) {
+                    this.generalErrors = [];
+                    this.entityPM = myResponse?.Result;
+                }
+                else this.generalErrors = myResponse?.ErrorsArray;
+                this.RefreshEntity();
+                this.CurrentSession.CloseCurrentWindow();
+            }, error => {
+                this.generalErrors = [error?.message];
+                console.error('Error saving SupplierInvoiceItemsReqList:', error);
+            });
+        }
     }
 
     CancelSupplierInvoiceItemsReqList() {
@@ -302,6 +313,12 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
     public set DutchGroupItem(newValue: number) {
         this.entityPM.DutchGroupItem = newValue;
+    }
+    public get RequestRequiredStatus(): string {
+        return this.entityPM?.RequestRequiredStatus;
+    }
+    public set RequestRequiredStatus(newValue: string) {
+        this.entityPM.RequestRequiredStatus = newValue;
     }
     //#endregion SiiRequest properties
 }
