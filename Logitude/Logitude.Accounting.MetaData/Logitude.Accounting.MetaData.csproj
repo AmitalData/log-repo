@@ -156,7 +156,6 @@
     <None Include="DBScripts\2023030_JournalApprovalMLInsertGlobalRecords.sxml" />
     <None Include="DBScripts\2023030_CreateIndexInLedgerTransactions_AccountIdMarkTenant.sxml" />
     <None Include="DBScripts\20230619_QueuePeekJouranlApprovalSetUpdateDate.dxml" />
-    <None Include="DBScripts\20230619_SetTenantIdleProcedure.dxml" />
     <None Include="DBScripts\202404011909_AddTableGLAccountCardsData.sxml" />
     <None Include="DBScripts\202405021130_UpdateObjectField_DisplayInRequiredFields.sxml" />
     <None Include="DBScripts\20250202_Create_PIX_GLAccounts_ChartOfAccountsTypeCode.sxml" />
