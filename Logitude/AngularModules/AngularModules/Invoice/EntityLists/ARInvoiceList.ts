@@ -171,7 +171,7 @@ export class ARInvoiceList {
 		ConfirmationNumberStatusName: string;
 	    APIResponseToConfirmation:string;
 		IsApprovalFailed: boolean;
-		IsApprovalDone: boolean;
+		ApprovalInProgress: boolean;
 
 		SequenceStatus:string;
 	    InvoiceNumberPart:string;

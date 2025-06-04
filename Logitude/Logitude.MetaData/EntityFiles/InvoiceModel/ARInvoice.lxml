@@ -18455,9 +18455,9 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;a5c97a4d-fd7f-4a90-a28f-8e60b2147f42&quot;"
-    FieldName="&quot;IsApprovalDone&quot;"
-    OldNames="IsApprovalDone"
+    Id="&quot;9a64bdba-851b-4eb6-ad79-9f2f94c981c7&quot;"
+    FieldName="&quot;ApprovalInProgress&quot;"
+    OldNames="ApprovalInProgress"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -18480,9 +18480,8 @@
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
-    PMPropertyPath="&quot;IsApprovalDone&quot;"
-    ListPropertyPath="&quot;IsApprovalDone&quot;"
-    DisplayInLookUpIndex="0"
+    PMPropertyPath="&quot;ApprovalInProgress&quot;"
+    ListPropertyPath="&quot;ApprovalInProgress&quot;"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -18499,11 +18498,10 @@
     DisplayInDocumentReferences="false"
     InActive="false"
     DisplayLongName="false"
-    FullFieldLable="&quot;IsApprovalDone&quot;"
-    DefaultText="&quot;IsApprovalDone&quot;"
-    FullLocalDefaultText="&quot;&quot;"
-    ListFieldLable="&quot;IsApprovalDoneListLable&quot;"
-    ListLableDefaultText="&quot;IsApprovalDone&quot;"
+    FullFieldLable="&quot;ApprovalInProgress&quot;"
+    DefaultText="&quot;ApprovalInProgress&quot;"
+    ListFieldLable="&quot;ApprovalInProgressListLable&quot;"
+    ListLableDefaultText="&quot;ApprovalInProgress&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -22472,6 +22470,12 @@
       Code="&quot;ARInvoice.O.Reconfirm&quot;"
       DefaultText="&quot;Reconfirm&quot;"
       LocalDefaultText="&quot;אשר מחדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.DraftInvoice&quot;"
+      DefaultText="&quot;Draft Invoice&quot;"
+      LocalDefaultText="&quot;חשבונית טיוטה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

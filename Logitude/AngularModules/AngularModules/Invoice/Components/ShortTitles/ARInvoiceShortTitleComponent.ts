@@ -77,7 +77,7 @@ export class ARInvoiceShortTitleComponent implements OnDestroy {
 
         if (this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "LL" || this.EntityPM.StatusCode == "PR") {
             if (this.EntityPM.DraftNumber) {
-                this.EntityNumber = this.EntityPM.DraftNumber + ", ";
+                this.EntityNumber = "Draft: " + this.EntityPM.DraftNumber + ", ";
             }
         }
 

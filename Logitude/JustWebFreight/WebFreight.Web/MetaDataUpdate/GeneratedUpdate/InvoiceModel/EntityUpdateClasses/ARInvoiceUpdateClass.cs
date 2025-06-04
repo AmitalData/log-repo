@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "9f8b4580bab3c2529ca0c3cc004ce429";
+		public const string HashString = "9f8b4580bab3c8952ca0c3cc004ce427";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15289,7 +15289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsApprovalDone",
+					 						FieldName = "ApprovalInProgress",
 					  						ObjectTableName =  "ARInvoice",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -15308,8 +15308,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsApprovalDone",
-					  						ListPropertyPath =  "IsApprovalDone",
+					  						PMPropertyPath = "ApprovalInProgress",
+					  						ListPropertyPath = "ApprovalInProgress",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -15327,10 +15327,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsApprovalDone",
-					  						DefaultText =  "IsApprovalDone",
-					  						ListFieldLable =  "IsApprovalDoneListLable",
-					  						ListLableDefaultText =  "IsApprovalDone",
+					  						FullFieldLable = "ApprovalInProgress",
+					  						DefaultText = "ApprovalInProgress",
+					  						ListFieldLable = "ApprovalInProgressListLable",
+					  						ListLableDefaultText = "ApprovalInProgress",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -17366,6 +17366,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceODatesMustBeInTheSameYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.DatesMustBeInTheSameYear", DefaultText = "Dates Must Be In The Same Year",LocalDefaultText = @"התאריכים חייבים להיות באותה שנה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceOReconfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.Reconfirm", DefaultText = "Reconfirm",LocalDefaultText = @"אשר מחדש", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceODraftInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.DraftInvoice", DefaultText = "Draft Invoice", LocalDefaultText = @"חשבונית טיוטה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

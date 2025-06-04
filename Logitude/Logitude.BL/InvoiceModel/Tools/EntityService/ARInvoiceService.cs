@@ -707,14 +707,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
                     throw new BusinessErrorException("An invoice has already been created for this report.");
-
+                
                 }
             }
 
             this.isApprovingInvoice = entityPM.SetApproved;
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
-
+            if(entityPM.SetApproved && !entityPM.ApprovalInProgress &&  invoice.ApprovalInProgress)
+            {
+                invoice.ApprovalInProgress = false;
+                invoiceRepository.Update(invoice);
+                invoiceRepository.SubmitChanges();
+            }
             if (invoice.StatusCode == "AR")
             {
                 if (this.entityPM.StatusCode == "AD")
@@ -793,7 +798,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.ARInvoiceStockNumber();
 
                 ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
-                ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+                //ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
 
                 if (entityPM.IsConsolidationInvoice)
                 {
@@ -899,6 +904,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+            ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
             this.InsertToQueue();
         }
 
