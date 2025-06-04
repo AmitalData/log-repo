@@ -8,7 +8,6 @@ using Polly.Retry;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using static Dropbox.Api.Properties.PropertyType;
 
 namespace Logitude.Server.Tools.RestRequestExecutor
 {

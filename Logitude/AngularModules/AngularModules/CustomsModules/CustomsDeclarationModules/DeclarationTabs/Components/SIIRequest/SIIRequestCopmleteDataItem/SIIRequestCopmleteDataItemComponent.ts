@@ -64,6 +64,8 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
 
     invoiceItemReq: SupplierInvoiceItemsForSIIRequestLine;
+    oldRequestRequiredStatus: string;    
+
     SetWindowArgs(args: any) {
         this.currentSiiRequest = args.SIIRequest;
         this.DecalarationData = args.Decalaration;
@@ -74,6 +76,8 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
         this.entityPM = args.entityPMSupplierInvoiceItemsReqListPM;
+        this.oldRequestRequiredStatus = this.entityPM?.RequestRequiredStatus;
+
     }
 
     SetPropertiesEnabled() {
@@ -137,6 +141,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.RequestRequiredStatus = this.errorsList?.length === 0 && !AppTool.IsNullOrEmpty(this.ProductFileNumber) ? CompleteStatuses.FullyCompleted : this.errorsList?.length > 0 ? CompleteStatuses.PartiallyCompleted : CompleteStatuses.UnCompleted;
     }
 
+
     displayErrorsMsg() {
         let windowArgs: any = {};
         windowArgs.Errors = this.errorsList;
@@ -189,9 +194,9 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
         this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
         this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
-
+        debugger;
         this.checkMandatoryFields();
-        if (this.RequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.RequestRequiredStatus === CompleteStatuses.FullyCompleted) {
+        if (this.oldRequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.oldRequestRequiredStatus === CompleteStatuses.FullyCompleted) {
             this.supplierInvoiceItemsReqListPMService.update(this.entityPM).subscribe(myResult => {
                 let myResponse: ServiceResponse = myResult;
                 if (!myResponse?.HasError && myResponse?.Result) {
