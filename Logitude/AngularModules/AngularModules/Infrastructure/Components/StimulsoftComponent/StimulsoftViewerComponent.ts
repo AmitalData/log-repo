@@ -181,12 +181,8 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.SetStimualData();
 
             }
-        }
-        
-        const disabledCodes = ["COO", "COOC", "ECCR", "EXDE"];
-        if (!disabledCodes.includes(this.EntityPM.Code)) {
-           this.IsEnableButtonExcel = true;
-        }
+        }    
+        this.IsEnableButtonExcel = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "REE")[0] ? true : false;
     
         if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.StimulsoftArgData.IsExcelReportAllowed == true) {
             this.IsEnableReportTemplateExcel = true;
