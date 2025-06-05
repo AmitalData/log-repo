@@ -330,7 +330,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                 {
-                    SetConfirmationNumberStatus();
+                    SetConfirmationNumberStatus(entityPM);
                 }
             }
 
@@ -481,7 +481,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
         }
-        public void SetConfirmationNumberStatus()
+        public void SetConfirmationNumberStatus(ARInvoicePM entityPM)
         {
             var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
                                              where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate && a.InActive == false
@@ -827,7 +827,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                     {
-                        SetConfirmationNumberStatus();
+                        SetConfirmationNumberStatus(entityPM);
                     }
                 }
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.InvoiceNumber });
@@ -5296,7 +5296,34 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        public void PrintOrSendInvoice(string id, int tenant) {
+        public void PrintOrSendInvoice(string id, string reference, int tenant) {
+            try
+            {
+                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARInvoice", tenant, true);
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", tenant);
+                CreateDocumentOutArgs documentOutArgs = new CreateDocumentOutArgs()
+                {
+                    EntityId = id,
+                    Tenant = tenant,
+                    ObjectTableId = objectTable?.Id,
+                    SignHSM = true,
+                    DocumentTypeId = documentTypeId,
+                    ChildReference = reference,
+                };
+                DocumentHelper documentHelper = new DocumentHelper();
+                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex ;
+            }
+          
+
+
+
         }
 
         public class ConfirmationNumberAPI

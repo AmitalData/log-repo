@@ -34,7 +34,7 @@ namespace CommunicationWorkerRole.Tasks
                     InvoiceApiQueryBatch invoiceApiQueryBatch = new InvoiceApiQueryBatch();
                     int tenant = this.Task != null ? this.Task.Tenant : 0 ;
                     string startDate = DateTime.UtcNow.AddDays(-1).Date.ToString("yyyy-MM-dd'T'00:00:00");
-                    string endDate = DateTime.UtcNow.Date.AddDays(1).ToString("yyyy-MM-dd'T'00:00:00");
+                    string endDate = DateTime.UtcNow.Date.ToString("yyyy-MM-dd'T'00:00:00");
 
                     invoiceApiQueryBatch.RunInvoiceApiInvoicesQuery(startDate, endDate, tenant);
                     string responseText = invoiceApiQueryBatch.ResponseText();
