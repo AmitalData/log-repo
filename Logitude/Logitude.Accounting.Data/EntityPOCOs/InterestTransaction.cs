@@ -66,6 +66,12 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Notes { get; set; }
         [Column("AccountingDate")]
         public DateTime AccountingDate { get; set; }
+        [ForeignKey("Journal")]
+        [Column("JournalId")]
+        public string JournalId { get; set; }
+
+        public virtual Journal Journal { get; set; }
+
     }
 }
 	 
