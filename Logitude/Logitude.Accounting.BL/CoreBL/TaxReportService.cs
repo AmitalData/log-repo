@@ -864,7 +864,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             var transactionSum = journalsTransactions.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
-            var transactionSumNotExcluded = journalsTransactionsNotExcluded.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
+            var transactionSumNotExcluded = journalsTransactionsNotExcluded.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountDebit);
             InputInvoiceAmount = transactionSum - InputVatAmount;
             InputInvoiceAmountNotExcluded = transactionSumNotExcluded - InputVatAmount;
 
