@@ -11,6 +11,7 @@ using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
@@ -22,6 +23,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
         private Customer entityPOCO;
         private string loggedContactId;
         private string myTableName;
+        ICommonDataContext objectContext;
         public CustomerTracing(CustomerPM entityPM, Customer entityPOCO, string loggedContactId, bool isNewEntity)
         {
             this.myTenant = entityPM.Tenant;
@@ -85,7 +87,12 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 
                 if (entityPM.Card?.EmailForSendingSingArinvoice != entityPOCO.Card?.EmailForSendingSingArinvoice)
                 {
-                    notes += Environment.NewLine + "EmailForSendingSingArinvoice Changed to be : " + entityPM.Card?.EmailForSendingSingArinvoice;
+                     string EmailForSendingSingArinvoiceName = "";
+                    if (!string.IsNullOrWhiteSpace(entityPM.Card?.EmailForSendingSingArinvoice)) {
+                        ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
+                        EmailForSendingSingArinvoiceName = contactQuery.GetSinglePMFromCache(entityPM.Card?.EmailForSendingSingArinvoice, entityPOCO.Tenant)?.Email;
+                    }
+                    notes += Environment.NewLine + "EmailForSendingSingArinvoice Changed to be : " + EmailForSendingSingArinvoiceName;
                 }
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()

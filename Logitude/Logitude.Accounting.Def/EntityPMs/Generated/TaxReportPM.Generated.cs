@@ -1004,7 +1004,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 	     get
 		{
 		   return removeDuplicates;
-		 }
+ 		 }
 		 set
 		 {
 		   if(removeDuplicates != value)
@@ -1013,8 +1013,8 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChanged(values);
 		   removeDuplicates=value;
 		   }
-			
-		 }
+ 		 }
+ 		 }
 	   }
 	  private bool isEdited ;
 	  	  
@@ -1029,13 +1029,14 @@ namespace Logitude.Accounting.Def.EntityPMs
 		   return isEdited;
 		 }
 		 set
+ 		  
 		 {
-		   if(isEdited != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsEdited",OldValue=isEdited,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isEdited=value;
-		   }
+ 		   if(isEdited != value)
+ 		  {
+ 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsEdited",OldValue=isEdited,NewValue=value,PropertyType="bool"};
+ 		    NotifyPropertyChanged(values);
+ 		   isEdited=value;
+ 		   }
 			
 		 }
 	   }

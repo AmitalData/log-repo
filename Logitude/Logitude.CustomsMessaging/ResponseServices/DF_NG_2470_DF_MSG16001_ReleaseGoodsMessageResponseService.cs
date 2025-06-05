@@ -169,6 +169,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             this.CloseCustomsCollateral(declarationPM);
 
+                           
 
 
                             if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
