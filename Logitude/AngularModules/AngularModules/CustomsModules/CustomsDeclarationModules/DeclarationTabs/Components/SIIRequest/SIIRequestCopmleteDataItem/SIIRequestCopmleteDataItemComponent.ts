@@ -64,7 +64,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
 
     invoiceItemReq: SupplierInvoiceItemsForSIIRequestLine;
-    oldRequestRequiredStatus: string;    
+    oldRequestRequiredStatus: string;
 
     SetWindowArgs(args: any) {
         this.currentSiiRequest = args.SIIRequest;
@@ -77,7 +77,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityArgs.ObjectTableName = "Customs.SupplierInvoiceItemsReqList";
         this.entityPM = args.entityPMSupplierInvoiceItemsReqListPM;
         this.oldRequestRequiredStatus = this.entityPM?.RequestRequiredStatus;
-
     }
 
     SetPropertiesEnabled() {
@@ -94,9 +93,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     //#region search product file number by API request:
     SearchProductFileNumber(ProductFileNumber: string = '') {
-        let productFileExists: boolean = false;
         this.validationErrors = [];
-
         this.ManufactureCountryCode = 'IL';// TODO: delete after testing
         this.checkMandatoryFields();
         if (this.errorsList.length > 0) {
@@ -106,22 +103,25 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.errorsList = [];
         this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
-            if (!myResponse?.HasError) {
-                productFileExists = myResponse?.Result;
-                // productFileExists = true; // TODO: delete after testing
-                if (productFileExists) {
-                    this.SaveSupplierInvoiceItemsReqList();
-                    this.entityPM.ProductFileNumber = ProductFileNumber;
-                    this.validationErrors = [];
-                }
-                else {
-                    this.ProductFileNumber = null;
-                    let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.\n ${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave")}?`;
-                    this.validationErrors = [errorMsg];
-                    this.displayErrorsMsg();
-                }
-            }
+            if (!myResponse?.HasError)
+                this.saveByProductFileNumberResult(myResponse?.Result, ProductFileNumber);
         });
+    }
+
+    isExistProductFile: boolean = false;
+    saveByProductFileNumberResult(productFileExists: boolean = false, productFileNumber: string = '') {
+        this.isExistProductFile = productFileExists;
+        if (productFileExists) {
+            this.ProductFileNumber = productFileNumber;
+            this.validationErrors = [];
+            this.SaveSupplierInvoiceItemsReqList();
+        }
+        else {
+            this.ProductFileNumber = null;
+            let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.\n ${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave")}?`;
+            this.validationErrors = [errorMsg];
+            this.displayErrorsMsg();
+        }
     }
 
     //region mandatory fields check:
@@ -138,7 +138,10 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             { field: this.InvoiceQuantityType, name: TextCodeTranslator.Translate(fieldName + "InvoiceQuantityType") },
         ];
         this.errorsList = mandatoryFields.filter(({ field }) => AppTool.IsNullOrEmpty(field))?.map(({ name }) => `${missingField} ${name}`);
-        this.RequestRequiredStatus = this.errorsList?.length === 0 && !AppTool.IsNullOrEmpty(this.ProductFileNumber) ? CompleteStatuses.FullyCompleted : this.errorsList?.length > 0 ? CompleteStatuses.PartiallyCompleted : CompleteStatuses.UnCompleted;
+        if (this.errorsList?.length > 0) {
+            this.errorsList.push(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave") + "?");
+        }
+        this.RequestRequiredStatus = this.errorsList?.length === 0 && !AppTool.IsNullOrEmpty(this.ProductFileNumber) ? CompleteStatuses.FullyCompleted : this.errorsList?.length > 0 || AppTool.IsNullOrEmpty(this.ProductFileNumber) ? CompleteStatuses.PartiallyCompleted : CompleteStatuses.UnCompleted;
     }
 
 
@@ -194,6 +197,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
         this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
         this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
+        if (!AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isExistProductFile) this.ProductFileNumber = null;
         this.checkMandatoryFields();
         if (this.oldRequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.oldRequestRequiredStatus === CompleteStatuses.FullyCompleted) {
             this.supplierInvoiceItemsReqListPMService.update(this.entityPM).subscribe(myResult => {
