@@ -67,7 +67,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSupplierInvoiceItemsForSIIRequest(string declarationId)
+        public HttpResponseMessage GetSupplierInvoiceItemsForSIIRequest(string declarationId,string siiRequestId)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var ctx = CustomContext.GetContext(auth.Tenant);
                 var svc = new SIIRequestQueryService(ctx);
                 svc.InitializeSettings();
-                var list = svc.GetSupplierInvoiceItems(declarationId, auth.Tenant);
+                var list = svc.GetSupplierInvoiceItems(declarationId, siiRequestId,auth.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, list);
@@ -94,7 +94,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public HttpResponseMessage PostSendSIIRequest(string SIIRequestId,int tenant)
+        public HttpResponseMessage PostSendSIIRequest(string siiRequestId, int tenant)
         
         {
             try

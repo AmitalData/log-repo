@@ -58,7 +58,7 @@ namespace Logitude.Customs.Data.Repsitories
                     .FirstOrDefault();
         }
 
-        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, int tenant)
+        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, string siiRequestId, int tenant)
         {
 
             var validCodes = new[] { "401", "402", "403" };
@@ -101,8 +101,8 @@ namespace Logitude.Customs.Data.Repsitories
          into certGroup
 
         join cert in context.SupplierInvoiceItemsReqLists
-            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
-            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
+            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey, SIIRequestID = siiRequestId }
+            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey, cert.SIIRequestID }
             into reqJoin
         from requestList in reqJoin.DefaultIfEmpty()
 
@@ -110,7 +110,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             InvoiceNumber = si.InvoiceNumber,
             InvoiceLineNumber = itm.LineNumber,
-            InvoiceCounterKey = itm.LineNumber,
+            InvoiceCounterKey = itm.CounterKey,
             ItemCode = itm.ItemCode,
             ItemDescription = itm.ItemDescription,
             ClassificationCode = itm.ClassificationCode,
