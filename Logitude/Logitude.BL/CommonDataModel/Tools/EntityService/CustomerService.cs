@@ -98,7 +98,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.objectContext = objectContext;
             this.entityRepository = new CustomerRepository(objectContext);
             this.addressRepository = new AddressRepository(objectContext);
-            this.cardRepository = new CardRepository(tenant);
+            this.cardRepository = new CardRepository(objectContext);
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.productRepository = new CustomerProductRepository(objectContext);
@@ -536,7 +536,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner)) 
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -573,7 +573,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddLogboxCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) )
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -728,7 +728,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityCard.Address2 = entityPM.Address2_Potential;
                     entityCard.Phone = entityPM.PhoneNumber;
                     entityCard.ZipCode = entityPM.ZipCode_Potential;
-                    
+
 
                     if (entityPM.CountryId_Potential != null)
                     {
@@ -803,7 +803,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryName = entityCard.CountryName;
             }
             entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport; 
+            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
         }
 
         private void ComputeContactFields()
@@ -1275,7 +1275,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateGLAccountWithOldAndNewContactForAccounting(oldContactForAccounting, newContactForAccounting);
 
         }
-        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId , string includeContactId)
+        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId, string includeContactId)
         {
             IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
             glaccountUpdate.UpdateGLAccountWithAdditionalData(entityPM.Card.GLAccountId, entityPM.Card.Tenant, null, excludeContactId, includeContactId);
