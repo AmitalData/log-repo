@@ -246,6 +246,7 @@ namespace Logitude.Accounting.BL.Utils
             newInterestTransaction.Tenant = line.Tenant;
             newInterestTransaction.ChangeSetOp = ChangeSetOperation.Insert;
             newInterestTransaction.AccountingDate = line.AccountingDate;
+            newInterestTransaction.JournalId = line.JournalId;
             return newInterestTransaction;
         }
 

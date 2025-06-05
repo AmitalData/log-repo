@@ -3552,6 +3552,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     GLAccountId = interestTransactionGLAccount?.Id,
                     CurrencyId = entityPM.InvoiceCurrencyId,
                     ChangeSetOp = ChangeSetOperation.Insert,
+                    JournalId = entityPM.JournalId,
                 };
                 return InterestTransactionVatLine;
             }
@@ -3633,6 +3634,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     Tenant = invoiceLine.Tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     CurrencyId = invoiceLine.ForiegnCurrencyId,
+                    JournalId = entityPM.JournalId,
 
                 };
                 return interestTransaction;
