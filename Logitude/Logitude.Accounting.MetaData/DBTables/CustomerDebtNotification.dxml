@@ -73,4 +73,9 @@
     ReferencedTable="TasksScheduler"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>
