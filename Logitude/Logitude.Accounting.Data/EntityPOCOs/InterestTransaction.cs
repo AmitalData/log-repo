@@ -64,6 +64,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string AccountingEntityCode { get; set; }
         [Column("Notes")]
 	    public string Notes { get; set; }
+        [Column("AccountingDate")]
+        public DateTime AccountingDate { get; set; }
     }
 }
 	 
