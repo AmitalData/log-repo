@@ -89,52 +89,30 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-
-        public decimal GetInterestReportOpenBalance(DateTime inputDate, string glAccountId, int tenant)
+        public decimal GetSumOfExReportsOrInterestOpenBalance(int tenant, string glAccountId)
         {
-            var firstOfMonth = new DateTime(inputDate.Year, inputDate.Month, 1);
+            var gLAccount = context.GLAccounts
+                  .SingleOrDefault(ga => ga.Tenant == tenant && ga.Id == glAccountId);
 
+            // If a matching GLAccount doesn't exist, return 0
+            if (gLAccount == null)
+                return 0m;
 
-            var openBalance = GetLedgerOpenBalance(glAccountId, tenant, firstOfMonth);
-            var interestDeltas = GetInterestAdjustments(glAccountId, tenant, firstOfMonth);
+            decimal? closedBalance = context.InterestReports
+                .Where(a => a.Tenant == tenant
+                     && (a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced
+                         || a.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
+                     && a.GLAccountId == glAccountId
+                     && (gLAccount.InterestCalculationStartDate == null
+                         || a.InterestCalculationDate >= gLAccount.InterestCalculationStartDate))
+                .OrderByDescending(a => a.InterestCalculationDate)
+                .Select(a => a.CloseBalance)
+                .FirstOrDefault();
 
-            return openBalance - interestDeltas.AfterValueDate - interestDeltas.BeforeValueDateWithoutReport;
+            return closedBalance ?? gLAccount.InterestOpenBalance ?? 0;
         }
 
-        private decimal GetLedgerOpenBalance(string glAccountId, int tenant, DateTime beforeDate)
-        {
-            return context.LedgerTransactions
-            .Where(x => x.AccountId == glAccountId && x.AccountingDate < beforeDate && x.Tenant == tenant)
-            .Sum(x => (decimal?)(x.LocalAmountDebit - x.LocalAmountCredit)) ?? decimal.Zero;
-        }
 
-        private (decimal AfterValueDate, decimal BeforeValueDateWithoutReport) GetInterestAdjustments(string glAccountId, int tenant, DateTime beforeDate)
-        {
-            var query = context.InterestTransactions
-            .Join(context.Journals,
-            it => new { it.EntityId, it.AccountingEntityCode, it.Tenant },
-            j => new { EntityId = j.AccountingEntityId, j.AccountingEntityCode, j.Tenant },
-            (it, j) => new { it, j })
-            .Join(context.GLAccounts,
-            x => new { x.it.GLAccountId, x.it.Tenant },
-            ga => new { GLAccountId = ga.Id, ga.Tenant },
-            (x, ga) => new { x.it, x.j, ga })
-            .Where(x => x.it.GLAccountId == glAccountId &&
-            x.j.AccountingDate < beforeDate &&
-            (x.ga == null || x.j.AccountingDate >= x.ga.InterestCalculationStartDate) &&
-            x.j.Tenant == tenant)
-            .Select(x => new
-            {
-                InterestAfter = (x.it.InterestValueDate >= beforeDate) ? x.it.LocalAmount : 0,
-                InterestBeforeUnreported = (x.it.InterestValueDate < beforeDate && x.it.InterestReportId == null) ? x.it.LocalAmount : 0
-            });
-
-
-            return (
-                query.Sum(x => x.InterestAfter),
-                query.Sum(x => x.InterestBeforeUnreported)
-            );
-        }
 
         public CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport(int tenant,string glaccountId)
         {

@@ -127,6 +127,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AccountingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GLAccountId"
     ReferencedTable="GLAccounts"
