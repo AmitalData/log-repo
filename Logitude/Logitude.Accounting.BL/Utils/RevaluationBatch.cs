@@ -245,6 +245,7 @@ namespace Logitude.Accounting.BL.Utils
             newInterestTransaction.GLAccountId = line.ActionCode == CreditCode ? line.CreditAccountId : line.DebitAccountId;
             newInterestTransaction.Tenant = line.Tenant;
             newInterestTransaction.ChangeSetOp = ChangeSetOperation.Insert;
+            newInterestTransaction.AccountingDate = line.AccountingDate;
             return newInterestTransaction;
         }
 
