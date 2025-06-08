@@ -226,7 +226,7 @@ namespace CommunicationWorkerRole
                     invoiceService.Update(aRInvoicePM, true);
                    
                     _DbQueueService.Complete();
-                    if (string.IsNullOrEmpty(invoiceApiCommunicationLogId))
+                    if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
                     {
                         try
                         {
