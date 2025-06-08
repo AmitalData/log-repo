@@ -434,6 +434,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? fromMonth ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? FromMonth  
+	   {
+	    
+	     get
+		{
+		   return fromMonth;
+		 }
+		 set
+		 {
+		   if(fromMonth != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FromMonth",OldValue=fromMonth,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   fromMonth=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
