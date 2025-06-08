@@ -91,7 +91,7 @@ using WebFreight.Web.Helpers;
 
 
                 TotalInterest = d.CalculatedCreditInterestAmount + d.CalculatedExcepInterestAmount + d.CalculatedStandInterestAmount,
-                TotalLocalAmount = interestTransactionLists.Sum(s => s.LocalAmount),
+                TotalLocalAmount = d.StandardInterestAmount + d.ExceptionalInterestAmount + d.CreditInterestAmount,
 
                 InterestTransactionList = interestTransactionLists.Where(s => s.InterestValueDate.Date == d.FromDate.Date)
                 .Select(a =>
@@ -131,7 +131,7 @@ using WebFreight.Web.Helpers;
 
             if (interestReportPeriods.Any())
             {
-
+                decimal totalLocalAmountSum = 0m;
                 foreach (var period in interestReportPeriods)
                 {
                     List<InterestReportFlatLine> periodLineList = new List<InterestReportFlatLine>();
@@ -158,10 +158,11 @@ using WebFreight.Web.Helpers;
 
                         // Last in a period
                         var lastLineInPeriod = periodLineList.Last();
-                        lastLineInPeriod.Date = period.ToDate;
+                        lastLineInPeriod.Date = period.FromDate;
                         lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
-                        lastLineInPeriod.TotalToDate = period.TotalLocalAmount;
+                        totalLocalAmountSum += period.TotalLocalAmount;
+                        lastLineInPeriod.TotalToDate = totalLocalAmountSum;
 
                         lastLineInPeriod.CalculatedStdInterestAmount = period.CalculatedStandardInterestAmount;
                         lastLineInPeriod.StdPercentage = period.StandardInterestPercentage;
