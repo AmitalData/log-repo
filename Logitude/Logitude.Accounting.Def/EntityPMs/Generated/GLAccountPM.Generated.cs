@@ -1493,7 +1493,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string paymentTermId ;
+
+        private string cardCountryCode;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public string CardCountryCode
+        {
+
+            get
+            {
+                return cardCountryCode;
+            }
+            set
+            {
+                if (cardCountryCode != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CardCountryCode", OldValue = vatNumber, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    cardCountryCode = value;
+                }
+
+            }
+        }
+        private string paymentTermId ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -3722,6 +3746,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactName",OldValue=contactName,NewValue=value,PropertyType="string"};
                     NotifyPropertyChanged(values);
 		   contactName=value;
+                }
+
+            }
+        }
+
+
+        private DateTime? markDate;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public DateTime? MarkDate
+        {
+
+            get
+            {
+                return markDate;
+            }
+            set
+            {
+                if (markDate != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "MarkDate", OldValue = markDate, NewValue = value, PropertyType = "DateTime?" };
+                    NotifyPropertyChanged(values);
+                    markDate = value;
                 }
 
             }

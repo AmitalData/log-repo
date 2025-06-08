@@ -236,6 +236,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+	
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

@@ -131,6 +131,7 @@ import { SchedulerReportMessageTemplateService } from './Components/StimulsoftCo
 import { DefaultAndConfigurationKeyListService } from './Services/StandardLists/DefaultAndConfigurationKeyListService';
 import { DefaultAndConfigurationListService } from './Services/StandardLists/DefaultAndConfigurationListService';
 import { DefaultAndConfigurationPMService } from './Services/StandardPMs/DefaultAndConfigurationPMService';
+import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
 
 export class ModuleProviders {
 
@@ -192,7 +193,9 @@ export class ModuleProviders {
             case "EmailAlertSettingPMService": { myResult = new EmailAlertSettingPMService(); break; }
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
             case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
-            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }
+            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }     
+            case "ReportService": { myResult = new ReportService(); break; }
+
             case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }
             case "BusinessHourListService": { myResult = new BusinessHourListService(); break; }
             case "PaymentChannelListService": { myResult = new PaymentChannelListService(); break; }

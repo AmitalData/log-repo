@@ -447,6 +447,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MarkDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"

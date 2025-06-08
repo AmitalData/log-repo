@@ -962,9 +962,17 @@ namespace Logitude.Infrastructure.BL
                 Code = "JAM", 
                 Name = "Journal Approval MultiThreading", 
                 SearchFields = "JAM, Journal Approval MultiThreading", 
-                Description = "Journal Approval MultiThreading 2", 
+                Description = "Journal Approval MultiThreading", 
 			});
-			 
+
+            all.Add(new ToggleDetails()
+            {
+                SearchFields = "TXD, Tax Deduction Report by Withholding and Bank Accounts",
+                Code = "TXD",
+                Description = "Tax Deduction Report by Withholding and Bank Accounts",
+                Name = "Tax Deduction Report by Withholding and Bank Accounts",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 SearchFields = "UAD, Update GLA Aging Data using WR", 
@@ -1029,8 +1037,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AV2,Israel Invoices Do Not Activate V2",
                 Description = "חשבוניות ישראל לא להפעיל V2 ",
             });
+			all.Add(new ToggleDetails()
+			{
+				Code = "REE",
+				Name = "Report Export To Exel",
+				SearchFields = "REE,Report Export To Exel",
+				Description = "Report Export To Exel ",
+			});
 
-            return all;
+			return all;
        }
 
 	    public void MapPoco(Toggle newPoco)

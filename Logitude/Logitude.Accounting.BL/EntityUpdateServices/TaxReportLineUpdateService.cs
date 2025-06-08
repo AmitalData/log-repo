@@ -7,6 +7,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityLists;
@@ -139,6 +140,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TaxReportPM taxReportPM = GetTaxReport(taxReportLinePM.TaxReportId, taxReportLinePM.Tenant);
             List<TaxReportLinePM> taxReportLinesPM = GetTaxReportLines(taxReportLinePM.TaxReportId, taxReportLinePM.Tenant);
 
+            var index = taxReportLinesPM.FindIndex(r => r.Line == taxReportLinePM.Line && r.TaxReportId == taxReportLinePM.TaxReportId && r.Tenant == taxReportLinePM.Tenant);
+            if (index != -1)
+            {
+                taxReportLinesPM[index] = taxReportLinePM;
+            }
+
             TaxReportService.CalculateReportTotals(taxReportPM, taxReportLinesPM);
             SubmitTaxReportChanges(taxReportPM);
         }
@@ -187,7 +194,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private static JournalAdditionalDataPM MapJournalAdditionalDataPM(JournalAdditionalDataPM journalAdditionalDataPM, TaxReportLinePM taxReportLine)
         {
-            journalAdditionalDataPM.TaxReportTransmitStatusCode = taxReportLine.TransmitStatusCode;
+            journalAdditionalDataPM.TaxReportTransmitStatusCode = taxReportLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate ? TaxReportLineTransmitStatusValues.Fortransmit : taxReportLine.TransmitStatusCode;
             journalAdditionalDataPM.TaxReportId = taxReportLine.TaxReportId;
             journalAdditionalDataPM.ChangeSetOp = ChangeSetOperation.Update;
             return journalAdditionalDataPM;
@@ -526,8 +533,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (taxreportLine.Reference == null) SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
             else
             {
-                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.Reference);
-                bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.Reference);
+                if (string.IsNullOrEmpty(taxreportLine.OriginalReference)) taxreportLine.OriginalReference = taxreportLine.Reference;
+               
+                taxreportLine.Reference = RemoveSpecialChars(taxreportLine.OriginalReference);
+                bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.OriginalReference);
                 if (containsLetters)
                 {
                     SetReferenceGroupForReferencesWithPrefex(taxreportLine);
@@ -551,15 +560,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SetTaxReportLineReferenceGroup(null, taxreportLine);
             for (int i = 0; i < taxreportLine.Reference.Length; i++)
             {
-                string referenceChar = taxreportLine.Reference.Substring(i, 1);
-                bool IsReferenceHasPrefix = CheckIfReferenceHasPrefex(taxreportLine.Reference, referenceChar);
+                string referenceChar = taxreportLine.OriginalReference.Substring(i, 1);
+                bool IsReferenceHasPrefix = CheckIfReferenceHasPrefex(taxreportLine.OriginalReference, referenceChar);
                 if (IsReferenceHasPrefix)
                 {
                     SetTaxReportLineReferenceGroup(taxreportLine.ReferecneGroup + referenceChar, taxreportLine);
                 }
                 else
                 {
-                    taxreportLine.Reference = taxreportLine.Reference.Substring(i, taxreportLine.Reference.Length - i);
+                    taxreportLine.Reference = taxreportLine.OriginalReference.Substring(i, taxreportLine.OriginalReference.Length - i);
                     break;
                 }
 

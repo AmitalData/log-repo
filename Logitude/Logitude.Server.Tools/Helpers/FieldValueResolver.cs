@@ -30,6 +30,7 @@ namespace Logitude.Server.Tools.Helpers
 
                     case "DateTime":
                     case "Date":
+                    case "DateTime2":
                         {
                             if (value == "NoDate")
                             {
@@ -37,8 +38,10 @@ namespace Logitude.Server.Tools.Helpers
                             }
                             else
                             {
-                                DateTime date = Convert.ToDateTime(value);
-                                return date;
+								DateTime date = value.EndsWith("Z")
+								   ? DateTime.Parse(value, null, System.Globalization.DateTimeStyles.RoundtripKind)
+								   : Convert.ToDateTime(value);
+								return date;
                             }
                         }
 
@@ -188,6 +191,7 @@ namespace Logitude.Server.Tools.Helpers
                         }
                     case "Date":
                     case "DateTime":
+                    case "DateTime2":
                         {
 
                             DateTime? date = ConvertToDate(customField);

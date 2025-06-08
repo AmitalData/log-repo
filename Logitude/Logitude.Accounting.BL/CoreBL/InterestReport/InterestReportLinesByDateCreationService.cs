@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private InterestReportLinesByDatePM GetMappedInterestReportLinesByDatePM(InterestReportLinesByDateMappingParams interestReportLinesByDateMappingParams)
         {
-            InterestReportLinesByDatePM interestReportLinesByDatePM = new InterestReportLinesByDatePM();
+            InterestReportLinesByDatePM interestReportLinesByDatePM =  new InterestReportLinesByDatePM();
             InterestReportPM interestReportPM = interestReportLinesByDateMappingParams.InterestReportLinesByDateCreationParams.InterestReportPM;
             interestReportLinesByDatePM.InterestReportId = interestReportLinesByDateMappingParams.InterestReportId;
             interestReportLinesByDatePM.Tenant = interestReportLinesByDateMappingParams.Tenant;
@@ -194,7 +194,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             decimal exceptionalInterestAmount = 0;
             decimal accumulatedAmount = interestReportLinesByDatePM.AccumulatedAmount;
             decimal gLAccountInterestCreditLimit = interestReportPM.GLAccountInterestCreditLimit != null ? interestReportPM.GLAccountInterestCreditLimit.Value : 0;
-            if (accumulatedAmount > 0 && accumulatedAmount > gLAccountInterestCreditLimit)
+            if (accumulatedAmount > 0 && accumulatedAmount > gLAccountInterestCreditLimit && gLAccountInterestCreditLimit != 0 )
             {
                 exceptionalInterestAmount = accumulatedAmount - gLAccountInterestCreditLimit;
             }
@@ -207,7 +207,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             decimal accumulatedAmount = interestReportLinesByDatePM.AccumulatedAmount;
             if (accumulatedAmount > 0)
             {
-                if (accumulatedAmount >= gLAccountInterestCreditLimit)
+                if (accumulatedAmount >= gLAccountInterestCreditLimit && gLAccountInterestCreditLimit != 0)
                 {
                     standardInterestAmount = gLAccountInterestCreditLimit;
                 }
@@ -294,7 +294,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     }
                 case "exceptional":
                     {
-                        ThrowValidationError("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
+                        ThrowValidationError("InterestReport.O.NoExceptionalBasePeriod", tenant, true);
                         break;
                         //string message = TextCodesTranslator.TranslateText("InterestReport.O.NoExceptionalBasePeriod&quot", tenant, true);
                         //throw new ApplicationException(message);

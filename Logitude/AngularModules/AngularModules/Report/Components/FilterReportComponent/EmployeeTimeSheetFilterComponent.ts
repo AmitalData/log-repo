@@ -8,6 +8,7 @@ import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { UserListService } from '../../../Common/Services/StandardLists/UserListService';
 import { UserList } from '../../../Common/EntityLists/UserList';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({    
     selector: 'EmployeeTimeSheetFilterComponent',
@@ -29,6 +30,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "TMEmployeeTime";
     private CurrentSession = SessionLocator.SelectedSession;
+    public EmployeesSelected: string = null;
     constructor() {
         super();
         this.DateOfWorkMinutes = 525;
@@ -101,7 +103,100 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
         return date;
     }
 
-    RunReport() {
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+
+        if (this.IsSchedulerReport) {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+        }
+        else {
+            this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+        }
+
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) {
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue);
+                    break;
+                case "Employees":
+                    this.EmployeesSelected = queryFilterItem.FieldValue;
+                    break;
+                case "TimeRequired":
+                    this.DateOfWorkMinutes = queryFilterItem.FieldValue;
+                    break;
+               
+
+            }
+
+        }
+    }
+    GetQueryFilterItems(){
+        var myEmployees: string = "";
+
+        if (this.UsersComboList.filter(i => i.Checked)[0] == null) {
+            this.UsersComboList.forEach((i) => {
+                myEmployees += i.Id + ",";
+            });
+        }
+        else {
+            this.UsersComboList.forEach((i) => {
+                if (i.Checked) {
+                    myEmployees += i.Id + ",";
+                }
+            });
+        }
+    
+
+        this.queryFilterItems = new Array<QueryFilterItem>();
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "FromDate";
+        this.queryFilterItem.FieldValue = this.FromDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "ToDate";
+        this.queryFilterItem.FieldValue = this.ToDate;
+        this.queryFilterItem.FieldDataType = "Date";
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "Employees";
+        this.queryFilterItem.FieldValue = myEmployees;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+
+        this.queryFilterItem = new QueryFilterItem();
+        this.queryFilterItem.DisplayInList = false;
+        this.queryFilterItem.FieldName = "TimeRequired";
+        this.TimeRequired = this.DateOfWorkMinutes;
+        this.queryFilterItem.FieldValue = this.TimeRequired;
+        this.queryFilterItem.Operator = "Equals";
+        this.queryFilterItems.push(this.queryFilterItem);
+        return this.queryFilterItems;
+    }
+    ValidateSelectedFilters(){
         this.ValidationErrorsList = [];
         if (this.FromDate == null) {
             this.ValidationErrorsList.push("From Date is required");
@@ -115,59 +210,15 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
             this.ValidationErrorsList.push("From Date cannot be greater than To Date");
         }
 
-
-        if (this.ValidationErrorsList.length == 0) {
-            var myEmployees: string = "";
-
-            if (this.UsersComboList.filter(i => i.Checked)[0] == null) {
-                this.UsersComboList.forEach((i) => {
-                    myEmployees += i.Id + ",";
-                });
-            }
-            else {
-                this.UsersComboList.forEach((i) => {
-                    if (i.Checked) {
-                        myEmployees += i.Id + ",";
-                    }
-                });
-            }
-        
-
-            this.queryFilterItems = new Array<QueryFilterItem>();
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "FromDate";
-            this.queryFilterItem.FieldValue = this.FromDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "ToDate";
-            this.queryFilterItem.FieldValue = this.ToDate;
-            this.queryFilterItem.FieldDataType = "Date";
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "Employees";
-            this.queryFilterItem.FieldValue = myEmployees;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "TimeRequired";
-            this.TimeRequired = this.DateOfWorkMinutes;
-            this.queryFilterItem.FieldValue = this.TimeRequired;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
-
+        return this.ValidationErrorsList.length == 0;
+    }
+    RunReport() {
+       
+        if (this.ValidateSelectedFilters()) {
+          
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-            this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+            this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
             this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
             this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -191,7 +242,7 @@ export class EmployeeTimeSheetFilterComponent extends BaseComponent {
 
             usesrList.forEach((item) => {
                 var isLoggedUser = false;
-                if (item.Id == SessionLocator.LoggedUserId) {
+                if (item.Id == SessionLocator.LoggedUserId || this.EmployeesSelected?.indexOf(item.Id) > -1) {
                     isLoggedUser = true;
                 }
                 this.UsersComboList.push(new UserItemClass(item, isLoggedUser));

@@ -205,6 +205,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
+            if (!(result.Split(',').Contains(entityPM.ForeignAmountCredit.ToString())))
+              {
+                    result = string.IsNullOrEmpty(result) ? entityPM.ForeignAmountCredit.ToString() : result + "," + entityPM.ForeignAmountCredit.ToString();
+              }
+          
+            if (!(result.Split(',').Contains(entityPM.ForeignAmountDebit.ToString())))
+                {
+                    result = string.IsNullOrEmpty(result) ? entityPM.ForeignAmountDebit.ToString() : result + "," + entityPM.ForeignAmountDebit.ToString();
+                }
+          
+                if (!(result.Split(',').Contains(entityPM.LocalAmountCredit.ToString())))
+                {
+                    result = string.IsNullOrEmpty(result) ? entityPM.LocalAmountCredit.ToString() : result + "," + entityPM.LocalAmountCredit.ToString();
+                }
+            
+                if (!(result.Split(',').Contains(entityPM.LocalAmountDebit.ToString())))
+                {
+                    result = string.IsNullOrEmpty(result) ? entityPM.LocalAmountDebit.ToString() : result + "," + entityPM.LocalAmountDebit.ToString();
+                }
+        
 
 
 

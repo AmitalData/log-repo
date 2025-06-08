@@ -35,6 +35,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string AccountingPaymentMethodId { get; set; }
 
         public string VendorBankAddress { get; set; }
+        public string VendorCountry { get; set; }
+
         public string VendorBankName { get; set; }
         public string VendorBankAccountNumber { get; set; }
         public string VendorSwift { get; set; }

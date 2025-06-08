@@ -200,35 +200,85 @@ export class CustomsCollateralFilterComponent extends BaseComponent {
         this.ValidationErrorsList = [];
 
 
-        var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        
-            if (this.FromDate == null) {
-                var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
-                this.ValidationErrorsList.push(FromDateValidation);
-            }
-
-            if (this.ToDate == null) {
-                var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
-                this.ValidationErrorsList.push(ToDateValidation);
-            }
-
-            if (this.FromDate != null && this.ToDate != null) {
-                var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
-                var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
-                if (FromDate > ToDate) {
-                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
-                }
-            
-        }
-        if (this.ValidationErrorsList.length == 0) {
+       
+        if (this.ValidateSelectedFilters()) {
 
             this.BuildReport();
 
         }
     }
+    ValidateSelectedFilters(){
+        var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        
+        if (this.FromDate == null) {
+            var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
+            this.ValidationErrorsList.push(FromDateValidation);
+        }
+
+        if (this.ToDate == null) {
+            var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
+            this.ValidationErrorsList.push(ToDateValidation);
+        }
+
+        if (this.FromDate != null && this.ToDate != null) {
+            var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
+            var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
+            if (FromDate > ToDate) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            }
+        return this.ValidationErrorsList.length == 0;
+    }
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CreateDate":{
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    this.ToDate = new Date(queryFilterItem.FieldValue2);
+                    break;
+                }
+                   
+                case "TransportModeId":
+                    this.SelectedTransportModeId = queryFilterItem.FieldValue;
+                break;
+                case "Customer":
+                    this.CustomerId = queryFilterItem.FieldValue;
+                     break;
+                 case "ImportExport":
+                    this.ImportExport = queryFilterItem.FieldValue;
+                    break;
+              
+              
+                                 
+            }
+   
+    
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+        SetRunReportTitle() {
+      
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
 
     BuildReport() {
-        this.InitilaizeFilter();
+        this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -242,26 +292,25 @@ export class CustomsCollateralFilterComponent extends BaseComponent {
         this.ReportsPreview.GenerateReport(this.reportFliter, true);
     }
 
-    InitilaizeFilter() {
+    GetQueryFilterItems() {
        
         this.queryFilterItems = new Array<QueryFilterItem>();
-        //-----------------------------------------------------------------------------1
+        
         this.queryFilterItems.push(this.GetNewQueryFilterItem("CreateDate", this.FromDate, this.ToDate, "Date", "Between"));
         
-        //-----------------------------------------------------------------------------2
-
+        
         if(this.SelectedTransportModeId != 'All') {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("TransportModeId", this.SelectedTransportModeId, null, "string"));
         }
-        //-----------------------------------------------------------------------------3
-        if(AppTool.IsNullOrEmpty(this.ImportExport != 'All')) {
+        
+        if(this.ImportExport != 'All') {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("ImportExport", this.ImportExport, null, "string"));
         }
         
         if(!AppTool.IsNullOrEmpty(this.CustomerId)) {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("Customer", this.CustomerId, null, "string"));
         }
-        
+        return this.queryFilterItems;
         
     } 
 

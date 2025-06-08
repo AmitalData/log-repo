@@ -21,6 +21,8 @@ using Simplog.Data.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.Resolvers;
+using Logitude.BL.CommonDataModel.EntityLists;
+using System.Reflection;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -38,6 +40,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void OnUpdating(LedgerTransactionPM entityPM)
         {
+
             if (entityPM.IsReconciled == null)
             {
                 entityPM.IsReconciled = false;
@@ -204,7 +207,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-
+        
 
         internal void UpdateBankAccount(LedgerTransactionPM entityPM)
         {

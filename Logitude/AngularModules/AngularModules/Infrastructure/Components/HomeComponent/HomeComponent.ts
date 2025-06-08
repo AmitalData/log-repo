@@ -1,5 +1,5 @@
 declare var window: any;
-import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy} from '@angular/core';
+import { HostListener, Component, ViewContainerRef, ViewChild, ViewChildren, QueryList, Output, EventEmitter, OnDestroy, ElementRef} from '@angular/core';
 import {AppTool} from '../../Tools';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {SessionLocator} from '../../Utilities/SessionLocator';
@@ -23,15 +23,31 @@ import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BluesnapContractPMService } from '../../Services/StandardPMs/BluesnapContractPMService';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
-import { interval } from 'rxjs';
-import { timeInterval } from 'rxjs/operators';
+import { BehaviorSubject, interval, Subscription } from 'rxjs';
+import { takeWhile,timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { RatesTableExtendedService } from 'Infrastructure/Services/ExtendedPMs/RatesTableExtendedService';
+import { RelatedDocumentViewModel } from 'CustomsModules/CustomsDocuments/Components/RelatedDocumentViewModel';
+import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
+import { ReportExecutionLogPM } from 'Common/EntityPMs/ReportExecutionLogPM';
+import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
+import { transform } from 'cypress/types/lodash';
+import { parseString } from 'xml2js';
+import { ReportsWorkspaceComponent } from 'TimeManagement/Components/Workspaces/ReportsWorkspaceComponent';
+import { ReportPMService } from 'Common/Services/StandardPMs/ReportPMService';
+import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { ReportPM } from 'Common/EntityPMs/ReportPM';
+import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
+import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
+import { ReportMenuComponent } from 'Report/Components/ReportMenuComponent';
 
 @Component({
     templateUrl: './HomeComponent.html',
+    providers: [ReportService]
+
 })
 
 export class HomeComponent implements OnDestroy{
@@ -55,7 +71,15 @@ export class HomeComponent implements OnDestroy{
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
     public AccountingActivated=false;
-    constructor() {
+
+    isReportPanelVisible: boolean = false;
+    currentReportId: string = "";
+    private reportPanelTimeout: any;
+    public isPinned: boolean = false;
+    countDoneRepors: number =0;
+
+
+    constructor(private reportService: ReportService) {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
         SessionLocator.AllSessions = new Array<SessionComponent>();
@@ -77,7 +101,7 @@ export class HomeComponent implements OnDestroy{
             this.InitializeAppHeader();
             this.CheckAmitalBrowserInUse();
         }
-
+        
         if (!SessionInfo.KeepUserLoggedIn) {
             // sessionTimeout
             var sessionTimeout: DetectUserInActivity = new DetectUserInActivity();
@@ -112,10 +136,11 @@ export class HomeComponent implements OnDestroy{
     public SystemFontFamily: string = "'Lucida Sans Unicode', 'Lucida Grande', sans-serif";
     table: any;
     InitializeComponent() {
+        
         this.InitializeBluesnapComponents();
         this.InitializeChargifyComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
-
+        this.InitializeReport();
         this.SetIsINTTRAPackage();
         var isNewSignupTenant = false;
 
@@ -151,7 +176,13 @@ export class HomeComponent implements OnDestroy{
     InitializeChargifyComponents() {
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
-
+    InitializeReport(){
+        this.reportService.LoadReports();
+        this.reportService.reportsCount$.subscribe(count => {
+            this.countDoneRepors = count;
+          });
+      
+    }
     USDLastUpdate=null;
     GetCurrencyRateLastUpdate(){
         var myService: RatesTableExtendedService = new RatesTableExtendedService();
@@ -760,7 +791,7 @@ export class HomeComponent implements OnDestroy{
         );
 
     }
-
+    ReportMenuComponent:ReportMenuComponent
     // Notification Bell
     badjCount: number;
     IsBadjCountVisibile: boolean;
@@ -779,7 +810,50 @@ export class HomeComponent implements OnDestroy{
             this.showLockIndicator = newValue;
         }
     }
+    public HasFeatureReport:boolean= FeatureLocator.HasFeaturePermession("Report", "Module");
 
+    get IsReportPanelVisible() { return this.isReportPanelVisible; }
+    set IsReportPanelVisible(newValue: boolean) {
+       
+       
+        this.isReportPanelVisible = newValue;
+        
+        if(!newValue){
+            this.isPinned = false;
+
+        }
+    }
+    get CurrentReportId() { return this.currentReportId; }
+    set CurrentReportId(newValue: string) {
+        
+        if (this.currentReportId != newValue) {
+            this.currentReportId = newValue;
+            this.reportService.LoadReports()
+           
+        }
+    }
+    IsReportPanelVisibleChanged() {
+        this.IsReportPanelVisible =!this.isReportPanelVisible;
+        this.CurrentReportId = "";
+    }
+    TogglePinReportPanel(event: any) {
+       
+        if (event==true) {
+            this.isPinned = true;
+        } else {
+            this.isPinned = false;
+        }
+    }
+    
+    keepReportPanelOpen() {
+        this.IsReportPanelVisible = true;
+    }
+
+    closeReportPanel() {
+        if(!this.isPinned)
+           this.IsReportPanelVisible = false;
+    }
+    
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();
     GetBadjCount() {
         this.notificationExtendedListService.GetNotificationsBadjCount(SessionLocator.LoggedUserId).subscribe((response:any) => {
@@ -2023,8 +2097,8 @@ export class HomeComponent implements OnDestroy{
             }
         });
     }
+ 
 }
-
 export class SessionTabItem {
     public Index: number;
     public IsSelected: boolean = false;
@@ -2148,3 +2222,4 @@ export class TenantUserDataClass {
 
 
 }
+

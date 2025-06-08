@@ -136,7 +136,9 @@ namespace Logitude.Accounting.Data.EntityLists
        public string LastActivityByUserName  { get; set; }
        [DataMember]
        public string VatNumber  { get; set; }
-       [DataMember]
+        [DataMember]
+        public string CardCountryCode { get; set; }
+        [DataMember]
        public string PaymentTermId  { get; set; }
        [DataMember]
        public string SalesmanUserId  { get; set; }
@@ -345,6 +347,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ContactEmail  { get; set; }
        [DataMember]
        public string ContactPhone  { get; set; }
+        [DataMember]
+        public DateTime? MarkDate { get; set; }
     }
 
 }

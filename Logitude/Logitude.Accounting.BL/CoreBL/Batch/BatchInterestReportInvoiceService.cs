@@ -28,6 +28,7 @@ using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Models;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -97,8 +98,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             args.CloseWithoutInvoice = interestReportArguments.CloseWithoutInvoice;
             if (interestReportArguments.AllSelected)
             {
-                List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
-                List<InterestReportPM> interestReportsFillteredByCategory = interestReportQueryService.GetNotInvoicedInterestReportsByCategory(interestReports, interestReportArguments);
+                IQueryable<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
+                IQueryable<InterestReportPM> interestReportsFillteredByCategory = interestReportQueryService.GetNotInvoicedInterestReportsByCategory(interestReports, interestReportArguments);
                 List<InterestReportLinesByDatePM> LinesByDatesForSelectedReports = interestReportQueryService.GetFirstAndLastInterestReportLineByDatesForInterestReports(interestReportsFillteredByCategory.Select(s => s.Id).ToList()).ToList();
 
                 foreach (InterestReportPM report in interestReportsFillteredByCategory)
@@ -144,12 +145,14 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 interestReport.InterestReportLinesByDates = LinesByDatesForSelectedReport;
                 CreateInvoiceForInterestReport(interestReportArgs, interestReport);
             }
-
-            catch (Exception e)
-            {
+            catch (BusinessErrorException e) {
                 BatchTaskExecution.ErrorLog += "\n" + "Report # " + interestReport.ReportNumber + " " + e.Message;
-                UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "9", null, e.Message);
             }
+             catch (Exception e)
+            {
+                    BatchTaskExecution.ErrorLog += "\n" + "Report # " + interestReport.ReportNumber + " " + e.Message;
+                    UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "9", null, e.Message);
+               }
 
 
         }
@@ -188,7 +191,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*2*) interestReport.Id=" + interestReport.Id);
-                    throw;
+                    throw ex;
                 }
                 if (!String.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
                 {

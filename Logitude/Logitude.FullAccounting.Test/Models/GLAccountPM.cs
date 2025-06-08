@@ -74,6 +74,8 @@ namespace Logitude.FullAccounting.Test.Models
         public string CustomerCode { get; set; }
         public string ParentAccountByCurrency { get; set; }
         public string VatNumber { get; set; }
+        public string CardCountryCode { get; set; }
+
         public string PaymentTermId { get; set; }
         public string CollectorId { get; set; }
         public string SalesmanUserId { get; set; }
@@ -113,6 +115,8 @@ namespace Logitude.FullAccounting.Test.Models
         public string CollectorName { get; set; }
         public string SplitCurrencyAccount { get; set; }
         public string ParentName { get; set; }
+        public DateTime? MarkDate { get; set; }
+
 
     }
 

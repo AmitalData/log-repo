@@ -48,6 +48,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Azure.Core, Version=1.44.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Core.1.44.1\lib\net472\Azure.Core.dll</HintPath>
@@ -305,17 +338,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\UnifreightIIGResources.1.0.6\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -341,6 +374,7 @@
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
+    <Compile Include="CloseTables\Codes\EventStatuses.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
@@ -428,6 +462,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
+    <Compile Include="CloseTables\Codes\UserCodes.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsShipStruct.Generated.cs" />
@@ -598,6 +634,7 @@
     <Compile Include="EntityDataMappings\CB_CustomsItemLinkageDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_LevyConditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_LevyExclusionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CB_PreferenceDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_PropertiesDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CarWeightDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_QuotaComputedDataDataMapping.cs" />
@@ -872,6 +909,7 @@
     <Compile Include="EntityDataMappings\Generated\CB_CustomsItemLinkageDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_LevyConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_LevyExclusionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CB_PreferenceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_PropertiesDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_QuotaComputedDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_QuotaDataMapping.Generated.cs" />
@@ -1511,8 +1549,10 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CB_PreferenceQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\CB_RuleDetailsHistoryQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginConnectionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
@@ -2147,6 +2187,8 @@
     <Compile Include="EntityUpdateServices\CertificateOfOriginInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CB_PreferenceUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CB_PreferenceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GovernmentProcTypeTenantUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarEngineVolumeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarWeightUpdateService.Generated.cs" />

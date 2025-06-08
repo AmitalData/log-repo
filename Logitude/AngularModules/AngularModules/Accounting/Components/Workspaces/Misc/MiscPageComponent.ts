@@ -83,6 +83,7 @@ export class MiscPageComponent implements AfterViewInit {
             var filters = new ApiQueryFilters();
 
             var tableName = "";
+            var NewButtonLabel = null;
             var listArgs = new ListComponentArgs();
 
             switch (myQueryCode) {
@@ -102,8 +103,9 @@ export class MiscPageComponent implements AfterViewInit {
                     }
                 case "ALLTaxDeductionReports": {
 
-                    displayTitle = TextCodeTranslator.Translate("TaxDeductionReport");
+                    displayTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
                     tableName = "TaxDeductionReport";
+                    NewButtonLabel = TextCodeTranslator.Translate("General.O.NewReport");
                     break;
 
                 }
@@ -139,6 +141,8 @@ export class MiscPageComponent implements AfterViewInit {
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = TextCodeTranslator.Translate("Accounting.General.O.Misc");
             listArgs.IgnoreSelectedPerspective = true;
+            listArgs.NewButtonLabel = NewButtonLabel;
+
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {

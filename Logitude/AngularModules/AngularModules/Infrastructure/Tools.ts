@@ -1071,7 +1071,7 @@ export class AppTool {
             }
 
             case "General.MH.Reports": {
-                myResult = "Table";
+                myResult = "Report";
                 break;
             }
 

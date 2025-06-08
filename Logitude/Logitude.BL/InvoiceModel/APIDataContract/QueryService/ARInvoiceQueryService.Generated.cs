@@ -23,6 +23,8 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel;
+using Logitude.Server.Tools;
+using Simplog.Data.CommonDataModel.Repositories;
 
  namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 { 
@@ -258,18 +260,28 @@ using Simplog.Data.InvoiceModel;
 						} 
 
 					}
-			
-					
-					CardQueryService BillToCardService = new CardQueryService(Tenant);
+
+					string paymentTermsId = "";
+					PaymentTermPM paymentTermPM = null;
+
+                    CardQueryService BillToCardService = new CardQueryService(Tenant);
 					if(MyEntity.BillTo != null)
 					{
 						var myBillToPM = BillToCardService.CardCustomDataMappingAndValidatin(MyEntity.BillTo,Tenant);
 						
 						if(myBillToPM != null)
-						{ 
+						{
 
-						 
-							if(!IsUpdate)
+							paymentTermsId = myBillToPM.PaymentTermId;
+							if (paymentTermsId != null && !IsUpdate)
+							{
+								PaymentTermQuery paymentTermQuery = new PaymentTermQuery(Tenant);
+								paymentTermPM = paymentTermQuery.GetSinglePM(paymentTermsId, Tenant);
+
+                            }
+
+
+                            if (!IsUpdate)
 							{								
 								temp.BillToId = myBillToPM.Id;
 						  
@@ -279,8 +291,7 @@ using Simplog.Data.InvoiceModel;
 						} 
 
 					}
-			
-					
+
                     
 					if(!IsUpdate)
 					{							
@@ -458,11 +469,12 @@ using Simplog.Data.InvoiceModel;
 					{							
 						temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
 
-										}  
+										}
 
-					 
 
-					if(MyEntity.ARInvoiceLines != null && MyEntity.ARInvoiceLines.Count > 0)
+
+
+					if (MyEntity.ARInvoiceLines != null && MyEntity.ARInvoiceLines.Count > 0)
 					{
 						ARInvoiceLineQueryService ARInvoiceLineService10 = new ARInvoiceLineQueryService(Tenant);
 						  
@@ -476,13 +488,23 @@ using Simplog.Data.InvoiceModel;
 						
 					}
 
-								 
-                    
-					if(!IsUpdate)
+
+
+					if (!IsUpdate)
 					{							
 						temp.DueDate = MyEntity.DueDate;
+						if (temp.DueDate == null)
+						{
 
-										}  
+							if (paymentTermPM != null && !IsUpdate)
+							{
+								DateTime? invoiceDueDate = GetExpectedDueDate(temp, paymentTermPM);
+								temp.DueDate = invoiceDueDate;
+							}
+							
+						}
+
+                    }  
 
 					
                     
@@ -699,7 +721,67 @@ using Simplog.Data.InvoiceModel;
             } 
         }
 
+        private DateTime? GetExpectedDueDate(ARInvoicePM aRInvoicePM, PaymentTermPM myPaymentTerm)
+        {
+            DateTime? dueDate = null;
 
-						   
-   }
+
+
+			if (myPaymentTerm != null)
+			{
+				if (myPaymentTerm.IsManuallySet)
+				{
+					dueDate = null;
+				}
+
+				else
+				{
+					DateTime? myComparativeDate = null;
+
+					if (aRInvoicePM.IsConsolidationInvoice)
+					{
+						myComparativeDate = aRInvoicePM.InvoiceDate;
+					}
+
+					else
+					{
+						if (myPaymentTerm.FromDateTypeCode == "SHI")
+						{
+							myComparativeDate = aRInvoicePM.OperationalDate;
+
+							if (myComparativeDate == null)
+							{
+								myComparativeDate = aRInvoicePM.InvoiceDate;
+							}
+						}
+
+						else
+						{
+							myComparativeDate = aRInvoicePM.InvoiceDate;
+						}
+					}
+
+					if (myComparativeDate != null)
+					{
+						if (myPaymentTerm.EndOfMonth)
+						{
+							int year = myComparativeDate.Value.Year;
+							int month = myComparativeDate.Value.Month;
+							month += myPaymentTerm.NumberOfMonths;
+							int daysInMonth = DateTime.DaysInMonth(year, month);
+
+							myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
+						}
+
+						dueDate = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));
+					}
+				}
+			}
+            
+
+            return dueDate;
+        }
+
+
+    }
 }

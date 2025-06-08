@@ -90,8 +90,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     {
                         SqlCommand cmd = new SqlCommand("[dbo].[Queue_SetStatus]", cn);
                         cmd.CommandType = CommandType.StoredProcedure;
-                        SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
-                        SqlParameter statusPar = new SqlParameter("@Statud", SqlDbType.Int);
+                        SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
+                        SqlParameter statusPar = new SqlParameter("@V_Statud", SqlDbType.Int);
 
 
                         messageIdPar.Direction = ParameterDirection.Input;
@@ -116,5 +116,6 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             }
 
         }
+        
     }
 }

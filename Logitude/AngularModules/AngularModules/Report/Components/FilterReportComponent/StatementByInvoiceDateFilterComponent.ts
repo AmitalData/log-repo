@@ -70,7 +70,7 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
         return queryFilterItems;
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
         this.RunReportTitle = "Preview";
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
@@ -83,6 +83,9 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
         if (queryFilterItem) {
             if (queryFilterItem.FieldName == "CustomerId") {
                 this.CustomerId = queryFilterItem.FieldValue;
+            }
+            if (queryFilterItem.FieldName == "PartnerId") {
+                this.PartnerId = queryFilterItem.FieldValue;
             }
         }
     }

@@ -375,6 +375,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='IncotermName' Type='varchar' Size='40'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='LockerAddress' Type='varchar' Size='1000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='LockerCity' Type='varchar' Size='1000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='LockerName' Type='nvarchar' Size='1000'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
+"  <Column Name='LockerCode' Type='varchar' Size='100'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "  <Relation ForeignKeyColumn='EntityType' ReferencedTable='CargoTrackingHeaderEntityTypes' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Relation ForeignKeyColumn='CurrentMilestoneCode' ReferencedTable='CargoTrackingMilestones' ReferencedColumn='Code' ReferencedTableSchema='dbo' />"+
 "  <Index Columns='EntityId' />"+

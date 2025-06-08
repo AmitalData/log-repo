@@ -483,6 +483,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
+        public CardPM GetSinglePMByCodePartnerTypes(string code, int tenant, List<string> partnerTypes = null)
+        {
+            var cardId = repository.GetCardIdByCodePartnerTypes(code, tenant, partnerTypes);
+            return GetSinglePM(cardId, tenant);
+
+        }
+
         public CardPM GetSinglePMByExternalId(string externalId, int tenant)
         {
             var cardId = repository.GetCardIdByExternalId(externalId, tenant);
@@ -1519,6 +1526,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == false ? "Shipper/Consignee" : card.PartnerType.Name),
                                                 CityName = card.CityName,
                                                  CountryCode = card.CountryCode,
+                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
+                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                 PartnerTypeId = card.PartnerTypeId,
                                                 CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,

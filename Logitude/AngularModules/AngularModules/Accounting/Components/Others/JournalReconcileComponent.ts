@@ -8,7 +8,7 @@ import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
@@ -19,6 +19,8 @@ import {FullAccountingSettingList} from '../../EntityLists/FullAccountingSetting
 import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import { RatesTableExtendedListService } from 'Infrastructure/Services/ExtendedLists/RatesTableExtendedListService';
+import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 @Component({
 
@@ -74,8 +76,6 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         });
 
         this.GLAccountsFilterItems = new ApiQueryFilters();
-      //  this.GLAccountsFilterItems.addAdditionalFilter("AccountTypeCode", "5,4", null, null,
-      //      "Exclude", false, false, false, "string", false, true);
         this.GLAccountsFilterItems.addAdditionalFilter("IsControlAccount", false, null, null,
             "Equals", false, false, false, "string", false, true);
 
@@ -95,6 +95,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     set GLAccountId(value: string) {
         if (this.glAcccountId != value) {
             this.glAcccountId = value;
+            
         }
     }
 
@@ -138,6 +139,22 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
 
     //#region Properties
+    rate: number = null;
+    get Rate() { return this.rate; }
+    set Rate(value: number) {    
+        if (this.rate != value) {
+            this.rate = value != null ? value : null;
+    
+            if (this.rate && this.rate != 0) {
+                this.TotalLocalDifference = this.TotalDifference * Number(this.rate);
+            } else { 
+                this.TotalLocalDifference = null;
+            }
+        }
+    }
+ 
+
+    
     reference1: string="";
     get Reference1() { return this.reference1; }
     set Reference1(value: string) {
@@ -205,8 +222,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     {
         let errorMessage = '';
 
-        for (let i = 0; i < this._SelectedLines.Length; i++) {
-            const selectedTransaction = this._SelectedLines.Collection[i];
+        for (let i = 0; i < this.SelectedLines.Length; i++) {
+            const selectedTransaction = this.SelectedLines.Collection[i];
             if (this.checkClosedMonth(new Date(selectedTransaction.AccountingDate))) {
 
                 let lineErrorMessage = TextCodeTranslator.Translate('Journal.RE.ReconcilePeriodClosed');
@@ -253,7 +270,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             if (accountingPeriod) {
                 const month = value.getMonth() + 1;
 
-                if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+                if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { 
                     return false;
                 } else {
                     return true;
@@ -265,21 +282,17 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     set AccountingDate(value: Date) {
         if (this._AccountingDate != value) {
             if (value != null) {
-                // Get Accounting Period by year
                 var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
 
                 if (accountingPeriod) {
 
                     var month = value.getMonth() + 1;
 
-                    this.ValidationErrorsList = []; // empty errors list
-                    // Valid Month => (ClosedMonth < month <= OpenMonth)
-                    if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+                    this.ValidationErrorsList = []; 
+                    if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { 
+                        this.ValidationErrorsList = []; 
 
-                        this.ValidationErrorsList = []; // empty errors list
-
-                    } else { // invalid (closed month)
-                        // push the error to errors list
+                    } else { 
                         this.ValidationErrorsList.push("Closed Month!");
                         this._AccountingDate = value;
                         return;
@@ -290,9 +303,22 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
             if (!AppTool.IsNullOrEmpty(this._AccountingDate)) {
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
             } else {
-                //this.AccountingDate = null;
                 this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
             }
+            if(this.IsMultiWithReconcileMethodCodeEqualOne){
+                var ratesTableExtendedListService = new RatesTableExtendedListService();
+                ratesTableExtendedListService.getExchageRateByValueAndDate(this.defaultCurrencyId, this.SelectedLines.Collection[0].CurrencyId, this._AccountingDate).subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse != null && !myResponse.HasError && myResponse.Result != undefined && myResponse.Result != null) {
+                        var rate = myResponse.Result;
+                        this.Rate = rate.Rate;
+                        
+                    }
+                    else
+                        this.Rate = null;
+                }); 
+            }
+           
+
         }
 
 
@@ -323,7 +349,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     GetAccountingPeriods() {
         const filters = new ApiQueryFilters(true);
         filters.addAdditionalFilter('PeriodTypeCode', '1', null, null,
-            'Equals', false, false, false, 'string'); // 1-Regular
+            'Equals', false, false, false, 'string');
 
         this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
@@ -339,21 +365,31 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         return new Date(year, month + 1, 0).getDate();
     }
 
-    _SelectedLines: ObservableCollection;//SelectedLines[];
-    _GLAccountPMId: string;
-
+    SelectedLines: ObservableCollection;
+    SourceGLAccountPM: GLAccountPM;
     TotalDifference: any;
     TotalCredit: any;
     TotalDebit: any;
+    IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
+    TotalLocalDifference: number = null;
+
     SetWindowArgs(winArgs) {
-        this._SelectedLines = winArgs.SelectedLines;
-        this._GLAccountPMId = winArgs.GLAccountPMId;
+        this.SelectedLines = winArgs.SelectedLines;
+        this.SourceGLAccountPM = winArgs.SourceGLAccountPM;
         this.TotalDifference = winArgs.TotalDifference;
         this.TotalCredit = winArgs.TotalCredit;
         this.TotalDebit = winArgs.TotalDebit;
+        this.IsMultiWithReconcileMethodCodeEqualOne = winArgs.IsMultiWithReconcileMethodCodeEqualOne && this.SelectedLines.Collection[0].CurrencyId != this.defaultCurrencyId;
     }
-    FillErrors(isSplitJournal: boolean) {
-
+    async FillErrors(isSplitJournal: boolean) {
+        this.ValidationErrorsList = [];
+        if (this.SourceGLAccountPM !== null  && this.glAccount !== null && this.glAccount.ChartOfAccountsTypeCode === "5" && this.SourceGLAccountPM?.ChartOfAccountsTypeCode === "4") {
+            const noAddressToVendor=TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
+            var vendorValidator: VendorValidator = new VendorValidator();
+            if (!await vendorValidator.IsVendorCountryValid(this.SourceGLAccountPM.Id,this.SourceGLAccountPM.CardCountryCode)) {
+                this.ValidationErrorsList.push(noAddressToVendor);
+            }
+        }
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
             this.ValidationErrorsList.push('GLAccount is Required');
         }
@@ -363,8 +399,8 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
     }
 
     BuildReconciliationLines(myReconciliationLines: ReconciliationLinePM[]): void {
-        for (let i = 0; i < this._SelectedLines.Length; i++) {
-            const selectedTransaction = this._SelectedLines.Collection[i];
+        for (let i = 0; i < this.SelectedLines.Length; i++) {
+            const selectedTransaction = this.SelectedLines.Collection[i];
             const newLine: any = {};
             newLine.ChangeSetOp = '1';
             newLine.ReconciliationId = 'new';
@@ -385,9 +421,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         }
     }
 
-    OkButtonClicked(isSplitJournal: boolean) {
+    async OkButtonClicked(isSplitJournal: boolean) {
 
-        this.FillErrors(isSplitJournal);
+        await this.FillErrors(isSplitJournal);
 
         if (this.ValidationErrorsList.length > 0) {
             return;
@@ -421,7 +457,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         this._ReconciliationExtendedPMService.CreateSplitJournalReconcile(
             myReconciliationLines,
-            this._GLAccountPMId, this.GLAccount.Id,
+            this.SourceGLAccountPM?.Id, this.GLAccount.Id,
             this.AccountingDate ? this.AccountingDate.toUTCString() : null,
             this.DueDate ? this.DueDate.toUTCString() : null,
             this.RefDate ? this.RefDate.toUTCString() : null,
@@ -450,7 +486,7 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
 
         this._ReconciliationExtendedPMService.CreateJournalReconcile(
             myReconciliationLines,
-            this._GLAccountPMId, this.GLAccount.Id, this.AccountingDate.toUTCString(),
+            this.SourceGLAccountPM?.Id, this.GLAccount.Id, this.AccountingDate.toUTCString(),
             this.DueDate ? this.DueDate.toUTCString() : null, this.RefDate ? this.RefDate.toUTCString() : null,
             this.reference1, this.reference2, this.reference3, this.Notes)
             .subscribe(
@@ -494,9 +530,9 @@ export class JournalReconcileComponent extends BaseComponent implements OnInit {
         var item = document.getElementById("adjustbutton");
         var itemRect = item.getBoundingClientRect();
 
-        let DDLHeight =22.5;//    height: 22px; * 3 +30
-        let Extra = 22 + 1 + 1; //    height: 22px; +1 UP +1 DOWN
-        if (itemRect.bottom + DDLHeight < this.getScreenHeight()) {//this.PaintTop = true
+        let DDLHeight =22.5;
+        let Extra = 22 + 1 + 1; 
+        if (itemRect.bottom + DDLHeight < this.getScreenHeight()) {
             document.getElementById("dropdowmenu").style.top = (itemRect.bottom - DDLHeight - Extra) + 'px';
         }
 
