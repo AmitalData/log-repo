@@ -65,7 +65,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("Notes")]
 	    public string Notes { get; set; }
         [Column("AccountingDate")]
-        public DateTime AccountingDate { get; set; }
+        public DateTime? AccountingDate { get; set; }
         [ForeignKey("Journal")]
         [Column("JournalId")]
         public string JournalId { get; set; }
