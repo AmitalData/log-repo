@@ -318,7 +318,6 @@ namespace CommunicationWorkerRole
 
 
                     }
-                    ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(tenant);
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                   
                     if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)

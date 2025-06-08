@@ -186,12 +186,10 @@ namespace CommunicationWorkerRole
             switch (invoiceApiCommunicationLog.Step)
             {
                 case InvoiceApiStepEnum.OpenInvoiceApiSession:
-                    OpenInvoiceApiSession();
-                    break;
-              
                 case InvoiceApiStepEnum.GetInvoiceApiInvoice:
-                    GetInvoice();
+                   OpenInvoiceApiSession();
                     break;
+                            
                 case InvoiceApiStepEnum.CloseInvoiceApiSession:
                     CloseInvoiceApiSession();
                     break;
