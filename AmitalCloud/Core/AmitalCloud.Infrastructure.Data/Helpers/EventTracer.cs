@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Transactions;
 using System.Web;
+using Microsoft.AspNetCore.Http;
 
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
