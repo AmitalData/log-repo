@@ -106,12 +106,22 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     isExistProductFile: boolean = false;
     isCheckedProductFile: boolean = false;
-    checkProductFileNumber(productFileNumber: string = '') {
+    checkProductFileNumber(productFileNumber: string) {
         this.isCheckedProductFile = true;
         this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
             if (!myResponse?.HasError)
                 this.saveByProductFileNumberResult(myResponse?.Result, productFileNumber);
+            else {
+                console.error('Error checking product file number:', myResponse?.ErrorsArray);
+                let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.`;
+                this.errorsList?.push(errorMsg);
+                this.openErrorsMsgWindow();
+            }
+        }, error => {
+            const errorMsg = error?.error?.ErrorMessage || error?.message || JSON.stringify(error);
+            this.generalErrors = [errorMsg];
+            console.error('Error checking product file number:', error);
         });
     }
 
@@ -144,42 +154,42 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             { field: this.InvoiceQuantityType, name: TextCodeTranslator.Translate(fieldName + "InvoiceQuantityType") },
         ];
         this.errorsList = mandatoryFields.filter(({ field }) => AppTool.IsNullOrEmpty(field))?.map(({ name }) => `${missingField} ${name}`);
-        if (this.errorsList?.length > 0) {
-            this.errorsList.push(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave") + "?");
-        }
         this.RequestRequiredStatus = this.errorsList?.length === 0 && !AppTool.IsNullOrEmpty(this.ProductFileNumber) ? CompleteStatuses.FullyCompleted : this.errorsList?.length > 0 || AppTool.IsNullOrEmpty(this.ProductFileNumber) ? CompleteStatuses.PartiallyCompleted : CompleteStatuses.UnCompleted;
     }
 
 
     displayErrorsMsg() {
-        if (!AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isCheckedProductFile) {
-            this.checkProductFileNumber();
-        }
-        else {
-            this.isCheckedProductFile = false;
-            let windowArgs: any = {};
-            windowArgs.Errors = this.errorsList;
-            windowArgs.Warning = this.validationErrors;
-            windowArgs.NoButtonVisibility = false;
-            windowArgs.CancelButtonVisibility = true;
-            windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Confirm");
-            windowArgs.CancelButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Cancel");
-            windowArgs.ComponentHeight = '328px';
-            let windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ErrorsFound");
-            let logWindow = new LogitudeWindow(this.CurrentSession);
-            logWindow.Width = 440;
-            logWindow.Height = 400;
-            logWindow.Title = windowTitle;
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = windowArgs;
+        if (!AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isCheckedProductFile)
+            this.checkProductFileNumber(this.ProductFileNumber);
+        else
+            this.openErrorsMsgWindow();
+    }
 
-            logWindow.WindowClosed.subscribe(($event: any) => {
-                return this.taxationWindowClosed($event) ? this.SaveSupplierInvoiceItemsReqList() : false;
-            });
-
-            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
-            this.CurrentSession.StopBusyIndicator();
+    openErrorsMsgWindow() {
+        if (this.errorsList?.length > 0) {
+            this.errorsList.push(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave") + "?");
         }
+        this.isCheckedProductFile = false;
+        let windowArgs: any = {};
+        windowArgs.Errors = this.errorsList;
+        windowArgs.Warning = this.validationErrors;
+        windowArgs.NoButtonVisibility = false;
+        windowArgs.CancelButtonVisibility = true;
+        windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Confirm");
+        windowArgs.CancelButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Cancel");
+        windowArgs.ComponentHeight = '328px';
+        let windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ErrorsFound");
+        let logWindow = new LogitudeWindow(this.CurrentSession);
+        logWindow.Width = 440;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            return this.taxationWindowClosed($event) ? this.SaveSupplierInvoiceItemsReqList() : false;
+        });
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
     }
 
     validationErrors: string[] = [];
