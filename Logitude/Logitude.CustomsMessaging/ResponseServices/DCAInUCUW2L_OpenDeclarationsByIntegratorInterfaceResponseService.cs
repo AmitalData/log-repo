@@ -204,19 +204,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             
                var documentsFilingService = new UnifreightDocumentsFilingService(_DataContext, Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "" });
-               //var documentTypeQuery = new DocumentTypeQuery(Tenant);
-               
-               
-               //var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
+              
                DocumentsFilingPM documentsFilingPM = _documentsFilingQuery.GetSinglePM(documentsFilingId, Tenant);
                if (documentsFilingPM != null && documentsFilingPM.EntityId != DeclarationId)
                {
                    documentsFilingPM.EntityId = DeclarationId;
-                   documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                   //documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
-                   //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-                   //documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
-                   documentsFilingPM.IsHybrid = true;//this is as substituteto hybrid !!!!
+                   documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");                
+                   documentsFilingPM.IsHybrid = true;
                     if (!string.IsNullOrEmpty(CustomFileNo)) 
                     {
                         documentsFilingPM.EntityId = DeclarationId;

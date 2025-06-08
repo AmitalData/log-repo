@@ -23,10 +23,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = GlobalContext.GetContext();
         }
 
-        //public IQueryable<TenantManagement> GetAWBStockPrepaidTenants()
-        //{
-        //    return this.context.TenantManagements.Where(d => d.IsAWBStockPrepaid == true);
-        //}
+       
 
         public IQueryable<TenantManagement> GetTenants()
         {
