@@ -575,7 +575,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                         else
                         {
-                            if (lineInvoiceAmount != lineInvoiceAmount_Computed)
+                            if (lineInvoiceAmount != lineInvoiceAmount_Computed && !entityPM.IsExternalEntity)
                             {
                                 throw new ApplicationException("Wrong Line Invoice Amount");
                             }
@@ -715,9 +715,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         record.InvoiceCurrencyVATAmount = MethodHelper.Roundd(record.InvoiceCurrencyVATAmount, 2);
                         record.ProfitCurrencyVATAmount = MethodHelper.Roundd(record.ProfitCurrencyVATAmount, 2);
                     }
+                        double? sumOfVATsAmountsRounded = MethodHelper.Round(sumOfVATsAmounts??0, 2); ;
+                        Amount = MethodHelper.Round(subTotal + sumOfVATsAmountsRounded, 2);
 
-                        Amount = MethodHelper.Round(subTotal + sumOfVATsAmounts, 2);
-                        Amount_Local = MethodHelper.Round(subTotal_Local + sumOfVATsAmounts_Local, 2);
+                        double? sumOfVATsAmounts_LocalRounded = MethodHelper.Round(sumOfVATsAmounts_Local ?? 0, 2);
+                        Amount_Local = MethodHelper.Round(subTotal_Local + sumOfVATsAmounts_LocalRounded, 2);
 
                         if (entityPM.ProfitCurrencyId == entityPM.InvoiceCurrencyId)
                         {

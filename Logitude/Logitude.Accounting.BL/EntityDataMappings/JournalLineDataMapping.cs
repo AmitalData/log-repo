@@ -104,6 +104,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.DebitAccountEnglishName = parent.EnglishName;
                 entityPM.DebitAccountNumber = parent.DisplayNumber;
                 entityPM.DebitAccountCOACode = parent.ChartOfAccountsTypeCode;
+                entityPM.DebitAccountCountryCode = parent.CardCountryCode;
 
 
             }

@@ -14341,6 +14341,82 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;783efe40-c789-4d2d-83ca-b0b3be29069b&quot;"
+    FieldName="&quot;CardCountryCode&quot;"
+    OldNames="CardCountryCode"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;nText&quot;"
+    MinLength="0"
+    MaxLength="100"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="100"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;CardCountryCode&quot;"
+    ListPropertyPath="&quot;CardCountryCode&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;CardCountryCode&quot;"
+    DefaultText="&quot;Card Country Code&quot;"
+    FullLocalDefaultText="&quot;קוד מדינת כרטיס&quot;"
+    ListFieldLable="&quot;CardCountryCodeListLable&quot;"
+    ListLableDefaultText="&quot;Card Country Code&quot;"
+    ListLocalDefaultText="&quot;קוד מדינת כרטיס&quot;"
+    IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="false"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;General Ledger Accounts&quot;"
     TextCode="&quot;General Ledger Accounts&quot;"
@@ -16625,6 +16701,19 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
     <EventType
+      Code="&quot;RCLC&quot;"
+      ObjectTableName="&quot;GLAccount&quot;"
+      EnglishName="&quot;Account Recalculated&quot;"
+      LocalName="&quot;בוצע חישוב מחדש&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
       Code="&quot;DSCS&quot;"
       ObjectTableName="&quot;GLAccount&quot;"
       EnglishName="&quot;Card is connected&quot;"
@@ -16682,6 +16771,13 @@
         MenuButtonType="&quot;menuitem&quot;"
         IndexOrder="0"
         LocalDefaultText="&quot;הפעל מחדש&quot;"
+        IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;GLAccountRecalculate&quot;"
+        DefaultText="&quot;Recalculate&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="0"
+        LocalDefaultText="&quot;חשב מחדש&quot;"
         IsPackagable="true" />
     </MenuButton>
   </MenuButtons>
@@ -18499,6 +18595,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;GLAccounts.O.ReconcileMethodCannotBeUpdated&quot;"
+      DefaultText="&quot;The reconcile method cannot be updated, the GLAccount has reconciliations&quot;"
+      LocalDefaultText="&quot;לא ניתן לעדכן את שיטת ההתאמה, נרשמו התאמות על הכרטיס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;GLAccounts.O.filter_accounting&quot;"
       DefaultText="&quot;Accounting Date&quot;"
       LocalDefaultText="&quot;תאריך חשבונאי&quot;"
@@ -18574,6 +18676,12 @@
       Code="&quot;GLAccounts.O.GLAccountReactivated&quot;"
       DefaultText="&quot;GLAccount Reactivated&quot;"
       LocalDefaultText="&quot;הכרטיס הופעל מחדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.GLAccountRecalculating&quot;"
+      DefaultText="&quot;Recalculating; check batch or event&quot;"
+      LocalDefaultText="&quot;מבצע חישוב מחדש, בדוק תור או אירוע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -19426,7 +19534,7 @@
       LocalDefaultText="&quot;לא נבחרו התאמות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-    <TextCode
+     <TextCode
       Code="&quot;GLAccounts.O.MarkedByAnother &quot;"
       DefaultText="&quot;There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.&quot;"
       LocalDefaultText="&quot;ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.&quot;"
@@ -19438,8 +19546,20 @@
       LocalDefaultText="&quot;יש התאמות בתהליך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+      <TextCode
+      Code="&quot;GLaccount.O.BalanceDiffersFrom&quot;"
+      DefaultText="&quot;Balance differs from&quot;"
+      LocalDefaultText="&quot;יתרה שונה מ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+     <TextCode
+      Code="&quot;GLAccounts.O.NoAddressToVendor&quot;"
+      DefaultText="&quot;To Vendor no country specified in default address&quot;"
+      LocalDefaultText="&quot;לספק לא צוינה מדינה בכתובת ברירת המחדל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures>
+   <AdditionalFeatures>
     <Feature
       Code="&quot;RECONCILE&quot;"
       FeatureTypeCode="&quot;AREA&quot;"

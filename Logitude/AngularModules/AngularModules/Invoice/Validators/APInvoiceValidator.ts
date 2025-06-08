@@ -44,7 +44,7 @@ export class APInvoiceValidator {
             this.Errors.push(TextCodeTranslator.Translate("APInvoice.O.ConfirmationNumberLength"));
         }
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAP) {
-            if (AppTool.IsNullOrEmpty(entityPM.VATNumber)) {
+            if (AppTool.IsNullOrEmpty(entityPM.VATNumber) && (this.EntityPM.VendorCountry === "IL"|| this.EntityPM.VendorCountry === null)) {
                 this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
             }
         }

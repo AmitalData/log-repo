@@ -10,12 +10,11 @@
 import {GLAccountWithholdingTaxPM} from './GLAccountWithholdingTaxPM';
 import {GLAccountInterestPeriodPM} from './GLAccountInterestPeriodPM';
 import {GLAccountCurrencyPM} from './GLAccountCurrencyPM';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class GLAccountPM {
 
@@ -922,6 +921,10 @@ export class GLAccountPM {
     private markDate: Date;
     public get MarkDate() { return this.markDate; }
     public set MarkDate(newValue: Date) { if (this.markDate != newValue) { this.markDate = newValue;  } }
+     
+    private cardCountryCode: string;
+    public get CardCountryCode() { return this.cardCountryCode; }
+    public set CardCountryCode(newValue: string) { if (this.cardCountryCode != newValue) { this.cardCountryCode = newValue;  } }
      
 	 
 

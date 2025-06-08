@@ -48,6 +48,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
@@ -205,10 +238,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.4.0.4\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.7\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -280,6 +313,7 @@
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
     <Compile Include="Helpers\ForbiddenSigns.cs" />
     <Compile Include="MessagingServices\DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8319_CustomItemRuleMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInGet_CB_MSG_8317_CustomItemClassifGuidanceMessagingService.cs" />
@@ -452,6 +486,7 @@
     <Compile Include="RequestServices\DF_MSG8235_ExportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG8235_TransshipmentDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderRequestService.cs" />
+    <Compile Include="RequestServices\Get_CB_MSG_8318_CustomItemMekachRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8319_CustomItemRuleRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8323_ClassifGuidanceDetailsRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8317_CustomItemClassifGuidanceRequestService.cs" />
@@ -509,6 +544,7 @@
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_8237_TransshipmentDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderResponseService.cs" />
+    <Compile Include="ResponseServices\Get_CB_MSG_8318_CustomItemMekachRequestService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8319_CustomItemRuleResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8323_ClassifGuidanceDetailsResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8317_CustomItemClassifGuidanceResponseService.cs" />
@@ -691,6 +727,7 @@
     <Compile Include="ResponseServices\VE_MSG013_VendorAddCommunicationDeviceResponseService.cs" />
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
+    <Compile Include="Tasks\UpdateClosedTables.cs" />
     <Compile Include="Tasks\POAExpireReminder.cs" />
     <Compile Include="Tasks\EnqueueSucceedRequestsheets.cs" />
     <Compile Include="Tasks\SendReportExel.cs" />

@@ -977,7 +977,7 @@
                                         </div>
 
                                         <div style="display:block;" [style.float]="isRTL ? 'right' : 'left'">
-                                            <div style="font-size: 24px; color:#282E30">{{OpenAmount | NumbersPipe:'N2'}}</div>
+                                            <div style="font-size: 24px; color:#282E30; direction:ltr; text-align: center;">{{OpenAmount | NumbersPipe:'N2'}}</div>
                                             <div style="vertical-align:top;">
                                                 <div class="Label" style="vertical-align:top;margin-top:-5px;display:inline-block;font-size: 11px;width:auto;">{{'APPayment.F.OpenAmount' | TextCodeTranslationPipe}}</div>
                                                 <div class="Label" style="vertical-align:top;margin-top:-5px;margin-left:5px;margin-right:5px; display:inline-block;font-size: 14px;width:auto;color:#282E30;" [style.text-align]="isRTL ? 'right' : 'left'">{{PaymentCurrencyCode}}</div>

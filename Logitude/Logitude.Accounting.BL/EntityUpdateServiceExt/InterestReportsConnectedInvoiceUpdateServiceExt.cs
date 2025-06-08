@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL.InterestService;
 using Simplog.Server.Infrastructure;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityUpdateServiceExt
 {
@@ -39,9 +40,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServiceExt
             {
                 MainContext = AccountingContext.GetContext(Tenant);
             }
-            var InterestReportsConnectInvoice = (from a in MainContext.InterestReportsConnectInvoices where a.ReportId==ReportId && a.Tenant==Tenant select a).FirstOrDefault();
-
-            return InterestReportsConnectInvoice!=null;
+            return MainContext.InterestReportsConnectInvoices.Any(a => a.ReportId == ReportId && a.Tenant == Tenant) ||
+                MainContext.InterestReports.Any(a => a.Id == ReportId && a.Tenant == Tenant && a.InterestReportStatusCode == InterestReportStatusCodes.Invoiced); 
         }
 
     }

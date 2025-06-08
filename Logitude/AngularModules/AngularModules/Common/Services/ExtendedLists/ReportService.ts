@@ -203,6 +203,26 @@ export class ReportService {
         }
         );
     }
+    GetExcel(filter: ReportFliter): Promise<any> {
+        const authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
+
+        const filterString = encodeURIComponent(JSON.stringify(filter));
+
+        return defer(() => {
+            return this._http.get(`${this._apiUrl}/GetExcel?filter=${filterString}`, {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                responseType: 'blob'
+            }).pipe(
+                map(response => {
+                    return response;
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
+        }).toPromise() as Promise<any>;
+    }
+
 }
 
 export class CustomersDataProvider {

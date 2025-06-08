@@ -88,6 +88,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        UpdateDate = a.UpdateDate,
                                        UpdatedByUserId = a.UpdatedByUserId,
                                        VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels ? a.VendorCard.EnglishName : a.VendorCard.LocalName),
+                                       VendorCountry = a.VendorCard == null ? "" :  a.VendorCard.CountryCode,
                                        VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
                                        VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                                        ExternalAccountingEntityId = a.ExternalAccountingEntityId,

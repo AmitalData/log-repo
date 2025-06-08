@@ -16,6 +16,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.EntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EntityPayableId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.PayableDebitGLAcountId).HasMaxLength(15).IsUnicode(false);
+
             this.Property(t => t.ForiegnCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DebitAccount).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.Description).IsRequired().HasMaxLength(250).IsUnicode(true);
@@ -52,6 +54,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ContainerTypeId).HasColumnName("ContainerTypeId");
             this.Property(t => t.Quantity).HasColumnName("Quantity");
             this.Property(t => t.ExcludeFromTaxReport).HasColumnName("ExcludeFromTaxReport");
+            this.Property(t => t.PayableDebitGLAcountId).HasColumnName("PayableDebitGLAcountId");
 
             this.HasRequired(t => t.APInvoice).WithMany().HasForeignKey(d => d.APInvoiceId);
             this.HasRequired(t => t.ChargesType).WithMany().HasForeignKey(d => d.ChargesTypeId);

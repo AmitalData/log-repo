@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+
 
 namespace Logitude.BL.Resolvers
 {
@@ -40,6 +42,15 @@ namespace Logitude.BL.Resolvers
             ContactPM loggedcontact = loggedContactUtil.GetLoggedContact(tenant);
 
             bool showLocal = !(bool)loggedcontact?.DontShowLocal;
+            return showLocal;
+        }
+
+        public static bool GetContactIncludingCustomerCareShowLocal(int tenant)
+        {
+            ILoggedContactUtil loggedContactUtil = ContainerAccessor.Container.Resolve(typeof(ILoggedContactUtil), "LoggedContactUtil", new ParameterOverride("", tenant)) as ILoggedContactUtil;
+            Contact loggedcontact = loggedContactUtil.GetLoggedContactsIncludingCustomerCareForWR(tenant);
+
+            bool showLocal = !(bool)loggedcontact?.DontShowLocalLabels;
             return showLocal;
         }
     }

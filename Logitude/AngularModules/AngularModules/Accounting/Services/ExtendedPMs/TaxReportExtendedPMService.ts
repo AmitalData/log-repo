@@ -183,6 +183,18 @@ export class TaxReportExtendedPMService {
 
     }
 
+    getDuplicateInputs(reportId: string) {
+	    var callTime = new Date();
+
+       return this.httpClient.get(this._apiUrl+'/GetDuplicateInputs/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
+        map(response => {
+            var result = response;
+
+            return result;
+        }),
+        catchError(ServiceHelper.HandleServiceError));
+
+    }
 
     GetTaxReportReconciledLines(taxReportId: string)
     {

@@ -11,6 +11,7 @@ using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
@@ -22,6 +23,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
         private Customer entityPOCO;
         private string loggedContactId;
         private string myTableName;
+        ICommonDataContext objectContext;
         public CustomerTracing(CustomerPM entityPM, Customer entityPOCO, string loggedContactId, bool isNewEntity)
         {
             this.myTenant = entityPM.Tenant;
@@ -64,6 +66,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
             else
             {
                 string notes = null;
+
                 if (!string.IsNullOrEmpty(entityPM.ReceivablesAccountingCard) && string.IsNullOrEmpty(entityPOCO.Card.ReceivablesAccountingCard))
                 {
                     notes = "External ID added";
@@ -81,26 +84,18 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 {
                     notes = "External ID removed";
                 }
-				//if (entityPM.EmailForSendingSingArinvoice != entityPOCO.EmailForSendingSingArinvoice)
-				//{
-    //                ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-    //                string emailContactPm = contactRepository.GetSingleContactForUpdate(entityPM.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
-				//	string emailContactPoco = contactRepository.GetSingleContactForUpdate(entityPOCO.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
 
-				//	var note =  TranslateTextsClass.Translate("Contact.F.Email", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + emailContactPoco?.ToString()   + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + emailContactPm?.ToString() ;
-				//	if (string.IsNullOrEmpty(notes))
-				//	{
-				//		notes = note;
+                if (entityPM.Card?.EmailForSendingSingArinvoice != entityPOCO.Card?.EmailForSendingSingArinvoice)
+                {
+                     string EmailForSendingSingArinvoiceName = "";
+                    if (!string.IsNullOrWhiteSpace(entityPM.Card?.EmailForSendingSingArinvoice)) {
+                        ContactQuery contactQuery = new ContactQuery(entityPOCO.Tenant);
+                        EmailForSendingSingArinvoiceName = contactQuery.GetSinglePMFromCache(entityPM.Card?.EmailForSendingSingArinvoice, entityPOCO.Tenant)?.Email;
+                    }
+                    notes += Environment.NewLine + "EmailForSendingSingArinvoice Changed to be : " + EmailForSendingSingArinvoiceName;
+                }
 
-    //                }
-    //                else
-    //                {
-    //                    notes += "\n" + note;
-
-				//	}
-				//}
-			
-				EventTracer.CreateTraceEvent(new EventTracerArgs()
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = myTenant,
                     EventTypeCode = "UPCU",
@@ -190,7 +185,6 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     Notes = entityPM.EventNote,
                 });
             }
-
             if (!entityPM.IsCustomer && entityPOCO.IsCustomer)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -243,6 +237,8 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     ObjectTableName = myTableName,
                 });
             }
+
+
         }
         private string BuildNotesEventForUpdateCustomer()
         {

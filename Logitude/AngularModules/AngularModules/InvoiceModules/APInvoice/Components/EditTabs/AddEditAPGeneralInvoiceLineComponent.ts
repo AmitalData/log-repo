@@ -26,6 +26,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     ColumnsWidths: ColumnsWidths[] = [];
     public GLAccountsFilterItems: ApiQueryFilters;
+    public PayableDebitGLAcountFilterItems: ApiQueryFilters;
 
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
@@ -42,6 +43,9 @@ export class AddEditAPGeneralInvoiceLineComponent {
     InitLOVFilters() {
         this.GLAccountsFilterItems = new ApiQueryFilters();
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+        this.PayableDebitGLAcountFilterItems = new ApiQueryFilters();
+       this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
+
     }
   
 
@@ -91,6 +95,10 @@ export class AddEditAPGeneralInvoiceLineComponent {
             var field = TextCodeTranslator.Translate("APInvoiceLine.F.VatTypeId");
             errors.push(msg.replace("%FieldName", field));
         }
+         if (AppTool.IsNullOrEmpty(this.EntityPM.PayableDebitGLAcountId)) {
+             var field = TextCodeTranslator.Translate("APInvoiceLine.F.PayableDebitGLAcountId");
+             errors.push(msg.replace("%FieldName", field));
+         }
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.VatPercentage)) {
             if (!this.EntityPM.VatIsMultiPercentage) {
@@ -105,7 +113,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
             }
         }
 
-        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.PayableDebitGLAcountId)) {
+        if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.PayableDebitGLAcountId) && AppTool.IsNullOrEmpty(this.EntityPM.PayableDebitGLAcountId)) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.NoGLAccount"));
         }
 
@@ -147,6 +155,8 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.myCloner.AddField('OtherInvoicesAmounts');
         this.myCloner.AddField('InvoiceCurrencyAmount');
         this.myCloner.AddField('OpenAmount');
+        this.myCloner.AddField('PayableDebitGLAcountId');
+
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.fatherComponent.EntityPM);
     }

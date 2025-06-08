@@ -896,7 +896,7 @@ namespace Logitude.BL.Helpers
             ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
 
 
-            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
+            DocumentsFiling documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
             ARInvoice invoice = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
 
             if (invoice != null)

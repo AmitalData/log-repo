@@ -40,8 +40,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             // chartOfAccounts ids list are selected from filter in UI.
              if (chartOfAccounts != null && chartOfAccounts.Count > 0)
              {
-                qBase = qBase.Where(i => chartOfAccounts.Any(item => item == i.Id));
-            }
+                qBase = qBase.Where(i => chartOfAccounts.Contains(i.Id));
+			}
 
             var qL1 = qBase
             .Where(chartOA => chartOA.ParentId == null)
@@ -100,7 +100,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      Level1Id = lastChartL.Level1Id,
                      Level1Name = lastChartL.Level1Name,
                      Level1Code = lastChartL.Level1Code,
-                     Level1English = lastChartL.Level5English,
+                     Level1English = lastChartL.Level1English,
 
                      Level2Id = currChartL.Id,
                      Level2Name = currChartL.LocalName,

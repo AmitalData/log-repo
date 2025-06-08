@@ -46,6 +46,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\All Projects\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|x64'">
+    <OutputPath>bin\x64\None\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -68,6 +101,7 @@
     <Compile Include="RequestParams\CLAIM_2340_ClaimRequestRequestParams.Shared.cs" />
     <Compile Include="RequestParams\ContinuousRequestOnClaimFileRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CourierBOLQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CustomItemMekachRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CustomItemRuleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\GetClassifGuidanceDetailsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\LogisticActionRequest.Shared.cs" />
@@ -141,6 +175,7 @@
     <Compile Include="RequestParams\VE_MSG010_VendorInsertUpdateDeleteMessageRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG013_VendorAddCommunicationDeviceRequestParams.Shared.cs" />
     <Compile Include="RequestParams\VE_MSG051_VendorSearchByCustomsAgentRequestParams.Shared.cs" />
+    <Compile Include="ResponseData\CustomItemMekachResponseData.Shared.cs" />
     <Compile Include="ResponseData\GetClassifGuidanceDetailsResponseData.Shared.cs" />
     <Compile Include="ResponseData\CustomItemRuleResponseData.Shared .cs" />
     <Compile Include="ResponseData\CustomItemClassifGuidanceResponseData.Shared.cs" />

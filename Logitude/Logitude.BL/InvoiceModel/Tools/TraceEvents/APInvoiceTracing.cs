@@ -121,6 +121,13 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 notesList.Add(note);
             }
 
+            // if status code has been changed
+            if (entityPM.StatusCode != invoice.StatusCode)
+            {
+                string note = TranslateTextsClass.Translate("APInvoice.F.StatusCode", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + invoice.StatusCode?.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.StatusCode?.ToString();
+                notesList.Add(note);
+            }
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = entityPM.Tenant,

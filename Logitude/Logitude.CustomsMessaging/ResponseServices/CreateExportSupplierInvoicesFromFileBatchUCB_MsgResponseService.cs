@@ -69,6 +69,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string errorItems = "";
             var invoiceFromDB = declarationPM.SupplierInvoices.FirstOrDefault();
             if (invoiceFromDB == null) return;
+            SupplierInvoiceRepository supplierInvoiceRepository = new SupplierInvoiceRepository(context);
+            int maxSequence = supplierInvoiceRepository.GetMaxSequenceNumeric(declarationid, tenant) ?? 0;
             foreach (var invoiceFromFile in fromFile)
             {
                 // create new invoice
@@ -87,6 +89,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DeclarationId = declarationid,
                     Tenant = tenant,
                     IssueDate = invoiceFromFile.IssueDate,
+                    InvoiceCounterKey = ++maxSequence,
+                    SequenceNumeric = maxSequence,
+
                     //ExportFreightAmount = invoiceFromDB.ExportFreightAmount,
                     //ExportInsuranceAmount = invoiceFromDB.ExportInsuranceAmount
                 };

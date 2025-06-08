@@ -2098,7 +2098,7 @@ namespace MeatadataGeneratorTool
                         }
 
 
-                        int dxmlColumnSize = new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
+                        int dxmlColumnSize = new string[] { "bit", "datetime", "datetime2", "decimal", "float", "int" }.Contains(dxmlColumnDataType) ? 0 : (fieldIsMaxLength ? -1 : fieldMaxLength);
 
                         columnElement.SetAttribute("Name", fieldName);
 
@@ -2421,6 +2421,8 @@ namespace MeatadataGeneratorTool
                     return "date";
                 case "DateTime":
                     return "datetime";
+                case "DateTime2":
+                    return "datetime2";
                 case "Decimal":
                 case "UnsDecimal":
                     return "decimal";
@@ -2456,7 +2458,7 @@ namespace MeatadataGeneratorTool
                 return false;
             }
 
-            if (new string[] { "bit", "datetime", "decimal", "float", "int" }.Contains(dxmlColumnDataType))
+            if (new string[] { "bit", "datetime", "datetime2", "decimal", "float", "int" }.Contains(dxmlColumnDataType))
             {
                 if (!fieldIsRequired && fieldIsNullable)
                 {

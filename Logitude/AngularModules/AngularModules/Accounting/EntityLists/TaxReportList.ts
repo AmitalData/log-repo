@@ -43,6 +43,7 @@ export class TaxReportList {
 	InputsTaxAmountRound: number;
 	ClosingJournalNumber: string;
 	ClosingJournalId: string;
+	RemoveDuplicates: boolean;
 	
 }
  
