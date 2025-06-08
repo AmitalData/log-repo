@@ -404,6 +404,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsFromCloud"
+    Type="bit"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
   <Relation
     ForeignKeyColumn="ChildObjectTableId"
     ReferencedTable="ObjectTables"
@@ -491,8 +499,8 @@
   <Index
     Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
 
-	<Index
-  Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
+  <Index
+    Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
     Columns="Tenant,IsDeleted,IsTransferdToQBO" />
   <UniqueConstraint
     Env="logbox"

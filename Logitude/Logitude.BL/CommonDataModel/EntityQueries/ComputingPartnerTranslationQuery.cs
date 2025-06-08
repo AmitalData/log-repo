@@ -157,14 +157,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             string LogitudeCode = (from a in repository.Context.ComputingPartnerTranslations
                                   where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == tenant
-                                  && a.PartnerCode == PartnerCode
-                                  select a.OurCode).FirstOrDefault();
+                                  && a.PartnerCode.ToUpper() == PartnerCode.ToUpper()
+								   select a.OurCode).FirstOrDefault();
             if (LogitudeCode == null)
             {
                 LogitudeCode = (from a in repository.Context.ComputingPartnerTranslations
                                where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == 0
-                               && a.PartnerCode == PartnerCode
-                               select a.OurCode).FirstOrDefault();
+                               && a.PartnerCode.ToUpper() == PartnerCode.ToUpper()
+								select a.OurCode).FirstOrDefault();
             }
 
             return LogitudeCode;

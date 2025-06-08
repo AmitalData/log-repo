@@ -2593,6 +2593,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			}
 			return declarationPMs;
 		}
+		public DeclarationPM GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
+		{
+			Declaration declaration = this.repository.GetDeclarationsByHawbAndIntegratore(tenant, hawb, IntegratorCode);
+			DeclarationDataMapping mappings = new DeclarationDataMapping();
+			DeclarationPM declarationPM = new DeclarationPM();
+			if (declaration != null)
+			{
+				mappings.CustomPOCOToPM(declarationPM, declaration);
+				mappings.POCOToPM(declarationPM, declaration);
+			}
+			return declarationPM;
+		}
 	}
 
     public class DiamondsDeclarationSummary

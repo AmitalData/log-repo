@@ -181,10 +181,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.entityPM.Id = this.entityPM.Id.PadRight(30, '0');
 
-            //Added by Maheera
-            //this.entityPM.SecurityId = entityPM.Id + System.Web.Security.Membership.GeneratePassword(10, 0);
+   
             Random rnd = new Random();
-            //this.entityPM.SecurityId = entityPM.Id + RandomString(10);
             string com_id = entityPM.Id;        // Length = 30
             string com_md5 = CreateMD5(com_id); // Length = 32 
             string com_short = entityPM.Id.Substring(0,8);
@@ -198,14 +196,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             DocumentsFilingValidating.Validate(theEntityPm);
             DocumentsFilingTracing.Trace(theEntityPm, Poco, isNewEntity);
-            _OnCreateUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant, theEntityPm.Folder);
+            _OnCreateUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant, theEntityPm.Folder, theEntityPm.IsFromCloud);
 
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
                 if (
-                    (entityPM.DirectionCode == "I")
-                    //|| 
-                    //(entityPM.DirectionCode == "E")
+                    (entityPM.DirectionCode == "I")               
                     )
                     
                 {
@@ -1424,7 +1420,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     FileSize = fileData.Length,
 
                 };
-                if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew))
+                if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew) || (entityPM.IsFromCloud && LogitudeSettings.StorageServiceMode != "db"))
                 {
                     var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
                     if (isnew)
@@ -1636,13 +1632,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                     if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", tenant))
                                     {
                                         sendHybridM = false;
-                                        if (extDocPM.ExternalEntityName == "CFIFILEM")
+                                        if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud)
                                         {
                                             SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                         }
                                     }
                                 }
-                                if (sendHybridM)
+                                if (sendHybridM && !extDocPM.IsFromCloud)
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 

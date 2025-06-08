@@ -44,6 +44,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string OcrToken { get; set; }
         [Column("UpdateDocOcrServiceUrl")]
 	    public string UpdateDocOcrServiceUrl { get; set; }
+        [Column("CourierDocURL")]
+	    public string CourierDocURL { get; set; }
+        [Column("CourierDocKey")]
+	    public string CourierDocKey { get; set; }
+        [Column("CourierDocQueueName")]
+	    public string CourierDocQueueName { get; set; }
+        [Column("CourierDocQueueConn")]
+	    public string CourierDocQueueConn { get; set; }
     }
 }
 	 

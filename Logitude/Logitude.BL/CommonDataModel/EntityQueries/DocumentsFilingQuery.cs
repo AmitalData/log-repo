@@ -134,7 +134,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
 
             if (extDocPm != null)
@@ -236,7 +238,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -329,7 +333,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -425,7 +431,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -534,7 +542,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -625,7 +635,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -716,7 +728,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -805,7 +819,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                                                IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                                ReceivedByPartner = a.ReceivedByPartner,
-                                                           }).ToList();
+															   IsFromCloud = a.IsFromCloud,
+
+														   }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
@@ -914,7 +930,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                                                IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                                ReceivedByPartner = a.ReceivedByPartner,
-                                                           }).ToList();
+															   IsFromCloud = a.IsFromCloud,
+
+														   }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
@@ -1043,7 +1061,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        ReceivedByPartner = a.ReceivedByPartner,
-                                   });
+									   IsFromCloud = a.IsFromCloud,
+
+								   });
 
             if (!string.IsNullOrEmpty(childEntityId)) externalDocumentPMs = externalDocumentPMs.Where(d => d.ChildEntityId == childEntityId);
 
@@ -1204,7 +1224,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
             }
             else
             {
@@ -1288,15 +1310,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
             }
 
-            //Islam: this code caused an exception in logitude!!! if you want to add a code like this which is only required for customs please check the settings.deployment first
-            //ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-
+    
             var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
-            //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
@@ -1429,7 +1450,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
             }
             else
             {
@@ -1510,7 +1533,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
             }
             return externalDocumentPMs;
         }
@@ -1600,13 +1625,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        ReceivedByPartner = a.ReceivedByPartner,
-                                   }).ToList();
+									   IsFromCloud = a.IsFromCloud,
+
+								   }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-            //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
             var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
-            //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
@@ -1709,7 +1734,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        ReceivedByPartner = a.ReceivedByPartner,
-                                   }).ToList();
+									   IsFromCloud = a.IsFromCloud,
+
+								   }).ToList();
 
             var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
@@ -2179,16 +2206,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
 
             }
             else
             {
                 externalDocumentPMs = (from a in repository.context.DocumentsFilings
-                                       .Include("Document").Include("DocumentType")                                       //.Include("CreatedByUser.Contact")
-                                       //.Include("ReceivedByUser.Contact")
-                                       
-                                       //.Include("Owner.Contact")
+                                       .Include("Document").Include("DocumentType")                                     
                                        where a.Tenant == tenant && a.EntityId == entityId && a.ChildEntityId == childEntityId && (a.ObjectTableId == objectTableId || a.ExternalEntityReference == referenceNumber)
                                        select new DocumentsFilingPM()
                                        {
@@ -2267,7 +2293,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
             }
 
 
@@ -2354,7 +2382,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                                     IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                     ReceivedByPartner = a.ReceivedByPartner,
-                                                }).ToList();
+													IsFromCloud = a.IsFromCloud,
+
+												}).ToList();
  
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
 
@@ -2367,15 +2397,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-            //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
              FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
             List<FollowUp> FollowUps=null;
 
-          //  CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
-          //  var IsConnectedToUniFreight = settingService.GetSettingByTenantN(tenant).IsConnectedToUniFreight;
+       
             var resMode = new { DefaultValue = "" };
 
-            //only to pilot
             if (directionCode!="E")
             {
                 FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
@@ -2384,7 +2411,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
              var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
  
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
-            //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
@@ -2486,7 +2512,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
-                                          }).ToList();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).ToList();
             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
             List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
             foreach (DocumentsFilingPM extDocPm in extDocPms)
@@ -2587,7 +2615,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -2675,7 +2705,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -2687,7 +2719,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return extDocPm;
         }
 
-        //externalentityreference ='60206223',  externalentityname ='CFIFILEM',
         public IQueryable<DocumentsFiling> GetByexternalentityreference(string externalentityname, string externalentityreference, int tenant)
         {
             (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
@@ -2781,7 +2812,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+
+										  }).FirstOrDefault();
 
             if (extDocPm != null)
             {
@@ -3152,6 +3185,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                         IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                         ReceivedByPartner = a.ReceivedByPartner,
+                        IsFromCloud = a.IsFromCloud,
                     }).ToList();
         }
 
@@ -3238,7 +3272,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                        ReceivedByPartner = a.ReceivedByPartner,
-                                                   };
+													   IsFromCloud = a.IsFromCloud,
+
+												   };
                 return result.ToList();
         }
 
@@ -3322,7 +3358,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                        ReceivedByPartner = a.ReceivedByPartner,
-                                                   };
+													   IsFromCloud = a.IsFromCloud,
+
+												   };
             return result.ToList();
         }
 
@@ -3411,7 +3449,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
             }
             else
             {
@@ -3491,7 +3531,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                            IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                            ReceivedByPartner = a.ReceivedByPartner,
-                                       }).ToList();
+										   IsFromCloud = a.IsFromCloud,
+
+									   }).ToList();
             }
             if (externalEntityReferences != null)
             {
@@ -3567,15 +3609,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                                     IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                     ReceivedByPartner = a.ReceivedByPartner,
-                                                }).ToList();
+													IsFromCloud = a.IsFromCloud,
+
+												}).ToList();
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
             }
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-            //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
             var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
-            //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
@@ -3682,14 +3724,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                        ReceivedByPartner = a.ReceivedByPartner,
-                                   }).ToList();
+									   IsFromCloud = a.IsFromCloud,
+
+								   }).ToList();
 
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-            //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
             var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
-            //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
             var documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant1(tenant);
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
@@ -3821,27 +3863,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                               ReceivedByPartner = a.ReceivedByPartner,
-                                          }).FirstOrDefault();
+											  IsFromCloud = a.IsFromCloud,
+										  }).FirstOrDefault();
 
-            //if (extDocPm != null)
-            //{
-            //    FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            //    List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-            //    if (FollowUps != null)
-            //    {
-            //        List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-            //        if (docFollowUp.Count != 0)
-            //        {
-            //            extDocPm.FollowUpCount = docFollowUp.Count;
-            //            extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-            //            extDocPm.HasFollowUp = docFollowUp.Any();
-            //        }
-            //    }
-
-
-            //    DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
-            //    extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
-            //}
+            
             return extDocPm;
         }
 
@@ -3869,6 +3894,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   FileSize = a.Document != null ? a.Document.FileSize : null,
                                                                   Extension = a.Document != null ? a.Document.Extension : "",
                                                                   ReceivedByPartner = a.ReceivedByPartner,
+
                                                               }).ToList();
 
 
@@ -3933,7 +3959,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              EntityNumber = a.EntityNumber,
                                                              BackedupExternally = a.BackedupExternally,
                                                              ReceivedByPartner = a.ReceivedByPartner,
-                                                         }).ToList();
+															 IsFromCloud = a.IsFromCloud,
+
+														 }).ToList();
             return documentFilingPMs;
 
         }
@@ -4043,7 +4071,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
                                                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
                                                        ReceivedByPartner = a.ReceivedByPartner,
-                                                   };
+													   IsFromCloud = a.IsFromCloud,
+
+												   };
             return result.ToList();
         }
 
@@ -4071,7 +4101,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        CreatedByUserId = a.CreatedByUserId,
                                                        SecurityId = a.SecurityId,
                                                        ReceivedByPartner = a.ReceivedByPartner,
-                                                   }).FirstOrDefault();
+													   IsFromCloud = a.IsFromCloud,
+
+												   }).FirstOrDefault();
 
             return documentsFilingPM;
         }

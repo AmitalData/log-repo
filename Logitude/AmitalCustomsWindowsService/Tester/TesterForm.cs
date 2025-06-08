@@ -59,14 +59,13 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
             _CBWorkerRole.Items.Add("CustomsHSMSignWR");
             _CBWorkerRole.Items.Add("ReportExecutionLogWR");
+			_CBWorkerRole.Items.Add("DocumentAzureQueueWR");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
 
             var t = new Thread(GetENV);
             t.Start();
-            //GetENV();an
-            ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
         private static void GetENV()
@@ -290,12 +289,18 @@ namespace AmitalCustomsWindowsService.Tester
                         { ServiceStarted = true, };
                     }
                     break;
-                default:
+				case "DocumentAzureQueueWR":
+					{
+						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentAzureQueueWR>(
+				10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+						{ ServiceStarted = true, };
+					}
+					break;
+				default:
                     return;
             }
 
 
-            //d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
             if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
             {
                 d.OverrideRMQ = textBoxOverrideRMQ.Text;
@@ -760,8 +765,14 @@ namespace AmitalCustomsWindowsService.Tester
 
                     }
                     break;
+				case "DocumentAzureQueueWR":
+					{
+						var documentAzureQueueWR = new DocumentAzureQueueWR();
+						documentAzureQueueWR.DebugStep();
 
-                default:
+					}
+					break;
+				default:
                     CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,
                 _CBWorkerRole.Text);

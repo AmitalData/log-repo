@@ -298,6 +298,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string courierDocURL ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierDocURL  
+	   {
+	    
+	     get
+		{
+		   return courierDocURL;
+		 }
+		 set
+		 {
+		   if(courierDocURL != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierDocURL",OldValue=courierDocURL,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierDocURL=value;
+		   }
+			
+		 }
+	   }
+	  private string courierDocKey ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierDocKey  
+	   {
+	    
+	     get
+		{
+		   return courierDocKey;
+		 }
+		 set
+		 {
+		   if(courierDocKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierDocKey",OldValue=courierDocKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierDocKey=value;
+		   }
+			
+		 }
+	   }
+	  private string courierDocQueueName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierDocQueueName  
+	   {
+	    
+	     get
+		{
+		   return courierDocQueueName;
+		 }
+		 set
+		 {
+		   if(courierDocQueueName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierDocQueueName",OldValue=courierDocQueueName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierDocQueueName=value;
+		   }
+			
+		 }
+	   }
+	  private string courierDocQueueConn ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CourierDocQueueConn  
+	   {
+	    
+	     get
+		{
+		   return courierDocQueueConn;
+		 }
+		 set
+		 {
+		   if(courierDocQueueConn != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CourierDocQueueConn",OldValue=courierDocQueueConn,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   courierDocQueueConn=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

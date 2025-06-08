@@ -235,19 +235,19 @@ namespace AmitalCustomsWindowsService
                 throw new Exception("how change code where is method >public AddWorkerFromAppSettingDB");
             }
             var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
-            ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
 
 
 
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
-            ///listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
             listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
             listOfWorkerEntryPoint.Add(new ReportExecutionLogWR());
+			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
+            
 
-            bool testCustomsSchedularWR = false;
+			bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();

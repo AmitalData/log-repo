@@ -30,7 +30,6 @@ namespace AmitalCustomsWindowsService
         // array of worker threads
         List<Thread> _Threads;
         List<IWorkerBaseWorkOnce> _Workers;
-        //private List<IWorkerBaseWorkOnce> _WorkersWorkOnce;
         int _workerId=0;
         private System.Timers.Timer _myTimer;
         
@@ -40,7 +39,6 @@ namespace AmitalCustomsWindowsService
         {
             InitializeComponent();
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            //throw new Exception("3333"); 
   
         }
 
@@ -48,6 +46,7 @@ namespace AmitalCustomsWindowsService
         {
             var err = e.ExceptionObject.ToString();
             NetCommonHelper.Logger.DevLog.Instance.WriteError("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString()+"Err:"+e.ToString() + err);
+
           
         }
 
@@ -154,8 +153,9 @@ namespace AmitalCustomsWindowsService
                 AddWorkerFromAppSetting<RabbitMQReceiveWR>();
                 AddWorkerFromAppSetting<CustomsHSMSignWR>();
                 AddWorkerFromAppSetting<ReportExecutionLogWR>();
+				AddWorkerFromAppSetting<DocumentAzureQueueWR>();
 
-                bool courierFeaturePackageExist = true;
+				bool courierFeaturePackageExist = true;
                 if (courierFeaturePackageExist)
                 {
                     AddWorkerFromAppSetting<SendWEBAPIMessage2MamanWR>();
@@ -244,13 +244,13 @@ namespace AmitalCustomsWindowsService
                 throw new Exception("how change code where is method >public AddWorkerFromAppSettingDB");
             }
             var listOfWorkerEntryPoint = CustomsWorkerRole.AllWorkerEntryPointTypeService.GetAllWorkerEntryPointType();
-            ///itzik +  ihab  listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new CommunicationWorkerRole.FTPCommunicationWorkerRoleWinService());
             listOfWorkerEntryPoint.Add(new SendWEBAPIMessage2MamanWR());
             listOfWorkerEntryPoint.Add(new FTPToAnalyzeQueueWR());
             listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
             listOfWorkerEntryPoint.Add(new CustomsAnalyzeQueueWR());
-            bool testCustomsSchedularWR = false;
+			listOfWorkerEntryPoint.Add(new DocumentAzureQueueWR());
+			bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)
             {
                 listOfWorkerEntryPoint = new List<Logitude.Server.Tools.WorkerEntryPoint>();

@@ -95,6 +95,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? MaxSISendInteractive { get; set; }
         [Column("ForbiddenSigns")]
 	    public string ForbiddenSigns { get; set; }
+        [Column("CourierDocToken")]
+	    public string CourierDocToken { get; set; }
     }
 }
 	 

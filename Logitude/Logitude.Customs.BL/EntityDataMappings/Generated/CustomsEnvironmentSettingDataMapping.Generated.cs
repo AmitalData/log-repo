@@ -33,7 +33,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMActiveCertUrl, 
 	         HSMSignServiceUrl, 
 	         OcrToken, 
-	         UpdateDocOcrServiceUrl,
+	         UpdateDocOcrServiceUrl, 
+	         CourierDocURL, 
+	         CourierDocKey, 
+	         CourierDocQueueName, 
+	         CourierDocQueueConn,
 	      }
 
 
@@ -51,7 +55,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMActiveCertUrl, 
 	         HSMSignServiceUrl, 
 	         OcrToken, 
-	         UpdateDocOcrServiceUrl,
+	         UpdateDocOcrServiceUrl, 
+	         CourierDocURL, 
+	         CourierDocKey, 
+	         CourierDocQueueName, 
+	         CourierDocQueueConn,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -108,6 +116,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDocOcrServiceUrl))
             {
 				entityPOCO.UpdateDocOcrServiceUrl = entityPM.UpdateDocOcrServiceUrl;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocURL))
+            {
+				entityPOCO.CourierDocURL = entityPM.CourierDocURL;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocKey))
+            {
+				entityPOCO.CourierDocKey = entityPM.CourierDocKey;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueName))
+            {
+				entityPOCO.CourierDocQueueName = entityPM.CourierDocQueueName;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueConn))
+            {
+				entityPOCO.CourierDocQueueConn = entityPM.CourierDocQueueConn;
 			}
 			}
 
@@ -174,6 +202,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UpdateDocOcrServiceUrl = entityPOCO.UpdateDocOcrServiceUrl;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocURL))
+            {
+					entityPM.CourierDocURL = entityPOCO.CourierDocURL;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocKey))
+            {
+					entityPM.CourierDocKey = entityPOCO.CourierDocKey;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocQueueName))
+            {
+					entityPM.CourierDocQueueName = entityPOCO.CourierDocQueueName;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierDocQueueConn))
+            {
+					entityPM.CourierDocQueueConn = entityPOCO.CourierDocQueueConn;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsEnvironmentSettingPM entityPM, CustomsEnvironmentSettingPM oldEntityPM)
@@ -228,6 +276,26 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDocOcrServiceUrl))
             {
                 oldEntityPM.UpdateDocOcrServiceUrl = entityPM.UpdateDocOcrServiceUrl;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocURL))
+            {
+                oldEntityPM.CourierDocURL = entityPM.CourierDocURL;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocKey))
+            {
+                oldEntityPM.CourierDocKey = entityPM.CourierDocKey;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueName))
+            {
+                oldEntityPM.CourierDocQueueName = entityPM.CourierDocQueueName;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierDocQueueConn))
+            {
+                oldEntityPM.CourierDocQueueConn = entityPM.CourierDocQueueConn;
             }
 			
 		}

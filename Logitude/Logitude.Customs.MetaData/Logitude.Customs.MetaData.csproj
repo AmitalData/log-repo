@@ -176,6 +176,7 @@
     <None Include="DBScripts\Post\202410071313_UpdateAccountingTablesForCustomsModule.sxml" />
     <None Include="DBScripts\Post\202412121400_GetDataCooConnected.sxml" />
     <None Include="DBScripts\Post\202410120930_CooInvoicesIsInvoiceConnected.sxml" />
+    <None Include="DBScripts\Post\202408150924_AddDocumentsMetaDataType.sxml" />
     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />

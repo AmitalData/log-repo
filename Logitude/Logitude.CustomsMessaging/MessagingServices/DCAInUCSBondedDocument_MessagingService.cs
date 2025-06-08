@@ -412,8 +412,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
                     using (var disposableToken =
-                        ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key,
-                        "UCBNDCD.CRS", true)
+						ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, false, key,
+						"UCBNDCD.CRS", true)
                         )
                     {
 						_Stopwatch = Stopwatch.StartNew();
@@ -441,7 +441,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 logData = LogMessagingUtil.Instance.ToString();
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument", stopLogAt);
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "sendOcrDocumentError", stopLogAt);
-				LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch.Restart();
+				LogitudeSettings.HandleLogMe(Environment.NewLine + "1 Took: " + _Stopwatch?.Elapsed.ToString(), false, "CheckLogTime-SendMeces", stopLogAt); _Stopwatch?.Restart();
 
 				throw;
             }
@@ -676,6 +676,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     });
                     customsDocumentPM.IsSendToQueue = true;
                     myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                    customsDocumentPM.IsCustomSendTime = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({DocumentsFilingPMId})");
 

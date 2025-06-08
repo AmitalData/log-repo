@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="d3b0aef5-9dc8-4367-9be2-1d0c6d4e7753" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://univ511:5057/Unifreight511/FilingManagerSplit" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="FilingManagerSplit.xsd" MetadataType="Schema" ID="e99dedb4-f494-49a0-b841-fc9900a1e62f" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd4" />
+    <MetadataFile FileName="FilingManagerSplit1.xsd" MetadataType="Schema" ID="941379cb-92e9-4fe6-8a22-a3ef25eaba7c" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd6" />
+    <MetadataFile FileName="FilingManagerSplit2.xsd" MetadataType="Schema" ID="1f72e69b-c339-4cdf-95de-c30a077fbb45" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd1" />
+    <MetadataFile FileName="FilingManagerSplit3.xsd" MetadataType="Schema" ID="d01f01d6-38c7-4b91-b172-2ac709d72465" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd0" />
+    <MetadataFile FileName="FilingManagerSplit4.xsd" MetadataType="Schema" ID="a91cf610-73c1-499b-99bc-121c352bb77b" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd3" />
+    <MetadataFile FileName="FilingManagerSplit5.xsd" MetadataType="Schema" ID="0d62b00c-cb6a-4706-9017-edec23816d6f" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd2" />
+    <MetadataFile FileName="FilingManagerSplit.disco" MetadataType="Disco" ID="8fcca252-5fc1-4008-b41a-8ed282d79453" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?disco" />
+    <MetadataFile FileName="FilingManagerService.wsdl" MetadataType="Wsdl" ID="ccc6aa5e-5937-4243-a457-5581adf1ea64" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?wsdl" />
+    <MetadataFile FileName="FilingManagerSplit6.xsd" MetadataType="Schema" ID="f5704bfe-a8b0-46b9-bf55-678d3d2af8bb" SourceId="1" SourceUrl="http://univ511:5057/Unifreight511/FilingManagerSplit?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

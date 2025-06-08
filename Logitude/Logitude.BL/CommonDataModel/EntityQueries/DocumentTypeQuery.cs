@@ -481,16 +481,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return docTypePm;
         }
-        
+
         public DocumentTypePM GetDigitalSinglePMByCodeAndTenant(string code, int tenant)
         {
             DocumentTypePM docTypePm = repository.context
                                                  .DocumentTypes
-                                                 .Where(a => a.Code == code 
+                                                 .Where(a => a.Code == code
                                                              && a.Tenant == tenant)
                                                  .Select(a => new DocumentTypePM()
                                                  {
-                                                    Id = a.Id
+                                                     Id = a.Id
                                                  })
                                                 .FirstOrDefault();
             return docTypePm;
@@ -1437,7 +1437,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 return d;
             }
-            
+
         }
 
         private bool IsFullAccountingActivated(int tenant)
@@ -2244,9 +2244,37 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return d;
         }
+        public DocumentType GetDocumentTypeByCode(string code, int tenant, bool fromCache = false)
+        {
+            DocumentType docTypePm = null;
 
+			string entityName = $"DocumentTypePM_{tenant}_{code}";
+
+			
+
+			if (fromCache && HttpContext.Current != null)
+            {
+				var cached = CacheManager.CacheWrapper.Get(entityName);
+				if (cached == null)
+				{
+					docTypePm = repository.context.DocumentTypes
+					.FirstOrDefault(a => a.Code == code && a.Tenant == tenant);
+					if (docTypePm != null)
+						CacheManager.CacheWrapper.Insert(entityName, docTypePm, null);
+				}
+				else
+				{
+					docTypePm = (DocumentType)cached;
+				}
+            }
+            else
+            {
+				docTypePm = repository.context.DocumentTypes
+			     .FirstOrDefault(a => a.Code == code && a.Tenant == tenant);
+			}
+            return docTypePm;
+        }
     }
-
     public class ShareDocumentTypesArgs
     {
         public string EntityId { get; set; }
