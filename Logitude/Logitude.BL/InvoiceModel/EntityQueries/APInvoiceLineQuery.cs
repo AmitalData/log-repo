@@ -39,7 +39,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<APInvoiceLinePM> GetInvoiceLinesByInvoiceId(string invoiceId, int tenant)
         {
-            List<APInvoiceLine> myData = (from a in repository.context.APInvoiceLines
+            List<APInvoiceLine> myData = (from a in repository.context.APInvoiceLines.Include("Currency")
                                           where a.Tenant == tenant
                                           && a.APInvoiceId == invoiceId
                                           select a).ToList();
@@ -183,6 +183,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                                 RefundAmount = a.RefundAmount,
                                 ForiegnCurrencyId = a.ForiegnCurrencyId,
+                                ForiegnCurrencyCode = a.Currency?.Code,
                                 ForiegnExchangeRate = a.ForiegnExchangeRate,
                                 ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
                                 DebitAccount = a.DebitAccount,
@@ -268,16 +269,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
 
 
-                    }
-                    else
-                    {
-                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
-                        CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
-                        Currency foreignCurrency = currencyRepository.GetSingleCurrency(item.ForiegnCurrencyId, tenant);
-                        if (foreignCurrency != null)
-                        {
-                            item.ForiegnCurrencyCode = foreignCurrency.Code;
-                        }
                     }
                 }
             }
