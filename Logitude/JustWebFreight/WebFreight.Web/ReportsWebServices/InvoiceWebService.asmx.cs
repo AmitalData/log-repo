@@ -262,7 +262,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.WaterMark = invoicedataprovider.Status;
                     invoicedataprovider.CopyName = invoicedataprovider.Status;
                     invoicedataprovider.CopyName_hebrew = "פרופורמה";
-                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? currentInvoice.DraftNumber : "";
+                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? "Draft: " + currentInvoice.DraftNumber : "";
                 }
 
                 else if (currentInvoice.StatusCode == "LL")
@@ -270,7 +270,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoicedataprovider.WaterMark = invoicedataprovider.Status;
                     invoicedataprovider.CopyName = invoicedataprovider.Status;
                     invoicedataprovider.CopyName_hebrew = "מבוטלת";
-                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? currentInvoice.DraftNumber : "";
+                    invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? "Draft: " + currentInvoice.DraftNumber : "";
                 }
 
                 else
@@ -605,7 +605,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                     invoicedataprovider.Volume = shipment.Volume != null ? String.Format("{0:#,0.00}", shipment.Volume) + " " + volumeUnitCode : "";
                     invoicedataprovider.VolumetricWeight = shipment.VolumetricWeight != null ? String.Format("{0:#,0.00}", shipment.VolumetricWeight) + " " + chargeableWeightUnitCode : "";
-                    invoicedataprovider.Notes = currentInvoice.PrintNotes != null ? currentInvoice.PrintNotes : "";
+                    if(currentInvoice.StatusCode == "DR"  && currentInvoice.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant))
+                       invoicedataprovider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant);
+                    else
+                        invoicedataprovider.Notes = currentInvoice.PrintNotes != null ? currentInvoice.PrintNotes : "";
 
                     //invoice payment term
                     PaymentTerm paymentterm = (from pa in commonContext.PaymentTerms
@@ -2381,7 +2384,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoicedataprovider.WaterMark = "Draft";
                         invoicedataprovider.CopyName = "Draft";
                         invoicedataprovider.CopyName_hebrew = "פרופורמה";
-                        invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? currentInvoice.DraftNumber : "";
+                        invoicedataprovider.InvoiceNumber = currentInvoice.DraftNumber != null ? "Draft: " + currentInvoice.DraftNumber : "";
                     }
                 }
 
@@ -3081,7 +3084,10 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.DueDateAsDateFormat = entityPOCO.DueDate;
                 invoiceDataProvider.CustomerRef = entityPOCO.CustomerRef;
                 invoiceDataProvider.BillToVatNumber = entityPOCO.VatNumber != null ? entityPOCO.VatNumber : "";
-                invoiceDataProvider.Notes = entityPOCO.PrintNotes != null ? entityPOCO.PrintNotes : "";
+                if (entityPOCO.StatusCode == "DR" && entityPOCO.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant))
+                    invoiceDataProvider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant);
+                else
+                    invoiceDataProvider.Notes = entityPOCO.PrintNotes != null ? entityPOCO.PrintNotes : "";
 
                 invoiceDataProvider.ApprovedDate = entityPOCO.ApprovedDate != null ? String.Format("{0:dd.MMM.yyyy}", entityPOCO.ApprovedDate) : "";
                 invoiceDataProvider.ApprovedDateAsDateFormat = entityPOCO.ApprovedDate;
@@ -3123,7 +3129,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoiceDataProvider.WaterMark = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName_hebrew = "פרופורמה";
-                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? entityPOCO.DraftNumber : "";
+                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? "Draft: " + entityPOCO.DraftNumber : "";
                     invoiceDataProvider.Draft_labelHebrew = "פרופורמה";
                     invoiceDataProvider.Draft_label = "Draft";
                 }
@@ -3133,7 +3139,7 @@ namespace WebFreight.Web.ReportsWebServices
                     invoiceDataProvider.WaterMark = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName = invoiceDataProvider.Status;
                     invoiceDataProvider.CopyName_hebrew = "מבוטלת";
-                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? entityPOCO.DraftNumber : "";
+                    invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? "Draft: " + entityPOCO.DraftNumber : "";
                     invoiceDataProvider.Draft_labelHebrew = "מבוטלת";
                     invoiceDataProvider.Draft_label = "Cancelled";
                 }
@@ -4234,7 +4240,7 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.WaterMark = "Draft";
                         invoiceDataProvider.CopyName = "Draft";
                         invoiceDataProvider.CopyName_hebrew = "פרופורמה";
-                        invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? entityPOCO.DraftNumber : "";
+                        invoiceDataProvider.InvoiceNumber = entityPOCO.DraftNumber != null ? "Draft: " + entityPOCO.DraftNumber : "";
                     }
                 }
 

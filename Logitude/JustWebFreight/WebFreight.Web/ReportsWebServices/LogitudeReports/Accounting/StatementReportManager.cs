@@ -979,7 +979,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.HouseNumber = d.HouseNumber;
                 item.Date = d.InvoiceDate.Value;
                 item.DueDate = d.DueDate.Value;
-                item.OurRefrence = d.StatusCode == "DR" || d.StatusCode == "PR" ? d.DraftNumber : d.InvoiceNumber;
+                item.OurRefrence = d.StatusCode == "DR" || d.StatusCode == "PR" ? "Draft: " + d.DraftNumber : d.InvoiceNumber;
                 item.YourRefrence = d.CustomerRef;
                 item.CurrencyId = d.InvoiceCurrencyId;
                 item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));

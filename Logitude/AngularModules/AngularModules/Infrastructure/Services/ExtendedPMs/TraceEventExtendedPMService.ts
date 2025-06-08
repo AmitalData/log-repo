@@ -37,6 +37,21 @@ export class TraceEventExtendedPMService {
             ).pipe(map(() => new ServiceResponse()), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+
+    GetLatestTraceEventByEventCode(entityId: string, eventCode: string) {
+        
+        var url = `${this._apiUrl}/GetLatestTraceEventByEventCode?entityId=${entityId}&eventCode=${eventCode}`;
+
+        return defer(() => {
+            let serviceResponse = new ServiceResponse();
+
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export enum TraceEventTypeCodes { CREATE = 'CREV', UPDATE = 'UPEV' }
