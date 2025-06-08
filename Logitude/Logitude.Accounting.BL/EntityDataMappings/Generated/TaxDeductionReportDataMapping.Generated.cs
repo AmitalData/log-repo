@@ -42,7 +42,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Email, 
 	         ErrorMessage, 
 	         ByMonth, 
-	         Month,
+	         Month, 
+	         FromMonth,
 	      }
 
 
@@ -66,7 +67,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Status, 
 	         StatusLocalName, 
 	         ByMonth, 
-	         Month,
+	         Month, 
+	         FromMonth,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -143,6 +145,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Month))
             {
 				entityPOCO.Month = entityPM.Month;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromMonth))
+            {
+				entityPOCO.FromMonth = entityPM.FromMonth;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -226,6 +233,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.Month = entityPOCO.Month;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FromMonth))
+            {
+					entityPM.FromMonth = entityPOCO.FromMonth;
+            }
+
 		}
 
 		public void PMToOldPM(TaxDeductionReportPM entityPM, TaxDeductionReportPM oldEntityPM)
@@ -300,6 +312,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Month))
             {
                 oldEntityPM.Month = entityPM.Month;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromMonth))
+            {
+                oldEntityPM.FromMonth = entityPM.FromMonth;
             }
 			
 		}
