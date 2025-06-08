@@ -145,7 +145,6 @@
     <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202007051540_UpdateCardGlaAccountDisplayNumber.sxml" />
     <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
-    <None Include="DBScripts\CommonModel\202008051018_AddNewMeasurementAndChargesType.sxml" />
     <None Include="DBScripts\CommonModel\202201261145_FillPostalCodesTable.sxml" />
     <None Include="DBScripts\CommonModel\202201310232_UpdateDeliveryArrivedEventStatus.sxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogbox2Ignore.Ignoresxml" />
