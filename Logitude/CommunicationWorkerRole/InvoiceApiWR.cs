@@ -21,12 +21,13 @@ using Logitude.Accounting.BL.Interfaces.Magaya;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Microsoft.Practices.Unity;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Accounting.Data;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 
 namespace CommunicationWorkerRole
 {
@@ -37,9 +38,9 @@ namespace CommunicationWorkerRole
         QueueResponse response = null;
         InvoiceApiService invoiceApiService;
         InvoiceApiCommunicationLogPM invoiceApiCommunicationLog = null;
-
+        string invoiceXml = null;
         int tenant = 0;
-
+        ARInvoicePM aRInvoicePM = null;
 
         public InvoiceApiWR()
         {
@@ -195,16 +196,16 @@ namespace CommunicationWorkerRole
                     CloseInvoiceApiSession();
                     break;
                 case InvoiceApiStepEnum.GenerateInvoice:
-                    GenerateInvoice(null);
+                    GenerateInvoice();
                     break;
                 case InvoiceApiStepEnum.GetConfirmationNumber:
-                    SetConfirmationNumberStatusInvoice(null,null);
+                    SetConfirmationNumberStatusInvoice();
                     break;
                 case InvoiceApiStepEnum.ApproveInvoice:
-                    ApproveInvoice(null,null);
+                    ApproveInvoice();
                     break;
                 case InvoiceApiStepEnum.PrintOrSendInvoice:
-                    PrintOrSendInvoice(null,tenant);
+                    PrintOrSendInvoice();
                     break;
                 
                 default:
@@ -237,10 +238,10 @@ namespace CommunicationWorkerRole
             try
             {
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetInvoiceApiInvoice, InvoiceApiStatusEnum.InProgress);
-                var  xml = invoiceApiService.GetTransaction(response.MessageValues["Type"], 1, response.MessageValues["Guid"]);
-                if (string.IsNullOrWhiteSpace(xml))
+                  invoiceXml = invoiceApiService.GetTransaction("IN", 0, response.MessageValues["Guid"]);
+                if (string.IsNullOrWhiteSpace(invoiceXml))
                     throw new Exception("GetTransaction failed or returned empty XML");
-                AddDocumentToApiCommunicationLog(System.Text.Encoding.UTF8.GetBytes(xml));
+                AddDocumentToApiCommunicationLog(System.Text.Encoding.UTF8.GetBytes(invoiceXml));
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetInvoiceApiInvoice, InvoiceApiStatusEnum.Done);
 
                 CloseInvoiceApiSession();
@@ -262,7 +263,7 @@ namespace CommunicationWorkerRole
                 invoiceApiService.EndSession();
 
                 UpdateCommunicationStatus(InvoiceApiStepEnum.CloseInvoiceApiSession, InvoiceApiStatusEnum.Done);
-                GenerateInvoice(null);
+                GenerateInvoice();
             }
             catch (Exception ex)
             {
@@ -271,11 +272,13 @@ namespace CommunicationWorkerRole
 
             }
         }
-        private void GenerateInvoice(string xml) {
+        private void GenerateInvoice() {
 
             try {
-                UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, InvoiceApiStatusEnum.InProgress);
-                ARInvoicePM aRInvoicePM = MapXmlToArinvoice(xml);
+                if (string.IsNullOrWhiteSpace(invoiceXml))
+                    GetBlob();
+                 UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, InvoiceApiStatusEnum.InProgress);
+                 aRInvoicePM = MapXmlToArinvoice(invoiceXml);
                 if (aRInvoicePM == null)
                 {
                     throw new Exception("Failed to map XML to ARInvoicePM");
@@ -286,7 +289,7 @@ namespace CommunicationWorkerRole
 
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, InvoiceApiStatusEnum.Done);
 
-                SetConfirmationNumberStatusInvoice(aRInvoicePM, service);
+                SetConfirmationNumberStatusInvoice(service);
 
             }
             catch (Exception ex)
@@ -297,16 +300,27 @@ namespace CommunicationWorkerRole
             }
 
         }
-        private void SetConfirmationNumberStatusInvoice(ARInvoicePM aRInvoicePM, ARInvoiceService service)
+        private void SetConfirmationNumberStatusInvoice(ARInvoiceService service =null)
         {
             try
             {
+                if(service == null)
+                {
+                    IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                    service = new ARInvoiceService(MyContext, tenant);
+
+                }
+                if (aRInvoicePM == null)
+                {          
+                    GetARInvoice();
+                }
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetConfirmationNumber, InvoiceApiStatusEnum.InProgress);
 
-                service.SetConfirmationNumberStatus();
+                service.SetConfirmationNumberStatus(aRInvoicePM);
+                service.Update(aRInvoicePM, true);
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetConfirmationNumber, InvoiceApiStatusEnum.Done);
 
-                ApproveInvoice(aRInvoicePM, service);
+                ApproveInvoice( service);
              }
             catch (Exception ex)
             {
@@ -314,10 +328,21 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "Error setting confirmation number status", null, null);
             }
         }
-        private void ApproveInvoice(ARInvoicePM aRInvoicePM, ARInvoiceService service) {
+        private void ApproveInvoice(ARInvoiceService service =null) {
             try
             {
+                if (service == null)
+                {
+                    IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+                    service = new ARInvoiceService(MyContext, tenant);
+
+                }
+                if (aRInvoicePM == null)
+                {
+                    GetARInvoice();
+                }
                 UpdateCommunicationStatus(InvoiceApiStepEnum.ApproveInvoice, InvoiceApiStatusEnum.InProgress);
+                CreateEvent("UPEV", "Invoice added: "+ aRInvoicePM.InvoiceNumber);
 
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ARInvoiceApproveWR", tenant);
@@ -326,7 +351,8 @@ namespace CommunicationWorkerRole
                     { "ARInvoiceId", aRInvoicePM.Id },
                     { "Tenant", tenant.ToString() },
                     { "BatchIdFromInterestInvoice", null },
-                    {"IsInvoiceApi", "true" }
+                    {"invoiceApiCommunicationLogId", invoiceApiCommunicationLog.Id},
+
                    }, tenant);
             }
             catch (Exception ex)
@@ -336,7 +362,30 @@ namespace CommunicationWorkerRole
                 queueService.CompleteAsFailed();
             }
         }
-        private void PrintOrSendInvoice(string xml, int tenant) { }
+        private void PrintOrSendInvoice() {
+            try
+            {
+                UpdateCommunicationStatus(InvoiceApiStepEnum.PrintOrSendInvoice, InvoiceApiStatusEnum.InProgress);
+
+                if (aRInvoicePM == null)
+                {
+                    GetARInvoice();
+                }
+                IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+
+                ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext,tenant);
+                invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant);
+           
+                UpdateCommunicationStatus(InvoiceApiStepEnum.ApproveInvoice, InvoiceApiStatusEnum.Done);
+
+            }
+            catch (Exception ex)
+            {
+                UpdateCommunicationStatus(InvoiceApiStepEnum.PrintOrSendInvoice, InvoiceApiStatusEnum.Failed, ex.Message);
+                queueService.CompleteAsFailed();
+            }
+
+        }
        
 
 
@@ -367,7 +416,7 @@ namespace CommunicationWorkerRole
         }
 
 
-        public void UpdateCommunicationStatus(string step , string status ,string exception = null)
+        public  void UpdateCommunicationStatus(string step , string status ,string exception = null)
         {
             try
             {
@@ -375,23 +424,19 @@ namespace CommunicationWorkerRole
                 {
                     IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                     InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                    invoiceApiCommunicationLog.Step = step;
-                    invoiceApiCommunicationLog.StatusCode = status;
-                    invoiceApiCommunicationLog.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                     if (exception != null)
                     {
                         var exceptionDict = new Dictionary<string, object>
                         {
                             { "exception", exception },
-                            { "MessageValues", response?.MessageValues }
+                            { "MessageValues", response?.MessageValues },
+                            { "ARInvoiceId" , aRInvoicePM?.Id}
                         };
-                        invoiceApiCommunicationLog.Exception = Newtonsoft.Json.JsonConvert.SerializeObject(exceptionDict);
+                        exception = Newtonsoft.Json.JsonConvert.SerializeObject(exceptionDict);
+                        CreateEvent("ICFD", exception);
+
                     }
-                    else
-                    {
-                        invoiceApiCommunicationLog.Exception = null;
-                    }
-                    invoiceApiCommunicationLogUpdateService.Update(invoiceApiCommunicationLog ,true);
+                    invoiceApiCommunicationLogUpdateService.UpdateCommunicationStatus(invoiceApiCommunicationLog ,tenant,step,status, exception);
 
                 }
 
@@ -414,6 +459,8 @@ namespace CommunicationWorkerRole
                 invoiceApiCommunicationLog = queryService.GetSingle(invoiceApiId, false,false) ??  throw new InvalidOperationException($"Log not found for InvoiceApiId: {invoiceApiId}");
                 if (invoiceApiCommunicationLog == null)
                     throw new Exception("InvoiceApiCommunicationLog not found for InvoiceApiId: " + invoiceApiId);
+                CreateEvent("UPEV", "WR Started" );
+
             }
             catch (Exception ex)
             {
@@ -442,6 +489,35 @@ namespace CommunicationWorkerRole
             blobService.Write(byteData, fileInfo);
             Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"SetBlob: {filePath}");
         }
+
+        private void GetBlob()
+        {
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            DocumentRepository documentrepository = new DocumentRepository(commonContext);
+             var document = documentrepository.GetSingleDocument(tenant, invoiceApiCommunicationLog.DocumentId);
+            if (document == null)
+            {
+                throw new Exception($"Document not found for Id: {invoiceApiCommunicationLog.DocumentId}");
+            }
+
+            IBlobService iBlobService = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                Tenant = document.Tenant,
+                FileName = document.Id,
+                FolderName = "others",
+                Extension = "xml",
+
+            };
+
+            byte[] byteData = iBlobService.Read(fileInfo);
+            if (byteData == null || byteData.Length == 0)
+            {
+                throw new Exception($"Blob not found for {document.Id}");
+            }
+            invoiceXml = System.Text.Encoding.UTF8.GetString(byteData);
+        }
         public void AddDocumentToApiCommunicationLog(byte[] ByteData)
         {
             try
@@ -450,9 +526,7 @@ namespace CommunicationWorkerRole
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
-                    UserRepository userRepository = new UserRepository(commonContext);
                     DocumentRepository documentrepository = new DocumentRepository(commonContext);
-                    ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
                     IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                     InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
 
@@ -479,7 +553,7 @@ namespace CommunicationWorkerRole
                     var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                    
                     SaveToBlob(ByteData, document);
-
+                    CreateEvent("UPEV", "Document added:" + document.Id);
                     stopwatch.Stop();
 
 
@@ -491,7 +565,36 @@ namespace CommunicationWorkerRole
                 throw ex;
             }
         }
+        public void GetARInvoice()
+        {
+            ARInvoiceQuery aRInvoiceQueryService = new ARInvoiceQuery(tenant);
+            var exceptionJson = invoiceApiCommunicationLog.Exception;
+            var exceptionDict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(exceptionJson);
+            var arInvoiceId = exceptionDict != null && exceptionDict.ContainsKey("ARInvoiceId")
+                ? exceptionDict["ARInvoiceId"]?.ToString()
+                : null;
+            if (string.IsNullOrWhiteSpace(arInvoiceId))
+                throw new Exception("ARInvoiceId not found in exception data for Guid: " + response.MessageValues["Guid"]);
 
+            aRInvoicePM = aRInvoiceQueryService.GetSinglePM(arInvoiceId, tenant);
+            if (aRInvoicePM == null)
+                throw new Exception("ARInvoicePM not found for Id: " + arInvoiceId);
+        }
+
+
+
+        private void CreateEvent(string eventCode,  string Notes = null)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = invoiceApiCommunicationLog.Id,
+                Tenant =tenant,
+                ObjectTableName = "InvoiceApiCommunicationLog",
+                IsAddedManually = false,
+                EventTypeCode = eventCode,
+                Notes = Notes,
+            });
+        }
 
     }
 
