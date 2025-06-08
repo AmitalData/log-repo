@@ -9,6 +9,8 @@ import { AppTool } from '../../../../Infrastructure/Tools';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 @Component({
 
@@ -21,7 +23,6 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
     public ObjectTableName = "BankAccount";
     public DataContext = this;
     public GLAccountsFilterItems: ApiQueryFilters;
-
 
     public isRTL: boolean = false;
 
@@ -60,9 +61,11 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
                     }
                 });
             }
+          
+
         }
     }
-
+   
     InitLOVFilters() {
         // initialize query filters for Accounts
         this.GLAccountsFilterItems = new ApiQueryFilters();
@@ -206,7 +209,12 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
             this.EntityPM.Inactive = value;
         }
     }
-
+    get FactoringBank() { return this.EntityPM.FactoringBank; }
+    set FactoringBank(value: boolean) {
+        if (this.EntityPM.FactoringBank  !==  value) {
+            this.EntityPM.FactoringBank = value;
+        }
+    }
     get LocalName() { return this.EntityPM.LocalName; }
     set LocalName(value: string) {
         if (this.EntityPM.LocalName != value) {

@@ -1210,6 +1210,18 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.SealNo = entityPM.SealNo;
             entityPoco.HSCode = entityPM.HSCode;
 
+            FieldChange.Add(entityPoco.LockerCode, entityPM.LockerCode, nameof(entityPM.LockerCode), fieldChanges);
+            entityPoco.LockerCode = entityPM.LockerCode;
+
+            FieldChange.Add(entityPoco.LockerName, entityPM.LockerName, nameof(entityPM.LockerName), fieldChanges);
+            entityPoco.LockerName = entityPM.LockerName;
+
+            FieldChange.Add(entityPoco.LockerCity, entityPM.LockerCity, nameof(entityPM.LockerCity), fieldChanges);
+            entityPoco.LockerCity = entityPM.LockerCity;
+
+            FieldChange.Add(entityPoco.LockerAddress, entityPM.LockerAddress, nameof(entityPM.LockerAddress), fieldChanges);
+            entityPoco.LockerAddress = entityPM.LockerAddress;
+
             BuildSearchField(entityPM, entityPoco, entityMasterData, myPackagesList);
             if (!LBcurrentTenant.IsDocumentsArchive)
             {

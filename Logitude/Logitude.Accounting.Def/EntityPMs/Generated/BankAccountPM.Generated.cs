@@ -1067,7 +1067,30 @@ namespace Logitude.Accounting.Def.EntityPMs
               }
              set {  deletedChequeCounterSerials = value; }
 	    }
-	  	    }
+	  	  private bool? factoringBank ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? FactoringBank  
+	   {
+	    
+	     get
+		{
+		   return factoringBank;
+		 }
+		 set
+		 {
+		   if(factoringBank != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FactoringBank",OldValue=factoringBank,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   factoringBank=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

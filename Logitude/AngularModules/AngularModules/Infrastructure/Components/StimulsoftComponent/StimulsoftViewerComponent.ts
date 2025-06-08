@@ -97,6 +97,7 @@ export class StimulsoftViewerComponent implements OnInit {
     public reportService: ReportService;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsEnableReportTemplateExcel: boolean = false;
+    IsEnableButtonExcel: boolean = false;
 
     SelectedFontSize: number;
     FontSizeLists: number[] = [];
@@ -177,8 +178,9 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.SetStimualData();
 
             }
-        }
-
+        }    
+        this.IsEnableButtonExcel = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "REE")[0] ? true : false;
+    
         if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.StimulsoftArgData.IsExcelReportAllowed == true) {
             this.IsEnableReportTemplateExcel = true;
         }
@@ -976,15 +978,6 @@ ResetEditableField(field: EditableFieldPosition){
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
 
-                    let isEditComponentSaved = false;
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-
-                        var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
-
-                        this.LoadReportTemplate(defultTemplateId, true);
-
-                    });
-
                     cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
                         if (isSaveSuccess) {
                             var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
@@ -1405,4 +1398,13 @@ ResetEditableField(field: EditableFieldPosition){
         this.ShowMessageTemlatesLists = (type == "Email");
     }
 
+    async ExportToExcel() {
+        
+        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = true;
+       
+        if (this.StimulsoftArgData.ReportFilterConmponent) {
+            this.RunReport();
+        }
+        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = false;
+    }
 }

@@ -271,42 +271,118 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
             this.showConsignments = itemValue;
         }
     }
-
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "CreateDate":{
+                    this.FromDate = new Date(queryFilterItem.FieldValue);
+                    this.toDate = new Date(queryFilterItem.FieldValue2);
+                    break;
+                }
+                case "TransportModeId":
+                    this.SelectedTransportModeId = queryFilterItem.FieldValue;
+                break;
+                case "DeclarationStatusTypeCode":
+                {
+                this.DeclarationStatusTypeCode= queryFilterItem.FieldValue;
+                this.declarationStatusTypeName = queryFilterItem.FieldValue2;
+                break;
+                }
+                 
+                case "DeclarationTypeCode":
+                {
+                  this.DeclarationTypeCode= queryFilterItem.FieldValue;
+                  this.declarationTypeName = queryFilterItem.FieldValue2;
+                  break;
+                }
+                                       
+                case "ReferentUserId":{
+                    this.ReferentUserId = queryFilterItem.FieldValue;
+                     this.referentUserName = queryFilterItem.FieldValue2;
+                     break;
+                 }
+                 case "DestinationCountryCode":
+                 {
+                    this.DestinationCountryCode = queryFilterItem.FieldValue;
+                    this.destinationCountryName = queryFilterItem.FieldValue2;
+                    break;
+                 }
+                 case "Customer":
+                    {
+                       this.CustomerId = queryFilterItem.FieldValue;
+                       this.customerName = queryFilterItem.FieldValue2;
+                       break;
+                    }
+                 case "ShowInvoices":
+                      this.ShowInvoices = queryFilterItem.FieldValue;
+                     break;
+                 case "ShowConsignments":
+                      this.ShowConsignments = queryFilterItem.FieldValue;
+                     break;
+                                 
+            }
+   
+    
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+      
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+       
+    }
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
     RunReport() {
         this.ValidationErrorsList = [];
 
 
-        var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        
-            if (this.FromDate == null) {
-                var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
-                this.ValidationErrorsList.push(FromDateValidation);
-            }
-
-            if (this.ToDate == null) {
-                var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
-                this.ValidationErrorsList.push(ToDateValidation);
-            }
-
-            if (this.FromDate != null && this.ToDate != null) {
-                var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
-                var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
-                if (FromDate > ToDate) {
-                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
-                }
-            
-        }
+       
         if (this.ValidationErrorsList.length == 0) {
 
             this.BuildReport();
 
         }
     }
+    ValidateSelectedFilters() {
+        var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        
+        if (this.FromDate == null) {
+            var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
+            this.ValidationErrorsList.push(FromDateValidation);
+        }
 
+        if (this.ToDate == null) {
+            var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
+            this.ValidationErrorsList.push(ToDateValidation);
+        }
+
+        if (this.FromDate != null && this.ToDate != null) {
+            var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
+            var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
+            if (FromDate > ToDate) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+            }
+        return this.ValidationErrorsList.length == 0;
+    }
+    }
     BuildReport() {
-        this.InitilaizeFilter();
+        this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -320,7 +396,7 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
         this.ReportsPreview.GenerateReport(this.reportFliter, true);
     }
 
-    InitilaizeFilter() {
+    GetQueryFilterItems() {
        
         this.queryFilterItems = new Array<QueryFilterItem>();
         //-----------------------------------------------------------------------------1
@@ -360,7 +436,7 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
         //-----------------------------------------------------------------------------8
         
         this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowConsignments", this.ShowConsignments, null, "string"));
-        
+        return this.queryFilterItems;
     } 
 
     GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {

@@ -17,7 +17,6 @@ import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {ObjectsLocator} from "../../../Infrastructure/Locators/ObjectsLocator";
 import { EventParams } from 'Accounting/Utilities/ReconcileEventManager';
 
 export class ARPaymentMenuButtonsHandler {
@@ -42,7 +41,6 @@ export class ARPaymentMenuButtonsHandler {
         this.isVoided = false;
         this.isPrintRequested = false;
         this.isSATSendRequest = false;
-        //this.EntityPM.SetReSendQBO = false;
     }
 
     Listen() {
@@ -208,18 +206,13 @@ export class ARPaymentMenuButtonsHandler {
                             else {
                                 button.IsDisabled = false;
                             }
-                            //  if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || AppTool.IsNullOrEmpty(this.EntityPM.Id) ||// this.EntityPM.StatusCode == "VD") {
-                            //     button.IsDisabled = true;
-                            // }
-
-                            // else {
-
+                           
 
                             if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
                                 button.IsHidden = true;
                             }
 
-                            // }
+                           
                             break;
                         }
 
@@ -342,7 +335,6 @@ export class ARPaymentMenuButtonsHandler {
 
     SolvedManual() {
         this.EntityPM.SATTransferStatusCode = "SM";
-        //this.EntityPM.TransmissionError = ""; // or ng if
         this.entityArgs.EditComponent.SaveChanges("Solved Manual");
     }
 
@@ -419,7 +411,6 @@ export class ARPaymentMenuButtonsHandler {
         logWindow.Show('./Invoice/Components/SAT/SendPaymentWindowComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
 
-            //this.StopBusyIndicator();
         });
     }
 
@@ -447,38 +438,7 @@ export class ARPaymentMenuButtonsHandler {
                 this.entityArgs.EditComponent.ValidationErrorsList.push(item);
             });
         }
-        ////if (this.EntityPM.StatusCode == "AD" || this.EntityPM.StatusCode == "CL") {
-        //    //if (this.EntityPM.PaymentInvoices.length > 0) {
-        //        var windowArgs: any = {};
-        //        windowArgs.EnttiyPM = this.EntityPM;
-
-        //        var logWindow = new LogitudeWindow();
-        //        //logWindow.Width = 500;
-        //        //logWindow.Height = 300;
-        //        logWindow.Title = "Send to SAT";
-        //        logWindow.WindowArgs = windowArgs;
-        //        logWindow.Show('./Invoice/Components/SAT/SendPaymentWindowComponent');
-        //        logWindow.WindowClosed.subscribe(($event: any) => {
-
-        //            //this.StopBusyIndicator();
-        //        });
-        //    //}
-        //    //else {
-        //    //    var messageWindow: MessageWindow;
-        //    //    var messageText = "There is no connected invoices";//TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
-        //    //    messageWindow = new MessageWindow();
-        //    //    messageWindow.Show(messageText);
-        //    //    return;
-        //    //}
-        ////}
-        ////else {
-        ////    var messageWindow: MessageWindow;
-        ////    var messageText = "Payment should be Approved before sending it to SAT";//TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
-        ////    messageWindow = new MessageWindow();
-        ////    messageWindow.Show(messageText);
-        ////    return;
-
-        ////}
+       
 
 
     }
@@ -486,14 +446,16 @@ export class ARPaymentMenuButtonsHandler {
     // [Approval]
     ApprovalMethod() {
 
-        // full accounting validation
-        //lines validation
+      
         if(SessionLocator.TenantPM.AccountingActivated){
             var _edit = this.CurrentSession.CurrentEditComponent;
             if(!_edit.IsEditValid){
                 _edit.ValidationErrorsList = [TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines')];
                 return;
             }else{
+                if(_edit.ValidationErrorsList !== null && _edit.ValidationErrorsList.length > 0){ 
+                   return;
+                }
                 _edit.ValidationErrorsList = [];
             }
 
@@ -555,7 +517,6 @@ export class ARPaymentMenuButtonsHandler {
 
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
-                //CommonContext.SubmitChanges();
             }
             this.entityArgs.EditComponent.SaveChanges();
             ARPaymentEventManager.ARPaymentApproved.emit(new EventParams());
@@ -571,22 +532,8 @@ export class ARPaymentMenuButtonsHandler {
 
     }
     CreateARPaymentCheque() {
-        //var arPaymentcheque: ARPaymentChequePM = new ARPaymentChequePM();
-        //arPaymentcheque.PaymentId = this.EntityPM.Id;
-        //arPaymentcheque.ChequeNumber = this.EntityPM.ChequeOrPaymentRef;
-        //arPaymentcheque.ValueDate = this.EntityPM.ValueDate;
-        //arPaymentcheque.BankBranch = this.EntityPM.BankBranch;
-        //arPaymentcheque.BankAccount = this.EntityPM.Account;
-        //arPaymentcheque.CurrencyId = this.EntityPM.PaymentCurrencyId;
-        //arPaymentcheque.LocalAmount = this.EntityPM.AmountInLocalCurrency;
-        //arPaymentcheque.ForeignAmount = this.EntityPM.AmountInPaymentCurrency;
+        
 
-        //var cashBookLine: CashBookLinePM = new CashBookLinePM(null);
-        //cashBookLine.CashBookId = "";
-        //cashBookLine.ARPChequeId = arPaymentcheque.Id;
-        //cashBookLine.IsDeposited = false;
-
-        //// Create Journal
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
         invoiceDomainService.PostARPaymentChequeAndCashBook(this.EntityPM).subscribe((response: ServiceResponse) => {
             if (response != null) {
@@ -611,7 +558,6 @@ export class ARPaymentMenuButtonsHandler {
             this.EntityPM.SetCancelApproval = true;
             if (this.CurrentDocument != null) {
                 this.CurrentDocument.NeedsRebuild = true;
-                //CommonContext.SubmitChanges();
             }
 
             this.entityArgs.EditComponent.SaveChanges();
@@ -682,7 +628,6 @@ export class ARPaymentMenuButtonsHandler {
                         this.EntityPM.SetCancelApproval = false;
                         if (this.CurrentDocument != null) {
                             this.CurrentDocument.NeedsRebuild = true;
-                            //CommonContext.SubmitChanges();
                         }
                         this.EntityPM.OpenAmount=234242;
                         this.entityArgs.EditComponent.SaveChanges();
@@ -720,7 +665,7 @@ export class ARPaymentMenuButtonsHandler {
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE" && (this.EntityPM.SATTransferStatusCode == "TD" || this.EntityPM.SATTransferStatusCode == "TG") && (this.EntityPM.StatusCode == "AD" || this.EntityPM.StatusCode == "CL"
             )) {
 
-            var messageText = "This Payment is connected to SAT, Please cancel payment approval before voiding it";//TextCodeTranslator.Translate("ARPayment.M.AccountingSettingsDontAllowVoid");
+            var messageText = "This Payment is connected to SAT, Please cancel payment approval before voiding it";
             messageWindow = new MessageWindow();
             messageWindow.Show(messageText);
             return;
@@ -735,7 +680,6 @@ export class ARPaymentMenuButtonsHandler {
         }
     }
 
-    //[ReTransfer]
     ReTransferClicked() {
         this.Validate();
         if (this.isValid) {
@@ -756,12 +700,10 @@ export class ARPaymentMenuButtonsHandler {
         var windowArgs: any = {};
         windowArgs.PaymentDate = this.EntityPM.RegisterDate;
         windowArgs.PaymentPM = this.EntityPM;
-        // windowArgs = this.SetPaymentChequeWindowArgs(windowArgs);
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 480;
         logWindow.Height = 280;
         logWindow.Title = windowTitle;
-        //  logWindow.ShowCloseButton = true;
 
         logWindow.WindowClosed.subscribe(($event: any) => this.VoidingARPayment($event));
         logWindow.Show('./InvoiceModules/ARPayment/Components/Other/CancelARPaymentComponent');

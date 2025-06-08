@@ -27,6 +27,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyResponseData.Succeeded = true;
+
+            if(customResponse?.ResponseContentHeader?.Remark != null)
+            {
+                this.MyResponseData.UserMessage = customResponse.ResponseContentHeader.Remark;
+            }
         }
 
         public override INF_MSG_GenericResponseData GetResponse(INF_MSG_Generic customResponse, BankAccountToRefundRequestParams requestParams)

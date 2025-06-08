@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { GenericTableComponent, TableData } from '../generic-table/generic-table.component';
-import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity } from '../main-display/main-display.component';
-import { API_MainService, Filters } from '../../../core/API_MainService';
+import { FileTypes, GenericTableComponent, TableData } from '../generic-table/generic-table.component';
+import { CB_CustomsItemComputedDataList, CB_RequirementComputedDataList, CB_TariffList, CustomItemClassifGuidanceResult, MainEntity, Mekach } from '../main-display/main-display.component';
+import { API_MainService } from '../../../core/API_MainService';
 import { CommonModule, NgStyle } from '@angular/common';
 import { NgFor, NgForOf } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
@@ -29,19 +29,27 @@ export class AccordionComponent implements OnInit {
   tableData3A: TableData;
   tableData3B: TableData;
   tableData4: TableData;
-  MainEntity: MainEntity = new MainEntity([], [], [], []);
-
+  tableData5: TableData;
+  MainEntity: MainEntity = new MainEntity([], [], [], [], []);
+  reloadMsg: string = "טוען נתונים...";
+  freeImportHeader: string = "יבוא חופשי";
+  pesonalImportHeader: string = "יבוא אישי";
+  classificationHeader: string = "הנחיות סיווג";
+  mekachHeader: string = "תדפיסי חקיקה (מקח''ים)";
   expandedArea1: boolean = false;
   expandedArea2: boolean = false;
   expandedArea3: boolean = true;
+  expandedArea5: boolean = false;
   faChevronLeft = faChevronLeft;
   faChevronDown = faChevronDown;
   noExistMessageClasisificationGuidance = "לא התקבלו הנחיות סיווג";
+  noExistMessageMakach = "לא התקבלו פרטי תדפיסי חקיקה";
   isLoadingClasisificationGuidance = false;
+  isLoadingMekach = false;
   resetClassificationGuidanceData: boolean = true;
 
   constructor(private API_MainService: API_MainService) {
-    this.MainEntity = new MainEntity([], [], [], []);
+    this.MainEntity = new MainEntity([], [], [], [], []);
   }
 
   ngOnInit() {
@@ -57,13 +65,14 @@ export class AccordionComponent implements OnInit {
       this.expandedArea1 = false;
       this.expandedArea2 = false;
       this.expandedArea3 = true;
+      this.expandedArea5 = true;
 
       this.customsItemId = data?.CustomsItemID;
       if (this.customsItemId) {
         this.resetData();
         this.buildAgreementsList(data?.CustomsItemID, data?.PH_MeasurementUnitID);
         this.buildRegularityRequirementList();
-        this.buildClasisificationGuidance();
+        this.getClassificationAndMekachData();
       }
     });
   }
@@ -99,7 +108,7 @@ export class AccordionComponent implements OnInit {
         { key: 'RequirementGoodsDescription', displayName: 'תיאור טובין בדרישה/תיאור הזהרות', dataType: 'string', visible: true },
         { key: 'Authority', displayName: 'גורם מאשר (הפניה לאיש קשר)', dataType: 'string', visible: true },
         { key: 'ConfirmationType', displayName: 'סוג אישור', dataType: 'string', visible: true },
-        { key: 'TextualCondition', displayName: 'תיאור תנאים', dataType: 'string', visible: true },
+        { key: 'TextualCondition', displayName: 'תיאור תנאים', dataType: 'link', visible: true, link: { url: `https://www.gov.il/he/Departments/DynamicCollectors/mandatory-standards-search?skip=0&standard_number_and_name=`, key: `TrNumber` } },
         { key: 'InterConditionsRelationship', displayName: 'יחס תנאים', dataType: 'string', visible: true },
         { key: 'IsPersonalImportIncluded', displayName: 'חל ביבוא אישי', dataType: 'boolean', visible: true },
         { key: 'IsCarnetIncluded', displayName: 'חל בקרנה', dataType: 'boolean', visible: true },
@@ -130,6 +139,16 @@ export class AccordionComponent implements OnInit {
       ],
       data: []
     };
+
+    this.tableData5 = {
+      columns: [
+        { key: 'mekachNumber', displayName: 'מס מק"ת/מק"ח', dataType: 'string', visible: true, width: '120px' },
+        { key: 'attachedMekahFile', displayName: 'קובץ מצורף', dataType: FileTypes.pdf, visible: true, width: '120px' },
+        { key: 'validityDate', displayName: 'בתוקף מיום', dataType: 'date', visible: true, width: '120px' },
+        { key: 'changeDescription', displayName: 'דברי הסבר', dataType: 'string', visible: true, width: '120px' }
+      ],
+      data: []
+    };
   }
 
   resetData() {
@@ -139,6 +158,7 @@ export class AccordionComponent implements OnInit {
     this.tableData3A.data = [];
     this.tableData3B.data = [];
     this.tableData4.data = [];
+    this.tableData5.data = [];
     this.ClassificationGuidanceId.next("");
   }
 
@@ -199,19 +219,48 @@ export class AccordionComponent implements OnInit {
       },
       (error) => {
         console.log(error.message);
+        this.isLoadingClasisificationGuidance = false;
       }
     );
   }
 
-  buildClasisificationGuidance() {
+  buildClasisificationGuidance(tenant: number = 0) {
     this.isLoadingClasisificationGuidance = true;
-    if (SessionInfo.LoggedUserTenant != 0)
-      this.GetDataCustomItemClassifGuidance(this.customsItemId, SessionInfo.LoggedUserTenant);
+    this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
+  }
+
+  buildDataMekach(tenant: number = 0) {
+    this.isLoadingMekach = true;
+    this.API_MainService.GetMekachDetails(this.customsItemId, tenant).subscribe(
+      (data: any) => {
+        const result: Mekach[] = data?.body?.CustomItemMekachDataList ?? [];
+        this.isLoadingMekach = false;
+        if (result?.length === 0) {
+          this.noExistMessageMakach = data?.body?.UserMessage ?? this.noExistMessageMakach;
+          return;
+        };
+        this.MainEntity.Mekach = result;
+        this.tableData5.data = this.MainEntity.Mekach;
+      },
+      (error) => {
+        console.log(error.message);
+        this.isLoadingMekach = false;
+      }
+    );
+  }
+
+  getClassificationAndMekachData() {
+    let tenant: number = SessionInfo.LoggedUserTenant;
+    if (tenant != 0) {
+      this.buildClasisificationGuidance(tenant);
+      this.buildDataMekach(tenant);
+    }
     else {
       this.API_MainService.GetTenantFromCustomsSettings().subscribe(
         (data: any) => {
-          const tenant: number = data?.body;
-          this.GetDataCustomItemClassifGuidance(this.customsItemId, tenant);
+          tenant = data?.body;
+          this.buildClasisificationGuidance(tenant);
+          this.buildDataMekach(tenant);
         },
         (error) => {
           console.log(error.message);

@@ -2,14 +2,14 @@
   <SqlScript>
     <![CDATA[
 
-	
-CREATE OR ALTER PROCEDURE [dbo].[usp_NewCustomsBookMainViewSearchByText]
+CREATE OR ALTER   PROCEDURE [dbo].[usp_NewCustomsBookMainViewSearchByText]
 @SearchFields VARCHAR(40),
 @CustomsBookType VARCHAR(2),
 @CustomsItemHierarchic VARCHAR(20),
 @Remarks BIT,
 @Rules BIT,
-@Tenant INT = 0
+@Tenant INT = 0,
+@IsDiscountCodes BIT = 0
 AS
 BEGIN
 IF @CustomsItemHierarchic is null AND @Remarks = 0 AND @Rules = 0 --ללא סינון
@@ -35,7 +35,10 @@ BEGIN
 	    FROM [dbo].[NewCustomsBookMainView] m
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
 	        AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
-	        AND m.ItemHierarchicLocationID != '1'
+			AND(
+				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3') AND m.ItemHierarchicLocationID != '1')
+			)
 	    UNION ALL--כללים
 	    SELECT m.CustomsItemId,
 	        m.Parent_CustomsItemId,
@@ -57,6 +60,10 @@ BEGIN
 	    JOIN customs.CB_RuleClassifications r ON m.CustomsItemId = r.CustomsItemID
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
 	        AND r.Rules LIKE '%' + @SearchFields + '%'
+			AND(
+				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	    UNION ALL --הערות
 	    SELECT
 	        m.CustomsItemId,
@@ -80,6 +87,10 @@ BEGIN
 	    WHERE r.Tenant = @Tenant 
 	        AND m.CI_CustomsBookTypeIDNum = @CustomsBookType 
 	        AND r.RemarkDescription LIKE '%' + @SearchFields + '%'
+			AND (
+				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+				)
 	),
 	RecursiveCTE AS (
 	    SELECT
@@ -189,7 +200,10 @@ BEGIN
 		WHERE CI_CustomsBookTypeIDNum =@CustomsBookType
 		AND
 		GoodsDescription LIKE '%' + @SearchFields + '%' AND CHARINDEX(',' + ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
-	
+		AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	),
 	RecursiveCTE AS (
 	    SELECT
@@ -292,6 +306,10 @@ BEGIN
 		ON m.CustomsItemId = r.CustomsItemID
 		WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
 		AND r.Rules LIKE '%' + @SearchFields + '%'
+		AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	
 	),
 	RecursiveCTE AS (
@@ -367,7 +385,7 @@ BEGIN
 	    WHERE Tenant = @Tenant
 	) AS remark ON DistinctResults.CustomsItemId = remark.CustomsItemsID
 	GROUP BY CustomsItemId,IsLeaf,Rules
-	ORDER BY ItemHierarchicLocationID;
+	ORDER BY Fullclassification;
 END--new
 IF @CustomsItemHierarchic is null AND @Remarks = 1 AND @Rules = 0 -- סינון של הערות בלבד
 BEGIN
@@ -399,7 +417,10 @@ BEGIN
 	)AS r ON m.CustomsItemId = r.CustomsItemsID
 	WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
 		AND r.RemarkDescription LIKE '%' + @SearchFields + '%'
-	
+		AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	),
 	RecursiveCTE AS (
 	    SELECT
@@ -500,7 +521,10 @@ BEGIN
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
         AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
         AND CHARINDEX(',' + m.ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
-	    
+	    AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 		UNION ALL--כללים
 	    
 		SELECT m.CustomsItemId,
@@ -523,7 +547,10 @@ BEGIN
 	    JOIN customs.CB_RuleClassifications r ON m.CustomsItemId = r.CustomsItemID
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
 	        AND r.Rules LIKE '%' + @SearchFields + '%'
-	   
+			AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	),
 	RecursiveCTE AS (
 	    SELECT
@@ -624,7 +651,10 @@ WITH BaseCTE AS (
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
         AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
         AND CHARINDEX(',' + m.ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
-	    
+	    AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 		UNION ALL -- הערות
 		SELECT 
 			m.CustomsItemId,
@@ -647,6 +677,10 @@ WITH BaseCTE AS (
 			JOIN customs.RemarksClassifications r ON m.CustomsItemId = r.CustomsItemsID
 			WHERE r.Tenant = @Tenant AND m.CI_CustomsBookTypeIDNum = @CustomsBookType AND
 			r.RemarkDescription LIKE '%' + @SearchFields + '%'
+			AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	),
 	RecursiveCTE AS (
 	    SELECT
@@ -747,7 +781,11 @@ WITH BaseCTE AS (
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType
 		AND m.GoodsDescription LIKE '%' + @SearchFields + '%'
 		AND CHARINDEX(',' + m.ItemHierarchicLocationID + ',', ',' + @CustomsItemHierarchic + ',') > 0
-	    
+	    AND (
+			(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+			(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
+
 		UNION ALL--כללים
 	    
 		SELECT m.CustomsItemId,
@@ -770,7 +808,11 @@ WITH BaseCTE AS (
 	    JOIN customs.CB_RuleClassifications r ON m.CustomsItemId = r.CustomsItemID
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
 	        AND r.Rules LIKE '%' + @SearchFields + '%'
-	    
+			AND (
+				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
+
 		UNION ALL --הערות
 	    
 		SELECT
@@ -795,6 +837,10 @@ WITH BaseCTE AS (
 	    WHERE r.Tenant = @Tenant
 	        AND m.CI_CustomsBookTypeIDNum = @CustomsBookType 
 	        AND r.RemarkDescription LIKE '%' + @SearchFields + '%'
+			AND (
+				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	),
 	RecursiveCTE AS (
 	    SELECT
@@ -895,7 +941,11 @@ WITH BaseCTE AS (
 	    JOIN customs.CB_RuleClassifications r ON m.CustomsItemId = r.CustomsItemID
 	    WHERE m.CI_CustomsBookTypeIDNum = @CustomsBookType AND m.Rules = 1
 	        AND r.Rules LIKE '%' + @SearchFields + '%'
-	    
+			AND (
+				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
+
 		UNION ALL --הערות
 	    
 		SELECT
@@ -920,6 +970,10 @@ WITH BaseCTE AS (
 	    WHERE r.Tenant = @Tenant
 	        AND m.CI_CustomsBookTypeIDNum = @CustomsBookType 
 	        AND r.RemarkDescription LIKE '%' + @SearchFields + '%'
+			AND (
+				(@IsDiscountCodes = 1 AND m.CI_CustomsItemCategoryIDNum = '2') OR
+				(@IsDiscountCodes = 0 AND m.CI_CustomsItemCategoryIDNum IN ('1', '3'))
+			)
 	),
 	RecursiveCTE AS (
 	    SELECT

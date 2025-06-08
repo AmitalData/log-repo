@@ -33,7 +33,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     public showLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-    public RunReportTitle: string;
+    public RunReportTitle: string = 'Run Report';
     CardExtendedPMService: CardExtendedPMService = new CardExtendedPMService();
     constructor() {
         super();
@@ -87,8 +87,8 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
 
     //#region Filters
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
-        this.IsSchedulerReport = true;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+        this.IsSchedulerReport = isSchedulerReport;
         this.SelectedCategory = null;       
         if (queryFilterItems) {
             queryFilterItems.forEach(queryFilterItem => {
@@ -417,6 +417,9 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
                     this.SelectedCategory = 'Category 5';        
                     this.Category5 = queryFilterItem.FieldValue; 
                     break;
+                default:
+                    this.SelectedCategory = null;
+                    break;
             };
         }
     }
@@ -538,7 +541,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
     categoryIndex: any = null;
     categoryValue: any = null;
     SetCategoryIndexAndValueFilters(queryFilterItems: Array<QueryFilterItem>) {
-       this.categoryIndex = this.SelectedCategory? this.SelectedCategory.replace(' ', ''): null;
+       this.categoryIndex = (this.SelectedCategory && typeof this.SelectedCategory === 'string' ) ? this.SelectedCategory.replace(' ', '') : null;
         if (this.categoryIndex)
         this.SetCategoryValueFilter( );
     }

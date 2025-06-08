@@ -25,5 +25,8 @@ export class ReportExecutionLogList {
 		CreatedByUserName: string;
 		SearchFields: string;
 		ReportName: string;
+		ReportLocalName: string;
+
+		NotDisplayInMenu: boolean;
 	
-}
+}

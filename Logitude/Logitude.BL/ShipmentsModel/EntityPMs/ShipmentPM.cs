@@ -16,7 +16,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentValidator), "IsShipmentValid")]
-    public class ShipmentPM//: EntityPMBase
+    public class ShipmentPM 
     {
         [Key]
         public string Id { get; set; }
@@ -3023,6 +3023,14 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string HSCode { get; set; }
         public string OrderNumber { get; set; }
         public bool IsUpdatedByAutomationSetValueResult { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LockerCode { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+         public string LockerName { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LockerAddress { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string LockerCity { get; set; }
 
     }
 

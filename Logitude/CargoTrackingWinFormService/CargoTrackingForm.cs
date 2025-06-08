@@ -27,13 +27,13 @@ namespace CargoTrackingWinFormService.Forms
     {
  
 
-        private string FromLocalConectionstring = "2022R1_Main,sa,Saas256,.";
+        private string FromLocalConectionstring = "Main-MERGE-TEST,amitaladmin,ut6py6VH7QkEiwR,sql-amital-dev-il.database.windows.net";
 
-        private string FromTestConectionstring = "Main-Test,sa,Saas256,test-sqldb.israelcentral.cloudapp.azure.com";
-        private string FromCloudConectionstring = "Main,CloudApp,London2020!,amitaldata.cloudapp.net";
-        private string ToLocalConectionstring = "CargoTracking,sa,Saas256,.";
-        private string ToTestConectionstring = "CargoTracking,sa,Saas256,test-sqldb.israelcentral.cloudapp.azure.com";
-        private string ToCloudConectionstring = "CargoTracking,amitaladmin,London2015!London2015!,amital.database.windows.net";
+        private string FromTestConectionstring = "Main-MERGE-TEST,amitaladmin,ut6py6VH7QkEiwR,sql-amital-dev-il.database.windows.net";
+        private string FromCloudConectionstring = "Main-MERGE-TEST,amitaladmin,ut6py6VH7QkEiwR,sql-amital-dev-il.database.windows.net";
+        private string ToLocalConectionstring = "CargoTracking-MERGE-TEST,amitaladmin,ut6py6VH7QkEiwR,sql-amital-dev-il.database.windows.net";
+        private string ToTestConectionstring = "CargoTracking-MERGE-TEST,amitaladmin,ut6py6VH7QkEiwR,sql-amital-dev-il.database.windows.net";
+        private string ToCloudConectionstring = "CargoTracking-MERGE-TEST,amitaladmin,ut6py6VH7QkEiwR,sql-amital-dev-il.database.windows.net";
         private List<string> ErrorsValidatons = new List<string>();
         string SelectedTable = null;
         List<CargoTrackingTable> CargoTableLists;

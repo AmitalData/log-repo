@@ -127,7 +127,7 @@ namespace CommunicationWorkerRole
             var jsonObject = System.Text.Encoding.Default.GetString(objectData);
             var reconciliationPM = JsonConvert.DeserializeObject<ReconciliationPM>(jsonObject);
             CreateReconciliationService recoService = new CreateReconciliationService();
-            RecoCallback recoCallback = recoService.CreateReconciliation(reconciliationPM);
+            RecoCallback recoCallback = recoService.CreateReconciliation(reconciliationPM, commLog.Id);
             return recoCallback;
         }
 

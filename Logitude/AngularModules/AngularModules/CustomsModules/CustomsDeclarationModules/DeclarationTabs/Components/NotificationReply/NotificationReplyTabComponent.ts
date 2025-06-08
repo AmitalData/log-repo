@@ -52,7 +52,7 @@ export class NotificationReplyTabComponent extends BaseComponent {
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-
+        
         if (!AppTool.IsNullOrEmpty(entityArgs)) {
             this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.Notification").subscribe((response: any) => {
@@ -167,6 +167,7 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
     public parent: NotificationReplyTabComponent;
     public ResponseList: NotificationReplyPM[] = [];
     public notificationData: string;
+    public senderName: string;
     public notificationReply: string;
     public withAnswerGridVisibility: boolean = false;
 
@@ -178,6 +179,11 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
         this.entityPM = notificationPM;
         this.parent = trigger;
         this.NotificationData = this.entityPM.Description;// + Environment.NewLine;
+
+        if (this.entityPM?.SenderName) {
+            this.SenderName = "מעריך: " + this.entityPM?.SenderName ;
+        }
+
 
         if (this.entityPM.NotificationRplies.length == 0) {
             this.WithAnswerGridVisibility = false;
@@ -196,6 +202,9 @@ export class DeclarationNotificationItemViewModel extends BaseComponent {
 
     public get NotificationData() { return this.notificationData; }
     public set NotificationData(newValue: string) { this.notificationData = newValue; }
+
+    public get SenderName() { return this.senderName; }
+    public set SenderName(newValue: string) { this.senderName = newValue; }
 
     public get NotificationReply() { return this.notificationReply; }
     public set NotificationReply(newValue: string) { this.notificationReply = newValue; }

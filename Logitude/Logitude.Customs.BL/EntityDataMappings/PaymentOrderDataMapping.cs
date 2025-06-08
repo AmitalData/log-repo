@@ -88,6 +88,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 }
             }
+
+            if (result.Length > 2000 && System.Configuration.ConfigurationManager.AppSettings.Get("DBMS") == "oracle")
+            {
+                result = result.Substring(0, 2000);
+            }
+
             entityPM.SearchFields = result.ToLower();
             entityPOCO.SearchFields = entityPM.SearchFields;
         }

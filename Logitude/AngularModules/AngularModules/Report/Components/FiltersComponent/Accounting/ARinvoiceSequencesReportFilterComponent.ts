@@ -109,28 +109,63 @@ export class ARinvoiceSequencesReportFilterComponent extends BaseComponent {
 
         return isOldDate;
     }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
 
-    //#endregion
-    private errors: string[] = [];
-    RunButtonClicked() {
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "FromDate":
+                     this.FromDate = new Date(queryFilterItem.FieldValue) ;
+                     break;
+                case "ToDate":
+                    this.ToDate = new Date(queryFilterItem.FieldValue) ;
+                    break;        
+                  
+            }
 
+           
+    
+        }
+    }
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        }
+    }
+    ValidateSelectedFilters() {
         this.errors = [];
         this.ValidationErrorsList = [];
         var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
         if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
             this.errors.push(TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
         }
-        if (this.errors.length == 0) {
+        return this.errors.length == 0;
+    }
+    //#endregion
+    private errors: string[] = [];
+    RunButtonClicked() {
 
-
-            var myFilterItems: QueryFilterItem[] = [];
-            myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
-            myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
+       
+        if (this.ValidateSelectedFilters()) {
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
-            myReportFliter.QueryFilterItemLists = myFilterItems;
+            myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
 
             this.RunReportEvent.emit(myReportFliter);
 
@@ -138,8 +173,13 @@ export class ARinvoiceSequencesReportFilterComponent extends BaseComponent {
             this.ValidationErrorsList = this.errors;
         }
     }
-
-
+    GetQueryFilterItems(){
+        var myFilterItems: QueryFilterItem[] = [];
+        myFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
+         myFilterItems.push(new QueryFilterItem("ToDate", this.ToDate, "Date"));
+        return myFilterItems;
+    }
+     
     private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {

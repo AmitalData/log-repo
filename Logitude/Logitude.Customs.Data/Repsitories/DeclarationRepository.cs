@@ -290,8 +290,7 @@ namespace Logitude.Customs.Data.Repsitories
                     && a.Tenant == tenant && a.IsCancelled == false
                     select a).FirstOrDefault();
         }
-
-
+     
         public int GetDeclarationMaxCancelRequestNumber(int tenant)
         {
             // && a.Id==id
@@ -1262,10 +1261,10 @@ namespace Logitude.Customs.Data.Repsitories
         }
 
 
-        public DeclarationConsignments GetDeclarationConsignment(string exportFile)
+        public DeclarationConsignments GetDeclarationConsignment(string exportFile,int tenant)
         {
             var declarationsQ = (from d in context.Declarations
-                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList
+                                 where d.ExportFile == exportFile && d.Tenant == tenant && !d.AmendmentDontDisplayInList
                                  select d
                        );
             List<Declaration> declarations = declarationsQ.ToList();
@@ -1276,12 +1275,11 @@ namespace Logitude.Customs.Data.Repsitories
                                  on d.Id equals c.DeclarationId into cjoin
                                  from cj in cjoin.DefaultIfEmpty()
 
-                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList
-                                 select cj
+                                 where d.ExportFile == exportFile && !d.AmendmentDontDisplayInList && d.Tenant == tenant select cj
                               ); 
             List<Consignment> consignments = consignmentsQ.ToList();
 
-            var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile && !d.AmendmentDontDisplayInList).Take(1)
+            var myQ2 = (from d in context.Declarations.Where(d => d.ExportFile == exportFile && !d.AmendmentDontDisplayInList && d.Tenant == tenant).Take(1)
 
                         join c in context.ConsignmentPackages.Select(x => new ConsignmentPackagesShort { DeclarationId = x.DeclarationId, PackageTypeCode = x.PackageTypeCode, Quantity = x.PackageQuantity.Value }) on d.Id equals c.DeclarationId into cjoin
                         from cj in cjoin.DefaultIfEmpty()
@@ -1674,10 +1672,15 @@ namespace Logitude.Customs.Data.Repsitories
 
             return declaration;
         }
+        public Declaration GetDeclarationAmendmentByAmendmentRequestNumber(int tenant,string requestNumber)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
-        
-        
-
+            Declaration declaration = (from a in context.Declarations
+                                              where a.Tenant == tenant && a.AmendmentRequestNumber == requestNumber
+                                       select a).FirstOrDefault();
+            return declaration;
+        }
     }
 
 

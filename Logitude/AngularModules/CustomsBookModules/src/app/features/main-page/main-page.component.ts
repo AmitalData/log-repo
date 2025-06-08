@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageTopComponent } from '../../shared/components/page-top/page-top.component';
 import { CB_CustomsItemComputedDataList, FilterOption, MainDisplayComponent } from '../../shared/components/main-display/main-display.component';
 import { AddCommentComponent } from '../../shared/components/add-comment/add-comment.component';
@@ -14,15 +14,17 @@ import { SessionInfo } from '../../core/Infrastructure/Utilities/SessionInfo';
 import { LoginService } from '../../core/Infrastructure/Services/LoginService';
 import { InfrastructureDomainService } from '../../core/Infrastructure/Services/InfrastructureDomainService';
 import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
+import { PreferenceMenuComponent } from '../../shared/components/preference-menu/preference-menu';
+import { CB_Preference, PreferencesService } from '../../shared/components/preference-menu/PreferencesService';
 
 @Component({
 	selector: 'app-main-page',
 	standalone: true,
-	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule, AppHeaderComponent],
+	imports: [PageTopComponent, MainDisplayComponent, AddCommentComponent, CommonModule, AppHeaderComponent, PreferenceMenuComponent],
 	templateUrl: './main-page.component.html',
 	styleUrl: './main-page.component.css',
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
 	HeaderService = new HeaderService();
 	showAddComment: boolean = false;
 	filterService = new FilterPopupService();
@@ -33,12 +35,27 @@ export class MainPageComponent {
 	selectSearchBy: string;
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private filterPopupService: FilterPopupService,
-		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService
-
-	) {
+		private preferencesService: PreferencesService,
+		private loginService: LoginService, private myInfrastructureDomainService: InfrastructureDomainService, private headerService: HeaderService) {
 		this._filters = this.filterService.getFilters();
+		this.getByIsDiscountCodes();
 	}
 
+	ngOnInit() {
+		// this.preferencesService.getPreferencesByUserId(SessionInfo.LoggedUserId, SessionInfo.LoggedUserTenant);
+		this.API_MainService.GetCB_PreferenceByUserIdAndTenant(SessionInfo.LoggedUserId, SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+			let PreferencesList: CB_Preference[] = data?.body;
+			this.preferencesService.allPreferences.next(PreferencesList);
+			if (PreferencesList.length == 0) {
+				this.preferencesService.AddAllCB_Preferences(this.preferencesService.defualtDataPreferences);
+			}
+		});
+	}
+	getByIsDiscountCodes() {
+		this.headerService.IsDiscountCodes.subscribe((value) => {
+			this.IsDiscountCodes = value;
+		});
+	}
 	getCustomsItemHierarchic(filtersSearch: FiltersSearch): string {
 		const selectedFilters = [];
 		if (filtersSearch.parts) selectedFilters.push(FilterOption.Parts);
@@ -56,6 +73,7 @@ export class MainPageComponent {
 		else this.checkIsFeaturePermessionCustomsBook(() => this.getSearchData(searchBy));
 	}
 
+	IsDiscountCodes: boolean = false;
 	getSearchData(searchBy: any) {
 		this.selectSearchBy = searchBy;
 		let filtersSearch: FiltersSearch = this.filterPopupService.getFilters();
@@ -70,6 +88,8 @@ export class MainPageComponent {
 			PageSize: 0,
 			Tenant: SessionInfo.LoggedUserTenant
 		};
+		if (this.IsDiscountCodes)
+			filters.IsDiscountCodes = this.IsDiscountCodes;
 
 		if (filters.CustomsItemHierarchic === '') {
 			filters.CustomsItemHierarchic = this.searchService.customsItemHierarchicDefault;

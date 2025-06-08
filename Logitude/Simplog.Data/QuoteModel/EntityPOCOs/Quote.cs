@@ -437,5 +437,7 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public bool? ConnectedToOpportunity { get; set; }
 
         public string QuoteClosingReasonNotes { get; set; }
-    }
+		public string ShipmentNumber { get; set; }
+
+	}
 }

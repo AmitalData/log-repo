@@ -21,7 +21,6 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {PaymentTermPM} from '../../EntityPMs/PaymentTermPM';
 
-import {PaymentTermPMInitService} from '../../EntityPMInitServices/PaymentTermPMInitService';
 
 @Injectable()
 
@@ -46,8 +45,7 @@ export class PaymentTermPMService {
 						var entity: PaymentTermPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
-                      PaymentTermPMInitService.InitValues(entity, false);
-                      PaymentTermPMInitService.ApplyUIPoperties(entity, false);
+                   
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -225,10 +223,7 @@ export class PaymentTermPMService {
 		    var entityPM: PaymentTermPM;
 			entityPM = new PaymentTermPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
-
-			PaymentTermPMInitService.InitValues(entityPM, true);
-			PaymentTermPMInitService.ApplyUIPoperties(entityPM, true);
-
+			
 			return entityPM;
     }
 		 

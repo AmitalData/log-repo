@@ -86,6 +86,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             }
 						case "date":
                         case "datetime":
+						case "datetime2": 
                             {
                                 query2 = sortClass.GetSorterQuery<InterestReportStatuseList, DateTime>(queryOperations, query2);
                                 break;

@@ -186,8 +186,8 @@
                                             [Text]="" [BackgroundImage]="myDictionary['ExporterName']"></HelpIcon>
                                     </td>
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext"
-                                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                        <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext" [Text]="ExporterName"
+                                            [ObjectTableName]="'Customs.CertificateOfOrigin'" [HideColumns]="true"
                                             [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
                                         </LogTextBox>
                                     </td>
@@ -318,9 +318,9 @@
                                             [Text]="" [BackgroundImage]="myDictionary['ExporterAddress']"></HelpIcon>
                                     </td>
                                     <td>
-                                        <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
+                                        <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true" [Text]="ExporterAddress"
                                             [ObjectFieldName]="'ExporterAddress'" [HideColumns]="true"
-                                            [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                            [ObjectTableName]="'Customs.CertificateOfOrigin'" [InputType]="'nText'"
                                             [DataContext]="DataContext" [Direction]="'LTR'">
                                         </LogTextBox>
                                     </td>
@@ -457,8 +457,8 @@
                                             [Text]="" [BackgroundImage]="myDictionary['ConsigneeName']"></HelpIcon>
                                     </td>
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'ConsigneeName'" [DataContext]="DataContext"
-                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true" [IsMultiline]="true"
+                                        <LogTextBox [ObjectFieldName]="'ConsigneeName'" [DataContext]="DataContext" [Text]="ConsigneeName"
+                                        [ObjectTableName]="'Customs.CertificateOfOrigin'" [HideColumns]="true" [IsMultiline]="true"
                                         [EnableKeyDown]="true" [Direction]="'LTR'">></LogTextBox>
                                     </td>
                                 </tr>
@@ -524,9 +524,9 @@
                                             [Text]="" [BackgroundImage]="myDictionary['ConsigneeAddress']"></HelpIcon>
                                     </td>
                                     <td>
-                                        <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
+                                        <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true" [Text]="ConsigneeAddress"
                                             [ObjectFieldName]="'ConsigneeAddress'" [HideColumns]="true"
-                                            [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                            [ObjectTableName]="'Customs.CertificateOfOrigin'" [InputType]="'nText'"
                                             [DataContext]="DataContext" [Direction]="'LTR'">
                                         </LogTextBox>
                                     </td>
@@ -561,7 +561,7 @@
 
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
-                                                 [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'" [Editable]="true">
+                                                [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'" [Editable]="true">
                                                  <ng-template let-item>
                                                     <log-cell-template #logcelltemplate
                                                         (CellClicked)="onCellSelected($event,logcelltemplate,item)"

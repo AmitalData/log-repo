@@ -3,18 +3,18 @@
     .TabTitle > div{
         font-size: 18px !important;
     }
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
 </style>
-<!-- Alert -->
-<!--<div class="alert-animation Alert">
-    <!--<div class="alert-close" (click)="CloseAlert()">×</div>-->
-<!--<div class="alert-title">{{'Accounting.General.O.Reconciled' | TextCodeTranslationPipe}}</div>-->
-<!--<div class="LeftCenter ConfirmIcon">&#10003;</div>-->
-<!--<div style="padding: 43px 15px 10px 50px;font-size: 13px;">
-        {{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.
-    </div>
 
-
-</div>-->
 <!-- Alert -->
 <div *ngIf="showAlert && recoCallback" class="alert-animation SaveAlert"
      [style.text-align]="isRTL ? 'right' : 'left'"
@@ -79,6 +79,17 @@
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="6">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr *ngIf="yelloMessage!=''" style="height:1px;">
+        <td colspan="6">
+            <div  style="width: 100%;text-align:center">
+                <div class="DisbleBox">
+                {{yelloMessage}}<span style="padding: 0px 16px;">-</span>
+                    <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+
+                </div>
+            </div>
         </td>
     </tr>
 
@@ -220,54 +231,13 @@
 
                     <li float-start style="width: 20px;height: 100%;"></li>
 
-                    <!-- Refresh Button -->
-                    <!-- <li float-start style="padding: 0 15px;padding-top: 4px;">
-                        <IconButton [Name]="'refresh'" (click)="ReloadScreen()"></IconButton>
-                    </li> -->
+
 
 
                 </ul>
             </div>
 
-            <!-- <table> -->
 
-
-
-                <!-- <tr class="FormFieldRow"> -->
-
-
-                    <!-- OpenAmount -->
-                    <!-- <td style="width: 120px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
-                                <LogLabel [ObjectFieldName]="'OpenAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width: 140px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
-                                <ComboBox [ItemsSource]="OperatorsList" [Binding]="'LocalName'" [SelectedItem]="SelectedOperator" (SelectedItemChanged)="SelectedOperator = $event"></ComboBox>
-                            </td>
-                            <td style="width: 80px;">
-                                <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [HideColumns]="true"
-                                            (ValueChanged)="OpenAmountTextChanged($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-
-                            </td> -->
-
-                    <!-- <td style="width :20px"></td> -->
-
-
-
-                    <!-- <td>
-                        <div></div>
-                    </td> -->
-
-
-                <!-- </tr> -->
-
-
-                <!-- <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                </tr>
-
-            </table> -->
         </td>
     </tr>
 
@@ -275,7 +245,6 @@
 
     <!-- .::(1)::. First Section Lines -->
     <tr >
-        <!--*ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit"-->
         <td style="width :10px"></td>
         <td style=" vertical-align: top;height: 100%;" colspan="4">
             <div class="GeneratedGridContainer" style="height: calc(100% - 10px)">
@@ -558,7 +527,6 @@
                     </td>
 
                     <td style="width: 80px; padding-left: 5px;">
-                        <!--<button class="Button" [disabled]="!(SelectedLines.Length > 0 && TotalDifference != 0)" (click)="AdjustButton()">{{'Accounting.General.O.Adjust' | TextCodeTranslationPipe}}</button>-->
                     </td>
                     <td style="width: 57px; padding-left: 5px;">
                         <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>

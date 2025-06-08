@@ -1768,6 +1768,52 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string bankName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankName  
+	   {
+	    
+	     get
+		{
+		   return bankName;
+		 }
+		 set
+		 {
+		   if(bankName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankName",OldValue=bankName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankName=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? processStartDate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? ProcessStartDate  
+	   {
+	    
+	     get
+		{
+		   return processStartDate;
+		 }
+		 set
+		 {
+		   if(processStartDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ProcessStartDate",OldValue=processStartDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   processStartDate=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

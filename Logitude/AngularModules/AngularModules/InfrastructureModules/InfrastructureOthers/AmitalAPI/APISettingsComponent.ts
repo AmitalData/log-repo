@@ -10,6 +10,13 @@ import { AmitalAPISchemaWebService, AmitalApiSchema, AmitalApiSettings } from "C
 import { AmitalAPIAddApiWindowComponent, AmitalAPIAddApiWindowPararms } from "./WindowsComponent/AmitalAPIAddApiWindowComponent";
 import { FieldData, MoreParam } from "./amitalApiTypes";
 import { AmitalAPIAddWindowService } from "./WindowsComponent/AmitalAPIAddWindowService";
+import { AmitalAPIDataListWindowComponent, AmitalAPIDataListWindowParams } from "./WindowsComponent/AmitalAPIDataListWindowComponent";
+
+export interface AmitalApiClientapiExpanded extends AmitalApiClientapi {
+    Schema: string;
+    ApiType: string;
+    Address: string;
+};
 
 @Component({
     selector: 'appAPISettings',
@@ -36,12 +43,13 @@ import { AmitalAPIAddWindowService } from "./WindowsComponent/AmitalAPIAddWindow
                         </log-cell-template>
                     </ng-template>
                 </log-column>
-                <log-column [header]="''" [width]="'140'" [Alignment]="'center'">
+                <log-column [header]="''" [width]="'250'" [Alignment]="'center'">
                     <ng-template let-item>
                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
                                 <button class="Button RedButton" (click)="openRemovePopup(item.Id)">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
                                 <button class="Button RedButton" (click)="openEditPopup(item)">{{'General.B.Edit' | TextCodeTranslationPipe}}</button>
+                                <button class="Button RedButton parameter-btn" (click)="openDataListPopup(item.PartnerName)">{{('General.O.SendParameters' | TextCodeTranslationPipe) || 'Send Parameters'}}</button>
                             </div>
                         </log-cell-template>
                     </ng-template>
@@ -83,6 +91,10 @@ import { AmitalAPIAddWindowService } from "./WindowsComponent/AmitalAPIAddWindow
             align-self: center;
             text-overflow: ellipsis;
             overflow: hidden;
+        }
+
+        .parameter-btn {
+            width: auto !important;
         }
     `],
 })
@@ -146,11 +158,11 @@ export class APISettingsComponent extends BaseComponent {
     }
 
     async initClientapiTable(clientapiData: AmitalApiClientapi[], schemas: AmitalApiSchema[], settings: AmitalApiSettings) {
-        clientapiData.forEach((x: AmitalApiClientapi) => {
+        clientapiData.forEach((x: AmitalApiClientapiExpanded) => {
             const schema: AmitalApiSchema = schemas.find(y => y.Id === x.SchemaId);
-            x['Schema'] = x.SchemaId + ' - ' + x.SchemaName;
-            x['ApiType'] = schema?.SchemaType;
-            x['Address'] = settings.baseAddress + '/' + schema?.Endpoint;
+            x.Schema = x.SchemaId + ' - ' + x.SchemaName;
+            x.ApiType = schema?.SchemaType;
+            x.Address = settings.baseAddress + '/' + schema?.Endpoint;
             if (x.MoreParams)
                 this.moreParamsList.forEach(param => x[param.name] = x.MoreParams[param.name]);
         })
@@ -209,5 +221,16 @@ export class APISettingsComponent extends BaseComponent {
 
         if (res)
             this.refreshClientApiTable();
+    }
+
+    openDataListPopup(partner: string) {
+        const windowArgs: AmitalAPIDataListWindowParams = { 
+            clientAPIs: this.clientapiDataSource.Collection.filter(x => x.PartnerName === partner && x.Active), 
+            amitalApiSettings: this.settings, 
+            azureClientId: this.DataContext.AzureClientId, 
+            secretValue: this.DataContext.SecretValue.substring(0, 4) + '****',
+            azureManagedApplObjId: this.DataContext.AzureManagedApplObjId,
+        };
+        AmitalAPIDataListWindowComponent.openWindow(windowArgs);
     }
 }

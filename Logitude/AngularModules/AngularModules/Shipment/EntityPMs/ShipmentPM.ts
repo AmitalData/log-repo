@@ -1,7 +1,7 @@
 
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import {UIProperties} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ShipmentFollowUpPM} from './ShipmentFollowUpPM';
 import {AWBOCIPM} from './AWBOCIPM';
 import {ShipmentPackagePM} from './ShipmentPackagePM';
@@ -28,12 +28,6 @@ export class ShipmentPM {
     public UIProperties: UIProperties;
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     constructor() {
-
-        //for (var property in this) {
-        //    if (this.hasOwnProperty(property)) {
-        //        this[property] = null;
-        //    }
-        //}
 
         this.UIProperties = new UIProperties(this);
         this.IsDirty = false;
@@ -5512,6 +5506,26 @@ export class ShipmentPM {
     public get Weight4() { return this.weight4; }
     public set Weight4(newValue: number) { if (this.weight4 != newValue) { this.weight4 = newValue; this.MarkAsDirty("Weight4"); } }
 
+
+    private lockerCode: string;
+    public get LockerCode() { return this.lockerCode; }
+    public set LockerCode(newValue: string) { if (this.lockerCode != newValue) { this.lockerCode = newValue; this.MarkAsDirty("LockerCode"); } }
+       
+	 
+    private lockerAddress: string;
+    public get LockerAddress() { return this.lockerAddress; }
+    public set LockerAddress(newValue: string) { if (this.lockerAddress != newValue) { this.lockerAddress = newValue; this.MarkAsDirty("LockerAddress"); } }
+       
+	 
+    private lockerName: string;
+    public get LockerName() { return this.lockerName; }
+    public set LockerName(newValue: string) { if (this.lockerName != newValue) { this.lockerName = newValue; this.MarkAsDirty("LockerName"); } }
+       
+	 
+    private lockerCity: string;
+    public get LockerCity() { return this.lockerCity; }
+    public set LockerCity(newValue: string) { if (this.lockerCity != newValue) { this.lockerCity = newValue; this.MarkAsDirty("LockerCity"); } }
+       
 
     public OldEntityPM: ShipmentPM;
 

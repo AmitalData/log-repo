@@ -116,7 +116,7 @@
   <Column
     Name="SearchFields"
     Type="nvarchar"
-    Size="2000">
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
