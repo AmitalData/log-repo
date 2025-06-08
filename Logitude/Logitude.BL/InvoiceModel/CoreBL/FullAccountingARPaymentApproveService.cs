@@ -151,19 +151,19 @@ namespace Logitude.BL.InvoiceModel.CoreBL
         }
 
         private int originalEntityLineNumber = 0;
-        public InterestTransactionPM GetInterestTransactionLineForCheque(ARPaymentChequePM cheque, ARPaymentPM payment)
+        public InterestTransactionPM GetInterestTransactionLineForCheque(ARPaymentChequePM cheque, ARPaymentPM payment , JournalPM journalPM)
         {
-            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque, payment);
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromARPaymentPM(cheque, payment, journalPM);
             return interestTransaction;
         }
 
-        public InterestTransactionPM GetInterestTransactionLineForBankTransfer(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
+        public InterestTransactionPM GetInterestTransactionLineForBankTransfer(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment,JournalPM journalPM)
         {
-            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromBankTransferARPaymentPM(bankTranfer, payment);
+            InterestTransactionPM interestTransaction = MapInterestTransactionPMFromBankTransferARPaymentPM(bankTranfer, payment, journalPM);
             return interestTransaction;
         }
 
-        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentChequePM cheque, ARPaymentPM payment)
+        private InterestTransactionPM MapInterestTransactionPMFromARPaymentPM(ARPaymentChequePM cheque, ARPaymentPM payment, JournalPM journalPM)
         {
             DateTime? dateForInterest = payment.ValueDate == null ? DateTime.Now : payment.ValueDate;
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
@@ -184,12 +184,13 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 GLAccountId = account != null ? account.Id : null,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
-                JournalId = payment.JournalId,
+                JournalId = journalPM?.Id,
+                AccountingDate = journalPM?.AccountingDate 
             };
             return interestTransaction;
         }
 
-        private InterestTransactionPM MapInterestTransactionPMFromBankTransferARPaymentPM(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment)
+        private InterestTransactionPM MapInterestTransactionPMFromBankTransferARPaymentPM(ARPaymentBankTranferPM bankTranfer, ARPaymentPM payment, JournalPM journalPM)
         {
             GLAccountPM account = GetGLAccount(payment.BillToId, payment.Tenant);
             if (!(account.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && account.AccountTypeCode == CustomerGLAccountType))
@@ -209,7 +210,8 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 GLAccountId = account != null ? account.Id : null,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
-                JournalId = payment.JournalId,
+                JournalId = journalPM?.Id,
+                AccountingDate = journalPM?.AccountingDate 
             };
             return interestTransaction;
         }

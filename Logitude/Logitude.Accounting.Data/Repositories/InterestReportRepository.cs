@@ -117,7 +117,7 @@ namespace Logitude.Accounting.Data.Repositories
                 .Where(x => x.it.GLAccountId == glAccountId &&
                             x.it.AccountingDate < beforeDate &&
                             (x.ga == null || x.it.AccountingDate >= x.ga.InterestCalculationStartDate) &&
-                            x.it.Tenant == tenant)
+                            x.it.Tenant == tenant && x.it.InterestEntityTypeCode != InterestEntities.OpenBalance)
                 .Select(x => new
                 {
                     InterestAfter = (x.it.InterestValueDate >= beforeDate) ? x.it.LocalAmount : 0,
