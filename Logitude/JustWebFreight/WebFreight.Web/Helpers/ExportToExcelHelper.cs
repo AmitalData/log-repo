@@ -1687,7 +1687,7 @@ namespace WebFreight.Web.Helpers
 
 			ICellStyle dateStyle = workbook.CreateCellStyle();
 			dateStyle.CloneStyleFrom(defaultStyle);
-			dateStyle.DataFormat = workbook.CreateDataFormat().GetFormat("MM/dd/yyyy");
+			dateStyle.DataFormat = workbook.CreateDataFormat().GetFormat("dd/MM/yyyy");
 
 			ICellStyle boolStyle = workbook.CreateCellStyle();
 			boolStyle.CloneStyleFrom(defaultStyle);

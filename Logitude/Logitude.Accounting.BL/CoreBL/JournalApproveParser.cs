@@ -778,31 +778,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CheckJournal()
         {
-
             var validationResult = JournalValidator.IsJournalValid(_JournalPM, _JournalValidatorContext);
             if (validationResult != null)
             {
-
-                string errorString = String.Empty;
-                foreach (string error in validationResult.MemberNames)
-                {
-                    errorString = errorString + error + ",";
-                }
-
-                errorString = errorString.Remove(errorString.Length - 1);
+                string errorString = string.Join("; ", validationResult.MemberNames) + ".";
                 throw new ApplicationException(errorString);
-
-
-                //                string errorText = validationResult.ErrorMessage + ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id + ", " + validationResult.MemberNames.FirstOrDefault();
-                //                    //+validationResult.MemberNames.Aggregate((a, b) => string.Concat(a, ",", b));
-
-
-                ////ThrowException(errorText);
-                //                throw new ApplicationException(errorText);
             }
-            //_JournalPM.JournalLines.ToLookup(rec => rec.ActionTypeCodeEnum);
-
         }
+
         private void AddTaxDebit(JournalLinePM item)
         {
             var journalLineDebitMapping = new JournalLineDebitTaxMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider(), GetIIAccountingSettingResolver());
