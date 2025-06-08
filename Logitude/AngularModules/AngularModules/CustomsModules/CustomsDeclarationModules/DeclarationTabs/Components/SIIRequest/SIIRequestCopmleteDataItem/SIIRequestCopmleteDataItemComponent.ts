@@ -92,23 +92,29 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     // #endregion initialization data
 
     //#region search product file number by API request:
-    SearchProductFileNumber(ProductFileNumber: string = '') {
+    SearchProductFileNumber(productFileNumber: string = '') {
         this.validationErrors = [];
-        this.ManufactureCountryCode = 'IL';// TODO: delete after testing
         this.checkMandatoryFields();
         if (this.errorsList.length > 0) {
+            this.isCheckedProductFile = false;
             this.displayErrorsMsg();
             return;
         }
         this.errorsList = [];
-        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(ProductFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
-            let myResponse: ServiceResponse = myResult;
-            if (!myResponse?.HasError)
-                this.saveByProductFileNumberResult(myResponse?.Result, ProductFileNumber);
-        });
+        this.checkProductFileNumber(productFileNumber);
     }
 
     isExistProductFile: boolean = false;
+    isCheckedProductFile: boolean = false;
+    checkProductFileNumber(productFileNumber: string = '') {
+        this.isCheckedProductFile = true;
+        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
+            let myResponse: ServiceResponse = myResult;
+            if (!myResponse?.HasError)
+                this.saveByProductFileNumberResult(myResponse?.Result, productFileNumber);
+        });
+    }
+
     saveByProductFileNumberResult(productFileExists: boolean = false, productFileNumber: string = '') {
         this.isExistProductFile = productFileExists;
         if (productFileExists) {
@@ -146,28 +152,34 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
 
     displayErrorsMsg() {
-        let windowArgs: any = {};
-        windowArgs.Errors = this.errorsList;
-        windowArgs.Warning = this.validationErrors;
-        windowArgs.NoButtonVisibility = false;
-        windowArgs.CancelButtonVisibility = true;
-        windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Confirm");
-        windowArgs.CancelButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Cancel");
-        windowArgs.ComponentHeight = '328px';
-        let windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ErrorsFound");
-        let logWindow = new LogitudeWindow(this.CurrentSession);
-        logWindow.Width = 440;
-        logWindow.Height = 400;
-        logWindow.Title = windowTitle;
-        logWindow.ShowCloseButton = false;
-        logWindow.WindowArgs = windowArgs;
+        if (!AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isCheckedProductFile) {
+            this.checkProductFileNumber();
+        }
+        else {
+            this.isCheckedProductFile = false;
+            let windowArgs: any = {};
+            windowArgs.Errors = this.errorsList;
+            windowArgs.Warning = this.validationErrors;
+            windowArgs.NoButtonVisibility = false;
+            windowArgs.CancelButtonVisibility = true;
+            windowArgs.SaveButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Confirm");
+            windowArgs.CancelButtonText = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.Cancel");
+            windowArgs.ComponentHeight = '328px';
+            let windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ErrorsFound");
+            let logWindow = new LogitudeWindow(this.CurrentSession);
+            logWindow.Width = 440;
+            logWindow.Height = 400;
+            logWindow.Title = windowTitle;
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
 
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            return this.taxationWindowClosed($event) ? this.SaveSupplierInvoiceItemsReqList() : false;
-        });
+            logWindow.WindowClosed.subscribe(($event: any) => {
+                return this.taxationWindowClosed($event) ? this.SaveSupplierInvoiceItemsReqList() : false;
+            });
 
-        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
-        this.CurrentSession.StopBusyIndicator();
+            logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+            this.CurrentSession.StopBusyIndicator();
+        }
     }
 
     validationErrors: string[] = [];
@@ -192,11 +204,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     generalErrors: string[] = [];
     SaveSupplierInvoiceItemsReqList() {
-        this.entityPM.DeclarationId = this.DecalarationData?.Id;
-        this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
-        this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
-        this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
-        this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
         if (!AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isExistProductFile) this.ProductFileNumber = null;
         this.checkMandatoryFields();
         if (this.oldRequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.oldRequestRequiredStatus === CompleteStatuses.FullyCompleted) {
@@ -215,6 +222,11 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             });
         }
         else {
+            this.entityPM.DeclarationId = this.DecalarationData?.Id;
+            this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
+            this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
+            this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
+            this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
             this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
                 let myResponse: ServiceResponse = myResult;
                 if (!myResponse?.HasError && myResponse?.Result) {
