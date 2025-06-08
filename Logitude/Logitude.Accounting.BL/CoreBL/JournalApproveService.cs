@@ -216,7 +216,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
             var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
-            var interestTranasction = service.MapInterestTransactionPMFromARPaymentPM(aRPaymentPM, aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode);
+            var interestTranasction = service.MapInterestTransactionPMFromARPaymentPM(aRPaymentPM, aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode , journalPM);
             if (!CheckIfInterestTransactionCreated(interestTranasction))
                 interestTransactionUpdateService.Update(interestTranasction, true);
         }
@@ -245,7 +245,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CancelInterestTrascntionsForChequeOrBankTranasfersARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
         {
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
-            List<InterestTransactionPM> interestTranactions = service.GetARPaymentInterestTransactionsForCancellation(aRPaymentPM);
+            List<InterestTransactionPM> interestTranactions = service.GetARPaymentInterestTransactionsForCancellation(aRPaymentPM, journalPM);
             var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
             foreach (var interestTransaction in interestTranactions)
             {
@@ -266,7 +266,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var chequeNumber = journalPM.JournalLines.FirstOrDefault()?.Reference1;
                 var returnedCheque = arPaymentCheques.FirstOrDefault(x => x.ChequeNumber == chequeNumber);
                 int returnedChequeLineNumber = arPaymentCheques.Max(x => x.LineNumber) + returnedCheque.LineNumber;
-                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(returnedCheque, aRPaymentPM);
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(returnedCheque, aRPaymentPM, journalPM);
                 if (interestTranasction != null)
                 {
                     interestTranasction.OriginalEntityLineNumber = returnedChequeLineNumber;
@@ -278,7 +278,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 foreach (var cheque in arPaymentCheques)
                 {
-                    var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM);
+                    var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM, journalPM);
                     if (!CheckIfInterestTransactionCreated(interestTranasction))
                         interestTransactionUpdateService.Update(interestTranasction, true);
                 }
@@ -292,7 +292,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             foreach (var bankTranfer in aRPaymentPM.ARPaymentBankTranfers)
             {
-                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForBankTransfer(bankTranfer, aRPaymentPM);
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForBankTransfer(bankTranfer, aRPaymentPM , journalPM);
                 if (!CheckIfInterestTransactionCreated(interestTranasction))
                     interestTransactionUpdateService.Update(interestTranasction, true);
             }

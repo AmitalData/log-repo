@@ -272,6 +272,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private InterestTransactionPM CreateNewInterestTransaction(DateTime previousInterestReportCalculationDate, string latestInterestReportId)
         {
+            var firstOfMonth = new DateTime(interestReportPM.InterestCalculationDate.Year, interestReportPM.InterestCalculationDate.Month, 1);
+
+
             InterestTransactionPM openBalanceInterestTransaction = new InterestTransactionPM()
             {
                 EntityId = latestInterestReportId != null ? latestInterestReportId : interestReportId,
@@ -284,6 +287,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = GetLocalCurrency(),
                 Tenant = tenant,
+                AccountingDate = firstOfMonth,
             };
             SubmitInterestTransaction(openBalanceInterestTransaction);
             return openBalanceInterestTransaction;
