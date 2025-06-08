@@ -181,8 +181,6 @@
                             style="position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
                             <div class="DisbleBox" style="margin: 0 auto;">
                                 {{GetErrorMsg()}}
-                                <!--<span style="padding: 0px 16px;">-</span>
-                                <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>-->
                             </div>
                         </div>
 
@@ -584,6 +582,7 @@
                                         </div>
                                     </div>
                                 </dropdown-button>
+
                             </div>
 
                             <!-- Search -->
@@ -606,6 +605,12 @@
                                     {{'TaxReport.O.DownloadPa' | TextCodeTranslationPipe}}
                                 </button>
                             </div>
+
+                            <div *ngIf="IsFixDupButtonVisible" style="padding: 4px;width: 200px;" [style.float]="isRTL ? 'left' : 'right'">
+                                <button class="Button" (click)="OnFixDupButtonClicked()">
+                                    {{'Accounting.O.FixDuplicates' | TextCodeTranslationPipe}}
+                                </button>
+                            </div>
                         </td>
                     </tr>
 
@@ -623,121 +628,6 @@
 
                             <!-- edit -->
                             <div *ngIf="0" class="CellContent">
-                                <!-- <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                                    [ItemSource]="ReportLines"
-                                                    [UseVirtuallization]="true">
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'Accounting.O.Included' | TextCodeTranslationPipe" [width]="'70'" [binding]="'GroupHash'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div [ngSwitch]="item.TransmitStatusCode" class="TextTrimming" style="text-align: center;" >
-                                                <img *ngSwitchCase="'1'" src="./Images/CheckBoxIcon.png" />
-                                                <div *ngSwitchCase="'2'" class="aboodX red" ></div>
-                                                <div *ngSwitchCase="'3'" class="aboodX orange" ></div>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.Line' | TextCodeTranslationPipe" [width]="'50'" [binding]="'Line'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" style="text-align: center;">
-                                                <span>{{item.Line }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.LineTypeCode' | TextCodeTranslationPipe" [width]="'50'" [binding]="'LineTypeCode'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" style="text-align: center;">
-                                                <span>{{item.LineTypeCode}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.VatNumber' | TextCodeTranslationPipe" [width]="'100'" [binding]="'VatNumber'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.VatNumber}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.Reference' | TextCodeTranslationPipe" [width]="'100'" [binding]="'Reference'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.Reference}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.ReferecneGroup' | TextCodeTranslationPipe" [width]="'100'" [binding]="'ReferecneGroup'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.ReferecneGroup}}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.ReferenceDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'ReferenceDate'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                <span>{{item.ReferenceDate | DateTimeToDatePipe }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.VatableInvoiceAmount' | TextCodeTranslationPipe" [width]="'100'" [binding]="'VatableInvoiceAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.VatableInvoiceAmount<0'>
-                                                <span>{{ item.VatableInvoiceAmount | NumbersPipe:'N2'  }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.VatAmount' | TextCodeTranslationPipe" [width]="'100'" [binding]="'VatAmount'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div style="color:#00a24d;direction: ltr; text-align: right; padding: 0px 2px;" [class.red]='item.VatAmount<0'>
-                                                <span>{{ item.VatAmount | NumbersPipe:'N2'  }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.StatusCode' | TextCodeTranslationPipe" [width]="'300'" [binding]="'StatusCode'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'"
-                                                 style="color:#00a24d;" [class.red]='item.StatusCode != "6"'>
-                                                <span>{{ showLocals ? item.StatusLocalName : item.StatusEnglishName }}</span>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'TaxReportLine.F.JournalId' | TextCodeTranslationPipe" [width]="'85'" [binding]="'JournalId'">
-                                        <log-cell-template template="let item" #logcelltemplate [IgnoreMods]="true">
-                                            <div class="TextTrimming" style="text-align: center;">
-                                                <a href="javascript:;" (click)="item.OpenJournal()">{{item.JournalNumber}}</a>
-                                            </div>
-                                        </log-cell-template>
-                                    </log-column>
-
-
-                                    <log-column [width]="'50'" [visibility]="'visibile'" [Alignment]="isRTL ? 'right' : 'left'">
-                                        <log-cell-template template="let item" [IgnoreMods]="true">
-                                            <IconButton float-start [Name]="'Edit'" [IsSmall]="true"
-                                                        style="display: block; margin-left:10px; margin-top:4px;" (click)="EditLine(item)"></IconButton>
-                                        </log-cell-template>
-                                    </log-column>
-
-                                </logitude-edit-grid> -->
                             </div>
 
                         </td>
@@ -752,16 +642,3 @@
 
 </table>
 
-<!-- Footer -->
-<!--<div style="position: absolute; left: 0px; bottom: 0px; right: 0px;">
-    <div class="tab-footer">
-        <div class="footer-title">
-        </div>
-        <div class="footer-summery">
-
-
-
-        </div>
-
-    </div>
-</div>-->

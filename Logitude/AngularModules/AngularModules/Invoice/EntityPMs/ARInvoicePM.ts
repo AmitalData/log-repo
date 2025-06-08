@@ -71,6 +71,11 @@ export class ARInvoicePM {
     public get IsApprovalFailed() { return this.isApprovalFailed; }
     public set IsApprovalFailed(newValue: boolean) { if (this.isApprovalFailed != newValue) { this.isApprovalFailed = newValue; this.MarkAsDirty("IsApprovalFailed"); } }
       
+
+    private approvalInProgress: boolean;
+    public get ApprovalInProgress() { return this.approvalInProgress; }
+    public set ApprovalInProgress(newValue: boolean) { if (this.approvalInProgress != newValue) { this.approvalInProgress = newValue; this.MarkAsDirty("ApprovalInProgress"); } }
+      
     private autoCreditedByARInvoiceNumber: string;
     public get AutoCreditedByARInvoiceNumber() { return this.autoCreditedByARInvoiceNumber; }
     public set AutoCreditedByARInvoiceNumber(newValue: string) { if (this.autoCreditedByARInvoiceNumber != newValue) { this.autoCreditedByARInvoiceNumber = newValue; this.MarkAsDirty("AutoCreditedByARInvoiceNumber"); } }

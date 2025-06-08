@@ -80,6 +80,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public DateTime? ApprovedDate { get; set; }
         public string CreditedByARInvoiceId { get; set; }
         public bool IsApprovalFailed { get; set; }
+        public bool ApprovalInProgress { get; set; }
         public DateTime? OperationalDate { get; set; }
         public DateTime? DateForInterest { get; set; }
         public bool SplitJournalByCurrency { get; set; }

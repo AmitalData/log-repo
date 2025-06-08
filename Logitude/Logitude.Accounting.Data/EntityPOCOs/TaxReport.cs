@@ -90,6 +90,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? InputsTaxAmountRound { get; set; }
         [Column("ReconciliationsNumbers")]
 	    public string ReconciliationsNumbers { get; set; }
+
     }
 }
 	 

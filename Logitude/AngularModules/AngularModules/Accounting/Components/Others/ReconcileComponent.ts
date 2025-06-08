@@ -1143,7 +1143,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
-                            "GLAccountPMId": this.GLAccountPM.Id,
+                            "SourceGLAccountPM": this.GLAccountPM,
                             TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
                             TotalDebit: this.TotalDebit,
@@ -1819,6 +1819,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
+            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;
@@ -1871,7 +1872,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 else {
                     if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
 
-
+                                       
+                    this.ValidationErrorsList = mm.ErrorsArray;  
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                  
                     if (mm.ErrorsArray.length > 0 && mm.ErrorsArray.some(e => e.includes("GLAccounts.O.MarkedByAnother"))) {
                         this.ValidationErrorsList = mm.ErrorsArray.map(error =>
                             error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ") : error

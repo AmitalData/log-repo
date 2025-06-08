@@ -16,6 +16,7 @@ using WebFreight.Web.DataContracts;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Data;
+using Simplog.Data.InvoiceModel.Repositories;
 
 
 namespace WebFreight.Web.Controllers.InvoiceModel.Extended
@@ -73,7 +74,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
             }
         }
 
-
+        
 
         public byte[] ExportInvoiceSequenceStatusReport(string fromDate, string toDate, int tenant)
         {
@@ -119,6 +120,29 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Extended
             var xls = new ExportToExcelHelper();
             var res = xls.ExportDataTableToExcel(dt, tenant, settingCol);
             return res;
+        }
+        [HttpPut]
+        public HttpResponseMessage UpdateIsApproveDoneInARInvocie(string invoiceId, bool approvalInProgress)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+                var repo = new ARInvoiceRepository(tenant);
+                var invoice = repo.GetSingle(invoiceId, tenant);
+                invoice.ApprovalInProgress = approvalInProgress;
+                repo.Update(invoice);
+                repo.SubmitChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, "Field updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
     }

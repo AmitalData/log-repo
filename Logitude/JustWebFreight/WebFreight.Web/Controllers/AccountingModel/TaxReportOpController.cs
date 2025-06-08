@@ -54,28 +54,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
     }
     public class TaxReportOpController : ApiController
     {
-        //public HttpResponseMessage PostDownloadPNC874File(TaxReportPM entityPM)
-        //{
-        //    try
-        //    {
-        //        string token = HttpContext.Current.Request.Headers["Token"];
-        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-        //        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-        //        SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
-        //        int tenant = authToken.Tenant;
 
-        //        DocumentsFilingPM docOut = TaxReportService.CreatePNC874File(entityPM.Id, tenant);
-
-
-        //        return Request.CreateResponse(HttpStatusCode.OK, docOut);
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-        //    }
-
-        //}
 
         public HttpResponseMessage PostDownloadPNC874FileInBatch(TaxReportPM entityPM)
         {
@@ -194,16 +173,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 {
                     string filterName = filterNameProp.ToString();
                     string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                    //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
-                    //{
-                    //string[] values = filterValue1.ToString().Split(',');
-                    //if (values.Count() > 1)
-                    //{
-                    //filterValue1 = values[0];
-                    //filterValue2 = values[1];
-                    //}
-                    //}
-                    //ToDo: Get object field by name and set the remained filter properties
+
+
                     ObjectField field = TaxReportLineObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                     if (field != null)
                     {
@@ -495,6 +466,39 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+
+        public HttpResponseMessage GetDuplicateInputs(string reportId)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+
+
+                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+                TaxReportQueryService reportService = new TaxReportQueryService(MyContext);
+                int count = reportService.GetDuplicateInputReportLines(reportId, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+
+                response.Result = count;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
         public HttpResponseMessage PutCreateTaxReportLine(TaxReportPM entityPM)
         {
 
@@ -507,7 +511,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
                 SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
                 int tenant = authToken.Tenant;
-                //    entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
+
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, entityPM);
@@ -563,7 +567,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
 
-            // Call the service
+
             List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(taxReportPM, tenant);
             TaxReportService.CalculateReportTotals(taxReportPM, lines);
             taxReportPM.ChangeSetOp = ChangeSetOperation.Update;

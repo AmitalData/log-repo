@@ -1977,7 +1977,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             if (this.EntityPM.Bank != value) {
                 this.EntityPM.Bank = value;
                 if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
                     this.UpdateBankFieldForPaymentCheque();
+                    
                 }
                 if (!AppTool.IsNullOrEmpty(value)) {
                     this.UIProperties.SetRequired("Bank", this.ObjectTableName, false);
@@ -2011,8 +2013,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     else {
                         this.UIProperties.SetRequired("BankBranch", this.ObjectTableName, true);
                     }
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
+
                     this.UpdateBankBranchFieldForPaymentCheque();
                 }
+                
             }
         }
     }
@@ -2037,6 +2042,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         this.UIProperties.SetRequired("Account", this.ObjectTableName, true);
                     }
                     this.UpdateAccountFieldForPaymentCheque();
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
+
                 }
             }
         }
@@ -2086,6 +2093,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.EntityPM.ChequeOrPaymentRef = value;
                 if (this.EntityPM.AccountingPaymentMethodCode == "CH") {
                     this.SetUIProperties_Cheque();
+                    this.ValidateDuplicateCheques(this.EntityPM.Bank, this.EntityPM.BankBranch, this.EntityPM.Account, this.EntityPM.ChequeOrPaymentRef);
                 }
                 if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
                     this.UpdatePaymentRefFieldForPaymentBankTransfer();
@@ -2494,8 +2502,17 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     }
 
     ValidateChequeFields() {
-        var errors: string[];
-        errors = this.ARPaymentValidator.Validate(this.EntityPM);
+        if(this.CurrentSession.CurrentEditComponent.ValidationErrorsList === null && this.CurrentSession.CurrentEditComponent.ValidationErrorsList.length === 0) {
+            return this.CurrentSession.CurrentEditComponent.ValidationErrorsList = this.ARPaymentValidator.Validate(this.EntityPM);
+        }
+        return this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+    }
+    async ValidateDuplicateCheques(bank:string,bankBranch:string,bankAccount:string,chequeOrPaymentRef:string) {
+        var errors: string[] = [];
+        const validationResult = await this.ARPaymentValidator.ValidateDuplicateCheque(bank, bankBranch, bankAccount, chequeOrPaymentRef);
+        if (!AppTool.IsNullOrEmpty(validationResult)) {
+            errors.push(validationResult);
+        }
         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         return errors;
     }

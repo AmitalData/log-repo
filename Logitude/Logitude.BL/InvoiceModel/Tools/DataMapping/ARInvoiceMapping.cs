@@ -168,6 +168,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.CancelledByARInvoiceId = entityPM.CancelledByARInvoiceId;
             entity.CreditedByARInvoiceId = entityPM.CreditedByARInvoiceId;            
             entity.IsApprovalFailed = entityPM.IsApprovalFailed;            
+            entity.ApprovalInProgress = entityPM.ApprovalInProgress;            
             entity.PrintNotes = entityPM.PrintNotes;            
             entity.InternalNotes = entityPM.InternalNotes;
             entity.PaymentTermExternalId = entityPM.PaymentTermExternalId;
