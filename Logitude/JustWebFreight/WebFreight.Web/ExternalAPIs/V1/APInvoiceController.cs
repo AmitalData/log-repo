@@ -183,11 +183,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                             this.MapLines(apinvoice, tenant, apinvoicePM, isFullAccounting);
 
-                            apinvoicePM.InvoiceCurrencyExchangeRate = apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency;
+                            apinvoicePM.InvoiceCurrencyExchangeRate = apinvoice.InvoiceCurrencyExchangeRate > 0
+                                ? apinvoice.InvoiceCurrencyExchangeRate
+                                : (apinvoicePM.AmountInInvoiceCurrency != 0 
+                                    ? apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency
+                                    : 1.0);
                         }
 
-                    
-                            apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode,apinvoicePM);
+
+                        apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode,apinvoicePM);
                             apinvoicePM.CreatedFromAPI = true;
                        
 
@@ -369,7 +373,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId))
             {
-                line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
+                line.ChargeTypeGLAccountId = line.PayableDebitGLAcountId ?? charge.PayableDebitGLAcountId;
             }
             else
             {

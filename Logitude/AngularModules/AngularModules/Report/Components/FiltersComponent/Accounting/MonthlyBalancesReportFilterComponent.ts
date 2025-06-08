@@ -1,5 +1,4 @@
-
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component ,ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ReportFliter } from '../../Filters/ReportFliter';
@@ -7,16 +6,9 @@ import { QueryFilterItem } from '../../Filters/QueryFilterItem';
 import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
-import { reject } from 'q';
 import { CodeNameClass } from 'Infrastructure/DataContracts/CodeNameClass';
-import { TaxReportExtendedPMService } from 'Accounting/Services/ExtendedPMs/TaxReportExtendedPMService';
-import { TaxReportPM } from 'Accounting/EntityPMs/TaxReportPM';
-import { Operators } from 'Accounting/DataContracts/Operators';
 import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { AppTool } from 'Infrastructure/Tools';
@@ -42,8 +34,9 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
     public TaxReportLists: CodeNameClass[] = [];
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isReady: boolean = false;
-
-    //new
+    public ChartOfAccountsComboBoxValue: string ="All";
+    private filterAll = "All";
+    private filterNotAll = "NotAll";
     selectedChartOfAccountsTypes: any[] = [];
     chartOfAccountsTypes: any[] = [];
     selectedChartOfAccounts: any[] = [];
@@ -63,6 +56,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                         this.entityResourceService.getEntityResourceByTableName("ARInvoice").subscribe((response: any) => {
                             this.entityResourceService.getEntityResourceByTableName("General").subscribe((response: any) => {
                             this.isReady = true;
+
                     });
                     });
                     });
@@ -72,52 +66,20 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         this.DataContext.UIProperties.SetRequired("ChartOfAccountsComboBoxValue", this.ObjectTableName, true)
         this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, true)
 
-        //new 
-        this.getChartOfAccounts();
     }
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-      
+        this.DetailedForJobs=false
+        this.getChartOfAccounts();
+
     }
 
   
 
     ValidateDate() {
-        // var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
-        // if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
-
-        //     setTimeout(() => {
-        //         if (!this.IsOldDate("ToDate"))
-        //             this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
-        //         this.errors = [];
-        //         if (!this.IsOldDate("FromDate"))
-        //             this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
-        //         this.CD.detectChanges();
-        //     }, 200);
-
-        // } else {
-        //     setTimeout(() => {
-        //         this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
-        //         this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
-        //         this.CD.detectChanges();
-        //     }, 200);
-
-        // }
+        
     }
 
-      
-   
-   //new
-    private chartOfAccountsComboBoxValue: string;
-    public get ChartOfAccountsComboBoxValue(): string
-    {
-        return this.chartOfAccountsComboBoxValue;
-    }
-    public set ChartOfAccountsComboBoxValue(v: string)
-    {
-        this.chartOfAccountsComboBoxValue = v;
-        this.SetChartOfAccountsFilterProperties();
-    }
 
     private detailedForJobs: boolean;
     get DetailedForJobs() { return this.detailedForJobs; }
@@ -135,11 +97,20 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         if (this.numberOfYear != value) {
             this.numberOfYear = value;
         }
+        if(this.numberOfYear!=null){
+            this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, false)
+
+        }
+        else{
+            this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, true)
+
+        }
     }
     SetChartOfAccountsFilterProperties(){
               this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
     }
     
+    AdditionalServiceSelectedValue:string
 
     private getChartOfAccounts()
     {
@@ -149,25 +120,77 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
             .subscribe((arg: any) =>
             {
                 this.chartOfAccounts = arg.Result;                
-                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`}}).sort((a, b) => a.Code - b.Code);
-            });
+                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,
+                    Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`,
+                    Checked: this.ChartOfAccountsComboBoxValue === this.filterNotAll && this.AdditionalServiceSelectedValue?.split(',').some(selectedItem =>  selectedItem === item.Code||selectedItem === item.Id)
+
+                }}).sort((a, b) => a.Code - b.Code); });
+
     }
     OnChartOfAccountsItemClicked(items){
 
         this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
 
     }
+    SelectedItemChanged(item) {
+        this.ChartOfAccountsComboBoxValue = item;
+    }
 
-
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
    
+      
    
-
-
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "DetailedForJobs":
+                    this.DetailedForJobs= queryFilterItem.FieldValue;
+                    break;
+                case "NumberOfYear":
+                    this.NumberOfYear = queryFilterItem.FieldValue;
+                    break;
+                case "ChartOfAccountsIdList":
+                    {  this.ChartOfAccountsComboBoxValue =  queryFilterItem.FieldValue === this.filterAll ? this.filterAll : this.filterNotAll; 
+                       this.AdditionalServiceSelectedValue = queryFilterItem.FieldValue;
+                       
+                       break;
+    
+                    }
+                                 
+            }
+                  
+        }
+    }
    
-
     RunReport() {
-        this.ValidationErrorsList = [];
+              
+        if (this.ValidateSelectedFilters()) {
 
+            this.BuildReport();
+
+        }
+    }
+    ValidateSelectedFilters(){
+        this.ValidationErrorsList = [];
 
         var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
        
@@ -180,22 +203,16 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
                 var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "קבוצת מאזן");
                 this.ValidationErrorsList.push(ToDateValidation);
             }
-
+        return this.ValidationErrorsList.length == 0;
           
-        
-        if (this.ValidationErrorsList.length == 0) {
-
-            this.BuildReport();
-
-        }
     }
-
-    InitilaizeFilter() {
+    GetQueryFilterItems() {
         this.queryFilterItems = new Array<QueryFilterItem>();
         this.queryFilterItems.push(new QueryFilterItem("DetailedForJobs", this.DetailedForJobs, "boolean"));
         if(this.selectedChartOfAccounts)
             this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item=>item.Id).join(','), "String"));
         this.queryFilterItems.push(new QueryFilterItem("NumberOfYear", this.NumberOfYear, "number"));
+        return this.queryFilterItems;
              
 
     }
@@ -211,11 +228,10 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         }
     }
     BuildReport() {
-        this.InitilaizeFilter();
-
+        
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
-        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
         this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
         this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
         this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
@@ -236,10 +252,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
 
         return queryFilterItem;
     }
-    ClearFields(){
-       
-
-    }
+    
 }
 
 

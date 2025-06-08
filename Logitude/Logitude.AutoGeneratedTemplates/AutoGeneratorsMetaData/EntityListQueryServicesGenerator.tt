@@ -510,6 +510,7 @@ namespace <#= querylistservicenamespacestring #>
                             }
 						case "date":
                         case "datetime":
+						case "datetime2": 
                             {
                                 query2 = sortClass.GetSorterQuery<<#= listName #>, DateTime>(queryOperations, query2);
                                 break;

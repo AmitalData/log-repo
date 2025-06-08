@@ -589,6 +589,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 (x.FieldErrors != null && x.FieldErrors.Any(y => y.ListVersionID == "1")) || (x.EntityErrors != null && x.EntityErrors.Any(y => y.ListVersionID == "1"))))
                             HasErors = true;
                     }
+                    if (_MyDeclarationPM.AmendmentStatus == "4")
+                    {
+                        if (_MyDeclarationPM.ReplacingRepairRequest != null)
+                        {
+                            DeclarationPM declarationAmendment = myDeclarationQueryService.GetDeclarationAmendmentByAmendmentRequestNumber(_MyDeclarationPM.Tenant, _MyDeclarationPM.ReplacingRepairRequest);
+                            declarationAmendment.AmendmentStatus = _MyDeclarationPM.AmendmentStatus;
+                            declarationAmendment.AmendmentErrorXml = this._MyDeclarationPM.AmendmentErrorXml;
+                            declarationAmendment.ChangeSetOp = ChangeSetOperation.Update;
+                            myDeclarationUpdateService.Update(declarationAmendment, false);
+                        }
+                    }
                     if (isExportCloseFromMehes)
                     {
                         if (customResponse.Response.Error != null)
@@ -636,6 +647,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     _MyDeclarationPM.AmendmentCorrectedByUserId = loggingUserId;
                     _MyDeclarationPM.AmendmentissueDate = DateTime.ParseExact(customResponse.Response.Declaration.IssueDateTime, "yyyy-MM-ddTHH:mm:ss", null);
+                }
+                
+                if (_MyDeclarationPM.DeclarationStatusTypeCode != "36")
+                {
+                    _MyDeclarationPM.IsExportClosed = false;
+                    _MyDeclarationPM.IsClose = false;
                 }
 
                 if ((!isExportClose && (_MyDeclarationPM.AmendmentStatus == "1" || _MyDeclarationPM.AmendmentStatus == "2")) || MyResponseData.IsExportCloseApprove)
@@ -842,9 +859,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var amitalInsertToQueueService = new AmitalInsertToQueueService<Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE>(logistictFile);
                     amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
                     RaiseEvent(this._MyDeclarationPM, null, status_id: "CLS");
-
-
                 }
+
 
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
                 var featureClosingAutoExpDec = features.Features.FirstOrDefault(x => x.Code == "ClosingAutoExpDec");

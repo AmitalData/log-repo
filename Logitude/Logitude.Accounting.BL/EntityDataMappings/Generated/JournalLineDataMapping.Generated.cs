@@ -94,9 +94,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DebitAccountCOACode, 
 	         DebitAccountEnglishName, 
 	         CreditAccountEnglishName, 
-	         ConfirmationNumber,
+	         ConfirmationNumber, 
             ExcludeFromTaxReport,
-        }
+	         DebitAccountCountryCode,
+	      }
 
         List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();

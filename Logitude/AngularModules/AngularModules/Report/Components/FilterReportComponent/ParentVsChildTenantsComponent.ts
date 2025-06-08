@@ -8,6 +8,7 @@ import {GlobalDomainService} from '../../../Common/Services/GlobalDomainService'
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantManagementList} from '../../../Infrastructure/EntityLists/TenantManagementList';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     
@@ -21,7 +22,7 @@ export class ParentVsChildTenantsComponent extends BaseComponent implements OnIn
     public ValidationErrorsList: string[];
     public ObjectTableName: string = "Report";
     public DataContext: ParentVsChildTenantsComponent = this;
-    
+    public SelectedParentTenantFilter: string = null;
     constructor() {
         super();
     }
@@ -61,7 +62,10 @@ export class ParentVsChildTenantsComponent extends BaseComponent implements OnIn
                     newItem.DisplyText = item.Name + " (" + item.Id + ")";
 
                     this.ParentTenantList.push(newItem);
-                });                
+                });  
+                if(this.SelectedParentTenantFilter!=null)  {
+                    this.SelectedParentTenant = this.ParentTenantList.filter(d => d.Code === this.SelectedParentTenantFilter)[0];
+                }            
             }
         }
     }
@@ -76,11 +80,61 @@ export class ParentVsChildTenantsComponent extends BaseComponent implements OnIn
 
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
+    public RunReportTitle: string = 'Run Report';
+    SetRunReportTitle() {
+        
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+        
+    }
+    public IsSchedulerReport: boolean = false;
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
+        this.IsSchedulerReport = isSchedulerReport;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+   
+        if (queryFilterItem) {
+            switch (queryFilterItem.FieldName) {
+                case "ParentTenantId":{
+                    this.SelectedParentTenantFilter= queryFilterItem.FieldValue;
+                    this.GetTenants();
+                    break;
+                        
+                }
+                    
+            }
+                 
+        }
+    }
+    ValidateSelectedFilters(){
+      return true;  
+    }
     RunReport(isloading: boolean) {
-        this.ValidationErrorsList = [];
+        
+            var reportFilter = new ReportFliter();
+            reportFilter.Tenant = SessionLocator.Tenant;
+            reportFilter.QueryFilterItemLists = this.GetQueryFilterItems();
+            reportFilter.FilterControlName = this.ReportsPreview.FilterControlName;
+            reportFilter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+            reportFilter.ReportCode = this.ReportsPreview.Report.Code;
+            reportFilter.NumberOfPage = 1;
+            reportFilter.ProcessType = "GenerateReport";
 
-        if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
+            this.ReportsPreview.GenerateReport(reportFilter, isloading);
+      
+    }
+
+    GetQueryFilterItems(){
+        this.queryFilterItems = new Array<QueryFilterItem>();
 
             if (this.SelectedParentTenant != null) {
                 this.queryFilterItem = new QueryFilterItem();
@@ -90,17 +144,6 @@ export class ParentVsChildTenantsComponent extends BaseComponent implements OnIn
                 this.queryFilterItem.Operator = "Equals";
                 this.queryFilterItems.push(this.queryFilterItem);
             }
-
-            var reportFliter = new ReportFliter();
-            reportFliter.Tenant = SessionLocator.Tenant;
-            reportFliter.QueryFilterItemLists = this.queryFilterItems;
-            reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-            reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-            reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-            reportFliter.NumberOfPage = 1;
-            reportFliter.ProcessType = "GenerateReport";
-
-            this.ReportsPreview.GenerateReport(reportFliter, isloading);
-        }
+            return this.queryFilterItems;   
     }
 }

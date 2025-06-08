@@ -181,6 +181,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PayableDebitGLAcountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="APInvoiceId"
     ReferencedTable="APInvoices"

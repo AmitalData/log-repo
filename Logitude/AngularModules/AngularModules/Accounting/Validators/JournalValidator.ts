@@ -1,8 +1,8 @@
 import { JournalPM } from '../EntityPMs/JournalPM';
-import { JournalLinePM } from '../EntityPMs/JournalLinePM';
-import {AppTool, DateTool} from '../../Infrastructure/Tools';
+import {AppTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 const approvedStatus = '2';
 export class JournalValidator
@@ -28,11 +28,10 @@ export class JournalValidator
     }
 
 
-    public static ValidateJournalLines(line: any) {
+    public static ValidateJournalLines(line: any ) {
         var errors = [];
         if (line) {
             if (line.ActionCode == null || line.ActionCode == undefined) {
-                // you must choose action code
                 errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseActionCode") + " " + line.Line  ); // + "You must choose action code for line "
             } else {
                 // Credit Account
@@ -60,7 +59,7 @@ export class JournalValidator
                 }
                
                
-
+               
 
                 // Credit and Debit account (same currency)
                 if (line.ActionCode == '3') {
@@ -72,7 +71,7 @@ export class JournalValidator
                     }
                 }
 
-
+              
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line
@@ -89,12 +88,30 @@ export class JournalValidator
 
             }
         }
-        //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
         SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
         return errors;
     }
 
-
+    public  async ValidateJournalLinesCountry(lines: any ) {
+        var errors = [];
+        const vendorSet = new Set<string>();
+ 
+ 
+        for (let line of lines) {
+            if((line.ActionCode === '2' || line.ActionCode === '3')  && line.DebitAccountCOACode === "4" && line.CreditAccountCOACode === "5"){
+                const vendorValidator: VendorValidator = new VendorValidator();
+                const vendorEntry = line.DebitAccountNumber + "/" + line.DebitAccountName;
+                 if (!await vendorValidator.IsVendorCountryValid(line.DebitAccountId,line.DebitAccountCountryCode,)) {
+                    vendorSet.add(vendorEntry); 
+                }
+            }
+        }
+        if(vendorSet.size > 0) {
+            const vendorList = Array.from(vendorSet).join(", ");
+            errors.push(TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor") +": "+ vendorList); 
+        }
+        return errors;
+    }
     public static ValidateTotals(entityPM: JournalPM) {
 
         var errors = [];
@@ -163,11 +180,7 @@ export class JournalValidator
         this.errorList = [];
         var result = [];
 
-        // Validate last row of journal lines
-        //if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
-        //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
-        //}
-
+        
         result = JournalValidator.ValidateAccountingDate();
         this.FillErrorList(result);
 
@@ -176,9 +189,9 @@ export class JournalValidator
             result = JournalValidator.ValidateJournalLines(journalLine);
             this.FillErrorList(result);
         }
+       
 
 
-        // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
         this.FillErrorList(result);
       
@@ -195,25 +208,16 @@ export class JournalValidator
         if (day > 0 && day < 32) {
             var lastDayOfMonth = this.lastDay(date.getFullYear(), date.getMonth());
             if (day > lastDayOfMonth) {
-                //error
-                //this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
+                
                 return false;
-                //var t = setTimeout(() => {
-                //    this.AccDay = value;
-                //});
+                
             } else {
-                //this.UIProperties.SetValidity("AccDay", this.ObjectTableName, true, "valid");
-                //this.AccountingDate = new Date(date.setDate(day));
+                
                 return true;
 
             }
         } else {
-            //error
-            //this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
-            //this.isValid = false;
-            //var t = setTimeout(() => {
-            //    this.AccDay = value;
-            //});
+            
             return false;
         }
 

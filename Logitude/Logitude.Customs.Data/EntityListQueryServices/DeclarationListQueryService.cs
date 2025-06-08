@@ -190,7 +190,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      from myJoinAmendmentRequest in qStatusAmendJoin.DefaultIfEmpty()
 
                                                      join cooStatusViews in context.CooStatusViews
-                                                     on a.Id equals cooStatusViews.DeclarationId into cooStatusViewsJoin
+                                                     on (a.IsAmendment == true ? a.AmendmentOriginalDeclartation : a.Id) equals cooStatusViews.DeclarationId into cooStatusViewsJoin
                                                      from MyDeclarationCooStatusViews in cooStatusViewsJoin.DefaultIfEmpty()
 
                                                      select new DeclarationList()

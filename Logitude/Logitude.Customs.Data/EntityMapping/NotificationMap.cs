@@ -107,6 +107,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CustomerId).HasColumnName("CustomerId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ResponseToMessage).HasColumnName("ResponseToMessage").HasMaxLength(20).IsUnicode(true);
+
+            this.Property(t => t.SenderName).HasColumnName("SenderName").HasMaxLength(50).IsUnicode(true);
         }
     }
 }

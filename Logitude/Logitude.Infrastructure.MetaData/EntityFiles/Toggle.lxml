@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -43,7 +44,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Toggle&quot;"
-  Code="&quot;37b9&quot;"
+  Code="&quot;8b4a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -62,6 +63,7 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
+  ShowFastSearch="false"
   Code1="&quot;3c31&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -999,7 +1001,12 @@
       Code="&quot;JAM&quot;"
       Name="&quot;Journal Approval MultiThreading&quot;"
       SearchFields="&quot;JAM, Journal Approval MultiThreading&quot;"
-      Description="&quot;Journal Approval MultiThreading 2&quot;" />
+      Description="&quot;Journal Approval MultiThreading&quot;" />
+    <Record
+      Code="&quot;TXD&quot;"
+      Name="&quot;Tax Deduction Report by Withholding and Bank Accounts&quot;"
+      SearchFields="&quot;TXD, Tax Deduction Report by Withholding and Bank Accounts&quot;"
+      Description="&quot;Tax Deduction Report by Withholding and Bank Accounts&quot;" />
     <Record
       SearchFields="&quot;UAD, Update GLA Aging Data using WR&quot;"
       Code="&quot;UAD&quot;"
@@ -1035,6 +1042,11 @@
       Name="&quot;Israel Invoices Do Not Activate V2&quot;"
       Description="&quot;חשבוניות ישראל לא להפעיל V2&quot;"
       SearchFields="&quot;AV2 ,Israel Invoices Do Not Activate V2&quot;" />
+    <Record
+      Name="&quot;Report Export To Exel&quot;"
+      Code="&quot;REE&quot;"
+      SearchFields="&quot;REE,Report Export To Exel&quot;"
+      Description="&quot;Report Export To Exel&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

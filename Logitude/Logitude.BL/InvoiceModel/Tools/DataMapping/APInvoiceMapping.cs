@@ -232,6 +232,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Notes = entityPM.Notes;
             entity.EntityId = entityPM.EntityId;
             entity.EntityPayableId = entityPM.EntityPayableId;
+            entity.PayableDebitGLAcountId = entityPM.PayableDebitGLAcountId;
+
             entity.RefundAmount = entityPM.RefundAmount;
             entity.ProfitCurrencyAmount = entityPM.ProfitCurrencyAmount;
             entity.VatPercentage = entityPM.VatPercentage;

@@ -168,8 +168,11 @@ namespace Logitude.Accounting.BL.CoreBL
                         //.Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign); 
                         ;
                 }
-                var myTotalOpenReconciliation= (qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency
-                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign)).ToList(); 
+                var qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency1 = qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency.ToList();
+				var qTotalOpenAmountInTransactionDiffBalanceInForeign1 = qTotalOpenAmountInTransactionDiffBalanceInForeign.ToList();
+
+				var myTotalOpenReconciliation = (qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency1
+                        .Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign1)).ToList(); 
                 var l = qThe.ToList();
                 CompareReport = new CompareReportM()
                 {

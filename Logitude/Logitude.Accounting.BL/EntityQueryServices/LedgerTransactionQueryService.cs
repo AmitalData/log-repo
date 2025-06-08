@@ -536,6 +536,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
         }
+
+
+        public IQueryable<LedgerTransaction> GetByJournalAndAccountId(string journalId, string accountId, int tenant)
+        {
+            return repository.GetByJournalAndAccountId(journalId, accountId, tenant);
+           
+        }
         public List<LedgerTransactionPM> GetByJournalIdAndForeignAmountCreditNotEqualZero(string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
@@ -1079,6 +1086,28 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return invoicesTransactions;
         }
+
+
+
+        public List<LedgerTransaction> GetTransactionsDeduction(string whAccountId, DateTime startDate, DateTime endDate, int tenant)
+        {
+             var dtos = repository.GetTransactionsDeductionDTO(whAccountId, startDate, endDate, tenant).ToList();
+
+            return dtos.Select(dto => new LedgerTransaction
+            {
+                Id = dto.Id,
+                AccountId = dto.AccountId,
+                OppositeAccountId = dto.OppositeAccountId,
+                JournalId = dto.JournalId,
+                JournalLineNumber = dto.JournalLineNumber ?? 0,
+                LocalAmountCredit = dto.LocalAmountCredit,
+                LocalAmountDebit = dto.LocalAmountDebit,
+                Reference1 = dto.Reference1,
+                AccountingDate = dto.AccountingDate,
+                Tenant = dto.Tenant
+             }).ToList();
+        }
+
 
         private List<LedgerTransactionJournalLineLT> FillTransactionsReconciliationNumbersLT(List<LedgerTransactionJournalLineLT> invoicesTransactions, int tenant)
         {
