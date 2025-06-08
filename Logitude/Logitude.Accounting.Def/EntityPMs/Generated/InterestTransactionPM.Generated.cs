@@ -620,12 +620,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			}
 		}
 
-        private DateTime accountingDate;
+        private DateTime? accountingDate;
 
 
         [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
         [DataMember]
-        public DateTime AccountingDate
+        public DateTime? AccountingDate
         {
 
             get

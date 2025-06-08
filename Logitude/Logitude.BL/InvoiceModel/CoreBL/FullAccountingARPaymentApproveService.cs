@@ -185,6 +185,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
                 JournalId = payment.JournalId,
+                AccountingDate =payment.RegisterDate 
             };
             return interestTransaction;
         }
@@ -210,6 +211,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = payment.PaymentCurrencyId,
                 JournalId = payment.JournalId,
+                AccountingDate = payment.RegisterDate 
             };
             return interestTransaction;
         }
