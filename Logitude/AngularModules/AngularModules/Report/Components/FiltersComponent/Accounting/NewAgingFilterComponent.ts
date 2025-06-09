@@ -39,7 +39,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
     private loggedUser: any;
     public RunReportTitle: string = 'Run Report';
     public IsSchedulerReport: boolean = false;
-
+    IsMergeGLAccount: boolean = false; 
 
     constructor(public entityListService: EntityListService) {
         super();
@@ -377,6 +377,10 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
                     this.SelectedObligo =this.operatorsList.find(a=>a.Code === queryFilterItem.FieldValue); ;
                     break;
                 }
+                case "IsMergeGLAccount":
+                    this.IsMergeGLAccount = queryFilterItem.FieldValue;
+                    break;
+                
 
 
             }
@@ -436,6 +440,8 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
         myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
         myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+        myFilterItems.push(new QueryFilterItem("IsMergeGLAccount", this.IsMergeGLAccount));
+
         if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
             myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
             myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
