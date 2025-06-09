@@ -226,7 +226,10 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-                    invoiceApiCommunicationLogId = response.MessageValues["invoiceApiCommunicationLogId"]?.ToString();
+                    invoiceApiCommunicationLogId = response.MessageValues.ContainsKey("invoiceApiCommunicationLogId")
+                                                                                 ? response.MessageValues["invoiceApiCommunicationLogId"]?.ToString()
+                                                                                  : null;
+
             
                     aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
