@@ -205,7 +205,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity);
+                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity , null);
                 myTracingClass.Trace();
                 myTracingClass.TraceProducts(entityPM.CustomerProducts, isNewEntity);
                 myTracingClass.TraceCompetitors(entityPM.CustomerCompetitors, isNewEntity);
@@ -314,7 +314,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.entityPOCO = entityRepository.GetSingleCustomer(entityPM.Id, tenant, false);
             this.entityCard = cardRepository.GetSingleCard(entityPM.Id, entityPM.Tenant);
-
+            var emailForSendingSingArinvoiceBackUp = entityCard?.EmailForSendingSingArinvoice ;
             this.InitializeComponent();
 
             CustomerValidating.Validate(entityPM, isNewEntity, this.objectContext);
@@ -398,7 +398,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             if (!entityPM.IsHybrid && !entityPM.IsLogBox)
             {
-                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity);
+                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity , emailForSendingSingArinvoiceBackUp);
                 myTracingClass.Trace();
 
                 if (productsChangeSet != null)
