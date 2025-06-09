@@ -3064,6 +3064,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
+            else if (this.ObjectTableName == "InterestReport") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('InterestReport.O.NewReport');
+            }
+            else if (this.ObjectTableName == "OpenFormatReport") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
+            }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
@@ -3634,6 +3640,13 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (this.ObjectTableName == "TaxDeductionReport") {
                 str = TextCodeTranslator.Translate("General.O.NewReport");
             }
+            else if (this.ObjectTableName == "InterestReport") {
+                str = TextCodeTranslator.Translate('InterestReport.O.NewReport');
+            }
+            else if (this.ObjectTableName == "OpenFormatReport") {
+                str = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
+            }
+
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
             }
