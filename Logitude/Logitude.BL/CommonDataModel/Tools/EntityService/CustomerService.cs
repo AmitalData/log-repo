@@ -98,7 +98,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.objectContext = objectContext;
             this.entityRepository = new CustomerRepository(objectContext);
             this.addressRepository = new AddressRepository(objectContext);
-            this.cardRepository = new CardRepository(tenant);
+            this.cardRepository = new CardRepository(objectContext);
             this.contactRepository = new ContactRepository(objectContext);
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.productRepository = new CustomerProductRepository(objectContext);
