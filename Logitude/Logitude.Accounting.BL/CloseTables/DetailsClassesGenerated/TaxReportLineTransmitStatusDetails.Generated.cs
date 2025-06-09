@@ -44,23 +44,23 @@ namespace Logitude.Accounting.BL
                 LocalName = "לא לשידור בכלל", 
                 SearchFields = "3,Not for transmit at all,לא לשידור בכלל", 
 			});
-
+			 
             all.Add(new TaxReportLineTransmitStatusDetails()
-            {
-                Code = "0",
-                EnglishName = "Without Transmit",
-                LocalName = "ללא סטטוס העברה",
-                SearchFields = "0,ללא סטטוס העברה,Without Transmit",
-            });
-
+            {    
+                Code = "0", 
+                EnglishName = "Without Transmit", 
+                LocalName = "ללא סטטוס העברה", 
+                SearchFields = "0,ללא סטטוס העברה,Without Transmit", 
+			});
+			 
             all.Add(new TaxReportLineTransmitStatusDetails()
-            {
-                Code = "4",
-                EnglishName = "Transmit even if Duplicate",
-                LocalName = "לשדר למרות כפילות",
-                SearchFields = "4,לשדר למרות כפילות,Transmit even if Duplicate",
-            });
-
+            {    
+                Code = "4", 
+                EnglishName = "Transmit even if Duplicate", 
+                LocalName = "לשדר למרות כפילות", 
+                SearchFields = "4,לשדר למרות כפילות,Transmit even if Duplicate", 
+			});
+			
             return all;
        }
 

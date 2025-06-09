@@ -1,28 +1,15 @@
 
-import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component,  OnInit, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
-import { ReconciliationPM } from '../../EntityPMs/ReconciliationPM';
 import { JournalPM } from '../../EntityPMs/JournalPM';
 
-import { ReconciliationLinePM } from '../../EntityPMs/ReconciliationLinePM';
-import { LedgerTransactionList } from '../../EntityLists/LedgerTransactionList';
-import { AutomaticReconcileMethodList } from '../../EntityLists/AutomaticReconcileMethodList';
-import { LedgerTransactionPM } from '../../EntityPMs/LedgerTransactionPM';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { ReconciliationExtendedPMService } from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
-import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { AccountingPeriodListService } from '../../Services/StandardLists/AccountingPeriodListService';
 import { AccountingPeriodList } from '../../EntityLists/AccountingPeriodList';
 import { FullAccountingSettingListService } from '../../Services/StandardLists/FullAccountingSettingListService';
@@ -30,6 +17,7 @@ import { FullAccountingSettingList } from '../../EntityLists/FullAccountingSetti
 import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
 import { ExternalReconciliationExtendedPMService } from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
 import { ReconcileExternalPageLinePM } from '../../EntityPMs/ReconcileExternalPageLinePM';
+import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 
 
@@ -105,6 +93,15 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
     set GLAccountId(value: string) {
         if (this.glAcccountId != value) {
             this.glAcccountId = value;
+          if(!AppTool.IsNullOrEmpty(this.glAcccountId)){
+            this.gLAccountPMService.get(this.glAcccountId).subscribe((myResponse: ServiceResponse) => {
+             if (!myResponse.HasError) {
+                var res = myResponse.Result;
+                this.GLAccount = res;
+
+               }
+            });
+          }
         }
     }
 
@@ -272,18 +269,18 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
 
         this._SelectedLedgerTransactionIdList = winArgs.LedgerTransactionIdList;
 
-        //this._SelectedLines.Collection.forEach(r => {
-        //    let myReconcileExternalPageLinePM: ReconcileExternalPageLinePM = r.PageLinePM;
-        //    if (AppTool.IsNullOrEmpty(this.Notes)) {
-        //        this.Notes = myReconcileExternalPageLinePM.Notes;
-        //    }
-            
-        //});
+        
     }
-    FillErrors() {
+    async FillErrors() {
         this.ValidationErrorsList = [];
+        if (this.glAccount !== null && this.glAccount.ChartOfAccountsTypeCode === "4") {
+            const noAddressToVendor=TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
+            var vendorValidator: VendorValidator = new VendorValidator();
+            if (!await vendorValidator.IsVendorCountryValid(this.glAccount.Id,this.glAccount.CardCountryCode)) {
+                this.ValidationErrorsList.push(noAddressToVendor);
+            }
+        }
         if (AppTool.IsNullOrEmpty(this.glAccount)) {
-            //this.Year = new Date().getFullYear();
             this.ValidationErrorsList.push("GLAccount is Required");
         }
         else if (this._BankAccountPMId == this.glAccount.Id) {
@@ -293,13 +290,10 @@ export class ExtReconcileAdjustBankFeeComponent extends BaseComponent implements
 
             this.ValidationErrorsList.push("Accounting Date is Required");
 
-        } else {
-            this.ValidationErrorsList = [];
-
-        }
+        } 
     }
-    OkButtonClicked() {
-        this.FillErrors();
+    async OkButtonClicked() {
+        await  this.FillErrors();
         if (this.ValidationErrorsList.length > 0) {
             return;
         }

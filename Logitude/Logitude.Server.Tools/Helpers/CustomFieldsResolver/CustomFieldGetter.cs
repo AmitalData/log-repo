@@ -263,6 +263,7 @@ namespace Logitude.BL.Helpers.CustomFieldsResolver
                     }
 
                 case "DateTime":
+                case "DateTime2":
                     {
                         return GetFieldDataDateType(customField, customFieldResolver, true);
                     }

@@ -237,20 +237,11 @@ export class AppTool {
 
 		if (location.href.indexOf('localhost') > -1) {
 			logitude_url = 'http://localhost:9996/'; //test.logitudeworld.com/test/';//
-		} else {
-			const baseUrl = document.getElementsByTagName('base')[0].href;
-			if(baseUrl.includes('/customs-book/customs-book')){
-				logitude_url = baseUrl.replace("/customs-book/customs-book","");
-			}
-			else if(baseUrl.includes('/customs-book')){
-				logitude_url = baseUrl.replace("/customs-book","");
-			}
 		}
-		// else {
-		// 	if(baseUrl.includes('/customs-book')){
-		// 		logitude_url = baseUrl.replace("/customs-book","");
-		// 	}
-		// }
+		else {
+			logitude_url = logitude_url.replace("/customs-book", "");
+			logitude_url = logitude_url.replace("login", "");
+		}
 		return logitude_url;
 	}
 

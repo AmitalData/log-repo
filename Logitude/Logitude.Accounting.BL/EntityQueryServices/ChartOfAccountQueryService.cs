@@ -100,7 +100,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      Level1Id = lastChartL.Level1Id,
                      Level1Name = lastChartL.Level1Name,
                      Level1Code = lastChartL.Level1Code,
-                     Level1English = lastChartL.Level5English,
+                     Level1English = lastChartL.Level1English,
 
                      Level2Id = currChartL.Id,
                      Level2Name = currChartL.LocalName,
