@@ -124,7 +124,8 @@
                                             </td>
                                             <td style="width:180px;" *ngIf="SelectedBusinessUnitFilter">
                                                 <ComboBox *ngIf="SelectedBusinessUnitFilter.Code != 'A'" [IsDisabled]="SelectedBusinessUnitFilter.Code == 'M' || SelectedBusinessUnitFilter.Code == 'A'" [ItemsSource]="UsersFilterList" [Binding]="'Name'" [SelectedItem]="SelectedUserFilter" (SelectedItemChanged)="SelectedUserFilter = $event"></ComboBox>
-                                                <LogLov *ngIf="SelectedBusinessUnitFilter.Code == 'A'"
+                                                <LogLov  *ngIf="SelectedBusinessUnitFilter.Code == 'A'"
+                                                        [ShowInActive]="true"
                                                         [ObjectFieldName]="'ListOfValuesUserId'"
                                                         [DataContext]="DataContext"
                                                         [LookUpTableName]="'User'"
@@ -178,7 +179,7 @@
                                             <!-- Country -->
                                             <td style="width:85px" class="Label">Country: </td>
                                             <td style="width:180px; margin-right:-18px;">
-                                                <LogLov [ObjectFieldName]="'CountryId'"
+                                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'CountryId'"
                                                         [SelectedValue]="CountryId"
                                                         [ObjectTableName]="'Customer'"
                                                         [DataContext]="DataContext"

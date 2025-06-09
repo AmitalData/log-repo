@@ -33,7 +33,7 @@
 
                     <td style="width:50px;">Origin:</td>
                     <td style="width:185px;">
-                        <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFromPortId'"
                                 [ObjectTableName]="'Booking'"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Port'"
@@ -48,7 +48,7 @@
 
                     <td style="width:80px;">Destination:</td>
                     <td style="width:185px;">
-                        <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
                                 [ObjectTableName]="'Booking'"
                                 [DataContext]="DataContext"
                                 [LookUpTableName]="'Port'"
