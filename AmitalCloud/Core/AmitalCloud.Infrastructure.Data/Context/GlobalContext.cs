@@ -7,6 +7,8 @@ using AmitalCloud.Infrastructure.Data.Helpers;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using AmitalCloud.Infrastructure.Data.DBHelpers;
+using Microsoft.Extensions.Logging;
+
 
 namespace AmitalCloud.Infrastructure.Data.Context
 {

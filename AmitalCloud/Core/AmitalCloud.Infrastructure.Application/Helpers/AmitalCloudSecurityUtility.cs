@@ -15,6 +15,7 @@ using System.Transactions;
 using System.Web;
 using AmitalCloud.Infrastructure.Model.Interfaces;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace AmitalCloud.Infrastructure.Application.Helpers
 {

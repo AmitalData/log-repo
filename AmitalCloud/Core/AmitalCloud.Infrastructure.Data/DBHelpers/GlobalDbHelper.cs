@@ -1,5 +1,6 @@
 ﻿using AmitalCloud.Infrastructure.Data.Repositories;
 using AmitalCloud.Infrastructure.Model.EntityClasses;
+using Microsoft.Extensions.Configuration;
 using System.Configuration;
 namespace AmitalCloud.Infrastructure.Data.Helpers
 {
