@@ -195,9 +195,20 @@ INSERT INTO #TemporaryTable
     WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit) 
     ELSE 0 
      END) AS TotalForeign,
-	SUM(t.OpenAmount*t.ExchangeRate) AS BalanceInLocalCurrency,
-	SUM(t.OpenAmount) AS BalanceInForeignCurrency
-   FROM 
+SUM(
+    CASE 
+        WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount 
+        ELSE t.OpenAmount * t.ExchangeRate
+    END
+) AS BalanceInLocalCurrency,
+
+SUM(
+    CASE 
+        WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount * t.ExchangeRate
+        ELSE t.OpenAmount
+    END
+) AS BalanceInForeignCurrency
+FROM 
     GLACCOUNTS GL
 LEFT JOIN 
     (SELECT * FROM LedgerTransactions WHERE tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile=0) T ON GL.Id = T.ACCOUNTID
@@ -222,7 +233,7 @@ LEFT JOIN
 	 C ON GL.CardsDataId = C.Id
 	 LEFT JOIN 
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant) 
-     CURRENCY ON T.CurrencyId = CURRENCY.Id 
+     CURRENCY ON T.OpenAmountCurrencyId = CURRENCY.Id 
      WHERE 
     GL.tenant = @Tenant 
 	
