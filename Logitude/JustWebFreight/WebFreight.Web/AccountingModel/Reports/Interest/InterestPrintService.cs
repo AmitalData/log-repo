@@ -248,24 +248,10 @@ using WebFreight.Web.Helpers;
 
         private string GetReference1(InterestTransactionProvider interestTransactionDP)
         {
-            string rv = string.Empty;
-            
 
-            switch (interestTransactionDP.EntityType)   // InterestEntityIconCode
-            {
-                case InterestEntityTypeCodes.ARInvoice:
-                case InterestEntityTypeCodes.ARPayment:
-                case InterestEntityTypeCodes.Adjustments:
-                case InterestEntityTypeCodes.InterestReport:
-                    rv = interestTransactionDP.EntityNumber;
-                    break;
-                case InterestEntityTypeCodes.Journal:
-                    rv = interestTransactionDP.Reference1;
-                    break;
-                default:
-                    break;
-            }
-            return rv;
+            return interestTransactionDP.EntityType == InterestEntityTypeCodes.Journal
+                                                        ? interestTransactionDP.Reference1
+                                                        : interestTransactionDP.EntityNumber;
 
         }
 
@@ -296,7 +282,10 @@ using WebFreight.Web.Helpers;
         {
             GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
             GLAccountPM gLAccount = glAccountQuery.GetSinglePM(InterestReportPM.GLAccountId, tenant);
-            InterestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
+            if (!string.IsNullOrWhiteSpace(InterestReportPM.GLAccountId))
+            {
+                InterestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
+            }
         }
 
         private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InterestReportPM)
