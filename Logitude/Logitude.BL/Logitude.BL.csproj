@@ -163,8 +163,9 @@
     <Reference Include="Logitude.CRM.BL">
       <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.CRM.BL.dll</HintPath>
     </Reference>
-    <Reference Include="Logitude.Customs.BL">
-      <HintPath>..\packages\LogitudeOldDlls.1.0.0\lib\Net40\Logitude.Customs.BL.dll</HintPath>
+    <Reference Include="Logitude.Customs.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Customs.BL.dll</HintPath>
     </Reference>
     <Reference Include="Logitude.XSD">
       <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.XSD.dll</HintPath>
