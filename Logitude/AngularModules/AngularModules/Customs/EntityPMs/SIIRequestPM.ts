@@ -141,6 +141,16 @@ export class SIIRequestPM {
     public set FromApplicationId(newValue: string) { if (this.fromApplicationId != newValue) { this.fromApplicationId = newValue; this.MarkAsDirty("FromApplicationId"); } }
        
 	 
+    private originCountryCode: string;
+    public get OriginCountryCode() { return this.originCountryCode; }
+    public set OriginCountryCode(newValue: string) { if (this.originCountryCode != newValue) { this.originCountryCode = newValue; this.MarkAsDirty("OriginCountryCode"); } }
+       
+	 
+    private unloadPortCode: string;
+    public get UnloadPortCode() { return this.unloadPortCode; }
+    public set UnloadPortCode(newValue: string) { if (this.unloadPortCode != newValue) { this.unloadPortCode = newValue; this.MarkAsDirty("UnloadPortCode"); } }
+       
+	 
 
     public OldEntityPM: SIIRequestPM;
 		
