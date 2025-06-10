@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "e3f9c1a0b57d48f2a6c3de9b1f74ab8e";
+		public const string HashString = "b7e4c2a1f9d8e6b3c5a7f2e1d4c8b6a9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4424,6 +4424,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOConfirmVoidJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ConfirmVoidJournal", DefaultText = "Are you sure you want to cancel this Journal?",LocalDefaultText = @"אנא אשר את ביטול פקודת היומן  ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
             TextCode JournalTextCode_JournalODuplicateLinesSkipped = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DuplicateLinesSkipped", DefaultText = "Duplicate Lines Skipped", LocalDefaultText = @"שורות כפולות אותרו ולא נקלטו", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode JournalTextCode_JournalOOnlyDuplicates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.OnlyDuplicates", DefaultText = "All lines in the file already exist in the system. The file was rejected.", LocalDefaultText = @"כל השורות בקובץ כבר קיימות במערכת. הקובץ לא נקלט", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
             TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"השער החדש קטן\גדול ביותר מחמישה אחוזים מהשער הקודם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

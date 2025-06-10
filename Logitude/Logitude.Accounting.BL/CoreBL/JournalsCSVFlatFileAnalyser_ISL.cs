@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -66,6 +67,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 accountingContext = AccountingContext.GetContext(tenant);
                 _FullAccountingSettingPM = GetFullAccountingSettings(accountingContext, tenant);
                 ValidateFlatFile(tenant);
+                if (!_JournalSrcLinesDTO.Where(ln => ln.SkipLine == false).Any() && _JournalSrcLinesDTO.Where(ln => ln.SkipLine == true).Any())
+                {
+                    string error_text = TranslateTextsClassTranslate("Journal.O.OnlyDuplicates", 0, useLocal);
+                    if (String.IsNullOrEmpty(error_text)) error_text = "All lines in the file already exist in the system. The file was rejected.";
+                    throw new ApplicationException(error_text);
+                }
                 if (this.MyCSVFlatFileLoadResult.ErrorRowList.Count == 0)
                 {
                     IAccountingContext MyContext = AccountingContext.GetContext(tenant);
@@ -107,10 +114,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         };
 
 
-                        foreach (JournalSrcLineDTO_ISL jLineDTO in _JournalSrcLinesDTO)
+                        foreach (JournalSrcLineDTO_ISL jLineDTO in _JournalSrcLinesDTO.Where(ln => ln.SkipLine == false))
                         {
-                            count++;
-                            bool errors = false;
 
                             journal.JournalLines.Add(new JournalLinePM()
                             {
@@ -205,9 +210,14 @@ namespace Logitude.Accounting.BL.CoreBL
             bool reading_Lines = false;
             bool finished = false;
             var JournalSrcLines = new List<JournalSrcLineDTO_ISL>();
-            var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            int currentLine = 0;
+            //var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
+            var lines = FileContent
+                .Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            int currentLine = 0;
+            string error_text = String.Empty;
             foreach (string rawLine in lines)
             {
                 currentLine++;
@@ -239,16 +249,24 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalSrcLines.Add(taxLine);
 
                 }
-                else
+                else if (error_text == String.Empty && !String.IsNullOrEmpty(rawLine))
                 {
-                    string text = TranslateTextsClassTranslate("JournalsCSV.O.NotValidRowType", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Not a valid Row Type";
-                    throw new ApplicationException($"{text}  {rawLine}");
+                    error_text = TranslateTextsClassTranslate("JournalsCSV.O.NotValidRowType", 0, useLocal);
+                    if (String.IsNullOrEmpty(error_text)) error_text = "Not a valid Row Type";
+                    error_text += $" {rowtype}  {rawLine}";
+                    if (JournalSrcLines.Any()) // An error after some lines - throw on the spot
+                    { 
+                        throw new ApplicationException(error_text); 
+                    }
                 }
                 if (finished)
                 {
                     break;
                 }
+            }
+            if (!JournalSrcLines.Any() & String.IsNullOrEmpty(error_text))
+            {
+                throw new ApplicationException(error_text);
             }
             return JournalSrcLines;
         }
@@ -337,12 +355,12 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (jLine.DuplCheck)
                     {
-                        CheckDuplicateRef(jLine.Reference1, jLine.CreditGLAccountId, tenant, jLine.CreditGLAccount);
+                        jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.CreditGLAccountId, tenant, jLine.CreditGLAccount);
                     }
-                    totalCredit += Math.Round(jLine.LocalAmount, 2);
+                    if (!jLine.SkipLine) totalCredit += Math.Round(jLine.LocalAmount, 2);
 
 				}
-                if (jLine.ActionCode != "1")
+                if (!jLine.SkipLine && jLine.ActionCode != "1")
                 {
                     if (String.IsNullOrEmpty(jLine.DebitGLAccount))
                     {
@@ -377,13 +395,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     if (jLine.DuplCheck)
                     {
-                        CheckDuplicateRef(jLine.Reference1, jLine.DebitGLAccountId, tenant, jLine.DebitGLAccount);
+                        jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.DebitGLAccountId, tenant, jLine.DebitGLAccount);
                     }
-                    totalDebit += Math.Round(jLine.LocalAmount, 2);
+                    if (!jLine.SkipLine) totalDebit += Math.Round(jLine.LocalAmount, 2);
 
 				}
 
-				count++;
+                count++;
             }
             if(totalDebit != totalCredit) 
             {
@@ -394,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 		}
 
-        private void CheckDuplicateRef(string reference1, string gLAccountId, int tenant, string account)
+        private bool CheckDuplicateRef(string reference1, string gLAccountId, int tenant, string account)
         {
             LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
             if (ledgerTransactionQueryService.ExistsLedgerTransactionByReferenceGLAccountId(reference1,gLAccountId, tenant))
@@ -402,7 +420,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 string text = "Reference " + reference1 + " exists already in G.L.Account " + account;
                 this.AddAccountLineRow(text);
                 this.DuplicatesSkippedCount += 1;
+                return true;
             }
+            return false;
         }
     }
 
@@ -501,6 +521,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public string Reference3 { get; private set; }
         public string Notes { get; private set; }
         public bool DuplCheck { get; private set; }
+        public bool SkipLine { get; set; } = false;
 
         internal static JournalSrcLineDTO_ISL Create(string rawLine, int currentLine)
         {
