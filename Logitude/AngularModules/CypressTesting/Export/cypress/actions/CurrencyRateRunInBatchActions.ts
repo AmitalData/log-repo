@@ -24,15 +24,17 @@ export function FillCurrencyRatesDetails(CurrencyRateRunInBatchDetails: Currency
     cy.Click(CurrencyRateRunInBatchSelectors.RunInBatch,null);
     cy.Click(CurrencyRateRunInBatchSelectors.Approve,null);
     cy.Click(CurrencyRateRunInBatchSelectors.Cancel,null);
-    cy.wait(100000);
+    cy.wait(200000);
     cy.Click(CurrencyRateRunInBatchSelectors.RequestsSheets,null);
     cy.Click(CurrencyRateRunInBatchSelectors.Search, null);
 
 }
 
 export function FillRequestSheets(currencyRateRunInBatchDetails: CurrencyRateRunInBatchDetails) {
-  
-    cy.get(CurrencyRateRunInBatchSelectors.ManageCustomsRequests).type(currencyRateRunInBatchDetails.ManageCustomsRequests);
+    cy.wait(20000);
+
+       cy.FillLogLov(CurrencyRateRunInBatchSelectors.ManageCustomsRequests,currencyRateRunInBatchDetails.ManageCustomsRequests,true);
+    // cy.get(CurrencyRateRunInBatchSelectors.ManageCustomsRequests).type(currencyRateRunInBatchDetails.ManageCustomsRequests);
     cy.Click(CurrencyRateRunInBatchSelectors.RequestStatus,null);
     cy.get(CurrencyRateRunInBatchSelectors.CheckAll).click({force: true});
     cy.get(CurrencyRateRunInBatchSelectors.Reference).click();

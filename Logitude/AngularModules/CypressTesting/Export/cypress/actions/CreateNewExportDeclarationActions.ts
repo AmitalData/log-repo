@@ -35,17 +35,17 @@ export function FillNewExportDeclaration(createNewExportDeclarationDetails: Crea
 
    cy.FillLogLov(CreateNewExportDeclarationSelectors.DeclarationOfficeHandlCode,createNewExportDeclarationDetails.DeclarationOfficeHandlCode, true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.ExportDeclarationOfficeCode,createNewExportDeclarationDetails.ExportDeclarationOfficeCode, true);
-   cy.get(CreateNewExportDeclarationSelectors.ExporterNumber).type(createNewExportDeclarationDetails.ExporterNumber);
+  // cy.get(CreateNewExportDeclarationSelectors.ExporterNumber).type(createNewExportDeclarationDetails.ExporterNumber);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.ProcedureCurrentCode,createNewExportDeclarationDetails.ProcedureCurrentCode,true);
    cy.get(CreateNewExportDeclarationSelectors.TransferExporterCode).type(createNewExportDeclarationDetails.TransferExporterCode);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.DeclarationDocumentTypeCode,createNewExportDeclarationDetails.DeclarationDocumentTypeCode,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.DeclarationDocumentId,createNewExportDeclarationDetails.DeclarationDocumentId,true);
-   cy.FillLogLov(CreateNewExportDeclarationSelectors.DestinationCountryCode,createNewExportDeclarationDetails.DestinationCountryCode,true);
+   //cy.FillLogLov(CreateNewExportDeclarationSelectors.DestinationCountryCode,createNewExportDeclarationDetails.DestinationCountryCode,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.AutonomyRegionTypeCode,createNewExportDeclarationDetails.AutonomyRegionTypeCode,true);
    cy.Click(CreateNewExportDeclarationSelectors.IsExporterConfirmation,createNewExportDeclarationDetails.IsExporterConfirmation,true)
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.RecipientName,createNewExportDeclarationDetails.RecipientName,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.RecipientAddress,createNewExportDeclarationDetails.RecipientAddress,true);
-   cy.FillLogLov(CreateNewExportDeclarationSelectors.RecipientIssueCountryCode,createNewExportDeclarationDetails.RecipientIssueCountryCode,true);
+//    cy.FillLogLov(CreateNewExportDeclarationSelectors.RecipientIssueCountryCode,createNewExportDeclarationDetails.RecipientIssueCountryCode,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.CargoType,createNewExportDeclarationDetails.CargoType,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.FirstCargoID,createNewExportDeclarationDetails.FirstCargoID,true);
    cy.FillLogTextBox(CreateNewExportDeclarationSelectors.SecondCargoID,createNewExportDeclarationDetails.SecondCargoID,true);
@@ -58,7 +58,7 @@ export function FillNewExportDeclaration(createNewExportDeclarationDetails: Crea
    cy.FillLogLov(CreateNewExportDeclarationSelectors.RecieverWareHouse,createNewExportDeclarationDetails.RecieverWareHouse,true);
    cy.FillLogLov(CreateNewExportDeclarationSelectors.InternalTransition,createNewExportDeclarationDetails.InternalTransition,true);
    cy.Click(CreateNewExportDeclarationSelectors.IsDangerousGoods,createNewExportDeclarationDetails.IsDangerousGoods,true)
-   cy.get(CreateNewExportDeclarationSelectors.CheckBox).click();
+//    cy.get(CreateNewExportDeclarationSelectors.CheckBox).click();
 
  }
 

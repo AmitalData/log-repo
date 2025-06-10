@@ -31,7 +31,7 @@ export class CreateNewExportInvoiceSelectors {
     public static readonly ExpenseAmount = '#NewARPayment';
 
     public static readonly ButtonSaveSupplierInvoice = '#SaveSupplierInvoice'
-    public static readonly ButtonDeleteSupplierInvoice = '#Delete_3.LogitudeIconButton'
+    public static readonly ButtonDeleteSupplierInvoice = '#Delete.LogitudeIconButton'
     public static readonly Yes = '.RedButton'
     public static readonly SupplierInvoiceFirstRow ="#row0";
 
