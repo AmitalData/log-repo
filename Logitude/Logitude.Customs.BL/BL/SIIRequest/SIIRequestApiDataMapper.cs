@@ -1,26 +1,18 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
-using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Data.EntityKeys;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.RestRequestExecutor;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mail;
-using System.Windows.Forms;
+
 
 namespace Logitude.Customs.BL.BL.SIIRequest
 {
@@ -62,12 +54,16 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 // default agent name
                 var agentName = defService
                     .GetDefault("ISRAEL", "GGG_COMP_NAM_L", "NON", "NON", _tenant);
-                    
-            
-                var SIICompanyName = DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1;
-                var maxNumber = siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1;
-                var nextId = $"{SIICompanyName}-{maxNumber}";
 
+                var SIICompanyName = DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1;
+
+                if (string.IsNullOrWhiteSpace(SIICompanyName))
+                {
+                    throw new InvalidOperationException("Please set a default value for 'SIIApplicationName'.");
+                }
+
+                var nextSequence = siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1;
+                var nextId = $"{SIICompanyName}-{nextSequence}";
 
                 var form = new ReleaseRequestFormDto
                 {
@@ -141,15 +137,15 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
         {
             ICommonDataContext context;
-            ObjectTableRepository myObjectTabelRepository;
+            ObjectTableRepository myObjectTableRepository;
             ComputingPartnerQuery computingPartnerQuery;
             ComputingPartnerTranslationQuery computingPartnerTranslationQuery;
             context = CommonDataContext.GetContext(tenant);
-            myObjectTabelRepository = new ObjectTableRepository(tenant);
+            myObjectTableRepository = new ObjectTableRepository(tenant);
             computingPartnerQuery = new ComputingPartnerQuery(new ComputingPartnerRepository(context));
             computingPartnerTranslationQuery = new ComputingPartnerTranslationQuery(new ComputingPartnerTranslationRepository(context));
 
-            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            ObjectTable objectTable = myObjectTableRepository.GetObjectTableByName(objectTableName, 0, true);
             ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);
             if (partner == null)
             {
