@@ -165,8 +165,8 @@ import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/Cashbo
 import { JournalShortTitleComponent } from './Components/ShortTitles/JournalShortTitleComponent';
 import { GLAccountInterestTransactionsComponent } from './Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent';
 import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsListTemplate';
+import { CustomerDebtNotificationComponent } from './Components/Maintenance/CustomerDebtNotificationComponent';
 
-//import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
 
 
@@ -224,6 +224,7 @@ export const Components =
         Receiving1000Component,
         AccountingFunctionalTestComponent,
         UploadExpensesComponent,
+        CustomerDebtNotificationComponent,
         //Edit Tabs
         GLAccountGeneralTabComponent,
         //CashBookGeneralTabComponent,
@@ -404,6 +405,8 @@ export class ModuleDeclarations {
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
             case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
             case "UploadExpensesComponent": { myResult = UploadExpensesComponent; break; }
+            case "CustomerDebtNotificationComponent": { myResult = CustomerDebtNotificationComponent; break; }
+
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }

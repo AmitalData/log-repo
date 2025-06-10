@@ -13,6 +13,7 @@ import { BIReportPMService } from '../../../Infrastructure/Services/StandardPMs/
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { DWSubQueryPMService } from '../../../Infrastructure/Services/StandardPMs/DWSubQueryPMService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { QueryFilterItem } from '../Filters/QueryFilterItem';
 @Component({
     
     templateUrl: './AddEditReportSchedulerComponent.html',
@@ -33,6 +34,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
     public BIReportEntity: any;
     public IsBIReport: boolean;
     public IsQueryReport: boolean;
+    public IsCustomerDebNotification: boolean;
+    public GLAccountId: string;
     public IsNew: boolean = true;
     public TasksSchedulerId: string;
     public OldReportSchedulerDetails;
@@ -79,7 +82,9 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
         this.IsQueryReport = windowArgs.IsQueryReport;
-        
+        this.IsCustomerDebNotification = windowArgs.IsCustomerDebNotification;
+        this.GLAccountId = windowArgs.GLAccountId;
+
         if (!windowArgs.TasksSchedulerId) {
             this.BIReportEntity = windowArgs.BIReportEntity;
         }
@@ -256,8 +261,18 @@ export class AddEditReportSchedulerComponent implements OnInit {
         let reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
         let reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
         let messageTemplateId = this.PageChild_RETASK.GetMessageTemplateId();
+        if (this.IsCustomerDebNotification && !AppTool.IsNullOrEmpty(this.GLAccountId))
+        {
+            var queryFilterItems = new Array<QueryFilterItem>();
+            var queryFilterItem = new QueryFilterItem();
+            queryFilterItem.FieldName = "GLAccountId";
+            queryFilterItem.FieldValue = this.GLAccountId;
+            queryFilterItem.Operator = "Equals";
+            queryFilterItems.push(queryFilterItem);
+            this.PageChild_PRREP.SetReportFilterItems(queryFilterItems);
+         }
 
-        this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);
+         this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);      
         this.PageChild_PRREP.SetReportTemplate(reportTemplateId);
         this.PageChild_PRREP.SetReportTemplateType(this.TemplateType);
         this.PageChild_PRREP.SetMessageTemplateId(messageTemplateId);
@@ -582,6 +597,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     DisableFinishButton() { 
+        if (this.IsCustomerDebNotification && AppTool.IsNullOrEmpty(this.GLAccountId) && this.PageChild_PRREP) return false;
         if (this.PageChild_OPEMA && this.PageChild_OPEMA.ToEmailLists.length == 0) return true;
         if (!this.IsBIReport && this.PageChild_PRREP && !this.IsNew && !this.PageChild_PRREP.ValidateSelectedFilters()) return true;
         if(this.IsQueryReport && this.IsNew && (this.PageChild_OPEMA)) return false;
@@ -590,7 +606,11 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
         return false;
     }
+    DisableNextButton() {
+        if (this.IsCustomerDebNotification && AppTool.IsNullOrEmpty(this.GLAccountId) && this.PageChild_PRREP) return true;
 
+       return this.SelectedTabLocation == 2 || (this.DataContext.IsFTP && this.SelectedTabLocation == 1);
+    }
     CloseButtonClicked() {
         var confirmMsg = "Are you sure you want to leave this page without saving the report?";
 
@@ -601,7 +621,10 @@ export class AddEditReportSchedulerComponent implements OnInit {
             if (!confirmWindow.Yes) return;
 
             this.PageChild_RETASK.RejectChanges();
-            this.CurrentSession.CloseCurrentWindow();
+            if(this.IsCustomerDebNotification)
+               this.CurrentSession.CloseCurrentWindowData(this.TasksSchedulerId);
+           
+               this.CurrentSession.CloseCurrentWindow();
         });
     }
 }

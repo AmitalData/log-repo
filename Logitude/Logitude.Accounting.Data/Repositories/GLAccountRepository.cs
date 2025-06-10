@@ -1656,7 +1656,19 @@ namespace Logitude.Accounting.Data.Repositories
 
             return accounts;
         }
-    }
+
+		public List<GLAccount> GetGLAccountByTenantAndCustomerDebtNotification(int tenant)
+		{
+			List<GLAccount> accounts = ((from a in context.GLAccounts
+										 join b in context.CustomerDebtNotifications 
+                                         on new {  a.Tenant, Id = a.Id} equals new {  b.Tenant, Id = b.AccountId } into moreDataJoin
+										 from m in moreDataJoin.DefaultIfEmpty()
+										 where a.Tenant == tenant && a.Inactive == false  && a.AccountTypeCode == "2" &&  m == null
+										 select a).ToList());
+
+			return accounts;
+		}
+	}
 
     public class GLAccountAndMoreDTO//: GLAccount
     {

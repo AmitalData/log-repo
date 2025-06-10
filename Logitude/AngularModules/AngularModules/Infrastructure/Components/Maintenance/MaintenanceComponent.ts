@@ -746,6 +746,18 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Chart Of Accounts Types Order";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.CustomerDebtNotification")) {
+                this._entityResourceService.getEntityResourceByTableName("CustomerDebtNotification", 0).subscribe((response: any) => {
+                  var item = new MenusTablePM();
+                  item.CategoryTypeCode = "ACC";
+                  item.Icon = "Settings"
+                  item.Code = "DNTC";
+                  item.TranslatedName  = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
+                  item.ObjectTableName = 'CustomerDebtNotification' 
+                  this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+               });
+            }
             //if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
             //    var item = new MenusTablePM();
             //    item.CategoryTypeCode = "ACC";
@@ -1464,6 +1476,21 @@ export class MaintenanceComponent {
                         logitudeWindow.Height = 400;
                         logitudeWindow.Title = 'Chart Of Accounts Types Order';//TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
                         logitudeWindow.Show('./Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent');
+                    });
+                    break;
+                }
+                case "DNTC": {
+                    var windowArgs: any = {};
+                    windowArgs.IsFromMaintenance = true;
+                  
+                    this._entityResourceService.getEntityResourceByTableName("CustomerDebtNotification", 0).subscribe((resp: any) => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 900;
+                        logitudeWindow.Height = 600;
+                        logitudeWindow.WindowArgs = windowArgs;
+                        logitudeWindow.Title = TextCodeTranslator.Translate("CustomerDebtNotification.O.DebtNotificationToCustomers");
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/CustomerDebtNotificationComponent');
+
                     });
                     break;
                 }

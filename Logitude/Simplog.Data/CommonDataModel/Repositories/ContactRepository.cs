@@ -575,8 +575,28 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             return contacts?.Id.ToString(); 
         }
+		public List<Contact> GetContactsForAccountingByGLAccountId(string glAccountId, int tenant)
+		{
+			var contacts = (
+				from contact in context.Contacts
+				where contact.ContactForAccounting == true
+				&& (
+					from cardContact in context.CardContacts
+					where (
+						from card in context.Cards
+						where card.GLAccountId == glAccountId && card.Tenant == tenant
+						select card.Id
+					).Contains(cardContact.CardId)
+					select cardContact.ContactId
+				).Contains(contact.Id)
+				
+				select contact
+			).ToList();
 
-        public Contact GetContactByEmail(string email, int tenant)
+			return contacts;
+		}
+
+		public Contact GetContactByEmail(string email, int tenant)
         {
             return context.Contacts
             .Where(a => (a.Tenant == tenant || a.Tenant == 0) && a.Email == email.ToLower())
