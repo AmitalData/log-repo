@@ -68,7 +68,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ContactCellPhone, 
 	         ContactFax, 
 	         ContactId, 
-	         FromApplicationId,
+	         FromApplicationId, 
+	         OriginCountryCode, 
+	         UnloadPortCode,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

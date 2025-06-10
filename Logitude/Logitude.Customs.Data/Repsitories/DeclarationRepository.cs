@@ -10,7 +10,8 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
@@ -1686,6 +1687,20 @@ namespace Logitude.Customs.Data.Repsitories
                                               where a.Tenant == tenant && a.AmendmentRequestNumber == requestNumber
                                        select a).FirstOrDefault();
             return declaration;
+        }
+        public Declaration GetDataForSIIRequest(string declarationId ,int tenant)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+            return context.Declarations
+                  .Where(a => a.Tenant == tenant && a.Id == declarationId)
+                  .Select(a => new Declaration
+                  {
+                      AgentId = a.AgentId,
+                      ImporterId = a.ImporterId,
+                      ImporterCode = a.ImporterCode,
+                      CustomFileNo = a.CustomFileNo,
+                  })
+                  .FirstOrDefault();
         }
 
 	}

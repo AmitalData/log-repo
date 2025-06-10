@@ -556,6 +556,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string originCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginCountryCode  
+	   {
+	    
+	     get
+		{
+		   return originCountryCode;
+		 }
+		 set
+		 {
+		   if(originCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryCode",OldValue=originCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string unloadPortCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UnloadPortCode  
+	   {
+	    
+	     get
+		{
+		   return unloadPortCode;
+		 }
+		 set
+		 {
+		   if(unloadPortCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnloadPortCode",OldValue=unloadPortCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   unloadPortCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

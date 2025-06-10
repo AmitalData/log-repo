@@ -53,6 +53,8 @@ namespace Logitude.Customs.Data.Repsitories
                         ManifestNumber = con == null ? null : con.ManifestNumber,
                         UnloadDate = con == null ? null : (DateTime?)con.UnloadDate,
                         CustomerId = d.CustomerId,
+                        OriginCountryCode = con.OriginCountryCode,
+                        UnloadPortCode = con.UnloadPortCode
                     })
                     .AsNoTracking()
                     .FirstOrDefault();
@@ -129,7 +131,7 @@ namespace Logitude.Customs.Data.Repsitories
             OriginCountryName = country.LocalName,
             HasDemandState = certGroup.Any(c => validCodes.Contains(c.ReqConfirmationTypeCode)),
             RequestRequiredStatus = String.IsNullOrEmpty(requestList.RequestRequiredStatus) ? "0" : requestList.RequestRequiredStatus,
-            LineNumber = requestList != null ? (int)requestList.LineNumber : 1,
+            LineNumber = requestList != null ? (int)requestList.LineNumber : 0,
         };
             var list = rawList.ToList();
 
@@ -145,8 +147,8 @@ namespace Logitude.Customs.Data.Repsitories
                 TradeAgreementName = x.TradeAgreementName,
                 InvoiceQuantityType = x.InvoiceQuantityType,
                 InvoiceQuantityTypeName = x.InvoiceQuantityTypeName,
-                InvoiceQuantity = x.InvoiceQuantity.ToString(),
-                ItemPrice = x.ItemPrice.ToString(),
+                InvoiceQuantity = x.InvoiceQuantity,
+                ItemPrice = x.ItemPrice,
                 ItemPriceCurrencyCode = x.ItemPriceCurrencyCode,
                 OriginCountryCode = x.OriginCountryCode,
                 OriginCountryName = x.OriginCountryName,
@@ -158,6 +160,25 @@ namespace Logitude.Customs.Data.Repsitories
             return result;
         }
 
+        public int GetSIIFormApplicationMaxNumber(int tenant)
+        {
+            var ids = context.SIIRequests
+                .Where(s => s.Tenant == tenant)
+                .Select(s => s.FromApplicationId)
+                .ToList();
+            if (ids.Count == 0)
+                return 0;
+            var maxNumber = ids
+                .Select(id =>
+                {
+                    var parts = id.Split('-');
+                    var last = parts.Last();
+                    return int.TryParse(last, out var num) ? num : 0;
+                })
+                .Max();
+            return maxNumber;
+        }
+
         public class SiiAgg
         {
             public string ImporterInternalId { get; set; }   // can be null
@@ -167,6 +188,9 @@ namespace Logitude.Customs.Data.Repsitories
             public string ManifestNumber { get; set; }
             public DateTime? UnloadDate { get; set; }
             public string CustomerId { get; set; }
+            public string OriginCountryCode { get; set; } 
+            public string UnloadPortCode { get; set; }
+
         }
        
     }

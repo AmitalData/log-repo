@@ -42,6 +42,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return items;
 
         }
+        public int GetSIIFormApplicationMaxNumber(int tenant)
+        {
+            return repository.GetSIIFormApplicationMaxNumber(tenant);
+        }
 
     }
 }
