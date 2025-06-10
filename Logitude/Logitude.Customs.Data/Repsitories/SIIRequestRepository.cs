@@ -1,4 +1,4 @@
- 
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -58,13 +58,13 @@ namespace Logitude.Customs.Data.Repsitories
                     .FirstOrDefault();
         }
 
-        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, int tenant)
+        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, string siiRequestId, int tenant)
         {
 
             var validCodes = new[] { "401", "402", "403" };
 
 
-            var list =
+            var rawList =
         from itm in context.SupplierInvoiceItems
         where itm.DeclarationId == declarationId
               && itm.Tenant == tenant
@@ -101,8 +101,8 @@ namespace Logitude.Customs.Data.Repsitories
          into certGroup
 
         join cert in context.SupplierInvoiceItemsReqLists
-            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey }
-            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey }
+            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey, SIIRequestID = siiRequestId }
+            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey, cert.SIIRequestID }
             into reqJoin
         from requestList in reqJoin.DefaultIfEmpty()
 
@@ -110,7 +110,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             InvoiceNumber = si.InvoiceNumber,
             InvoiceLineNumber = itm.LineNumber,
-            InvoiceCounterKey = itm.LineNumber,
+            InvoiceCounterKey = itm.CounterKey,
             ItemCode = itm.ItemCode,
             ItemDescription = itm.ItemDescription,
             ClassificationCode = itm.ClassificationCode,
@@ -131,8 +131,31 @@ namespace Logitude.Customs.Data.Repsitories
             RequestRequiredStatus = String.IsNullOrEmpty(requestList.RequestRequiredStatus) ? "0" : requestList.RequestRequiredStatus,
             LineNumber = requestList != null ? (int)requestList.LineNumber : 1,
         };
+            var list = rawList.ToList();
 
-            return list.ToList();
+            var result = list.Select((x, index) => new SupplieInvoiceItemsForSIIRequest
+            {
+                InvoiceNumber = x.InvoiceNumber,
+                InvoiceLineNumber = x.LineNumber,
+                InvoiceCounterKey = x.InvoiceCounterKey,
+                ItemCode = x.ItemCode,
+                ItemDescription = x.ItemDescription,
+                ClassificationCode = x.ClassificationCode,
+                TradeAgreementCode = x.TradeAgreementCode,
+                TradeAgreementName = x.TradeAgreementName,
+                InvoiceQuantityType = x.InvoiceQuantityType,
+                InvoiceQuantityTypeName = x.InvoiceQuantityTypeName,
+                InvoiceQuantity = x.InvoiceQuantity.ToString(),
+                ItemPrice = x.ItemPrice.ToString(),
+                ItemPriceCurrencyCode = x.ItemPriceCurrencyCode,
+                OriginCountryCode = x.OriginCountryCode,
+                OriginCountryName = x.OriginCountryName,
+                HasDemandState = x.HasDemandState,
+                RequestRequiredStatus = x.RequestRequiredStatus,
+                LineNumber = index + 1,
+            }).ToList();
+
+            return result;
         }
 
         public class SiiAgg

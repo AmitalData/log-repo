@@ -5,7 +5,6 @@ import { defer } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { CompleteStatuses } from 'CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestTabs/SIIRequestComponent';
 @Injectable()
 
 export class SIIRequestWebService {
@@ -35,14 +34,14 @@ export class SIIRequestWebService {
         );
     }
 
-    getSupplierInvoiceItemsForSIIRequest(declarationId: string) {
+    getSupplierInvoiceItemsForSIIRequest(declarationId: string,siiRequestId: string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetSupplierInvoiceItemsForSIIRequest/?declarationId=" + declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetSupplierInvoiceItemsForSIIRequest/?declarationId=" + declarationId + "&siiRequestId=" + siiRequestId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 let serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;

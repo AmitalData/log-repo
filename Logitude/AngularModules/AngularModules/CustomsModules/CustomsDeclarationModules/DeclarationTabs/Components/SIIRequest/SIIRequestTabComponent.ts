@@ -159,7 +159,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
         args.errorMassage = [];
-        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId).subscribe(myResult => {
+        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId,this.selectedSIIRequest?.Id).subscribe(myResult => {
           let myResponse: ServiceResponse = myResult;
           if (!myResponse?.HasError && myResponse?.Result) {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;

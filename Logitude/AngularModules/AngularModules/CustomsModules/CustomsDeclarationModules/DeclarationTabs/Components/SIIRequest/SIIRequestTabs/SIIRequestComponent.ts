@@ -118,10 +118,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.supplierInvoiceItemsCollection = new ObservableCollection([]);
         this.originalSupplierInvoiceItemsCollection = new ObservableCollection([]);
         this.initFullData();
-
-        if (this.IsNewOrEdit === SiiRequestMode.IsNew) {
-            this.SaveSiiRequest();
-        }
     }
 
     initFullData() {
@@ -146,6 +142,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     this.IsDisplayOnly = false;
                     this.isAllowChange = true;
                     this.RefreshEntity();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else if (response.ErrorsArray.length > 0) {
                     this.validationErrors = response.ErrorsArray;
@@ -326,7 +323,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
         let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            filtered = original.filter(i => i.ClassificationCode.toLowerCase().includes(this.SearchText) || i.ItemCode.toLowerCase().includes(this.SearchText));
+            filtered = original.filter(i => i.ClassificationCode?.toLowerCase().includes(this.SearchText) || i.ItemCode?.toLowerCase().includes(this.SearchText));
             this.supplierInvoiceItemsCollection.Clear();
             if (filtered.length > 0) {
                 filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
