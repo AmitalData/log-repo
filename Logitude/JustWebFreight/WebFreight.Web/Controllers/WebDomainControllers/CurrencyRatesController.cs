@@ -124,6 +124,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetCurrenciesExchangeRateByCurrencyId(string currencyId, int pageSize ,int pageIndex)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                             
+                WebFreightDomainService domain = new WebFreightDomainService();
+                var  result = domain.GetCurrenciesExchangeRateByCurrencyId(currencyId,authToken.Tenant, pageSize, pageIndex);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetRatesByValueDate(string currencyId, string dateString)
         {
             try

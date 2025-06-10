@@ -3131,6 +3131,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         isEnabled = false;
                     }
                 }
+                
 
                 if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
                     isEnabled = false;
@@ -3144,6 +3145,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
+
+   
+
     private SetNewEntityButtonVisibility() {
         
         var isVisible = true;    
@@ -3570,6 +3574,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.WindowArgs = windowArgs;
                         break;
                     }
+                case "AdditionalCurrencyRate":
                 case "InterestReport":
                     {
                         logWindow.Width = 400;
@@ -3647,6 +3652,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                 str = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
             }
 
+            else if (this.ObjectTableName == "AdditionalCurrencyRate") {
+                str = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.NewAdditionalCurrencyRate");
+            }
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;
             }

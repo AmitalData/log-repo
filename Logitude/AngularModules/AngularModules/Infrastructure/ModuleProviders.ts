@@ -89,6 +89,8 @@ import { LastRunDetailExtendedPMService } from './Services/ExtendedPMs/LastRunDe
 import { DWObjectTableExtendedListService } from './Services/ExtendedLists/DWObjectTableExtendedListService';
 import { WebhookKeysListService } from './Services/StandardLists/WebhookKeysListService';
 import { BIReportFolderExtendedListService } from './Services/ExtendedLists/BIReportFolderExtendedListService';
+import { AdditionalCurrencyRateListService } from './Services/StandardLists/AdditionalCurrencyRateListService';
+import { AdditionalCurrencyRatePMService } from './Services/StandardPMs/AdditionalCurrencyRatePMService';
 
 import { ToggleListService } from './Services/StandardLists/ToggleListService';
 import { FeatureToggleListService } from './Services/StandardLists/FeatureToggleListService';
@@ -222,6 +224,7 @@ export class ModuleProviders {
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BIReportExtendedListService": { myResult = new BIReportExtendedListService(); break; }
             case "LastRunDetailExtendedPMService": { myResult = new LastRunDetailExtendedPMService(); break; }
+            case "AdditionalCurrencyRatePMService": { myResult = new AdditionalCurrencyRatePMService(); break; }
             case "DWObjectTableExtendedListService": { myResult = new DWObjectTableExtendedListService(); break; }
             case "BusinessRolePMService": { myResult = new BusinessRolePMService(); break; }
             case "TeamListService": { myResult = new TeamListService(); break; }
@@ -241,6 +244,7 @@ export class ModuleProviders {
             case "HelpResourceListService": { myResult = new HelpResourceListService(); break; }
             case "HelpResourcePMService": { myResult = new HelpResourcePMService(); break; }
             case "BIReportFolderExtendedListService": { myResult = new BIReportFolderExtendedListService(); break; }
+            case "AdditionalCurrencyRateListService": { myResult = new AdditionalCurrencyRateListService(); break; }
             case "MultiEntityUpdateLogPMService": { myResult = new MultiEntityUpdateLogPMService(); break; }
             case "EntityStatusTypeListService": { myResult = new EntityStatusTypeListService(); break; }
             case "ImageLibraryListService": { myResult = new ImageLibraryListService(); break; }
