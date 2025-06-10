@@ -1349,8 +1349,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("Sending Restore Declaration Request Failed !");
             }                       
         }
+        private DeclarationRestoreResponseData SendRestoreDeclaration(DeclarationRestoreRequestParams requestParamsData)
+        {
+            DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
+            DeclarationRestoreResponseData responseData = messagingService.Send(requestParamsData);
+            if (responseData?.HasException == false && responseData?.Succeeded == true)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request success!");
+                return responseData;
+            }
+            else
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Failed because of declaration data is not found!");
+                throw new Exception("declaration data is not found !" + " " + responseData?.UserMessage);
+            }
+        }
 
-        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+
+        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user, string requestParamsJson)
         {
             CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
             {
