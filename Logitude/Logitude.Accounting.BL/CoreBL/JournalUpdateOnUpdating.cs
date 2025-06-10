@@ -1,32 +1,33 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
+using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Logitude.Accounting.BL.Validators;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Security;
-using Logitude.BL.Interfaces;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
-using Logitude.BL.Resolvers;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 
 namespace Logitude.Accounting.BL
 {
@@ -281,6 +282,7 @@ namespace Logitude.Accounting.BL
                     journalPM.VoidedByJournalId = Storno.Id;
                     journalPM.IsVoided = true;
                     journalPM.VoidDate = DateTime.UtcNow;
+                    DeleteJournalExternalReconcileOfBankAdjustment(journalPM, Storno);
 
                     //throw new ApplicationException("entityPM.VoidedBy = Storno.Id;// Add this line after VoidedBy convert from bool? to VC(15)");
 
@@ -297,6 +299,64 @@ namespace Logitude.Accounting.BL
             }
 
         }
+
+
+        public void DeleteJournalExternalReconcileOfBankAdjustment(JournalPM theOriginal, JournalPM theStorno)
+        {
+            // 1. Validate 'Storno'.
+            if (!IsStornoJournalOK(theOriginal, theStorno))
+            {
+                Debug.WriteLine("The original void and the storno have not been properly initialized.");
+                return;
+            }
+
+            // 2. Handle "Bank Adjustment" entity code.
+            const string bankAdjustmentAccountingEntityCode = "12";
+            if (theOriginal.AccountingEntityCode != bankAdjustmentAccountingEntityCode)
+            {
+                return;
+            }
+
+            // 3. Stop if 'Storno' already has external reconciles.
+            if (theStorno.JournalExternalReconciles?.Any() == true)
+            {
+                return;
+            }
+
+            // 4. Gather external reconciles to delete.
+            var itemsToDelete = theOriginal.JournalExternalReconciles?
+                .Where(r => r.JournalId == theOriginal.Id);
+
+            if (itemsToDelete == null)
+            {
+                return;
+            }
+
+            // 5. Update items for deletion.
+            foreach (var item in itemsToDelete)
+            {
+                item.ChangeSetOp = ChangeSetOperation.Delete;
+            }
+
+            return;
+        }
+
+
+        private bool IsStornoJournalOK(JournalPM theOriginal, JournalPM theStorno)
+        {
+            if (String.IsNullOrWhiteSpace(theStorno.OriginalJournalId))
+            {
+                return false;
+            }
+
+            if (theStorno.OriginalJournalId != theOriginal.Id)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
 
         private void CancelJournal(JournalPM journalPM)
         {
