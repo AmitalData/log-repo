@@ -216,6 +216,7 @@
     <None Include="DBScripts\Post\202212281351_UpdateBothINTERFACEMANAGEMENTS.sxml" />
     <None Include="DBScripts\Post\202301291730_SetDeclarationToDisplayDeclarationReferantData.sxml" />
     <None Include="DBScripts\Post\202403171200_CreateIndexOnCourierAndDeclaration.sxml" />
+    <None Include="DBScripts\Post\20250606_AddComputingPartner.sxml" />
     <None Include="DBScripts\Post\20250603_AddCounterIdForSIIRequest.sxml" />
     <None Include="DBScripts\Post\20250528_SIIRequestDefaults.sxml" />
     <None Include="DBScripts\Pre\202309071150_DropColumnJsonData_OcrDocument.sxml" />
