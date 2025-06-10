@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.Contracts;
 using Logitude.Customs.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -8,28 +9,13 @@ using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-     public partial class MeasurmentUnitQueryService
+    public partial class UnloadingSiteTypeQueryService : ICanGetAllClosedTable<UnloadingSiteTypePM>
     {
-         public MeasurmentUnitPM GetMeasurmentUnitByMalamId
-            //(int? malamId)
-            (int malamId)
+        public IQueryable<UnloadingSiteTypePM> GetUnloadingSiteTypePMs()
         {
-             MeasurmentUnitPM pm = null;
-             var poco = repository.GetMeasurementUnitByMalamId(malamId);
-
-             if (poco != null)
-             {
-
-                 pm = this.GetEntityPM(poco);
-             }
-             return pm;
-         }
-
-        public IQueryable<MeasurmentUnitPM> GetMeasurmentUnitPMs()
-        {
-            IQueryable<MeasurmentUnit> pocos = repository.GetAll();
-            IQueryable<MeasurmentUnitPM> query = from a in pocos
-                                                 select new MeasurmentUnitPM
+            IQueryable<UnloadingSiteType> pocos = repository.GetAll();
+            IQueryable<UnloadingSiteTypePM> query = from a in pocos
+                                                 select new UnloadingSiteTypePM
                                                  {
                                                      Code = a.Code,
                                                      EnglishName = a.EnglishName,
@@ -38,7 +24,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                  };
             return query;
         }
-
-
+        public List<UnloadingSiteTypePM> GetAll()
+        {
+            var pocos = repository.GetAll().ToList();
+            var pms = pocos.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pms;
+        }
     }
 }
