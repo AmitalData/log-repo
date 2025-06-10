@@ -1526,6 +1526,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == false ? "Shipper/Consignee" : card.PartnerType.Name),
                                                 CityName = card.CityName,
                                                  CountryCode = card.CountryCode,
+                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
+                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                 PartnerTypeId = card.PartnerTypeId,
                                                 CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,

@@ -34,7 +34,7 @@ namespace WebFreight.Web.DataProviders
         public decimal? ExternalTransactionsTotal { get; set; }
         public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
         public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal; } }
-         public decimal? CreditUsed { get { return CreditLimit - Obligo; } }
+         public decimal? CreditUsed { get { return (CreditLimit - Obligo)*-1; } }
          public decimal? TotalLocal { get; set; } 
         public decimal? TotalForeign { get; set; } 
        public decimal? TotalFutureOpenCheques { get; set; }

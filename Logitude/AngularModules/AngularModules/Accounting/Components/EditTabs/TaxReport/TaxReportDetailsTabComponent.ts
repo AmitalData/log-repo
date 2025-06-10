@@ -15,6 +15,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { TaxReportLineStatusListService } from '../../../Services/StandardLists/TaxReportLineStatusListService';
 import { TaxReportLineExtendedListService } from '../../../Services/ExtendedLists/TaxReportLineExtendedListService';
+import { TaxReportPMService } from '../../../Services/StandardPMs/TaxReportPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -25,6 +26,7 @@ import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
 import { HttpResponse } from '@angular/common/http';
+import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -41,7 +43,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public isRTL: boolean = false;
     public showLocals: boolean = false;
     public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
-
+    private _TaxReportPMService: TaxReportPMService = new TaxReportPMService();
     private _entityListService: EntityListService = new EntityListService();
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private _TaxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
@@ -51,6 +53,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
     public QueryColumns: QueryColumnPM[] = [];
     IsTesterButtonVisibile: boolean = false;
+    IsFixDupButtonVisible: boolean = false;
     ReportLines: ObservableCollection;
     OriginalReportLines: ObservableCollection;
     isReady: boolean = false;
@@ -255,6 +258,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     ListFilters: ApiQueryFilters = new ApiQueryFilters();
     FilterLines() {
 
+ 
 
         var filters = new ApiQueryFilters;
 
@@ -373,13 +377,18 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
     }
     PushStatus(status) {
+        
         this.SelectedStatusItems.push(status.Code);
+        this.GetDuplicateInputs();
         this.FilterLines();
+        
     }
     PopStatus(status) {
+        
         var itemIndex = this.SelectedStatusItems.indexOf(status.Code);
         if (itemIndex > -1)
             this.SelectedStatusItems.splice(itemIndex, 1);
+        this.GetDuplicateInputs();
         this.FilterLines();
     }
     GetLinesWithErrorsCount() {
@@ -388,6 +397,21 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             this.ShowErrorMsg = __errorsCount >= 1;
             this.errorsCount = __errorsCount;
         });
+    }
+
+    GetDuplicateInputs() {
+        // Duplicate: There is another Inputs transaction with the same VAT No. and Reference
+
+        const duplicateStatus = "5";
+        if (this.SelectedStatusItems.length === 1 && this.SelectedStatusItems.includes(duplicateStatus)) {
+            this._TaxReportExtendedPMService.getDuplicateInputs(this.EntityPM.Id).subscribe((myResult: ServiceResponse) => {
+                var __duplicateInputsCount = myResult.Result;
+                this.IsFixDupButtonVisible = __duplicateInputsCount >= 1;
+            });
+        }
+        else {
+            this.IsFixDupButtonVisible = false;
+        }
     }
 
     GetTransmitStatuses() {
@@ -401,7 +425,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.FilterLines();
     }
     PopTransmitStatus(status) {
-        
+
         var itemIndex = this.SelectedTransmitStatusItems.indexOf(status.Code);
         if (itemIndex > -1)
             this.SelectedTransmitStatusItems.splice(itemIndex, 1);
@@ -501,7 +525,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
 
 
-        //ameerah
+        
         this.columns.push({
             FieldName: 'SubTotalInLocalCurrency',
             DataTypeCode: 'Number',
@@ -512,7 +536,8 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-        // this
+        
+    
         this.columns.push({
             FieldName: 'TotalInvoiceAmount',
             DataTypeCode: 'Number',
@@ -676,6 +701,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
 
         this.GetLinesWithErrorsCount();
+        this.GetDuplicateInputs();
 
     }
 
@@ -705,6 +731,33 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         }, error => {
             console.error('Error downloading the file:', error);
         });
+    }
+
+
+    OnFixDupButtonClicked() {
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+
+        this.EntityPM.RemoveDuplicates = true;
+        this.EntityPM.NeedsRebulid = true;
+
+        this._TaxReportPMService.update(this.EntityPM)
+            .subscribe((response: ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                if (response.HasError) {
+                    const message = new MessageWindow();
+                    message.ShowErrorIcon = true;
+                    message.Width = 400;
+                    message.Show(response.ErrorsArray.join('\n'));
+                } else {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                    const message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.Width = 400;
+                }
+            }, (error) => {
+                 new MessageWindow().Show(error || 'Something wrong happened!');
+            });
     }
 
     EditLine(entity) {

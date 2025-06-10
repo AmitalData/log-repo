@@ -374,6 +374,7 @@
     <Compile Include="BL\CourierSchedulerService.cs" />
     <Compile Include="BL\ServerNamesRestartServiceScriptService.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
+    <Compile Include="CloseTables\Codes\EventStatuses.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
@@ -461,6 +462,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
+    <Compile Include="CloseTables\Codes\UserCodes.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsShipStruct.Generated.cs" />
