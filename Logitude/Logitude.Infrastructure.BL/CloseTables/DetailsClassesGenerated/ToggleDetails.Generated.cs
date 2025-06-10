@@ -1053,7 +1053,7 @@ namespace Logitude.Infrastructure.BL
 				SearchFields = "STQ,Add Task Scheduler To Queue By Date",
 				Description = "הכנסה לתור של מתזמן לפי התאריך",
 			});
-			all.Add(new ToggleDetails()
+ 			all.Add(new ToggleDetails()
 			{
 				Code = "REE",
 				Name = "Report Export To Exel",
@@ -1061,7 +1061,7 @@ namespace Logitude.Infrastructure.BL
 				Description = "Report Export To Exel ",
 			});
 
-			return all;
+ 			return all;
        }
 
 	    public void MapPoco(Toggle newPoco)

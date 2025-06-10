@@ -403,10 +403,10 @@
     <Compile Include="BL\SIIRequest\SIIRequestApiRequestFactory.cs" />
     <Compile Include="BL\SIIRequest\SIIRequestWebApiEndpointConfig.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
-    <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
-    <Compile Include="CloseTables\Codes\EventStatuses.cs" />
+      <Compile Include="CloseTables\Codes\DeclarationDirection.cs" />
+     <Compile Include="CloseTables\Codes\EventStatuses.cs" />
     <Compile Include="CloseTables\Codes\UserCodes.cs" />
-    <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
+     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
     <Compile Include="CloseTables\CustomsAutonomyKeywordDetails.cs" />
     <Compile Include="CloseTables\CustomRabbitMQQueue.cs" />
     <Compile Include="CloseTables\CustomsPartnerFtpDetails.cs" />
@@ -600,7 +600,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
+      <Compile Include="CloseTables\DetailsClassesGenerated\UnloadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ValidCustomsItemDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehicleManufacturerDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\VehiclePoolTypeDetails.Generated.cs" />
@@ -622,7 +622,7 @@
     <Compile Include="CloseTables\EnumGenerated\AmendmentFieldReasonTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentFieldStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendmentRequestStatusStruct.Generated.cs" />
-    <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
+     <Compile Include="CloseTables\EnumGenerated\AmendmentStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AmendRequestRejectReasonTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AssigneeNotificationTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AttachmentTypeStruct.Generated.cs" />
@@ -673,7 +673,7 @@
     <Compile Include="CloseTables\EnumGenerated\CustomerTypeGeneralStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomMetaDataTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsAddressTypeStruct.Generated.cs" />
-    <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
+     <Compile Include="CloseTables\EnumGenerated\CustomsBookTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsBranchStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\CustomsDocumentUploadStruct.Generated.cs" />
@@ -1915,8 +1915,6 @@
     <Compile Include="EntityQueryServices\Generated\ExportReferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
-    <Compile Include="EntityQueryServices\UnloadingSiteTypeQueryService.cs" />
-    <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SIIRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />

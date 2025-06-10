@@ -5,7 +5,7 @@
     <Constraints PrimaryKey="true" Nullable="false" />
   </Column>
   
-  <Column Name="ExecutionDate" Type="datetime">
+  <Column Name="ExecutionDate" Type="datetime2">
     <Constraints Nullable="false" />
   </Column>
   

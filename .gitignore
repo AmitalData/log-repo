@@ -515,4 +515,6 @@ __pycache__/
 /Logitude/Logitude.SystemLogs/Nlog.config
 /Logitude/Logitude.Update/Nlog.config
 /Logitude/RabbitMQSRV/Nlog.config
-/LogitudeTools/ShipmentsReport/ShipmentsReport/appsettings.json
+ /LogitudeTools/ShipmentsReport/ShipmentsReport/appsettings.json
+
+ 

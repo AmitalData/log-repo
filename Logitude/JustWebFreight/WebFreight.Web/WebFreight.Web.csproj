@@ -1068,6 +1068,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_PaymentViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\Aur_TimesheetViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CashBookTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\Generated\ListControllers\CustomerDebtNotificationViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountAgingDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountCardsDataViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\GLAccountCurrencyViewsController.Generated.cs" />
