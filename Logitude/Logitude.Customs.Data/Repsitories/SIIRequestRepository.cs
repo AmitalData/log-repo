@@ -53,6 +53,8 @@ namespace Logitude.Customs.Data.Repsitories
                         ManifestNumber = con == null ? null : con.ManifestNumber,
                         UnloadDate = con == null ? null : (DateTime?)con.UnloadDate,
                         CustomerId = d.CustomerId,
+                        OriginCountryCode = con.OriginCountryCode,
+                        UnloadPortCode = con.UnloadPortCode
                     })
                     .AsNoTracking()
                     .FirstOrDefault();

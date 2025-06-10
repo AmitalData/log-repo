@@ -1,4 +1,4 @@
-﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.Customs.BL.CloseTables;
@@ -8,11 +8,17 @@ using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.RestRequestExecutor;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mail;
 using System.Windows.Forms;
 
@@ -21,6 +27,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
     public class SIIRequestApiDataMapper
     {
         int _tenant;
+        readonly string SIIRequestComputingPartner = "SIIRequest";
+        readonly string ComputingPartnerTableMeasurmentUnit = "Customs.MeasurmentUnit";
+        readonly string ComputingPartnerTableUnloadingSiteType = "Customs.UnloadingSiteType";
         public SIIRequestApiDataMapper(int tenant)
         {
             _tenant = tenant;
@@ -31,67 +40,83 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             try
             {
                 var context = CustomContext.GetContext(_tenant);
+                var siiService = new SIIRequestQueryService(context);
+                var decService = new DeclarationQueryService(context);
+                var requestItemsService = new SupplierInvoiceItemsReqListQueryService(context);
+                var defService = new DefaultValueQueryService(context);
+                var userService = new UserQuery(_tenant);
+                var contactRepo = new ContactRepository(_tenant);
 
-                var siiQueryService = new SIIRequestQueryService(context);
-                var requestItemsQueryService = new SupplierInvoiceItemsReqListQueryService(context);
-                var declarationQueryService = new DeclarationQueryService(context);
-                var userQueryService = new UserQuery(_tenant);
+                var sii = siiService.GetSingle(siiRequestId, true, false) 
+                    ?? throw new ArgumentException($"SII Request {siiRequestId} not found");
+
+                var dec = decService.GetDataForSIIRequest(sii.DeclarationId, _tenant);
+                var importer = dec?.ImporterId != null
+                    ? userService.GetSinglePM(dec.ImporterId, _tenant) 
+                    : null;
+
+                // get the logged‐in contact
+                var email = HttpContext.Current.User.Identity.Name;
+                var contact = contactRepo.GetSingleContactByEmail(email, _tenant);
+
+                // default agent name
+                var agentName = defService
+                    .GetDefault("ISRAEL", "GGG_COMP_NAM_L", "NON", "NON", _tenant);
+                    
+            
+                var SIICompanyName = DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1;
+                var maxNumber = siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1;
+                var nextId = $"{SIICompanyName}-{maxNumber}";
 
 
-
-                var form = new ReleaseRequestFormDto();
-
-                var siiRequest = siiQueryService.GetSingle(siiRequestId, true, false);
-                if (siiRequest == null)
+                var form = new ReleaseRequestFormDto
                 {
-                    throw new ArgumentException($"SII Request with ID {siiRequestId} not found", nameof(siiRequestId));
-                }
-                var SIICompanyName = DefaultService.Instance.Get(_tenant, "SIICustomerUniqueCode", "SIICustomerUniqueCode")?.Value1;
-                var maxIdNumber = siiQueryService.GetSIIFormApplicationMaxNumber(_tenant) + 1 ;
-                form.FormApplicationId = SIICompanyName + "-" + maxIdNumber.ToString();
+                    FormApplicationId = nextId,
+                    CustomsAgentRegisteredNumber = dec?.AgentId,
+                    AgentFileId = dec?.CustomFileNo,
+                    CustomsAgentName = agentName,
 
-                var dec = declarationQueryService.GetDataForSIIRequest(siiRequest.DeclarationId, _tenant);
-                if(dec != null)
-                {
-                    form.CustomsAgentRegisteredNumber = dec.AgentId;
-                    form.AgentFileId = dec.CustomFileNo;
-                    if (dec.ImporterId != null)
+                    ImporterNumber = importer?.Id ?? dec?.ImporterCode,
+                    ImporterEmail = importer?.Email,
+                    ImporterPhone = importer?.BusinessPhone,
+                    ImporterCellPhone = importer?.BusinessPhone,
+                    ImporterFax = importer?.Fax,
+
+                    ApplicantFullName = contact?.LocalName,
+                    ApplicantIdNumber = contact is null
+                                         ? null
+                                         : userService.GetPersonalIdByUserId(contact.Id, _tenant),
+
+                    DeliveryArrivalDate = sii.UnloadDate,
+                    DeliveryComment = sii.Remarks,
+                    ShipFlightNumber = sii.VesselName,
+                    BillOfLadingId = sii.ManifestNumber,
+
+                    ContactPersonFirstName = sii.ContactName,
+                    ContactPersonLastName = sii.ContactName,
+                    ContactPersonEmail = sii.ContactEmail,
+                    ContactPersonPhone = sii.ContactCellPhone,
+                    ContactPersonCellPhone = sii.ContactCellPhone,
+                    ContactPersonFax = sii.ContactFax,
+
+                    IsNumericCountryCode = CountryCode.alphaCode.ToString(),
+                    ImportCountry = new CountryAlphaDto { AlphaCode = sii.OriginCountryCode },
+
+                    WarehouseLocationName = sii.WareHouseAddress,
+                    WarehouseSettlement = new IdDto { Id = sii.WareHouseCity },
+                    DestinationPort = new IdDto
                     {
-                        var importerPM = userQueryService.GetSinglePM(dec.ImporterId, _tenant);
-                        if (importerPM != null)
-                        {
-                            form.ImporterEmail = importerPM.Email;
-                            form.ImporterPhone = importerPM.BusinessPhone;
-                            form.ImporterCellPhone = importerPM.BusinessPhone;
-                            form.ImporterFax = importerPM.Fax;
-                            form.ImporterNumber = importerPM.Id;
-                        }
-                    }
-                    else
-                    {
-                        form.ImporterNumber = dec.ImporterCode;
-                    }
-                }
-                
-                form.DeliveryArrivalDate = siiRequest.UnloadDate;
-                form.DeliveryComment = siiRequest.Remarks;
-                form.ShipFlightNumber = siiRequest.VesselName;
-                form.BillOfLadingId = siiRequest.ManifestNumber;
-                form.ContactPersonFirstName = siiRequest.ContactName;
-                form.ContactPersonLastName = siiRequest.ContactName;
-                form.ContactPersonEmail = siiRequest.ContactEmail;
-                form.ContactPersonPhone = siiRequest.ContactCellPhone;
-                form.ContactPersonCellPhone = siiRequest.ContactCellPhone;
-                form.ContactPersonFax = siiRequest.ContactFax;
-                form.IsNumericCountryCode = CountryCode.alphaCode.ToString();
+                        Id = GetComputingPartnerCodeTranslation(sii.UnloadPortCode,SIIRequestComputingPartner,ComputingPartnerTableUnloadingSiteType,_tenant)
+                    },
 
-
-
+                    //for now 0 until doucments is figured out
+                    FormAttachmentIndex = 0
+                };
 
 
                 foreach (var requestItemKey in requestItemsKeys)
                 {
-                    var item = requestItemsQueryService.GetSingle(requestItemKey.DeclarationId, requestItemKey.LineNumber, requestItemKey.SIIRequestID, requestItemKey.InvoiceCounterKey, requestItemKey.InvoiceItemLineNumber, true, false);
+                    var item = requestItemsService.GetSingle(requestItemKey.DeclarationId, requestItemKey.LineNumber, requestItemKey.SIIRequestID, requestItemKey.InvoiceCounterKey, requestItemKey.InvoiceItemLineNumber, true, false);
                     if (item == null)
                     {
                         throw new ArgumentException($"Request Item Linenumber {requestItemKey.LineNumber} for Declaration {requestItemKey.DeclarationId} not found in SII Request {siiRequestId}", nameof(requestItemKey));
@@ -113,7 +138,35 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 throw new ApplicationException("Error building SII Request API data mapper", ex);
             }
         }
-        
+        public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
+        {
+            ICommonDataContext context;
+            ObjectTableRepository myObjectTabelRepository;
+            ComputingPartnerQuery computingPartnerQuery;
+            ComputingPartnerTranslationQuery computingPartnerTranslationQuery;
+            context = CommonDataContext.GetContext(tenant);
+            myObjectTabelRepository = new ObjectTableRepository(tenant);
+            computingPartnerQuery = new ComputingPartnerQuery(new ComputingPartnerRepository(context));
+            computingPartnerTranslationQuery = new ComputingPartnerTranslationQuery(new ComputingPartnerTranslationRepository(context));
+
+            ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+            ComputingPartnerPM partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, tenant);
+            if (partner == null)
+            {
+                partner = computingPartnerQuery.GetSinglePMByCode(computingPartner, 0);
+            }
+
+            string partnerCode = null;
+            if (partner != null && objectTable != null)
+            {
+                partnerCode = computingPartnerTranslationQuery.GetPartnerCodeTranslation(logitudeCode, partner.Id, objectTable.Id, tenant);
+            }
+
+            return partnerCode;
+        }
+
+
+
     }
     enum CountryCode
     {

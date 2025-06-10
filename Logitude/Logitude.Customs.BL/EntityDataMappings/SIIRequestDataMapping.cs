@@ -65,6 +65,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
                 entityPM.VesselName = agg.VesselLocalName;
                 entityPM.ManifestNumber = agg.ManifestNumber;
+                entityPM.OriginCountryCode = agg.OriginCountryCode;
+                entityPM.UnloadPortCode = agg.UnloadPortCode;
                 if (agg.UnloadDate.HasValue)
                     entityPM.UnloadDate = agg.UnloadDate.Value;
                 if (entityPOCO.ContactId == null && agg.CustomerId != null)

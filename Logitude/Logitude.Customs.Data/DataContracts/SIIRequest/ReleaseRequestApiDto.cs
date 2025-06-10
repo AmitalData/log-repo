@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public string ImporterPhone { get; set; }
         public string ImporterCellPhone { get; set; }
         public string ImporterFax { get; set; }
-        public long ApplicantIdNumber { get; set; }
+        public string ApplicantIdNumber { get; set; }
         public string ApplicantFullName { get; set; }
         public string CustomsAgentRegisteredNumber { get; set; }
         public string CustomsAgentName { get; set; }
@@ -80,6 +80,6 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
 
     public class IdDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }
