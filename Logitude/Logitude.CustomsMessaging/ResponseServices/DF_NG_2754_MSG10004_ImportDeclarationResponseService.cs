@@ -1347,8 +1347,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Failed !");
                 throw new Exception("Sending Restore Declaration Request Failed !");
                 LogMessagingUtil.Instance.AppendLine("Sending Restore Declaration Request Failed !");
-        }               
-        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
+            }                       
         }
 
         private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user)
