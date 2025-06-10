@@ -154,8 +154,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreditAccountId = paymentCashbook.AccountId,
                 DebitAccountId = billTo.GLAccountId,
                 DebitControlAccountId = cashbookGLAccount.ControlAccountId,
-                Reference1 = paymentPM.PaymentNo,
-                Reference2 = cheque.ChequeNumber,
+                Reference1 =  cheque.ChequeNumber,
+                Reference2 = paymentPM.PaymentNo,
                 Notes = CreditLineNotes
             };
         }
@@ -178,8 +178,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 DebitAccountId = billTo.GLAccountId,
                 CreditAccountId = paymentCashbook.AccountId,
                 DebitControlAccountId = cashbookGLAccount.ControlAccountId,
-                Reference1 = paymentPM.PaymentNo,
-                Reference2 = cheque.ChequeNumber,
+                Reference1 = cheque.ChequeNumber,
+                Reference2 = paymentPM.PaymentNo,
                 Notes = CreditLineNotes
             };
         }
