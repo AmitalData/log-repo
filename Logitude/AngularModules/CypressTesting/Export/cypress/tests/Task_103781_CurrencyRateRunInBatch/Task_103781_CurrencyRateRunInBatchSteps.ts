@@ -6,11 +6,10 @@ import { CurrencyRateRunInBatchDetails } from '../../models/CurrencyRateRunInBat
 import { CurrencyRateRunInBatchSelectors } from '../../selectors/CurrencyRateRunInBatchSelectors';
 
 
-//#region Check Export Currency rates 
 Given("the user logged in and navigates to Export workspace", () => {
     
     cy.Login();
-    Actions.NavigatesCurrencyRatesWizerd()
+    Actions.NavigatesCustomsRequestsWizerd()
 });
 
 Given("fill Export Currency rates with the following details", (dataTable) => {
@@ -34,6 +33,8 @@ Then("the request status will be Answer was analyze", () => {
         CurrencyRateRunInBatchActions.CheckStatusRequest();
         
 });
+
+ 
 
 
 

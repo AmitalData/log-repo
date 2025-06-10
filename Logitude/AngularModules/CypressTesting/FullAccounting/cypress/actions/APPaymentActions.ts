@@ -15,7 +15,7 @@ export function FillAPPayment(aPPaymentDetails: APPaymentDetails) {
     cy.FillLogLov(APPaymentSelectors.APPaymentVendor, aPPaymentDetails.Vendor, true)
     cy.FillLogLov(APPaymentSelectors.APPaymentMethod, aPPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(APPaymentSelectors.APPaymentAmount, aPPaymentDetails.PaymentAmount)
-    cy.FillLogTextBox(APPaymentSelectors.APPaymentRegisterDate, aPPaymentDetails.RegisterDate)
+    //cy.FillLogTextBox(APPaymentSelectors.APPaymentRegisterDate, (new Date()).toLocaleDateString('en-GB'))
     //cy.FillLogLov(APPaymentSelectors.APPaymentBranch,aPPaymentDetails.BranchId, true)
 }
 
