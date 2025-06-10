@@ -23,6 +23,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         public void Save(ApiResponse<ReleaseRequestApiResponseDto> apiResp,
                          string siiRequestId)
         {
+            if (apiResp == null)
+                throw new InvalidOperationException($"No response was received from the SII for request '{siiRequestId}'.");
+
             var entity = new SIIRequestApiCallLog
             {
                 SIIRequestId = siiRequestId,

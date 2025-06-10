@@ -26,7 +26,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             _mapper = new SIIRequestApiDataMapper(tenant);
         }
 
-        public ApiResponse<ReleaseRequestApiResponseDto> Send(string siiRequestId, List<SupplierInvoiceItemsReqListKeys> selectedRows)
+        public async Task<ApiResponse<ReleaseRequestApiResponseDto>> SendAsync(string siiRequestId, List<SupplierInvoiceItemsReqListKeys> selectedRows)
         {
             var credentials = _factory.BuildCredentials(InterfaceName, PartnerCode);
             var config = _factory.GetEndpointConfig(InterfaceName, PartnerCode);
@@ -35,11 +35,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
             var apiReq = ApiRequestBuilder.Build(_tenant, config, dto);
             var executor = new RestRequestExecutor();
-            return Task.Run(() =>
-                     executor.ExecuteAsync<ReleaseRequestApiDto,
-                                           ReleaseRequestApiResponseDto>(apiReq))
-                   .GetAwaiter()
-                   .GetResult();
+            return await executor.ExecuteAsync<ReleaseRequestApiDto, ReleaseRequestApiResponseDto>(apiReq);
         }
     }
 
