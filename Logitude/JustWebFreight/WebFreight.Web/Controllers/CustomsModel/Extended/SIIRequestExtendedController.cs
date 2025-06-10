@@ -27,6 +27,7 @@ using Logitude.Customs.BL.BL.SIIRequest;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Server.Tools.RestRequestExecutor;
+using Logitude.Customs.Data.EntityKeys;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -94,47 +95,26 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public HttpResponseMessage PostSendSIIRequest(string siiRequestId, int tenant)
-        
+        public HttpResponseMessage PostSendSIIRequest(string siiRequestId, int tenant, [FromBody] List<SupplierInvoiceItemsReqListKeys> selectedRows)
         {
             try
             {
-                string logKey = PerformanceLogger.LogCurrentTime();
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                var sender = new SIIRequestApiSender(auth.Tenant);
+                ApiResponse<ReleaseRequestApiResponseDto> apiResp =sender.Send(siiRequestId, selectedRows);
+                var saver = new SIIRequestApiResponseSaver(auth.Tenant);
+                saver.Save(apiResp, siiRequestId);
+                var payload = apiResp?.Result
+                    ?? new ReleaseRequestApiResponseDto
+                    {
+                        RequestNumber = 0,
+                        ResponseCode = apiResp?.ErrorCode ?? -1,
+                        ValidationMessages = apiResp?.ErrorMessage
+                    };
+                return Request.CreateResponse(HttpStatusCode.OK, "Request Number:"  + payload.RequestNumber);
 
-                string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIISendRequest;
-                string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
-
-                var factory = new SIIRequestApiRequestFactory(auth.Tenant);
-                var credentials = factory.BuildCredentials(interfaceName, partnerCode);
-
-                var dto = new ProductFileRequestDto
-                {
-                    credentials = credentials,
-                };
-
-                var config = factory.GetEndpointConfig(interfaceName, partnerCode);
-                var apiRequest = ApiRequestBuilder.Build(tenant, config, dto);
-
-                var executor = new RestRequestExecutor();
-                var apiResp = Task.Run(() =>
-                    executor.ExecuteAsync<ProductFileRequestDto, ProductFileCheckResponseDto>(apiRequest))
-                    .GetAwaiter()
-                    .GetResult();
-
-                bool fileExists = apiResp != null &&
-                          apiResp.Success &&
-                          apiResp.Result != null &&
-                          apiResp.Result.productFiles != null &&
-                          apiResp.Result.productFiles.Count > 0;
-
-
-                SecurityUtility.AuthenticationOnTenant(auth.Tenant);
-                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-
-                return Request.CreateResponse(HttpStatusCode.OK, fileExists);
             }
             catch (Exception ex)
             {

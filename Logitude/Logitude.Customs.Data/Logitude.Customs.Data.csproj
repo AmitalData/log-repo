@@ -230,6 +230,7 @@
     <Compile Include="DataContracts\SIIRequest\ProductFileCheckResponseDto.cs" />
     <Compile Include="DataContracts\SIIRequest\ProductFileRequestDto.cs" />
     <Compile Include="DataContracts\SIIRequest\ReleaseRequestApiDto.cs" />
+    <Compile Include="DataContracts\SIIRequest\ReleaseRequestApiResponseDto.cs" />
     <Compile Include="EntityKeys\AcceptanceStatusKeys.cs" />
     <Compile Include="EntityKeys\ActionCodeKeys.cs" />
     <Compile Include="EntityKeys\AgentTalkBackTypeKeys.cs" />

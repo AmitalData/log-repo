@@ -1681,6 +1681,21 @@ namespace Logitude.Customs.Data.Repsitories
                                        select a).FirstOrDefault();
             return declaration;
         }
+        public Declaration GetDataForSIIRequest(string declarationId ,int tenant)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+            return context.Declarations
+                  .Where(a => a.Tenant == tenant && a.Id == declarationId)
+                  .Select(a => new Declaration
+                  {
+                      AgentId = a.AgentId,
+                      ImporterId = a.ImporterId,
+                      ImporterCode = a.ImporterCode,
+                      CustomFileNo = a.CustomFileNo,
+                  })
+                  .FirstOrDefault();
+        }
+
     }
 
 

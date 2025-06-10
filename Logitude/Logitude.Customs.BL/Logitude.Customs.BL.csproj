@@ -376,6 +376,8 @@
     <Compile Include="BL\SIIRequest\SIIRequestApiDataMapper.cs" />
     <Compile Include="BL\SIIRequest\SIIRequestApiRequestBuilder.cs" />
     <Compile Include="BL\SIIRequest\SIIRequestApiRequestFactory.cs" />
+    <Compile Include="BL\SIIRequest\SIIRequestApiResponseSaver.cs" />
+    <Compile Include="BL\SIIRequest\SIIRequestApiSender.cs" />
     <Compile Include="BL\SIIRequest\SIIRequestWebApiEndpointConfig.cs" />
     <Compile Include="BL\SIModificationByCustomerCommissionService.cs" />
     <Compile Include="CloseTables\CustomsCargoSealStatus.cs" />
