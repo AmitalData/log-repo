@@ -20,7 +20,7 @@ export class ARInvoiceValidator {
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     }
 
-    Validate(entity: ARInvoicePM) {
+    Validate(entity: ARInvoicePM, isFromApprove: boolean = false) {
         this.Errors = [];
         this.EntityPM = entity;
 
@@ -39,6 +39,13 @@ export class ARInvoiceValidator {
         if (this.EntityPM.IsInvoiceNumberFromStock && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && this.EntityPM.IsAutoCredit) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
+        if(!AppTool.IsNullOrEmpty(this.EntityPM.ApprovedDate)) {
+            this.Errors.push("This invoice is already approved");
+        }
+        if(this.EntityPM.StatusCode == "PR" && isFromApprove){
+            this.Errors.push("The invoice is already in the approval process");
+        }
+        
         var date1 = new Date(this.EntityPM.InvoiceDate.toString());
         var date2 = new Date();
         date2.setHours(23);

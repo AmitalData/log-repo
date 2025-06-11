@@ -84,6 +84,14 @@ namespace Logitude.Accounting.BL
                 LocalName = "הפקת החשבונית נכשלה", 
                 SearchFields = "9,הפקת החשבונית נכשלה,Invoicing Failed", 
 			});
+			 
+            all.Add(new InterestReportStatuseDetails()
+            {    
+                Code = "10", 
+                LocalName = "הדפסת חשבונית נכשלה", 
+                EnglishName = "Invoice printing failed", 
+                SearchFields = "Invoice printing failed,הדפסת חשבונית נכשלה,10", 
+			});
 			
             return all;
        }
