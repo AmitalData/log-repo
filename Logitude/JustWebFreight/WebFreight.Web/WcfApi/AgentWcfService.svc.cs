@@ -60,7 +60,7 @@ namespace WebFreight.Web.WcfApi
 
                     if (entityPM.InvoiceCurrencyId != null)
                     {
-                        Currency currency = currencyRepository.GetSingleCurrencyByCode(entityPM.InvoiceCurrencyId, entityPM.Tenant);
+                        Currency currency = currencyRepository.GetSingleCurrencyByIdOrCode(entityPM.InvoiceCurrencyId, entityPM.Tenant);
                         if (currency != null)
                         {
                             entityPM.InvoiceCurrencyId = currency.Id;

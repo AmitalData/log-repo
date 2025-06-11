@@ -203,17 +203,26 @@ export class ReportService {
         }
         );
     }
+    GetExcel(filter: ReportFliter): Promise<any> {
+        const authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        authHeader.append('Content-Type', 'application/json');
 
-    GetExcel(reportKey: string, reportName: string, tenant: string, reportCode: string): Promise<any> {
-        return this._http.get(
-            this._apiUrl + "/GetExcel",
-            { 
-                params: { reportKey, reportName, tenant, reportCode }, 
-                headers: ServiceHelper.GetHttpHeaders().headers, 
-                responseType: 'blob' 
-            }
-        ).toPromise() as Promise<any>;
+        const filterString = encodeURIComponent(JSON.stringify(filter));
+
+        return defer(() => {
+            return this._http.get(`${this._apiUrl}/GetExcel?filter=${filterString}`, {
+                headers: ServiceHelper.GetHttpHeaders().headers,
+                responseType: 'blob'
+            }).pipe(
+                map(response => {
+                    return response;
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
+        }).toPromise() as Promise<any>;
     }
+
 }
 
 export class CustomersDataProvider {

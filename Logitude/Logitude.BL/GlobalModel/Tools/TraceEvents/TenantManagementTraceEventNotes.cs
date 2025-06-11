@@ -76,12 +76,13 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             string fieldName = property.Name;
             string tableName = pocoInstance.GetType().BaseType.Name;
             ObjectFieldPM objectField = new ObjectFieldQuery(tenantId).GetObjectFieldPMsByObjectTableName(tableName, tenantId).FirstOrDefault(x => x.FieldName == fieldName);
-            string description = objectField.FullNameTextCodeDefaultText;
 
             if (objectField == null)
                 return;
 
-            if (objectField.LookUpTableId != null)
+			string description = objectField.FullNameTextCodeDefaultText;
+
+			if (objectField.LookUpTableId != null)
             {
                 string lookupTableName = new ObjectTableRepository(tenantId).GetObjectTableById(objectField.LookUpTableId, tenantId).Name;
 

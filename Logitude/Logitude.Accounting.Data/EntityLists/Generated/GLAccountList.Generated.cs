@@ -62,7 +62,11 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ReconcileMethodCode  { get; set; }
        [DataMember]
        public string ReconcileMethodName  { get; set; }
-       [DataMember]
+        [DataMember]
+        public string ExchangeRateId { get; set; }
+        [DataMember]
+        public string ExchangeRateName { get; set; }
+        [DataMember]
        public string ControlAccountId  { get; set; }
        [DataMember]
        public string ControlAccountName  { get; set; }
@@ -136,7 +140,9 @@ namespace Logitude.Accounting.Data.EntityLists
        public string LastActivityByUserName  { get; set; }
        [DataMember]
        public string VatNumber  { get; set; }
-       [DataMember]
+        [DataMember]
+        public string CardCountryCode { get; set; }
+        [DataMember]
        public string PaymentTermId  { get; set; }
        [DataMember]
        public string SalesmanUserId  { get; set; }

@@ -44,8 +44,14 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/DeleteRemarksClassification`;
 		return this.Post(url, data);
 	}
+	
+	GetDefaultCB_CollapseSearchHierarchy(tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetDefaultCB_CollapseSearchHierarchy?tenant=${tenant}`;
+		return this.Get(url);
+	}
 
-	GetCustomsBookMainView(filters: Filters) {	
+
+	GetCustomsBookMainView(filters: Filters) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}&IsDiscountCodes=${filters.IsDiscountCodes}`;
 		return this.Get(url);
 	}
@@ -61,6 +67,11 @@ export class API_MainService extends BaseService {
 	}
 	GetClassifGuidanceDetails(classificationGuidanceNumber: string, tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetClassifGuidanceDetails?classificationGuidanceNumber=${classificationGuidanceNumber}&tenant=${tenant}`;
+		return this.Get(url);
+	}
+	
+	GetMekachDetails(customsItemId: number, tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetMekachDetails?customsItemId=${customsItemId}&tenant=${tenant}`;
 		return this.Get(url);
 	}
 
@@ -101,11 +112,11 @@ export class API_MainService extends BaseService {
 		return this.Get(url);
 	}
 
-	GetAllComments( tenant: number) {
+	GetAllComments(tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetAllComments?tenant=${tenant}`;
 		return this.Get(url);
 	}
-	
+
 	GetAllCommentsByCustomsItemId(customsItemId: number, tenant: number) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetAllCommentsByCustomsItemId?customsItemId=${customsItemId}&tenant=${tenant}`;
 		return this.Get(url);
@@ -134,7 +145,7 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_Preference/AddNewAllCB_Preferences`;
 		return this.Post(url, data);
 	}
-	
+
 	EditCB_Preference(data) {
 		const url = `${this._apiUrl}CB_Preference/EditCB_Preference`;
 		return this.Post(url, data);

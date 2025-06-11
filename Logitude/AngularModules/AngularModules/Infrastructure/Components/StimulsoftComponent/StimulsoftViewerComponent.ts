@@ -97,6 +97,7 @@ export class StimulsoftViewerComponent implements OnInit {
     public reportService: ReportService;
     reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
     IsEnableReportTemplateExcel: boolean = false;
+    IsEnableButtonExcel: boolean = false;
 
     SelectedFontSize: number;
     FontSizeLists: number[] = [];
@@ -177,8 +178,9 @@ export class StimulsoftViewerComponent implements OnInit {
                 this.SetStimualData();
 
             }
-        }
-
+        }    
+        this.IsEnableButtonExcel = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "REE")[0] ? true : false;
+    
         if (FeatureLocator.HasFeaturePermession("ReportsTemplate", "ReportTemplateExcel") && this.StimulsoftArgData.IsExcelReportAllowed == true) {
             this.IsEnableReportTemplateExcel = true;
         }
@@ -976,15 +978,6 @@ ResetEditableField(field: EditableFieldPosition){
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
 
-                    let isEditComponentSaved = false;
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-
-                        var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
-
-                        this.LoadReportTemplate(defultTemplateId, true);
-
-                    });
-
                     cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
                         if (isSaveSuccess) {
                             var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";
@@ -1406,21 +1399,12 @@ ResetEditableField(field: EditableFieldPosition){
     }
 
     async ExportToExcel() {
-        this.CurrentSession.StartBusyIndicator("Exporting...");
-
-        const reportKey:string = this.StimulsoftArgData.ReportKey;
-        const tenant: string = this.StimulsoftArgData.Tenant.toString();
-        const reportCode: string = this.StimulsoftArgData?.ReportsPreviewComponent?.Report.Code;
-        const reportName: string = this.StimulsoftArgData?.ReportsPreviewComponent?.Report.LocalName;
-
-        const res: Blob = await this.reportService.GetExcel(reportKey, reportName, tenant, reportCode);
-        const blobUrl: string = window.URL.createObjectURL(res);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = reportName + ".xlsx";
-        link.click();
-        link.remove();
-
-        this.CurrentSession.StopBusyIndicator();
+        
+        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = true;
+       
+        if (this.StimulsoftArgData.ReportFilterConmponent) {
+            this.RunReport();
+        }
+        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = false;
     }
 }

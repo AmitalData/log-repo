@@ -89,6 +89,8 @@ using System.Threading.Tasks;
 using NLog;
 using System.Windows.Media;
 using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Practices.ObjectBuilder2;
+//using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -102,6 +104,11 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class LogitudeReportsWebService : System.Web.Services.WebService
     {
+        const string FictiveGLAccount = "FictiveGLAccount";
+        const string GLAccount = "GLAccount";
+        const string ChartOfAccount = "ChartOfAccount";
+        const string ChartOfAccountType = "ChartOfAccountType";
+
         #region AirlineStatistics
         [WebMethod]
         public byte[] LoadAirlineStatisticsData(byte[] xmlFilters, bool isClosed, int tenant)
@@ -1330,11 +1337,6 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.From = openDate.Month.ToString() + @"/" + openDate.Year.ToString();
             }
 
-            //if (expirationDate != null)
-            //{
-            //    iQueryable = iQueryable.Where(d => System.Data.Entity.DbFunctions.TruncateTime(d.ExpirationDate) <= System.Data.Entity.DbFunctions.TruncateTime(expirationDate));
-            //    dataProvider.To = expirationDate.Month.ToString() + @"/" + expirationDate.Year.ToString();
-            //}
 
             if (!string.IsNullOrEmpty(customerId))
             {
@@ -1515,7 +1517,6 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_ToDate != null)
                 {
                     DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out date2);
-                    //date2 = date2.AddMonths(1);
                 }
 
                 else
@@ -1631,7 +1632,6 @@ namespace WebFreight.Web.ReportsWebServices
                 Shipment shipment = shipments.Where(d => d.Id == arInvoice.MainEntityId).FirstOrDefault();
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, invoicesRecored);
 
-                //ARInvoicePM invoicePM = invoiceQuery.GetSinglePM(currentInvoice.Id, currentInvoice.Tenant);
                 foreach (ARInvoiceTotalVAT vat in myTotalVats)
                 {
                     VATClass item = new VATClass()
@@ -2113,10 +2113,6 @@ namespace WebFreight.Web.ReportsWebServices
                     item.Operator = "LessThanOrEqual";
                 }
 
-                //else if (FromDate == null && toDate == null)
-                //{
-                //    item.Operator = "IsNotNull";
-                //}
 
                 else
                 {
@@ -2162,10 +2158,8 @@ namespace WebFreight.Web.ReportsWebServices
 
             List<ShipmentDataView> Shipments = shipments.ToList();
             List<string> ShipmentIds = Shipments.Select(p => p.Id).ToList();
-            // List<string> ConsigneeAdressIds = Shipments.Select(p => p.ConsigneeAddressId).ToList();
 
             List<ShipmentPackage> shipmentPackages = (from d in shipmentsContext.ShipmentPackages.Include("PackageType") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
-            // List<Card> Consiness = (from d in commonContext.Cards.Include("Address") where ShipmentIds.Contains(d.ShipmentId) select d).ToList();
 
 
             if (shipmentPackages.Count > 0)
@@ -2683,7 +2677,6 @@ namespace WebFreight.Web.ReportsWebServices
             }
             else
             {
-                // dataProvider.airline = "All";
             }
 
             AddressQuery addressQuery = new AddressQuery(tenant);
@@ -3305,7 +3298,6 @@ namespace WebFreight.Web.ReportsWebServices
                 if (filterItem_ToDate != null)
                 {
                     DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out date2);
-                    //date2 = date2.AddMonths(1);
                 }
 
                 else
@@ -3967,7 +3959,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Card billTo = cardRepository.GetSingleCard(a.BillToId, tenant);
 
                     statementRecord.InvoiceCurrency = a.PaymentCurrencyCode;
-                    statementRecord.ShipmentNumber = ""; // ????
+                    statementRecord.ShipmentNumber = ""; 
                     statementRecord.InvoiceNumber = a.PaymentNo;
                     statementRecord.SentDate = a.RegisterDate;
                     statementRecord.Age = Convert.ToInt32((todayDate - a.RegisterDate.Value).TotalDays);
@@ -4072,7 +4064,7 @@ namespace WebFreight.Web.ReportsWebServices
                     Card vendor = cardRepository.GetSingleCard(a.VendorId, tenant);
 
                     statementRecord.InvoiceCurrency = a.PaymentCurrencyCode;
-                    statementRecord.ShipmentNumber = ""; // ????
+                    statementRecord.ShipmentNumber = "";
                     statementRecord.InvoiceNumber = a.PaymentNo;
                     statementRecord.SentDate = a.RegisterDate;
                     statementRecord.Age = Convert.ToInt32((todayDate - a.RegisterDate.Value).TotalDays);
@@ -4496,12 +4488,6 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (leadSources.ToLower() == "all")
                 {
-                    //LeadSourceRepository leadSourceRepository = new LeadSourceRepository(tenant);
-                    //IQueryable<LeadSource> iQueryable = leadSourceRepository.GetLeadSources(tenant).Where(d => !d.InActive);
-                    //if (iQueryable.Count() > 0)
-                    //{
-                    //    myLeadSourcesList = iQueryable.Select(s => s.Id).ToList();
-                    //}
                 }
 
                 else
@@ -5280,10 +5266,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            //DateTime myStartDate = todayDate.AddMonths(-1);
 
-            //DateTime? fromDate = null;
-            //DateTime? toDate = null;
 
             if (filterItem_FromDate != null)
             {
@@ -6049,8 +6032,6 @@ namespace WebFreight.Web.ReportsWebServices
 
         private CustomerPotentialActualDataProvider LoadCustomerPotentialActualDataProvider(byte[] xmlFilters, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
-            // SecurityUtility.CheckContactFeature("Customer", "READ", tenant);
 
             CustomerPotentialActualDataProvider myResult = new CustomerPotentialActualDataProvider();
             myResult.Customers = new List<CustomersData>();
@@ -7584,10 +7565,10 @@ namespace WebFreight.Web.ReportsWebServices
 
             totalData.TotalWeight = totalWeight != 0 ? (String.Format("{0:#,0.00}", totalWeight) + " " + (WeightUnit)) : ""; //KGS 
             if (totalPackagesQuantity != 0)
-                totalData.TotalQuantity = totalPackagesQuantity.ToString();// + " Pcs" + Environment.NewLine;
+                totalData.TotalQuantity = totalPackagesQuantity.ToString(); 
 
             if (totalContainersQuantity != 0)
-                totalData.TotalQuantity += totalContainersQuantity.ToString();// +" Con";
+                totalData.TotalQuantity += totalContainersQuantity.ToString(); 
 
             #endregion
 
@@ -8914,13 +8895,11 @@ namespace WebFreight.Web.ReportsWebServices
         public OceanInsightsDataProvider LoadOceanInsightsDataProvider(byte[] xmlFilters, int tenant)
         {
             OceanInsightsDataProvider totalData = new OceanInsightsDataProvider();
-            //totalData.OceanInsightsRecordList = new List<OceanInsightsRecord>();
 
-            //ContactRepository contactRepository = new ContactRepository(tenant);
+
             OceanInsightsRequestRepository OceanInsightsRepository = new OceanInsightsRequestRepository(tenant);
-            //ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+
             IQueryable<OceanInsightsRequest> iQueryable = OceanInsightsRepository.GetOceanInsightsRequests().Where(a => a.FromPushPage == false);
-            //Contact loggedContact = contactRepository.GetSingleContactByEmail(SecurityUtility.GetAuthenticatedUser(), tenant);
 
             QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
             #region Report Filters
@@ -8930,21 +8909,7 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_ToDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ToDate").FirstOrDefault();
             QueryFilterItem filterItem_Detailed = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Detailed").FirstOrDefault();
 
-            //DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            //DateTime myStartDate = todayDate.AddMonths(-1);
-            //DateTime fromDate = new DateTime(myStartDate.Year, myStartDate.Month, 1);
-            //DateTime toDate = new DateTime(todayDate.Year, todayDate.Month, DateTime.DaysInMonth(todayDate.Year, todayDate.Month));
 
-
-            //if (filterItem_FromDate != null)
-            //{
-            //    DateTime.TryParse(filterItem_FromDate.FieldValue.ToString(), out fromDate);
-            //}
-
-            //if (filterItem_ToDate != null)
-            //{
-            //    DateTime.TryParse(filterItem_ToDate.FieldValue.ToString(), out toDate);
-            //}
             DateTime? FromDate = null;
             DateTime? ToDate = null;
             int Tenant = -1;
@@ -10038,7 +10003,20 @@ namespace WebFreight.Web.ReportsWebServices
 
         }
 
+        public byte[] LoadAccountingNewAgingDataProvider(byte[] xmlFilters, int tenant)
+        {
+            NewAccountingAgingDataProvider dataprovider=BuildDataProvider(xmlFilters,tenant);
+            return new ReportMemoryStreamService().Convert(dataprovider, typeof(NewAccountingAgingDataProvider), tenant);
+        }
 
+        private NewAccountingAgingDataProvider BuildDataProvider(byte[] xmlFilters, int tenant)
+        {
+
+            NewAgingReportDataProviderLoader agingReportLoader = new NewAgingReportDataProviderLoader(xmlFilters,tenant);
+
+            return agingReportLoader.BuildDataProvider();
+
+        }
         public byte[] LoadCustomerStatusDataProvider(byte[] xmlFilters, int tenant)
         {
             CustomerStatusDataProvider dataprovider = GetCustomerStatusDataProvider(xmlFilters, tenant);
@@ -10514,28 +10492,20 @@ namespace WebFreight.Web.ReportsWebServices
             var revenueExpenseReportParam = new RevenueExpenseReportParam()
             {
                 Tenant = tenant,
-                //  MyRevenueExpenseReportLevel = ReportLevel.,
                 ToDate = (DateTime)toDate,
                 FromDate = (DateTime)fromDate
             };
 
             switch (level)
             {
-                //case "ChartOfAccountType":
-                //    {
-                //        revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.ChartofaccountType;
-                //        break;
-                //    }
-                case "ChartOfAccount":
+                case ChartOfAccount:
                     {
                         totalData.Level = " קבוצת מאזן";
-                        //revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.Chartofaccount;
                         break;
                     }
-                case "GLAccount":
+                case GLAccount:
                     {
                         totalData.Level = "כרטיס";
-                        // revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
                         break;
                     }
             }
@@ -10570,7 +10540,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (chartOfAccountsIdList != null)
                 revenueExpenseReportParam.ChartOfAccounts = chartOfAccountsIdList;
 
-            if (level == "GLAccount")
+            if (level == GLAccount)
             {
                 RevenueExpenseReportService servce = new RevenueExpenseReportService(revenueExpenseReportParam, 5);
                 revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
@@ -10585,7 +10555,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    //servce.Dispose();
                 }
 
 
@@ -10639,7 +10608,6 @@ namespace WebFreight.Web.ReportsWebServices
             }
             finally
             {
-                //service.Dispose();
             }
 
 
@@ -10860,7 +10828,6 @@ namespace WebFreight.Web.ReportsWebServices
             }
             finally
             {
-                //service.Dispose();
             }
 
 
@@ -10924,6 +10891,7 @@ namespace WebFreight.Web.ReportsWebServices
             RevenueExpenseDataProvider totalData = new DataProviders.RevenueExpenseDataProvider();
             List<ChartOfAccountsTypePM> chartOfAccountTypes = GetChartOfAccountTypes(tenant);
             List<ChartOfAccount> ChartOfAccountsList = GetChartOfAccounts(tenant);
+
 
             #region Report Filters
 
@@ -11137,7 +11105,6 @@ namespace WebFreight.Web.ReportsWebServices
             var trailReportParam = new TrailReportParam()
             {
                 Tenant = tenant,
-                //    MyRevenueExpenseReportLevel = ReportLevel.,
                 ToDate = (DateTime)toDate,
                 FromDate = (DateTime)fromDate,
                 CurrenciesDetailed = (bool)currency,
@@ -11161,29 +11128,26 @@ namespace WebFreight.Web.ReportsWebServices
 
             switch (level)
             {
-                case "ChartOfAccountType":
+                case ChartOfAccountType:
                     {
                         totalData.Level = "סוג קבוצת מאזן";
-                        //trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
                         break;
                     }
-                case "ChartOfAccount":
+                case ChartOfAccount:
                     {
                         totalData.Level = " קבוצת מאזן";
-                        //revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.Chartofaccount;
                         break;
                     }
-                case "GLAccount":
+                case GLAccount:
                     {
                         totalData.Level = "כרטיס";
-                        // revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
                         break;
                     }
             }
 
             List<TrailReportM> result = null;
             List<string> GLAccountParents = new List<string>();
-            //  var service = null;// TrailReportFactory.CreateNew(trailReportParam);
+
             totalData.ResultList = new List<ResultList>();
 
 
@@ -11192,7 +11156,7 @@ namespace WebFreight.Web.ReportsWebServices
             GLAccountQueryService queryService = new GLAccountQueryService(tenant);
             ChartOfAccountQueryService chartQuaryService = new ChartOfAccountQueryService(tenant);
 
-            if (level == "GLAccount" || level == "ChartOfAccount" || level == "ChartOfAccountType")
+            if (level == GLAccount || level == ChartOfAccount || level == ChartOfAccountType)
             {
 
                 trailReportParam.DetailedControlVendors = true;
@@ -11203,13 +11167,13 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
-                trailReportParam.Category1 = null;
-                trailReportParam.Category2 = null;
-                trailReportParam.Category3 = null;
-                trailReportParam.Category4 = null;
-                trailReportParam.Category5 = null;
+                trailReportParam.Category1 = category1;
+                trailReportParam.Category2 = category2;
+                trailReportParam.Category3 = category3;
+                trailReportParam.Category4 = category4;
+                trailReportParam.Category5 = category5;
                 trailReportParam.MyTrailReportLevel = ReportLevel.ChartofaccountType;
-                if (level == "GLAccount")
+                if (level == GLAccount)
                 {
                     if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
                     if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
@@ -11222,7 +11186,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    // typeservice.Dispose();
                 }
 
 
@@ -11289,7 +11252,7 @@ namespace WebFreight.Web.ReportsWebServices
 
 
 
-            if (level == "GLAccount" || level == "ChartOfAccount")
+            if (level == GLAccount || level == ChartOfAccount)
             {
 
 
@@ -11301,13 +11264,13 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
-                trailReportParam.Category1 = null;
-                trailReportParam.Category2 = null;
-                trailReportParam.Category3 = null;
-                trailReportParam.Category4 = null;
-                trailReportParam.Category5 = null;
+                 trailReportParam.Category1 = category1;
+                trailReportParam.Category2 = category2;
+                trailReportParam.Category3 = category3;
+                trailReportParam.Category4 = category4;
+                trailReportParam.Category5 = category5;
                 if (level == "GLAccount")
-                {
+                 {
                     if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
                     if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
                 }
@@ -11320,7 +11283,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    //service.Dispose();
                 }
                 
 
@@ -11356,11 +11318,6 @@ namespace WebFreight.Web.ReportsWebServices
                             Type = "ChartOfAccount"
                         };
 
-                        //if (record.ParentId == "6")
-                        //{
-                        //    record.ParentId = "7";
-
-                        //}
 
                         ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
                         if (parent == null)
@@ -11409,6 +11366,10 @@ namespace WebFreight.Web.ReportsWebServices
                             {
                                 totalData.ResultList.Add(record);
                             }
+                        }
+                        else 
+                        {
+                            UpdateBalances(duplicated, record);
                         }
 
 
@@ -11510,6 +11471,10 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             totalData.ResultList.Add(record);
                         }
+                        else
+                        {
+                            UpdateBalances(duplicated, record);
+                        }
 
 
                     }
@@ -11606,7 +11571,10 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             totalData.ResultList.Add(record);
                         }
-
+                        else
+                        {
+                            UpdateBalances(duplicated, record);
+                        }
 
                     }
                 }
@@ -11705,6 +11673,10 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             totalData.ResultList.Add(record);
                         }
+                        else
+                        {
+                            UpdateBalances(duplicated, record);
+                        }
 
                     }
                 }
@@ -11793,6 +11765,10 @@ namespace WebFreight.Web.ReportsWebServices
                                 totalData.ResultList.Add(record);
                             }
                         }
+                        else
+                        {
+                            UpdateBalances(duplicated, record);
+                        }
 
 
                     }
@@ -11807,7 +11783,7 @@ namespace WebFreight.Web.ReportsWebServices
 
 
 
-            if (level == "GLAccount")
+            if (level == GLAccount)
             {
 
                 List<string> chartOfAccountTypesCodes = GetChartOfAccountsTypesFilterValue(queryOperations);
@@ -11829,7 +11805,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
                 trailReportParam.Suppress_ControlAccount = true;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; 
 
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
 
@@ -11843,7 +11819,6 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 finally
                 {
-                    // servce.Dispose();
 
                 }
 
@@ -11909,8 +11884,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 else
                                 {
 
-                                    //RecalculateParentTotals(record, totalData);
-                                    //ResultList resultList = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
+
                                 }
                             }
                         }
@@ -11941,8 +11915,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         bool glaccExists = totalData.ResultList.Where(res => (res.Type != "ChartOfAccount" || res.Type == null)
                                         && res.ParentId == chartLine.Id).Any();
-                        //bool chartExists = totalData.ResultList.Where(res => (res.Type == "ChartOfAccount")
-                        //                && res.ParentId == chartLine.Id).Any();
+
                         string logtext4 = "LogitudeReportsWebService.GetTrailBalanceDataProvider(), Point 4, chartLine=" + chartLine.Name + ", Id=" + chartLine.Id + ", glaccExists=" + glaccExists.ToString();
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext4);
 
@@ -11952,10 +11925,9 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             var glacc = totalData.ResultList.Where(res => (res.Type != "ChartOfAccount" || res.Type == null)
                                         && res.ParentId == chartLine.Id).FirstOrDefault();
-                           // var ch = totalData.ResultList.Where(res => (res.Type == "ChartOfAccount")
-                           //             && res.ChartofAccountTypeCode == chartLine.ParentId && res.ParentId == chartLine.Id).FirstOrDefault();
+
                         }
-                        if (!glaccExists) // && !chartExists)
+                        if (!glaccExists) 
                         {
 
                             ChartOfAccountsTypePM chartType = chartOfAccountTypes.Where(type => type.Code == chartLine.ParentId).FirstOrDefault();
@@ -11991,6 +11963,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 ChartofAccountTypeLocalName = chartType != null ? chartType.LocalName : null,
                                 CurrencyCode = "Multi",
                                 GLAccountEnglish = chart != null ? chart.EnglishName : null,
+                                Type = FictiveGLAccount,
                             };
 
                             totalData.ResultList.Add(fictiveGLAccountRecord);
@@ -12004,6 +11977,24 @@ namespace WebFreight.Web.ReportsWebServices
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext6);
 
                 RecalculateParentTotals(totalData);
+                totalData.ResultList.Where(res => res.Type == FictiveGLAccount).ToList().ForEach(fict =>
+                {
+                    var parent = totalData.ResultList.Where(rec => rec.Id == fict.ParentId).SingleOrDefault();
+                    if (parent != null)
+                    {
+                        fict.LocalCloseBalance = parent.LocalCloseBalance;
+                        fict.LocalCredit = parent.LocalCredit;
+                        fict.LocalDebit = parent.LocalDebit;
+                        fict.LocalOpenBalance = parent.LocalOpenBalance;
+                        fict.ForeignCloseBalance = parent.ForeignCloseBalance;
+                        fict.ForeignCredit = parent.ForeignCredit;
+                        fict.ForeignDebit = parent.ForeignDebit;
+                        fict.ForeignOpenBalance = parent.ForeignOpenBalance;
+
+                        fict.Balance = parent.Balance = 0m;
+                    }
+                    fict.Type = null;
+                });
 
             }
 
@@ -12019,11 +12010,6 @@ namespace WebFreight.Web.ReportsWebServices
             totalData.TotalForeignDebit = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.ForeignDebit);
             totalData.TotalForeignOpenBalance = totalData.ResultList.Where(d => d.ParentId == null).Sum(d => d.ForeignOpenBalance);
 
-            //  totalData.ResultList.OrderBy(d => d.Name);
-            //var revenues = result.Where(d => d.ChartOfAcountType == "1").FirstOrDefault().LocalCloseBalance;
-            //var expenses = result.Where(d => d.ChartOfAcountType == "2").FirstOrDefault().LocalCloseBalance;
-            //totalData.TotalRevenueExpense = (revenues == null ? 0 : revenues) - (expenses == null ? 0 : expenses);
-            // service.Dispose();
 
             #endregion
 
@@ -12036,24 +12022,24 @@ namespace WebFreight.Web.ReportsWebServices
             return totalData;
         }
 
+
+
+        private void UpdateBalances(ResultList duplicated, ResultList record)
+        {
+            duplicated.LocalOpenBalance += record.LocalOpenBalance;
+            duplicated.LocalDebit += record.LocalDebit;
+            duplicated.LocalCredit += record.LocalCredit;
+            duplicated.LocalCloseBalance += record.LocalCloseBalance;
+
+            duplicated.ForeignOpenBalance += record.ForeignOpenBalance;
+            duplicated.ForeignDebit += record.ForeignDebit;
+            duplicated.ForeignCredit += record.ForeignCredit;
+            duplicated.ForeignCloseBalance += record.ForeignCloseBalance;
+        }
+
+
         private void FilterChartOfAccountsAndTypes(RevenueExpenseDataProvider totalData, List<TrailReportM> trailReportMs)
         {
-            // filter chart of account types
-            //foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
-            //{
-            //    if (!trailReportMs.Any(x => x != null && x.ChartOfAcountType == item.Id))
-            //    {
-            //        totalData.ResultList.Remove(item);
-            //    }
-            //}
-            // filter chart of accounts
-            /*foreach (var item in totalData.ResultList.Where(x => x.Type == "ChartOfAccount").ToList())
-            {
-                if (!trailReportMs.Any(x => x != null && x.ChartOfAccountId == item.Id) && !item.Error)
-                {
-                    totalData.ResultList.Remove(item);
-                }
-            }*/
             // Update chart of account types total amounts
             foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
             {
@@ -12160,28 +12146,32 @@ namespace WebFreight.Web.ReportsWebServices
         }
 
 
-        private void RecalcOneGroupLevel(RevenueExpenseDataProvider totalData, IEnumerable<IGrouping<string,ResultList>> groupedRecords)
+        private void RecalcOneGroupLevel(RevenueExpenseDataProvider totalData, IEnumerable<IGrouping<string,ResultList>> groups)
         {
-            foreach (var group in groupedRecords)
+            foreach (var group in groups)
             {
                 var parentRecord = totalData.ResultList.FirstOrDefault(d => d.Id == group.Key);
+                
+                var hs = group.Any(rec => rec.Type == FictiveGLAccount)
+                    ? group.Where(r => r.Type == FictiveGLAccount).ToHashSet()
+                    : group.ToHashSet();
+
 
                 if (parentRecord != null)
                 {
                     executionCount++;
-                    List<string> groupIds = group.Select(item => item.Id).ToList();
 
-                    parentRecord.LocalCloseBalance += totalData.ResultList.Where(res => groupIds.Contains(res.Id)).Sum(c => c.LocalCloseBalance);
-                    parentRecord.LocalCredit += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.LocalCredit);
-                    parentRecord.LocalDebit += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.LocalDebit);
-                    parentRecord.LocalOpenBalance += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.LocalOpenBalance);
+                    parentRecord.LocalCloseBalance += hs.Sum(rec => rec.LocalCloseBalance);
+                    parentRecord.LocalCredit += hs.Sum(rec => rec.LocalCredit);
+                    parentRecord.LocalDebit += hs.Sum(rec => rec.LocalDebit);
+                    parentRecord.LocalOpenBalance += hs.Sum(rec => rec.LocalOpenBalance);
 
-                    parentRecord.ForeignCloseBalance += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.ForeignCloseBalance ?? 0);
-                    parentRecord.ForeignCredit += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.ForeignCredit);
-                    parentRecord.ForeignDebit += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.ForeignDebit);
-                    parentRecord.ForeignOpenBalance += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.ForeignOpenBalance);
+                    parentRecord.ForeignCloseBalance += hs.Sum(rec => rec.ForeignCloseBalance ?? 0);
+                    parentRecord.ForeignCredit += hs.Sum(rec => rec.ForeignCredit);
+                    parentRecord.ForeignDebit += hs.Sum(rec => rec.ForeignDebit);
+                    parentRecord.ForeignOpenBalance += hs.Sum(rec => rec.ForeignOpenBalance);
 
-                    parentRecord.Balance += group.Where(res => groupIds.Contains(res.Id)).Sum(c => c.Balance);
+                    parentRecord.Balance += hs.Sum(rec => rec.Balance);
 
                 }
             }
@@ -12208,46 +12198,49 @@ namespace WebFreight.Web.ReportsWebServices
 
                         item.Balance = 0m;
                     }
-                }        
+                }
 
                 try
                 {
-                    var groupedRecords_GLAccounts = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type != "ChartOfAccount").GroupBy(c => c.ParentId);
-                    RecalcOneGroupLevel(totalData, groupedRecords_GLAccounts);
+                    var groupedByParent = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type != "ChartOfAccount" && res.Type != FictiveGLAccount).GroupBy(c => c.ParentId);
+
+
+                    RecalcOneGroupLevel(totalData, groupedByParent);
                 }
                 catch (OverflowException ex)
                 {
                     var error = ex.Message;
-                    // Handle or log the exception
                 }
 
                 List<string> typeIdList = new List<string> { "1", "2", "3", "4", "5", "6", "7" };
 
-                if (totalData.ResultList.Any(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" 
+                if (totalData.ResultList.Any(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) 
                             && !typeIdList.Contains(res.ParentId)))
                 {
                     try
                     {
-                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" && typeIdList.Contains(res.ParentId)).Select(res => res.Id).ToList();
+                        List<string> parentChartIds = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && typeIdList.Contains(res.ParentId)).Select(res => res.Id).ToList();
 
-                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId));
+                        var children = totalData.ResultList.Where(res => parentChartIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
                         List<string> childrenIds = children.Select(res => res.Id).ToList();
 
-                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId)))
+                        if (childrenIds != null && childrenIds.Count > 0 && totalData.ResultList.Any(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId)))
                         {
-                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId));
+                            var grandChildren = totalData.ResultList.Where(res => childrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
                             List<string> grandChildrenIds = grandChildren.Select(res => res.Id).ToList();
 
 
-                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId)))
+                            if (grandChildrenIds != null && grandChildrenIds.Count > 0 && totalData.ResultList.Any(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId)))
                             {
-                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && res.Type == "ChartOfAccount" && !typeIdList.Contains(res.ParentId));
+                                var grandGrandChildren = totalData.ResultList.Where(res => grandChildrenIds.Contains(res.ParentId) && (res.Type == "ChartOfAccount" || res.Type == FictiveGLAccount) && !typeIdList.Contains(res.ParentId));
                                 List<string> grandGrandChildrenIds = grandGrandChildren.Select(res => res.Id).ToList();
 
                                 try
                                 {
-                                    IEnumerable<IGrouping<string, ResultList>> groupedRecords_GrandGrandChildren = grandGrandChildren.GroupBy(c => c.ParentId);
-                                    RecalcOneGroupLevel(totalData, groupedRecords_GrandGrandChildren);
+                                    IEnumerable<IGrouping<string, ResultList>> groupedByParent_GrandGrandChildren =
+                                        grandGrandChildren.GroupBy(c => c.ParentId);
+
+                                    RecalcOneGroupLevel(totalData, groupedByParent_GrandGrandChildren);
                                 }
                                 catch (Exception)
                                 {
@@ -12262,8 +12255,10 @@ namespace WebFreight.Web.ReportsWebServices
 
                             try
                             {
-                                IEnumerable<IGrouping<string, ResultList>> groupedRecords_GrandChildren = grandChildren.GroupBy(c => c.ParentId);
-                                RecalcOneGroupLevel(totalData, groupedRecords_GrandChildren);
+                                IEnumerable<IGrouping<string, ResultList>> groupedByParent_GrandChildren = grandChildren.GroupBy(c => c.ParentId);
+
+
+                                RecalcOneGroupLevel(totalData, groupedByParent_GrandChildren);
                             }
                             catch (Exception)
                             {
@@ -12273,26 +12268,29 @@ namespace WebFreight.Web.ReportsWebServices
                         }
 
 
-                        IEnumerable<IGrouping<string, ResultList>> groupedRecords_Children = children.GroupBy(c => c.ParentId);
-                        RecalcOneGroupLevel(totalData, groupedRecords_Children);
+                        IEnumerable<IGrouping<string, ResultList>> groupedByParent_Children =
+                                children.GroupBy(c => c.ParentId);
+
+                        RecalcOneGroupLevel(totalData, groupedByParent_Children);
                     }
                     catch (OverflowException ex)
                     {
                         var error = ex.Message;
-                        // Handle or log the exception
                     }
                 }
 
 
                 try
                 {
-                    var groupedRecords_Parents = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && res.Type == "ChartOfAccount" && typeIdList.Contains(res.ParentId)).GroupBy(c => c.ParentId);
-                    RecalcOneGroupLevel(totalData, groupedRecords_Parents);
+                    var allCharts = totalData.ResultList.Where(res => res.ParentId != null && res.ParentId != "" && typeIdList.Contains(res.ParentId));
+                    var groupedByParent_Parents =
+                         allCharts.GroupBy(c => c.ParentId);
+
+                    RecalcOneGroupLevel(totalData, groupedByParent_Parents);
                 }
                 catch (OverflowException ex)
                 {
                     var error = ex.Message;
-                    // Handle or log the exception
                 }
             }
         }
@@ -12662,7 +12660,6 @@ namespace WebFreight.Web.ReportsWebServices
                                         if (!string.IsNullOrEmpty(myCountry))
                                         {
                                             shipment.FinalCountryofDestination = myCountry;
-                                            //shipment.FinalPortofDestination = myLastDelivery..Code;
 
                                         }
 
@@ -12677,7 +12674,6 @@ namespace WebFreight.Web.ReportsWebServices
                             if (warehouse != null)
                             {
                                 shipment.FinalCountryofDestination = warehouse.CountryName;
-                                //shipment.FinalPortofDestination = warehouse.Code;
 
                             }
                         }
@@ -12847,7 +12843,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
                                     if (!string.IsNullOrEmpty(myLastPickup.FromPartnerCardId))
                                     {
-                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.Id == myLastPickup.FromPartnerCardId).FirstOrDefault();// addressRepository.GetMainAddressByCardId(myLastPickup.FromPartnerCardId, tenant);
+                                        Address myPartnerAddress = FromPartnerAddressLists.Where(d => d.Id == myLastPickup.FromPartnerCardId).FirstOrDefault(); 
                                         if (myPartnerAddress != null)
                                         {
                                             shipment.PickupCity = myPartnerAddress.City;
@@ -12907,7 +12903,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         if (myPartner != null)
                                         {
                                             shipment.DeliveryToName = myPartner.EnglishName;
-                                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault();//addressRepository.GetMainAddressByCardId(myLastDelivery.ToPartnerCardId, tenant);
+                                            Address myPartnerAddress = ToPartnerAddressLists.Where(d => d.Id == myLastDelivery.ToPartnerCardId).FirstOrDefault(); 
                                             if (myPartnerAddress != null)
                                             {
                                                 shipment.DeliveryTocity = myPartnerAddress.City;
@@ -13175,8 +13171,7 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 foreach (TraceEventPM item in traceEventgroup.OrderBy(d => d.EventDateTime).ToList())
                 {
-                    //item.EventDateTime1 = item.EventDateTime.ToString("yyyy-MM-dd");
-                    //item.EventDateTime2 = item.EventDateTime.ToString("HH: mm:ss");
+
                     ShipmentEventsList shipmentEventsList = CreateNewShipmentEventsList(item);
 
                     shipmentEventsLists.Add(shipmentEventsList);
@@ -13192,8 +13187,7 @@ namespace WebFreight.Web.ReportsWebServices
                 EventCode = item.EventTypeCode,
                 EventName = item.EventTypeEnglishName,
                 EventDate = item.EventDateTime,
-                //EventDate1 = item.EventDateTime.ToString("yyyy-MM-dd"),
-                //EventDate2 = item.EventDateTime.ToString("HH: mm:ss"),
+
                 LogDate = item.LogDateTime,
                 UserName = item.ContactEnglishFirstName,
                 Notes = item.Notes,

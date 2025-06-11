@@ -111,6 +111,7 @@
                                                     <li id="ChartofaccountHtmlinputId" (click)="FilterItemClicked('ChartOfAccount')" style="width: 105px; height: 22px;"
                                                         [class.SelectedFilter]="FilterSelectedValue === 'ChartOfAccount'">
                                                         {{ 'Accounting.General.O.ChartOfaccountFilter' | TextCodeTranslationPipe }}
+
                                                     </li>
 
                                                     <li id="ChartOfAccountTypeHtmlinputId" (click)="FilterItemClicked('ChartOfAccountType')" style="width: 125px; height: 22px;"
@@ -167,7 +168,7 @@
                                                 <div [ngSwitch]="SelectedCategory" [class.disabled]="IsCategoryDisabled">
 
                                                     <!-- Category 1 -->
-                                                    <LogLov *ngSwitchCase="'Category 1'"
+                                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 1'"
                                                              
                                                             [ObjectFieldName]="'Category1'"
                                                             [ObjectTableName]="'GLAccount'"
@@ -179,7 +180,7 @@
                                                     </LogLov>
 
                                                     <!-- Category 2 -->
-                                                    <LogLov *ngSwitchCase="'Category 2'"
+                                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 2'"
                                                             
                                                             [ObjectFieldName]="'Category2'"
                                                             [ObjectTableName]="'GLAccount'"
@@ -191,7 +192,7 @@
                                                     </LogLov>
 
                                                     <!-- Category 3 -->
-                                                    <LogLov *ngSwitchCase="'Category 3'"
+                                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 3'"
                                                            
                                                             [ObjectFieldName]="'Category3'"
                                                             [ObjectTableName]="'GLAccount'"
@@ -203,7 +204,7 @@
                                                     </LogLov>
 
                                                     <!-- Category 4 -->
-                                                    <LogLov *ngSwitchCase="'Category 4'"
+                                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 4'"
                                                            
                                                             [ObjectFieldName]="'Category4'"
                                                             [ObjectTableName]="'GLAccount'"
@@ -215,7 +216,7 @@
                                                     </LogLov>
 
                                                     <!-- Category 5 -->
-                                                    <LogLov *ngSwitchCase="'Category 5'"
+                                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 5'"
                                                             
                                                             [ObjectFieldName]="'Category5'"
                                                             [ObjectTableName]="'GLAccount'"

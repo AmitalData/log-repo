@@ -21,7 +21,8 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 
- namespace Logitude.Accounting.BL.APIDataContract.ApiV1
+
+namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 { 
    public partial class GLAccountQueryService
    {
@@ -108,12 +109,15 @@ using Logitude.Accounting.Data;
 				   if(MyEntityPM.ReconcileMethodCode != null)
 				   {
 					   ReconcileMethodQueryService ReconcileMethodService4 = new ReconcileMethodQueryService(Tenant);
-					   					   temp.ReconcileMethod = ReconcileMethodService4.GetReconcileMethodByCode(MyEntityPM.ReconcileMethodCode,Tenant); 
+					   temp.ReconcileMethod = ReconcileMethodService4.GetReconcileMethodByCode(MyEntityPM.ReconcileMethodCode,Tenant); 
 			       
-					   				   }
-				   
-				   temp.ReconcileMethodName = MyEntityPM.ReconcileMethodName;			  
-				   if(MyEntityPM.ControlAccountId != null)
+					 }
+                 temp.ReconcileMethodName = MyEntityPM.ReconcileMethodName;
+
+             
+                temp.ExchangeRateName = MyEntityPM.ExchangeRateName;
+
+                if (MyEntityPM.ControlAccountId != null)
 				   {
 					   GLAccountQueryService GLAccountService5 = new GLAccountQueryService(Tenant);
 					   					   temp.ControlAccount = GLAccountService5.GetGLAccountById(MyEntityPM.ControlAccountId,Tenant); 

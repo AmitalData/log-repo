@@ -18,6 +18,7 @@ using Logitude.Server.Tools;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Collections.Generic;
 
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
@@ -25,7 +26,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
    
     public class RatesTablesCustomController : ApiController
     {
-        public HttpResponseMessage UpdateRate(RatesTablePM entityPM)
+        public HttpResponseMessage UpdateRate(UpdateRateRequest request)
         {
             if (ModelState.IsValid)
             {
@@ -38,15 +39,20 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
+                        RatesTablePM entityPM = request.EntityPM;
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         RatesTableService service = new RatesTableService(MyContext, entityPM.Tenant);
-                        
+
                         if(IsFullAccountingActivated(entityPM.Tenant))
                         {
                            entityPM.Rate = CalculateRateAccordingUnits(entityPM);
                         }
-                       
+
                         service.Create(entityPM);
+
+                        List<CurrencyRatePM> currencyRates = request.CurrencyRates;
+                        CurrencyRateService currencyRateUpdateService = new CurrencyRateService(MyContext, entityPM.Tenant);
+                        currencyRateUpdateService.Create(currencyRates, entityPM);
 
                         scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -114,6 +120,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
             return isFullAccountingActivated;
+        }
+
+        public class UpdateRateRequest
+        {
+            public RatesTablePM EntityPM { get; set; }
+            public List<CurrencyRatePM> CurrencyRates { get; set; }
         }
     }
 }

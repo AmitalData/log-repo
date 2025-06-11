@@ -169,8 +169,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         return (hsmSignServer.SignCertificate, SignMethodByQueueEnum.HSMSignQueue);
                     }
 
-
-                    availableSignServer = repo.GetSingle(customsAgentId, personId, tenant).ToMySignStationList();
+                    availableSignServer = repo.GetAllAvailable(tenant, customsAgentId, LastAccessedInMin).Where(a => a.PersonId == personId).FirstOrDefault().ToMySignStationList();
 
                     if (availableSignServer == null)
                     {
