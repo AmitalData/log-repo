@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "48e057ecc35119e1ebd2d0f970daa349";
+		public const string HashString = "246b873991f49a4e261d7ba5f2c63e4c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4741,7 +4741,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestReportTextCode_InterestReportOResendDigitalInvoices = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.ResendDigitalInvoices", DefaultText = "Resend digital invoices",LocalDefaultText = @"שלח חשבוניות דיגטליות מחדש", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode InterestReportTextCode_InterestReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NewReport", DefaultText = "New Interest Report",LocalDefaultText = @"BS64:IteT15XXlyDXqNeZ15HXmdeqINeX15PXqSI=", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode InterestReportTextCode_InterestReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestReport.O.NewReport", DefaultText = "New Interest Report",LocalDefaultText = @"דוח ריבית חדש", ObjectTableId = InterestReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
