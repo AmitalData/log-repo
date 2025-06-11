@@ -104,8 +104,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<DefaultAndConfiguration> GetDefaultAndConfigurations(int tenant) =>
-            tenant == 0 ? context.DefaultAndConfigurations.AsQueryable() :
-            context.DefaultAndConfigurations.Where(a => a.Tenant == tenant).AsQueryable();
+        public IQueryable<DefaultAndConfiguration> GetDefaultAndConfigurations(int tenant)
+        {
+            IQueryable<DefaultAndConfiguration> q = tenant == 0 ? context.DefaultAndConfigurations.AsQueryable() :
+            context.DefaultAndConfigurations.Where(a => a.Tenant == tenant || (a.Tenant == 0 && a.AllowInheritance == true));
+            return q.Where(x => x.Is_Active == true);
+        }
     }
 }
