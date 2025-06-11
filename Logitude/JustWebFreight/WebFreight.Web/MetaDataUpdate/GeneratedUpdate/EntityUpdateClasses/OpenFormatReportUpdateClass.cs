@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OpenFormatReportUpdateClass
    {  		
-		public const string HashString = "ae4c77890b5e89802c5496fefef56c97";
+		public const string HashString = "0c4e0cdde7a4371fa6542ddd06472ec2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1430,7 +1430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable OpenFormatReportObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "OpenFormatReport" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode OpenFormatReportTextCode_OpenFormatReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.O.NewReport", DefaultText = "New open format report",LocalDefaultText = @"BS64:IteT15XXlyDXnteR16DXlCDXkNeX15nXkyDXl9eT16ki", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode OpenFormatReportTextCode_OpenFormatReportONewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "OpenFormatReport.O.NewReport", DefaultText = "New open format report",LocalDefaultText = @"דוח מבנה םחיד חדש", ObjectTableId = OpenFormatReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
