@@ -578,20 +578,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
 		public List<Contact> GetContactsForAccountingByGLAccountId(string glAccountId, int tenant)
 		{
 			var contacts = (
-				from contact in context.Contacts
-				where contact.ContactForAccounting == true
-				&& (
-					from cardContact in context.CardContacts
-					where (
-						from card in context.Cards
-						where card.GLAccountId == glAccountId && card.Tenant == tenant
-						select card.Id
-					).Contains(cardContact.CardId)
-					select cardContact.ContactId
-				).Contains(contact.Id)
-				
-				select contact
-			).ToList();
+			from contact in context.Contacts
+			join cardContact in context.CardContacts on contact.Id equals cardContact.ContactId
+			join card in context.Cards on cardContact.CardId equals card.Id
+			where contact.ContactForAccounting == true
+			&& card.GLAccountId == glAccountId
+			&& card.Tenant == tenant
+			select contact
+			).Distinct().ToList();
 
 			return contacts;
 		}

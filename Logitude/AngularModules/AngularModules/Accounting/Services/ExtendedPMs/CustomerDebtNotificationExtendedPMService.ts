@@ -3,7 +3,6 @@ import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResp
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
-import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
 import { CustomerDebtNotificationPM } from 'Accounting/EntityPMs/CustomerDebtNotificationPM';
  
 

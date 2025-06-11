@@ -823,7 +823,6 @@
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServices\AccountingEntityJournalUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingIntegrityCheckUpdateService.cs" />
-    <Compile Include="EntityUpdateServices\CustomerDebtNotificationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomerDebtNotificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />

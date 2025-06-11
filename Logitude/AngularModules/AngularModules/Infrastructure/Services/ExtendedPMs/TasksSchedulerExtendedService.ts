@@ -1,17 +1,9 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
-import { InfraSettings } from '../../Utilities/InfraSettings';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
-import { SessionInfo } from '../../Utilities/SessionInfo';
-import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
-
-import { ScreenSectionPM } from '../../EntityPMs/ScreenSectionPM';
-
-
 
 
 @Injectable()

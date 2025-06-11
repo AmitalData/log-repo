@@ -6,7 +6,7 @@ import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 import { ReportsTemplateListExtendedService } from '../../../Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ReportSchedulerRecepients, ReportSchedulerDetails, SchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
+import { ReportSchedulerRecepients, ReportSchedulerDetails } from '../../../Infrastructure/DataContracts/SchedulerDetails';
 import { SchedulerExtendedPMService } from 'Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
 import { AppTool } from 'Infrastructure/Tools';
 import { BIReportPMService } from '../../../Infrastructure/Services/StandardPMs/BIReportPMService';

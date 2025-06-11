@@ -74,7 +74,7 @@ namespace CommunicationWorkerRole.Services
             {
                 CustomerDebtNotificationRepository customerDebtNotificationRepository = new CustomerDebtNotificationRepository(reportTask.Tenant);
                 CustomerDebtNotification customerDebtNotification =  customerDebtNotificationRepository.GetCustomerDebtNotificationByTaskSchudler(reportTask.Tenant,reportTask.Id);
-                if(customerDebtNotification == null || customerDebtNotification.InActive == "1")
+                if(customerDebtNotification == null || customerDebtNotification.InActive == IsActiveEnum.NotActive)
 				{
 					this.currentTask.LogInfo("Customer Debt Notification Task is not active or not found.");
 					return;
@@ -160,7 +160,6 @@ namespace CommunicationWorkerRole.Services
 		{
 			GLAccountMoreDataRepository glaccountMoreDataRepository = new GLAccountMoreDataRepository(customerDebtNotification.Tenant);
             GLAccountMoreData glAccountMoreData = glaccountMoreDataRepository.GetSingle(accountId, customerDebtNotification.Tenant);
-            decimal amount = 0;
             bool isDebt = false;
             switch (customerDebtNotification.TypesDebts)
             {
@@ -950,44 +949,5 @@ namespace CommunicationWorkerRole.Services
             return logsMessage;
         }
     }
-    //public class ActivatedEmail
-    //{
-    //    public string To;
-    //    public bool IsActive;
-    //}
-
-    //public class ReportScedulerDocumentArgs
-    //{
-    //    public string Name;
-    //    public string Format;
-    //    public int Tenant;
-    //    public byte[] ByteData;
-    //}
-    //public class SendHtmlDocumentArgs
-    //{
-    //    public string documentId;
-    //    public ReportSchedulerRecepients recepients;
-    //    public TasksSchedulerPM reportTask;
-    //    public StiReport stiReport;
-    //}
-    //public class GetEmailDetailsByMessageTemplateIdArgs
-    //{
-    //    public string messageTemplateId;
-    //    public int tenant;
-    //    public string userId;
-    //    public StiReport stiReport;
-    //}
-    //public class GetEmailDetailsArgs
-    //{
-    //    public string messageTemplateId;
-    //    public int tenant;
-    //    public string userId;
-    //    public StiReport stiReport;
-    //}
-    //public class EmailDetails
-    //{
-    //    public byte[] Body;
-    //    public string Subject;
-    //}
 }
 

@@ -6,15 +6,13 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SchedulerExtendedPMService } from '../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
-import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { TaskReportSchedulerItemClass } from './TaskReportSchedulerComponent';
-import { QueryFilterItem } from '../Filters/QueryFilterItem';
 import {
     SchedulerDetails,
     ReportSchedulerDetails,
     ReportSchedulerRecepients,
 } from '../../../Infrastructure/DataContracts/SchedulerDetails';
-import { DateTimePipe } from '../../../Controls/Pipes/DateTimePipe';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
 import { AddEditReportSchedulerComponent } from './AddEditReportSchedulerComponent';

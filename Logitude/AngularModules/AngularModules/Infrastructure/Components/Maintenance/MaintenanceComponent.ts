@@ -6,27 +6,19 @@ import { FeatureLocator } from '../../Utilities/FeatureLocator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from '../../../Infrastructure/Args';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-//import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
-import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
  import { ShaamSettingsArgs } from 'CustomsModules/CustomsMaintenance/Components/ShaamSettings/ShaamSettingsComponent';
-//import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
  import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
-//import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
  import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
-import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
 import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
-import { HomeScreenEvent, HomeScreenEventTypes, HostScreenComponent } from 'Common/Components/HostScreen/HostScreenComponent';
-import { filter } from 'rxjs/operators';
 import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
 import { CustomEntityArgs } from '../LogitudeComponents/LogSearchWindowComponent';
 
@@ -758,27 +750,6 @@ export class MaintenanceComponent {
                   this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                });
             }
-            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
-            //    var item = new MenusTablePM();
-            //    item.CategoryTypeCode = "ACC";
-            //    item.Icon = "Settings"
-            //    item.Code = "ACYT";
-            //    item.ObjectTableName = "Year Transfer";
-            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            //}
-            //if (FeatureLocator.HasFeaturePermession("General", "General.Features.AccountingPeriods")) {
-            //    var item = new MenusTablePM();
-            //    item.CategoryTypeCode = "ACC";
-            //    item.Icon = "Settings"
-            //    item.Code = "ACPD";
-            //    item.ObjectTableName = "AccountingPeriod";
-            //    var ObjectTable = window.ObjectTables.filter(d => d.Name == "AccountingPeriod")[0];
-            //    item.ObjectTableId = ObjectTable.Id;
-            //    this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-            //}
-
-
-
         }
 
     }

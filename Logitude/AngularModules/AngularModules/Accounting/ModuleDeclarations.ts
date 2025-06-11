@@ -227,7 +227,6 @@ export const Components =
         CustomerDebtNotificationComponent,
         //Edit Tabs
         GLAccountGeneralTabComponent,
-        //CashBookGeneralTabComponent,
         GLAccountOverviewComponent,
         GLAccountTransactionsTabComponent,
         GLAccountInterestTransactionsComponent,
@@ -409,7 +408,6 @@ export class ModuleDeclarations {
 
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
-            //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
             case "GLAccountInterestTransactionsComponent": { myResult = GLAccountInterestTransactionsComponent; break; }

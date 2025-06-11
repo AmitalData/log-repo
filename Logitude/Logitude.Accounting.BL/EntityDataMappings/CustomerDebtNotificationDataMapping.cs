@@ -32,7 +32,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(CustomerDebtNotificationPM entityPM, CustomerDebtNotification entityPOCO)
         {
-            //throw new NotImplementedException();
         }
    }
 

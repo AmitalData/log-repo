@@ -1,6 +1,6 @@
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {LocationDirective} from '../../../Infrastructure/Utilities/LocationDirective';
-import {Component, OnInit, QueryList, ViewChildren, ViewChild, ViewContainerRef}  from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren }  from '@angular/core';
 import { ReportGroupList } from '../../EntityLists/ReportGroupList';
 import { ReportList } from '../../EntityLists/ReportList';
 

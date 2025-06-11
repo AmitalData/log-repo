@@ -1,36 +1,18 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ServiceArgs } from '../../../Infrastructure/DataContracts/ServiceArgs';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { LogLabelComponent } from '../../../Infrastructure/Components/LogitudeComponents/LogLabelComponent';
-import { LogTextBoxComponent } from '../../../Infrastructure/Components/LogitudeComponents/LogTextBoxComponent';
-import { LogLovComponent } from '../../../Infrastructure/Components/LogitudeComponents/LogLovComponent';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { TenantPMService } from '../../../Common/Services/StandardPMs/TenantPMService';
-import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-import { ObjectsUpdater } from '../../../Infrastructure/Locators/ObjectsUpdater';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-
 import { CustomerDebtNotificationPM } from 'Accounting/EntityPMs/CustomerDebtNotificationPM';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { CustomerDebtNotificationExtendedPMService } from 'Accounting/Services/ExtendedPMs/CustomerDebtNotificationExtendedPMService';
 import { CustomerDebtNotificationPMService } from 'Accounting/Services/StandardPMs/CustomerDebtNotificationPMService';
 import { ReportGroupList } from 'Report/EntityLists/ReportGroupList';
-import { ReportList } from 'Report/EntityLists/ReportList';
 import { ReportGroupService } from 'Common/Services/ExtendedLists/ReportGroupService';
-import { ReportsGrpupClass } from 'Report/Components/Workspaces/ReportComponent';
 import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
 import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventManager';
 import { TasksSchedulerExtendedService } from 'Infrastructure/Services/ExtendedPMs/TasksSchedulerExtendedService';
@@ -40,7 +22,7 @@ import { TasksSchedulerExtendedService } from 'Infrastructure/Services/ExtendedP
     templateUrl: './CustomerDebtNotificationComponent.html',
     providers: [ServiceArgs]
 })
-export class CustomerDebtNotificationComponent extends BaseComponent {
+export class CustomerDebtNotificationComponent extends BaseComponent implements OnInit, OnDestroy {
     public DataContext: any = this;
     public ObjectTableName: string = "CustomerDebtNotification";
     private CustomerDebtNotificationPM: CustomerDebtNotificationPM;
@@ -49,7 +31,6 @@ export class CustomerDebtNotificationComponent extends BaseComponent {
     public IsVisibile = false;
     private CurrentSession = SessionLocator.SelectedSession;
    
-    public ItemsSource: ObservableCollection;
     
     private entityResourceService: EntityResourceService = new EntityResourceService();
     ApiQueryFilters:ApiQueryFilters;
@@ -64,17 +45,21 @@ export class CustomerDebtNotificationComponent extends BaseComponent {
     
     constructor() {
         super();
-        this.entityResourceService.getEntityResourceByTableName("CustomerDebtNotification").subscribe((res: any) => {
-            this.ItemsSource = new ObservableCollection([]);
-            this.CurrentSession.StartBusyIndicator('Loading...');           
-            this.ApiQueryFilters = new ApiQueryFilters();
-            this.Listen();
-            this.GLAccountId = !AppTool.IsNullOrEmpty(this.CurrentSession?.CurrentEditComponent?.EntityPM?.Id) ? this.CurrentSession?.CurrentEditComponent?.EntityPM?.Id : null;
+        this.Listen();
 
+    }
+  
+    ngOnInit() {     
+        this.entityResourceService.getEntityResourceByTableName("CustomerDebtNotification").subscribe((res: any) => {
+            this.CurrentSession.StartBusyIndicator('Loading...');           
+            this.ApiQueryFilters = new ApiQueryFilters();      
+            this.GLAccountId = !AppTool.IsNullOrEmpty(this.CurrentSession?.CurrentEditComponent?.EntityPM?.Id) ? this.CurrentSession?.CurrentEditComponent?.EntityPM?.Id : null;
             this.LoadCustomerDebtNotification();
         
         });
-
+    }
+    ngOnDestroy(): void {
+        AccountingEventManager.TasksSchedulerId.unsubscribe();
     }
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
@@ -278,37 +263,31 @@ export class CustomerDebtNotificationComponent extends BaseComponent {
 
          if (this.CustomerDebtNotificationPM?.Id == null) {
             this.myService.insert(this.CustomerDebtNotificationPM).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null) {
-                    if (!myResponse.HasError) {
-                        if(this.IsFromMaintenance)
-                           this.CurrentSession.CloseCurrentWindowEmit("ok");
-                        else
-                           this.CurrentSession.StopBusyIndicator();
-                    }
-                    else {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
-                        this.CurrentSession.StopBusyIndicator();
-                    }
-                }
+                this.AfterSubmit(myResponse);
             });
         }
         else {
             this.myService.update(this.CustomerDebtNotificationPM).subscribe((myResponse: ServiceResponse) => {
-                if (myResponse != null) {
-                    if (!myResponse.HasError) {
-                        if(this.IsFromMaintenance)
-                           this.CurrentSession.CloseCurrentWindowEmit("ok");
-                        else
-                           this.CurrentSession.StopBusyIndicator();
-                    }
-                    else {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
-                        this.CurrentSession.StopBusyIndicator();
-                    }
-                }
+                this.AfterSubmit(myResponse);
             });
         }
     }
+    AfterSubmit(myResponse: ServiceResponse)
+    {
+        if (myResponse != null) {
+            if (!myResponse.HasError) {
+                if(this.IsFromMaintenance)
+                   this.CurrentSession.CloseCurrentWindowEmit("ok");
+                else
+                   this.CurrentSession.StopBusyIndicator();
+            }
+            else {
+                this.ValidationErrorsList = myResponse.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        }
+    }
+
 }
 
 
