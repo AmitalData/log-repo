@@ -11,6 +11,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Data.Entity;
 using Logitude.BL.CommonDataModel.APIDataContract;
+using Logitude.BL.Security;
+using Logitude.Server.Tools;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -287,9 +289,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         {
             var glAccountQueryService = new GLAccountQueryService(tenant);
             var exchangeRateId = glAccountQueryService.GetExchangeRateIdById(glaccountId, tenant);
+            
 
-
-            if (exchangeRateId == null)
+            if (exchangeRateId == null && ! SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", tenant))
                 return GetLastRateByValueDate(tenant, foreignCurrencyId, baseCurrencyId, date)?.Rate;
 
             var ratesQuery = repository.context.RatesTable
