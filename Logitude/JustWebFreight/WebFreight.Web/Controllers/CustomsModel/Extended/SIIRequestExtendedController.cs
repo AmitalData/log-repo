@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.BL.SIIRequest;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
@@ -95,7 +96,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId, int tenant, [FromBody] List<SupplierInvoiceItemsReqListKeys> selectedRows)
+        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] List<SupplierInvoiceItemsReqListKeys> selectedRows)
         {
             try
             {
@@ -103,7 +104,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 var sender = new SIIRequestApiSender(auth.Tenant);
-                var apiResp = await sender.SendAsync(siiRequestId, selectedRows)
+                var apiResp = await sender.SendAsync(siiRequestId, declarationId, selectedRows)
                     ?? throw new InvalidOperationException($"Did not receive a response from SII for request '{siiRequestId}'."); 
                 var saver = new SIIRequestApiResponseSaver(auth.Tenant);
                 saver.Save(apiResp, siiRequestId);

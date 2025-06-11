@@ -108,7 +108,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     isCheckedProductFile: boolean = false;
     checkProductFileNumber(productFileNumber: string) {
         this.isCheckedProductFile = true;
-        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode).subscribe(myResult => {
+        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode,this.entityPM.DeclarationId).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
             if (!myResponse?.HasError)
                 this.saveByProductFileNumberResult(myResponse?.Result, productFileNumber);
