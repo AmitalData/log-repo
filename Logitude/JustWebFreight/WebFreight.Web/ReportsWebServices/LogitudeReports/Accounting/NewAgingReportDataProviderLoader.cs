@@ -89,6 +89,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     command.Parameters.AddWithValue("@CurrencyFilterSelectedValue", GetFilterValue<string>("CurrencyOriginalLocalValue"));
                     command.Parameters.AddWithValue("@CurrencyId", GetFilterValue<string>("CurrencyId"));
                     command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@GroupMultiAccounts", GetFilterValue<bool>("IsGroupMultiAccounts"));
+
 
                     using (var reader = command.ExecuteReader())
                     {
