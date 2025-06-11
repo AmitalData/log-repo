@@ -45,6 +45,7 @@ import { AmitalAPISchemaTable } from './AmitalAPI/components/AmitalAPISchemaTabl
 import { CloseSaveButtonsComponent } from './AmitalAPI/components/CloseSaveButtonsComponent';
 import { LogTexBoxFormComponent } from './AmitalAPI/components/LogTexBoxFormComponent';
 import { LogitudeGridSimpleComponent } from './AmitalAPI/components/LogitudeGridSimpleComponent';
+import { AmitalAPIDataListWindowComponent } from './AmitalAPI/WindowsComponent/AmitalAPIDataListWindowComponent';
 
 export const Components =
     [
@@ -95,6 +96,7 @@ export const Components =
         CloseSaveButtonsComponent,
         AmitalAPIRequestsComponent,
         LogitudeGridSimpleComponent,
+        AmitalAPIDataListWindowComponent,
     ];
 
 export class ModuleDeclarations {
@@ -150,6 +152,7 @@ export class ModuleDeclarations {
             case "CloseSaveButtonsComponent": { myResult = CloseSaveButtonsComponent; break; }
             case "AmitalAPIRequestsComponent": { myResult = AmitalAPIRequestsComponent; break; }
             case "LogitudeGridSimpleComponent": { myResult = LogitudeGridSimpleComponent; break; }            
+            case "AmitalAPIDataListWindowComponent": { myResult = AmitalAPIDataListWindowComponent; break; }
         }
 
         return myResult;

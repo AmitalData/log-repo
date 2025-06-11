@@ -704,7 +704,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     : unmatchedTransactions.Sum(x => x.ForeignAmountCredit) + updatedLedgerTransactions.Sum(x => x.ForeignAmountCredit);
 
                 invoice.IsClosed = totalOpenAmount == 0;
-                if (invoice.StatusCode != "VD") invoice.StatusCode = totalOpenAmount == 0 ? "PD"
+                if (invoice.StatusCode != "VD" && invoice.StatusCode !="AC" && invoice.StatusCode != "AR") invoice.StatusCode = totalOpenAmount == 0 ? "PD"
                     : Math.Abs(ledgerTransactionPM.OpenAmount) < totalAmount ? "PP" : "AD";
 
                 SecurityUtility.IsWorkerRoleCall = true;

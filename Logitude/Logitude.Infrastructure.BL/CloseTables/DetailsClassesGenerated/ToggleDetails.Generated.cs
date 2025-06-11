@@ -1046,8 +1046,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "AV2,Israel Invoices Do Not Activate V2",
                 Description = "חשבוניות ישראל לא להפעיל V2 ",
             });
+			all.Add(new ToggleDetails()
+			{
+				Code = "REE",
+				Name = "Report Export To Exel",
+				SearchFields = "REE,Report Export To Exel",
+				Description = "Report Export To Exel ",
+			});
 
-            return all;
+			return all;
        }
 
 	    public void MapPoco(Toggle newPoco)

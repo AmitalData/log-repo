@@ -46,6 +46,7 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             msg.RelatedEntity = GetRelatedEntity(dec);
             msg.msgCode = msgCode;
             msg.msgString = msgString;
+            msg.SenderName = "Tester";
             return msg;
         }
         private ConnectedEntity GetRelatedEntity(DeclarationPM dec)

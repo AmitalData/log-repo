@@ -10,6 +10,7 @@ import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { RatesTablePM } from 'Infrastructure/EntityPMs/RatesTablePM';
 import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 import { StringIterator } from 'cypress/types/lodash';
+import { CurrencyRatePM } from 'Infrastructure/EntityPMs/CurrencyRatePM';
 @Injectable()
 
 export class RatesTableExtendedService {
@@ -21,7 +22,7 @@ export class RatesTableExtendedService {
     }
 
 
-    UpdateRate(entityPM: RatesTablePM) {
+    UpdateRate(entityPM: RatesTablePM, currencyRates: CurrencyRatePM[]) {
  
 		var callTime = new Date();  
 		var ratesTablePMService;
@@ -35,8 +36,13 @@ export class RatesTableExtendedService {
 			if (errorsArray.length == 0) {
                 ratesTablePMService = new RatesTablePMService();
 				var mappedEntity: RatesTablePM = ratesTablePMService.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl+"/UpdateRate", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+
+				const requestBody = {
+					entityPM: mappedEntity,
+					currencyRates: currencyRates
+				};
+
+				return this._http.post(this._apiUrl + "/UpdateRate", JSON.stringify(requestBody), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
 

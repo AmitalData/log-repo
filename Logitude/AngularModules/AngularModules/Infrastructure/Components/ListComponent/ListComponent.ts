@@ -3064,6 +3064,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Customs.LogisticActionRequest") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Customs.General.O.OpenLogisticActionRequest')
             }
+            else if (this.ObjectTableName == "InterestReport") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('InterestReport.O.NewReport');
+            }
+            else if (this.ObjectTableName == "OpenFormatReport") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
+            }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
@@ -3125,6 +3131,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         isEnabled = false;
                     }
                 }
+                
 
                 if (ObjectsLocator.IsDemoTenant(this.TenantPM.Id.toString())) {
                     isEnabled = false;
@@ -3138,6 +3145,9 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
+
+   
+
     private SetNewEntityButtonVisibility() {
         
         var isVisible = true;    
@@ -3564,6 +3574,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.WindowArgs = windowArgs;
                         break;
                     }
+                case "AdditionalCurrencyRate":
                 case "InterestReport":
                     {
                         logWindow.Width = 400;
@@ -3633,6 +3644,16 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == "TaxDeductionReport") {
                 str = TextCodeTranslator.Translate("General.O.NewReport");
+            }
+            else if (this.ObjectTableName == "InterestReport") {
+                str = TextCodeTranslator.Translate('InterestReport.O.NewReport');
+            }
+            else if (this.ObjectTableName == "OpenFormatReport") {
+                str = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
+            }
+
+            else if (this.ObjectTableName == "AdditionalCurrencyRate") {
+                str = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.NewAdditionalCurrencyRate");
             }
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {
                 str = this.NewButtonLable;

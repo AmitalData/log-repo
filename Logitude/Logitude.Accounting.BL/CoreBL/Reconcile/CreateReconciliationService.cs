@@ -55,11 +55,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 myReconciliationLinePM.Line = i;
                 myReconciliationLinePM.CurrencyId = currLedgerTrans.OpenAmountCurrencyId;
                 myReconciliationLinePM.TransactionId = currLedgerTrans.Id;
-                myReconciliationLinePM.ReconciliationAmount = //currLedgerTrans.OpenAmount;
+                myReconciliationLinePM.ReconciliationAmount = 
                             currLedgerTrans.AmountToReconcile;
                 myReconciliationLinePM.CurrencyRate = currLedgerTrans.ExchangeRate;
 
-                //ReconciliationLinePM.IsPartial = currLedgerTrans.OpenAmount;
                 myReconciliationLinePM.GroupNumber = currLedgerTrans.GroupMatch;
 
                 myReconciliationPM.ReconciliationLines.Add(myReconciliationLinePM);
@@ -104,9 +103,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            // List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
-            // List<LedgerTransactionJournalLineLT> ltjlines = GetLedgerTransactionJournalLineLTsByIdList(transactionsIds, reconciliationPM.Tenant);
-            bool hasMultipleARPayments = false; // CheckIfHasMultiplePaymentsLT(ltjlines);
+            bool hasMultipleARPayments = false; 
             if (hasMultipleARPayments && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber == 0) && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber != 0))
             {
                     recoCallBack = SplitAndSubmitReconciliationByGroupNumberNonZero(reconciliationPM, hasMultipleARPayments);
@@ -135,7 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 repoLedger.ResetDraftOpenReconciliation(reconciliationPM.AccountId, reconciliationPM.Tenant);
             }
             return recoCallBack;
-            //}
+
         }
 
         private static void CheckIfReconcilePaymentOnly(ReconciliationPM reconciliationPM, List<LedgerTransactionPM> recoTransactions)
@@ -157,7 +154,7 @@ namespace Logitude.Accounting.BL.CoreBL
             foreach (ReconciliationPM recoPM in paymentReconciliations)
             {
                 service.Update(recoPM, true);
-                //throw new ApplicationException("Manual exc");
+                
             }
             if (updateGLAccountAgingDataUsingWR) {
                 WriteEntityPMOnCommunicationLog(paymentReconciliations, tenant);
@@ -419,7 +416,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         public ReconciliationPM reconciliationPM;
-        //public List<ReconciliationPM> splittedRecoPMs;
+        
 
         public bool isSplitted = false;
         public int splittedRecoCount = 0;

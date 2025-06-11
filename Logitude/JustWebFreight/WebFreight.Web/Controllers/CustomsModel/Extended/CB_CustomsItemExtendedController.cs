@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
-
+using Logitude.BL.Helpers;
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
     public class CB_CustomsItemExtendedController : ApiController
@@ -53,6 +53,28 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetDefaultCB_CollapseSearchHierarchy(int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                if (token == null)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception("Token is missing")));
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                // Add default check of customs book::
+                DefaultAndConfiguration_Ext defaultData = DefaultService.Instance.Get(authToken.Tenant, "CB_CollapseSearchHierarchy", "CB_CollapseSearchHierarchyAdditionalKey");
+                bool defaultDataResult = defaultData?.Value1 == "true" ? true : false;
+                return Request.CreateResponse(HttpStatusCode.OK, defaultDataResult);
+            }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -314,6 +336,33 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 };
                 DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService messagingService = new DCAInGet_CB_MSG_8323_ClassifGuidanceDetailsMessagingService();
                 GetClassifGuidanceDetailsResponseData responseData = messagingService.Send(requestParamsData);
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        public HttpResponseMessage GetMekachDetails(int customsItemId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
+                CustomItemMekachRequestParams requestParamsData = new CustomItemMekachRequestParams()
+                {
+                    customsItemId = customsItemId,
+                    Tenant = tenant,
+                    validToDate = DateTime.Now,
+                    languageType = 1
+                };
+                DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService messagingService = new DCAInGet_CB_MSG_8318_CustomItemMekachMessagingService();
+                CustomItemMekachResponseData responseData = messagingService.Send(requestParamsData);
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
 
             }

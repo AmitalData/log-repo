@@ -5,14 +5,9 @@ import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorR
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { ReconciliationPM } from '../../EntityPMs/ReconciliationPM';
-import { JournalPM } from '../../EntityPMs/JournalPM';
-
-import { ReconciliationLinePM } from '../../EntityPMs/ReconciliationLinePM';
-import { LedgerTransactionList } from '../../EntityLists/LedgerTransactionList';
 import { AutomaticReconcileMethodList } from '../../EntityLists/AutomaticReconcileMethodList';
 import { LedgerTransactionPM } from '../../EntityPMs/LedgerTransactionPM';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
@@ -25,19 +20,17 @@ import { ReconcileExcelDataArgs, ReconciliationExtendedPMService } from '../../S
 import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
-import { count, delay, expand, takeLast } from 'rxjs/operators';
-import { EMPTY, Observable } from 'rxjs';
+import { delay, expand, takeLast } from 'rxjs/operators';
+import { EMPTY} from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
-import { now } from 'cypress/types/lodash';
 
 export class LineModel extends BaseComponent {
     public LedgerTransactionPM: LedgerTransactionPM = null;
@@ -1150,7 +1143,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.B.Adjust");
                         logitudeWindow.WindowArgs = {
                             "SelectedLines": this.SelectedLines,
-                            "GLAccountPMId": this.GLAccountPM.Id,
+                            "SourceGLAccountPM": this.GLAccountPM,
                             TotalDifference: this.TotalDifference,
                             TotalCredit: this.TotalCredit,
                             TotalDebit: this.TotalDebit,
@@ -1826,6 +1819,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
+            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;
@@ -1878,7 +1872,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                 else {
                     if (this.IsReconcileButtonClicked) this.IsReconcileButtonClicked = false;
 
-
+                                       
+                    this.ValidationErrorsList = mm.ErrorsArray;  
+                    SessionLocator.SelectedSession.StopBusyIndicator();
+                  
                     if (mm.ErrorsArray.length > 0 && mm.ErrorsArray.some(e => e.includes("GLAccounts.O.MarkedByAnother"))) {
                         this.ValidationErrorsList = mm.ErrorsArray.map(error =>
                             error === "GLAccounts.O.MarkedByAnother" ? TextCodeTranslator.Translate("GLAccounts.O.MarkedByAnother ") : error

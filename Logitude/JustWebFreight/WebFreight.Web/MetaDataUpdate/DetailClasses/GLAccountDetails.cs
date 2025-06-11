@@ -25,5 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool Inactive { get; set; }
         public string ReconcileMethodCode { get; set; }
         public string ReconcileMethodName { get; set; }
+        public string ExchangeRateId { get; set; }
+        public string ExchangeRateName { get; set; }
     }
 }

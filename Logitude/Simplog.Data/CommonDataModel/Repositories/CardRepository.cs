@@ -179,20 +179,23 @@ namespace Simplog.Data.CommonDataModel.Repositories
                              && a.GLAccountId == id && partnerTypes.Contains(a.PartnerTypeId)
                              select a).FirstOrDefault();
             }
-            string key = $"GetCardByGLAccountId({id},{tenant})";
-            var cardFromCache = CacheManager.GetOrInsertNewObject<Card>(key, () =>
+            if (fromCache)
             {
-                Card card = (from a in context.Cards
-                             where a.Tenant == tenant
-                             && a.GLAccountId == id
-                             select a).FirstOrDefault();
-                return card;
-            }, fromCache);
+                string key = $"GetCardByGLAccountId({id},{tenant})";
+                return CacheManager.GetOrInsertNewObject<Card>(key, () => GetCardByGLAccountId(id, tenant));
 
+                
+            }
 
-            return cardFromCache;
+            return GetCardByGLAccountId(id, tenant);
         }
-
+        public Card GetCardByGLAccountId(string id, int tenant)
+        {
+            return (from a in context.Cards
+                    where a.Tenant == tenant
+                    && a.GLAccountId == id
+                    select a).FirstOrDefault();
+        }
 
         public List<Card> GetCardsByGLAccountIds(List<string> glaccountIds, int tenant)
         {
@@ -450,6 +453,38 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
                     entityId = (from a in context.Cards
                                 where a.Tenant == tenant && a.Code == code
+                                select a.Id).FirstOrDefault();
+
+                    if (CacheManager.CacheWrapper.Get(entityName) == null && entityId != null)
+                    {
+                        CacheManager.CacheWrapper.Insert(entityName, entityId, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    }
+                }
+                else
+                {
+                    entityId = (string)CacheManager.CacheWrapper.Get(entityName);
+                }
+
+
+            }
+
+            return entityId;
+        }
+
+        public string GetCardIdByCodePartnerTypes(string code, int tenant, List<string> partnerTypes = null)
+        {
+            string entityId = null;
+            if (!string.IsNullOrEmpty(code))
+            {
+                string entityName = "Card_CachedId" + code + tenant;
+
+
+
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+
+                    entityId = (from a in context.Cards
+                                where a.Tenant == tenant && a.Code == code && partnerTypes.Contains(a.PartnerTypeId)
                                 select a.Id).FirstOrDefault();
 
                     if (CacheManager.CacheWrapper.Get(entityName) == null && entityId != null)

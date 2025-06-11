@@ -205,7 +205,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (!entityPM.IsHybrid)
             {
-                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity);
+                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity , null);
                 myTracingClass.Trace();
                 myTracingClass.TraceProducts(entityPM.CustomerProducts, isNewEntity);
                 myTracingClass.TraceCompetitors(entityPM.CustomerCompetitors, isNewEntity);
@@ -314,7 +314,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.entityPOCO = entityRepository.GetSingleCustomer(entityPM.Id, tenant, false);
             this.entityCard = cardRepository.GetSingleCard(entityPM.Id, entityPM.Tenant);
-
+            var emailForSendingSingArinvoiceBackUp = entityCard?.EmailForSendingSingArinvoice ;
             this.InitializeComponent();
 
             CustomerValidating.Validate(entityPM, isNewEntity, this.objectContext);
@@ -398,7 +398,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
             if (!entityPM.IsHybrid && !entityPM.IsLogBox)
             {
-                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity);
+                CustomerTracing myTracingClass = new CustomerTracing(entityPM, entityPOCO, loggedContact.Id, isNewEntity , emailForSendingSingArinvoiceBackUp);
                 myTracingClass.Trace();
 
                 if (productsChangeSet != null)
@@ -536,7 +536,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner)) 
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -573,7 +573,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void AddLogboxCustomerToQueue()
         {
-            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) )
+            if (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
@@ -728,7 +728,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityCard.Address2 = entityPM.Address2_Potential;
                     entityCard.Phone = entityPM.PhoneNumber;
                     entityCard.ZipCode = entityPM.ZipCode_Potential;
-                    
+
 
                     if (entityPM.CountryId_Potential != null)
                     {
@@ -803,7 +803,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryName = entityCard.CountryName;
             }
             entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
-            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport; 
+            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
         }
 
         private void ComputeContactFields()
@@ -1275,7 +1275,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateGLAccountWithOldAndNewContactForAccounting(oldContactForAccounting, newContactForAccounting);
 
         }
-        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId , string includeContactId)
+        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId, string includeContactId)
         {
             IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
             glaccountUpdate.UpdateGLAccountWithAdditionalData(entityPM.Card.GLAccountId, entityPM.Card.Tenant, null, excludeContactId, includeContactId);

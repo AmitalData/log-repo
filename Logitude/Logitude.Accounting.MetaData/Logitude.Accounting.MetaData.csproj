@@ -71,9 +71,12 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
-    <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
+     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
-    <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
+     <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
+     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateLTForeign.dxml" />
+    <None Include="DBOthers\SProcedures\usp_UpdateLTLocal.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <Content Include="DBScripts\202204131020_AddInterestTransactionsForRegularJournals.axml" />
     <Content Include="DBScripts\20220912_0000_AddInterestsForCancelledARPayments.axml" />
@@ -82,6 +85,7 @@
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\LedgerTransactionsDeductionViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
+    <None Include="DBOthers\SProcedures\usp_NewAgingReport.dxml" />
     <None Include="DBScripts\202405131200_CreateSchemaQueryReports.sxml" />
     <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
     <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />

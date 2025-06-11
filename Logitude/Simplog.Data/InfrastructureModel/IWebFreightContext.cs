@@ -7,8 +7,6 @@ using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 
-//using WebFreight.Web.QuoteModel.EntityPOCOs;
-
 namespace Simplog.Data.InfrastructureModel
 {
     public interface IWebFreightContext : IContext
@@ -35,6 +33,8 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<ScreenField> ScreenFields { get; }
         IDbSet<TextCodeType> TextCodeTypes { get; }
         IDbSet<RatesTable> RatesTable { get; }
+        IDbSet<AdditionalCurrencyRate> AdditionalCurrencyRates { get; }
+        IDbSet<CurrencyRate> CurrencyRates { get; }
         IDbSet<EventType> EventType { get; }
         IDbSet<EventRemark> EventRemarks { get; }
         IDbSet<TraceEvent> TraceEvent { get; }

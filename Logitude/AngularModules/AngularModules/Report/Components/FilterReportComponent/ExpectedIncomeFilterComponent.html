@@ -51,7 +51,7 @@
                 <tr>
                     <td style="width: 1px; padding-right: 5px;" class="Label">Salesman:</td>
                     <td style="width:180px;">
-                        <LogLov [ObjectFieldName]="'SalesmanId'"
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'SalesmanId'"
                                 [DataContext]="DataContext"
                                 [ObjectTableName]="'Customer'"
                                 [LookUpTableName]="'User'">
@@ -60,7 +60,7 @@
 
                     <td style="width: 1px; padding-right: 5px;" class="Label">Payment Channel:</td>
                     <td style="width:180px;">
-                        <LogLov [ObjectFieldName]="'PaymentChannelCode'"
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'PaymentChannelCode'"
                                 [DataContext]="DataContext"
                                 [ObjectTableName]="'Customer'"
                                 [LookUpTableName]="'PaymentChannel'">
@@ -69,7 +69,7 @@
 
                     <td style="width: 1px; padding-right: 5px;" class="Label">Country:</td>
                     <td style="width:180px;">
-                        <LogLov [ObjectFieldName]="'CountryId'"
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'CountryId'"
                                 [DataContext]="DataContext"
                                 [ObjectTableName]="'Customer'"
                                 [LookUpTableName]="'Country'">
@@ -81,7 +81,7 @@
                             <tr>
                                 <td style="width: 1px; padding-right: 5px;" class="Label">Reseller:</td>
                                 <td style="width:180px;">
-                                    <LogLov [ObjectFieldName]="'ResellerId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'ResellerId'"
                                             [DataContext]="DataContext"
                                             [ObjectTableName]="'Customer'"
                                             [LookUpTableName]="'Card'">

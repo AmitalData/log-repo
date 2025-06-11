@@ -1327,21 +1327,22 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
         public List<CurrencySum> GetLedgerTransactionTotalLocalAmountFromTo(string accountId, DateTime fromDate, DateTime toDate, int tenant)
         {
 
-            var mysumlist = (from r in context.LedgerTransactions
-                             where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
-                             group r by new
-                             {
-                                 r.CurrencyId
-                             } into g
-                             select new CurrencySum
-                             {
-                                 AccountId = accountId,
-                                 CurrencyId = g.Key.CurrencyId,
-                                 LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
-                                 LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
-                                 ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
-                                 ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
-                             }).ToList();
+            var q = (from r in context.LedgerTransactions
+                     where r.AccountId == accountId && r.AccountingDate >= fromDate && r.AccountingDate <= toDate && r.Tenant == tenant
+                     group r by new
+                     {
+                         r.CurrencyId
+                     } into g
+                     select new CurrencySum
+                     {
+                         AccountId = accountId,
+                         CurrencyId = g.Key.CurrencyId,
+                         LocalAmountCredit = g.Sum(x => x.LocalAmountCredit),
+                         LocalAmountDebit = g.Sum(x => x.LocalAmountDebit),
+                         ForeignAmountCredit = g.Sum(x => x.ForeignAmountCredit),
+                         ForeignAmountDebit = g.Sum(x => x.ForeignAmountDebit)
+                     });
+            List<CurrencySum> mysumlist = q != null ? q.ToList() : new List<CurrencySum>();
             return mysumlist;
         }
 
@@ -1810,29 +1811,28 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             DateTime endDate,
             int tenant)
         {
-            var query =
-                from a in context.LedgerTransactionsDeductionView
-                where a.Tenant == tenant
-                      && (a.ChartOfAccountsTypeCode == ChartOfAccountsTypes.Banks || a.AccountId == whAccountId)
-                      && a.AccountingDate >= startDate
-                      && a.AccountingDate <= endDate
-                select new LedgerTransactionDeductionDTO
-                {
-                    Id = a.Id,
-                    AccountId = a.AccountId,
-                    OppositeAccountId = a.OppositeAccountId,
-                    JournalId = a.JournalId,
-                    JournalLineNumber = a.JournalLineNumber,
-                    LocalAmountDebit = a.LocalAmountDebit ?? 0m,
-                    LocalAmountCredit = a.LocalAmountCredit ?? 0m,
-                    Reference1 = a.Reference1,
-                    AccountingDate = a.AccountingDate,
-                    Tenant = a.Tenant
-                };
-
-            return query;
+            return context.LedgerTransactionsDeductionView
+                        .Where(a =>
+                        a.Tenant == tenant &&
+                        (a.ChartOfAccountsTypeCode == ChartOfAccountsTypes.Banks || a.AccountId == whAccountId) &&
+                        a.AccountingDate >= startDate &&
+                        a.AccountingDate <= endDate)
+                        .Select(a => new LedgerTransactionDeductionDTO
+                        {
+                            Id = a.Id,
+                            AccountId = a.AccountId,
+                            OppositeAccountId = a.OppositeAccountId,
+                            JournalId = a.JournalId,
+                            JournalLineNumber = a.JournalLineNumber,
+                            LocalAmountDebit = a.LocalAmountDebit ?? 0m,
+                            LocalAmountCredit = a.LocalAmountCredit ?? 0m,
+                            Reference1 = a.Reference1,
+                            AccountingDate = a.AccountingDate,
+                            Tenant = a.Tenant
+                        });
         }
 
+    
         public List<LedgerTransaction> GetTransactionsBySourceId(string sourceId, string sourceTypeCode, int tenant)
         {
             return (from transaction in context.LedgerTransactions

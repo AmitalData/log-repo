@@ -64,6 +64,7 @@ export class MainDisplayComponent implements OnInit {
 	cbTariffList: CB_TariffList[];
 	cbRequirementComputedDataList: CB_RequirementComputedDataList[];
 	isExpand: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	defualtCbCollapseSearchHierarchy: boolean = false;
 
 	constructor(private API_MainService: API_MainService, private searchService: SearchService, private headerService: HeaderService, private preferencesService: PreferencesService,
 		private filterPopupService: FilterPopupService, private addCommentService: AddCommentService, private loginService: LoginService,
@@ -81,9 +82,9 @@ export class MainDisplayComponent implements OnInit {
 				this.searchState = searchState[data];
 				this.InitData();
 			}
-
-			// this.InitData();
 		});
+
+		this.checkDefaultCB_CollapseSearchHierarchy();
 		this.ListenToItemsSearched();
 		this.getByIsDiscountCodes();
 	}
@@ -98,6 +99,13 @@ export class MainDisplayComponent implements OnInit {
 		});
 		this.isFeaturePermessionCB.subscribe((isFeaturePermessionCB) => {
 			this.isFeaturePermessionCBMsg = isFeaturePermessionCB;
+		});
+	}
+
+	checkDefaultCB_CollapseSearchHierarchy() {
+		this.API_MainService.GetDefaultCB_CollapseSearchHierarchy(SessionInfo.LoggedUserTenant).subscribe((data: any) => {
+			if (!data?.body) return;
+			this.defualtCbCollapseSearchHierarchy = data?.body === true;
 		});
 	}
 
@@ -132,6 +140,7 @@ export class MainDisplayComponent implements OnInit {
 
 	IsDiscountCodes: boolean = false;
 	GetAllCustomsBookMainView() {
+
 		this.isLoadingMode.next(true);
 		let filters: Filters = {
 			CustomsBookType: this.searchState,
@@ -214,8 +223,10 @@ export class MainDisplayComponent implements OnInit {
 				this.countSearchResult = data.length;
 				// update list:
 				this.data = this.orderedDataForSearch(data);
-				// this.searchToggleAllChildren(true); // expand all 
-				this.toggleVisibility(true, this.data);
+				if (this.defualtCbCollapseSearchHierarchy && this.searchService.selectSearchBy === SearchBy.searchBy_form01)
+					this.toggleVisibilitySearch(true, this.data);
+				else
+					this.toggleVisibility(true, this.data);
 				this.searchMode = TableTopState.Search;
 				this.searchValue = this.searchService.GetSearchText();
 				if (this.showDetails) {
@@ -253,40 +264,21 @@ export class MainDisplayComponent implements OnInit {
 		}, 0);
 	}
 
-	toggleVisibilitySearch(expend: boolean, data: CB_CustomsItemComputedDataList[]): boolean {
-
-		let shouldExpandParent = false;
+	toggleVisibilitySearch(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
+		const searchTextLength = this.searchService.GetSearchText().length;
+		const maxLevel = searchTextLength <= 3 ? 2 : searchTextLength - 1;
 
 		data.forEach(item => {
-			// Check if the current item's FullClassification contains the search text
-			const searchText = this.searchService.GetSearchText();
-			const containsSearchText = item.FullClassification.includes(searchText);
+			const itemLevel = Number(item.ItemHierarchicLocationID);
+			item.checked = itemLevel > maxLevel ? false : expend;
+			this.showChildern(item.checked, item, item.checked);
 
-			// Recursively check if any children should be expanded
-			let shouldExpandChildren = false;
-			if (item.children && item.children.length > 0) {
-				shouldExpandChildren = this.toggleVisibilitySearch(expend, item.children);
-			}
-
-			// Determine if the current item should be expanded
-			if (containsSearchText || shouldExpandChildren) {
-
-				// #109247
-				const itemHierarchicLocationID: number = Number(item.ItemHierarchicLocationID);
-				if (searchText.length == 2 && itemHierarchicLocationID > 2) {
-					return;
-				}
-				if (searchText.length == 4 && itemHierarchicLocationID > 3) {
-					return;
-				}
-				this.showChildern(expend, item, true);
-				shouldExpandParent = true;
+			if (item.children?.length) {
+				this.toggleVisibilitySearch(expend, item.children);
 			}
 		});
-
-		// Return whether this branch should be expanded to the parent call
-		return shouldExpandParent;
 	}
+
 
 	toggleVisibility(expend: boolean, data: CB_CustomsItemComputedDataList[]) {
 		data.forEach(item => {
@@ -469,7 +461,7 @@ export class MainDisplayComponent implements OnInit {
 		this.filterPopupService.toggleFilterPopup(false);
 		// this.data = this.fullData;
 		this.data = !this.IsDiscountCodes ? this.fullData : this.originalDataByIsDiscountCodes;
-		if(this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
+		if (this.IsDiscountCodes && this.originalDataByIsDiscountCodes?.length == 0) this.GetAllCustomsBookMainView();
 		this.toggleVisibility(false, this.data);
 		this.preferencesService.showSettingsClick(false);
 	}
@@ -583,12 +575,14 @@ export class MainEntity {
 	CB_TariffList: CB_TariffList[];
 	CB_RequirementComputedDataList: CB_RequirementComputedDataList[];
 	CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[];
+	Mekach: Mekach[];
 
-	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[], CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[]) {
+	constructor(CB_CustomsItemComputedDataList: CB_CustomsItemComputedDataList[], CB_TariffList: CB_TariffList[], CB_RequirementComputedDataList: CB_RequirementComputedDataList[], CustomItemClassifGuidanceResult: CustomItemClassifGuidanceResult[], Mekach: Mekach[]) {
 		this.CB_CustomsItemComputedDataList = CB_CustomsItemComputedDataList;
 		this.CB_TariffList = CB_TariffList;
 		this.CB_RequirementComputedDataList = CB_RequirementComputedDataList;
 		this.CustomItemClassifGuidanceResult = CustomItemClassifGuidanceResult;
+		this.Mekach = Mekach;
 	}
 }
 
@@ -734,3 +728,11 @@ export class ClassifGuidanceAttached {
 	attachedCustomsItemID: number;
 }
 
+export class Mekach {
+	mekachNumber: number; // מס מק"ת/מק"ח
+	attachedMekahFile: string; // קובץ מצורף (נתיב לקובץ)
+	validityDate: Date; // בתוקף מיום
+	changeDescription: string; // דברי הסבר
+	customsItemId?: number;
+	tenant?: number;
+}

@@ -34,8 +34,11 @@ namespace Simplog.Data.QuoteModel.Repositories
         {
             return (from a in context.Quotes where a.QuoteNumber == quoteNumber && a.Tenant == tenant select a.Id).FirstOrDefault();
         }
-
-        public int GetQuotesCount(int tenant)
+		public Quote GetQuoteByNumber(string quoteNumber, int tenant)
+		{
+			return (from a in context.Quotes where a.QuoteNumber == quoteNumber && a.Tenant == tenant select a).FirstOrDefault();
+		}
+		public int GetQuotesCount(int tenant)
         {
             return (from record in context.Quotes where record.Tenant == tenant && record.IsCancelled == false select record).Count();
         }

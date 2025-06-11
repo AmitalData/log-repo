@@ -453,6 +453,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExchangeRateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"
@@ -571,6 +578,11 @@
   <Relation
     ForeignKeyColumn="ContactId"
     ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ExchangeRateId"
+    ReferencedTable="AdditionalCurrencyRates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

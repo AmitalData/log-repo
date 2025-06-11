@@ -24,6 +24,7 @@ import { InvoiceTool } from '../../Tools';
 import { reject } from 'q';
 import { InvoiceDomainService } from '../../Services/InvoiceDomainService';
 import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
+import { VendorValidator } from 'Common/Validators/VendorValidator';
 
 export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
@@ -50,11 +51,14 @@ export class APPaymentMenuButtonsHandler {
     }
 
     private ResetAllFlags() {
+        
         this.isApproval = false;
         this.isCancelApproval = false;
         this.isVoided = false;
         this.isPrintRequested = false;
         this.isOerationInProgrees = false;
+        this.EntityPM.SetApproved = false;
+
     }
 
     private isValid: boolean = false;
@@ -382,12 +386,12 @@ export class APPaymentMenuButtonsHandler {
         }
     }
 
-    CompleteApprove() {
+     CompleteApprove() {
         if (this.EntityPM.PaymentMethodCode == "FS" && (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG")) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("This payments with payment method Offsetting will not be transfered to quickbooks online , transfer it manually");
             messageWindow.WindowClosed.subscribe(a => {
-                this.ApprovingLogic();
+                  this.ApprovingLogic();
             });
         }
 
@@ -396,11 +400,18 @@ export class APPaymentMenuButtonsHandler {
         }
     }
 
-    private ApprovingLogic() {
-        var message = "";
+    private async ApprovingLogic() {
         var isValid = true;
+
         this.entityArgs.EditComponent.ValidationErrorsList = [];
+       
         var errors = this.customValidator.Validate(this.EntityPM);
+
+        const vendorValidator: VendorValidator = new VendorValidator();
+        const noAddressToVendor = TextCodeTranslator.Translate("GLAccounts.O.NoAddressToVendor");
+        if (!await vendorValidator.IsVendorCountryValid(this.EntityPM.VendorGLAccountId,this.EntityPM.VendorCountry)) {
+            errors.push(noAddressToVendor);
+        }
         if (errors != null && errors.length > 0) {
             isValid = false;
         }

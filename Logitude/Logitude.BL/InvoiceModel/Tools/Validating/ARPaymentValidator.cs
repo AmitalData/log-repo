@@ -219,7 +219,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 Bank = entityPM.Bank,
                 IsNewEntity = isNew,
                 IsFromReconcileScreen = entityPM.UpdateAmountAndStatuses,
-                IsExternalEntity = entityPM.IsExternalEntity
+                IsExternalEntity = entityPM.IsExternalEntity,
+                Id = entityPM.Id,
+                SetVoided = entityPM.SetVoided,
+
             };
 
             ValidateFullAccounting(arpaymentValidatorArgs);
@@ -542,9 +545,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
                 }
 
-                if (arguments.PaymentMethodCode == "CH" && arguments.ChequeReplicas?.Count > 1)
+                if (arguments.PaymentMethodCode == "CH" && arguments.ChequeReplicas?.Count > 0)
                 {
-                    errors = ValidateDuplicateChequeNumber(arguments.ChequeReplicas, arguments.Tenant, errors, useLocal);
+                    errors = ValidateDuplicateChequeNumber(arguments.ChequeReplicas, arguments.Tenant, errors, useLocal, arguments.Id ,arguments.SetVoided);
                 }
 
                 if (!string.IsNullOrEmpty(errors))
@@ -598,16 +601,28 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             return accountingPeriodList;
         }
 
-        private static string ValidateDuplicateChequeNumber(List<ARPaymentChequeReplicaPM> aRPaymentChequeReplicas, int tenant, string errors, bool useLocal)
+        private static string ValidateDuplicateChequeNumber(List<ARPaymentChequeReplicaPM> aRPaymentChequeReplicas, int tenant, string errors, bool useLocal, string paymentId, bool setVoided)
         {
-            foreach (ARPaymentChequeReplicaPM aRPaymentCheque in aRPaymentChequeReplicas)
+            if(aRPaymentChequeReplicas.Count > 1)
             {
-                bool isDuplicateChequeNumber = aRPaymentChequeReplicas.FindAll(c => c.ChequeNumber == aRPaymentCheque.ChequeNumber).Count > 1;
-                if (isDuplicateChequeNumber)
+                foreach (ARPaymentChequeReplicaPM aRPaymentCheque in aRPaymentChequeReplicas)
                 {
-                    errors += TranslateTextsClass.Translate("Accounting.M.MoreThanChequeWithTheSameChequeNumber", tenant, useLocal);
-                    break;
+                    bool isDuplicateChequeNumber = aRPaymentChequeReplicas.FindAll(c => c.ChequeNumber == aRPaymentCheque.ChequeNumber).Count > 1;
+                    if (isDuplicateChequeNumber)
+                    {
+                        errors += TranslateTextsClass.Translate("Accounting.M.MoreThanChequeWithTheSameChequeNumber", tenant, useLocal);
+                        break;
+                    }
                 }
+            }
+            
+            if(setVoided)
+                return errors;
+
+            foreach (var item in aRPaymentChequeReplicas)
+            {
+                ARPaymentChequeRepository arPaymentChequeRepository = new ARPaymentChequeRepository(tenant);
+               errors+= arPaymentChequeRepository.CheckARPaymentChequeAlreadyExists(item.ChequeNumber,item.BankId,item.BankAccount,item.BankBranch,tenant, useLocal, paymentId);
             }
 
             return errors;

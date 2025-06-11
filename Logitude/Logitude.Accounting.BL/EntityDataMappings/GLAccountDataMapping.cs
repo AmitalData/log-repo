@@ -29,6 +29,10 @@ using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data.Enums;
+using Logitude.BL.InfrastructureModel.EntityLists;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -109,6 +113,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencyCode);
             this.CustomMappedPMProperties.Add(PMPropertyNames.CurrencySign);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ReconcileMethodName);
+            this.CustomMappedPMProperties.Add(PMPropertyNames.ExchangeRateName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.RevenueExpenseName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ChartOfAccountsName);
             this.CustomMappedPMProperties.Add(PMPropertyNames.ChartOfAccountsTypeName);
@@ -209,6 +214,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 ReconcileMethodPM reconcileMethod = reconcileMethodQueryService.GetSingle(entityPOCO.ReconcileMethodCode, false, true);
                 if (reconcileMethod != null) entityPM.ReconcileMethodName = (showLocals ? reconcileMethod.LocalName : reconcileMethod.EnglishName);
             }
+            if (entityPOCO.ExchangeRateId != null)
+            {
+                AdditionalCurrencyRateRepository AdditionalCurrencyRateRepository = new AdditionalCurrencyRateRepository(entityPOCO.Tenant);
+                AdditionalCurrencyRate additionalCurrencyRate = AdditionalCurrencyRateRepository.GetSingle(entityPOCO.ExchangeRateId,entityPOCO.Tenant);
+                if (additionalCurrencyRate != null) entityPM.ExchangeRateName = additionalCurrencyRate.Name;
+            }
 
             if (entityPOCO.AutomaticReconcileId != null)
             {
@@ -270,10 +281,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
 
                     CardRepository repo = new CardRepository(entityPOCO.Tenant);
-                    Card card = repo.GetCardByGLAccountId(entityPOCO.Id, entityPOCO.Tenant, true);
+                    Card card = repo.GetCardByGLAccountId(entityPOCO.Id, entityPOCO.Tenant, false);
                     if (card != null)
                     {
                         entityPM.VatNumber = card.VatNumber;
+                        entityPM.CardCountryCode =card.CountryCode;
                     }
                 }
 
@@ -288,28 +300,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     List<string> partnerTypes = new List<string>() { "AC", "CS", "AG", "AL", "CG", "SG", "SL", "TR", "VD", "WH" };
                     Card card = repo.GetCardByGLAccountId(gLAccountCurrency.MainGLAccountId, entityPOCO.Tenant, false, partnerTypes);
                     entityPM.ParentCurrencyGLAccountCardId = card?.Id;
+                    if (string.IsNullOrEmpty(entityPM.CardCountryCode))
+                    {
+                        entityPM.CardCountryCode = card?.CountryCode;
+                    }
                 }
 
-                //if (entityPOCO.ClientId != null)
-                //{
-                //    Card clientCard = CardRepository.GetSingleCard(entityPOCO.ClientId, entityPOCO.Tenant, true);
-                //    if (clientCard != null)
-                //    {
-                //        entityPM.ClientName = clientCard.LocalName;
-                //        entityPM.ClientCode = clientCard.Code;
-                //    }
-                //}
-
-                //if (entityPOCO.VendorId != null)
-                //{
-                //    Card vendorCard = CardRepository.GetSingleCard(entityPOCO.ClientId, entityPOCO.Tenant, true);
-                //    if (vendorCard != null)
-                //    {
-                //        entityPM.VendorName = vendorCard.LocalName;
-                //        entityPM.VendorCode = vendorCard.Code;
-                //    }
-                //}
-
+              
 
                 if (entityPOCO.Inactive == true)
                 {

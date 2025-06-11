@@ -533,6 +533,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (taxreportLine.Reference == null) SetTaxReportLineReferenceGroup(ReferenceGroupDefaultValue, taxreportLine);
             else
             {
+                if (string.IsNullOrEmpty(taxreportLine.OriginalReference)) taxreportLine.OriginalReference = taxreportLine.Reference;
+               
                 taxreportLine.Reference = RemoveSpecialChars(taxreportLine.OriginalReference);
                 bool containsLetters = CheckIfReferenceContainsLetters(taxreportLine.OriginalReference);
                 if (containsLetters)

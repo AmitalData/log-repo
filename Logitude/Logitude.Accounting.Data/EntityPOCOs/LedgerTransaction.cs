@@ -106,6 +106,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string UpdatedByUserName { get; set; }
         [Column("InternalNote")]
 	    public string InternalNote { get; set; }
+        [Column("ProcessStartDate")]
+	    public DateTime? ProcessStartDate { get; set; }
     }
 }
 	 

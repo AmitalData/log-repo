@@ -245,6 +245,8 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new RankMap());
             modelBuilder.Configurations.Add(new RateClassMap());
             modelBuilder.Configurations.Add(new RatesTableMap());
+            modelBuilder.Configurations.Add(new AdditionalCurrencyRateMap());
+            modelBuilder.Configurations.Add(new CurrencyRateMap());
             modelBuilder.Configurations.Add(new RestrictionMap());
             modelBuilder.Configurations.Add(new RoleFeatureMap());
             modelBuilder.Configurations.Add(new RoleMap());
@@ -512,6 +514,18 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<RatesTable> RatesTable
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<AdditionalCurrencyRate> AdditionalCurrencyRates
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CurrencyRate> CurrencyRates
         {
             get;
             set;

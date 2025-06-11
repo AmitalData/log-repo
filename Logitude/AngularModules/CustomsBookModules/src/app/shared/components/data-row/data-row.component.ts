@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input, OnInit, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit, ViewChild, ElementRef, Renderer2, HostListener, ChangeDetectorRef } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faStar as faStarBold, faChevronLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { faStar, faCommentDots, faSquareCaretRight, faFileText } from '@fortawesome/free-regular-svg-icons';
@@ -47,12 +47,14 @@ export class DataRowComponent implements OnInit {
 	selectedSearchBy: SearchBy = SearchBy.searchBy_form01;
 	screenWidth: number;
 	widthSmaller: boolean = false;
-
-	constructor(private preferencesService: PreferencesService, private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService) {
+	defualtBackgroundColor: string = '#F3F5F7';
+	constructor(private preferencesService: PreferencesService, private addCommentService: AddCommentService, private renderer: Renderer2, private API_MainService: API_MainService, private searchService: SearchService,
+		private cdr: ChangeDetectorRef) {
 		this.screenWidth = window.innerWidth;
 	}
-
+	
 	ngOnInit() {
+		this.cdr.detectChanges(); 
 		this.showRulesData();
 		this.selectedSearchBy = this.searchService.selectSearchBy;
 		this.addCommentService.fullCommentsData.subscribe((data: RemarksClassificationList[]) => {
@@ -62,7 +64,8 @@ export class DataRowComponent implements OnInit {
 	}
 
 	getBackgroundColor(): string {
-		return this.preferencesService.getPreference(this.level, PreferenceType.Background);
+		const color = this.preferencesService.getPreference(this.level, PreferenceType.Background);
+		return color !== this.defualtBackgroundColor ? color : null;
 	}
 
 	getTextColor(): string {
