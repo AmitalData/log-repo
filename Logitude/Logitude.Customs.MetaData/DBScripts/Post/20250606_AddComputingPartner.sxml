@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs">
-	<Sql Version="1">
+	<Sql Version="2">
 		<![CDATA[
     /* ---------- Insert ComputingPartner 'SII-1' if not exists ---------- */
     IF NOT EXISTS (
@@ -28,8 +28,8 @@
             'SIIRequest',
             GETDATE(),
             GETDATE(),
-            '1-9',
-            '1-9',
+            '1-2',
+            '1-2',
             NULL,
             'SIIRequest',
             'SIIRequest',
@@ -69,8 +69,8 @@
             0, 0, 0, 0,
             GETDATE(),
             GETDATE(),
-            '1-9',
-            '1-9'
+            '1-2',
+            '1-2'
         FROM ObjectTables
         WHERE NAME = 'Customs.UnloadingSiteType';
     END
@@ -105,8 +105,8 @@
             0, 0, 0, 0,
             GETDATE(),
             GETDATE(),
-            '1-9',
-            '1-9'
+            '1-2',
+            '1-2'
         FROM ObjectTables
         WHERE NAME = 'Customs.MeasurmentUnit';
     END
