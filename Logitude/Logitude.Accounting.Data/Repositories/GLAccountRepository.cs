@@ -1668,6 +1668,7 @@ namespace Logitude.Accounting.Data.Repositories
 
 			return accounts;
 		}
+    }
 
 		public class GLAccountAndMoreDTO//: GLAccount
     {
