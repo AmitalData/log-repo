@@ -96,7 +96,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId, int tenant, [FromBody] List<SupplierInvoiceItemsReqListKeys> selectedRows)
+        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] List<SupplierInvoiceItemsReqListKeys> selectedRows)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 var sender = new SIIRequestApiSender(auth.Tenant);
-                var apiResp = await sender.SendAsync(siiRequestId, selectedRows)
+                var apiResp = await sender.SendAsync(siiRequestId, declarationId, selectedRows)
                     ?? throw new InvalidOperationException($"Did not receive a response from SII for request '{siiRequestId}'."); 
                 var saver = new SIIRequestApiResponseSaver(auth.Tenant);
                 saver.Save(apiResp, siiRequestId);

@@ -59,7 +59,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         public async Task<HttpResponseMessage> GetProductFileExists(
             string modelCode,
             string importerNumber,
-            string originCountry)
+            string originCountry,
+            string declarationId)
         {
             try
             {               
@@ -79,6 +80,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 var factory = new SIIRequestApiRequestFactory(authToken.Tenant);
                 var credentials = factory.BuildCredentials(interfaceName, partnerCode);
+                var communicationDetails = factory.BuildCommunicationsDto(interfaceName, partnerCode, declarationId);
 
                 var dto = new ProductFileRequestDto
                 {
@@ -88,7 +90,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     originCountry = originCountry,
                 };
 
-                var apiRequest = factory.Create(interfaceName, partnerCode, dto);
+                var apiRequest = factory.Create(interfaceName, partnerCode, dto,communicationDetails);
 
                 var executor = new RestRequestExecutor();
                 

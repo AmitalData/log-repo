@@ -15,13 +15,13 @@ export class SupplierInvoiceItemsReqListWebService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SupplierInvoiceItemsReqListExtended';
     }
 
-    GetProductFileExists(modelCode: string, importerNumber: string, originCountry: string) {
+    GetProductFileExists(modelCode: string, importerNumber: string, originCountry: string, declarationId : string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
             authHeader.append('Content-Type', 'application/json');
             let serviceResponse: ServiceResponse = new ServiceResponse();
-            return this._http.get(this._apiUrl + "/GetProductFileExists/?modelCode=" + modelCode + "&importerNumber=" + importerNumber + "&originCountry=" + originCountry, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetProductFileExists/?modelCode=" + modelCode + "&importerNumber=" + importerNumber + "&originCountry=" + originCountry + "&declarationId="+declarationId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 serviceResponse.Result = response;
                 return serviceResponse;
             }), catchError(ServiceHelper.HandleServiceError));

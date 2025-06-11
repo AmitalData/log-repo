@@ -50,18 +50,24 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
     {
         public int LineSerialNumber { get; set; }
         public string ProductFileNumber { get; set; }
+        public string ProductCode { get; set; }
         public string ModelCode { get; set; }
         public string ModelDescription { get; set; }
         public CountryAlphaDto OriginCountry { get; set; }
+        public string Manufacturer { get; set; }
         public bool IsDutchGroup1Requested { get; set; }
         public string CustomsItem { get; set; }
         public string Supplier { get; set; }
-        public decimal QuantityToRelease { get; set; }
-        public int SiiUnitCode { get; set; }
+        public decimal? QuantityToRelease { get; set; }
+        public string SiiUnitCode { get; set; }
+        public decimal? QuantityByDecaredUnit { get; set; }
         public string Comment { get; set; }
         public List<int> FormAttachmentIndexes { get; set; }
         public string SupplierInvoiceNumber { get; set; }
-        public DateTime SupplierInvoiceDate { get; set; }
+        public DateTime? SupplierInvoiceDate { get; set; }
+        public string DeclaredUnitCode { get; set; }
+        public string VendorName { get; set; }
+        public string ProductDutchGroup { get; set; }
     }
 
     public class FormAttachmentDto

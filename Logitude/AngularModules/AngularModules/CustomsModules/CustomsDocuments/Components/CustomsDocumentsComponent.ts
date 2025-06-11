@@ -154,6 +154,8 @@ export class CustomsDocumentsComponent
             this.ParentEntityCode = this.ObjectTableName.split('.')[1];
 
         }
+
+        ///here
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocument").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("DocumentsFiling").subscribe((response: any) => {
                 this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsDocumentsTicket").subscribe((response: any) => {
