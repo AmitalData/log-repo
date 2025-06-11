@@ -7,6 +7,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -180,11 +181,13 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (LinePM.ActionCode== ActionCode_DebitAndCredit)
             {
+                var additionalCurrencyRateFeature = SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", LinePM.Tenant);
                 RatesTableQuery ratesTableQuery = new RatesTableQuery();
                 TenantQuery tenantQuery = new TenantQuery(LinePM.Tenant);
                 TenantPM tPM = tenantQuery.GetSinglePM(LinePM.Tenant);
                 string accountingCurrencyId = tPM.CurrencyId;
-                decimal? rateValue =  (decimal?)ratesTableQuery.GetLastRecordByValueDateAndExchangeRateId(LinePM.Tenant, LinePM.CurrencyId, tPM?.CurrencyId, LinePM.AccountingDate, LinePM.DebitAccountId) ??  LinePM.ExchangeRate;
+                decimal? rateValue =additionalCurrencyRateFeature ? (decimal?)ratesTableQuery.GetLastRecordByValueDateAndExchangeRateId(LinePM.Tenant, LinePM.CurrencyId, tPM?.CurrencyId, LinePM.AccountingDate, LinePM.DebitAccountId) ??  LinePM.ExchangeRate : LinePM.ExchangeRate;
+                decimal ForeignAmountValue = additionalCurrencyRateFeature ?  Math.Round(LinePM.LocalAmount / rateValue.Value, 2) : LinePM.ForeignAmount;
                 JournalLinePM newLine = new JournalLinePM
                 {
                     ActionTypeCode = ActionCode_Debit,
@@ -203,7 +206,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     Line = JournalLines.Count() + 1,
                     DocumentDate = LinePM.DocumentDate,
                     ExchangeRate =  rateValue,
-                    ForeignAmount = Math.Round(LinePM.LocalAmount / rateValue.Value, 2) ,
+                    ForeignAmount = ForeignAmountValue,
                     LocalAmount = LinePM.LocalAmount,
                     CurrencyId = LinePM.CurrencyId,
                     CurrencyCode = LinePM.CurrencyCode,
