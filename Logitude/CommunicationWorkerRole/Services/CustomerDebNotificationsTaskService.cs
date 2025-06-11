@@ -76,7 +76,7 @@ namespace CommunicationWorkerRole.Services
                 CustomerDebtNotification customerDebtNotification =  customerDebtNotificationRepository.GetCustomerDebtNotificationByTaskSchudler(reportTask.Tenant,reportTask.Id);
                 if(customerDebtNotification == null || customerDebtNotification.InActive == IsActiveEnum.NotActive)
 				{
-					this.currentTask.LogInfo("Customer Debt Notification Task is not active or not found.");
+					this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Customer Debt Notification Task is not active or not found."));
 					return;
 				}
                 if (!string.IsNullOrEmpty(customerDebtNotification.AccountId))
@@ -95,7 +95,7 @@ namespace CommunicationWorkerRole.Services
                 }
                 else
                 {
-					this.currentTask.LogInfo("status TasksScheduler Maintainence ActiveSelectedCustomers");
+					this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("status TasksScheduler Maintainence ActiveSelectedCustomers"));
 					return;
 				}
 
@@ -115,15 +115,12 @@ namespace CommunicationWorkerRole.Services
 		{
 			if (!CalculateDebts(customerDebtNotification, accountId))
 			{
-				this.currentTask.LogInfo("No Debt - task cancelled");
+				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("No Debt for GLAccountId: " + accountId + "task cancelled"));
 				return;
 			}
 			else
 			{
-				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report scheduler details"));
-				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
-				this.trackerCounter += 1;
-
+				
 
 				SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
 				if (string.IsNullOrEmpty(schedulerDetails.ReportDetails.Recepients.To))
@@ -131,10 +128,13 @@ namespace CommunicationWorkerRole.Services
 					schedulerDetails.ReportDetails.Recepients.To = GetAllContatByGLAccountId(reportTask.Tenant, accountId);
                     if (string.IsNullOrEmpty(schedulerDetails.ReportDetails.Recepients.To))
                     {
-                        this.currentTask.LogInfo("No recepients found for GLAccountId: " + accountId + ". Task cancelled.");
+                        this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("No recepients found for GLAccountId: " + accountId + ". Task cancelled."));
                         return;
                     }
 				}
+				this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report scheduler details" + accountId));
+				this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
+				this.trackerCounter += 1;
 
 
 				schedulerDetails.ReportDetails.ReportFilterItems.ForEach(filterItem => {

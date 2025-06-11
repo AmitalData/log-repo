@@ -377,7 +377,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             return;
         }
 
-        if (!this.DataContext.IsFTP && !this.IsNew && AppTool.IsNullOrEmpty(this.OldReportSchedulerDetails?.Recepients?.To) && !this.PageChild_OPEMA) {
+        if (!this.IsCustomerDebNotification && !this.DataContext.IsFTP && !this.IsNew && AppTool.IsNullOrEmpty(this.OldReportSchedulerDetails?.Recepients?.To) && !this.PageChild_OPEMA) {
             this.PageChild_RETASK?.parentComponent?.ValidationErrorsList?.push("Please add at least one contact");
             return;
         }
