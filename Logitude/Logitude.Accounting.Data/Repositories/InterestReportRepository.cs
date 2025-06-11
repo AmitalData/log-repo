@@ -89,7 +89,7 @@ namespace Logitude.Accounting.Data.Repositories
         }
 
 
-        public decimal GetInterestReportOpenBalance(DateTime inputDate, string glAccountId, int tenant)
+        public decimal? GetInterestReportOpenBalance(DateTime inputDate, string glAccountId, int tenant)
         {
             var firstOfMonth = new DateTime(inputDate.Year, inputDate.Month, 1);
 
@@ -100,14 +100,14 @@ namespace Logitude.Accounting.Data.Repositories
             return openBalance - interestDeltas.AfterValueDate - interestDeltas.BeforeValueDateWithoutReport;
         }
 
-        private decimal GetLedgerOpenBalance(string glAccountId, int tenant, DateTime beforeDate)
+        private decimal? GetLedgerOpenBalance(string glAccountId, int tenant, DateTime beforeDate)
         {
             return context.LedgerTransactions
             .Where(x => x.AccountId == glAccountId && x.AccountingDate < beforeDate && x.Tenant == tenant)
             .Sum(x => (decimal?)(x.LocalAmountDebit - x.LocalAmountCredit)) ?? decimal.Zero;
         }
 
-        private (decimal AfterValueDate, decimal BeforeValueDateWithoutReport) GetInterestAdjustments(string glAccountId, int tenant, DateTime beforeDate)
+        private (decimal? AfterValueDate, decimal? BeforeValueDateWithoutReport) GetInterestAdjustments(string glAccountId, int tenant, DateTime beforeDate)
         {
             var query = context.InterestTransactions
                 .Join(context.GLAccounts,
@@ -120,16 +120,15 @@ namespace Logitude.Accounting.Data.Repositories
                             x.it.Tenant == tenant && x.it.InterestEntityTypeCode != InterestEntities.OpenBalance)
                 .Select(x => new
                 {
-                    InterestAfter = (x.it.InterestValueDate >= beforeDate) ? x.it.LocalAmount : 0,
-                    InterestBeforeUnreported = (x.it.InterestValueDate < beforeDate && x.it.InterestReportId == null) ? x.it.LocalAmount : 0
+                    InterestAfter = (x.it.InterestValueDate >= beforeDate) ? x.it.LocalAmount :0,
+                    InterestBeforeUnreported = (x.it.InterestValueDate < beforeDate && x.it.InterestReportId == null) ?x.it.LocalAmount :0
                 });
+            var AfterValueDate = query.Sum(x => (decimal?)x.InterestAfter) ?? 0;
+            var BeforeValueDateWithoutReport = query.Sum(x => (decimal?)x.InterestBeforeUnreported) ?? 0;
 
-            return (
-                query.Sum(x => x.InterestAfter),
-                query.Sum(x => x.InterestBeforeUnreported)
-            );
+            return ((AfterValueDate != null ? AfterValueDate : 0), (BeforeValueDateWithoutReport != null? BeforeValueDateWithoutReport : 0));
+
         }
-
 
 
 
