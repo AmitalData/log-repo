@@ -1824,7 +1824,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
-            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
+            newLine.CurrencyRate = selectedTransaction.ledgerTransaction.ExchangeRate;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;
