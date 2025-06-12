@@ -18482,6 +18482,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ApprovalInProgress&quot;"
     ListPropertyPath="&quot;ApprovalInProgress&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -22476,6 +22477,18 @@
       Code="&quot;ARInvoice.O.DraftInvoice&quot;"
       DefaultText="&quot;Draft Invoice&quot;"
       LocalDefaultText="&quot;חשבונית טיוטה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.ApprovalInvoice&quot;"
+      DefaultText="&quot;This invoice is already approved&quot;"
+      LocalDefaultText="&quot;חשבונית זו כבר אושרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.InvoiceInProgress&quot;"
+      DefaultText="&quot;The invoice is already in the approval process&quot;"
+      LocalDefaultText="&quot;החשבונית כבר נמצאת בתהליך אישור&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
