@@ -421,9 +421,16 @@ namespace WebFreight.Web.WcfApi
                     {
                         foreach (var field in queryParams)
                         {
-                            cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
+                            //cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
+                            cmd.Parameters.Add(sql_logi.get_SqlParameter(field.Key, field.Value));
                         }
-                        if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        //if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter
+                        {
+                            ParameterName = "@Tenant",
+                            SqlDbType = SqlDbType.Int,
+                            SqlValue = tenant
+                        });
                         if (sql_logi.IS_INSERT)
                         {
                             rows_effected = cmd.ExecuteNonQuery();
