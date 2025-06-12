@@ -40,7 +40,8 @@ export class ARInvoiceMenuButtonsHandler {
     private menuButtonClicked: MenuButtonPM;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
     public myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
-
+    public statusCode: string;  
+    public approvedDate: Date;  
     //private RelativeRateDate: String; 
     
 
@@ -523,9 +524,9 @@ export class ARInvoiceMenuButtonsHandler {
         this.AutoCreditDate = null;
         this.AutoCreditManualNumber = null;
     }
-    Validate(isFromApprove: boolean = false) {
+    Validate(statusCode: string = null, approvedDate: Date = null) {
         var validator = new ARInvoiceValidator();
-        var errors: string[] = validator.Validate(this.EntityPM, isFromApprove);
+        var errors: string[] = validator.Validate(this.EntityPM, statusCode, approvedDate);
 
         this.isValid = errors.length == 0 ? true : false;
 
@@ -643,10 +644,13 @@ export class ARInvoiceMenuButtonsHandler {
         }
 
         else if(!AppTool.IsNullOrEmpty(this.EntityPM.Id)){
+            this.CurrentSession.StartBusyIndicatorLoading();
             this.myEntityPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+               this.CurrentSession.StopBusyIndicator();
                if (!response.HasError) {
-                this.EntityPM = response.Result;
-                this.Approve(true);
+                this.statusCode = response.Result.StatusCode;
+                this.approvedDate = response.Result.ApprovedDate;
+                this.Approve(this.statusCode, this.approvedDate);
                }
             });
         }
@@ -655,9 +659,9 @@ export class ARInvoiceMenuButtonsHandler {
         }
     }
 
-    Approve(isFromApprove: boolean = false){
+    Approve(statusCode: string = null, approvedDate: Date = null){
                 
-        this.Validate(isFromApprove);
+        this.Validate(statusCode, approvedDate);
 
             if (this.isValid) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
