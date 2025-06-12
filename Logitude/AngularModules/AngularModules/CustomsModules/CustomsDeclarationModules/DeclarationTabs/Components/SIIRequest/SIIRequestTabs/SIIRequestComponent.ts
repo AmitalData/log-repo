@@ -270,7 +270,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestCopmleteDataItem/SIIRequestCopmleteDataItemComponent');
         args.logWindow = logWindow;
-        logWindow.WindowClosed.subscribe(($event: any) => {
+        logWindow.WindowClosed.subscribe((entityPM: SupplierInvoiceItemsForSIIRequestLine) => {
+            if (!AppTool.IsNullOrEmpty(entityPM)) this.SelectedRow.entityPM = entityPM;
+
             this.RefreshEntity();
             this.isOpen = false;
         });
@@ -459,7 +461,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set RequestNo(newValue: string) {
         this.entityPM.RequestNo = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get DeclarationId(): string {
@@ -467,7 +468,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set DeclarationId(newValue: string) {
         this.entityPM.DeclarationId = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get Status(): string {
@@ -475,7 +475,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set Status(newValue: string) {
         this.entityPM.Status = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get WareHouseAddress(): string {
@@ -512,7 +511,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set IsClosed(newValue: boolean) {
         this.entityPM.IsClosed = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get Remarks(): string {
@@ -528,7 +526,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ListCounter(newValue: number) {
         this.entityPM.ListCounter = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ImporterId(): string {
@@ -536,7 +533,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ImporterId(newValue: string) {
         this.entityPM.ImporterId = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ContactName(): string {
@@ -544,7 +540,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ContactName(newValue: string) {
         this.entityPM.ContactName = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get UnloadDate(): Date {
@@ -552,7 +547,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set UnloadDate(newValue: Date) {
         this.entityPM.UnloadDate = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ManifestNumber(): string {
@@ -560,7 +554,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ManifestNumber(newValue: string) {
         this.entityPM.ManifestNumber = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get VesselName(): string {
@@ -576,7 +569,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ContactEmail(newValue: string) {
         this.entityPM.ContactEmail = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ContactTel(): string {
@@ -584,7 +576,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ContactTel(newValue: string) {
         this.entityPM.ContactTel = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ContactCellPhone(): string {
@@ -592,7 +583,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ContactCellPhone(newValue: string) {
         this.entityPM.ContactCellPhone = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ContactFax(): string {
@@ -600,7 +590,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ContactFax(newValue: string) {
         this.entityPM.ContactFax = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ContactId(): string {
