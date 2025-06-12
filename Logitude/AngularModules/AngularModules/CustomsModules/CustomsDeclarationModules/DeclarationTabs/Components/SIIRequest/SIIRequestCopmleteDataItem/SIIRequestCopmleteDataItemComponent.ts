@@ -251,7 +251,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
                 }
                 else this.generalErrors = myResponse?.ErrorsArray;
                 this.RefreshEntity();
-                this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindowData(this.entityPM);
             }, error => {
                 this.generalErrors = [error?.message];
                 console.error('Error updating SupplierInvoiceItemsReqList:', error);
@@ -270,7 +270,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
                 }
                 else this.generalErrors = myResponse?.ErrorsArray;
                 this.RefreshEntity();
-                this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CloseCurrentWindowData(this.entityPM);
             }, error => {
                 this.generalErrors = [error?.message];
                 console.error('Error saving SupplierInvoiceItemsReqList:', error);
@@ -284,8 +284,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             var confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;
-            // confirm.Show(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges"));
-            confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.Cancel"));
+            confirm.Show(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges"));
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
