@@ -1,5 +1,4 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
@@ -284,8 +283,6 @@ namespace Logitude.Accounting.BL
                     journalPM.VoidDate = DateTime.UtcNow;
                     DeleteJournalExternalReconcileOfBankAdjustment(journalPM, Storno);
 
-                    //throw new ApplicationException("entityPM.VoidedBy = Storno.Id;// Add this line after VoidedBy convert from bool? to VC(15)");
-
                     break;
 
                 case JournalStatusTypePM.StatusCodeEnum.Cancelled:
@@ -325,9 +322,9 @@ namespace Logitude.Accounting.BL
 
             // 4. Gather external reconciles to delete.
             var itemsToDelete = theOriginal.JournalExternalReconciles?
-                .Where(r => r.JournalId == theOriginal.Id);
+                .Where(r => r.JournalId == theOriginal.Id).ToList();
 
-            if (itemsToDelete == null)
+            if (itemsToDelete == null || itemsToDelete.Count == 0)
             {
                 return;
             }
@@ -338,22 +335,14 @@ namespace Logitude.Accounting.BL
                 item.ChangeSetOp = ChangeSetOperation.Delete;
             }
 
-            return;
+
         }
 
 
         private bool IsStornoJournalOK(JournalPM theOriginal, JournalPM theStorno)
         {
-            if (String.IsNullOrWhiteSpace(theStorno.OriginalJournalId))
-            {
-                return false;
-            }
-
-            if (theStorno.OriginalJournalId != theOriginal.Id)
-            {
-                return false;
-            }
-            return true;
+            return !string.IsNullOrWhiteSpace(theStorno.OriginalJournalId)
+                                && theStorno.OriginalJournalId == theOriginal.Id;
         }
 
 
