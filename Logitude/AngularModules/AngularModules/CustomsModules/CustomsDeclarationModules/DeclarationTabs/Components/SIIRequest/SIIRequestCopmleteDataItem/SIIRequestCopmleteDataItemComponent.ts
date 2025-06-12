@@ -17,6 +17,7 @@ import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from 'Infrastructure/Tools';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { SIIRequestPMService } from 'Customs/Services/StandardPMs/SIIRequestPMService';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public siiRequestWebService: SIIRequestWebService;
+    public siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
     public supplierInvoiceItemsReqListWebService: SupplierInvoiceItemsReqListWebService;
     public supplierInvoiceItemsReqListPMService: SupplierInvoiceItemsReqListPMService = new SupplierInvoiceItemsReqListPMService();
     public currentSiiRequest: SIIRequestPM = new SIIRequestPM();
@@ -215,8 +217,31 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     generalErrors: string[] = [];
     SaveSupplierInvoiceItemsReqList() {
-        if (!AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isExistProductFile) this.ProductFileNumber = null;
-        this.checkMandatoryFields();
+        if (AppTool.IsNullOrEmpty(this.currentSiiRequest.Id)) {
+
+            this.siiRequestPMService.insert(this.currentSiiRequest).subscribe(requestResult => {
+                let requestResponse: ServiceResponse = requestResult;
+                if (!requestResponse?.HasError && requestResponse?.Result) {
+                    this.currentSiiRequest = requestResponse.Result;
+                    this.entityPM.SIIRequestID = this.currentSiiRequest?.Id;
+                    this.saveItemCompletionData();
+                }
+                else if (requestResponse?.ErrorsArray.length > 0) {
+                    console.error('Error saving SII request:', requestResponse?.ErrorsArray);
+                    this.generalErrors = requestResponse?.ErrorsArray;
+                }
+            }, error => {
+                console.error('Error saving SII request:', error);
+                this.generalErrors = [error?.message];
+            });
+        }
+        else {
+            this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
+            this.saveItemCompletionData();
+        }
+    }
+
+    private saveItemCompletionData() {
         if (this.oldRequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.oldRequestRequiredStatus === CompleteStatuses.FullyCompleted) {
             this.supplierInvoiceItemsReqListPMService.update(this.entityPM).subscribe(myResult => {
                 let myResponse: ServiceResponse = myResult;
@@ -234,7 +259,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         }
         else {
             this.entityPM.DeclarationId = this.DecalarationData?.Id;
-            this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
             this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
             this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
             this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
