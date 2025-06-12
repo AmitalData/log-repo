@@ -269,8 +269,12 @@ namespace CommunicationWorkerRole
 
 
                     if (aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
-                    { 
+                    {
+                        try
+                        {
                             aRInvoicePM.InterestReportId = interestReportId;
+                            UpdateInterestReportsStatues(interestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
+
                             if (!string.IsNullOrEmpty(batchId))
                             {
                                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -281,7 +285,6 @@ namespace CommunicationWorkerRole
                                     {
 
                                         invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
-                                        UpdateInterestReportsStatues(interestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
                                         invoiceService.SignInvoice(aRInvoicePM, tenant);
                                         NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
                                         scope.Complete();
@@ -296,7 +299,13 @@ namespace CommunicationWorkerRole
 
                                 }
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in UpdateInterestInvoiceStatus");
+                        }
                     }
+                        
 
 
                 }
