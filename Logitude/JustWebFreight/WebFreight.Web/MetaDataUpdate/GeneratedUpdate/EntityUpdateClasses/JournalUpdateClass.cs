@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "348b7ae32d25442e5b0a336ee80abfef";
+		public const string HashString = "b7e4c2a1f9d8e6b3c5a7f2e1d4c8b6a9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -4382,6 +4382,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalMForeignDiffLocalAmountButTenantCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignDiffLocalAmountButTenantCurrency", DefaultText = "Although the currency is accounting currency,The foreign amount is different from local amount ",LocalDefaultText = @"למרות שהמטבע היינו מטבע חשבונםי הסכום במטז שונה מסכום מקומי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalOConfirmVoidJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ConfirmVoidJournal", DefaultText = "Are you sure you want to cancel this Journal?",LocalDefaultText = @"םנם םשר םת ביטול פקודת היומן  ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+            TextCode JournalTextCode_JournalODuplicateLinesSkipped = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DuplicateLinesSkipped", DefaultText = "Duplicate Lines Skipped", LocalDefaultText = @"שורות כפולות � ותרו ול�  נקלטו", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+            TextCode JournalTextCode_JournalOOnlyDuplicates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.OnlyDuplicates", DefaultText = "All lines in the file already exist in the system. The file was rejected.", LocalDefaultText = @"כל השורות בקובץ כבר קיימות במערכת. הקובץ ל�  נקלט", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"השער החדש קטן\גדול ביותר מחמישה םחוזים מהשער הקודם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
