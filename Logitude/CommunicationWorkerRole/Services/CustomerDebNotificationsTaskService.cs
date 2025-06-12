@@ -196,7 +196,7 @@ namespace CommunicationWorkerRole.Services
 			ContactRepository contactRep = new ContactRepository(tenant);
 			List<Contact> contacts = contactRep.GetContactsForAccountingByGLAccountId(glaccountId, tenant);
 	
-			contacts.ToList().ForEach(contact => {
+			contacts.ForEach(contact => {
 				if (!string.IsNullOrEmpty(contact.Email))
 				{
 					recepients += contact.Email + ";";
