@@ -2,12 +2,9 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { JournalPM } from '../../EntityPMs/JournalPM';
 import { JournalAnalyseResult } from '../../EntityPMs/JournalAnalyseResult';
 import { BankAccountPM } from '../../EntityPMs/BankAccountPM';
-import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { JournalPMService } from '../../Services/StandardPMs/JournalPMService';
@@ -15,17 +12,12 @@ import { CurrencyPMService } from '../../../Common/Services/StandardPMs/Currency
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { JournalExtendedPMService } from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-
-
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { AccountingOpService } from '../../Services/Others/AccountingOpService';
 declare var attachmentUploader, ResultAsArray: any;
 
 
@@ -62,8 +54,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
-    //_AccountingOpService: AccountingOpService;
-
+   
 
     public UploadFileId: string = Guid.NewRandomString();
     FileName: string;
@@ -129,9 +120,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
 
 
 
-    //#region Prev Bank Page
-
-    //#endregion
+  
 
     SendJournal(): any {
 

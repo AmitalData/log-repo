@@ -1565,10 +1565,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string AccountId { get; set; }
         public string AccountDisplayNumber { get; set; }
         public string CurrencyId { get; set; }
-        //public decimal LocalAmountCredit { get; set; }
-        //public decimal LocalAmountDebit { get; set; }
-        //public decimal ForeignAmountCredit { get; set; }
-        //public decimal ForeignAmountDebit { get; set; }
 
         public double LocalAmountCredit { get; set; }
         public double LocalAmountDebit { get; set; }

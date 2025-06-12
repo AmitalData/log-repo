@@ -48,7 +48,6 @@ export class JournalAnalyseResult {
        }
     }
 
-    private MyClone: JournalAnalyseResult;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);

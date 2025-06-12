@@ -210,7 +210,6 @@ namespace Logitude.Accounting.BL.CoreBL
             bool reading_Lines = false;
             bool finished = false;
             var JournalSrcLines = new List<JournalSrcLineDTO_ISL>();
-            //var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             var lines = FileContent
                 .Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries)
@@ -232,10 +231,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
 
-                //if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || (rowtype.Length >= 1 && Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1))))
                 if (!reading_Lines)
                 {
-                    //   Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
                     reading_Lines = true;
                     continue;
                 }
