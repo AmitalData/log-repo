@@ -40,10 +40,10 @@ export class ARInvoiceValidator {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
         if(!AppTool.IsNullOrEmpty(this.EntityPM.ApprovedDate)) {
-            this.Errors.push("This invoice is already approved");
+            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.O.ApprovalInvoice"));
         }
         if(this.EntityPM.StatusCode == "PR" && isFromApprove){
-            this.Errors.push("The invoice is already in the approval process");
+            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.O.InvoiceInProgress"));
         }
         
         var date1 = new Date(this.EntityPM.InvoiceDate.toString());
