@@ -16,6 +16,7 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from 'Infrastructure/Tools';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 
 @Component({
@@ -108,7 +109,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     isCheckedProductFile: boolean = false;
     checkProductFileNumber(productFileNumber: string) {
         this.isCheckedProductFile = true;
-        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode,this.entityPM.DeclarationId).subscribe(myResult => {
+        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode, this.entityPM.DeclarationId).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
             if (!myResponse?.HasError)
                 this.saveByProductFileNumberResult(myResponse?.Result, productFileNumber);
@@ -253,9 +254,29 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
         }
     }
 
+    oldEntityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM();
     CancelSupplierInvoiceItemsReqList() {
-        this.RefreshEntity();
-        this.CurrentSession.CloseCurrentWindow();
+        if (this.entityPM.IsDirty && !this.IsDisplayOnly) {
+            var confirm = new ConfirmWindow();
+            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+            confirm.ShowNoButton = true;
+            // confirm.Show(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges"));
+            confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.Cancel"));
+            confirm.WindowClosed.subscribe((event: any) => {
+                if (confirm.Yes) {
+                    confirm.Close();
+                    this.SaveAndSearchSupplierInvoiceItemsReqList(this.ProductFileNumber);
+                }
+                else {
+                    this.entityPM = this.oldEntityPM;
+                    this.CurrentSession.CloseCurrentWindow();
+                }
+            });
+        }
+        else {
+            this.RefreshEntity();
+            this.CurrentSession.CloseCurrentWindow();
+        }
     }
 
     RefreshEntity() {
@@ -271,84 +292,98 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
     public set ProductFileNumber(newValue: string) {
         this.entityPM.ProductFileNumber = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get ManufactureCountryCode(): string {
         return this.entityPM?.ManufactureCountryCode;
     }
     public set ManufactureCountryCode(newValue: string) {
         this.entityPM.ManufactureCountryCode = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get ManufactureCountryName(): string {
         return this.entityPM?.ManufactureCountryName;
     }
     public set ManufactureCountryName(newValue: string) {
         this.entityPM.ManufactureCountryName = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get ManufacturerName(): string {
         return this.entityPM?.ManufacturerName;
     }
     public set ManufacturerName(newValue: string) {
         this.entityPM.ManufacturerName = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get Remarks(): string {
         return this.entityPM?.Remarks;
     }
     public set Remarks(newValue: string) {
         this.entityPM.Remarks = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get ItemNo(): string {
         return this.entityPM?.ItemNo;
     }
     public set ItemNo(newValue: string) {
         this.entityPM.ItemNo = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get ItemName(): string {
         return this.entityPM?.ItemName;
     }
     public set ItemName(newValue: string) {
         this.entityPM.ItemName = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get InvoiceQuantity(): number {
         return this.entityPM?.InvoiceQuantity;
     }
     public set InvoiceQuantity(newValue: number) {
         this.entityPM.InvoiceQuantity = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get InvoiceQuantityType(): string {
         return this.entityPM?.InvoiceQuantityType;
     }
     public set InvoiceQuantityType(newValue: string) {
         this.entityPM.InvoiceQuantityType = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get StatisticQuantity(): number {
         return this.entityPM?.StatisticQuantity;
     }
     public set StatisticQuantity(newValue: number) {
         this.entityPM.StatisticQuantity = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get StatisticQuantityType(): string {
         return this.entityPM?.StatisticQuantityType;
     }
     public set StatisticQuantityType(newValue: string) {
         this.entityPM.StatisticQuantityType = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get DutchRequested(): boolean {
         return this.entityPM?.DutchRequested;
     }
     public set DutchRequested(newValue: boolean) {
         this.entityPM.DutchRequested = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get DutchGroupItem(): number {
         return this.entityPM?.DutchGroupItem;
     }
     public set DutchGroupItem(newValue: number) {
         this.entityPM.DutchGroupItem = newValue;
+        this.entityPM.IsDirty = true;
     }
     public get RequestRequiredStatus(): string {
         return this.entityPM?.RequestRequiredStatus;
     }
     public set RequestRequiredStatus(newValue: string) {
         this.entityPM.RequestRequiredStatus = newValue;
+        this.entityPM.IsDirty = true;
     }
     //#endregion SiiRequest properties
 }
