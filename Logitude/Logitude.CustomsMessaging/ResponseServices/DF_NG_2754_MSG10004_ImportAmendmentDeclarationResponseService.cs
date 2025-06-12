@@ -1420,7 +1420,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 throw new System.Exception(
                    "unable to find the supplierInvoiceItemVehicleAddPM from Declaration Id " + supplierInvoiceItemVehiclePM.DeclarationId + " and Supplier Invoice Item Line " + supplierInvoiceItemVehiclePM.InvoiceItemLineNumber + " and Supplier Invoice Item Vehicle Line " + supplierInvoiceItemVehiclePM.LineNumber);
             }
-            supplierInvoiceItemVehicleAddPM.ChangeSetOp = ChangeSetOperation.Update;
+            supplierInvoiceItemVehicleAddPM.ChangeSetOp = ChangeSetOperation.Insert;
             var supplierInvoiceItemVehicleAddPMList = new List<SupplierInvoiceItemVehicleAddPM>();
 
             decimal? allDeduction = 0;
