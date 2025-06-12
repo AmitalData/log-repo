@@ -50,6 +50,19 @@
                                                 <td></td>
                                             </tr>
 
+                                            <!-- From Month -->
+                                            <tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'FromMonth'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
+                                                    {{entityPM.FromMonth | DateTimePipe:'MY'}}
+                                                </td>
+                                                <td></td>
+                                            </tr>
+
                                             <!-- Month -->
                                             <tr class="FormFieldRow">
                                                 <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
@@ -65,6 +78,7 @@
                                                 </td>
                                                 <td></td>
                                             </tr>
+
                                             <tr class="FormFieldRow">
 
 
