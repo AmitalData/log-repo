@@ -39,6 +39,7 @@ export class ARInvoiceMenuButtonsHandler {
     private IsConfirmationMessageForCriedtNoteVisible:boolean=false;
     private menuButtonClicked: MenuButtonPM;
     DocumentsFilingExtendedPMService: DocumentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
+    public myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
 
     //private RelativeRateDate: String; 
     
@@ -522,9 +523,9 @@ export class ARInvoiceMenuButtonsHandler {
         this.AutoCreditDate = null;
         this.AutoCreditManualNumber = null;
     }
-    Validate() {
+    Validate(isFromApprove: boolean = false) {
         var validator = new ARInvoiceValidator();
-        var errors: string[] = validator.Validate(this.EntityPM);
+        var errors: string[] = validator.Validate(this.EntityPM, isFromApprove);
 
         this.isValid = errors.length == 0 ? true : false;
 
@@ -637,13 +638,26 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     ApproveClicked() {
-
         if (!FeatureLocator.HasEntityPermessions("ARInvoice", "UPDT", true)) {
             this.StopFlags();
         }
 
-        else {
-            this.Validate();
+        else if(!AppTool.IsNullOrEmpty(this.EntityPM.Id)){
+            this.myEntityPMService.get(this.EntityPM.Id).subscribe((response: ServiceResponse) => {
+               if (!response.HasError) {
+                this.EntityPM = response.Result;
+                this.Approve(true);
+               }
+            });
+        }
+        else{
+          this.Approve();                    
+        }
+    }
+
+    Approve(isFromApprove: boolean = false){
+                
+        this.Validate(isFromApprove);
 
             if (this.isValid) {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
@@ -747,7 +761,6 @@ export class ARInvoiceMenuButtonsHandler {
             else {
                 this.StopFlags();
             }
-        }
     }
 
     ComputeRelativeRateDate() {
@@ -991,8 +1004,7 @@ export class ARInvoiceMenuButtonsHandler {
 
     async GetInvoiceStatus(id: string) {
         if (AppTool.IsNullOrEmpty(id)) return;
-        var myEntityPMService: ARInvoicePMService = new ARInvoicePMService()
-        myEntityPMService.get(id).subscribe((response: ServiceResponse) => {
+        this.myEntityPMService.get(id).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.EntityPM = response.Result;
                 if (this.EntityPM.StatusCode !== "PR" && this.EntityPM.ApprovalInProgress) { 
@@ -1025,7 +1037,8 @@ export class ARInvoiceMenuButtonsHandler {
     }
     showApprovalFailedMessage() 
     {
-
+        this.isPrintRequested = false;
+        this.addDocumentFilling = false;
         const traceEventExtendedPMService = new TraceEventExtendedPMService();
         traceEventExtendedPMService.GetLatestTraceEventByEventCode(this.EntityPM.Id, "APF").subscribe((response: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
@@ -1048,6 +1061,8 @@ export class ARInvoiceMenuButtonsHandler {
                     }
                     if (confirmWindow.No) {
                         this.EntityPM.IsDirty = true;
+                        this.isPrintRequested = false;
+                        this.addDocumentFilling = false;
                         this.SaveDraftClicked()
                         confirmWindow.Close();
 

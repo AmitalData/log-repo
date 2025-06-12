@@ -77,7 +77,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                         case "CloseWithoutInvoice" :
                             {
 
-                                if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "9")
+                                if (this.EntityPM.InterestReportStatusCode == "1" || (this.EntityPM.InterestReportStatusCode == "9" && AppTool.IsNullOrEmpty(this.EntityPM.ARinvoiceId)))
                                     button.IsDisabled = false;
                                 else
                                     button.IsDisabled = true;
