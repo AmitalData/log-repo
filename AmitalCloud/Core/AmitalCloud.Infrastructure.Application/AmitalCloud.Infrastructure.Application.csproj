@@ -14,14 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.ServiceModel.DomainServices.Server">
-      <HintPath>..\..\Library\Bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="NetCommonHelper">
       <HintPath>..\..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server">
+      <HintPath>..\..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
