@@ -201,7 +201,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         {
             IQueryable<ShipmentType> shpLIst = shipmentTypeRepository.GetShipmentTypes();
             Dictionary<string, ShipmentType> tenantShipmentTypes = shpLIst.ToDictionary(d => d.Id, a => a);//shipmentTypeRepository.GetShipmentTypes().ToDictionary(d => d.Id, a => a);
-            //Dictionary<string, ShipmentType> tenantShipmentTypes = shipmentTypeRepository.GetShipmentTypes().ToDictionary(d => d.Id, a => a);
 
             if (tenantShipmentTypes.Keys.Contains(shipmentTypeDetails.Id))
             {
@@ -1116,23 +1115,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static void AddPackages(PackageDetails packageDetails, PackageRepository packageRepository)
-        {
-            Dictionary<string, Package> tenantPackages = packageRepository.GetPackages().ToDictionary(d => d.Code, a => a);
-
-            if (tenantPackages.Keys.Contains(packageDetails.Code))
-            {
-                //Package package = packageRepository.GetSinglePackage(packageDetails.Code);
-                //package.Name = packageDetails.Name;
-                //package.SearchFields = packageDetails.Code + "," + packageDetails.Name;
-                //packageRepository.Update(package);
-            }
-            else
-            {
-                Package package = new Package() { Code = packageDetails.Code, Name = packageDetails.Name, SearchFields = packageDetails.Code + "," + packageDetails.Name, FeaturePackageTypeCode = "BS" };
-                packageRepository.Add(package);
-            }
-        }
 
         public static void AddAWBChargesCodes(AWBChargesCodeDetails awbChargesCodeDetails, AWBChargesCodeRepository awbChargeCodesRepository)
         {
@@ -2413,7 +2395,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 GLAccountType type = gLAccountTypeRepository.GetSingle(gLAccountTypeDetails.Code);
                 type.EnglishName = gLAccountTypeDetails.EnglishName;
                 type.LocalName = gLAccountTypeDetails.LocalName;
-                //type.SearchFields = gLAccountTypeDetails.JournalTypeID + "," + gLAccountTypeDetails.EnglishName + "," + gLAccountTypeDetails.LocalName;
                 type.Inactive = gLAccountTypeDetails.Inactive;
                 gLAccountTypeRepository.Update(type);
             }
@@ -3225,30 +3206,6 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static void AddCourierPendingReason(CourierPendingReason courierPendingReasonDetails, CourierPendingReasonRepository courierPendingReasonRepository)
-        {
-            //Dictionary<string, CourierPendingReason> tenantCourierPendingReason = courierPendingReasonRepository.GetAll().ToDictionary(d => d.Code, a => a);
-
-            //if (tenantCourierPendingReason.Keys.Contains(courierPendingReasonDetails.Code))
-            //{
-            //    CourierPendingReason courierPendingReason = courierPendingReasonRepository.GetSingle(courierPendingReasonDetails.Code, tenantCourierPendingReason.Keys.);
-            //    courierPendingReason.LocalName = courierPendingReasonDetails.LocalName;
-            //    courierPendingReason.EnglishName = courierPendingReasonDetails.EnglishName;
-            //    courierPendingReason.SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName).ToLower();
-            //    courierPendingReasonRepository.Update(courierPendingReason);
-            //}
-            //else
-            //{
-            //    CourierPendingReason newCourierPendingReason = new CourierPendingReason()
-            //    {
-            //        Code = courierPendingReasonDetails.Code,
-            //        LocalName = courierPendingReasonDetails.LocalName,
-            //        EnglishName = courierPendingReasonDetails.EnglishName,
-            //        SearchFields = (courierPendingReasonDetails.Code + "," + courierPendingReasonDetails.LocalName).ToLower()
-            //    };
-            //    courierPendingReasonRepository.Add(newCourierPendingReason);
-            //}
-        }
 
         public static void AddMamanSpecialAction(MamanSpecialAction mamanSpecialActionDetails, MamanSpecialActionRepository mamanSpecialActionRepository)
         {
@@ -3510,27 +3467,29 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 siiRequestStatusRepository.Add(newSiiRequestStatus);
             }
         }
-        public static void AddSIIDocumentType(SIIDocumentType sIIDocumentType, SIIDocumentTypeRepository sIIDocumentTypeRepository)
+        public static void AddOrUpdateSIIDocumentType(SIIDocumentType documentType,SIIDocumentTypeRepository repository)
         {
-            Dictionary<string, SIIDocumentType> tenantSiiDocumentTypes = sIIDocumentTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
-            if (tenantSiiDocumentTypes.Keys.Contains(sIIDocumentType.Code))
+            var existingTypesByCode = repository
+                .GetAll()
+                .ToDictionary(d => d.Code, d => d);
+
+            if (existingTypesByCode.ContainsKey(documentType.Code))
             {
-                SIIDocumentType siiDocumentType = sIIDocumentTypeRepository.GetSingle(sIIDocumentType.Code);
-                siiDocumentType.LocalName = sIIDocumentType.LocalName;
-                siiDocumentType.SearchFields = (sIIDocumentType.Code + "," + sIIDocumentType.LocalName).ToLower();
-                sIIDocumentTypeRepository.Update(siiDocumentType);
+                var existing = repository.GetSingle(documentType.Code);
+                existing.LocalName = documentType.LocalName;
+                existing.SearchFields = $"{documentType.Code},{documentType.LocalName}".ToLower();
+                repository.Update(existing);
             }
             else
             {
-                SIIDocumentType newSiiDocumentType = new SIIDocumentType()
+                var newType = new SIIDocumentType
                 {
-                    Code = sIIDocumentType.Code,
-                    LocalName = sIIDocumentType.LocalName,
-                    SearchFields = (sIIDocumentType.Code + "," + sIIDocumentType.LocalName).ToLower()
+                    Code = documentType.Code,
+                    LocalName = documentType.LocalName,
+                    SearchFields = $"{documentType.Code},{documentType.LocalName}".ToLower()
                 };
-                sIIDocumentTypeRepository.Add(newSiiDocumentType);
+                repository.Add(newType);
             }
-
         }
     }
 }
