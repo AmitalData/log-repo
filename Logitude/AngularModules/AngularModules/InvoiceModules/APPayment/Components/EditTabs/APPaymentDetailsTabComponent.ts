@@ -641,7 +641,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                         const customRate = exchangeRateId 
                         ? lastRate.CurrencyRates.find(rate => rate.AdditionalCurrencyRateId === exchangeRateId)?.Rate 
                         : null;
-                         result = customRate ?? lastRate.Rate;
+                         result = customRate ?? lastRate.ValueDate;
                      } 
                 }
             }

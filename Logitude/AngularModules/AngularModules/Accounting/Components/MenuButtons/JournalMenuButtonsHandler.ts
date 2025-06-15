@@ -207,7 +207,6 @@ export class JournalMenuButtonsHandler {
 
     public async MenuButtonClick(menuButton: MenuButtonPM) {
 
-       
 
         switch (menuButton.EventCode) {
             case "JournalSave": // save and close
@@ -233,7 +232,7 @@ export class JournalMenuButtonsHandler {
                       this.entityArgs.EditComponent.ValidationErrorsList = validationErrors;                                     
                        return;
                     }
-                    this.SaveChenges();    
+                    this.SaveChanges();    
 
                     this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
                         if ($event == true) {                           

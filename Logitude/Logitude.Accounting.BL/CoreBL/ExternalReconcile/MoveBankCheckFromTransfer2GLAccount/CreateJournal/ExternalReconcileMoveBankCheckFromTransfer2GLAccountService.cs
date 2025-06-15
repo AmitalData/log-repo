@@ -429,27 +429,30 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                     M_BankBelongtoDifferentBankThanLedger//"אין תאימות דף הבנק שייך לבנק אחר הנשלף מהתנועה"
                     );
             }
+
+            decimal LedgerTransactionCreditAmount = 0.0m;
             if (bankAccountFromTransfer != null && this._ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant)== bankAccountFromTransfer.CurrencyId)
             {
-                //if (myLedgerTransactionBankTransferPMs.LocalAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
-                if (myLedgerTransactionBankTransferPMs.Sum(r=>r.LocalAmountCredit) != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
-                {
-                    _AdjustAsBankFee = true;
-                    //err.Add(
-                    //    M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
-                    //    );
-                }
+                LedgerTransactionCreditAmount = myLedgerTransactionBankTransferPMs.Sum(r => r.LocalAmountCredit);
             }
             else
             {
-                //if (myLedgerTransactionBankTransferPMs.ForeignAmountCredit != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
-                if (myLedgerTransactionBankTransferPMs.Sum(r=>r.ForeignAmountCredit) != myReconcileExternalPageLinePM.DebitAmount) // WI 65377
-                {
-                    _AdjustAsBankFee = true;
-                    //err.Add(
-                    //    M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
-                    //    );
-                }
+                LedgerTransactionCreditAmount = myLedgerTransactionBankTransferPMs.Sum(r => r.ForeignAmountCredit);
+            }
+
+            // if the credit amout is negative then it is a debit amount and it needs to be compared to a credit amount
+            var isLedgerTransactionMinusCredit = LedgerTransactionCreditAmount < 0;
+            if (isLedgerTransactionMinusCredit)
+            {
+                LedgerTransactionCreditAmount = -LedgerTransactionCreditAmount;
+            }
+            if ((isLedgerTransactionMinusCredit && LedgerTransactionCreditAmount != myReconcileExternalPageLinePM.CreditAmount)
+                || (!isLedgerTransactionMinusCredit && LedgerTransactionCreditAmount != myReconcileExternalPageLinePM.DebitAmount))
+            {
+                _AdjustAsBankFee = true;
+                //err.Add(
+                //    M_AmountInPageAndLedgerMustBeEqual//"סכום החובה בדף בנק חייב להיות זהה לסכום התנועה בכרטסת בנק לשלם בזכות"
+                //    );
             }
             if (_AdjustAsBankFee && String.IsNullOrWhiteSpace(_OnAdjust_adjustGLAccountId))
             {
@@ -467,9 +470,9 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                     );
 
             }
-            if (myReconcileExternalPageLinePM.DebitAmount <= 0)
+            if (myReconcileExternalPageLinePM.DebitAmount <= 0 && !isLedgerTransactionMinusCredit)
             {
-                err.Add(
+                    err.Add(
                     M_CheckAmountInPageMustBeInDebit//"סכום החובה בדף בנק חייב להיות גדול מאפס כנדרש בצק"
                     );
             }

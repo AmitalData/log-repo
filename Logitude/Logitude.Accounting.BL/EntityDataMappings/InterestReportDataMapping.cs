@@ -59,6 +59,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 SetInterestReportGLAccountFields(entityPM);  
                              
              }
+
+            if (entityPOCO.ARinvoiceId != null)
+            {
+                ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(entityPM.Tenant);
+                entityPM.ARInvoiceNumber = aRInvoiceRepository.GetInvoiceNumber(entityPOCO.ARinvoiceId, entityPOCO.Tenant);
+            }
+
             CustomerPM customerPM = new CustomerPM();
             if (entityPM.CustomerId != null)
             {
@@ -187,7 +194,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         private void FillSearchFields(InterestReportPM entityPM, CustomerPM customerPM)
         {
-            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName + "," + entityPM.GLAccountDisplayNumber + "," + entityPM.GLAccountLocalName;
+            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName + "," + entityPM.GLAccountDisplayNumber + "," + entityPM.GLAccountLocalName + "," + entityPM.ARInvoiceNumber;
 
             if (customerPM != null && customerPM.Code != null) {
                 entityPM.SearchFields = entityPM.SearchFields + "," + customerPM.Code;

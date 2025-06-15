@@ -42,21 +42,7 @@ import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlow
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
-import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
-import { PartnerServicePM, PartnersDomainService } from 'Common/Services/PartnersDomainService';
-import { result } from 'cypress/types/lodash';
-import { debug } from 'console';
-import { VendorPM } from 'Common/EntityPMs/VendorPM';
-import { AgentPM } from 'Common/EntityPMs/AgentPM';
-import { ShippingAgentPM } from 'Common/EntityPMs/ShippingAgentPM';
-import { CustomAgentPM } from 'Common/EntityPMs/CustomAgentPM';
-import { CustomerPM } from 'Common/EntityPMs/CustomerPM';
-import { ContactPM } from 'Common/EntityPMs/ContactPM';
-import { AddressPM } from 'Common/EntityPMs/AddressPM';
-import { AccountingPartnerPM } from 'Common/EntityPMs/AccountingPartnerPM';
-import { TruckerPM } from 'Common/EntityPMs/TruckerPM';
-import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
-import { AirlinePM } from 'Common/EntityPMs/AirlinePM';
+
 import { WarehousePM } from 'Common/EntityPMs/WarehousePM';
 import { take } from 'rxjs/operators';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';

@@ -3073,6 +3073,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.MenuTableQuerySection == 'CustomsShipments') {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate('Shipment.O.OpenNewCustomShipment')
             }
+            else if (this.ObjectTableName == "InterestReport") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('InterestReport.O.NewReport');
+            }
+            else if (this.ObjectTableName == "OpenFormatReport") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
+            }
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
@@ -3660,6 +3666,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                     logWindow.Height = 300;
                 }
             }
+            else if (this.ObjectTableName == "InterestReport") {
+                str = TextCodeTranslator.Translate('InterestReport.O.NewReport');
+            }
+            else if (this.ObjectTableName == "OpenFormatReport") {
+                str = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
+            }
+
             else if (this.ObjectTableName == "AdditionalCurrencyRate") {
                 str = TextCodeTranslator.Translate("AdditionalCurrencyRate.O.NewAdditionalCurrencyRate");
             }
