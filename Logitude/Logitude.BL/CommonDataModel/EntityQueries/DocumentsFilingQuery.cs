@@ -3625,7 +3625,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 													IsFromCloud = a.IsFromCloud,
 
 												}).ToList();
-                externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
+                var cmp = new DocumentsFilingPMComparer();
+                externalDocumentPMs = externalDocumentPMs.Concat(docs).Distinct(cmp).ToList();
             }
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
@@ -3659,6 +3660,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return externalDocumentPMs.Where(d => d.HasFile).ToList();
         }
+       
 
         public List<DocumentsFilingPM> GetDocumentsFilingsByRferenceForRelatedDocuments(int tenant, List<string> externalEntityReferences)
         {
@@ -4229,5 +4231,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 		}
 	}
 
-
+    public class DocumentsFilingPMComparer : IEqualityComparer<DocumentsFilingPM>
+    {
+        public bool Equals(DocumentsFilingPM x, DocumentsFilingPM y)
+            => x?.Id == y?.Id;
+        public int GetHashCode(DocumentsFilingPM obj)
+            => obj.Id?.GetHashCode() ?? 0;
+    }
 }
