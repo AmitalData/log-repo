@@ -891,7 +891,7 @@ namespace WebFreight.Web.MetaDataUpdate
             updateClass.FillContainerizationHataraStatus();
             updateClass.FillOcrStatusTable();
             updateClass.FillSIIRequestStatusTable(0);
-
+                updateClass.FillSIIDocumentType(0);
 
             }
             catch (Exception ex)

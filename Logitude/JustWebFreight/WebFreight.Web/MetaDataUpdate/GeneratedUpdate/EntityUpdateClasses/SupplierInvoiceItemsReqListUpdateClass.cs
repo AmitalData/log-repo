@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "201d0e0e02ffb30a9a29796b841884f4";
+		public const string HashString = "ed34211ef7f198cd0810bbd71af3db9a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת בקשות",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "24e2",
+			      				    Code =  "1336",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -646,7 +646,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestType",
 					  						DefaultText =  "Request Type",
-					  						FullLocalDefaultText =  "גורם מטפל ",
+					  						FullLocalDefaultText =  "גורם מטפל",
 					  						ListFieldLable =  "RequestTypeListLable",
 					  						ListLableDefaultText =  "RequestType",
 					  						ListLocalDefaultText =  "גורם מטפל ",
@@ -711,7 +711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProductFileNumber",
 					  						DefaultText =  "Product File Number",
-					  						FullLocalDefaultText =  "תיק מוצר ",
+					  						FullLocalDefaultText =  "תיק מוצר",
 					  						ListFieldLable =  "ProductFileNumberListLable",
 					  						ListLableDefaultText =  "Product File Number",
 					  						ListLocalDefaultText =  "תיק מוצר ",
@@ -778,7 +778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryCode",
 					  						DefaultText =  "Manufacture Country Code",
-					  						FullLocalDefaultText =  "ארץ יצור ",
+					  						FullLocalDefaultText =  "ארץ יצור",
 					  						ListFieldLable =  "ManufactureCountryCodeListLable",
 					  						ListLableDefaultText =  "Manufacture Country Code",
 					  						ListLocalDefaultText =  "ארץ יצור ",
@@ -845,7 +845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryName",
 					  						DefaultText =  "Manufacture Country Name",
-					  						FullLocalDefaultText =  "ארץ יצור ",
+					  						FullLocalDefaultText =  "ארץ יצור",
 					  						ListFieldLable =  "ManufactureCountryNameListLable",
 					  						ListLableDefaultText =  "Manufacture Country Name",
 					  						ListLocalDefaultText =  "ארץ יצור ",
@@ -911,7 +911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufacturerName",
 					  						DefaultText =  "Manufacturer Name ",
-					  						FullLocalDefaultText =  "שם יצרן ",
+					  						FullLocalDefaultText =  "שם יצרן",
 					  						ListFieldLable =  "ManufacturerNameListLable",
 					  						ListLableDefaultText =  "Manufacturer Name",
 					  						ListLocalDefaultText =  "שם יצרן ",
@@ -1166,7 +1166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ItemNo",
 					  						DefaultText =  "Item No ",
-					  						FullLocalDefaultText =  "קוד דגם/מק\"ט  ",
+					  						FullLocalDefaultText =  "קוד דגם/מק\"ט ",
 					  						ListFieldLable =  "ItemNoListLable",
 					  						ListLableDefaultText =  "Item No ",
 					  						ListLocalDefaultText =  "קוד דגם/מק\"ט  ",
@@ -1230,7 +1230,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ItemName",
 					  						DefaultText =  "Item Description",
-					  						FullLocalDefaultText =  "תאור הדגם  ",
+					  						FullLocalDefaultText =  "תאור הדגם",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1291,7 +1291,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DutchGroupItem",
 					  						DefaultText =  "DutchGroupItem",
-					  						FullLocalDefaultText =  "קבוצת דוייטש מוצר  ",
+					  						FullLocalDefaultText =  "קבוצת דוייטש מוצר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1420,7 +1420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceQuantityType",
 					  						DefaultText =  "Invoice Quantity Type",
-					  						FullLocalDefaultText =  "יחידת מידה במת\"י  ",
+					  						FullLocalDefaultText =  "יחידת מידה במת\"י ",
 					  						ListFieldLable =  "InvoiceQuantityTypeListLable",
 					  						ListLableDefaultText =  "Invoice Quantity Type Name",
 					  						ListLocalDefaultText =  "יחידת מידה במת\"י  ",
@@ -1487,7 +1487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatisticQuantity",
 					  						DefaultText =  "Statistic Quantity",
-					  						FullLocalDefaultText =  "כמות במשלוח לפי יחידה מוצהרת  ",
+					  						FullLocalDefaultText =  "כמות במשלוח לפי יחידה מוצהרת ",
 					  						ListFieldLable =  "StatisticQuantityListLable",
 					  						ListLableDefaultText =  "Statistic Quantity",
 					  						ListLocalDefaultText =  "כמות במשלוח לפי יחידה מוצהרת  ",
@@ -1552,7 +1552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatisticQuantityType",
 					  						DefaultText =  "Statistic Quantity Type",
-					  						FullLocalDefaultText =  "יחידת מידה מוצהרת  ",
+					  						FullLocalDefaultText =  "יחידת מידה מוצהרת ",
 					  						ListFieldLable =  "StatisticQuantityTypeListLable",
 					  						ListLableDefaultText =  "Statistic Quantity Type",
 					  						ListLocalDefaultText =  "יחידת מידה מוצהרת  ",
@@ -1962,6 +1962,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VendorName",
 					  						ListPropertyPath =  "VendorName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2099,6 +2100,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.Confirm", DefaultText = "Confirm",LocalDefaultText = @"אשר", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"בטל", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOUnSavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges", DefaultText = "there is unsaved changes",LocalDefaultText = @"בהשלמת נתוני הבקשה בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -868,6 +868,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new SignStationMap());
 	
+            modelBuilder.Configurations.Add(new SIIDocumentTypeMap());
+	
             modelBuilder.Configurations.Add(new SIIRequestMap());
 	
             modelBuilder.Configurations.Add(new SIIRequestStatusMap());
@@ -3946,6 +3948,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<SignStation> SignStations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SIIDocumentType> SIIDocumentTypes 
 	 {
 	      get; set;
 	 

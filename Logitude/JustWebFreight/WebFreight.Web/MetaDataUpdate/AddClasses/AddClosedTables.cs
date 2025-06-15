@@ -3509,6 +3509,26 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 siiRequestStatusRepository.Add(newSiiRequestStatus);
             }
         }
+        public static void AddSIIDocumentType(SIIDocumentType sIIDocumentType, SIIDocumentTypeRepository sIIDocumentTypeRepository)
+        {
+            Dictionary<string, SIIDocumentType> tenantSiiDocumentTypes = sIIDocumentTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
+            if (tenantSiiDocumentTypes.Keys.Contains(sIIDocumentType.Code))
+            {
+                SIIDocumentType siiDocumentType = sIIDocumentTypeRepository.GetSingle(sIIDocumentType.Code);
+                siiDocumentType.LocalName = sIIDocumentType.LocalName;
+                siiDocumentType.SearchFields = (sIIDocumentType.Code + "," + sIIDocumentType.LocalName).ToLower();
+                sIIDocumentTypeRepository.Update(siiDocumentType);
+            }
+            else
+            {
+                SIIDocumentType newSiiDocumentType = new SIIDocumentType()
+                {
+                    Code = sIIDocumentType.Code,
+                    LocalName = sIIDocumentType.LocalName,
+                    SearchFields = (sIIDocumentType.Code + "," + sIIDocumentType.LocalName).ToLower()
+                };
+                sIIDocumentTypeRepository.Add(newSiiDocumentType);
+            }
 
-    }
+        }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Script DBType="Main" Module="Customs">
-	<Sql Version="1">
+<Script DBType="Global" Module="Customs">
+	<Sql Version="2">
 		<![CDATA[
     /* ---------- SII Customer Unique Code ---------- */
     IF NOT EXISTS (
@@ -35,7 +35,7 @@
     END
     ]]>
 	</Sql>
-	<Oracle Version="1">
+	<Oracle Version="2">
 		<![CDATA[
    MERGE INTO DefaultAndConfigurationKeys d
 USING (SELECT 0               AS Tenant,
