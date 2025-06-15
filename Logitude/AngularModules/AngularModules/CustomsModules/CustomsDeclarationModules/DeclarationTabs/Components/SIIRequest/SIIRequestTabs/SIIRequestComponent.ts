@@ -184,6 +184,30 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             });
         }
     }
+    ViewDocumentsComponent(){
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.entityPM;
+        windowArgs.ObjectTableName = "Customs.SIIRequest";
+        windowArgs.EntityParentPM = "Customs.Declaration";
+        //    windowArgs.SkipCtor = this.SkipCtor;
+        windowArgs.IsFromStandAloneScreen = true;
+        windowArgs.IsClose = true;
+        var windowTitle = "Customs.Declaration.TH.Documents";
+
+        var logWindow = new LogitudeWindow();
+        logWindow.IsHideHeader = true;
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnDocumentsWindowClosed($event));
+        this.entityArgs.SkipCtor = true;
+        logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+    }
+    OnDocumentsWindowClosed(event) {
+        this.entityArgs.SkipCtor = false;
+    }
 
     checkMandatoryCustomsFields(ValidationErrors: any[]) {
         let windowArgs: any = {};
