@@ -46,7 +46,7 @@
   LocalDefaultTextBack_up="&quot;רשימת בקשות&quot;"
   LocalDefaultText="&quot;BS64:Iteo16nXmdee16og15HXp9ep15XXqiI=&quot;"
   DefaultText="&quot;Supplier Invoice Items Request List&quot;"
-  Code="&quot;1336&quot;"
+  Code="&quot;646d&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2361,7 +2361,8 @@
     <TextCode
       Code="&quot;Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges&quot;"
       DefaultText="&quot;there is unsaved changes&quot;"
-      LocalDefaultText="&quot;בהשלמת נתוני הבקשה בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?&quot;"
+      LocalDefaultTextBack_up="&quot;בהשלמת נתוני הבקשה בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?&quot;"
+      LocalDefaultText="&quot;BS64:IteR15TXqdec157XqiDXoNeq15XXoNeZINeU15HXp9ep15Qg15HXldem16LXlSDXqdeZ16DXldeZ15nXnSDXqdec15Ag16DXqdee16jXlSwg15TXkNedINeR16jXpteV16DXmiDXnNep157XldeoINeQ15XXqtedPyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
