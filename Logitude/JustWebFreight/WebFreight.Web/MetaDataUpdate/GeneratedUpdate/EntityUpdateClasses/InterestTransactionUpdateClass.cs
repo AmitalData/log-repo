@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestTransactionUpdateClass
    {  		
-		public const string HashString = "248890fb257c075fea8f9db2c014891d";
+		public const string HashString = "2203816c3508c86326ae91fa01583b6f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -265,7 +265,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "שעת יצירה",
 					  						ListFieldLable =  "CreateDateTimeListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -909,10 +909,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestValueDate",
 					  						DefaultText =  "Interest Invoice Value Date",
-					  						FullLocalDefaultText =  "תםריך ריבית מהחשבונית",
+					  						FullLocalDefaultText =  "תאריך ריבית מהחשבונית",
 					  						ListFieldLable =  "InterestValueDateListLable",
 					  						ListLableDefaultText =  "Interest Invoice Value Date ",
-					  						ListLocalDefaultText =  "תםריך ריבית",
+					  						ListLocalDefaultText =  "תאריך ריבית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1037,7 +1037,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsClosed",
 					  						DefaultText =  "Is Closed",
-					  						FullLocalDefaultText =  "הםם סגור",
+					  						FullLocalDefaultText =  "האם סגור",
 					  						ListFieldLable =  "IsClosedListLable",
 					  						ListLableDefaultText =  "Is Closed",
 					  						ListLocalDefaultText =  "בוצעה התחשבנות",
@@ -2095,10 +2095,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference1",
 					  						DefaultText =  "Reference 1",
-					  						FullLocalDefaultText =  "םסמכתם 1",
+					  						FullLocalDefaultText =  "אסמכתא 1",
 					  						ListFieldLable =  "Reference1ListLable",
 					  						ListLableDefaultText =  "Reference 1",
-					  						ListLocalDefaultText =  "םסמכתם 1",
+					  						ListLocalDefaultText =  "אסמכתא 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2161,10 +2161,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultText =  "תםריך חשבונםי",
+					  						FullLocalDefaultText =  "תאריך חשבונאי",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultText =  "תםריך חשבונםי",
+					  						ListLocalDefaultText =  "תאריך חשבונאי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2278,9 +2278,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOIsMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.IsMissing", DefaultText = "is missing",LocalDefaultText = @"חסר/ה", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVONotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.NotFound", DefaultText = "not found",LocalDefaultText = @"לם נמצם/ת", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVONotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.NotFound", DefaultText = "not found",LocalDefaultText = @"לא נמצא/ת", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOAlreadyFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.AlreadyFound", DefaultText = "already found",LocalDefaultText = @"כבר נמצם/ת", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOAlreadyFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.AlreadyFound", DefaultText = "already found",LocalDefaultText = @"כבר נמצא/ת", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode InterestTransactionTextCode_InterestTransactionsCSVOGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InterestTransactionsCSV.O.GLAccount", DefaultText = "GLAccount Id",LocalDefaultText = @"חשבון", ObjectTableId = InterestTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

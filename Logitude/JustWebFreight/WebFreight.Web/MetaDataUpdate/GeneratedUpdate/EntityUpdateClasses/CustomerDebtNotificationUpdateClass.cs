@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomerDebtNotificationUpdateClass
    {  		
-		public const string HashString = "1a558aeaea715cfafbe94e5ae5bd7c49";
+		public const string HashString = "6cb77f5c34390facac8ad16fc4c93c37";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,6 +44,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -70,7 +71,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customer Debt Notifications",
-			      				    Code =  "693e",
+			      				    Code =  "6252",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -763,23 +764,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable CustomerDebtNotificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CustomerDebtNotification" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationODebtNotificationToCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.DebtNotificationToCustomers", DefaultText = "Debt notification to customers",LocalDefaultText = @"הודעת חוב ללקוחות", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationODebtNotificationToCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.DebtNotificationToCustomers", DefaultText = "Debt notification to customers",LocalDefaultText = @"הודעת חוב ללקוחות", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationONotActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.NotActive", DefaultText = "Not Active",LocalDefaultText = @"לם פעיל", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationONotActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.NotActive", DefaultText = "Not Active",LocalDefaultText = @"לא פעיל", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOActiveAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.ActiveAllCustomers", DefaultText = "Active for all customers",LocalDefaultText = @"פעיל לכל הלקוחות", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOActiveAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.ActiveAllCustomers", DefaultText = "Active for all customers",LocalDefaultText = @"פעיל לכל הלקוחות", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOActiveSelectedCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.ActiveSelectedCustomers", DefaultText = "Active for selected customers",LocalDefaultText = @"פעיל ללקוחות נבחרים", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOActiveSelectedCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.ActiveSelectedCustomers", DefaultText = "Active for selected customers",LocalDefaultText = @"פעיל ללקוחות נבחרים", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOObligato = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.Obligato", DefaultText = "Obligato",LocalDefaultText = @"םובליגו", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOObligato = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.Obligato", DefaultText = "Obligato",LocalDefaultText = @"אובליגו", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.AccountingBalance", DefaultText = "Accounting balance",LocalDefaultText = @"יתרה חשבונםית", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.AccountingBalance", DefaultText = "Accounting balance",LocalDefaultText = @"יתרה חשבונאית", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOBalanceRegarding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.BalanceRegarding", DefaultText = "Balance regarding",LocalDefaultText = @"יתרה לגביה", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOBalanceRegarding = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.BalanceRegarding", DefaultText = "Balance regarding",LocalDefaultText = @"יתרה לגביה", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.Percentage", DefaultText = "Percentage",LocalDefaultText = @"םחוז", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOPercentage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.Percentage", DefaultText = "Percentage",LocalDefaultText = @"אחוז", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.TotalAmount", DefaultText = "Total amount",LocalDefaultText = @"סכום מוחלט", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomerDebtNotificationTextCode_CustomerDebtNotificationOTotalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CustomerDebtNotification.O.TotalAmount", DefaultText = "Total amount",LocalDefaultText = @"סכום מוחלט", ObjectTableId = CustomerDebtNotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
