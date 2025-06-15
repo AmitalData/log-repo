@@ -48,6 +48,7 @@ import { take } from 'rxjs/operators';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { resolve } from 'cypress/types/bluebird';
 import { AdditionalCurrencyRateValidator } from 'Infrastructure/Validators/AdditionalCurrencyRateValidator';
+import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
 
 
 const InterestTransactionTabCode = 'GLIT';
