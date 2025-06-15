@@ -2365,6 +2365,12 @@
       LocalDefaultText="&quot;BS64:IteR15TXqdec157XqiDXoNeq15XXoNeZINeU15HXp9ep15Qg15HXldem16LXlSDXqdeZ16DXldeZ15nXnSDXqdec15Ag16DXqdee16jXlSwg15TXkNedINeR16jXpteV16DXmiDXnNep157XldeoINeQ15XXqtedPyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SupplierInvoiceItemsReqList.O.SendingRequest&quot;"
+      DefaultText="&quot;Sending Product Check &quot;"
+      LocalDefaultText="&quot;בדיקת תיק מוצר מול מכון תקנים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
