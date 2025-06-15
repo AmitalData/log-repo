@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "3032d80ea3b1dce841bc3b57440f537e";
+		public const string HashString = "2a0b6ae7fdaad2e7365fa65aace2d233";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -72,7 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "רשימת בקשות",
 			      				    LocalDefaultText =  "BS64:Iteo16nXmdee16og15HXp9ep15XXqiI=",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "646d",
+			      				    Code =  "ac0e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2071,6 +2071,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"BS64:IteR15jXnCI=", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOUnSavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges", DefaultText = "there is unsaved changes",LocalDefaultText = @"BS64:IteR15TXqdec157XqiDXoNeq15XXoNeZINeU15HXp9ep15Qg15HXldem16LXlSDXqdeZ16DXldeZ15nXnSDXqdec15Ag16DXqdee16jXlSwg15TXkNedINeR16jXpteV16DXmiDXnNep157XldeoINeQ15XXqtedPyI=", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOSendingRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.SendingRequest", DefaultText = "Sending Product Check ",LocalDefaultText = @"BS64:IteR15PXmden16og16rXmdenINee15XXpteoINee15XXnCDXnteb15XXnyDXqten16DXmdedIg==", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
