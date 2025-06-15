@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxDeductionReportUpdateClass
    {  		
-		public const string HashString = "f810fb23c7b0b18d6dc496471431fa8c";
+		public const string HashString = "be174bc6aff68221e39a3c2410cac98a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
           {                     
             
@@ -1444,10 +1444,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature TaxDeductionReportFeature_TaxDeductionReport_Features_Menu = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.Features.Menu", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.Menu", NameTextCodeDefaultText = @"Tax Deduction Report" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxDeductionReportObjectTable,contextTenant);
 
-		   Feature TaxDeductionReportFeature_TaxDeductionReport_O_Periodic = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.O.Periodic", FeatureTypeCode = "תקופתי", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.TaxDeductionReport.O.Periodic", NameTextCodeDefaultText = @"Periodic", ToggleCode = "O" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxDeductionReportObjectTable);
-
-		   Feature TaxDeductionReportFeature_TaxDeductionReport_O_InvalidMonthPeriod = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxDeductionReport.O.InvalidMonthPeriod", FeatureTypeCode = "ערך השדה 'לחודש' חייב להיות גדול מערך השדה 'מחודש'", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxDeductionReport.Features.TaxDeductionReport.O.InvalidMonthPeriod", NameTextCodeDefaultText = @"To month must be greater than from month", ToggleCode = "O" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,TaxDeductionReportObjectTable);
-
    
 	    
 		}
@@ -1605,7 +1601,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportONoVendorGlAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.NoVendorGlAccount", DefaultText = "The selected vendor doesn't have GlAccount",LocalDefaultText = @"לספק הנבחר לם מחובר כרטיס הנהלת חשבונות", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOExcludedFromDeductionReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ExcludedFromDeductionReport", DefaultText = "The selected vendor is excluded from deduction report",LocalDefaultText = " הספק הנבחר מסומן ''לם לדיווח'' בדוח 856", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-  
+
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOPeriodic = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Periodic", DefaultText = "Periodic",LocalDefaultText = @"תקופתי", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOInvalidMonthPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.InvalidMonthPeriod", DefaultText = "To month must be greater than from month",LocalDefaultText = @"ערך השדה 'לחודש' חייב להיות גדול מערך השדה 'מחודש'", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }
