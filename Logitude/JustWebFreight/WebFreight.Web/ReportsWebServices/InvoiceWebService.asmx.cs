@@ -610,8 +610,9 @@ namespace WebFreight.Web.ReportsWebServices
 
                     invoicedataprovider.Volume = shipment.Volume != null ? String.Format("{0:#,0.00}", shipment.Volume) + " " + volumeUnitCode : "";
                     invoicedataprovider.VolumetricWeight = shipment.VolumetricWeight != null ? String.Format("{0:#,0.00}", shipment.VolumetricWeight) + " " + chargeableWeightUnitCode : "";
-                    if(currentInvoice.StatusCode == "DR"  && currentInvoice.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant))
-                       invoicedataprovider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant);
+                    
+                    if(currentInvoice.StatusCode == "DR"  && currentInvoice.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant, !loggedcontact.DontShowLocalLabels))
+                       invoicedataprovider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant, !loggedcontact.DontShowLocalLabels);
                     else
                         invoicedataprovider.Notes = currentInvoice.PrintNotes != null ? currentInvoice.PrintNotes : "";
 
@@ -3089,8 +3090,8 @@ namespace WebFreight.Web.ReportsWebServices
                 invoiceDataProvider.DueDateAsDateFormat = entityPOCO.DueDate;
                 invoiceDataProvider.CustomerRef = entityPOCO.CustomerRef;
                 invoiceDataProvider.BillToVatNumber = entityPOCO.VatNumber != null ? entityPOCO.VatNumber : "";
-                if (entityPOCO.StatusCode == "DR" && entityPOCO.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant))
-                    invoiceDataProvider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant);
+                if (entityPOCO.StatusCode == "DR" && entityPOCO.PrintNotes == TranslateTextsClass.Translate("ARInvoice.O.Invoice", tenant, !loggedcontact.DontShowLocalLabels))
+                    invoiceDataProvider.Notes = TranslateTextsClass.Translate("ARInvoice.O.DraftInvoice", tenant, !loggedcontact.DontShowLocalLabels);
                 else
                     invoiceDataProvider.Notes = entityPOCO.PrintNotes != null ? entityPOCO.PrintNotes : "";
 
