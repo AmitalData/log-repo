@@ -7,7 +7,7 @@ import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
-import { SIIRequestWebService, SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
+import { SIIRequestWebService } from 'Customs/Services/WebServices/SIIRequestWebService';
 import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { SupplierInvoiceItemsReqListPMService } from 'Customs/Services/StandardPMs/SupplierInvoiceItemsReqListPMService';
@@ -119,6 +119,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
                 console.error('Error checking product file number:', myResponse?.ErrorsArray);
                 let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.`;
                 this.errorsList?.push(errorMsg);
+                this.ProductFileNumber = null;
                 this.openErrorsMsgWindow();
             }
         }, error => {
@@ -217,26 +218,27 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
     generalErrors: string[] = [];
     SaveSupplierInvoiceItemsReqList() {
-        if (AppTool.IsNullOrEmpty(this.currentSiiRequest.Id)) {
-
-            this.siiRequestPMService.insert(this.currentSiiRequest).subscribe(requestResult => {
-                let requestResponse: ServiceResponse = requestResult;
-                if (!requestResponse?.HasError && requestResponse?.Result) {
-                    this.currentSiiRequest = requestResponse.Result;
-                    this.entityPM.SIIRequestID = this.currentSiiRequest?.Id;
-                    this.saveItemCompletionData();
+        const siiRequestId = this.currentSiiRequest?.Id;
+        if (AppTool.IsNullOrEmpty(siiRequestId)) {
+            this.siiRequestPMService.insert(this.currentSiiRequest).subscribe({
+                next: (response: ServiceResponse) => {
+                    if (!response?.HasError && response?.Result) {
+                        this.currentSiiRequest = response.Result;
+                        this.entityPM.SIIRequestID = this.currentSiiRequest?.Id;
+                        this.saveItemCompletionData();
+                    }
+                    else if (response?.ErrorsArray.length > 0) {
+                        console.error('Error saving SII request:', response?.ErrorsArray);
+                        this.generalErrors = response?.ErrorsArray || ['Unknown error'];
+                    }
+                },
+                error: (err: any) => {
+                    console.error('Error saving SII request:', err);
+                    this.generalErrors = [err?.message || 'Unknown error'];
                 }
-                else if (requestResponse?.ErrorsArray.length > 0) {
-                    console.error('Error saving SII request:', requestResponse?.ErrorsArray);
-                    this.generalErrors = requestResponse?.ErrorsArray;
-                }
-            }, error => {
-                console.error('Error saving SII request:', error);
-                this.generalErrors = [error?.message];
             });
-        }
-        else {
-            this.entityPM.SIIRequestID = this.currentSiiRequest.Id;
+        } else {
+            this.entityPM.SIIRequestID = siiRequestId;
             this.saveItemCompletionData();
         }
     }
@@ -281,7 +283,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     oldEntityPM: SupplierInvoiceItemsReqListPM = new SupplierInvoiceItemsReqListPM();
     CancelSupplierInvoiceItemsReqList() {
         if (this.entityPM.IsDirty && !this.IsDisplayOnly) {
-            var confirm = new ConfirmWindow();
+            const confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;
             confirm.Show(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges"));

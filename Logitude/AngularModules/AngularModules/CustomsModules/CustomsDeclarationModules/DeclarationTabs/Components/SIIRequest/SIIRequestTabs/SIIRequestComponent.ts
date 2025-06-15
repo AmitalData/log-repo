@@ -129,9 +129,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
 
     // #region Actions:
-    CancelSaveSiiRequest() {
+    CancelSiiRequest() {
         if (this.entityPM.IsDirty && !this.IsDisplayOnly) {
-            var confirm = new ConfirmWindow();
+            const  confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;
             confirm.Show(TextCodeTranslator.Translate("Customs.SIIRequest.O.UnSavedChanges"));
