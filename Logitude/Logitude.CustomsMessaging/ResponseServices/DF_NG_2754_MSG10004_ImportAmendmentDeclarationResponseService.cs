@@ -506,9 +506,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         var courierdeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationOrg.Id, tenant);
                         if (courierdeclaration != null)
-                            courierdeclaration.ChangeSetOp = ChangeSetOperation.Delete
-                                ;
-                        courierDeclarationUpdateService.Update(courierdeclaration, true);
+                        {
+                            courierdeclaration.ChangeSetOp = ChangeSetOperation.Delete;
+                            courierDeclarationUpdateService.Update(courierdeclaration, true);
+                        }
 
                         CourierDeclarationPM courierDeclarationPM = new CourierDeclarationPM();
                         courierDeclarationPM.Tenant = courierdeclaration.Tenant;
@@ -580,8 +581,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             catch (System.Exception ex)
 
             {
-                error = ex.Message + ex.StackTrace;
-                return null;
+                throw new System.Exception("Error in MapResponseToDeclaration: " + ex.Message, ex);
             }
         }
 
