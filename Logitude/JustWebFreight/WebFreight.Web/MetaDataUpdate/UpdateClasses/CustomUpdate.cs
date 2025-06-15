@@ -17574,12 +17574,12 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         {
             SIIDocumentTypeRepository sIIDocumentTypeRepository = new SIIDocumentTypeRepository(0);
             Dictionary<string,SIIDocumentType> keyValuePairs=sIIDocumentTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
-            AddClosedTables.AddSIIDocumentType(new SIIDocumentType() { Code = "1", LocalName= "שטר מטען" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddSIIDocumentType(new SIIDocumentType() { Code = "2", LocalName = "חשבון ספק" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddSIIDocumentType(new SIIDocumentType() { Code = "4", LocalName = "תצהיר נלווה לבקשה למתן אישור עמידה בדרישות הממונה על התקינה" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddSIIDocumentType(new SIIDocumentType() { Code = "8", LocalName = "דוחות בדיקה חיצוניים" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddSIIDocumentType(new SIIDocumentType() { Code = "9", LocalName = "קטלוגים/תצהירים" }, sIIDocumentTypeRepository);
-            AddClosedTables.AddSIIDocumentType(new SIIDocumentType() { Code = "101", LocalName = "אחר" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "1", LocalName= "שטר מטען" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "2", LocalName = "חשבון ספק" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "4", LocalName = "תצהיר נלווה לבקשה למתן אישור עמידה בדרישות הממונה על התקינה" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "8", LocalName = "דוחות בדיקה חיצוניים" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "9", LocalName = "קטלוגים/תצהירים" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "101", LocalName = "אחר" }, sIIDocumentTypeRepository);
 
         }
 
