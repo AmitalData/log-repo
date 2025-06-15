@@ -582,6 +582,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\SalesTaxExemptionTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SecurityClearenceTypeCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SignatureTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\SIIDocumentTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SIIRequestStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SiteLookupDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\SpecialActionDescriptionTypeDetails.Generated.cs" />
@@ -1613,6 +1614,7 @@
     <Compile Include="EntityDataMappings\Generated\ServersNameDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SignStationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SIIDocumentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SIIRequestDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SIIRequestStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SiteLookupDataMapping.Generated.cs" />
@@ -1824,6 +1826,7 @@
     <Compile Include="EntityDataMappings\ServersNameDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SignStationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SIIDocumentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\SIIRequestDataMapping.cs" />
     <Compile Include="EntityDataMappings\SIIRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\SiteLookupDataMapping.cs" />
@@ -1917,6 +1920,7 @@
     <Compile Include="EntityQueryServices\Generated\ExportReferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ProceduralFaultQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\SIIDocumentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\UnloadingSiteTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SIIRequestQueryService.cs" />
@@ -2566,6 +2570,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsPaymentTermUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\SIIRequestUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SIIDocumentTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestHandlingAuthorityUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIRequestUpdateService.Generated.cs" />

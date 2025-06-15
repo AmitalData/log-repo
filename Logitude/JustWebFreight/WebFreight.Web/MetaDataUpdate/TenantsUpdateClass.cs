@@ -901,6 +901,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClass.FillOcrStatusTable(tenant);
                 updateClass.FillSIIRequestStatusTable(tenant);
 
+                updateClass.FillSIIDocumentType(tenant);
 
 
             }
