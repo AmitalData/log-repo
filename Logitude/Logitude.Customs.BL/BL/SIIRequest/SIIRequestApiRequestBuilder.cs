@@ -1,4 +1,5 @@
-﻿using Logitude.Server.Tools.RestRequestExecutor;
+﻿using Logitude.Customs.Data.DataContracts.SIIRequest;
+using Logitude.Server.Tools.RestRequestExecutor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,15 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         public static ApiRequest<TData> Build<TData>(
             int tenant,
             SIIRequestWebApiEndpointConfig config,
-            TData data)
+            TData data, ApiCommunicationConstants communicationsDto)
         {
             return new ApiRequest<TData>
             {
                 Tenant = tenant,
                 Url = config.Url,
                 Header = config.Header,
-                Data = data
+                Data = data,
+                Communications = communicationsDto,
             };
         }
     }

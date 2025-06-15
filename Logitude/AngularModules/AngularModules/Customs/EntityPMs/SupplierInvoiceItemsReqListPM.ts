@@ -141,6 +141,36 @@ export class SupplierInvoiceItemsReqListPM {
     public set OriginCountryCode(newValue: string) { if (this.originCountryCode != newValue) { this.originCountryCode = newValue; this.MarkAsDirty("OriginCountryCode"); } }
        
 	 
+    private classificationCode: string;
+    public get ClassificationCode() { return this.classificationCode; }
+    public set ClassificationCode(newValue: string) { if (this.classificationCode != newValue) { this.classificationCode = newValue; this.MarkAsDirty("ClassificationCode"); } }
+       
+	 
+    private invoiceQuantityTypeCode: string;
+    public get InvoiceQuantityTypeCode() { return this.invoiceQuantityTypeCode; }
+    public set InvoiceQuantityTypeCode(newValue: string) { if (this.invoiceQuantityTypeCode != newValue) { this.invoiceQuantityTypeCode = newValue; this.MarkAsDirty("InvoiceQuantityTypeCode"); } }
+       
+	 
+    private invoiceNumber: string;
+    public get InvoiceNumber() { return this.invoiceNumber; }
+    public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
+       
+	 
+    private issueDate: Date;
+    public get IssueDate() { return this.issueDate; }
+    public set IssueDate(newValue: Date) { if (this.issueDate != newValue) { this.issueDate = newValue; this.MarkAsDirty("IssueDate"); } }
+       
+	 
+    private statisticQuantityTypeCode: string;
+    public get StatisticQuantityTypeCode() { return this.statisticQuantityTypeCode; }
+    public set StatisticQuantityTypeCode(newValue: string) { if (this.statisticQuantityTypeCode != newValue) { this.statisticQuantityTypeCode = newValue; this.MarkAsDirty("StatisticQuantityTypeCode"); } }
+       
+	 
+    private vendorName: string;
+    public get VendorName() { return this.vendorName; }
+    public set VendorName(newValue: string) { if (this.vendorName != newValue) { this.vendorName = newValue; this.MarkAsDirty("VendorName"); } }
+       
+	 
 
     public OldEntityPM: SupplierInvoiceItemsReqListPM;
 		

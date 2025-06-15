@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.APIDataContract.ApiV1;
 using Logitude.BL.Interfaces;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
@@ -13,6 +14,7 @@ using Logitude.Server.Tools.Utils;
 using Microsoft.Azure.Management.Sql.Fluent.Models;
 using Microsoft.Practices.Unity;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -23,6 +25,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
     public class SIIRequestApiRequestFactory
     {
         private readonly int _tenant;
+        private CustomsPartnerFtpPM customsPartnerFtpPM;
+        private InterfaceDetails interfaceDetails;
         private readonly CustomsPartnerFtpDetails _ftpDetailsHelper;
         private readonly CustomsPartnerFtpQueryService _ftpQueryService;
 
@@ -30,6 +34,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         public const string MissingServiceUrl = "Customs.SIIRequest.O.MissingServiceUrl";
         public const string MissingUsername = "Customs.SIIRequest.O.MissingUsername";
         public const string MissingPassword = "Customs.SIIRequest.O.MissingPassword";
+        public const string DeclarationObjectTable = "Customs.Declaration";
 
         public SIIRequestApiRequestFactory(int tenant)
         {
@@ -40,11 +45,14 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         public CredentialsDto BuildCredentials(string interfaceName, string partnerCode)
         {
-            var def = GetInterfaceDefinition(interfaceName);
-            var pm = GetPartnerFtpRow(interfaceName, partnerCode, def);
-            var dto = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pm.CommunicationDetails);
+            if(interfaceDetails == null)
+            {
+                interfaceDetails = GetInterfaceDefinition(interfaceName);
+                customsPartnerFtpPM= GetPartnerFtpRow(interfaceName, partnerCode, interfaceDetails);
+            }
+            var dto = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(customsPartnerFtpPM.CommunicationDetails);
 
-            Validate(dto, def.Name, _tenant);
+            Validate(dto, interfaceDetails.Name, _tenant);
             var SIICustomerUniqueCode = DefaultService.Instance.Get(_tenant, "SIICustomerUniqueCode", "SIICustomerUniqueCode")?.Value1;
 
             return new CredentialsDto
@@ -54,13 +62,30 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 hashPassword = dto.Password
             };
         }
+        public ApiCommunicationConstants BuildCommunicationsDto(string interfaceName, string partnerCode,string declarationId)
+        {
+            if (interfaceDetails == null)
+            {
+                interfaceDetails = GetInterfaceDefinition(interfaceName);
+            }
+            var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+            return new ApiCommunicationConstants
+            {
+                EntityId = declarationId,
+                Subject = interfaceDetails.Name,
+                ObjectTableId = objectTableId
+            };
+        }
         public SIIRequestWebApiEndpointConfig GetEndpointConfig(string interfaceName, string partnerCode)
         {
-            var def = GetInterfaceDefinition(interfaceName);
-            var pm = GetPartnerFtpRow(interfaceName, partnerCode, def);
-            var dto = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pm.CommunicationDetails);
+            if (interfaceDetails == null)
+            {
+                interfaceDetails = GetInterfaceDefinition(interfaceName);
+                customsPartnerFtpPM = GetPartnerFtpRow(interfaceName, partnerCode, interfaceDetails);
+            }
+            var dto = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(customsPartnerFtpPM.CommunicationDetails);
 
-            Validate(dto, def.Name, _tenant);
+            Validate(dto, interfaceDetails.Name, _tenant);
 
             return new SIIRequestWebApiEndpointConfig
             {
@@ -133,10 +158,10 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         public ApiRequest<TData> Create<TData>(
             string interfaceName,
             string partnerCode,
-            TData data)
+            TData data, ApiCommunicationConstants communicationsDto)
         {
             var config = GetEndpointConfig(interfaceName, partnerCode);
-            return ApiRequestBuilder.Build(_tenant, config, data);
+            return ApiRequestBuilder.Build(_tenant, config, data, communicationsDto);
         }
         private InterfaceDetails GetInterfaceDefinition(string interfaceName)
         {
