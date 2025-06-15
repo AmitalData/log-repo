@@ -2,8 +2,7 @@
 <Table
   Name="CustomsDocumentsTickets"
   Schema="Customs"
-  DBType="Main"
-  Module="Customs">
+  DBType="Main">
   <Column
     Name="Id"
     Type="varchar"
@@ -84,11 +83,6 @@
     ReferencedTable="DocumentsFilings"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="DocumentTypeCode"
-    ReferencedTable="CustomDocumentTypes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="VerificationStatusTypeCode"
     ReferencedTable="CustomsVerificationStatusTypes"

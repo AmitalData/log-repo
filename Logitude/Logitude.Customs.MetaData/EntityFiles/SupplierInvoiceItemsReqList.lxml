@@ -46,7 +46,7 @@
   LocalDefaultTextBack_up="&quot;רשימת בקשות&quot;"
   LocalDefaultText="&quot;BS64:Iteo16nXmdee16og15HXp9ep15XXqiI=&quot;"
   DefaultText="&quot;Supplier Invoice Items Request List&quot;"
-  Code="&quot;a27b&quot;"
+  Code="&quot;ac0e&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2226,6 +2226,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;VendorName&quot;"
     ListPropertyPath="&quot;VendorName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -2355,6 +2356,20 @@
       DefaultText="&quot;Cancel&quot;"
       LocalDefaultTextBack_up="&quot;בטל&quot;"
       LocalDefaultText="&quot;BS64:IteR15jXnCI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges&quot;"
+      DefaultText="&quot;there is unsaved changes&quot;"
+      LocalDefaultTextBack_up="&quot;בהשלמת נתוני הבקשה בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?&quot;"
+      LocalDefaultText="&quot;BS64:IteR15TXqdec157XqiDXoNeq15XXoNeZINeU15HXp9ep15Qg15HXldem16LXlSDXqdeZ16DXldeZ15nXnSDXqdec15Ag16DXqdee16jXlSwg15TXkNedINeR16jXpteV16DXmiDXnNep157XldeoINeQ15XXqtedPyI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SupplierInvoiceItemsReqList.O.SendingRequest&quot;"
+      DefaultText="&quot;Sending Product Check &quot;"
+      LocalDefaultTextBack_up="&quot;בדיקת תיק מוצר מול מכון תקנים&quot;"
+      LocalDefaultText="&quot;BS64:IteR15PXmden16og16rXmdenINee15XXpteoINee15XXnCDXnteb15XXnyDXqten16DXmdedIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

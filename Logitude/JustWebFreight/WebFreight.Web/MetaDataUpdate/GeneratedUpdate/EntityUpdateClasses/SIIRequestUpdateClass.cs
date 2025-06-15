@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "10a3d8ce4d39155f90a10e636f715643";
+		public const string HashString = "d653ba19ca4b54e6f7b0ddd0514b174a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "5f9f",
+			      				    Code =  "42ad",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1641,6 +1641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OriginCountryCode",
 					  						ListPropertyPath =  "OriginCountryCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1701,6 +1702,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UnloadPortCode",
 					  						ListPropertyPath =  "UnloadPortCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -1888,6 +1890,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingUsername = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingUsername", DefaultText = "Required field (%name) – Username",LocalDefaultText = @"BS64:IteU15nXoNeVINep15PXlCDXl9eV15HXlCAoJW5hbWUpIC0g16nXnSDXntep16rXntepIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingPassword", DefaultText = "Required field (%name) – Password",LocalDefaultText = @"BS64:IteU15nXoNeVINep15PXlCDXl9eV15HXlCAoJW5hbWUpIC0g16HXmdeh157XkCI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOUnSavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.UnSavedChanges", DefaultText = "there is unsaved changes",LocalDefaultText = @"BS64:IteR16DXqteV16DXmSDXlNeR16fXqdeUINeU16DXldeb15fXmdeqINeR15XXptei15Ug16nXmdeg15XXmdeZ150g16nXnNeQINeg16nXnteo15UsINeU15DXnSDXkdeo16bXldeg15og15zXqdee15XXqCDXkNeV16rXnT8i", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
