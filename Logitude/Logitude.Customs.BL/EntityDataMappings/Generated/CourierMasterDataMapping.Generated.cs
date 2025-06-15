@@ -58,7 +58,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OpenDeclarations, 
 	         NoOfCourierHawbwWithoutHatara, 
 	         NoOfCourierHawbWithoutDelivery, 
-	         EffectiveFlight,
+	         EffectiveFlight, 
+	         CourierMasterPaymentStatusCd,
 	      }
 
 
@@ -135,7 +136,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CourierDeclarationStatusCode, 
 	         CourierManifestStatusCode, 
 	         IsCourierMissingClassification, 
-	         EffectiveFlight,
+	         EffectiveFlight, 
+	         CourierMasterPaymentStatusCd,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -322,6 +324,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectiveFlight))
             {
 				entityPOCO.EffectiveFlight = entityPM.EffectiveFlight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierMasterPaymentStatusCd))
+            {
+				entityPOCO.CourierMasterPaymentStatusCd = entityPM.CourierMasterPaymentStatusCd;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -515,6 +522,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.EffectiveFlight = entityPOCO.EffectiveFlight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CourierMasterPaymentStatusCd))
+            {
+					entityPM.CourierMasterPaymentStatusCd = entityPOCO.CourierMasterPaymentStatusCd;
+            }
+
 		}
 
 		public void PMToOldPM(CourierMasterPM entityPM, CourierMasterPM oldEntityPM)
@@ -699,6 +711,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EffectiveFlight))
             {
                 oldEntityPM.EffectiveFlight = entityPM.EffectiveFlight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CourierMasterPaymentStatusCd))
+            {
+                oldEntityPM.CourierMasterPaymentStatusCd = entityPM.CourierMasterPaymentStatusCd;
             }
 			
 		}

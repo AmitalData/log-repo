@@ -557,7 +557,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                                 if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
                                     myMessageWindow.ShowEventButton=true;
                                     myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
-                                }  
+                                }else{
+                                    this.UpdateCourierMasterPaymentStatus();
+                                }
                                 myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
@@ -577,7 +579,9 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                                 if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
                                     myMessageWindow.ShowEventButton=true;
                                     myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
-                                }  
+                                } else{
+                                    this.UpdateCourierMasterPaymentStatus();
+                                }
                                 myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
@@ -598,6 +602,20 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             ;
         });
 
+    }
+
+    UpdateCourierMasterPaymentStatus(){
+        this.entityPM.CourierMasterPaymentStatusCd = "1";
+        this._CourierMasterPMService
+            .update(this.entityPM)
+            .subscribe((response: ServiceResponse) => {
+                if (response.HasError) {
+                    var myMessageWindow = new MessageWindow();
+                    myMessageWindow.Show(response.ErrorsArray[0]);
+                } else {
+                    this.entityPM = response.Result;
+                }
+            });
     }
 
     SendALLCorrectDec(courierDeclarationStatusCode: string) {        
