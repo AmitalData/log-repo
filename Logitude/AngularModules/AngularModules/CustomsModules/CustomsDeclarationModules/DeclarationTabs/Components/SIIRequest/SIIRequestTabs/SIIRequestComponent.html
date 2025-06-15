@@ -433,7 +433,7 @@
                                                                                         src="./Images/Buttons/EditWithGreenTick.png" />
                                                                                 </IconButton>
                                                                                 <button class="Button"
-                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    style="height:18px; width: 18px;"
                                                                                     id="Edit_Additional"
                                                                                     *ngIf="item.RequestRequiredStatus === isFullyCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)"
@@ -442,7 +442,7 @@
                                                                                         src="./Images/Buttons/EditWithGreenTick.png" />
                                                                                 </button>
                                                                                 <button class="Button"
-                                                                                    style="height:18px; width: 18px;right:2px;"
+                                                                                    style="height:18px; width: 18px;"
                                                                                     id="Edit_Additional"
                                                                                     *ngIf="item.RequestRequiredStatus === isPartiallyCompleted"
                                                                                     (click)="onEditSupplierInvoiceItemRequest(item)"
@@ -476,7 +476,7 @@
         <td style="width: 235px;position: absolute;bottom: 5px;">
             <div style="display: flex; align-items: flex-end; justify-content: space-around;">
                 <div style="width: 57px;vertical-align: bottom;">
-                    <button class="Button" (click)="CancelSaveSiiRequest()">{{'Customs.General.B.Cancel'
+                    <button class="Button" (click)="CancelSiiRequest()">{{'Customs.General.B.Cancel'
                         |TextCodeTranslationPipe}}</button>
                 </div>
                 <div style="width: 57px;vertical-align: bottom;">
