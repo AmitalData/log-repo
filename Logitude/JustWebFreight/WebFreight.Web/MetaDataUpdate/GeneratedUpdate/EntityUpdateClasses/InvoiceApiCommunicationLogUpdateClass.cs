@@ -261,10 +261,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תםריך יצירה",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -588,10 +588,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Exception",
 					  						DefaultText =  "Exception",
-					  						FullLocalDefaultText =  "שגיםה",
+					  						FullLocalDefaultText =  "שגיאה",
 					  						ListFieldLable =  "ExceptionListLable",
 					  						ListLableDefaultText =  "Exception",
-					  						ListLocalDefaultText =  "שגיםה",
+					  						ListLocalDefaultText =  "שגיאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -831,8 +831,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature InvoiceApiCommunicationLogDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Details", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.MGGT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
  
                  
-			   TextCode InvoiceApiCommunicationLogEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature InvoiceApiCommunicationLogEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Events", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.ICEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable);
+			   TextCode InvoiceApiCommunicationLogEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature InvoiceApiCommunicationLogEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Events", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.ICEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -840,7 +840,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "MGGT",HtmlComponentName = "InvoiceApiCommunicationLogDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent", FeatureId = InvoiceApiCommunicationLogDetailsFeature_TH0.Id,FeatureUniqeCode = InvoiceApiCommunicationLogDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, TabNameTextCodeId = InvoiceApiCommunicationLogDetailsTextCode_TH0.Id, TabNameTextCodeCode = InvoiceApiCommunicationLogDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ICEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InvoiceApiCommunicationLogEventsFeature_TH1.Id,FeatureUniqeCode = InvoiceApiCommunicationLogEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, TabNameTextCodeId = InvoiceApiCommunicationLogEventsTextCode_TH1.Id, TabNameTextCodeCode = InvoiceApiCommunicationLogEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "ICEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = InvoiceApiCommunicationLogEventsFeature_TH1.Id,FeatureUniqeCode = InvoiceApiCommunicationLogEventsFeature_TH1.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, TabNameTextCodeId = InvoiceApiCommunicationLogEventsTextCode_TH1.Id, TabNameTextCodeCode = InvoiceApiCommunicationLogEventsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -915,7 +915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 IsFollowUp =  false,
                 ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id,
 				 
-            }, EventTypeRepository, tenantEventTypes);
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
 	    }
