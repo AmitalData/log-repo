@@ -102,11 +102,13 @@ namespace Logitude.Customs.Data.Repsitories
             }
          into certGroup
 
-        join cert in context.SupplierInvoiceItemsReqLists
-            on new { itm.DeclarationId, itm.LineNumber, itm.CounterKey, SIIRequestID = siiRequestId }
-            equals new { cert.DeclarationId, cert.LineNumber, CounterKey = cert.InvoiceCounterKey, cert.SIIRequestID }
-            into reqJoin
-        from requestList in reqJoin.DefaultIfEmpty()
+        let requestList =
+            context.SupplierInvoiceItemsReqLists.FirstOrDefault(request =>
+                   request.DeclarationId == itm.DeclarationId
+                && request.InvoiceItemLineNumber == itm.LineNumber
+                && request.InvoiceCounterKey == itm.CounterKey
+                && request.SIIRequestID == siiRequestId
+                && request.Tenant == tenant)
 
         select new SupplieInvoiceItemsForSIIRequest
         {
