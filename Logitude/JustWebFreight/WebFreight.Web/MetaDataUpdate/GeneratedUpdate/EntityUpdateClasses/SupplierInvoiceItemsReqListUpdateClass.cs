@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "ed34211ef7f198cd0810bbd71af3db9a";
+		public const string HashString = "1610c4cb210a834a195c8f599514a3d9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת בקשות",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "1336",
+			      				    Code =  "b030",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2102,6 +2102,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOCancel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.Cancel", DefaultText = "Cancel",LocalDefaultText = @"בטל", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOUnSavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.UnSavedChanges", DefaultText = "there is unsaved changes",LocalDefaultText = @"בהשלמת נתוני הבקשה בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOSendingRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.SendingRequest", DefaultText = "Sending Product Check ",LocalDefaultText = @"בדיקת תיק מוצר מול מכון תקנים", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
