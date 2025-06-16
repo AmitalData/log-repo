@@ -1704,6 +1704,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM != null) {
             if (this.EntityPM.BranchId != value) {
                 this.EntityPM.BranchId = value;
+                this.Validate();
                 this.CheckARPaymentCashBook();
             }
         }
@@ -2528,12 +2529,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return this.PaymenyAmount - this.paymentReconciledAmountTotal - this.amount2reconcileTotal;
     }
 
-    ValidateChequeFields() {
-        if(this.CurrentSession.CurrentEditComponent.ValidationErrorsList === null && this.CurrentSession.CurrentEditComponent.ValidationErrorsList.length === 0) {
-            return this.CurrentSession.CurrentEditComponent.ValidationErrorsList = this.ARPaymentValidator.Validate(this.EntityPM);
-        }
-        return this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
+    Validate() {
+        return this.CurrentSession.CurrentEditComponent.ValidationErrorsList = this.ARPaymentValidator.Validate(this.EntityPM);
     }
+
     async ValidateDuplicateCheques(bank:string,bankBranch:string,bankAccount:string,chequeOrPaymentRef:string) {
         var errors: string[] = [];
         const validationResult = await this.ARPaymentValidator.ValidateDuplicateCheque(bank, bankBranch, bankAccount, chequeOrPaymentRef);
@@ -2544,7 +2543,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return errors;
     }
     AddChequesButtonClicked() {
-        var errors: string[] = this.ValidateChequeFields();
+        var errors: string[] = this.Validate();
         if (errors.length > 0) {
             return;
         }
