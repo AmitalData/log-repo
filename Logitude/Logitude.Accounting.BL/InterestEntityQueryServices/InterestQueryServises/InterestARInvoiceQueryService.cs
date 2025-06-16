@@ -31,26 +31,26 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.EntityType = "ARInvoice";
                 result.EntityTypeCode = InterestEntityTypeCodes.ARInvoice;
 
-                result.OriginalLines = new List<InterestEntityOriginalLineResult>();
                 int count = 0;
-                foreach (var item in aRInvoice.InvoiceLines)
+                result.OriginalLines = new List<InterestEntityOriginalLineResult>();
+
+                result.OriginalLines.AddRange(aRInvoice.InvoiceLines.Select(item => new InterestEntityOriginalLineResult
                 {
-                    count++;
-                    InterestEntityOriginalLineResult line = new InterestEntityOriginalLineResult();
-                    line.OriginalLineNumber = item.LineNumber;
-                    line.Reference1 = aRInvoice.InvoiceNumber;
-                    line.Notes = item.Description;
-                    result.OriginalLines.Add(line);
-                }
-                foreach (var item in aRInvoice.TotalVATs.Where(vt => vt.VATPercent > 0))
+                    OriginalLineNumber = item.LineNumber,
+                    Reference1 = aRInvoice.InvoiceNumber,
+                    Notes = item.Description
+                }).ToList());
+
+                count = aRInvoice.InvoiceLines.Count;
+
+                result.OriginalLines.AddRange(aRInvoice.TotalVATs
+                .Where(vt => vt.VATPercent > 0)
+                .Select(vt => new InterestEntityOriginalLineResult
                 {
-                    count++;
-                    InterestEntityOriginalLineResult line = new InterestEntityOriginalLineResult();
-                    line.OriginalLineNumber = count;
-                    line.Reference1 = aRInvoice.InvoiceNumber;
-                    line.Notes = "VAT " + item.VATPercent + "%";
-                    result.OriginalLines.Add(line);
-                }
+                    OriginalLineNumber = ++count,
+                    Reference1 = aRInvoice.InvoiceNumber,
+                    Notes = $"VAT {vt.VATPercent}%"
+                }));
             }
            
 
