@@ -10,260 +10,299 @@
 
 
 create or ALTER PROCEDURE [dbo].[usp_NewAgingReport]
-    @AccountID VARCHAR(50) = NULL,
-    @InputDate DATE = NULL,
-    @Tenant INT,
-    @ChartOfAccountsTypeCode INT = NULL,
-    @AccountTypeCode INT = NULL,
-    @SalesmanId VARCHAR(50) = NULL,
-    @CollectorId VARCHAR(50) = NULL,
-    @CategoryValue VARCHAR(50) = NULL,
-    @CategoryName VARCHAR(50) = NULL,
-    @ChartOfAccountsId VARCHAR(50) = NULL,
-    @CurrencyFilterSelectedValue VARCHAR(50) = null,
-	 @CurrencyId VARCHAR(50)=NULL
+@AccountID VARCHAR(50) = NULL,
+@InputDate DATE = NULL,
+@Tenant INT,
+@ChartOfAccountsTypeCode INT = NULL,
+@AccountTypeCode INT = NULL,
+@SalesmanId VARCHAR(50) = NULL,
+@CollectorId VARCHAR(50) = NULL,
+@CategoryValue VARCHAR(50) = NULL,
+@CategoryName VARCHAR(50) = NULL,
+@ChartOfAccountsId VARCHAR(50) = NULL,
+@CurrencyFilterSelectedValue VARCHAR(50) = null,
+@CurrencyId VARCHAR(50)=NULL,
 
-   
-AS
+  @GroupMultiAccounts  bit =0
+  AS
+
 
 BEGIN
-     IF @InputDate IS NULL
-    BEGIN
-        SET @InputDate = GETDATE();
-    END
-	CREATE TABLE #TemporaryTable (
-    CreditLimit float(18),
-    InsuredcreditLimit decimal(18,2),
-    SalesmanUserId VARCHAR(15),
-    CollectorId VARCHAR(15),
-    AccountCurrencyCode VARCHAR(3),
-    TotalOpenShipments decimal(18,2),
-    TotFutureOpenChequesInLocalCur DECIMAL(18, 2),
-	TotPastOpenChequesInLocalCur DECIMAL(18, 2),
+IF @InputDate IS NULL
+BEGIN
+SET @InputDate = GETDATE();
+END
+CREATE TABLE #TemporaryTable (
+RowNumber VARCHAR(15),
+CreditLimit float(18),
+InsuredcreditLimit decimal(18,2),
+SalesmanUserId VARCHAR(15),
+CollectorId VARCHAR(15),
+AccountCurrencyCode VARCHAR(3),
+TotalOpenShipments decimal(18,2),
+TotFutureOpenChequesInLocalCur DECIMAL(18, 2),
+TotPastOpenChequesInLocalCur DECIMAL(18, 2),
+DisplayNumber VARCHAR(15),
+LocalName NVARCHAR(210),
+EnglishName VARCHAR(75),
+ID VARCHAR(15),
+ContactId VARCHAR(15),
+PaymnetTermLocalName NVARCHAR(210),
+PaymnetTermEnglishName VARCHAR(75),
+MinimumInterestInvoiceBilling NVARCHAR(210),
+CreditAllotmentPercentage NVARCHAR(210),
+IsMultiCurrency bit,
 
-    DisplayNumber VARCHAR(15),
-    LocalName NVARCHAR(210),
-    EnglishName VARCHAR(75),
-    ID VARCHAR(15),
-    Minus30Days DECIMAL(30, 2),
-    Minus60Days DECIMAL(30, 2),
-    Minus90Days DECIMAL(30, 2),
-    Minus120Days DECIMAL(30, 2),
-    Minus150Days DECIMAL(30, 2),
-    Minus180Days DECIMAL(30, 2),
-    Past DECIMAL(30, 2),
-    Plus30Days DECIMAL(30, 2),
-    Plus60Days DECIMAL(30, 2),
-    Plus90Days DECIMAL(30, 2),
-    Future DECIMAL(30, 2),
-    ExternalTransactionsTotal DECIMAL(30, 2),
-   TotalForeign DECIMAL(30, 2),
-   	BalanceInLocalCurrency DECIMAL(30, 2),
-   	BalanceInForeignCurrency DECIMAL(30, 2),
+Minus30Days DECIMAL(30, 2),
+Minus60Days DECIMAL(30, 2),
+Minus90Days DECIMAL(30, 2),
+Minus120Days DECIMAL(30, 2),
+Minus150Days DECIMAL(30, 2),
+Minus180Days DECIMAL(30, 2),
+Past DECIMAL(30, 2),
+Plus30Days DECIMAL(30, 2),
+Plus60Days DECIMAL(30, 2),
+Plus90Days DECIMAL(30, 2),
+Future DECIMAL(30, 2),
+ExternalTransactionsTotal DECIMAL(30, 2),
+MainGlaccountId VARCHAR(75),
 
+TotalForeign DECIMAL(30, 2),
+BalanceInLocalCurrency DECIMAL(30, 2),
+BalanceInForeignCurrency DECIMAL(30, 2),
 );
 
-
 INSERT INTO #TemporaryTable
+SELECT
+ROW_NUMBER() OVER (ORDER BY t.accountId)  as RowNumber,
+MAX(C.CreditLimit) AS CreditLimit ,
+MAX(C.InsuredcreditLimit) AS InsuredcreditLimit,
+MAX(GL.SalesmanUserId) AS SalesmanUserId,
+MAX(GL.CollectorId) AS CollectorId,
+MAX(CURRENCY.Code) AS AccountCurrencyCode,
+MAX(C.TotalOpenShipments) AS TotalOpenShipments,
+MAX(FUTQ.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
+MAX(FUTQ.TotPastOpenChequesInLocalCur) AS TotPastOpenChequesInLocalCur,
+MAX(GL.DisplayNumber) AS DisplayNumber,
+MAX(GL.LocalName) AS LocalName,
+MAX(GL.EnglishName) AS EnglishName,
+MAX(GL.Id)AS ID,
+MAX(GL.ContactId)AS ContactId,
+MAX(PT.LocalName) AS PaymnetTermLocalName,
+MAX(PT.EnglishName) AS PaymnetTermEnglishName,
+max(gl.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
+max(gl.CreditAllotmentPercentage) as CreditAllotmentPercentage,
+MAX(CAST(GL.IsMultiCurrency AS INT)) AS IsMultiCurrency,
 
- SELECT  
-    
-	MAX(C.CreditLimit) AS CreditLimit ,
-	MAX(C.InsuredcreditLimit) AS InsuredcreditLimit,
-	MAX(GL.SalesmanUserId) AS SalesmanUserId,
-	MAX(GL.CollectorId) AS CollectorId,
-	MAX(CURRENCY.Code) AS AccountCurrencyCode,
-	MAX(C.TotalOpenShipments) AS TotalOpenShipments,
-	MAX(FUTQ.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
-	MAX(FUTQ.TotPastOpenChequesInLocalCur) AS TotPastOpenChequesInLocalCur,
-	MAX(GL.DisplayNumber) AS DisplayNumber,
-	MAX(GL.LocalName) AS LocalName,
-	MAX(GL.EnglishName) AS EnglishName,
-	MAX(GL.Id)AS ID,
-    SUM(CASE 
-      WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Minus30Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Minus60Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 61 AND 90 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Minus90Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 91 AND 120 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Minus120Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 121 AND 150 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Minus150Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 151 AND 180 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Minus180Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) > 180 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Past,
-    
-   
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -30 AND 0 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Plus30Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -60 AND -31 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Plus60Days,
-	 SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -90 AND -61 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Plus90Days,
-    
-    SUM(CASE 
-        WHEN DATEDIFF(day, T.DueDate, @InputDate) < -90 THEN 
-            CASE 
-                WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' AND T.OpenAmountCurrencyId != TEN.CurrencyId THEN T.OpenAmount * t.ExchangeRate
-                ELSE T.OpenAmount
-            END
-        ELSE 0 
-    END) AS Future,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 1 AND 30 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus30Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 31 AND 60 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus60Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 61 AND 90 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus90Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 91 AND 120 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus120Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 121 AND 150 THEN T.AdjustedOpenAmount ELSE 0 END) AS Minus150Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN 151 AND 180 THEN T.AdjustedOpenAmount ELSE 0 END)AS Minus180Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) > 180 THEN T.AdjustedOpenAmount ELSE 0 END) AS Past,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -30 AND 0 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus30Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -60 AND -31 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus60Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) BETWEEN -90 AND -61 THEN T.AdjustedOpenAmount ELSE 0 END) AS Plus90Days,
+SUM(CASE
+WHEN DATEDIFF(day, T.DueDate, @InputDate) < -90 THEN T.AdjustedOpenAmount ELSE 0 END) AS Future,
 
-	(SELECT SUM(trans.LocalAmountCredit)
-     FROM LedgerTransactions trans
-     JOIN Journals jrn ON trans.JournalId = jrn.Id
-     WHERE 
-         jrn.ExternalSystem IS NOT NULL
-         AND trans.AccountId = T.AccountId  
-         AND trans.Tenant = @Tenant
-         AND trans.DueDate > @InputDate 
-         AND trans.LocalAmountCredit != 0
-    ) AS ExternalTransactionsTotal,
-    
-	SUM(CASE 
-    WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit) 
-    ELSE 0 
-     END) AS TotalForeign,
-	SUM(t.OpenAmount*t.ExchangeRate) AS BalanceInLocalCurrency,
-	SUM(t.OpenAmount) AS BalanceInForeignCurrency
-   FROM 
-    GLACCOUNTS GL
-LEFT JOIN 
-    (SELECT * FROM LedgerTransactions WHERE tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile=0) T ON GL.Id = T.ACCOUNTID
-INNER JOIN 
-    TENANTS TEN ON GL.tenant = TEN.Id
-	LEFT JOIN
-	 (
- SELECT max(a.AccountId) as AccountId,
+(SELECT SUM(trans.LocalAmountCredit)
+FROM LedgerTransactions trans
+JOIN Journals jrn ON trans.JournalId = jrn.Id
+WHERE
+jrn.ExternalSystem IS NOT NULL
+AND trans.AccountId = T.AccountId
+AND trans.Tenant = @Tenant
+AND trans.DueDate > @InputDate
+AND trans.LocalAmountCredit != 0
+) AS ExternalTransactionsTotal,
+
+(SELECT max(MainGLAccountId)
+FROM GLAccountCurrencies 
+where MainGLAccountId  =t.accountid or  glaccountid =t.accountid
+ ) AS MainGlaccountId,
+SUM(CASE
+WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredit)
+ELSE 0
+END) AS TotalForeign,
+SUM(
+    CASE 
+        WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount 
+        ELSE t.OpenAmount * t.ExchangeRate
+    END
+) AS BalanceInLocalCurrency,
+
+SUM(
+    CASE 
+        WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount * t.ExchangeRate
+        ELSE t.OpenAmount
+    END
+) AS BalanceInForeignCurrency
+FROM
+GLACCOUNTS GL
+LEFT JOIN
+(
+    SELECT 
+        lt.Id,
+        lt.AccountId,
+        lt.OpenAmount,
+        lt.OpenAmountCurrencyId,
+        lt.ExchangeRate,
+        CASE 
+            WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' 
+                 OR (
+                     EXISTS (
+                         SELECT 1
+                         FROM GLAccountCurrencies g
+                         WHERE g.Tenant=@tenant and g.MainGLAccountId = lt.AccountId OR g.GLAccountId = lt.AccountId
+                     ) AND @GroupMultiAccounts = 1
+                 )
+                 AND lt.OpenAmountCurrencyId != ten.CurrencyId
+            THEN lt.OpenAmount * lt.ExchangeRate
+            ELSE lt.OpenAmount
+        END AS AdjustedOpenAmount,
+        lt.DueDate,
+        lt.CreateDate,
+        lt.ForeignAmountCredit,
+        lt.ForeignAmountDebit,
+		lt.Tenant,
+		lt.CurrencyId
+    FROM LedgerTransactions lt
+	INNER JOIN
+    TENANTS TEN ON lt.tenant = TEN.Id
+
+    WHERE lt.Tenant = @Tenant AND IsReconciled = 0 AND IsExternalReconcile = 0
+) T ON GL.Id = T.AccountId 
+LEFT JOIN
+(
+SELECT max(a.AccountId) as AccountId,
 SUM( CASE WHEN a.ValueDate <= @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotPastOpenChequesInLocalCur,
 SUM( CASE WHEN a.ValueDate > @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotFutureOpenChequesInLocalCur
-
 FROM AllARPaymentChequesViews a
 LEFT JOIN BankDepositLines l ON a.ChequeId = l.ARPaymentChequeId
 LEFT JOIN BankDeposits b ON l.DepositId = b.Id
 LEFT JOIN BankAccounts ba ON b.DepositBankAccountId = ba.Id
 WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)
- AND a.Tenant = @tenant
- group by  a.AccountId
+AND a.Tenant = @tenant
+group by  a.AccountId
 )  FUTQ ON FUTQ.AccountId = GL.ID
-LEFT JOIN 
-    (SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
-	 C ON GL.CardsDataId = C.Id
-	 LEFT JOIN 
-(SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant) 
-     CURRENCY ON T.CurrencyId = CURRENCY.Id 
-     WHERE 
-    GL.tenant = @Tenant 
+LEFT JOIN
+(SELECT TotalOpenShipments,InsuredcreditLimit,CreditLimit,ID,PaymentTermId FROM GLAccountCardsDatas WHERE tenant = @Tenant  )
+C ON GL.CardsDataId = C.Id
+LEFT JOIN
+(SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant)
+CURRENCY ON T.OpenAmountCurrencyId = CURRENCY.Id
+left JOIN
+PaymentTerms PT ON PT.Id = C.PaymentTermId
+WHERE
+GL.tenant = @Tenant
+AND (@AccountID IS NULL OR GL.ID = @AccountID  or  (@GroupMultiAccounts =1 and  GL.ID IN (SELECT GLAccountId FROM GLAccountCurrencies WHERE MainGLAccountId  =@AccountID) ))
+AND GL.Inactive = 0
+AND ( @AccountTypeCode IS NULL OR GL.AccountTypeCode = @AccountTypeCode )
+AND ( @ChartOfAccountsTypeCode IS NULL OR GL.ChartOfAccountsTypeCode = @ChartOfAccountsTypeCode )
+AND (@SalesmanId IS NULL OR GL.SalesmanUserId = @SalesmanId)
+AND (@CollectorId IS NULL OR GL.CollectorId = @CollectorId)
+AND (@ChartOfAccountsId IS NULL OR GL.ChartOfAccountsId = @ChartOfAccountsId)
+AND (@CurrencyId IS NULL OR GL.CurrencyId = @CurrencyId)
+AND (
+(@CategoryName IS NULL OR
+(@CategoryName = 'Category1Id' AND GL.Category1Id = @CategoryValue) OR
+(@CategoryName = 'Category2Id' AND GL.Category2Id = @CategoryValue) OR
+(@CategoryName = 'Category3Id' AND GL.Category3Id = @CategoryValue) OR
+(@CategoryName = 'Category4Id' AND GL.Category4Id = @CategoryValue) OR
+(@CategoryName = 'Category5Id' AND GL.Category5Id = @CategoryValue))
+)
+GROUP BY
+T.Tenant, T.AccountId,
+CASE
+WHEN (Gl.ReconcileMethodCode = 1 and gl.IsMultiCurrency =1 and @GroupMultiAccounts=0) THEN T.CurrencyId
+ELSE null
+END
+SELECT
+MAX(CONTACT_Collector.EnglishName) AS AccountCollectorName,
+MAX(CONTACT_Collector.LocalName) AS AccountCollectorLocalName,
+MAX(CONTACT_Salesman.EnglishNamE) AS AccountSalesmanName,
+MAX(CONTACT_Salesman.LocalName) AS AccountSalesmanLocalName,
+MAX(CONTACT_GLAccount.BusinessPhone) as AccountBusinessPhone,
+max(t.MainGlaccountId) as MainGlaccountId,
+MAX(t.Id)AS ID,
+
+MAX(CAST(t.IsMultiCurrency AS INT)) AS IsMultiCurrency,
+MAX(t.CreditLimit) AS CreditLimit ,
+MAX(t.InsuredcreditLimit) AS InsuredcreditLimit,
+MAX(t.SalesmanUserId) AS SalesmanUserId,
+MAX(t.CollectorId) AS CollectorId,
+MAX(t.AccountCurrencyCode) AS AccountCurrencyCode,
+MAX(t.TotalOpenShipments) AS TotalOpenShipments,
+MAX(t.TotFutureOpenChequesInLocalCur) AS TotFutureOpenChequesInLocalCur,
+MAX(t.TotPastOpenChequesInLocalCur) AS TotPastOpenChequesInLocalCur,
+MAX(t.DisplayNumber) AS DisplayNumber,
+MAX(CASE 
+            WHEN T.MainGlaccountId = T.Id THEN T.LocalName 
+            WHEN T.MainGlaccountId IS NULL  or @GroupMultiAccounts =0 THEN T.LocalName
+            ELSE NULL 
+        END) AS LocalName,
+MAX(CASE 
+            WHEN T.MainGlaccountId = T.Id THEN T.EnglishName 
+            WHEN T.MainGlaccountId IS NULL  or @GroupMultiAccounts =0 THEN T.EnglishName
+            ELSE NULL 
+        END) AS EnglishName,
+MAX(t.ContactId)AS ContactId,
+MAX(t.PaymnetTermLocalName) AS PaymnetTermLocalName,
+MAX(t.PaymnetTermEnglishName) AS PaymnetTermEnglishName,
+max(t.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
+max(t.CreditAllotmentPercentage) as CreditAllotmentPercentage,
+SUM(T.BalanceInLocalCurrency) AS BalanceInLocalCurrency,
+sum(t.BalanceInForeignCurrency) as BalanceInForeignCurrency,
+sum(t.TotalForeign) as TotalForeign,
+sum(t.ExternalTransactionsTotal) as ExternalTransactionsTotal,
+MAX(t.Past) AS Past,
+MAX(t.Plus30Days) AS Plus30Days,
+max(t.Plus60Days) Plus60Days,
+max(t.Plus90Days) as Plus90Days,
+SUM(T.Future) AS Future,
+MAX(t.Minus30Days) AS Minus30Days,
+MAX(t.Minus60Days) AS Minus60Days,
+max(t.Minus90Days) Minus90Days,
+max(t.Minus120Days) as Minus120Days,
+SUM(T.Minus150Days) AS Minus150Days ,
+SUM(T.Minus180Days) AS Minus180Days 
+FROM #TemporaryTable T
+LEFT JOIN
+(SELECT Id, EnglishName, LocalName ,Tenant FROM Contacts  WHERE InActive=0)
+CONTACT_Salesman ON CONTACT_Salesman.Tenant=@Tenant AND  T.SalesmanUserId = CONTACT_Salesman.Id
+LEFT JOIN
+(SELECT Id, EnglishName, LocalName,Tenant FROM Contacts WHERE InActive=0)
+CONTACT_Collector ON   CONTACT_Collector.Tenant=@Tenant AND  T.CollectorId = CONTACT_Collector.Id
+left join 
+(select id ,BusinessPhone from Contacts where InActive= 0)
+CONTACT_GLAccount on CONTACT_GLAccount.Id  = t.ContactId 
+left join GLAccountCurrencies GLC
+ON GLC.MainGLAccountId = T.ID AND GLC.GLAccountId =T.ID
+
+
 	
-	AND (@AccountID IS NULL OR GL.ID = @AccountID) 
-    AND GL.Inactive = 0 
-    AND ( @AccountTypeCode IS NULL OR GL.AccountTypeCode = @AccountTypeCode )
-    AND ( @ChartOfAccountsTypeCode IS NULL OR GL.ChartOfAccountsTypeCode = @ChartOfAccountsTypeCode )
-    AND (@SalesmanId IS NULL OR GL.SalesmanUserId = @SalesmanId) 
-    AND (@CollectorId IS NULL OR GL.CollectorId = @CollectorId)
-    AND (@ChartOfAccountsId IS NULL OR GL.ChartOfAccountsId = @ChartOfAccountsId)
-	AND (@CurrencyId IS NULL OR GL.CurrencyId = @CurrencyId)
 
-    AND (
-        (@CategoryName IS NULL OR 
-        (@CategoryName = 'Category1Id' AND GL.Category1Id = @CategoryValue) OR 
-        (@CategoryName = 'Category2Id' AND GL.Category2Id = @CategoryValue) OR
-        (@CategoryName = 'Category3Id' AND GL.Category3Id = @CategoryValue) OR
-        (@CategoryName = 'Category4Id' AND GL.Category4Id = @CategoryValue) OR
-        (@CategoryName = 'Category5Id' AND GL.Category5Id = @CategoryValue))
-    )
-GROUP BY 
-   T.Tenant, T.AccountId,
-    CASE 
-        WHEN (Gl.ReconcileMethodCode = 1 and gl.IsMultiCurrency =1) THEN T.CurrencyId
-        ELSE null 
+GROUP BY  
+    CASE
+        WHEN @GroupMultiAccounts = 0 THEN t.RowNumber
+        WHEN T.MainGlaccountId IS NULL and @GroupMultiAccounts=1 THEN T.id
+        ELSE T.MainGlaccountId
     END
+	ORDER BY 
+  MAX(T.MainGlaccountId)
 
-SELECT t.*,
-CONTACT_Collector.EnglishName AS AccountCollectorName, 
-	CONTACT_Collector.LocalName AS AccountCollectorLocalName, 
-	CONTACT_Salesman.EnglishName AS AccountSalesmanName, 
-	CONTACT_Salesman.LocalName AS AccountSalesmanLocalName
-	FROM #TemporaryTable T
-LEFT JOIN 
-
- (SELECT Id, EnglishName, LocalName ,Tenant FROM Contacts  WHERE InActive=0) 
-     CONTACT_Salesman ON CONTACT_Salesman.Tenant=@Tenant AND  T.SalesmanUserId = CONTACT_Salesman.Id 
-LEFT JOIN 
-(SELECT Id, EnglishName, LocalName,Tenant FROM Contacts WHERE InActive=0) 
-     CONTACT_Collector ON   CONTACT_Collector.Tenant=@Tenant AND  T.CollectorId = CONTACT_Collector.Id 
-	 order by t.ID 
 	  DROP TABLE  #TemporaryTable 
 END;
 

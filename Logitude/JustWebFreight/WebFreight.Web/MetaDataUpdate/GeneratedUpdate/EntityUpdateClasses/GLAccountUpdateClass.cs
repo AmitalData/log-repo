@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "0c57715ea7ec83297c6ebb727f41b2b9";
+		public const string HashString = "6b14fc602604c616a0fec997531bac85";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -14796,6 +14796,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsONoAddressToVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NoAddressToVendor", DefaultText = "To Vendor no country specified in default address",LocalDefaultText = @"לספק לא צוינה מדינה בכתובת ברירת המחדל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"יתרה שונה מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GLAccountTextCode_GLaccountOIsGroupMultiAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.IsGroupMultiAccounts", DefaultText = "To consolidate split GLAccount",LocalDefaultText = @"לאחד כרטיסי פיצול", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
