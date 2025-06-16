@@ -117,7 +117,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                  CurrencyId = r.CurrencyId,
                  InterestValueDate = (DateTime)r.DueDate,
                  Tenant = r.Tenant,
-                 ChangeSetOp = ChangeSetOperation.Insert
+                 ChangeSetOp = ChangeSetOperation.Insert,
+                 AccountingDate =r.AccountingDate,
+                 JournalId = regularJournal.Id
+
              }
              ).ToList();
 
@@ -139,7 +142,10 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                  CurrencyId = r.CurrencyId,
                  InterestValueDate = (DateTime)r.DueDate,
                  Tenant = r.Tenant,
-                 ChangeSetOp = ChangeSetOperation.Insert
+                 ChangeSetOp = ChangeSetOperation.Insert,
+                 AccountingDate = r.AccountingDate,
+                 JournalId = regularJournal.Id
+
              }
              ).ToList();
 
@@ -184,7 +190,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                  CurrencyId = r.CurrencyId,
                  InterestValueDate = (DateTime)r.DueDate,
                  Tenant = r.Tenant,
-                 ChangeSetOp = ChangeSetOperation.Insert
+                 ChangeSetOp = ChangeSetOperation.Insert,
+                 AccountingDate = r.AccountingDate,
+                 JournalId = externalJournal.Id
              }
              ).ToList();
 

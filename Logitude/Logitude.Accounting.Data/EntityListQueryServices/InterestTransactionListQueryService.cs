@@ -35,13 +35,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 = (from interestTransaction in interestTransactionQuery.Include("Currency")
 
                    join journal in context.Journals.Include("AccountingEntity")
-                   on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode, Tenant = interestTransaction.Tenant } equals
-                      new
-                      {
-                          AccountingEntityId = journal.AccountingEntityId,
-                          journal.AccountingEntityCode,
-                          journal.Tenant
-                      }
+                   on interestTransaction.JournalId equals
+                      journal.Id
+                    
                    join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                    into reportJoinData
                    from report in reportJoinData.DefaultIfEmpty()
@@ -72,7 +68,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                        JournalId = journal.Id,
                        JournalNumber = journal.JournalNumber,
-                       AccountingDate = journal.AccountingDate,
+                       AccountingDate = interestTransaction.AccountingDate,
 
                        Source = journal.AccountingEntityReference,
                        SourceType = journal.AccountingEntity == null ? null : journal.AccountingEntity.EnglishName,
@@ -88,13 +84,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return from interestTransaction in interestTransactionQuery.Include("Currency")
 
                         join journal in context.Journals.Include("AccountingEntity")
-                        on new { AccountingEntityId = interestTransaction.EntityId, Tenant = interestTransaction.Tenant } equals
-                            new
-                            {
-                                AccountingEntityId = journal.Id,
-                                Tenant = journal.Tenant
-                            }
-
+                        on interestTransaction.JournalId equals
+                           journal.Id
                         join report in context.InterestReports on interestTransaction.InterestReportId equals report.Id
                         into reportJoinData
                         from report in reportJoinData.DefaultIfEmpty()
@@ -140,13 +131,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return from interestTransaction in interestTransactionQuery.Include("Currency")
 
                    join journal in context.Journals.Include("AccountingEntity")
-                   on new { AccountingEntityId = interestTransaction.EntityId, AccountingEntityCode = interestTransaction.AccountingEntityCode, Tenant = interestTransaction.Tenant } equals
-                      new
-                      {
-                          AccountingEntityId = journal.AccountingEntityId,
-                          journal.AccountingEntityCode,
-                          journal.Tenant
-                      }
+                   on interestTransaction.JournalId equals
+                   journal.Id
                    join journallines in context.JournalLines on new { journalId = journal.Id, tenant = journal.Tenant} equals
                             new
                             {
