@@ -443,6 +443,7 @@
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\SignStationKeys.cs" />
     <Compile Include="EntityKeys\ServersNameKeys.cs" />
+    <Compile Include="EntityKeys\SIIDocumentTypeKeys.cs" />
     <Compile Include="EntityKeys\SIIRequestKeys.cs" />
     <Compile Include="EntityKeys\SIIRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
@@ -833,6 +834,7 @@
     <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ServersNameListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SIIDocumentTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SIIRequestListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SIIRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
@@ -920,6 +922,7 @@
     <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ServersNameListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SIIDocumentTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SIIRequestListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SIIRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
@@ -1023,6 +1026,7 @@
     <Compile Include="EntityLists\Generated\RenewalMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LevyTrustList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestHandlingAuthorityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SIIDocumentTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SIIRequestList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SIIRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
@@ -1404,6 +1408,7 @@
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
     <Compile Include="EntityMapping\SignStationMap.cs" />
     <Compile Include="EntityMapping\ServersNameMap.cs" />
+    <Compile Include="EntityMapping\SIIDocumentTypeMap.cs" />
     <Compile Include="EntityMapping\SIIRequestMap.cs" />
     <Compile Include="EntityMapping\SIIRequestStatusMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
@@ -1645,6 +1650,7 @@
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
     <Compile Include="EntityPOCOs\SignStation.cs" />
     <Compile Include="EntityPOCOs\ServersName.cs" />
+    <Compile Include="EntityPOCOs\SIIDocumentType.cs" />
     <Compile Include="EntityPOCOs\SIIRequest.cs" />
     <Compile Include="EntityPOCOs\SIIRequestStatus.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
@@ -2037,6 +2043,7 @@
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ServersNameRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SIIDocumentTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SIIRequestRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SIIRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
@@ -2124,6 +2131,7 @@
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
     <Compile Include="Repsitories\SignStationRepository.cs" />
     <Compile Include="Repsitories\ServersNameRepository.cs" />
+    <Compile Include="Repsitories\SIIDocumentTypeRepository.cs" />
     <Compile Include="Repsitories\SIIRequestRepository.cs" />
     <Compile Include="Repsitories\SIIRequestStatusRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />

@@ -472,9 +472,18 @@
         <td></td>
     </tr>
     <tr style="height:10px"></tr>
-    <tr style="height: 100%; display: flex; justify-content: flex-end; align-items: flex-end;">
-        <td style="width: 235px;position: absolute;bottom: 5px;">
-            <div style="display: flex; align-items: flex-end; justify-content: space-around;">
+    <tr style="    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;">
+        <td style="width: 100%;position: absolute;bottom: 5px;display: flex;justify-content: space-between;">
+            <div style="display: flex;">
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="Button" (click)="ViewDocumentsComponent()">{{'Customs.Declaration.TH.Documents'
+                        |TextCodeTranslationPipe}}</button>
+                </div>
+            </div>
+            <div style="display: flex; align-items: flex-end; justify-content: space-around; width: 270px;">
                 <div style="width: 57px;vertical-align: bottom;">
                     <button class="Button" (click)="CancelSiiRequest()">{{'Customs.General.B.Cancel'
                         |TextCodeTranslationPipe}}</button>

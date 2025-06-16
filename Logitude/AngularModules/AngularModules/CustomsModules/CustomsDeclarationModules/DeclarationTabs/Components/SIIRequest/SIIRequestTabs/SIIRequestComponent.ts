@@ -131,7 +131,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     // #region Actions:
     CancelSiiRequest() {
         if (this.entityPM.IsDirty && !this.IsDisplayOnly) {
-            const  confirm = new ConfirmWindow();
+            const confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
             confirm.ShowNoButton = true;
             confirm.Show(TextCodeTranslator.Translate("Customs.SIIRequest.O.UnSavedChanges"));
@@ -184,6 +184,34 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             });
         }
     }
+    
+    ViewDocumentsComponent(): void {
+        const windowArgs = {
+            EntityPM: this.entityPM,
+            ObjectTableName: 'Customs.SIIRequest',
+            EntityParentPM: 'Customs.Declaration',
+            IsFromStandAloneScreen: true,
+            IsClose: true,
+        };
+
+        const logWindow = new LogitudeWindow();
+        logWindow.IsHideHeader = true;
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title = 'Customs.Declaration.TH.Documents';
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+
+        logWindow.WindowClosed.subscribe((event: any) => this.onDocumentsWindowClosed(event));
+
+        this.entityArgs.SkipCtor = true;
+        logWindow.Show('./CustomsModules/CustomsDocuments/Components/CustomsDocumentsComponent');
+    }
+
+    onDocumentsWindowClosed(event: any): void {
+        this.entityArgs.SkipCtor = false;
+    }
+    
 
     checkMandatoryCustomsFields(ValidationErrors: any[]) {
         let windowArgs: any = {};

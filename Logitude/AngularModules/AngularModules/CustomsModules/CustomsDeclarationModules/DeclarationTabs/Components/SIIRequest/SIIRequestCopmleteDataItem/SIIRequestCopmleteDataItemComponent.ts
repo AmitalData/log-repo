@@ -111,8 +111,10 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     isCheckedProductFile: boolean = false;
     checkProductFileNumber(productFileNumber: string) {
         this.isCheckedProductFile = true;
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.SendingRequest"));
         this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode, this.entityPM.DeclarationId).subscribe(myResult => {
             let myResponse: ServiceResponse = myResult;
+            this.CurrentSession.StopBusyIndicator();
             if (!myResponse?.HasError)
                 this.saveByProductFileNumberResult(myResponse?.Result, productFileNumber);
             else {
@@ -123,6 +125,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
                 this.openErrorsMsgWindow();
             }
         }, error => {
+            this.CurrentSession.StopBusyIndicator();
             const errorMsg = error?.error?.ErrorMessage || error?.message || JSON.stringify(error);
             this.generalErrors = [errorMsg];
             console.error('Error checking product file number:', error);
