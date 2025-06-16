@@ -387,7 +387,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                                         if (!string.IsNullOrEmpty(docId))
                                         {
                                             bool okGotFromStorage = false;
-                                            okGotFromStorage = DocumentHelper.CheckPDFInvoiceInStorage(documentsFiling.Id, exportDocumentArgs.Tenant, accountingSettings);
+                                            okGotFromStorage = DocumentHelper.CheckPDFInvoiceInStorage(documentsFiling.Id, exportDocumentArgs.Tenant, accountingSettings, exportDocumentArgs.LoggedContactId);
                                             if (okGotFromStorage)
                                             {
                                                 lock (_locker)
