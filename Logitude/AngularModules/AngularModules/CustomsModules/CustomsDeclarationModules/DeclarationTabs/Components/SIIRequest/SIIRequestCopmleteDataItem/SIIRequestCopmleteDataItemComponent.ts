@@ -249,7 +249,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
                 let myResponse: ServiceResponse = myResult;
                 if (!myResponse?.HasError && myResponse?.Result) {
                     this.generalErrors = [];
-                    this.entityPM = myResponse?.Result;
                 }
                 else this.generalErrors = myResponse?.ErrorsArray;
                 this.RefreshEntity();
@@ -268,7 +267,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
                 let myResponse: ServiceResponse = myResult;
                 if (!myResponse?.HasError && myResponse?.Result) {
                     this.generalErrors = [];
-                    this.entityPM = myResponse?.Result;
                 }
                 else this.generalErrors = myResponse?.ErrorsArray;
                 this.RefreshEntity();
