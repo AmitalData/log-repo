@@ -58,6 +58,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.Mark = false;
             }
+            if (entityPM.Mark == false)
+            {
+                entityPM.AmountToReconcile = 0m;
+            }
         }
 
 
