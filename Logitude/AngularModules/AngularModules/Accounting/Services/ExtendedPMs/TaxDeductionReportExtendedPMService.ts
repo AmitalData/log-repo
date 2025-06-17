@@ -1,16 +1,11 @@
 
 import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { TaxDeductionReportPM} from '../../EntityPMs/TaxDeductionReportPM';
-import { TaxDeductionReportData, TotalForCompany, DBVendorsList, ByMonthList, ByVendorList  } from '../../DataContracts/TaxDeductionReportData';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { TaxDeductionReportData } from '../../DataContracts/TaxDeductionReportData';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
  
 
@@ -87,33 +82,23 @@ export class TaxDeductionReportExtendedPMService {
     }
 
 
-
     GetTaxDeductionReportData(reportId: string) {
-        return this.httpClient.get(this._apiUrl + "/GetTaxDeductionReportData?reportId=" + reportId ,  ServiceHelper.GetHttpHeaders()).pipe(
-        map(response => {
-            var serviceResponse: ServiceResponse = new ServiceResponse();
+        const url = `${this._apiUrl}/GetTaxDeductionReportData?reportId=${encodeURIComponent(reportId)}`;
+        return this.httpClient.get<any[]>(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                const mappedList = (response || []).map(json =>
+                    this.MapJsonToEntityData(json)
+                );
 
-                serviceResponse.Result = response;
+                const serviceResponse = new ServiceResponse();
+                serviceResponse.Result = mappedList;
 
-                var _mappedListsArray: Array<TaxDeductionReportData> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: TaxDeductionReportData;
-                        entity = this.MapJsonToEntityData(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-
-                    }
-                }
-
-                serviceResponse.Result = _mappedListsArray;
                 return serviceResponse;
-        }),
-        catchError(ServiceHelper.HandleServiceError));
-       
-        
-
+            }),
+            catchError(ServiceHelper.HandleServiceError)
+        );
     }
+
 
 
     MapJsonToEntityData(jsonData: any, mapParent: boolean = true, entityData: TaxDeductionReportData = null) {

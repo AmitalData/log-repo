@@ -1,14 +1,8 @@
-import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { TaxDeductionReportPM } from '../../../EntityPMs/TaxDeductionReportPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
-import { TaxDeductionReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxDeductionReportExtendedPMService';
-import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
-import { TaxDeductionReportPMService } from '../../../Services/StandardPMs/TaxDeductionReportPMService';
-import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ChildDirective } from '../../../../Infrastructure/Directives/ChildDirective';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
@@ -36,16 +30,15 @@ export class TaxDeductionReportGeneralTabComponent implements AfterViewInit {
 
 
   ngAfterViewInit() {
-    let COMPLETED = "3";
-    if (this.EntityPM.StatusTypeCode === COMPLETED) {
-        SessionLocator.DynamicLoader.Load("./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabCompleted", this.Child.Location)
-            .then(cmpRef => {
-            });
+    const enum TaxDeductionStatus {
+      Completed = '3'
+    }
+
+    if (this.EntityPM.StatusTypeCode === TaxDeductionStatus.Completed){
+        SessionLocator.DynamicLoader.Load("./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabCompletedComponent", this.Child.Location);
     }
     else {
-        SessionLocator.DynamicLoader.Load("./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabNotCompleted", this.Child.Location)
-            .then(cmpRef => {
-            });
+        SessionLocator.DynamicLoader.Load("./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabNotCompletedComponent", this.Child.Location);
     }
   }
 }

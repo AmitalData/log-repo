@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TaxDeductionReportPM } from '../../../EntityPMs/TaxDeductionReportPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -9,15 +9,15 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { TaxDeductionReportPMService } from '../../../Services/StandardPMs/TaxDeductionReportPMService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { TaxDeductionReportData, TotalForCompany, DBVendorsList, ByMonthList, ByVendorList  } from '../../../DataContracts/TaxDeductionReportData';
+import { TaxDeductionReportData  } from '../../../DataContracts/TaxDeductionReportData';
 
 
 @Component({
     
-    templateUrl: './TaxDeductionReportGeneralTabCompleted.html'
+    templateUrl: './TaxDeductionReportGeneralTabCompletedComponent.html'
 })
 
-export class TaxDeductionReportGeneralTabCompleted extends BaseComponent {
+export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponent {
 
     public DataContext: any = this;
     ObjectTableName: string = "TaxDeductionReport";
@@ -86,7 +86,7 @@ export class TaxDeductionReportGeneralTabCompleted extends BaseComponent {
 
 
 
-    get Email() { return this.entityPM.Email; }
+    get Email() { return this.entityPM?.Email ?? ''; }
 
     BuildTaxDeductionReportData() {
 

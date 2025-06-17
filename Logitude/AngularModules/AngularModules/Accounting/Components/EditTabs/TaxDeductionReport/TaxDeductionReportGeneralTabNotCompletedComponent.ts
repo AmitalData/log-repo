@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TaxDeductionReportPM } from '../../../EntityPMs/TaxDeductionReportPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
@@ -13,10 +13,10 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 
 @Component({
     
-    templateUrl: './TaxDeductionReportGeneralTabNotCompleted.html'
+    templateUrl: './TaxDeductionReportGeneralTabNotCompletedComponent.html'
 })
 
-export class TaxDeductionReportGeneralTabNotCompleted extends BaseComponent {
+export class TaxDeductionReportGeneralTabNotCompletedComponent extends BaseComponent {
 
     public DataContext: any = this;
     ObjectTableName: string = "TaxDeductionReport";

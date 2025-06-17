@@ -73,8 +73,8 @@ import {BankCodeGeneralTabComponent} from './Components/EditTabs/BankCode/BankCo
 import {ExternalRecoDetailsTabComponent} from './Components/EditTabs/ExternalReconciliation/ExternalRecoDetailsTabComponent';
 import { OpenFormatReportLogTabComponent } from './Components/EditTabs/OpenFormatReport/OpenFormatReportLogTabComponent';
 import { TaxDeductionReportGeneralTabComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabComponent';
-import { TaxDeductionReportGeneralTabNotCompleted } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabNotCompleted';
-import { TaxDeductionReportGeneralTabCompleted } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabCompleted';
+import { TaxDeductionReportGeneralTabNotCompletedComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabNotCompletedComponent';
+import { TaxDeductionReportGeneralTabCompletedComponent } from './Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabCompletedComponent';
 import { BankPageEventsComponent } from './Components/EditTabs/BankAccount/BankPageEventsComponent';
 
 import {GlAccountLedgerTransactionsListTemplate} from './Components/ListTemplates/GlAccountLedgerTransactionsListTemplate';
@@ -253,8 +253,8 @@ export const Components =
         TaxDeductionReportLogTabComponent,
         OpenFormatReportLogTabComponent,
         TaxDeductionReportGeneralTabComponent,
-        TaxDeductionReportGeneralTabNotCompleted,
-        TaxDeductionReportGeneralTabCompleted,
+        TaxDeductionReportGeneralTabNotCompletedComponent,
+        TaxDeductionReportGeneralTabCompletedComponent,
         BankPageEventsComponent,
         InterestBasesTypeDetailsTabComponent,
         ChequeCounterSerialComponent,
@@ -436,8 +436,8 @@ export class ModuleDeclarations {
             case "TaxDeductionReportLogTabComponent": { myResult = TaxDeductionReportLogTabComponent; break; }
             case "OpenFormatReportLogTabComponent": { myResult = OpenFormatReportLogTabComponent; break; }
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
-            case "TaxDeductionReportGeneralTabNotCompleted": { myResult = TaxDeductionReportGeneralTabNotCompleted; break; }
-            case "TaxDeductionReportGeneralTabCompleted": { myResult = TaxDeductionReportGeneralTabCompleted; break; }
+            case "TaxDeductionReportGeneralTabNotCompletedComponent": { myResult = TaxDeductionReportGeneralTabNotCompletedComponent; break; }
+            case "TaxDeductionReportGeneralTabCompletedComponent": { myResult = TaxDeductionReportGeneralTabCompletedComponent; break; }
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break;}
             case "ChequeCounterSerialComponent": { myResult = ChequeCounterSerialComponent; break;}
