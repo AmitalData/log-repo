@@ -57,22 +57,33 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate)))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={_JournalPM.JournalNumber} ,tenant={_JournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={_JournalPM.APPaymentCancelDate}  ");
-
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                              "[Closed Month Error] Storno not allowed: Attempted to create a storno journal for a regular accounting date, but the accounting period is closed for this date. " +
+                              $"(Condition: APPaymentCancelDate is null, using AccountingDate for validation) " +
+                              $"Tenant={_JournalPM.Tenant}, JournalNumber={_JournalPM.JournalNumber}, AccountingDate={_JournalPM.AccountingDate}, " +
+                              $" ExternalSystem={_JournalPM.ExternalSystem}"
+                          );
                     ThrowCloseMonth(_JournalPM.Tenant);
                 }
             }
             else
             {
-                if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(),(DateTime)_JournalPM.APPaymentCancelDate)))
+                if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), (DateTime)_JournalPM.APPaymentCancelDate)))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={_JournalPM.JournalNumber} ,tenant={_JournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={_JournalPM.APPaymentCancelDate}  ");
+                  
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                            "[Closed Month Error] Storno not allowed: Attempted to create a storno journal for a cancelled AP payment, but the accounting period is closed for the APPaymentCancelDate. " +
+                            "(Condition: APPaymentCancelDate is not null, using APPaymentCancelDate for validation) " +
+                            $"Tenant={_JournalPM.Tenant}, JournalNumber={_JournalPM.JournalNumber}, APPaymentCancelDate={_JournalPM.APPaymentCancelDate}, " +
+                            $" ExternalSystem={_JournalPM.ExternalSystem}"
+                        );
 
-                    ThrowCloseMonth(_JournalPM.Tenant);
+                        ThrowCloseMonth(_JournalPM.Tenant);
+                   
                 }
-            }
-  
 
+
+            }
         }
 
         private void ThrowCloseMonth(int tenant)
