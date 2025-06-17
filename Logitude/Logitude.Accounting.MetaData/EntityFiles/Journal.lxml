@@ -4062,6 +4062,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsExternalEntity&quot;"
     ListPropertyPath="&quot;IsExternalEntity&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -5089,7 +5090,7 @@
     <TextCode
       Code="&quot;Journal.O.Recent&quot;"
       DefaultText="&quot;Recent Journals&quot;"
-      LocalDefaultText="&quot;פקודות אחרונים&quot;"
+      LocalDefaultText="&quot;פקודות אחרונות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
