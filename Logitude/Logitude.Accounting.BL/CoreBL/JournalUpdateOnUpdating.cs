@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL
         private IAccountingContext _MainContext;
 
         private IJournalStornoService _JournalStornoService;
-        
+
 
 
         public JournalUpdateOnUpdating(IAccountingContext mainContext)
@@ -87,14 +87,22 @@ namespace Logitude.Accounting.BL
                 throw new ApplicationException("Journal is voided (Change is not Allowed)");
             }
 
-                /// 
-                foreach (var jl in journalPM.JournalLines)
+            var originalLines = journalPM.JournalLines.ToList();
+            for (int i = 0; i < originalLines.Count; i++)
             {
+                JournalLinePM jl = originalLines[i];
                 var JournalUpdateOnCreatingLine = CreateJournalLineOnUpdate();
-                //jl.EnsureAllDecimalPrecisionIfChangeChangeUpdate();
-                JournalUpdateOnCreatingLine.OnUpdate(jl, journalPM);
-            }
 
+                JournalUpdateService journalUpdateService = new JournalUpdateService(this._MainContext, new Dictionary<string, IContext>(), journalPM.Tenant);
+                var newJournalLinePM = journalUpdateService.CheckJournalActionCodeAndSplitedIt(jl, journalPM.JournalLines);
+                JournalUpdateOnCreatingLine.OnUpdate(jl, journalPM);
+
+                if (newJournalLinePM != null)
+                {
+                    journalPM.JournalLines.Add(newJournalLinePM);
+                    JournalUpdateOnCreatingLine.OnUpdate(newJournalLinePM, journalPM);
+                }
+            }
 
             string loggedContactId = //AddActivityGetLogContactId(entityPM.Tenant, entityPM.Id, "N");
                 //this.UpdateServiceProvider.
