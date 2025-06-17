@@ -250,13 +250,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             repoPriv.UpdateWhileStreaming(tenant, id, updatePoco);
         }
 
-        internal void SetStatusCodeFailed(string seedJournalId, int tenant ,Exception e)
+        internal Journal SetStatusCodeFailed(string seedJournalId, int tenant)
         {
             var repoPriv = GetJournalRepositoryPriv();
             var poco = repoPriv.GetSingle(seedJournalId, tenant);
             poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
-            TraceFailedJournal(poco, e);
             repoPriv.Update(poco);
+            return poco;
 
         }
         public void TraceFailedJournal(Journal entity, Exception ex)

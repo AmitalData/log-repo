@@ -27,7 +27,7 @@ namespace Logitude.Accounting.BL.CoreBL
             _SeedJournalId = seedJournalId;
             //this._QMessageId = MessageId;
         }
-        public  void MarkAsFailed(Exception ex)
+        public  void MarkAsFailed(Exception ex  )
         {
             using (var scope = TransactionFactory.GetTransaction())
             {
@@ -48,8 +48,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     var repo = new JournalRepository(accountingContext);
                     
                     var up = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-                    up.SetStatusCodeFailed(_SeedJournalId, _Tenant, ex);
-                    
+                    var poco = up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+                    up.TraceFailedJournal(poco , ex);
+
                     if (ex != null)
                     {
                         var sb = new StringBuilder();
