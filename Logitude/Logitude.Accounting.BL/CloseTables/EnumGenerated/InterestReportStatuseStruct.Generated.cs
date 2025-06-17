@@ -24,6 +24,7 @@ namespace Logitude.Accounting.BL.CloseTables
         public const string InProgress = "5";
         public const string InvoicingInProgress = "8";
         public const string InvoicingFailed = "9";
+        public const string InvoicePrintingFailed = "10";
     }
  }
  
