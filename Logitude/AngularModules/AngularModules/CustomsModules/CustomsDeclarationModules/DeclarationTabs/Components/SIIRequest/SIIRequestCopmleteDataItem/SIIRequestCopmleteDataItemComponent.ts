@@ -104,7 +104,8 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             return;
         }
         this.errorsList = [];
-        this.checkProductFileNumber(productFileNumber);
+        !AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isCheckedProductFile ?
+            this.checkProductFileNumber(productFileNumber) : this.SaveSupplierInvoiceItemsReqList();
     }
 
     isExistProductFile: boolean = false;
@@ -247,6 +248,10 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
 
     private saveItemCompletionData() {
+        this.entityPM.DeclarationId = AppTool.IsNullOrEmpty(this.entityPM.DeclarationId) ? this.DecalarationData?.Id : this.entityPM.DeclarationId;
+        this.entityPM.InvoiceCounterKey = AppTool.IsNullOrEmpty(this.entityPM.InvoiceCounterKey) ? this.invoiceItemReq?.InvoiceCounterKey : this.entityPM.InvoiceCounterKey;
+        this.entityPM.InvoiceItemLineNumber = AppTool.IsNullOrEmpty(this.entityPM.InvoiceItemLineNumber) ? this.invoiceItemReq?.InvoiceLineNumber : this.entityPM.InvoiceItemLineNumber;
+        this.entityPM.LineNumber = AppTool.IsNullOrEmpty(this.entityPM.LineNumber) ? this.invoiceItemReq?.LineNumber : this.entityPM.LineNumber;
         if (this.oldRequestRequiredStatus === CompleteStatuses.PartiallyCompleted || this.oldRequestRequiredStatus === CompleteStatuses.FullyCompleted) {
             this.supplierInvoiceItemsReqListPMService.update(this.entityPM).subscribe(myResult => {
                 let myResponse: ServiceResponse = myResult;
@@ -262,10 +267,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             });
         }
         else {
-            this.entityPM.DeclarationId = this.DecalarationData?.Id;
-            this.entityPM.InvoiceCounterKey = this.invoiceItemReq.InvoiceCounterKey;
-            this.entityPM.InvoiceItemLineNumber = this.invoiceItemReq.InvoiceLineNumber;
-            this.entityPM.LineNumber = this.invoiceItemReq.LineNumber;
             this.supplierInvoiceItemsReqListPMService.insert(this.entityPM).subscribe(myResult => {
                 let myResponse: ServiceResponse = myResult;
                 if (!myResponse?.HasError && myResponse?.Result) {
