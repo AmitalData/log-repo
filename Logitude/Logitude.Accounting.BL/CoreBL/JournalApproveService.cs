@@ -141,7 +141,7 @@ namespace Logitude.Accounting.BL.CoreBL
 						using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
 						{
 							var updater = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant ,ex);
+							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
 							scope.Complete();
 						}
 					}
@@ -153,7 +153,8 @@ namespace Logitude.Accounting.BL.CoreBL
 				}
 				return new ResultApproveJournalM()
 				{
-					Success = false
+					Success = false,
+                    FailDue = ex.Message
 				};
 			}
 			finally
@@ -1442,10 +1443,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
-            if (message == null || message.RetryNumber > 5)
+            if (message == null || message.RetryNumber > 6)
             {
                 var journalFailedService = new JournalFailedService(tenant, seedJournalId);
-                journalFailedService.MarkAsFailed(ex);
+                journalFailedService.MarkAsFailed(ex );
                 if (myDbQueueService != null)
                 {
                     myDbQueueService.Complete();
@@ -1619,7 +1620,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))
                         {
                             var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant,ex);
+                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
                             scope.Complete();
                         }
                     }
