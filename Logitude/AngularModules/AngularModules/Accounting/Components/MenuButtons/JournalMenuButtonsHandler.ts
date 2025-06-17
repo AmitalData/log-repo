@@ -213,7 +213,7 @@ export class JournalMenuButtonsHandler {
                 {
                     this.EntityPM.StatusCode = "1"; // Waiting
 
-                    this.SaveChenges();
+                    this.SaveChanges();
                     break;
                 }
             case "JournalApprove":
@@ -258,7 +258,7 @@ export class JournalMenuButtonsHandler {
                             x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
                         }
                     });
-                    this.SaveChenges();
+                    this.SaveChanges();
                     break;
                 }
             case "JournalVoid":
@@ -332,7 +332,7 @@ export class JournalMenuButtonsHandler {
             });
     }
 
-    SaveChenges() {
+    SaveChanges() {
 
         // the validation will be in PM Service (custom validator)
         this.entityArgs.EditComponent.SaveChanges();
