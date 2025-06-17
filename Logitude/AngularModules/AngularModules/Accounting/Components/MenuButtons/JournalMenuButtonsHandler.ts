@@ -232,7 +232,7 @@ export class JournalMenuButtonsHandler {
                       this.entityArgs.EditComponent.ValidationErrorsList = validationErrors;                                     
                        return;
                     }
-                    this.SaveChanges();    
+                    this.SaveChenges();    
 
                     this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
                         if ($event == true) {                           
