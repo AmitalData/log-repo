@@ -57,6 +57,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), _JournalPM.AccountingDate)))
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={_JournalPM.JournalNumber} ,tenant={_JournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={_JournalPM.APPaymentCancelDate}  ");
+
                     ThrowCloseMonth(_JournalPM.Tenant);
                 }
             }
@@ -64,6 +66,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (!(JournalValidatorNotStatic.IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(),(DateTime)_JournalPM.APPaymentCancelDate)))
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={_JournalPM.JournalNumber} ,tenant={_JournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={_JournalPM.APPaymentCancelDate}  ");
+
                     ThrowCloseMonth(_JournalPM.Tenant);
                 }
             }

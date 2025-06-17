@@ -4,6 +4,7 @@ using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -382,9 +383,11 @@ namespace Logitude.Accounting.BL.Validators
                     if (myJournalPM.APPaymentCancelDate==null)
                     {
                         if (!IsMonthOpenForAccountingDate(accountingPeriodsByTypeRegular.AsQueryable(), myJournalPM.AccountingDate, myJournalPM.AccountingEntityCode, myJournalPM.ExternalSystem))
-                        {
+                        {   
                             errorsList.AddNew(transText);
                             valid = false;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={myJournalPM.JournalNumber} ,tenant={myJournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={myJournalPM.APPaymentCancelDate}  ");
+
                         }
                     }
                     else
@@ -393,6 +396,8 @@ namespace Logitude.Accounting.BL.Validators
                         {
                             errorsList.AddNew(transText);
                             valid = false;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={myJournalPM.JournalNumber} ,tenant={myJournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={myJournalPM.APPaymentCancelDate}  ");
+
                         }
 
                     }
@@ -1030,6 +1035,8 @@ accountingValidationContextServiceProvider
                 periods.PeriodTypeCode=="1" && periods.Year == /*myJournalPM.*/AccountingDate.Date.Year);
             if (currentAccountingPeriodPM == null)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(  $"currentAccountingPeriodPM == null  ,Closed Month error:  AccountingDate={AccountingDate}, +   accountingEntityCode={accountingEntityCode},   ExternalSystem={externalSystem}");
+
                 valid = false;
                 //errorsList.Add(transText);
             }
@@ -1046,6 +1053,9 @@ accountingValidationContextServiceProvider
                     //Not Valid ... AccountingDateMonth must be greater than close Mounth
                     //not valid  8>=8 
                     //not valid  0>=1 - Must Open mounth before work on year !!
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"!(accountingDateMonth > currentAccountingPeriodPM.ClosedMonth.GetValueOrDefault()) ,Closed Month error:  currentAccountingPeriodPM.ClosedMonth ={currentAccountingPeriodPM.ClosedMonth} ,AccountingDate={AccountingDate}, +   accountingEntityCode={accountingEntityCode},   ExternalSystem={externalSystem}");
+
+
                     valid = false;
                     //errorsList.Add(transText); //ClosedMonth Must B
                 }
@@ -1063,7 +1073,7 @@ accountingValidationContextServiceProvider
                 }
                 else
                 {
-
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"Closed Month error:  currentAccountingPeriodPM.ClosedMonth ={currentAccountingPeriodPM.ClosedMonth} ,AccountingDate={AccountingDate}, +   accountingEntityCode={accountingEntityCode},   ExternalSystem={externalSystem}");
                     valid = false;
                     //errorsList.Add(transText);
                 }

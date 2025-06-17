@@ -396,6 +396,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 accountingDate = repo.GetSingleJournalByNumber(reconciliationLine.JournalNumber, tenant).AccountingDate;
                 if (!IsMonthOpenForAccountingDate(accountingDate, tenant))
                 {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                        $"[ CreateJournalForReconciliationLine ,Closed Month Error] " +
+                        $"Tenant={tenant}, " +
+                        $"ReconciliationLine: JournalNumber={reconciliationLine.JournalNumber}, TransactionId={reconciliationLine.TransactionId}, Line={reconciliationLine.Line}" +
+                        $"AccountingDate={accountingDate}, " +
+                        $"TheAccountId={TheAccountId}, AdjustAccountId={AdjustAccountId}, " 
+                    );
                     return null;
                 }
             }
