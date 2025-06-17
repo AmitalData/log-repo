@@ -35,7 +35,7 @@
     Name="CreateDate"
     Type="datetime2">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ControlAccountId"

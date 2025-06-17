@@ -120,7 +120,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         private void UCB2755Batch(GenericRequestParams requestParams)
         {
             var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-            if (requestParams.LoggingEntityId2 != objectTableIdCourierMaster)
+            if (requestParams.LoggingEntityId2 != objectTableIdCourierMaster && !requestParams.FromAutomate)
             {
                 return;
             }

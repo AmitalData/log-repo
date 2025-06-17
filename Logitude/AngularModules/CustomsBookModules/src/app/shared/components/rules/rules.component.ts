@@ -95,7 +95,7 @@ export class RulesComponent implements OnInit, OnChanges {
     // Function to get children of a parent rule recursively
     const getChildren = (parentRule: CB_RulesDetailsList): CB_RulesDetailsList[] => {
       // Filter for children of the current parent rule
-      const children = rulesList.filter(rule => rule.ParentID === parentRule.ID);
+      const children = rulesList?.filter(rule => rule.ParentID === parentRule.ID);
 
       this.sortingItems(children);
 
@@ -107,7 +107,7 @@ export class RulesComponent implements OnInit, OnChanges {
     };
 
     // Find root rules
-    const rootRules = rulesList.filter(rule => rule.ParentID == 0 || rule.ParentID == null || rule.Index == "-");
+    const rootRules = rulesList?.filter(rule => rule.ParentID == 0 || rule.ParentID == null || rule.Index == "-");
     // Build the hierarchy for root rules
     const rulesListData = rootRules.map(rootRule => {
       const children = getChildren(rootRule);

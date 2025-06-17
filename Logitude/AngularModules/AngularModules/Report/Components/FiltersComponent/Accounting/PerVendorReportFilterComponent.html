@@ -99,7 +99,7 @@
         </td>
         <td style="width:10px"></td>
         <td style="width:190px;">
-            <LogLov [ObjectFieldName]="'VendorId'"
+            <LogLov [ShowInActive]="true" [ObjectFieldName]="'VendorId'"
                     [ObjectTableName]="'Card'"
                     [DataContext]="DataContext"
                     [SelectedValue]="VendorId"
@@ -110,7 +110,7 @@
                     [DependencyFilter1IsList]="true">
             </LogLov>
 
-            <!--<LogLov [ObjectFieldName]="'VendorId'"
+            <!--<LogLov [ShowInActive]="true" [ObjectFieldName]="'VendorId'"
                     [NoObjectField]="true"
                     [ObjectTableName]="'Card'"
                     [DataContext]="DataContext"

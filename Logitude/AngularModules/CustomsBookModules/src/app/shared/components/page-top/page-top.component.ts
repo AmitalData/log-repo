@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { SearchBy, SearchService } from './service/top-page.service';
 import { FormsModule, } from '@angular/forms';
 import { HeaderService, searchState } from '../app-header/service/header.service';
@@ -15,7 +15,7 @@ import { SearchCustomsItemAutocomplateComponent } from './search-customs-item-au
 	templateUrl: './page-top.component.html',
 	styleUrl: './page-top.component.css',
 })
-export class PageTopComponent {
+export class PageTopComponent implements AfterViewInit {
 	@ViewChild(SearchCustomsItemAutocomplateComponent) searchCustomsItemAutocomplateComponent: SearchCustomsItemAutocomplateComponent;
 	@Output() searchClick = new EventEmitter<string | number>();
 	textToSearch: string = '';
@@ -25,9 +25,12 @@ export class PageTopComponent {
 		public searchService: SearchService,
 		private headerService: HeaderService,
 		private filterPopupService: FilterPopupService,
-		public romanTool: RomanToolService,
+		public romanTool: RomanToolService, private cdr: ChangeDetectorRef
 	) { }
 
+	ngAfterViewInit() {
+		this.cdr.detectChanges();
+	}
 	public text: string = '';
 	public checked: string | number = '';
 	public searchBy = SearchByParam;

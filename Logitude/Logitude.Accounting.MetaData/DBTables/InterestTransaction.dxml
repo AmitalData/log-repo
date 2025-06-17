@@ -107,6 +107,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="JournalId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsCancelled"
     Type="bit">
     <Constraints
@@ -127,6 +134,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AccountingDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GLAccountId"
     ReferencedTable="GLAccounts"
@@ -140,6 +153,11 @@
   <Relation
     ForeignKeyColumn="CurrencyId"
     ReferencedTable="Currencies"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="JournalId"
+    ReferencedTable="Journals"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

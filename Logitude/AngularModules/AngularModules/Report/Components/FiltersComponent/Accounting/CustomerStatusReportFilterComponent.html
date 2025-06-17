@@ -133,7 +133,7 @@
 
                             <!-- 2 -->
                             <td style="width: 150px;">
-                                <LogLov style="display: block;width: 130px;"
+                                <LogLov [ShowInActive]="true" style="display: block;width: 130px;"
                                         [ObjectFieldName]="'Customer'"
                                         [ObjectTableName]="'GLAccount'"
                                         [DataContext]="DataContext"
@@ -146,7 +146,7 @@
                                         [StartSearchFromNumber]="5">
                                 </LogLov>
 
-                                <!-- <LogLov *ngIf="filterSelectedValue === 'filter_chartOfAccount'"
+                                <!-- <LogLov [ShowInActive]="true" *ngIf="filterSelectedValue === 'filter_chartOfAccount'"
                     style="display: block;width: 130px;"
                     [ObjectFieldName]="'ChartOfAccount'"
                     [ObjectTableName]="'GLAccount'"
@@ -199,7 +199,7 @@
 
                             <!-- 2 -->
                             <td style="">
-                                <LogLov [ObjectFieldName]="'Salesman'"
+                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'Salesman'"
                                         style="display: block;width: 130px;"
                                         [ObjectTableName]="'GLAccount'"
                                         [DataContext]="DataContext"
@@ -244,7 +244,7 @@
 
                             <!-- 2 -->
                             <td style="">
-                                <LogLov [ObjectFieldName]="'Collector'"
+                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'Collector'"
                                         style="display: block;width: 130px;"
                                         [ObjectTableName]="'GLAccount'"
                                         [DataContext]="DataContext"
@@ -301,31 +301,31 @@
                                      [class.disabled]="IsCategoryDisabled">
 
                                     <!-- Category 1 -->
-                                    <LogLov *ngSwitchCase="'Category 1'" [ObjectFieldName]="'Category1'" [ObjectTableName]="'GLAccount'"
+                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 1'" [ObjectFieldName]="'Category1'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category1'"
                                             [HideColumns]="true" [SelectedValue]="Category1">
                                     </LogLov>
 
                                     <!-- Category 2 -->
-                                    <LogLov *ngSwitchCase="'Category 2'" [ObjectFieldName]="'Category2'" [ObjectTableName]="'GLAccount'"
+                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 2'" [ObjectFieldName]="'Category2'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category2'"
                                             [HideColumns]="true" [SelectedValue]="Category2">
                                     </LogLov>
 
                                     <!-- Category 3 -->
-                                    <LogLov *ngSwitchCase="'Category 3'" [ObjectFieldName]="'Category3'" [ObjectTableName]="'GLAccount'"
+                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 3'" [ObjectFieldName]="'Category3'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category3'"
                                             [HideColumns]="true" [SelectedValue]="Category3">
                                     </LogLov>
 
                                     <!-- Category 4 -->
-                                    <LogLov *ngSwitchCase="'Category 4'" [ObjectFieldName]="'Category4'" [ObjectTableName]="'GLAccount'"
+                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 4'" [ObjectFieldName]="'Category4'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category4'"
                                             [HideColumns]="true" [SelectedValue]="Category4">
                                     </LogLov>
 
                                     <!-- Category 5 -->
-                                    <LogLov *ngSwitchCase="'Category 5'" [ObjectFieldName]="'Category5'" [ObjectTableName]="'GLAccount'"
+                                    <LogLov [ShowInActive]="true" *ngSwitchCase="'Category 5'" [ObjectFieldName]="'Category5'" [ObjectTableName]="'GLAccount'"
                                             [DataContext]="DataContext" [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category5'"
                                             [HideColumns]="true" [SelectedValue]="Category5">
                                     </LogLov>

@@ -35,7 +35,7 @@
                                         <td style="width:15px"></td>
                                         <td style="width:120px;">Opportunities Type:</td>
                                         <td style="width:200px;">
-                                          <LogLov [ObjectFieldName]="'OpportunityTypeId'"
+                                          <LogLov [ShowInActive]="true" [ObjectFieldName]="'OpportunityTypeId'"
                                                   [ObjectTableName]="'Opportunity'"
                                                   [DataContext]="DataContext"
                                                   [LookUpTableName]="'OpportunityType'"
@@ -49,7 +49,7 @@
                                         <td style="width:15px"></td>
                                         <td style="width:90px">Business Unit: </td>
                                         <td style="width:200px">
-                                          <LogLov [ObjectFieldName]="'BusinessUnitId'"
+                                          <LogLov [ShowInActive]="true" [ObjectFieldName]="'BusinessUnitId'"
                                                   [ObjectTableName]="'Opportunity'"
                                                   [DataContext]="DataContext"
                                                   [LookUpTableName]="'BusinessUnit'"
@@ -100,7 +100,7 @@
                                                     <tr>
                                                         <td style="width:100px;">Reseller:</td>
                                                         <td style="width:170px;">
-                                                            <LogLov [ObjectFieldName]="'ResellerId'"
+                                                            <LogLov [ShowInActive]="true" [ObjectFieldName]="'ResellerId'"
                                                                     [DataContext]="DataContext"
                                                                     [ObjectTableName]="'Opportunity'"
                                                                     [LookUpTableName]="'Card'"
@@ -128,7 +128,7 @@
                                                 <table>
                                                     <tr>
                                                         <td style="width:166px;">
-                                                            <LogLov [ObjectFieldName]="'CountryId'"
+                                                            <LogLov [ShowInActive]="true" [ObjectFieldName]="'CountryId'"
                                                                     [ObjectTableName]="'Country'"
                                                                     [DataContext]="DataContext"
                                                                     [LookUpTableName]="'Country'"
@@ -150,7 +150,7 @@
                                             <td style="width:15px"></td>
                                             <td style="width:90px;">Salesman: </td>
                                             <td style="width:200px;">
-                                                <LogLov [ObjectFieldName]="'OwnerId'"
+                                                <LogLov [ShowInActive]="true" [ObjectFieldName]="'OwnerId'"
                                                         [ObjectTableName]="'Opportunity'"
                                                         [DataContext]="DataContext"
                                                         [LookUpTableName]="'User'"

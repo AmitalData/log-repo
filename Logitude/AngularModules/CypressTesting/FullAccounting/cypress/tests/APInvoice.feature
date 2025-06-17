@@ -5,13 +5,13 @@ Feature: AP Invoice
     Scenario: Create new AP Invoice
         Given the user logged in and navigates to Full Accounting workspace
         And an AP Invoice with the following details
-            | Vendor         | KHTest    |
-            | InvoiceNumber  | Random     |
-            | InvoiceAmount  | 100        |
-            | InvoiceDate    | 16/04/2023 |
-            | AccountingDate | 16/04/2023 |
-            | PaymentTerm    | Cash |
-            | BranchId       | Main Office         |
+            | Vendor         | KHTest      |
+            | InvoiceNumber  | Random      |
+            | InvoiceAmount  | 100         |
+            | InvoiceDate    | 16/04/2023  |
+            | AccountingDate | 16/04/2023  |
+            | PaymentTerm    | Cash        |
+            | BranchId       | Main Office |
         
 
     Scenario: Add new Invoice Line
