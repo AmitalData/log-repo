@@ -42,7 +42,7 @@ namespace Logitude.Accounting.BL.Validators
         //public const string M_ExternalNoAlreadyExists_3 = "Journals.O.ExternalNoAlreadyExists_3";
         //public const string M_ExternalNoAlreadyExists_4 = "Journals.O.ExternalNoAlreadyExists_4";
         public const string M_ExchangeRateEmpty = "Journal.M.ExchangeRateEmpty";
-        // ForeignAmount Allowed ...  public const string M_ForeignAmountNotZero = "Journal.M.ForeignAmountNotZero";
+        // ForeignAmount Allowed ...  public const string M_ForeignAmountNotZero = "Journal.M.ForeignAmountNotZero";אות
         public const string M_LocalAmountNotZero = "Allowed  !!!Journal.M.LocalAmountNotZero"; // LocalAmountNotZero   Allowed  
         public const string M_ActionCode = "Journal.M.ActionCode";
         public const string M_ActionCodeDebit = "Journal.M.ActionCodeDebit";
@@ -386,7 +386,10 @@ namespace Logitude.Accounting.BL.Validators
                         {   
                             errorsList.AddNew(transText);
                             valid = false;
-                            NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={myJournalPM.JournalNumber} ,tenant={myJournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={myJournalPM.APPaymentCancelDate}  ");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                                "[Closed Month] Validation failed: Attempted to post journal using AccountingDate, but the period is closed. " +
+                                $"Tenant={myJournalPM.Tenant}, JournalNumber={myJournalPM.JournalNumber}, AccountingDate={myJournalPM.AccountingDate} , ExternalSystem={myJournalPM.ExternalSystem}"
+                            );
 
                         }
                     }
@@ -396,7 +399,10 @@ namespace Logitude.Accounting.BL.Validators
                         {
                             errorsList.AddNew(transText);
                             valid = false;
-                            NetCommonHelper.Logger.DevLog.Instance.WriteError($"JournalValidator Closed Month error:  myJournalPM ={myJournalPM.JournalNumber} ,tenant={myJournalPM.Tenant}, +   myJournalPM.APPaymentCancelDate={myJournalPM.APPaymentCancelDate}  ");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                                "[Closed Month] Validation failed: Attempted to post journal using APPaymentCancelDate, but the period is closed. " +
+                                $"Tenant={myJournalPM.Tenant}, JournalNumber={myJournalPM.JournalNumber}, APPaymentCancelDate={myJournalPM.APPaymentCancelDate}, ExternalSystem={myJournalPM.ExternalSystem}"
+                            );
 
                         }
 
@@ -1035,10 +1041,13 @@ accountingValidationContextServiceProvider
                 periods.PeriodTypeCode=="1" && periods.Year == /*myJournalPM.*/AccountingDate.Date.Year);
             if (currentAccountingPeriodPM == null)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(  $"currentAccountingPeriodPM == null  ,Closed Month error:  AccountingDate={AccountingDate}, +   accountingEntityCode={accountingEntityCode},   ExternalSystem={externalSystem}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                    "[Closed Month] Validation failed: No accounting period found for the given year. " +
+                    $"AccountingDate={AccountingDate}, EntityCode={accountingEntityCode}, ExternalSystem={externalSystem}"
+                );
 
                 valid = false;
-                //errorsList.Add(transText);
+               
             }
             else
             {
@@ -1053,11 +1062,13 @@ accountingValidationContextServiceProvider
                     //Not Valid ... AccountingDateMonth must be greater than close Mounth
                     //not valid  8>=8 
                     //not valid  0>=1 - Must Open mounth before work on year !!
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"!(accountingDateMonth > currentAccountingPeriodPM.ClosedMonth.GetValueOrDefault()) ,Closed Month error:  currentAccountingPeriodPM.ClosedMonth ={currentAccountingPeriodPM.ClosedMonth} ,AccountingDate={AccountingDate}, +   accountingEntityCode={accountingEntityCode},   ExternalSystem={externalSystem}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                        "[Closed Month] Validation failed: The month is closed for posting (accountingDateMonth <= ClosedMonth). " +
+                        $"ClosedMonth={currentAccountingPeriodPM.ClosedMonth}, AccountingDate={AccountingDate}, EntityCode={accountingEntityCode}, ExternalSystem={externalSystem}"
+                    );
 
 
                     valid = false;
-                    //errorsList.Add(transText); //ClosedMonth Must B
                 }
                 if (accountingDateMonth == currentAccountingPeriodPM.OpenMonth)
                 {
@@ -1073,9 +1084,11 @@ accountingValidationContextServiceProvider
                 }
                 else
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"Closed Month error:  currentAccountingPeriodPM.ClosedMonth ={currentAccountingPeriodPM.ClosedMonth} ,AccountingDate={AccountingDate}, +   accountingEntityCode={accountingEntityCode},   ExternalSystem={externalSystem}");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                        "[Closed Month] Validation failed: The month is not open for posting (accountingDateMonth > OpenMonth and not allowed by entity/system). " +
+                        $"OpenMonth={currentAccountingPeriodPM.OpenMonth}, AccountingDate={AccountingDate}, EntityCode={accountingEntityCode}, ExternalSystem={externalSystem}"
+                    );
                     valid = false;
-                    //errorsList.Add(transText);
                 }
             }
             return valid;
