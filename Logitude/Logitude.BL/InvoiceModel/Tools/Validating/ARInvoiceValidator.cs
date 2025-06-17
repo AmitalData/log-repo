@@ -1239,7 +1239,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 if (isExternalAPI)
                 {
                     if (month < period.ClosedMonth)
-                        errorsList.Add(GetClosedMonthErrorMessage(tenant));
+
+                    errorsList.Add(GetClosedMonthErrorMessage(tenant));
                 }
                 else {
                     if (month > period.OpenMonth || month < period.ClosedMonth)
