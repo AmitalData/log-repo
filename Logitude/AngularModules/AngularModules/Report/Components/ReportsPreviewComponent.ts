@@ -349,7 +349,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             this.ReportFliter = this.FillReportFilter(filter);
             if (this.IsUsedExportToExel || this.ReportFliter.ReportCode == "EXDE")
             {
-               this.StartBusyIndicator("ExportToExel...");
+               this.StartBusyIndicator("Exporting to Excel...");
                this.ExportToExcel(this.ReportFliter);
                return
             }
