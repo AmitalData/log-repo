@@ -779,14 +779,14 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             if (myScreenFields.length == 0) {
                 myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant == 0);
             }
-            if (EditComponent._CustomsSettingList?.CompanyType === "B") {
-                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "IsCourierManadatory");
+            if (EditComponent._CustomsSettingList?.CompanyType !== "B") {
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "IsCourierManadatory");
             }
-            if(FeatureLocator.HasFeaturePermession("Customs.Declaration", "ExportDiamonds")) {
-                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "IsDiamondManadatory");
+            if(!FeatureLocator.HasFeaturePermession("Customs.Declaration", "ExportDiamonds")) {
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "IsDiamondManadatory");
             }
-            if(FeatureLocator.HasFeaturePermession(this.ObjectTableName, "IsDocumentUpload")){
-                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "CustomsDocumentUpload");
+            if(!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "IsDocumentUpload")){
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "CustomsDocumentUpload");
             }
             this.GenerateHeaderScreen(myHeaderScreen, myScreenFields,true);
         }
