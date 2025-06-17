@@ -456,11 +456,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 					}
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:Start");
                     //throw new Exception("tst");
+                    var lockLoggingObjectTableId= requestParams.LoggingObjectTableId;
                     _ResponseService.Update(customsResponse, requestParams);
 					if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null)
 					{
 						string sessionId = requestParams.RequestVIA == SendRequestVIA.DCABatch? "MessageDCABatch": "MessageInteractive";
-					    generalLockQueryService.DeleteGeneralLockByEntity(requestParams.Tenant , requestParams.LoggingEntityId, requestParams.LoggingObjectTableId, sessionId);
+					    generalLockQueryService.DeleteGeneralLockByEntity(requestParams.Tenant , requestParams.LoggingEntityId, lockLoggingObjectTableId, sessionId);
 					}
 					stopwatch.Stop();
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:" + stopwatch.Elapsed.ToString());
