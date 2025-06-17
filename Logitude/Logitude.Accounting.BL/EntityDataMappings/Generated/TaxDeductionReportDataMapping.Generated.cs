@@ -37,7 +37,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ErrorMessage, 
 	         ByMonth, 
 	         Month, 
-	         FromMonth,
+	         FromMonth, 
+	         ReportSavedData,
 	      }
 
 
@@ -62,7 +63,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         StatusLocalName, 
 	         ByMonth, 
 	         Month, 
-	         FromMonth,
+	         FromMonth, 
+	         ReportSavedData,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -144,6 +146,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FromMonth))
             {
 				entityPOCO.FromMonth = entityPM.FromMonth;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportSavedData))
+            {
+				entityPOCO.ReportSavedData = entityPM.ReportSavedData;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -232,6 +239,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.FromMonth = entityPOCO.FromMonth;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReportSavedData))
+            {
+					entityPM.ReportSavedData = entityPOCO.ReportSavedData;
+            }
+
 		}
 
 		public void PMToOldPM(TaxDeductionReportPM entityPM, TaxDeductionReportPM oldEntityPM)
@@ -313,6 +325,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.FromMonth = entityPM.FromMonth;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReportSavedData))
+            {
+                oldEntityPM.ReportSavedData = entityPM.ReportSavedData;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(TaxDeductionReportPM entityPM)
@@ -329,6 +346,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ErrorMessage)) //T4 find type == nText 
             {
                 entityPM.ErrorMessage = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ErrorMessage));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ReportSavedData)) //T4 find type == nText 
+            {
+                entityPM.ReportSavedData = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ReportSavedData));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
