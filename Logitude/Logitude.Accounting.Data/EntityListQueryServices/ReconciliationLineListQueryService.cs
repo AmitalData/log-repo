@@ -34,7 +34,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                             Tenant = a.Tenant,
                                                             ReconciliationAmount = a.ReconciliationAmount,
                                                             // ledger transaction fields
-                                                            CreateDate = a.LedgerTransaction != null ? a.LedgerTransaction.CreateDate : DateTime.Now,
+                                                            CreateDate = a.LedgerTransaction.CreateDate ?? DateTime.Now,
                                                             DueDate = (a.LedgerTransaction != null ? a.LedgerTransaction.DueDate : DateTime.Now),
                                                             AmountCredit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode=="0"? a.LedgerTransaction.LocalAmountCredit: a.LedgerTransaction.ForeignAmountCredit : 0),
                                                             AmountDebit = (a.LedgerTransaction != null ? a.LedgerTransaction.Account.ReconcileMethodCode == "0" ? a.LedgerTransaction.LocalAmountDebit : a.LedgerTransaction.ForeignAmountDebit : 0),
