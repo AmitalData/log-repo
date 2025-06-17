@@ -104,7 +104,8 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             return;
         }
         this.errorsList = [];
-        this.checkProductFileNumber(productFileNumber);
+        !AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isCheckedProductFile ?
+            this.checkProductFileNumber(productFileNumber) : this.SaveSupplierInvoiceItemsReqList();
     }
 
     isExistProductFile: boolean = false;
