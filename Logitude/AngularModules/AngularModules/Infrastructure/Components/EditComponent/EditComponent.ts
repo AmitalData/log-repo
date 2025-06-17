@@ -774,10 +774,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             }
         }
         else if (this.ObjectTableName == "Customs.CustomDocumentType") {// TASK-#120561:
-            myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "CustomDocumentType.GeneralTabScreen")[0];
-            let myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant == SessionLocator.Tenant);
-            if (myScreenFields.length == 0) {
-                myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant == 0);
+            myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code === "CustomDocumentType.GeneralTabScreen")[0];
+            let myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant === SessionLocator.Tenant);
+            if (myScreenFields.length === 0) {
+                myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant === 0);
             }
             if (EditComponent._CustomsSettingList?.CompanyType !== "B") {
                 myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "IsCourierManadatory");
