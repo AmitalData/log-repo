@@ -140,7 +140,7 @@ namespace Logitude.Accounting.BL.CoreBL
 						using (var scope = new TransactionScope(TransactionScopeOption.Suppress))
 						{
 							var updater = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant ,ex);
 							scope.Complete();
 						}
 					}
@@ -1627,7 +1627,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         using (TransactionScope scope = new TransactionScope(TransactionScopeOption.Suppress))
                         {
                             var up = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
-                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
+                            up.SetStatusCodeFailed(_SeedJournalId, _Tenant,ex);
                             scope.Complete();
                         }
                     }
