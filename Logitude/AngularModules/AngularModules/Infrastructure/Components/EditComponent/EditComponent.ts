@@ -81,6 +81,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @Output() TabSelected: EventEmitter<string> = new EventEmitter<string>();
     @Output() TabChanged: EventEmitter<string> = new EventEmitter<string>();
     @Output() SaveAndCloseCompleted: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() SaveARInvoiceCompleted: EventEmitter<string> = new EventEmitter<string>();
+
     @Output() OnFirstTimeAfterSingleDataLoaded: EventEmitter<string> = new EventEmitter<string>();
     @Output() IsLock: EventEmitter<[boolean, string, string, string]> = new EventEmitter<[boolean, string, string, string]>();
     @Output() DisplayModeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -1775,16 +1777,21 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
                 this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
-
-                        this.StopBusyIndicator();
+                        
 
                         if (myResponse.HasError) {
+                            this.StopBusyIndicator();
                             this.OnSavingFailed();
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                             this.FireSaveCompleted(false);
                         }
-
+                        else if(this.ObjectTableName === "ARInvoice" && this.EntityPM.StatusCode === 'PR') 
+                        {
+                            this.SaveARInvoiceCompleted.emit(myResponse.Result.Id);
+                            return;
+                        }
                         else {
+                            this.StopBusyIndicator();
 
                             if (this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus == 5) {
                                 const messageWindow = new MessageWindow();
@@ -1900,16 +1907,25 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     if (!isDuplicate) {
                         this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
                             res.subscribe((myResponse: ServiceResponse) => {
-                                 
+
+
+                        if (myResponse.HasError) {
                                 this.StopBusyIndicator();
         
-                                if (myResponse.HasError) {
+
                                     this.OnSavingFailed();
                                     this.ValidationErrorsList = myResponse.ErrorsArray;
                                     this.FireSaveCompleted(false);
-                                }
+                        }
+                        else if(this.ObjectTableName === "ARInvoice" && this.EntityPM.StatusCode === 'PR') 
+                            {
+                                this.SaveARInvoiceCompleted.emit(myResponse.Result.Id);
+                                return;
+                            }
         
                                 else {
+                            this.StopBusyIndicator();
+
                             if (this.SelectedTab.Code == "DCCF") {
                                 DeclarationEventManager.SavePendingAfterDeclarationSaved.emit(null);;
                             }

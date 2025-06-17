@@ -40,6 +40,8 @@ namespace CommunicationWorkerRole
         private bool _UseQueue = true;
         private DbQueueService _DbQueueService;
         private string _ObjectTable = "ARInvoice";
+        private static DateTime _freeTenantsDateTime = DateTime.Now;
+
 
         public override void Run()
         {
@@ -163,6 +165,11 @@ namespace CommunicationWorkerRole
                 try
                 {
                     _DbQueueService = new DbQueueService(selectedQueue, 0);
+                    if (DateTime.Now.Subtract(_freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
+                    {
+                        _freeTenantsDateTime = DateTime.Now;
+                        _DbQueueService.FreeTenants("ARInvoice");
+                    }
                     response = _DbQueueService.ReceiveDetailsByTenant(_ObjectTable, new TimeSpan(0, 0, 0, 5));
                 }
                 catch (Exception)
@@ -209,10 +216,17 @@ namespace CommunicationWorkerRole
             bool isInvoiceApi = response.MessageValues["IsInvoiceApi"].ToString() == "true" ;
             int tenant = 0;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+            string interestReportId = response.MessageValues.ContainsKey("InterestReportId") && response.MessageValues["InterestReportId"] != null
+                        ? response.MessageValues["InterestReportId"].ToString()
+                        : string.Empty;
+            string batchId = response.MessageValues.ContainsKey("BatchIdFromInterestInvoice") && response.MessageValues["BatchIdFromInterestInvoice"] != null
+                        ? response.MessageValues["BatchIdFromInterestInvoice"].ToString()
+                        : string.Empty;
 
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
             ARInvoicePM aRInvoicePM = aRInvoiceQuery.GetSinglePM(arinvoiceId, tenant);
             IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
+            ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(tenant);
 
             if (arinvoiceId != null)
             {
@@ -237,41 +251,57 @@ namespace CommunicationWorkerRole
                         }
                     }
 
-                    if (aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
+
+                    ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
+                    invoice.ApprovalInProgress = true;
+                    UpdateARInvoiceInRepository(invoice, invoiceRepository);
+
+
+
+                    if (aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
                     {
-
-                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                        try
                         {
-                            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-                            InterestReportPM interestReportPM = interestReportQueryService.GetSingle(aRInvoicePM.InterestReportId, false, true);
-                            try
+                            aRInvoicePM.InterestReportId = interestReportId;
+                            UpdateInterestReportsStatues(interestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
+
+                            if (!string.IsNullOrEmpty(batchId))
                             {
+                                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                                {
+                                    InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+                                    InterestReportPM interestReportPM = interestReportQueryService.GetSingle(interestReportId, false, true);
+                                    try
+                                    {
 
-                                invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
-                                UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
-                                invoiceService.SignInvoice(aRInvoicePM, tenant);
-                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
-                                scope.Complete();
+                                        invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
+                                        invoiceService.SignInvoice(aRInvoicePM, tenant);
+                                        NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
+                                        scope.Complete();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        scope.Dispose();
+                                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReportPM.Id);
+                                        UpdateInterestReportsStatues(interestReportId, tenant, "10", aRInvoicePM.CreatedByUserId, null, ex.Message);
+
+                                    }
+
+                                }
                             }
-                            catch (Exception ex)
-                            {
-                                scope.Dispose();
-                                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReportPM.Id);
-                                UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
-
-                            }
-
                         }
-
+                        catch (Exception ex)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in UpdateInterestInvoiceStatus");
+                        }
                     }
+                        
+
 
                 }
                 catch (BusinessErrorException ex)
                 {
-                    string batchId = response.MessageValues.ContainsKey("BatchIdFromInterestInvoice") && response.MessageValues["BatchIdFromInterestInvoice"] != null
-                        ? response.MessageValues["BatchIdFromInterestInvoice"].ToString()
-                        : string.Empty;
-
+                    
                     BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
                     BatchTaskExecutionPM batchTask = batchTaskExecutionQueryService.GetSingle(batchId, false, true);
                     if (batchTask == null) return;
@@ -280,46 +310,30 @@ namespace CommunicationWorkerRole
                     batchTask.ErrorLog += "\n" + "Report # " + aRInvoicePM.InterestReportNumber + " " + ex.Message;
                     BatchTaskExecutionUpdateService batchTaskExecutionRepository = new BatchTaskExecutionUpdateService(tenant);
                     batchTaskExecutionRepository.Update(batchTask, true);
+                    
+                    ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                     if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
                     {
-                        UpdateCounter(tenant);
+                        UpdateCounter(tenant, invoice, invoiceRepository);
                     }
-                    _DbQueueService.CompleteAsFailed();
+                    InvoiceApprovalFailed(invoice, ex.Message, invoiceRepository);
+
                 }
                 catch (Exception ex)
                 {
-                    ARInvoiceRepository invoiceRepository = new ARInvoiceRepository(tenant);
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
-                    if (invoice != null && invoice.StatusCode == "AD")
-                    {
-                        _DbQueueService.Complete();
-                        throw;
-                    }
+                  
                     if (!string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
                     {
-                        UpdateCounter(tenant);
+                        UpdateCounter(tenant, invoice, invoiceRepository);
                     }
-                    if (response.RetryNumber == 4)
+                    if (response.RetryNumber >= 4 || invoice.StatusCode == "AD")
                     {
-                        _DbQueueService.CompleteAsFailed();
+                        InvoiceApprovalFailed(invoice, ex.Message, invoiceRepository);
 
-                        invoice.IsApprovalFailed = true;
-                        invoice.StatusCode = "DR";
-                        invoiceRepository.Update(invoice);
-
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = tenant,
-                            EventTypeCode = "APF",
-                            EntityId = arinvoiceId,
-                            ObjectTableName = _ObjectTable,
-                            Notes = ex.Message
-                        });
-
-                        invoiceRepository.SubmitChanges();
                         if (aRInvoicePM.ARInvoiceTypeCode == "IT")
                         {
-                            UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
+                            UpdateInterestReportsStatues(interestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
                         }
                     }
 
@@ -343,7 +357,10 @@ namespace CommunicationWorkerRole
         }
 
 
-        private void UpdateCounter(int tenant)
+
+
+
+        private void UpdateCounter(int tenant, ARInvoice aRInvoice, ARInvoiceRepository repository)
         {
             CounterStatRepository counterStatRepository = new CounterStatRepository(tenant);
             if (TableCounter.counterState == null) return;
@@ -362,6 +379,14 @@ namespace CommunicationWorkerRole
             }
 
 
+            if(aRInvoice.InvoiceNumber != aRInvoice.Id)
+            {
+                aRInvoice.InvoiceNumber = aRInvoice.Id;
+                UpdateARInvoiceInRepository(aRInvoice, repository);
+               
+
+
+            }
         }
 
 
@@ -391,6 +416,36 @@ namespace CommunicationWorkerRole
             interestReportPM.IsUpdatedFromBatch = true;
             service.Update(interestReportPM, true);
 
+        }
+
+        public void UpdateARInvoiceInRepository(ARInvoice aRInvoice, ARInvoiceRepository repository = null)
+        {
+            if(repository == null)
+                repository = new ARInvoiceRepository(aRInvoice.Tenant);
+            repository.Update(aRInvoice);
+            repository.SubmitChanges();
+        }
+
+
+        public void InvoiceApprovalFailed(ARInvoice invoice, string exception, ARInvoiceRepository invoiceRepository) 
+        {
+            _DbQueueService.CompleteAsFailed();
+            invoice.ApprovalInProgress = true;
+            invoice.IsApprovalFailed = true;
+            invoice.StatusCode = "DR";
+            invoice.ApprovedDate = null;
+           
+
+            UpdateARInvoiceInRepository(invoice, invoiceRepository);
+
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = invoice.Tenant,
+                EventTypeCode = "APF",
+                EntityId = invoice.Id,
+                ObjectTableName = _ObjectTable,
+                Notes = exception
+            });
         }
 
 

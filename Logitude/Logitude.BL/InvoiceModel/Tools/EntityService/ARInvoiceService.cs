@@ -618,10 +618,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
            new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented });
 
         }
-        private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
+        public void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
             IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
-            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InvoiceEntities[0].EntityId, theEntityPM.StatusCode);
+            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InterestReportId, theEntityPM.StatusCode);
 
         }
         private void UpdateInterestReportStatus(ARInvoicePM theEntityPM, string Statues)
@@ -631,10 +631,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        private void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
+        public void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
         {
             IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
-            InterestReportsConnectedInvoiceUpdate.UpdateInterestLastBatchService(theEntityPM.InvoiceEntities[0].EntityId, tenant, null, theEntityPM.Id);
+            InterestReportsConnectedInvoiceUpdate.UpdateInterestLastBatchService(theEntityPM.InterestReportId, tenant, null, theEntityPM.Id);
         }
         private void ValidateInvoiceConnected()
         {
@@ -721,14 +721,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
                     throw new BusinessErrorException("An invoice has already been created for this report.");
-
+                
                 }
             }
 
             this.isApprovingInvoice = entityPM.SetApproved;
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
-
+            if(entityPM.SetApproved && !entityPM.ApprovalInProgress &&  invoice.ApprovalInProgress)
+            {
+                invoice.ApprovalInProgress = false;
+                invoiceRepository.Update(invoice);
+                invoiceRepository.SubmitChanges();
+            }
             if (invoice.StatusCode == "AR")
             {
                 if (this.entityPM.StatusCode == "AD")
@@ -807,7 +812,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.ARInvoiceStockNumber();
 
                 ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
-                ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+                //ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
 
                 if (entityPM.IsConsolidationInvoice)
                 {
@@ -913,6 +918,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+            ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
             this.InsertToQueue();
         }
 
@@ -5264,7 +5270,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     { "ARInvoiceId", entityPM.Id },
                     { "Tenant", tenant.ToString() },
-                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId }
+                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId },
+                    { "InterestReportId", entityPM.InterestReportId }
 
                 }, tenant);
             }

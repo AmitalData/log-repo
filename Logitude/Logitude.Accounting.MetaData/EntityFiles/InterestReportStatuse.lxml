@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +43,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Interest Report Statuse&quot;"
-  Code="&quot;c83e&quot;"
+  Code="&quot;f3c6&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;f278&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -134,6 +138,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -209,6 +214,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -282,6 +288,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -357,6 +364,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -442,6 +450,11 @@
       EnglishName="&quot;Invoicing Failed&quot;"
       LocalName="&quot;הפקת החשבונית נכשלה&quot;"
       SearchFields="&quot;9,הפקת החשבונית נכשלה,Invoicing Failed&quot;" />
+    <Record
+      Code="&quot;10&quot;"
+      LocalName="&quot;הדפסת חשבונית נכשלה&quot;"
+      EnglishName="&quot;Invoice printing failed&quot;"
+      SearchFields="&quot;Invoice printing failed,הדפסת חשבונית נכשלה,10&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

@@ -26,6 +26,7 @@ export class ConfirmWindow {
     public ShowErorImage: boolean = false;
     public MultipleMessages: string[] = null;
     public IsMultipleMessages: boolean = false;
+    public MultipleMessagesHeight: number = 80;
     LayoutDirection: string = 'ltr';
     @Output() WindowClosed = new EventEmitter();
     public IsChecked: boolean = false;
@@ -126,6 +127,7 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     public MultipleMessages: string[] = null;
     public IsMultipleMessages: boolean = false;
     public ZIndex: number = 2;
+    public MultipleMessagesHeight: string = "80px";
 
     LayoutDirection: string = 'ltr';
     public ShowCheckBox: boolean = false;
@@ -176,6 +178,8 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
 
         if (myWindow.Height != null) {
             this.Height = myWindow.Height + "px";
+            this.MultipleMessagesHeight = myWindow.Height - 90 + "px";
+
         }
     }
 

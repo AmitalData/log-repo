@@ -1211,7 +1211,7 @@ namespace WebFreight.Web.ReportsWebServices
                 invoicesRecored.InvoiceDate = a.InvoiceDate;
                 invoicesRecored.InvoiceType = a.ARInvoiceTypeName;
                 invoicesRecored.DueDate = a.DueDate;
-                invoicesRecored.OurReference = a.StatusCode == "DR" ? a.DraftNumber : a.InvoiceNumber;
+                invoicesRecored.OurReference = a.StatusCode == "DR" ? "Draft: " + a.DraftNumber : a.InvoiceNumber;
                 invoicesRecored.MasterNumber = a.MasterNumber;
                 invoicesRecored.HouseNumber = a.HouseNumber;
                 invoicesRecored.YourRefrence = a.CustomerRef;

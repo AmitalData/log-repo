@@ -891,7 +891,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsApprovalDone"
+    Name="ApprovalInProgress"
     Type="bit"
     DefaultValue="0">
     <Constraints

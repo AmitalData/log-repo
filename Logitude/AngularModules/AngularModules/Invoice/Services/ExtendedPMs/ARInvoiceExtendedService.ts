@@ -37,6 +37,17 @@ export class ARInvoiceExtendedService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    
+    UpdateIsApproveDoneInARInvocie(invoiceId: string, approvalInProgress: boolean) {
+        return defer(() => {    
+            return this._http.put(this._apiUrl + '/UpdateIsApproveDoneInARInvocie/?' + '&invoiceId=' + invoiceId + '&approvalInProgress=' + approvalInProgress, null,ServiceHelper.GetHttpHeaders())
+                .pipe(map((response: any) => {
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     MapJsonToEntityList(jsonList: any) {
 
