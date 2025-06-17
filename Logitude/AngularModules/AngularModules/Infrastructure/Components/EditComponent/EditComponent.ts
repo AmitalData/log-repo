@@ -773,17 +773,21 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
-        else if (this.ObjectTableName == "Customs.CustomDocumentType") {
-            
+        else if (this.ObjectTableName == "Customs.CustomDocumentType") {// TASK-#120561:
             myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "CustomDocumentType.GeneralTabScreen")[0];
             let myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant == SessionLocator.Tenant);
             if (myScreenFields.length == 0) {
                 myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant == 0);
             }
-            // check features TASK-#120561:
-            myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "IsCourierManadatory");
-            myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "IsDiamondManadatory");
-            myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "CustomsDocumentUpload");
+            if (EditComponent._CustomsSettingList?.CompanyType === "B") {
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "IsCourierManadatory");
+            }
+            if(FeatureLocator.HasFeaturePermession("Customs.Declaration", "ExportDiamonds")) {
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "IsDiamondManadatory");
+            }
+            if(FeatureLocator.HasFeaturePermession(this.ObjectTableName, "IsDocumentUpload")){
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName != "CustomsDocumentUpload");
+            }
             this.GenerateHeaderScreen(myHeaderScreen, myScreenFields,true);
         }
         else {
