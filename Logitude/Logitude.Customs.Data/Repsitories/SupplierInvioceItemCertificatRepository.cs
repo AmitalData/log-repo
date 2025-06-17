@@ -193,7 +193,7 @@ INNER JOIN SupplierInvoices ON SupplierInvoiceItems.DeclarationId = SupplierInvo
                 {
                     wherestring += " and Customs.SupplierInvoices.InvoiceNumber = '" + invoiceNumber + "'";
                 }
-                cmd = (@"select NEWID() as Id , Customs.SupplierInvoices.InvoiceNumber,Customs.SupplierInvoiceItems.ItemCode,Customs.SupplierInvoiceItems.ClassificationCode,
+                cmd = (@"select NEWID() as Id , Customs.SupplierInvoices.InvoiceNumber,Customs.SupplierInvoiceItems.ItemCode,Customs.SupplierInvoiceItems.ClassificationCode,Customs.SupplierInvoiceItems.SearchFields,
 Customs.SupplierInvoiceItems.TradeAgreementCode,SupplierInvoiceItems.OriginCountryCode, Customs.CustomsCountries.LocalName AS OriginCountryName,
 Customs.TradeAgreements.LocalName AS TradeAgreementName,
 Customs.SupplierInvioceItemCertificats.ItemCertificateCounterKey,Customs.SupplierInvoices.InvoiceCounterKey,Customs.SupplierInvoices.DeclarationId,
@@ -223,7 +223,15 @@ INNER JOIN Customs.SupplierInvoices ON Customs.SupplierInvoiceItems.DeclarationI
             }
             else
             {
-                result = iQueryable.OrderBy(d => d.InvoiceNumber).ThenBy(d => d.InvoiceCounterKey).ThenBy(d => d.SequenceNumeric).Skip(skip).Take(take).AsQueryable();
+                if (!string.IsNullOrEmpty(SearchFields) && SearchFields != "null")
+                {
+                    result = iQueryable.OrderBy(d=> d.SearchFields).ThenBy(d => d.InvoiceNumber).ThenBy(d => d.InvoiceCounterKey).ThenBy(d => d.SequenceNumeric).Skip(skip).Take(take).AsQueryable();
+
+                }
+                else
+                {
+                    result = iQueryable.OrderBy(d => d.InvoiceNumber).ThenBy(d => d.InvoiceCounterKey).ThenBy(d => d.SequenceNumeric).Skip(skip).Take(take).AsQueryable();
+                }
             }
             //foreach (CertificateConnectedItems item in result)
             //{
