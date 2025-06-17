@@ -441,7 +441,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
                      break;
                 }
                 case "NumberOfMonths":
-                    this.NumberOfMonths= queryFilterItem.FieldValue;                           
+                    this.NumberOfMonths = queryFilterItem.FieldValue ? Number(queryFilterItem.FieldValue) : null;
                     break;
                 case "CustomerId":
                     this.Customer= queryFilterItem.FieldValue;                           
