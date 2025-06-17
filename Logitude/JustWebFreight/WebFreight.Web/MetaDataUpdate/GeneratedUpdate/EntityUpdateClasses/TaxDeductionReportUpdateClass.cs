@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxDeductionReportUpdateClass
    {  		
-		public const string HashString = "be174bc6aff68221e39a3c2410cac98a";
+		public const string HashString = "07b29dced06f7a604636a4ef3e3d9791";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1673,13 +1673,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOInvalidMonthPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.InvalidMonthPeriod", DefaultText = "To month must be greater than from month",LocalDefaultText = @"ערך השדה 'לחודש' חייב להיות גדול מערך השדה 'מחודש'", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
+           TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportType", DefaultText = "Report Type", LocalDefaultText = @"סוג דו''ח", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-    
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportPeriod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportPeriod", DefaultText = "Report Period", LocalDefaultText = @"תקופת הדו''ח", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   }
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOReportData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.ReportData", DefaultText = "Report Data", LocalDefaultText = @"נתוני הדו''ח", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalPayments", DefaultText = "Total Payments", LocalDefaultText = @"סה''כ תשלומים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalDeductions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalDeductions", DefaultText = "Total Deductions", LocalDefaultText = @"סה''כ ניכויים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            
+
+        }
+
+
+
+    }
     
 }
 	 

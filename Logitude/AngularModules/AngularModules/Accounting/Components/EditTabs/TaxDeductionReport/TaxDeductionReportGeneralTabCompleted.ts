@@ -9,6 +9,7 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { BatchTaskExecutionListService } from '../../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { TaxDeductionReportPMService } from '../../../Services/StandardPMs/TaxDeductionReportPMService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { TaxDeductionReportData, TotalForCompany, DBVendorsList, ByMonthList, ByVendorList  } from '../../../DataContracts/TaxDeductionReportData';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class TaxDeductionReportGeneralTabCompleted extends BaseComponent {
 
     public DataContext: any = this;
     ObjectTableName: string = "TaxDeductionReport";
+    DataObjectTableName: string = "TaxDeductionReportData";
     public entityPM: TaxDeductionReportPM;
     isRTL: boolean = false;
     showLocals: boolean = false;
@@ -29,6 +31,7 @@ export class TaxDeductionReportGeneralTabCompleted extends BaseComponent {
     taxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
    
     private CurrentSession = SessionLocator.SelectedSession;
+    _TaxDeductionReportData: TaxDeductionReportData;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.entityPM = entityArgs.EntityPM;
@@ -40,42 +43,65 @@ export class TaxDeductionReportGeneralTabCompleted extends BaseComponent {
         if (this.entityPM.StatusTypeCode == "4") {
             this.Faild = true;
         }
+        this. _TaxDeductionReportData = new TaxDeductionReportData();
+        //this.BuildTaxDeductionReportData();
     }
 
     Building: boolean= false;
     get IsAdditionalReportExist() { return this.entityPM.IsAdditionalReportExist; }
 
-    get Email() { return this.entityPM.Email; }
-    RunService() {
-        this.entityPM.StatusTypeCode = "2";
-        this.Building=true;
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
-        this.taxDeductionReportPMService.update(this.entityPM).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                 
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.entityPM).subscribe((myResult:ServiceResponse) => {
-                        var mm: ServiceResponse = myResult;
-                        var entity = mm.Result;
 
 
-
-                    });
-                }
-
-                else {
-                  
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            }
-        });
-        
-
-
+    get ReportType() { 
+            return this.entityPM.ByMonth === false
+                        ? TextCodeTranslator.Translate("TaxDeductionReport.O.ByYear")
+                        : this.entityPM.FromMonth === this.entityPM.Month
+                            ? TextCodeTranslator.Translate("TaxDeductionReport.O.ByMonth")
+                            :  TextCodeTranslator.Translate("TaxDeductionReport.O.Periodic") ;
     }
 
+
+    private FormatDateToMonthYear(dateInput: Date | string): string {
+        const date = new Date(dateInput);
+        if (isNaN(date.getTime())) {
+            throw new Error("Invalid date input");
+        }
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${year}`;
+    }
+
+
+    get ReportPeriod() {
+        return this.entityPM.ByMonth === false
+            ? this.entityPM.TaxYear.toString()
+            : this.entityPM.FromMonth === this.entityPM.Month
+                ? `${TextCodeTranslator.Translate("TaxDeductionReport.F.Month")} ${this.FormatDateToMonthYear(this.entityPM.Month)}`
+                : `${TextCodeTranslator.Translate("TaxDeductionReport.F.FromMonth")} ` +
+                  `${this.FormatDateToMonthYear(this.entityPM.FromMonth)} ` +
+                  `${TextCodeTranslator.Translate("Accounting.General.O.To")} ` +
+                  `${TextCodeTranslator.Translate("TaxDeductionReport.O.ToMonth")} ` +
+                  `${this.FormatDateToMonthYear(this.entityPM.Month)}`;
+    }
+
+
+
+    get Email() { return this.entityPM.Email; }
+
+    BuildTaxDeductionReportData() {
+
+        this.taxDeductionReportExtendedPMService.GetTaxDeductionReportData(this.entityPM.Id).subscribe((myResponse: ServiceResponse) => {
+
+            if (myResponse) {
+                if (!myResponse.HasError) {
+                        this._TaxDeductionReportData = myResponse.Result;
+
+                }
+            }
+
+        });
+
+    }
   
 }
 

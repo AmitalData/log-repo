@@ -1269,6 +1269,7 @@
     <TypeScriptCompile Include="Accounting\Components\Workspaces\GLAccounts\GLAccountsPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Workspaces\Main\MainPageComponent.ts" />
     <TypeScriptCompile Include="Accounting\DataContracts\InterestReportArgs.ts" />
+    <TypeScriptCompile Include="Accounting\DataContracts\TaxDeductionReportData.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\AccountingIntegrityCheckList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\IntegrityCheckStatusList.ts" />
     <TypeScriptCompile Include="Accounting\EntityLists\JournalAdditionalDataList.ts" />
