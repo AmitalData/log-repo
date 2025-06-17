@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "6b14fc602604c616a0fec997531bac85";
+		public const string HashString = "7f2bdb3b487002174ee0e2822727db75";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -12402,6 +12402,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExchangeRateId",
 					  						ListPropertyPath =  "ExchangeRateId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -12469,6 +12470,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ExchangeRateName",
 					  						ListPropertyPath =  "ExchangeRateName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -14765,8 +14767,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOInterestReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestReport", DefaultText = "Interest report",LocalDefaultText = @"דוח ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOClosedBalanceInLocalCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ClosedBalanceInLocalCurrency", DefaultText = "Closed balance in Local Currency",LocalDefaultText = @" סגירה יתרה במטבע מקומי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
  		   TextCode GLAccountTextCode_GLAccountOCollector = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Collector", DefaultText = "Collector",LocalDefaultText = @"גובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountOBalanceInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.BalanceInHebrew", DefaultText = "Balance",LocalDefaultText = @"יתרה לפי יתרה לגביה בשח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
@@ -14780,8 +14780,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsONotRepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotRepaid", DefaultText = "Not Repaid",LocalDefaultText = @"פירוט שלא נפרעו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"פירוט המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
- 		   TextCode GLAccountTextCode_GLAccountOClosingBalanceAccordingToTheBalanceInDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue", DefaultText = "Closing balance according to the balance In Due",LocalDefaultText = @"יתרת סגירה לפי יתרה לגביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountOCancelSelectedReco = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedReco", DefaultText = "Cancel Selected Reconciles",LocalDefaultText = @"ביטול התאמות מסומנות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
