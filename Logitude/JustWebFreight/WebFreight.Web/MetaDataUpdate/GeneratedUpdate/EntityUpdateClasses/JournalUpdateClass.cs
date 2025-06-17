@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "c5d18eba5a8facd873f8dba79a4f9108";
+		public const string HashString = "b5c2d31c6925e6b2860f25b745bcff8b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -4277,7 +4277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalORevelations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Revelations", DefaultText = "Revelations",LocalDefaultText = @"שערוך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"פקודות םחרונים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"?????? ???????", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.General", DefaultText = "General",LocalDefaultText = @"כללי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
