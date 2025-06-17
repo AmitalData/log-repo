@@ -39,7 +39,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsClosed, 
 	         IsCancelled, 
 	         Notes,
-	      }
+            AccountingDate,
+            JournalId
+
+
+        }
 
 
 	      public enum PMPropertyNames
@@ -156,8 +160,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.Notes = entityPM.Notes;
 			}
-			
-				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AccountingDate))
+            {
+                entityPOCO.AccountingDate = entityPM.AccountingDate;
+            }
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.JournalId))
+            {
+                entityPOCO.JournalId = entityPM.JournalId;
+            }
+            BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
 		  }
 
 		public void POCOToPM(InterestTransactionPM entityPM, InterestTransaction entityPOCO)

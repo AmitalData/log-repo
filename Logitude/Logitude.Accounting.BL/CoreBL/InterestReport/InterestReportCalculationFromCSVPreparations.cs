@@ -159,8 +159,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     interestTransactionPM.InterestValueDate = GetDateTimeFromString(lineFields[12]);
                     interestTransactionPM.InterestReportId = lineFields[13];
                     interestTransactionPM.IsClosed = lineFields[14] == "0" ? false : true;
-
-                    if(!interestTransactionPM.IsCancelled 
+                    interestTransactionPM.JournalId = lineFields[15];
+                    interestTransactionPM.AccountingDate = GetDateTimeFromString(lineFields[16]);
+                    if (!interestTransactionPM.IsCancelled 
                         && !interestTransactionPM.IsClosed 
                         && interestTransactionGetParameters.GLAccountIds.Contains( interestTransactionPM.GLAccountId)
                         && interestTransactionPM.InterestValueDate <= interestTransactionGetParameters.InterestCalculationDate)
