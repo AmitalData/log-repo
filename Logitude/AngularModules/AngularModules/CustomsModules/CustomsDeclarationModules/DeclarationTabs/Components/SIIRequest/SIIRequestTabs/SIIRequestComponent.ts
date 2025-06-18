@@ -298,8 +298,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/SIIRequestCopmleteDataItem/SIIRequestCopmleteDataItemComponent');
         args.logWindow = logWindow;
-        logWindow.WindowClosed.subscribe((entityPM: SupplierInvoiceItemsForSIIRequestLine) => {
-            if (!AppTool.IsNullOrEmpty(entityPM)) this.SelectedRow.entityPM = entityPM;
+        logWindow.WindowClosed.subscribe((entityPM: SupplierInvoiceItemsReqListPM) => {
+            if (!AppTool.IsNullOrEmpty(entityPM)) this.SelectedRow.entityPM.RequestRequiredStatus = entityPM.RequestRequiredStatus;
 
             this.RefreshEntity();
             this.isOpen = false;
