@@ -44,7 +44,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;רשימת בקשות&quot;"
   DefaultText="&quot;Supplier Invoice Items Request List&quot;"
-  Code="&quot;b030&quot;"
+  Code="&quot;deb5&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2278,13 +2278,13 @@
     <TextCode
       Code="&quot;Customs.SupplierInvoiceItemsReqList.O.ProductNotFound&quot;"
       DefaultText="&quot;Product File not found&quot;"
-      LocalDefaultText="&quot;תיק מוצר לא קיים במכון תקנים&quot;"
+      LocalDefaultText="&quot;תיק מוצר לא קיים במ&quot;ת&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.SupplierInvoiceItemsReqList.O.ContinueSave&quot;"
       DefaultText="&quot;Do keep anyway&quot;"
-      LocalDefaultText="&quot;האם לשמור בכל זאת&quot;"
+      LocalDefaultText="&quot;האם לשמור בכל זאת את הנתונים שהוזנו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

@@ -18514,7 +18514,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
         }
         public void FillSIIDocumentType(int tenant)
         {
-            SIIDocumentTypeRepository sIIDocumentTypeRepository = new SIIDocumentTypeRepository(0);
+            SIIDocumentTypeRepository sIIDocumentTypeRepository = new SIIDocumentTypeRepository(tenant);
             Dictionary<string,SIIDocumentType> keyValuePairs=sIIDocumentTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "1", LocalName= "שטר מטען" }, sIIDocumentTypeRepository);
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "2", LocalName = "חשבון ספק" }, sIIDocumentTypeRepository);
@@ -18522,7 +18522,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "8", LocalName = "דוחות בדיקה חיצוניים" }, sIIDocumentTypeRepository);
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "9", LocalName = "קטלוגים/תצהירים" }, sIIDocumentTypeRepository);
             AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "101", LocalName = "אחר" }, sIIDocumentTypeRepository);
-
+            sIIDocumentTypeRepository.SubmitChanges();
         }
 
     }

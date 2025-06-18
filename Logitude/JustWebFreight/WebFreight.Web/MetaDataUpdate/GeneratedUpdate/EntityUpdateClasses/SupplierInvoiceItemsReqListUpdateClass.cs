@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "1610c4cb210a834a195c8f599514a3d9";
+		public const string HashString = "7622aa5f6d572b04018d61f5fb4013a7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת בקשות",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "b030",
+			      				    Code =  "deb5",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2087,9 +2087,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable SupplierInvoiceItemsReqListObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsReqList" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOProductNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ProductNotFound", DefaultText = "Product File not found",LocalDefaultText = @"תיק מוצר לא קיים במכון תקנים", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOProductNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ProductNotFound", DefaultText = "Product File not found",LocalDefaultText = "תיק מוצר לא קיים במ''ת", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOContinueSave = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ContinueSave", DefaultText = "Do keep anyway",LocalDefaultText = @"האם לשמור בכל זאת", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOContinueSave = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ContinueSave", DefaultText = "Do keep anyway",LocalDefaultText = @"האם לשמור בכל זאת את הנתונים שהוזנו", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOErrorRequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ErrorRequiredFields", DefaultText = "Error filling in required fields on the screen",LocalDefaultText = @"שגיאה במילוי שדות חובה במסך", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
