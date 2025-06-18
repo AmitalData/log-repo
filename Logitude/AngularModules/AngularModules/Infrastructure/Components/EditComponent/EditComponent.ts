@@ -801,7 +801,23 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
-
+        else if (this.ObjectTableName == "Customs.CustomDocumentType") {// TASK-#120561:
+            myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code === "CustomDocumentType.GeneralTabScreen")[0];
+            let myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant === SessionLocator.Tenant);
+            if (myScreenFields.length === 0) {
+                myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === myHeaderScreen.Code && d.Tenant === 0);
+            }
+            if (EditComponent._CustomsSettingList?.CompanyType !== "B") {
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "IsCourierManadatory");
+            }
+            if(!FeatureLocator.HasFeaturePermession("Customs.Declaration", "ExportDiamonds")) {
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "IsDiamondManadatory");
+            }
+            if(!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "IsDocumentUpload")){
+                myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "CustomsDocumentUpload");
+            }
+            this.GenerateHeaderScreen(myHeaderScreen, myScreenFields,true);
+        }
         else {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
@@ -849,8 +865,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
     }
 
-    private GenerateHeaderScreen(HeaderScreen: any, ObjectFields: ObjectFieldPM[]) {
-
+    private GenerateHeaderScreen(HeaderScreen: any, ObjectFields: ObjectFieldPM[] ,isCustomFilterObjectFields: boolean = false) {
         var element = document.getElementById(this.HeaderId);
         if (element == null) {
             this.RunFindHeaderTimer(HeaderScreen, ObjectFields);
@@ -876,9 +891,18 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     this.HeaderScreenRowHeight = 20;
                 }
 
-                var myScreenFields: any[] = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == SessionLocator.Tenant);
-                if (myScreenFields.length == 0) {
-                    myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == 0);
+                let myScreenFields: any[] = [];
+                if (isCustomFilterObjectFields && ObjectFields?.length > 0) {
+                    myScreenFields = ObjectFields;
+                    this.entityArgs.customObjectFields = myScreenFields;
+                    HeaderScreen.NumberOfColumns = myScreenFields.length;
+                }
+                else {
+                    this.entityArgs.customObjectFields = null;
+                    myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == SessionLocator.Tenant);
+                    if (myScreenFields.length == 0) {
+                        myScreenFields = window.ScreenFields.filter(d => d.ScreenCode === HeaderScreen.Code && d.Tenant == 0);
+                    }
                 }
 
                 var widthOfColumn: number = 0;
@@ -1766,15 +1790,15 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             if(this.ObjectTableName === "BankAccount"){
                 const oldFactoringBank = this.EntityPM.OldEntityPM?.factoringBank;
                 const newFactoringBank = this.EntityPM.FactoringBank;
-                 if (oldFactoringBank !== newFactoringBank) {
+                if (oldFactoringBank !== newFactoringBank) {
 
-                   const canContinue = await this.CheckOpenCheques(this.EntityPM);
-                   if (!canContinue) {
-                      return;
-                   }
-                  }
+                    const canContinue = await this.CheckOpenCheques(this.EntityPM);
+                    if (!canContinue) {
+                        return;
+                    }
+                }
             }
-        
+
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
                 || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "UserDefinedReport" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
@@ -2046,14 +2070,14 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     arPaymentChequeOperationsService: ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService()
 
 
-    
+
     async CheckOpenCheques(entityPM: any): Promise<boolean> {
         this.CurrentSession.StartBusyIndicator("Check cheques");
         return new Promise<boolean>((resolve) => {
             this.arPaymentChequeOperationsService.GetCountOpenChequesByBankAccount(entityPM.Tenant, entityPM.Id).subscribe((result: any) => {
                 if (result > 0) {
                     this.StopBusyIndicator();
-                   
+
                     var confirmWindow = new ConfirmWindow();
                     confirmWindow.Width = 450;
                     confirmWindow.Height = 190;
@@ -2061,7 +2085,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     var countFutureChecksText = TextCodeTranslator.Translate("BankAccounts.O.CountFutureChecks");
                     countFutureChecksText = countFutureChecksText.replace("X%", result);
                     confirmWindow.Show(countFutureChecksText+" ,"+TextCodeTranslator.Translate(message))
-                    
+
                     confirmWindow.WindowClosed.subscribe(() => {
                         if (confirmWindow.Yes) {
                             resolve(true);

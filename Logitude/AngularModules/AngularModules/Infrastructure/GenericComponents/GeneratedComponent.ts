@@ -143,11 +143,13 @@ export class GeneratedComponent extends BaseComponent implements AfterContentIni
                 var myScreen = window.Screens.filter((x: any) => x.ObjectTableId === (!AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ChildObjectTableId : this.ObjectTableId) && x.Code.toLowerCase() == this.ScreenCode.toLowerCase())[0];
 
                 if (myScreen != null) {
-
-                    var myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
-
+                    
+                    let myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id && x.Tenant === SessionInfo.LoggedUserTenant);
                     if (myScreenFields.length == 0) {
                         myScreenFields = window.ScreenFields.filter((x: any) => x.ScreenId === myScreen.Id);
+                    }
+                    if (this.entityArgs?.customObjectFields?.length > 0) {
+                        myScreenFields = this.entityArgs.customObjectFields;
                     }
 
                     if (myScreenFields.length == 0) {
