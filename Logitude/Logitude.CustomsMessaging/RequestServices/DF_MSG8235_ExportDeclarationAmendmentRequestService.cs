@@ -414,7 +414,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
                 }
             };
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel,isExport:true);
 
 
 

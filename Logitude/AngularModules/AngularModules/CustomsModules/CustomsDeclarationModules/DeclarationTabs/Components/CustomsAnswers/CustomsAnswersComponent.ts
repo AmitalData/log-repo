@@ -1667,7 +1667,7 @@ export class ConstraintLineModel extends BaseComponent {
             var window = new LogitudeWindow();
             window.Width = 600;
             window.Height = 500;
-            window.Title = "פרטי םילוץ";
+            window.Title = "פרטי אילוץ";
             window.WindowArgs = {
                 DeclarationError: this.declarationError,
                 ConstraintPM: this.constraintPM,

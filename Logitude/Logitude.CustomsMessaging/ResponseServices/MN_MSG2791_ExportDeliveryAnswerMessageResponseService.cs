@@ -173,7 +173,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         comments = FUStatusRemarks,
                     };
                 }
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel,isExport:true);
             }
             catch (System.Exception)
             {
