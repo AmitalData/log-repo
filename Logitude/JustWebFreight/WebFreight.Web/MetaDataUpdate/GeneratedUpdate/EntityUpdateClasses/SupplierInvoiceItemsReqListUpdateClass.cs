@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SupplierInvoiceItemsReqListUpdateClass
    {  		
-		public const string HashString = "2a0b6ae7fdaad2e7365fa65aace2d233";
+		public const string HashString = "5a1620f4370a52be550bb338145af22a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -72,7 +72,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "רשימת בקשות",
 			      				    LocalDefaultText =  "BS64:Iteo16nXmdee16og15HXp9ep15XXqiI=",
 			      				    DefaultText =  "Supplier Invoice Items Request List",
-			      				    Code =  "ac0e",
+			      				    Code =  "907d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -588,8 +588,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestType",
 					  						DefaultText =  "Request Type",
-					  						FullLocalDefaultTextBack_up =  "גורם מטפל ",
-					  						FullLocalDefaultText =  "BS64:IteS15XXqNedINee15jXpNecICI=",
+					  						FullLocalDefaultTextBack_up =  "גורם מטפל",
+					  						FullLocalDefaultText =  "BS64:IteS15XXqNedINee15jXpNecIg==",
 					  						ListFieldLable =  "RequestTypeListLable",
 					  						ListLableDefaultText =  "RequestType",
 					  						ListLocalDefaultTextBack_up =  "גורם מטפל ",
@@ -655,8 +655,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ProductFileNumber",
 					  						DefaultText =  "Product File Number",
-					  						FullLocalDefaultTextBack_up =  "תיק מוצר ",
-					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXnteV16bXqCAi",
+					  						FullLocalDefaultTextBack_up =  "תיק מוצר",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXnteV16bXqCI=",
 					  						ListFieldLable =  "ProductFileNumberListLable",
 					  						ListLableDefaultText =  "Product File Number",
 					  						ListLocalDefaultTextBack_up =  "תיק מוצר ",
@@ -724,8 +724,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryCode",
 					  						DefaultText =  "Manufacture Country Code",
-					  						FullLocalDefaultTextBack_up =  "ארץ יצור ",
-					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
+					  						FullLocalDefaultTextBack_up =  "ארץ יצור",
+					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCI=",
 					  						ListFieldLable =  "ManufactureCountryCodeListLable",
 					  						ListLableDefaultText =  "Manufacture Country Code",
 					  						ListLocalDefaultTextBack_up =  "ארץ יצור ",
@@ -793,8 +793,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufactureCountryName",
 					  						DefaultText =  "Manufacture Country Name",
-					  						FullLocalDefaultTextBack_up =  "ארץ יצור ",
-					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCAi",
+					  						FullLocalDefaultTextBack_up =  "ארץ יצור",
+					  						FullLocalDefaultText =  "BS64:IteQ16jXpSDXmdem15XXqCI=",
 					  						ListFieldLable =  "ManufactureCountryNameListLable",
 					  						ListLableDefaultText =  "Manufacture Country Name",
 					  						ListLocalDefaultTextBack_up =  "ארץ יצור ",
@@ -861,8 +861,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ManufacturerName",
 					  						DefaultText =  "Manufacturer Name ",
-					  						FullLocalDefaultTextBack_up =  "שם יצרן ",
-					  						FullLocalDefaultText =  "BS64:Itep150g15nXpteo158gIg==",
+					  						FullLocalDefaultTextBack_up =  "שם יצרן",
+					  						FullLocalDefaultText =  "BS64:Itep150g15nXpteo158i",
 					  						ListFieldLable =  "ManufacturerNameListLable",
 					  						ListLableDefaultText =  "Manufacturer Name",
 					  						ListLocalDefaultTextBack_up =  "שם יצרן ",
@@ -1122,8 +1122,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ItemNo",
 					  						DefaultText =  "Item No ",
-					  						FullLocalDefaultTextBack_up =  "קוד דגם/מק\"ט  ",
-					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXk9eS150v157XpyLXmOKAryAi",
+					  						FullLocalDefaultTextBack_up =  "קוד דגם/מק\"ט ",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXk9eS150v157XpyLXmOKAryI=",
 					  						ListFieldLable =  "ItemNoListLable",
 					  						ListLableDefaultText =  "Item No ",
 					  						ListLocalDefaultTextBack_up =  "קוד דגם/מק\"ט  ",
@@ -1188,8 +1188,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ItemName",
 					  						DefaultText =  "Item Description",
-					  						FullLocalDefaultTextBack_up =  "תאור הדגם  ",
-					  						FullLocalDefaultText =  "BS64:Iteq15DXldeoINeU15PXkted4oCvICI=",
+					  						FullLocalDefaultTextBack_up =  "תאור הדגם",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXldeoINeU15PXktedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1250,8 +1250,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DutchGroupItem",
 					  						DefaultText =  "DutchGroupItem",
-					  						FullLocalDefaultTextBack_up =  "קבוצת דוייטש מוצר  ",
-					  						FullLocalDefaultText =  "BS64:Iten15HXldem16og15PXldeZ15nXmNepINee15XXpteo4oCvICI=",
+					  						FullLocalDefaultTextBack_up =  "קבוצת דוייטש מוצר",
+					  						FullLocalDefaultText =  "BS64:Iten15HXldem16og15PXldeZ15nXmNepINee15XXpteoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1382,8 +1382,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceQuantityType",
 					  						DefaultText =  "Invoice Quantity Type",
-					  						FullLocalDefaultTextBack_up =  "יחידת מידה במת\"י  ",
-					  						FullLocalDefaultText =  "BS64:IteZ15fXmdeT16og157XmdeT15Qg15HXnteqIteZ4oCvICI=",
+					  						FullLocalDefaultTextBack_up =  "יחידת מידה במת\"י ",
+					  						FullLocalDefaultText =  "BS64:IteZ15fXmdeT16og157XmdeT15Qg15HXnteqIteZ4oCvIg==",
 					  						ListFieldLable =  "InvoiceQuantityTypeListLable",
 					  						ListLableDefaultText =  "Invoice Quantity Type Name",
 					  						ListLocalDefaultTextBack_up =  "יחידת מידה במת\"י  ",
@@ -1451,8 +1451,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatisticQuantity",
 					  						DefaultText =  "Statistic Quantity",
-					  						FullLocalDefaultTextBack_up =  "כמות במשלוח לפי יחידה מוצהרת  ",
-					  						FullLocalDefaultText =  "BS64:Iteb157XldeqINeR157Xqdec15XXlyDXnNek15kg15nXl9eZ15PXlCDXnteV16bXlNeo16rigK8gIg==",
+					  						FullLocalDefaultTextBack_up =  "כמות במשלוח לפי יחידה מוצהרת ",
+					  						FullLocalDefaultText =  "BS64:Iteb157XldeqINeR157Xqdec15XXlyDXnNek15kg15nXl9eZ15PXlCDXnteV16bXlNeo16rigK8i",
 					  						ListFieldLable =  "StatisticQuantityListLable",
 					  						ListLableDefaultText =  "Statistic Quantity",
 					  						ListLocalDefaultTextBack_up =  "כמות במשלוח לפי יחידה מוצהרת  ",
@@ -1518,8 +1518,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatisticQuantityType",
 					  						DefaultText =  "Statistic Quantity Type",
-					  						FullLocalDefaultTextBack_up =  "יחידת מידה מוצהרת  ",
-					  						FullLocalDefaultText =  "BS64:IteZ15fXmdeT16og157XmdeT15Qg157Xldem15TXqNeq4oCvICI=",
+					  						FullLocalDefaultTextBack_up =  "יחידת מידה מוצהרת ",
+					  						FullLocalDefaultText =  "BS64:IteZ15fXmdeT16og157XmdeT15Qg157Xldem15TXqNeq4oCvIg==",
 					  						ListFieldLable =  "StatisticQuantityTypeListLable",
 					  						ListLableDefaultText =  "Statistic Quantity Type",
 					  						ListLocalDefaultTextBack_up =  "יחידת מידה מוצהרת  ",
@@ -2056,9 +2056,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable SupplierInvoiceItemsReqListObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.SupplierInvoiceItemsReqList" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOProductNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ProductNotFound", DefaultText = "Product File not found",LocalDefaultText = @"BS64:Iteq15nXpyDXnteV16bXqCDXnNeQINen15nXmdedINeR157Xm9eV158g16rXp9eg15nXnSI=", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOProductNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ProductNotFound", DefaultText = "Product File not found",LocalDefaultText = @"BS64:Iteq15nXpyDXnteV16bXqCDXnNeQINen15nXmdedINeR154i16oi", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOContinueSave = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ContinueSave", DefaultText = "Do keep anyway",LocalDefaultText = @"BS64:IteU15DXnSDXnNep157XldeoINeR15vXnCDXlteQ16oi", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOContinueSave = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ContinueSave", DefaultText = "Do keep anyway",LocalDefaultText = @"BS64:IteU15DXnSDXnNep157XldeoINeR15vXnCDXlteQ16og15DXqiDXlNeg16rXldeg15nXnSDXqdeU15XXlteg15Ui", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SupplierInvoiceItemsReqListTextCode_CustomsSupplierInvoiceItemsReqListOErrorRequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SupplierInvoiceItemsReqList.O.ErrorRequiredFields", DefaultText = "Error filling in required fields on the screen",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qg15HXnteZ15zXldeZINep15PXldeqINeX15XXkdeUINeR157XodeaIg==", ObjectTableId = SupplierInvoiceItemsReqListObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
