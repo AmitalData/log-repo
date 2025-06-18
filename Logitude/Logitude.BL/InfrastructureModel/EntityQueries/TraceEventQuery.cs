@@ -572,5 +572,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                          });
             
         }
+
+
+        public TraceEvent GetLatestTraceEventByEventCode(string entityId, string eventCode, int tenant)
+        {
+            return repository.GetLatestTraceEventByEventCode(entityId, eventCode, tenant);
+        }
     }
 }

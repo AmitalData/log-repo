@@ -7107,5 +7107,23 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false"
       ToggleCode="&quot;&quot;" />
+    <Feature
+      Code="&quot;AutomatedSendDeclaration&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.AutomatedSendDeclaration&quot;"
+      FeatureDefaultText="&quot;Automated Send Declaration&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;AutomatedSendManifest&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CourierMaster.Features.AutomatedSendManifest&quot;"
+      FeatureDefaultText="&quot;Automated Send Manifest&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

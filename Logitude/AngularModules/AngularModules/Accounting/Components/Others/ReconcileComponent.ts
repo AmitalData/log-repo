@@ -1460,7 +1460,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             // ServerSideSortable: true,
             // SortByName: 'Notes'
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNotes", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
 
@@ -1824,7 +1824,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newLine.Line = i;
             newLine.CurrencyId = selectedTransaction.OpenAmountCurrencyId;
             newLine.TransactionId = selectedTransaction.Id;
-            newLine.CurrencyRate = selectedTransaction.ExchangeRate;
+            newLine.CurrencyRate = selectedTransaction.ledgerTransaction.ExchangeRate;
             newLine.ReconciliationAmount = selectedTransaction.AmountToReconcile;
             newLine.DueDate = selectedTransaction.DueDate;
             newLine.IsPartial = selectedTransaction.IsPartial;

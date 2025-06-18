@@ -42,12 +42,17 @@ using System.Data.SqlClient;
 using System.Data;
 using Logitude.Customs.BL.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class JournalUpdateService : EntityUpdateService<Journal, JournalPM, EntityPM>
         , IJournalUpdateService
     {
+        const string ActionCode_Credit = "1";
+        const string ActionCode_Debit = "2";
+        const string ActionCode_DebitAndCredit = "3";
+
         class JournalLineUpdateServicePriv : JournalLineUpdateService
         {
             public JournalLineUpdateServicePriv(IContext mainContext, Dictionary<string, IContext> additionalContexts, int tenant)
@@ -159,6 +164,80 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
+        public JournalLinePM CheckJournalActionCodeAndSplitedIt(JournalLinePM LinePM, List<JournalLinePM> JournalLines)
+        {
+            JournalLinePM newLine = null;
+
+            if (LinePM.ActionCode == ActionCode_DebitAndCredit)
+            {
+                var additionalCurrencyRateFeature = SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", LinePM.Tenant);
+                RatesTableQuery ratesTableQuery = new RatesTableQuery();
+                TenantQuery tenantQuery = new TenantQuery(LinePM.Tenant);
+                TenantPM tPM = tenantQuery.GetSinglePM(LinePM.Tenant);
+                string accountingCurrencyId = tPM.CurrencyId;
+                decimal? rateValue = additionalCurrencyRateFeature ? (decimal?)ratesTableQuery.GetLastRecordByValueDateAndExchangeRateId(LinePM.Tenant, LinePM.CurrencyId, tPM?.CurrencyId, LinePM.AccountingDate, LinePM.DebitAccountId) ?? LinePM.ExchangeRate : LinePM.ExchangeRate;
+                decimal ForeignAmountValue = additionalCurrencyRateFeature ? Math.Round(LinePM.LocalAmount / rateValue.Value, 2) : LinePM.ForeignAmount;
+                newLine = new JournalLinePM
+                {
+                    ActionTypeCode = ActionCode_Debit,
+                    Reference1 = LinePM.Reference1,
+                    Reference2 = LinePM.Reference2,
+                    Reference3 = LinePM.Reference3,
+                    AccountingDate = LinePM.AccountingDate,
+                    Notes = LinePM.Notes,
+                    ActionId = LinePM.ActionId,
+                    CurrentContextTag = LinePM.CurrentContextTag,
+                    CreditAccountId = LinePM.CreditAccountId,
+                    DebitAccountId = LinePM.DebitAccountId,
+                    DebitControlAccountId = LinePM.DebitControlAccountId,
+                    Tenant = LinePM.Tenant,
+                    DueDate = LinePM.DueDate,
+                    Line = JournalLines.Count() + 1,
+                    DocumentDate = LinePM.DocumentDate,
+                    ExchangeRate = rateValue,
+                    ForeignAmount = ForeignAmountValue,
+                    LocalAmount = LinePM.LocalAmount,
+                    CurrencyId = LinePM.CurrencyId,
+                    CurrencyCode = LinePM.CurrencyCode,
+                    ExternalOpenAmount = LinePM.ExternalOpenAmount,
+                    ExternalReconcileNumber = LinePM.ExternalReconcileNumber,
+                    IsExternalReconcile = LinePM.IsExternalReconcile,
+                    IsCreditAccountMulti = LinePM.IsCreditAccountMulti,
+                    IsDebitAccountMulti = LinePM.IsDebitAccountMulti,
+                    EncodeBase64NVARCHARFieldsBy = LinePM.EncodeBase64NVARCHARFieldsBy,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                };
+                LinePM.ActionTypeCode = ActionCode_Credit;
+                LinePM.ActionCode = null;
+                LinePM.DebitAccountId = LinePM.DebitAccountId;
+                SetActionDatatForJournalLine(newLine);
+                SetActionDatatForJournalLine(LinePM);
+            }
+
+            return newLine;
+        }
+
+        private void SetActionDatatForJournalLine(JournalLinePM journalLinePM)
+        {
+            if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode))
+            {
+                JournalActionTypeList action = GetJournalActionTypeListByCode(journalLinePM);
+                if (action != null)
+                {
+                    journalLinePM.ActionId = action.Id;
+                    journalLinePM.ActionCode = action.Code;
+                    journalLinePM.ActionName = action.EnglishName;
+                }
+            }
+        }
+
+        private JournalActionTypeList GetJournalActionTypeListByCode(JournalLinePM item)
+        {
+            var _IJournalActionTypeListQueryService = new JournalActionTypeListQueryService(this.MainContext as IAccountingContext);
+            JournalActionTypeList action = _IJournalActionTypeListQueryService.GetByCode(item.ActionTypeCode, item.Tenant);
+            return action;
+        }
+
         private void UpdateLedgerTransactionWithNewValuesFromJournalLines(JournalPM entityPM)
         {
             foreach (JournalLinePM JournalLine in entityPM.JournalLines
@@ -250,15 +329,61 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             repoPriv.UpdateWhileStreaming(tenant, id, updatePoco);
         }
 
-        internal void SetStatusCodeFailed(string seedJournalId, int tenant)
+        internal Journal SetStatusCodeFailed(string seedJournalId, int tenant)
         {
             var repoPriv = GetJournalRepositoryPriv();
             var poco = repoPriv.GetSingle(seedJournalId, tenant);
             poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
             repoPriv.Update(poco);
+            return poco;
 
         }
+        public void TraceFailedJournal(Journal entity, Exception ex)
+        {
+            ContactRepository contactRep = new ContactRepository(entity.Tenant);
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entity.Tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entity.Tenant);
+            EventTracerArgs eventTracerArgs = new EventTracerArgs()
+            {
+                Notes = "Failed Journal: " + entity.JournalNumber + ", Exception: " + ex.Message,
+                EntityId = entity.Id,
+                Tenant = entity.Tenant,
+                UserId = contact?.Id,
+                ObjectTableName = "Journal",
+                IsAddedManually = false,
+                EventTypeCode = "JFTE",
 
+            };
+             
+            EventTracer.CreateTraceEvent(eventTracerArgs);
+            if (entity.AccountingEntityCode == AccountingEntityValues.TaxReport)
+            {
+                TaxReportQueryService taxReportQueryService = new TaxReportQueryService(entity.Tenant);
+                TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(this.MainContext as IAccountingContext, new Dictionary<string, IContext>(), entity.Tenant);
+
+                TaxReportPM taxReport = taxReportQueryService.GetSingle(entity.AccountingEntityId, false, false);
+
+                if (taxReport != null) {
+                    taxReport.StatusCode = VatReportStatusValues.Transmitted;
+                    taxReport.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportUpdateService.Update(taxReport, true, null);
+
+                    eventTracerArgs = new EventTracerArgs()
+                    {
+                        Notes = "Failed Journal: " + entity.JournalNumber + ", Exception: " + ex.Message,
+                        EntityId = taxReport.Id,
+                        Tenant = entity.Tenant,
+                        UserId = contact?.Id,
+                        ObjectTableName = "TaxReport",
+                        IsAddedManually = false,
+                        EventTypeCode = "TFTE",
+
+                    };
+                    EventTracer.CreateTraceEvent(eventTracerArgs);
+
+                }
+            }
+        }
         public virtual JournalUpdateOnUpdating GetJournalOnUpdtatingObject()
         {
             var journalUpdate = new JournalUpdateOnUpdating(this.MainContext as IAccountingContext);
@@ -442,7 +567,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         });
 
                     }
+                    else if (entityPM.StatusCodeEnum  == JournalStatusTypePM.StatusCodeEnum.Failed || entityPM.StatusCode == "4")
+                    {
+                        ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                        Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                        String notes = "Previous status code: " + TraceIt_JournalStatusName(entityPOCO.StatusCode, entityPM.Tenant) + ", Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = contact.Id,
+                            ObjectTableName = "Journal",
+                            IsAddedManually = false,
+                            EventTypeCode = "JVD",
+                            Notes = notes,
 
+                        });
+                    }
                 }
                 else
                 {
@@ -851,7 +993,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return true;
         }
 
-
+        
 
 
     }

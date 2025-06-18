@@ -331,7 +331,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                 {
-                    SetConfirmationNumberStatus();
+                    SetConfirmationNumberStatus(entityPM);
                 }
             }
 
@@ -496,7 +496,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
         }
-        public void SetConfirmationNumberStatus()
+        public void SetConfirmationNumberStatus(ARInvoicePM entityPM)
         {
             var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
                                              where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate && a.InActive == false
@@ -618,10 +618,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
            new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented });
 
         }
-        private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
+        public void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
             IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
-            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InvoiceEntities[0].EntityId, theEntityPM.StatusCode);
+            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InterestReportId, theEntityPM.StatusCode);
 
         }
         private void UpdateInterestReportStatus(ARInvoicePM theEntityPM, string Statues)
@@ -631,10 +631,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        private void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
+        public void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
         {
             IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
-            InterestReportsConnectedInvoiceUpdate.UpdateInterestLastBatchService(theEntityPM.InvoiceEntities[0].EntityId, tenant, null, theEntityPM.Id);
+            InterestReportsConnectedInvoiceUpdate.UpdateInterestLastBatchService(theEntityPM.InterestReportId, tenant, null, theEntityPM.Id);
         }
         private void ValidateInvoiceConnected()
         {
@@ -721,14 +721,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
                     throw new BusinessErrorException("An invoice has already been created for this report.");
-
+                
                 }
             }
 
             this.isApprovingInvoice = entityPM.SetApproved;
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
-
+            if(entityPM.SetApproved && !entityPM.ApprovalInProgress &&  invoice.ApprovalInProgress)
+            {
+                invoice.ApprovalInProgress = false;
+                invoiceRepository.Update(invoice);
+                invoiceRepository.SubmitChanges();
+            }
             if (invoice.StatusCode == "AR")
             {
                 if (this.entityPM.StatusCode == "AD")
@@ -807,7 +812,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.ARInvoiceStockNumber();
 
                 ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
-                ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+                //ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
 
                 if (entityPM.IsConsolidationInvoice)
                 {
@@ -842,7 +847,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                     {
-                        SetConfirmationNumberStatus();
+                        SetConfirmationNumberStatus(entityPM);
                     }
                 }
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.InvoiceNumber });
@@ -913,6 +918,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+            ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
             this.InsertToQueue();
         }
 
@@ -3590,6 +3596,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     GLAccountId = interestTransactionGLAccount?.Id,
                     CurrencyId = entityPM.InvoiceCurrencyId,
                     ChangeSetOp = ChangeSetOperation.Insert,
+                    JournalId = entityPM.JournalId,
+                    AccountingDate = entityPM.InvoiceDate
                 };
                 return InterestTransactionVatLine;
             }
@@ -3671,6 +3679,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     Tenant = invoiceLine.Tenant,
                     ChangeSetOp = ChangeSetOperation.Insert,
                     CurrencyId = invoiceLine.ForiegnCurrencyId,
+                    JournalId = entityPM.JournalId,
+                    AccountingDate = entityPM.InvoiceDate
 
                 };
                 return interestTransaction;
@@ -5260,7 +5270,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     { "ARInvoiceId", entityPM.Id },
                     { "Tenant", tenant.ToString() },
-                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId }
+                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId },
+                    { "InterestReportId", entityPM.InterestReportId }
 
                 }, tenant);
             }
@@ -5314,7 +5325,34 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        public void PrintOrSendInvoice(string id, int tenant) {
+        public void PrintOrSendInvoice(string id, string reference, int tenant) {
+            try
+            {
+                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("ARInvoice", tenant, true);
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", tenant);
+                CreateDocumentOutArgs documentOutArgs = new CreateDocumentOutArgs()
+                {
+                    EntityId = id,
+                    Tenant = tenant,
+                    ObjectTableId = objectTable?.Id,
+                    SignHSM = true,
+                    DocumentTypeId = documentTypeId,
+                    ChildReference = reference,
+                };
+                DocumentHelper documentHelper = new DocumentHelper();
+                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex ;
+            }
+          
+
+
+
         }
 
         public class ConfirmationNumberAPI

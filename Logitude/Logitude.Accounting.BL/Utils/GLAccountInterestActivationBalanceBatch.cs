@@ -426,9 +426,22 @@ namespace Logitude.Accounting.BL.Utils
                     excScope.Complete();
                 }
 
+                string message;
+                string stackTrace;
+                if (e.InnerException != null)
+                {
+                    message = e.InnerException.Message;
+                    stackTrace = e.InnerException.StackTrace;
+                }
+                else
+                {
+                    message = e.Message;
+                    stackTrace = e.StackTrace;
+                }
+                _MyResult.BadAccountLineCount++;
+                AddErrorRow($"Unexpected error: {message}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Unexpected error when calculating activation balance: {message}, stack trace: {stackTrace}");
             }
-
-
         }
 
         private void UpdateInterestTransactions(

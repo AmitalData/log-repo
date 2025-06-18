@@ -26,26 +26,11 @@ using System.Configuration;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
-using Unifreight.BL.EntityPMs.UGenerated;
-using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
-using Logitude.CustomsMessaging;
 using Logitude.CustomsMessaging.MessagingServices;
 using Unifreight.Data.AmitalModel.Repsitories;
-using Logitude.Customs.Data.EntityKeys;
-using Logitude.Server.Tools.Utils;
-
-using DocumentFormat.OpenXml.EMMA;
-using Simplog.Server.Infrastructure.Helpers;
-using Unifreight.Data.AmitalModel.EntityPOCOs;
-using Simplog.Server.Infrastructure.DataContracts;
-using System.Web.Caching;
-using UnifreightIIG.Common.MessageLib.Unifreight.Customs;
 using System.Text;
 using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools;
-using Logitude.BL.Security;
-
 namespace Logitude.CustomsMessaging.U2L.CommDec
 {
     public class CommDecService : UnifreightGenericService
@@ -795,10 +780,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 declarationUpdateService.Update(this._MyDeclarationPM, true);
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.IsNewFromU2L = false;
 
-                string defValueB = defaultValueQueryService.GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);
-
-                // if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
-                // {
+                string defValueB = defaultValueQueryService.GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _MyDeclarationPM.Tenant);                
                 var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
 
                 if (setting.IsConnectedToUniFreight)
@@ -807,19 +789,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
                     var res = repo.UpdateLOGITUDE_FILE(_MyDeclarationPM.Tenant, Convert.ToInt64(_MyDeclarationPM.CustomFileNo), _MyDeclarationPM.Id);
                     repo.SubmitChanges();
-                }
- 
-                //  }
+                }                 
 
                 customFileNo = _MyDeclarationPM.CustomFileNo;
-                decId = _MyDeclarationPM.Id;
-
-                // Build a request in the background to send a customs declaration message for the same bill of lading in a courier #113945
-                if (SecurityUtility.CheckFeature("Customs.CourierMaster", "SendAutoManifest", _MyDeclarationPM.Tenant) && currentDeclarationCourierStatusPM.CourierManifestStatusCode == "R")
-                {
-                    sendCustomsDeclarationForCourier();
-                }
-
+                decId = _MyDeclarationPM.Id;               
                 AppendLogLine("declarationUpdat:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 string val = "";
                 if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["AvoidCreateCustomsRequestSheet"]))
@@ -2980,53 +2953,6 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 return null;
             }
             return rec.PARTNERCODE;
-        }
-
-        public void sendCustomsDeclarationForCourier()
-        {
-            try
-            {
-                var user = AuthenticationUtil.ResolveUserId(_tenant);
-                var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-
-                MANIFESTRequestRequestParams requestParams1170 = new MANIFESTRequestRequestParams()
-                {
-                    Tenant = _MyDeclarationPM.Tenant,
-                    LoggingEnabled = true,
-                    LoggingObjectTableId = objectTableId,
-                    LoggingEntityId = _MyDeclarationPM.Id,
-                    LoggingObjectTableId2 = objectTableIdCourierMaster,
-                    LoggingEntityId2 = _MyDeclarationPM.CourierMasterId,
-                    InterfaceTypeCode = "1170",
-                    LoggingUserId = user,
-                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                    DeclarationId = _MyDeclarationPM.Id,
-                    LoggingEntityReference = _MyDeclarationPM.Id,
-                    TenantPriority = 97
-                };
-
-                MN_MSG1_MANIFESTMessagingService messagingService = new MN_MSG1_MANIFESTMessagingService();
-                messagingService.Send(requestParams1170);
-
-                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({_MyDeclarationPM.Id})");
-
-                StringBuilder mess = new StringBuilder();
-                mess.AppendLine($" CreateSheetSBQMessage({_MyDeclarationPM.Id})");
-                
-
-            }
-            catch (Exception ex) 
-            {
-                throw new Exception(ex.Message);
-            }
-
-
-        }
-
-  
-
-
+        }          
     }
 }

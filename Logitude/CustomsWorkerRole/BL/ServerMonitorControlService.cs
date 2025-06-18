@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +25,7 @@ namespace CustomsWorkerRole.BL
             }
 
 
-            var serversNameQueryService = new ServersNameQueryService(0);
+            var serversNameQueryService = new ServersNameQueryService(SettingUtil.GetTenantDBFromConfig());
             if (!serversNameQueryService.Any())
             {
                 if (DateTime.Now < THEGracePeriod)

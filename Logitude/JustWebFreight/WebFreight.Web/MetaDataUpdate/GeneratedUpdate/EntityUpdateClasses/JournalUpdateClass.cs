@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "348b7ae32d25442e5b0a336ee80abfef";
+		public const string HashString = "b4051eb52fb3913be875ec31fe0ee074";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -4053,6 +4053,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "JFTE",
+                EnglishName =  "Journal Failed",
+                LocalName =  "Journal Failed",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = JournalObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext,int contextTenant)
@@ -4259,7 +4277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalORevelations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Revelations", DefaultText = "Revelations",LocalDefaultText = @"שערוך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"פקודות אחרונים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"פקודות אחרונות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.General", DefaultText = "General",LocalDefaultText = @"כללי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -4382,6 +4400,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalMForeignDiffLocalAmountButTenantCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignDiffLocalAmountButTenantCurrency", DefaultText = "Although the currency is accounting currency,The foreign amount is different from local amount ",LocalDefaultText = @"למרות שהמטבע היינו מטבע חשבונאי הסכום במטז שונה מסכום מקומי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalOConfirmVoidJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ConfirmVoidJournal", DefaultText = "Are you sure you want to cancel this Journal?",LocalDefaultText = @"אנא אשר את ביטול פקודת היומן  ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode JournalTextCode_JournalODuplicateLinesSkipped = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DuplicateLinesSkipped", DefaultText = "Duplicate Lines Skipped",LocalDefaultText = @"שורות כפולות אותרו ולא נקלטו", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode JournalTextCode_JournalOOnlyDuplicates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.OnlyDuplicates", DefaultText = "All lines in the file already exist in the system. The file was rejected.",LocalDefaultText = @"כל השורות בקובץ כבר קיימות במערכת. הקובץ לא נקלט", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"השער החדש קטן\גדול ביותר מחמישה אחוזים מהשער הקודם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

@@ -24,7 +24,8 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
         private string loggedContactId;
         private string myTableName;
         ICommonDataContext objectContext;
-        public CustomerTracing(CustomerPM entityPM, Customer entityPOCO, string loggedContactId, bool isNewEntity)
+        private string emailForSendingSingArinvoiceBackUp;
+        public CustomerTracing(CustomerPM entityPM, Customer entityPOCO, string loggedContactId, bool isNewEntity ,string emailForSendingSingArinvoiceBackUp)
         {
             this.myTenant = entityPM.Tenant;
             this.isNewEntity = isNewEntity;
@@ -32,6 +33,8 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
             this.entityPOCO = entityPOCO;
             this.loggedContactId = loggedContactId;
             this.myTableName = "Customer";
+            this.emailForSendingSingArinvoiceBackUp = emailForSendingSingArinvoiceBackUp;
+
         }
 
         public void Trace()
@@ -85,7 +88,7 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                     notes = "External ID removed";
                 }
 
-                if (entityPM.Card?.EmailForSendingSingArinvoice != entityPOCO.Card?.EmailForSendingSingArinvoice)
+                if (entityPM.Card?.EmailForSendingSingArinvoice != emailForSendingSingArinvoiceBackUp)
                 {
                      string EmailForSendingSingArinvoiceName = "";
                     if (!string.IsNullOrWhiteSpace(entityPM.Card?.EmailForSendingSingArinvoice)) {

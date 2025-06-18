@@ -5570,8 +5570,7 @@
     <TextCode
       Code="&quot;InterestReport.O.NewReport&quot;"
       DefaultText="&quot;New Interest Report&quot;"
-      LocalDefaultTextBack_up="&quot;דוח ריבית חדש&quot;"
-      LocalDefaultText="&quot;BS64:IteT15XXlyDXqNeZ15HXmdeqINeX15PXqSI=&quot;"
+      LocalDefaultText="&quot;דוח ריבית חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

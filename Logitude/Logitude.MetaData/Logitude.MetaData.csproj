@@ -145,7 +145,6 @@
     <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
     <None Include="DBScripts\CommonModel\202007051540_UpdateCardGlaAccountDisplayNumber.sxml" />
     <None Include="DBOthers\ShipmentsModel\Views\LogBoxShipmentDataView.dxml" />
-    <None Include="DBScripts\CommonModel\202008051018_AddNewMeasurementAndChargesType.sxml" />
     <None Include="DBScripts\CommonModel\202201261145_FillPostalCodesTable.sxml" />
     <None Include="DBScripts\CommonModel\202201310232_UpdateDeliveryArrivedEventStatus.sxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogbox2Ignore.Ignoresxml" />
@@ -331,8 +330,8 @@
     <None Include="DBTables\InfrastructureModel\CurrencyRate.dxml" />
     <None Include="DBTables\InfrastructureModel\CustomChildObject.dxml" />
     <None Include="DBTables\InfrastructureModel\DataCustomObject.dxml" />
-    <None Include="DBTables\InfrastructureModel\DefaultAndConfiguration.dxml" />
-    <None Include="DBTables\InfrastructureModel\DefaultAndConfigurationKey.dxml" />
+    <None Include="DBTables\GlobalModel\DefaultAndConfiguration.dxml" />
+    <None Include="DBTables\GlobalModel\DefaultAndConfigurationKey.dxml" />
     <None Include="DBTables\InfrastructureModel\EventRemark.dxml" />
     <None Include="DBTables\InfrastructureModel\ReferenceCustomObject.dxml" />
     <None Include="DBTables\InfrastructureModel\SearchIndex.dxml" />
@@ -354,6 +353,8 @@
     <None Include="DBTables\ShipmentsModel\ShipmentReferance.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
+    <None Include="EntityFiles\GlobalModel\DefaultAndConfiguration.lxml" />
+    <None Include="EntityFiles\GlobalModel\DefaultAndConfigurationKey.lxml" />
     <None Include="EntityFiles\CommonDataModel\DocumentsMetaDataType.lxml" />
     <None Include="EntityFiles\CommonDataModel\FreelancerGroupType.lxml" />
     <None Include="EntityFiles\CommonDataModel\Responsibility.lxml" />
@@ -362,8 +363,6 @@
     <None Include="EntityFiles\InfrastructureModel\AdditionalCurrencyRate.lxml" />
     <None Include="EntityFiles\InfrastructureModel\CurrencyRate.lxml" />
     <None Include="EntityFiles\CommonDataModel\SearchIndexEditHistory.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\DefaultAndConfiguration.lxml" />
-    <None Include="EntityFiles\InfrastructureModel\DefaultAndConfigurationKey.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackageExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
     <None Include="EntityFiles\CommonDataModel\Mention.lxml" />

@@ -243,10 +243,10 @@
     ReferencedTable="CarWeights"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  <Relation
+  <!--<Relation
     ForeignKeyColumn="Discount_CustomsItemGroupTypeID"
     ReferencedTable="CustomsItemGroups"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="Customs" />-->
  
 </Table>

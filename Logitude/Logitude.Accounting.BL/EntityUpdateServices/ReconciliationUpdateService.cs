@@ -338,6 +338,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             CreditAccountId = diffAccountId,
                             DebitControlAccountId = controlAccountId,
                             CreditControlAccountId = null,
+
+                            DocumentDate = newJournal.AccountingDate,
+                            AccountingDate = newJournal.AccountingDate,
+                            DueDate = newJournal.AccountingDate,
+
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
@@ -354,6 +359,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             CreditAccountId = diffAccountId,
                             DebitControlAccountId = null,
                             CreditControlAccountId = null,
+
+                            DocumentDate = newJournal.AccountingDate,
+                            AccountingDate = newJournal.AccountingDate,
+                            DueDate = newJournal.AccountingDate,
+
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,

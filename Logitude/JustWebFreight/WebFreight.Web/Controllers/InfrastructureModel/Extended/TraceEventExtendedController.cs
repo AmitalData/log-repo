@@ -136,5 +136,27 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetLatestTraceEventByEventCode(string entityId, string eventCode)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                TraceEventQuery query = new TraceEventQuery(tenant);
+                TraceEvent traceEvent = query.GetLatestTraceEventByEventCode(entityId, eventCode, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, traceEvent);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }

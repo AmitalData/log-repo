@@ -1517,8 +1517,7 @@
     <TextCode
       Code="&quot;OpenFormatReport.O.NewReport&quot;"
       DefaultText="&quot;New open format report&quot;"
-      LocalDefaultTextBack_up="&quot;דוח מבנה אחיד חדש&quot;"
-      LocalDefaultText="&quot;BS64:IteT15XXlyDXnteR16DXlCDXkNeX15nXkyDXl9eT16ki&quot;"
+      LocalDefaultText="&quot;דוח מבנה אחיד חדש&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

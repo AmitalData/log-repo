@@ -432,7 +432,7 @@ namespace CommunicationWorkerRole
 
                     CustomerService service = new CustomerService(commonContext, customerPM, ownerUser.Id);
                     service.Create();
-                    CustomerTracing customerTracingClass = new CustomerTracing(customerPM, service.entityPOCO, ownerUser.Id, true);
+                    CustomerTracing customerTracingClass = new CustomerTracing(customerPM, service.entityPOCO, ownerUser.Id, true,null);
                     customerTracingClass.Trace();
                     commonContext.SaveChanges();
 

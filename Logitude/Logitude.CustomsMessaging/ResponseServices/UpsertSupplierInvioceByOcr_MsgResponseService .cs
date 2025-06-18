@@ -66,236 +66,255 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, GenericRequestParams requestParams)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Update method started.");
 
             ICustomContext context = CustomContext.GetContext(customResponse.tenant);
-
             this.MyResponseData = new UpsertSupplierInvioceByOcrResponseData();
 
-            DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
-            bool isSubmitDeclaration = declarationQueryService.GetSingle(customResponse.Declarationid, false, false)?.IsSubmitDeclaration ?? false;
-            if (isSubmitDeclaration)
+            if (IsDeclarationSubmitted(customResponse.Declarationid, context))
             {
-                this.MyResponseData.Succeeded = false;
-                this.MyResponseData.HasException = true;
-                this.MyResponseData.UserMessage = "Invoice cannot be updated, the declaration has been submitted";
-
-                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
-                if (requestsSheetPM != null)
-                {
-                    MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
-                }
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Declaration already submitted. Handling as submitted.");
+                HandleSubmittedDeclaration(customResponse, requestParams, context);
                 return;
             }
 
-            OcrDocumentQueryService ocrDocumentService = new OcrDocumentQueryService(customResponse.tenant);
-
-            var myOcrDocument = ocrDocumentService.GetOcrDocumentByDocumentFilingId(customResponse.DocumentsFilingId, customResponse.tenant);
-            if (myOcrDocument != null && !string.IsNullOrEmpty(myOcrDocument.JsonData) && !string.IsNullOrEmpty(myOcrDocument.Reference))
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Getting OCR document...");
+            OcrDocument ocrDocument = GetOcrDocument(customResponse);
+            if (ocrDocument == null)
             {
-                CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(customResponse.tenant);
-                CustomsDocumentPM customsDocument = customsDocumentQueryService.GetSingle(myOcrDocument?.DocId, false, false);
-
-                if (customsDocument != null && customsDocument.DocumentStatusCode == "7")
-                {
-                    throw new Exception("Customs Document Send In Progress !!!");
-                }
-
-                try
-                {
-                    string pattern = @"[\x00-\x08\x0B\x0C\x0E-\x1F]";
-                    string cleanedJson = Regex.Replace(myOcrDocument.JsonData, pattern, "");
-                    SupplierInvoiceOcr convertJson = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(cleanedJson);//json מיפוי
-
-                    if (convertJson != null)
-                    {
-                        Dictionary<string, string> dic = new Dictionary<string, string>();
-
-                        foreach (var page in convertJson.pages)
-                        {
-                            foreach (var prediction in page.prediction)
-                            {
-                                if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label) && !string.IsNullOrEmpty(prediction.ocr_text))
-                                {
-                                    dic.Add(prediction.label, prediction.ocr_text);
-                                }
-                            }
-                        }
-
-                        List<Dictionary<string, string>> supplierInvoiceItemsList = new List<Dictionary<string, string>>();
-                        List<Dictionary<string, int>> ocrPositionItems = new List<Dictionary<string, int>>();
-                        Dictionary<string, string> dicItems = new Dictionary<string, string>();
-                        for (int i = 0; i < convertJson.pages.Count(); i++)
-                        {
-                            var ocrDataPositionCell = new Dictionary<string, int>();
-                            var tables = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
-                            if (tables.Any())
-                            {
-                                foreach (var table in tables)
-                                {
-                                    int row = 0;
-                                    dicItems = new Dictionary<string, string>();
-                                    foreach (var cell in table?.cells)
-                                    {
-                                        if (cell != null && cell.row != row && dicItems.Count > 0)
-                                        {
-                                            supplierInvoiceItemsList.Add(dicItems);
-                                            ocrPositionItems.Add(ocrDataPositionCell);
-                                            dicItems = new Dictionary<string, string>();
-                                            ocrDataPositionCell = new Dictionary<string, int>();
-                                        }
-                                        if (!dicItems.ContainsKey(cell.label) && !string.IsNullOrEmpty(cell.text) && cell.label != ExpensesAmount && cell.label != ExpensesName)
-                                        {
-                                            dicItems.Add(cell.label, cell.text);
-                                            if (ocrDataPositionCell.Count() == 0)
-                                            {
-                                                ocrDataPositionCell.Add("ymin", cell.ymin);
-                                                ocrDataPositionCell.Add("ymax", cell.ymax);
-                                                ocrDataPositionCell.Add("page_no", table.page_no);
-                                            }
-                                        }
-                                        row = cell.row;
-                                    }
-
-                                    if (dicItems.Count > 0)
-                                    {
-                                        supplierInvoiceItemsList.Add(dicItems);
-                                        ocrPositionItems.Add(ocrDataPositionCell);
-
-                                    }
-
-                                }
-
-
-                            }
-
-                        }
-
-
-                        //insert or update supplierInvoice
-                        try
-                        {
-                            UpsertSupplierInvoiceResult Result = UpsertSupplierInvoiceByOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList, ocrPositionItems);
-
-                          
-                                LogMessagingUtil.Instance.Clear();
-                                LogMessagingUtil.Instance.AppendLine("Is New Invoice: " + myOcrDocument.Reference);
-
-                                CustomsDocumentsTicketQueryService customsDocumentsTicketQuery = new CustomsDocumentsTicketQueryService(customResponse.tenant);
-                                CustomsDocumentsTicketPM customsDocumentsTicketPM = customsDocumentsTicketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(customResponse.Declarationid, "", "", "", customResponse.tenant, "Declaration")
-                                    ?.Where(x => x.DocumentsFilingId == customResponse.DocumentsFilingId)?.FirstOrDefault();
-                                CustomsDocumentsTicketUpdateService customsDocumentsTicketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);
-                                LogMessagingUtil.Instance.AppendLine("find DocumentTicket where docFilingId: " + customResponse.DocumentsFilingId);
-                                LogMessagingUtil.Instance.AppendLine("is find: " + customsDocumentsTicketPM == null ? "NO" : "YES");
-                                SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(customResponse.tenant);
-                                var invoiceCounterKey = supplierInvoiceQueryService.GetInvoicesForDeclarationByInvoiceNum(customResponse.Declarationid, myOcrDocument.Reference, customResponse.tenant, false)?[0]?.InvoiceCounterKey;
-                                LogMessagingUtil.Instance.AppendLine("find invoiceCounterKey by DeclarationId and InvoiceNumber: " + customResponse.Declarationid + " , " + myOcrDocument.Reference);
-                                LogMessagingUtil.Instance.AppendLine("find invoiceCounterKey: " + invoiceCounterKey);
-                                if (customsDocumentsTicketPM != null && invoiceCounterKey != null)
-                                {
-                                    customsDocumentsTicketPM.ChangeSetOp = ChangeSetOperation.Update;
-                                    LogMessagingUtil.Instance.AppendLine("customsDocumentsTicketPM -UPDATE");
-
-                                    foreach (var CustomsDocumentPointer in customsDocumentsTicketPM.CustomsDocumentPointers)
-                                    {
-                                        LogMessagingUtil.Instance.AppendLine("CustomsDocumentPointer - UPDATE");
-
-                                        CustomsDocumentPointer.ChangeSetOp = ChangeSetOperation.Update;
-                                        CustomsDocumentPointer.Child1EntityCode = "SupplierInvoice";
-                                        CustomsDocumentPointer.Child1EntityId = invoiceCounterKey.ToString();
-                                    }
-                                    customsDocumentsTicketUpdateService.Update(customsDocumentsTicketPM, true);
-                                }
-
-                            //}
-                            myOcrDocument.NotConnect = true;
-                            OcrDocumentUpdateService ocrDocumentUpdateService = new OcrDocumentUpdateService(context, new Dictionary<string, IContext>(), customResponse.tenant);
-                            OcrDocumentPM myOcrDocumentPM = ocrDocumentService.GetEntityPM(myOcrDocument, false);
-                            myOcrDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
-                            ocrDocumentUpdateService.Update(myOcrDocumentPM, true);
-
-                            this.MyResponseData.Succeeded = true;
-                            this.MyResponseData.HasException = false;
-                            string InvoiceSuccess = Result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";
-                            this.MyResponseData.UserMessage = TranslateTextsClass.Translate(InvoiceSuccess, customResponse.tenant, true);
-                            if (Result.invalidValuesRemarks != null)
-                                this.MyResponseData.Remarks = "Invalid value, not exist in table - " + Result.invalidValuesRemarks;
-                            CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                            CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
-                            
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR- start 5 " + requestsSheetPM.Id);
-
-                            if (requestsSheetPM != null)
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR- " + requestsSheetPM.Id);
-                                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
-                            }
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR finsh 5");
-
-
-                        }
-                        catch (System.Exception ex)
-                        {
-                            this.MyResponseData.Succeeded = false;
-                            this.MyResponseData.HasException = true;
-                            this.MyResponseData.UserMessage = ex.Message + " : " + " " + TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorCreatingInvoice", customResponse.tenant, true) + " ";
-                            CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                            CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
-                            if (requestsSheetPM != null)
-                            {
-                                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
-                            }
-                            return;
-                        }
-
-                    }
-
-                }
-                catch (System.Exception ex)
-                {
-                    this.MyResponseData.Succeeded = false;
-                    this.MyResponseData.HasException = true;
-                    this.MyResponseData.UserMessage = ex.Message + " : " + " " + TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorInReceivingData", customResponse.tenant, true) + " ";
-                    CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                    CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
-                    if (requestsSheetPM != null)
-                    {
-                        MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
-                    }
-                }
-
-
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("OCR document is null. Exiting.");
+                return;
             }
-            else
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Cleaning OCR JSON data...");
+            string cleanedJson = CleanJsonData(ocrDocument.JsonData);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Deserializing JSON to SupplierInvoiceOcr...");
+            SupplierInvoiceOcr supplierInvoiceOcr = JsonConvert.DeserializeObject<SupplierInvoiceOcr>(cleanedJson);
+            if (supplierInvoiceOcr == null)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SupplierInvoiceOcr deserialization failed. Exiting.");
+                return;
+            }
 
-                this.MyResponseData.Succeeded = false;
-                this.MyResponseData.HasException = true;
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Extracting fields from OCR pages...");
+            Dictionary<string, string> fields = ExtractFieldsFromPages(supplierInvoiceOcr);
 
-                if (myOcrDocument == null)
-                    this.MyResponseData.UserMessage = TranslateTextsClass.Translate("Customs.OcrDocument.O.IsNotOcrDocument", customResponse.tenant, true);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Extracting items and positions from OCR pages...");
+            (List<Dictionary<string, string>> itemsList, List<Dictionary<string, int>> positionsList) = ExtractItemsFromPages(supplierInvoiceOcr);
 
-                else
-                {
-                    string message = TranslateTextsClass.Translate("Customs.OcrDocument.O.CannotOpenInvoice", customResponse.tenant, true);
-                    this.MyResponseData.UserMessage =
-                        string.IsNullOrEmpty(myOcrDocument.Reference) ? message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.MissingInvoiceNumber", customResponse.tenant, true)
-                        : message + "," + TranslateTextsClass.Translate("Customs.OcrDocument.O.JSONFileNotReceived", customResponse.tenant, true);
-                }
+            try
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Calling UpsertSupplierInvoiceByOcr...");
+                UpsertSupplierInvoiceResult result = UpsertSupplierInvoiceByOcr(customResponse, ocrDocument.Reference, fields, itemsList, positionsList);
 
-                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
-                CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
-                if (requestsSheetPM != null)
-                {
-                    MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
-                }
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Updating related entities...");
+                UpdateRelatedEntities(customResponse, context, ocrDocument, result);
 
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Handling success response...");
+                HandleSuccessResponse(customResponse, result, context, requestParams);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Exception occurred in Update: " + ex.ToString());
+                HandleFailureResponse(ex, customResponse, context, requestParams);
+            }
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Update method completed.");
+        }
+
+        private bool IsDeclarationSubmitted(string declarationId, ICustomContext context)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Checking if declaration is submitted...");
+            DeclarationQueryService service = new DeclarationQueryService(context);
+            bool isSubmitted = service.GetSingle(declarationId, false, false)?.IsSubmitDeclaration ?? false;
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Declaration submitted: {isSubmitted}");
+            return isSubmitted;
+        }
+
+        private void HandleSubmittedDeclaration(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader response, GenericRequestParams requestParams, ICustomContext context)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Handling submitted declaration.");
+            this.MyResponseData.Succeeded = false;
+            this.MyResponseData.HasException = true;
+            this.MyResponseData.UserMessage = "Invoice cannot be updated, the declaration has been submitted";
+
+            CustomsRequestsSheetQueryService sheetService = new CustomsRequestsSheetQueryService(context);
+            CustomsRequestsSheetPM sheet = sheetService.GetRequestInProgress(response.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), response.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+            if (sheet != null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Requeuing process for submitted declaration.");
+                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, sheet.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
             }
         }
 
+        private OcrDocument GetOcrDocument(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader response)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Getting OCR document from service.");
+            OcrDocumentQueryService service = new OcrDocumentQueryService(response.tenant);
+            OcrDocument document = service.GetOcrDocumentByDocumentFilingId(response.DocumentsFilingId, response.tenant);
 
+            if (document != null && !string.IsNullOrEmpty(document.JsonData) && !string.IsNullOrEmpty(document.Reference))
+            {
+                CustomsDocumentQueryService customsService = new CustomsDocumentQueryService(response.tenant);
+                CustomsDocumentPM customsDoc = customsService.GetSingle(document.DocId, false, false);
 
+                if (customsDoc?.DocumentStatusCode == "7")
+                {
+                    throw new Exception("Customs Document Send In Progress !!!");
+                }
+                return document;
+            }
 
+            return null;
+        }
+
+        private string CleanJsonData(string jsonData)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Cleaning JSON data of control characters.");
+            string pattern = "[\x00-\x08\x0B\x0C\x0E-\x1F]";
+            return Regex.Replace(jsonData, pattern, "");
+        }
+
+        private Dictionary<string, string> ExtractFieldsFromPages(SupplierInvoiceOcr ocr)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Extracting fields from OCR pages.");
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (var page in ocr.pages)
+            {
+                foreach (Prediction prediction in page.prediction)
+                {
+                    if (prediction.label.ToUpper() != label && !result.ContainsKey(prediction.label) && !string.IsNullOrEmpty(prediction.ocr_text))
+                    {
+                        result[prediction.label] = prediction.ocr_text;
+                    }
+                }
+            }
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Finished extracting fields from OCR pages.");
+            return result;
+        }
+
+        private (List<Dictionary<string, string>>, List<Dictionary<string, int>>) ExtractItemsFromPages(SupplierInvoiceOcr ocr)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Extracting items from OCR pages.");
+            List<Dictionary<string, string>> items = new List<Dictionary<string, string>>();
+            List<Dictionary<string, int>> positions = new List<Dictionary<string, int>>();
+
+            for (int i = 0; i < ocr.pages.Count(); i++)
+            {
+                IEnumerable<Prediction> tables = ocr.pages[i].prediction.Where(x => x.label.ToUpper() == label);
+                foreach (Prediction table in tables)
+                {
+                    int row = 0;
+                    Dictionary<string, string> currentItem = new Dictionary<string, string>();
+                    Dictionary<string, int> position = new Dictionary<string, int>();
+
+                    foreach (var cell in table?.cells)
+                    {
+                        if (cell != null && cell.row != row && currentItem.Count > 0)
+                        {
+                            items.Add(currentItem);
+                            positions.Add(position);
+                            currentItem = new Dictionary<string, string>();
+                            position = new Dictionary<string, int>();
+                        }
+
+                        if (!currentItem.ContainsKey(cell.label) && !string.IsNullOrEmpty(cell.text) && cell.label != ExpensesAmount && cell.label != ExpensesName)
+                        {
+                            currentItem[cell.label] = cell.text;
+                            if (position.Count == 0)
+                            {
+                                position["ymin"] = cell.ymin;
+                                position["ymax"] = cell.ymax;
+                                position["page_no"] = table.page_no;
+                            }
+                        }
+                        row = cell.row;
+                    }
+
+                    if (currentItem.Count > 0)
+                    {
+                        items.Add(currentItem);
+                        positions.Add(position);
+                    }
+                }
+            }
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Finished extracting items from OCR pages.");
+            return (items, positions);
+        }
+
+        private void UpdateRelatedEntities(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader response, ICustomContext context, OcrDocument ocrDoc, UpsertSupplierInvoiceResult result)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Updating related entities for OCR document.");
+            CustomsDocumentsTicketQueryService ticketQuery = new CustomsDocumentsTicketQueryService(response.tenant);
+            CustomsDocumentsTicketPM ticket = ticketQuery.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(response.Declarationid, "", "", "", response.tenant, "Declaration")
+                ?.FirstOrDefault(x => x.DocumentsFilingId == response.DocumentsFilingId);
+
+            SupplierInvoiceQueryService invoiceService = new SupplierInvoiceQueryService(response.tenant);
+            var invoiceKey = invoiceService.GetInvoicesForDeclarationByInvoiceNum(response.Declarationid, ocrDoc.Reference, response.tenant, false)?[0]?.InvoiceCounterKey;
+
+            if (ticket != null && invoiceKey != null)
+            {
+                ticket.ChangeSetOp = ChangeSetOperation.Update;
+                foreach (var pointer in ticket.CustomsDocumentPointers)
+                {
+                    pointer.ChangeSetOp = ChangeSetOperation.Update;
+                    pointer.Child1EntityCode = "SupplierInvoice";
+                    pointer.Child1EntityId = invoiceKey.ToString();
+                }
+
+                CustomsDocumentsTicketUpdateService ticketUpdateService = new CustomsDocumentsTicketUpdateService(context, new Dictionary<string, IContext>(), response.tenant);
+                ticketUpdateService.Update(ticket, true);
+            }
+
+            ocrDoc.NotConnect = true;
+            OcrDocumentUpdateService ocrUpdateService = new OcrDocumentUpdateService(context, new Dictionary<string, IContext>(), response.tenant);
+            OcrDocumentPM ocrPM = new OcrDocumentQueryService(response.tenant).GetEntityPM(ocrDoc, false);
+            ocrPM.ChangeSetOp = ChangeSetOperation.Update;
+            ocrUpdateService.Update(ocrPM, true);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Finished updating related entities for OCR document.");
+        }
+
+        private void HandleSuccessResponse(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader response, UpsertSupplierInvoiceResult result, ICustomContext context, GenericRequestParams requestParams)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Handling success response.");
+            this.MyResponseData.Succeeded = true;
+            this.MyResponseData.HasException = false;
+            string messageKey = result.isNewInvoice ? "Customs.OcrDocument.O.InvoiceSuccessfullyOpened" : "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully";
+            this.MyResponseData.UserMessage = TranslateTextsClass.Translate(messageKey, response.tenant, true);
+
+            if (!string.IsNullOrWhiteSpace(result.invalidValuesRemarks))
+            {
+                this.MyResponseData.Remarks = "Invalid value, not exist in table - " + result.invalidValuesRemarks;
+            }
+
+            CustomsRequestsSheetQueryService sheetService = new CustomsRequestsSheetQueryService(context);
+            CustomsRequestsSheetPM sheet = sheetService.GetRequestInProgress(response.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), response.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+            if (sheet != null)
+            {
+                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, sheet.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
+            }
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Finished handling success response.");
+        }
+
+        private void HandleFailureResponse(Exception ex, DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader response, ICustomContext context, GenericRequestParams requestParams)
+        {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Handling failure response.");
+            this.MyResponseData.Succeeded = false;
+            this.MyResponseData.HasException = true;
+            this.MyResponseData.UserMessage = ex.Message + " : " + TranslateTextsClass.Translate("Customs.OcrDocument.O.ErrorCreatingInvoice", response.tenant, true);
+
+            CustomsRequestsSheetQueryService sheetService = new CustomsRequestsSheetQueryService(context);
+            CustomsRequestsSheetPM sheet = sheetService.GetRequestInProgress(response.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), response.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+            if (sheet != null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Requeuing failed process.");
+                MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, sheet.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
+            }
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Failure response handled.");
+        }
 
         public UpsertSupplierInvoiceResult UpsertSupplierInvoiceByOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList, List<Dictionary<string, int>> ocrPosition)
         {

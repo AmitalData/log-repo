@@ -128,6 +128,8 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 			catch (Exception ex)
 			{
+				LogMessagingUtil.Instance.AppendLine($"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex.Message}");
+
 				NetCommonHelper.Logger.DevLog.Instance.WriteError(
 				$"[usp_AccountingStreaming] Error in AccountingStreamingInNewSerializableTransaction! JournalPM?.Id={_JournalPM?.Id} | Exception: {ex}");
 
@@ -150,7 +152,8 @@ namespace Logitude.Accounting.BL.CoreBL
 				}
 				return new ResultApproveJournalM()
 				{
-					Success = false
+					Success = false,
+                    FailDue = ex.Message
 				};
 			}
 			finally
@@ -213,7 +216,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
             var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
-            var interestTranasction = service.MapInterestTransactionPMFromARPaymentPM(aRPaymentPM, aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode);
+            var interestTranasction = service.MapInterestTransactionPMFromARPaymentPM(aRPaymentPM, aRPaymentPM.StatusCode == ARPaymentVoidedStatusCode , journalPM);
             if (!CheckIfInterestTransactionCreated(interestTranasction))
                 interestTransactionUpdateService.Update(interestTranasction, true);
         }
@@ -242,7 +245,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CancelInterestTrascntionsForChequeOrBankTranasfersARPayment(JournalPM journalPM, ARPaymentPM aRPaymentPM, IAccountingContext context)
         {
             ARPaymentService service = new ARPaymentService(null, journalPM.Tenant);
-            List<InterestTransactionPM> interestTranactions = service.GetARPaymentInterestTransactionsForCancellation(aRPaymentPM);
+            List<InterestTransactionPM> interestTranactions = service.GetARPaymentInterestTransactionsForCancellation(aRPaymentPM, journalPM);
             var interestTransactionUpdateService = new InterestTransactionUpdateService(context, new Dictionary<string, IContext>(), journalPM.Tenant);
             foreach (var interestTransaction in interestTranactions)
             {
@@ -263,7 +266,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var chequeNumber = journalPM.JournalLines.FirstOrDefault()?.Reference1;
                 var returnedCheque = arPaymentCheques.FirstOrDefault(x => x.ChequeNumber == chequeNumber);
                 int returnedChequeLineNumber = arPaymentCheques.Max(x => x.LineNumber) + returnedCheque.LineNumber;
-                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(returnedCheque, aRPaymentPM);
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(returnedCheque, aRPaymentPM, journalPM);
                 if (interestTranasction != null)
                 {
                     interestTranasction.OriginalEntityLineNumber = returnedChequeLineNumber;
@@ -275,7 +278,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 foreach (var cheque in arPaymentCheques)
                 {
-                    var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM);
+                    var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForCheque(cheque, aRPaymentPM, journalPM);
                     if (!CheckIfInterestTransactionCreated(interestTranasction))
                         interestTransactionUpdateService.Update(interestTranasction, true);
                 }
@@ -289,7 +292,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             foreach (var bankTranfer in aRPaymentPM.ARPaymentBankTranfers)
             {
-                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForBankTransfer(bankTranfer, aRPaymentPM);
+                var interestTranasction = fullAccountingARPaymentApproveService.GetInterestTransactionLineForBankTransfer(bankTranfer, aRPaymentPM , journalPM);
                 if (!CheckIfInterestTransactionCreated(interestTranasction))
                     interestTransactionUpdateService.Update(interestTranasction, true);
             }
@@ -614,7 +617,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception e)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
+					scope.Dispose();
+					LogMessagingUtil.Instance.AppendLine($"AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id={_JournalPM?.Id} | Exception: {e.Message}");
+					NetCommonHelper.Logger.DevLog.Instance.WriteError("AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + e );
                     throw e;
 
                 }
@@ -998,8 +1003,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception eee)
                 {
+					LogMessagingUtil.Instance.AppendLine($"WorkWithoutQueueStatus4 | Exception: {eee.Message}");
 
-                    OnException(null, null, journalId, SeedTenant, eee);
+					OnException(null, null, journalId, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
                     //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
                     Thread.Sleep(500);
@@ -1073,8 +1079,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception eee)
                 {
+					LogMessagingUtil.Instance.AppendLine($"WorkWithoutQueue | Exception: {eee.Message}");
 
-                    OnException(null, null, journalId, SeedTenant, eee);
+					OnException(null, null, journalId, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
                     //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
                     Thread.Sleep(500);
@@ -1167,11 +1174,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         catch (Exception eee2)
                         {
-
-                            //OnException(null, null, journalId, SeedTenant, eee);
-
+							LogMessagingUtil.Instance.AppendLine($"ReturnToQueue journalId= {journalId.ToString()} | Exception: {eee2.Message}");
                             NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee2, journalId.ToString());
-                            //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
+
                             Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
 
                             Thread.Sleep(100);
@@ -1190,8 +1195,9 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 catch (Exception eee)
                 {
+					LogMessagingUtil.Instance.AppendLine($"ReturnToQueue2 journalId= {journal?.Id} | Exception: {eee.Message}");
 
-                    OnException(null, null, journal?.Id, SeedTenant, eee);
+					OnException(null, null, journal?.Id, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
                     //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
                     Thread.Sleep(500);
@@ -1267,8 +1273,9 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
+				LogMessagingUtil.Instance.AppendLine($"EnqueueDB | Exception: {e.Message}");
 
-                Logitude.SystemLogs.ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "QueueSendService.Send()" + messageProperties.ToString(), null);
+				Logitude.SystemLogs.ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "QueueSendService.Send()" + messageProperties.ToString(), null);
                 throw;
             }
         }
@@ -1288,8 +1295,9 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
+				LogMessagingUtil.Instance.AppendLine($"EnqueueMultiThreadedDB | Exception: {e.Message}");
 
-                Logitude.SystemLogs.ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "QueueSendService.Send()" + messageProperties.ToString(), null);
+				Logitude.SystemLogs.ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "QueueSendService.Send()" + messageProperties.ToString(), null);
                 throw;
             }
         }
@@ -1343,7 +1351,9 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (JournalApproveException ex)
             {
-                switch (ex.WhatTODO)
+				LogMessagingUtil.Instance.AppendLine($"JournalApproveException {qpJournalId} | Exception: {ex.Message}");
+
+				switch (ex.WhatTODO)
                 {
 
                     case WhatTODOJournalApproveEnum.ClearQueue:
@@ -1362,7 +1372,9 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception ex)
             {
-                OnException(myDbQueueService, message, qpJournalId, tenant, ex);
+				LogMessagingUtil.Instance.AppendLine($"ProcessMessage_Db {qpJournalId} | Exception: {ex.Message}");
+
+				OnException(myDbQueueService, message, qpJournalId, tenant, ex);
             }
             return isSubmitApprove;
 
@@ -1439,10 +1451,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
-            if (message == null || message.RetryNumber > 5)
+            if (message == null || message.RetryNumber > 6)
             {
                 var journalFailedService = new JournalFailedService(tenant, seedJournalId);
-                journalFailedService.MarkAsFailed(ex);
+                journalFailedService.MarkAsFailed(ex );
                 if (myDbQueueService != null)
                 {
                     myDbQueueService.Complete();
@@ -1606,7 +1618,9 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteError(" usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + ex);
+				LogMessagingUtil.Instance.AppendLine($"usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id {_JournalPM?.Id} | Err: {ex.Message}");
+
+				NetCommonHelper.Logger.DevLog.Instance.WriteError(" usp_AccountingStreaming AccountingStreamingInNewSerializableTransaction! _JournalPM?.Id" + _JournalPM?.Id + " Err:" + ex);
                 if (_JournalPM?.StatusCode == "6" && !_JournalPM.IsLedgerCreated)
                 {
                     try

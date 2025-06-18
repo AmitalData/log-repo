@@ -68,10 +68,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (!String.IsNullOrWhiteSpace(requestParams.AppicationId))
             {
-                CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);
-
-                // Sending Auto Restore Declaration Request #113942
-                DeclarationRestoreResponseData declarationRestoreResponseData = RestoreDeclarationRequest(requestParams);
+                CalculateDeclarationCourierStatus.UpdateCourierDeclarationStatusCode(requestParams.Tenant, requestParams.AppicationId);                
             }
             base.OnRequestFail(customResponse, requestParams);
         }
@@ -1349,9 +1346,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 LogMessagingUtil.Instance.AppendLine("Sending Restore Declaration Request Failed !");
                 NetCommonHelper.Logger.DevLog.Instance.WriteError("Sending Restore Declaration Request Failed !");
                 throw new Exception("Sending Restore Declaration Request Failed !");
-            }
+                LogMessagingUtil.Instance.AppendLine("Sending Restore Declaration Request Failed !");
+            }                       
         }
-
         private DeclarationRestoreResponseData SendRestoreDeclaration(DeclarationRestoreRequestParams requestParamsData)
         {
             DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService messagingService = new DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
@@ -1368,7 +1365,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-		private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user, string requestParamsJson)
+
+        private bool CheckFileCredit(DeclarationPM declarationPM, DeclarationPaymentPM declarationPaymentPM, string user, string requestParamsJson)
         {
             CustomFileCreditRequestParams requestParamsCredit = new CustomFileCreditRequestParams()
             {

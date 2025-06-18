@@ -1,4 +1,6 @@
-﻿namespace AmitalCloud.Infrastructure.Data.Helpers
+﻿using Microsoft.Extensions.Configuration;
+
+namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public static class ConfigurationHelper
     {

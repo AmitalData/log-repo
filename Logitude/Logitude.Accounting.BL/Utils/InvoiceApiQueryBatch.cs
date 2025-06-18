@@ -57,7 +57,7 @@ namespace Logitude.Accounting.BL.Utils
                     startDate,
                     endDate,
                     logEntryType: 0x01,
-                    transType: "Invoice",
+                    transType: "IN",
                     flags: 0x00);
                 InvoiceApiService.EndSession();
 
@@ -65,7 +65,7 @@ namespace Logitude.Accounting.BL.Utils
                     throw new Exception("QueryLog failed or returned empty XML");
 
                 var doc = XDocument.Parse(xml);
-                XNamespace ns = "http://www.InvoiceApi.com/XMLSchema/V1";
+                XNamespace ns = "http://www.magaya.com/XMLSchema/V1";
                 var items = doc.Descendants(ns + "GUIDItem")
                     .Select(x => new
                     {
@@ -129,7 +129,6 @@ namespace Logitude.Accounting.BL.Utils
             {
                 InvoiceApiCommunicationLogPM log = new InvoiceApiCommunicationLogPM()
                 {
-                    Id = IdCounter.GetNumber("InvoiceApiCommunicationLog", tenant),
                     DocumentId = null,
                     CreateDate = DateTime.Now,
                     StatusCode = InvoiceApiStatusEnum.Created,
@@ -139,7 +138,9 @@ namespace Logitude.Accounting.BL.Utils
                     
                 };
                 log.ChangeSetOp = ChangeSetOperation.Insert;
-                InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogUpdateService(tenant);
+                IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+
+                InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
                 invoiceApiCommunicationLogRepository.Update(log,true);
                 return log.Id;
 

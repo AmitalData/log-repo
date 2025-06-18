@@ -30,7 +30,7 @@
     Name="LocalName"
     Type="nvarchar"
     Size="200"
-    DefaultValue="''">
+     >
     <Constraints
       Nullable="false" />
   </Column>

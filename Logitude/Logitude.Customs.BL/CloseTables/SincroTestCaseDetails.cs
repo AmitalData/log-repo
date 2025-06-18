@@ -41,6 +41,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2754Payment",
                     Name = "  הגשת תשלום",
                     Entity="DeclarationPayment",
+                    Param1= @"{ ""PaymentOrderNumber"":""4589""}",
                     AvoidSign= true
 
                 },

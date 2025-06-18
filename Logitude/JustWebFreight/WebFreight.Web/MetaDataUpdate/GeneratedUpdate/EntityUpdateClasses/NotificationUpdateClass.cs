@@ -68,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הודעה",
 			      				    DefaultText =  "Notification",
-			      				    Code =  "f658",
+			      				    Code =  "5b5f",
 			      				    Name =  "Customs.Notification Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2386,6 +2386,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SenderName",
 					  						ListPropertyPath =  "SenderName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2582,6 +2583,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode NotificationTextCode_CustomsNotificationONotificationReplySendErrors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.NotificationReplySendErrors", DefaultText = "Notification reply pre sending errors",LocalDefaultText = @"שגיאות לפני שליחת תשובה להודעה", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode NotificationTextCode_CustomsNotificationOOpenNotification = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.OpenNotification", DefaultText = "Open Notifications",LocalDefaultText = @"הצהרות פתוחות", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode NotificationTextCode_CustomsNotificationOPrivateName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Notification.O.PrivateName", DefaultText = "Private Name",LocalDefaultText = @"שם פרטי:", ObjectTableId = NotificationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

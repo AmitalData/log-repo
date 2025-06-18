@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -7,6 +8,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -26,13 +28,8 @@ namespace Logitude.Accounting.BL.CoreBL
     public class JournalUpdateOnCreating : IJournalUpdateInsert
     {
         private IAccountingContext _MainContext;
-        private List<JournalLinePM> SplitiedJournals;
-        const string ActionCode_Credit = "1";
-        const string ActionCode_Debit = "2";
-        const string ActionCode_DebitAndCredit = "3";
         public JournalUpdateOnCreating(IAccountingContext mainContext)
         {
-            this.SplitiedJournals = new List<JournalLinePM>();
             this._MainContext = mainContext;
         }
         
@@ -130,18 +127,23 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 //if (entityPM.CreateDate == DateTime.MinValue) entityPM.CreateDate = DateTime.Now;
                 entityPM.CreateDate = DateTime.Now; //eyal 
-               
-                foreach (JournalLinePM item in entityPM.JournalLines)
+
+                var originalLines = entityPM.JournalLines.ToList();
+                for (int i = 0; i < originalLines.Count; i++)
                 {
-                    CheckJournalActionCodeAndSplitedIt(item, entityPM.JournalLines);
+                    JournalLinePM item = originalLines[i];
+
+                    JournalUpdateService journalUpdateService = new JournalUpdateService(this._MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                    var newJournalLinePM = journalUpdateService.CheckJournalActionCodeAndSplitedIt(item, entityPM.JournalLines);
                     OnCreateLine(entityPM, item);
-                    //item.Notes = entityPM.JournalLines[0].Notes;
+
+                    if (newJournalLinePM != null)
+                    {
+                        entityPM.JournalLines.Add(newJournalLinePM);
+                        OnCreateLine(entityPM, newJournalLinePM);
+                    }
                 }
-                foreach (JournalLinePM item in SplitiedJournals)
-                {
-                    entityPM.JournalLines.Add(item);
-                    OnCreateLine(entityPM, item);
-                }
+
                 foreach (var item in entityPM.JournalReconciles)
                 {
 
@@ -175,80 +177,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //}
 
         }
-    
-        private void CheckJournalActionCodeAndSplitedIt(JournalLinePM LinePM , List<JournalLinePM>  JournalLines)
-        {
-            if (LinePM.ActionCode== ActionCode_DebitAndCredit)
-            {
-                RatesTableQuery ratesTableQuery = new RatesTableQuery();
-                TenantQuery tenantQuery = new TenantQuery(LinePM.Tenant);
-                TenantPM tPM = tenantQuery.GetSinglePM(LinePM.Tenant);
-                string accountingCurrencyId = tPM.CurrencyId;
-                decimal? rateValue =  (decimal?)ratesTableQuery.GetLastRecordByValueDateAndExchangeRateId(LinePM.Tenant, LinePM.CurrencyId, tPM?.CurrencyId, LinePM.AccountingDate, LinePM.DebitAccountId) ??  LinePM.ExchangeRate;
-                JournalLinePM newLine = new JournalLinePM
-                {
-                    ActionTypeCode = ActionCode_Debit,
-                    Reference1 = LinePM.Reference1,
-                    Reference2 = LinePM.Reference2,
-                    Reference3 = LinePM.Reference3,
-                    AccountingDate = LinePM.AccountingDate,
-                    Notes = LinePM.Notes,
-                    ActionId = LinePM.ActionId,
-                    CurrentContextTag = LinePM.CurrentContextTag,
-                    CreditAccountId = LinePM.CreditAccountId,
-                    DebitAccountId = LinePM.DebitAccountId,
-                    DebitControlAccountId = LinePM.DebitControlAccountId,
-                    Tenant = LinePM.Tenant,
-                    DueDate = LinePM.DueDate,
-                    Line = JournalLines.Count() + 1,
-                    DocumentDate = LinePM.DocumentDate,
-                    ExchangeRate =  rateValue,
-                    ForeignAmount = Math.Round(LinePM.LocalAmount / rateValue.Value, 2) ,
-                    LocalAmount = LinePM.LocalAmount,
-                    CurrencyId = LinePM.CurrencyId,
-                    CurrencyCode = LinePM.CurrencyCode,
-                    ExternalOpenAmount = LinePM.ExternalOpenAmount,
-                    ExternalReconcileNumber = LinePM.ExternalReconcileNumber,
-                    IsExternalReconcile = LinePM.IsExternalReconcile,
-                    IsCreditAccountMulti = LinePM.IsCreditAccountMulti,
-                    IsDebitAccountMulti = LinePM.IsDebitAccountMulti,
-                    EncodeBase64NVARCHARFieldsBy = LinePM.EncodeBase64NVARCHARFieldsBy,
-
-                };
-                LinePM.ActionTypeCode = ActionCode_Credit;
-                LinePM.ActionCode = null;
-                LinePM.DebitAccountId = LinePM.DebitAccountId;
-                SetActionDatatForJournalLine(newLine);
-                SetActionDatatForJournalLine(LinePM);
-                SplitiedJournals.Add(newLine);
-            }
-
-        }
-
-        public void SetActionDatatForJournalLine(JournalLinePM journalLinePM)
-        {
-            if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode))
-            {
-                JournalActionTypeList action = GetJournalActionTypeListByCode(journalLinePM);
-                if (action != null)
-                {
-                    journalLinePM.ActionId = action.Id;
-                    journalLinePM.ActionCode = action.Code;
-                    journalLinePM.ActionName = action.EnglishName;
-                }
-            }
-        }
-
-
-        public virtual JournalActionTypeList GetJournalActionTypeListByCode(JournalLinePM item)
-        {
-            var _IJournalActionTypeListQueryService =
-                new JournalActionTypeListQueryService(this._MainContext as IAccountingContext);
-
-            JournalActionTypeList action = _IJournalActionTypeListQueryService
-                .GetByCode(item.ActionTypeCode, item.Tenant);
-            return action;
-        }
+  
 
 
         public virtual void ClearDMYByUserId(JournalPM entityPM, string loggedContactId)

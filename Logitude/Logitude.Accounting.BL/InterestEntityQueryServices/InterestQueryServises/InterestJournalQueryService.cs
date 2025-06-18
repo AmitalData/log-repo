@@ -29,15 +29,14 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServis
                 result.EntityType = "Journal";
                 result.EntityTypeCode = InterestEntityTypeCodes.Journal;
 
-                result.OriginalLines = new List<InterestEntityOriginalLineResult>();
-                foreach (var item in journalPM.JournalLines)
+                result.OriginalLines = journalPM.JournalLines
+                .Select(item => new InterestEntityOriginalLineResult
                 {
-                    InterestEntityOriginalLineResult line = new InterestEntityOriginalLineResult();
-                    line.OriginalLineNumber = item.Line;
-                    line.Reference1 = item.Reference1;
-                    line.Notes = item.Notes;
-                    result.OriginalLines.Add(line);
-                }
+                    OriginalLineNumber = item.Line,
+                    Reference1 = item.Reference1,
+                    Notes = item.Notes
+                })
+                .ToList();
             }
            
 

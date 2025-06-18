@@ -62,6 +62,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     CalculateDataForInterestReport();
 
 
+
+                   
+
                     scope.Complete();
                 }
             }
@@ -269,6 +272,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
         private InterestTransactionPM CreateNewInterestTransaction(DateTime previousInterestReportCalculationDate, string latestInterestReportId)
         {
+            var firstOfMonth = new DateTime(interestReportPM.InterestCalculationDate.Year, interestReportPM.InterestCalculationDate.Month, 1);
+
+
             InterestTransactionPM openBalanceInterestTransaction = new InterestTransactionPM()
             {
                 EntityId = latestInterestReportId != null ? latestInterestReportId : interestReportId,
@@ -281,6 +287,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 ChangeSetOp = ChangeSetOperation.Insert,
                 CurrencyId = GetLocalCurrency(),
                 Tenant = tenant,
+                AccountingDate = firstOfMonth,
             };
             SubmitInterestTransaction(openBalanceInterestTransaction);
             return openBalanceInterestTransaction;
@@ -417,15 +424,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private decimal? GetInterestReportOpenBalance()
         {
             InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            return   interestReportQueryService.GetInterestReportOpenBalance(interestReportPM.InterestCalculationDate,tenant, interestReportPM.GLAccountId);
+            return interestReportQueryService.GetInterestReportOpenBalance(interestReportPM.InterestCalculationDate, tenant, interestReportPM.GLAccountId);
+
         }
 
-        private decimal? SumOfExReports()
-        {
-            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-            decimal interestReportOpenBalance = interestReportQueryService.GetClosedBalanceOfLastInvoicedOrClosedWithoutInvoiceInterestReport(tenant, interestReportPM.GLAccountId);
-            return interestReportOpenBalance;
-        }
+        
 
         private CloseBalanceInterestReportData GetCloseBalanceCalculationDateAndStatusOfTheLastInterestReport()
         {

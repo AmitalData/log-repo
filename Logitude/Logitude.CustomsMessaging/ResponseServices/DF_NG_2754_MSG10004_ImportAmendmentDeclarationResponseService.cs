@@ -509,9 +509,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         var courierdeclaration = courierDeclarationQueryService.GetCourierDeclarationByDeclarationId(declarationOrg.Id, tenant);
                         if (courierdeclaration != null)
-                            courierdeclaration.ChangeSetOp = ChangeSetOperation.Delete
-                                ;
-                        courierDeclarationUpdateService.Update(courierdeclaration, true);
+                        {
+                            courierdeclaration.ChangeSetOp = ChangeSetOperation.Delete;
+                            courierDeclarationUpdateService.Update(courierdeclaration, true);
+                        }
 
                         CourierDeclarationPM courierDeclarationPM = new CourierDeclarationPM();
                         courierDeclarationPM.Tenant = courierdeclaration.Tenant;
@@ -583,8 +584,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             catch (System.Exception ex)
 
             {
-                error = ex.Message + ex.StackTrace;
-                return null;
+                throw new System.Exception("Error in MapResponseToDeclaration: " + ex.Message, ex);
             }
         }
 
@@ -1349,13 +1349,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     supplierInvoiceItemVehicle.ChangeSetOp = ChangeSetOperation.Insert;
                                 }
 
-
+                                if (isFromImporter) {
                                 supplierInvoiceItemPM.CatalogNumber = invoiceItem.CatalogNumber;
                                 supplierInvoiceItemPM.ItemCode = invoiceItem.ItemCode;
                                 supplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
                                 supplierInvoiceItemPM.ItemAdditionalStatus = invoiceItem.ItemAdditionalStatus;
                                 supplierInvoiceItemPM.CertificatesStatusCode = invoiceItem.CertificatesStatusCode;
-
+                                }
                             }
 
 
@@ -1367,12 +1367,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             var supplierInvoice = declarationPMBeforeDelete.SupplierInvoices.FirstOrDefault(si => si.SupplierInvoiceItems.Any(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric));
                             supplierInvoiceItemPM.SupplierInvoiceItemVehicles = supplierInvoice?.SupplierInvoiceItems.FirstOrDefault(sii => sii.SequenceNumeric == supplierInvoiceItemPM.SequenceNumeric)?.SupplierInvoiceItemVehicles;
                             
-                            foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
-                            {
-                                if(supplierInvoiceItemVehicle != null)
-                                    supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehicleAdds(supplierInvoiceItemVehicle, supplierInvoiceItemPM, supplierInvoiceItemPM.SupplierInvoiceItemVehicles);
-                            }
+                         
 
+                        }
+                        foreach (var supplierInvoiceItemVehicle in supplierInvoiceItemPM.SupplierInvoiceItemVehicles)
+                        {
+                            if (supplierInvoiceItemVehicle != null)
+                                supplierInvoiceItemVehicle.SupplierInvoiceItemVehicleAdds = GetSupplierInvoiceItemVehicleAdds(supplierInvoiceItemVehicle, supplierInvoiceItemPM, supplierInvoiceItemPM.SupplierInvoiceItemVehicles);
                         }
                     }
                     supplierInvoiceItemPM.SalesTaxExemptionTypeCode = GetValueCodeType(governmentAgencyGoodsItem.DMExtensions.SalesTaxExemptionType);
@@ -1425,7 +1426,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 throw new System.Exception(
                    "unable to find the supplierInvoiceItemVehicleAddPM from Declaration Id " + supplierInvoiceItemVehiclePM.DeclarationId + " and Supplier Invoice Item Line " + supplierInvoiceItemVehiclePM.InvoiceItemLineNumber + " and Supplier Invoice Item Vehicle Line " + supplierInvoiceItemVehiclePM.LineNumber);
             }
-            supplierInvoiceItemVehicleAddPM.ChangeSetOp = ChangeSetOperation.Update;
+            supplierInvoiceItemVehicleAddPM.ChangeSetOp = ChangeSetOperation.Insert;
             var supplierInvoiceItemVehicleAddPMList = new List<SupplierInvoiceItemVehicleAddPM>();
 
             decimal? allDeduction = 0;

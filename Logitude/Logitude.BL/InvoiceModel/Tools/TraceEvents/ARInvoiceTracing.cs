@@ -92,7 +92,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                         ObjectTableName = "ARInvoice",
                         Notes = entityPM.EventNote
                     });
-                }                
+                }
             }
 
             else if (entityPM.SetVoided)
@@ -124,7 +124,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 });
             }
 
-            else if (entityPM.StatusCode != "PD" && entityPOCO.StatusCode == "PR")
+            else if (entityPM.StatusCode != "PD"&& entityPOCO.StatusCode == "PD" )
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {

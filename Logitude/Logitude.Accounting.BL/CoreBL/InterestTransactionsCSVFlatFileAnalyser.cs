@@ -105,6 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                     InterestValueDate = itLine.InterestValueDate,
                                     IsCancelled = false,
                                     IsClosed = false,
+                                    AccountingDate =DateTime.UtcNow
                                 };
 
 

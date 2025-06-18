@@ -42,7 +42,11 @@ export class InterestTransactionPM {
     private updateDateTime: Date;
     public get UpdateDateTime() { return this.updateDateTime; }
     public set UpdateDateTime(newValue: Date) { if (this.updateDateTime != newValue) { this.updateDateTime = newValue; this.MarkAsDirty("UpdateDateTime"); } }
-       
+
+    private accountingDate: Date;
+    public get AccountingDate() { return this.accountingDate; }
+    public set AccountingDate(newValue: Date) { if (this.accountingDate != newValue) { this.accountingDate = newValue; this.MarkAsDirty("AccountingDate"); } }
+
 	 
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }

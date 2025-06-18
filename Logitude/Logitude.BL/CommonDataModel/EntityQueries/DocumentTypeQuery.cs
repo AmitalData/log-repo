@@ -2248,28 +2248,29 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             DocumentType docTypePm = null;
 
-            string entityName = "DocumentTypePM" + code + tenant;
+			string entityName = $"DocumentTypePM_{tenant}_{code}";
 
-            if (HttpContext.Current != null)
+			
+
+			if (fromCache && HttpContext.Current != null)
             {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                {
-                    docTypePm = (from a in repository.context.DocumentTypes
-                                 where a.Code == code && a.Tenant == tenant
-								 select a).FirstOrDefault();
+				var cached = CacheManager.CacheWrapper.Get(entityName);
+				if (cached == null)
+				{
+					docTypePm = repository.context.DocumentTypes
+					.FirstOrDefault(a => a.Code == code && a.Tenant == tenant);
 					if (docTypePm != null)
-                        CacheManager.CacheWrapper.Insert(entityName, docTypePm, null);
-                }
-                else
-                {
-                    docTypePm = (DocumentType)CacheManager.CacheWrapper.Get(entityName);
-                }
+						CacheManager.CacheWrapper.Insert(entityName, docTypePm, null);
+				}
+				else
+				{
+					docTypePm = (DocumentType)cached;
+				}
             }
             else
             {
-				docTypePm = (from a in repository.context.DocumentTypes
-							 where a.Code == code && a.Tenant == tenant
-                             select a).FirstOrDefault();
+				docTypePm = repository.context.DocumentTypes
+			     .FirstOrDefault(a => a.Code == code && a.Tenant == tenant);
 			}
             return docTypePm;
         }

@@ -59,6 +59,10 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.ByMonth).HasColumnName("ByMonth");
 
             this.Property(t => t.Month).HasColumnName("Month");
+
+            this.Property(t => t.FromMonth).HasColumnName("FromMonth");
+
+            this.Property(t => t.ReportSavedData).HasColumnName("ReportSavedData").IsMaxLength().IsUnicode(true);
         }
     }
 }

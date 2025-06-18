@@ -65,6 +65,10 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool ByMonth { get; set; }
         [Column("Month")]
 	    public DateTime? Month { get; set; }
+        [Column("FromMonth")]
+	    public DateTime? FromMonth { get; set; }
+        [Column("ReportSavedData")]
+	    public string ReportSavedData { get; set; }
     }
 }
 	 

@@ -146,16 +146,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountingDate = DateTime.Now,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 DueDate = cheque.ValueDate,
-                LocalAmount = cheque.LocalAmount,
-                ForeignAmount = cheque.ForeignAmount,
+                LocalAmount = cheque.LocalAmount *-1,
+                ForeignAmount = cheque.ForeignAmount *-1,
                 CurrencyId = cheque.CurrencyId,
                 ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount,
-                
-                CreditAccountId = paymentCashbook.AccountId,
-                DebitAccountId = billTo.GLAccountId,
+
+                DebitAccountId = paymentCashbook.AccountId,
+                CreditAccountId = billTo.GLAccountId,
                 DebitControlAccountId = cashbookGLAccount.ControlAccountId,
-                Reference1 = paymentPM.PaymentNo,
-                Reference2 = cheque.ChequeNumber,
+                Reference1 =  cheque.ChequeNumber,
+                Reference2 = paymentPM.PaymentNo,
                 Notes = CreditLineNotes
             };
         }
@@ -170,16 +170,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 AccountingDate = DateTime.Now,
                 DocumentDate = paymentPM.RegisterDate.Value,
                 DueDate = cheque.ValueDate,
-                LocalAmount = cheque.LocalAmount,
-                ForeignAmount = cheque.ForeignAmount,
+                LocalAmount = cheque.LocalAmount * -1,
+                ForeignAmount = cheque.ForeignAmount * -1,
                 CurrencyId = cheque.CurrencyId,
                 ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount,
-                
-                DebitAccountId = billTo.GLAccountId,
-                CreditAccountId = paymentCashbook.AccountId,
+
+                CreditAccountId = billTo.GLAccountId,
+                DebitAccountId = paymentCashbook.AccountId,
                 DebitControlAccountId = cashbookGLAccount.ControlAccountId,
-                Reference1 = paymentPM.PaymentNo,
-                Reference2 = cheque.ChequeNumber,
+                Reference1 = cheque.ChequeNumber,
+                Reference2 = paymentPM.PaymentNo,
                 Notes = CreditLineNotes
             };
         }
