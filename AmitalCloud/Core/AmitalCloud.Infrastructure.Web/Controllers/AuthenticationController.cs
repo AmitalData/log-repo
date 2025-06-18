@@ -38,7 +38,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
             catch (Exception ex)
             {
-                LogException(ex, loginParameters.Email, "PostUserValidation");
+                ExceptionHandler.HandleException(ex, DateTime.Now, loginParameters.Tenant, loginParameters.Email, "", $"AuthenticationController : PostUserValidation", null);
+
                 return StatusCode(StatusCodes.Status500InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
@@ -54,16 +55,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
             catch (Exception ex)
             {
-                LogException(ex, parameters.Email, "PostLoginData", tenant);
+                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, parameters.Email, "", $"AuthenticationController : PostLoginData", null);
                 return StatusCode(StatusCodes.Status500InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
             }
         }
 
-        private void LogException(Exception ex, string email, string methodName, int tenant = 0)
-        {
-            ExceptionHandler.HandleException(ex, DateTime.Now, tenant, email, "", $"AuthenticationController : {methodName}", null);
-            string message = ex.InnerException?.Message + Environment.NewLine + ex.Message;
-            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, message);
-        }
+     
     }
 }

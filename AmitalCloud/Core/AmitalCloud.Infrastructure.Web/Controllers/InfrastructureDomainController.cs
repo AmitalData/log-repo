@@ -20,12 +20,8 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             try
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
-                string? token = HttpContext.Request.Headers["Token"];
-                if (string.IsNullOrEmpty(token))
-                {
-                    return Unauthorized("Token is required");
-                }
-                string loggedUserEmail = AuthenticationTokenRepository.GetSingleTokenFromCache(token).Email;
+
+                string loggedUserEmail = AmitalCloudSecurityUtility.GetAuthenticatedUser();
 
                 ContactQuery contactQuery = new ContactQuery(tenant);
                 string? loggedUserId = contactQuery.GetContactByEmailOnly(loggedUserEmail, tenant)?.Id;

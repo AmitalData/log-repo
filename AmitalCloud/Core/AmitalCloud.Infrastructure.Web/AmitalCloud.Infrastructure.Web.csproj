@@ -5,8 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
+   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Marvin.JsonPatch" Version="2.2.1" />

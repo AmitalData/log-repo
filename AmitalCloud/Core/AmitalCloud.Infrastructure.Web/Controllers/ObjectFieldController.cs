@@ -8,11 +8,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GeneralDomainController : ControllerBase
+    public class ObjectFieldController : ControllerBase
     {
         [HttpGet("GetObjectFieldModificationForLoggedTenant")]
         public IActionResult GetObjectFieldModificationForLoggedTenant()
-        {
+        { 
             try
             {
                 int tenant = AmitalCloudSecurityUtility.AuthenticateTenant(); ;
