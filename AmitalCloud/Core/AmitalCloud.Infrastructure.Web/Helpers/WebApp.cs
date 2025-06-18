@@ -51,7 +51,6 @@ namespace AmitalCloud.Infrastructure.Web.Helpers
             builder.Services.AddScoped<GlobalDBRepository>();
             ConfigurationHelper.Initialize(builder.Configuration);
             builder.Services.AddScoped<ILoggedContactUtil, AmitalCloud.Infrastructure.Data.Security.LoggedContactUtil>();
-            builder.Services.AddScoped<IRulesValidator, Validators.RulesValidator>();
             builder.Services.AddScoped<ITreeFilterQueryService, TreeFilterQuery.TreeFilterQueryService>();
             builder.Services.AddScoped<LoggedContactResolver>();
 
