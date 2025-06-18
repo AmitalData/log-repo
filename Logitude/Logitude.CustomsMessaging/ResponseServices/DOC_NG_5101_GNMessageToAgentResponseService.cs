@@ -61,6 +61,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
         public void UpdateIt(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
+            const string firstName = "שם מעריך:";
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(context);
 
@@ -579,7 +580,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
             if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(notificationStatusCode))
             {
                 LogMessagingUtil.Instance.AppendLine("Sent status " + notificationStatusCode + " to UNF");
-                RaiseEvent(this._MyDeclarationPM, notificationStatusCode, customResponse.MessageToAgent.msgString?.Replace("00:00:00", ""));
+                string messageforUnf = customResponse.MessageToAgent.msgString?.Replace("00:00:00", "");
+                if (!string.IsNullOrWhiteSpace(messageforUnf) && !string.IsNullOrWhiteSpace(customResponse.MessageToAgent?.SenderName))
+                {
+                    messageforUnf += "\n" + firstName + customResponse.MessageToAgent.SenderName;
+                }
+                RaiseEvent(this._MyDeclarationPM, notificationStatusCode, messageforUnf);
             }
 
             if (!string.IsNullOrWhiteSpace(notificationDefinitionCode))
