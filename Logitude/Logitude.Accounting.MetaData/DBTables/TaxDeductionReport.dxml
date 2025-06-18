@@ -109,6 +109,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReportSavedData"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

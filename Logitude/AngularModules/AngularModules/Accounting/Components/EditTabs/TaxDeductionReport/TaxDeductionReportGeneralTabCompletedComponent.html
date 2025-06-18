@@ -1,0 +1,188 @@
+<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table>
+                    <tr class="TabTitleRow">
+                        <td>{{'TaxDeductionReport.TH.Log' | TextCodeTranslationPipe}} </td>
+                    </tr>
+
+                    <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
+
+                    <tr>
+                        <td>
+                            <table>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- Report Type -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [NoObjectField]="true"  [Text]="'TaxDeductionReport.O.ReportType' | TextCodeTranslationPipe" 
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
+                                                    <LogTextBox [ObjectFieldName]="'ReportType'" [InputType]="'Text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [ForceDisable]="true"></LogTextBox>
+                                                </td>
+                                                <td></td>
+
+                                            </tr>
+
+                                            <!-- Report Period -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [NoObjectField]="true"    [TextCode]="'TaxDeductionReport.O.ReportPeriod'" 
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:500px;">
+                                                    <LogTextBox [ObjectFieldName]="'ReportPeriod'" [InputType]="'Text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [ForceDisable]="true"></LogTextBox>
+                                                </td>
+                                                <td></td>
+
+                                            </tr>
+                                            <!-- IsAdditionalReportExist -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'IsAdditionalReportExist'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="vertical-align:top;width:150px;">
+                                                    <LogCheckBox [ObjectFieldName]="'IsAdditionalReportExist'" [Checked]="IsAdditionalReportExist" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                                </td>
+                                                <td></td>
+
+                                            </tr>
+
+                                            <!-- Email -->
+                                            <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
+                                                    <LogTextBox [ObjectFieldName]="'Email'" [InputType]="'Text'" [DataContext]="DataContext"
+                                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+
+                                            <!-- From Month -->
+                                            <!--<tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'FromMonth'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
+                                                    {{entityPM.FromMonth | DateTimePipe:'MY'}}
+                                                </td>
+                                                <td></td>
+                                            </tr>-->
+
+                                            <!-- Report Data -->
+                                           <!-- <tr class="FormFieldRow">
+                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogLabel [ObjectFieldName]="'ByMonth'"  [TextCode]="'TaxDeductionReport.O.ReportData'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+
+                                                <td>
+                                                    <div style="display: inline-block; vertical-align: top;">
+                                                        <table class="TableHolder" style="width: 500%;">-->
+
+                                                            <!-- Total Payments -->
+                                                         <!--   <tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">
+                                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                    <LogLabel [ObjectFieldName]="'TotalPayments'" [ObjectTableName]="DataObjectTableName"
+                                                                            [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
+                                                                    {{_TaxDeductionReportData.totalForCompany.TotalPayments}}
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>-->
+                                                                                                                    
+                                                            <!-- Total Deductions -->
+                                                         <!--  <tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">
+                                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                    <LogLabel [ObjectFieldName]="'TotalDeductions'" [ObjectTableName]="DataObjectTableName"
+                                                                            [DataContext]="DataContext"></LogLabel>
+                                                                </td>
+
+                                                                <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
+                                                                    {{_TaxDeductionReportData.totalForCompany.TotalDeductions}}
+                                                                </td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div style="display: inline-block; vertical-align: top; margin-left: 10px;">==>
+                                                        <!--<table class="TableHolder" style="width: 700%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                        <LogLabel [ObjectFieldName]="'TotalPerMonth'" [TextCode]="'TaxDeductionReport.O.TotalPerMonth'"  [ObjectTableName]="DataObjectTableName"
+                                                                            [DataContext]="DataContext"></LogLabel>
+                                                                    </th>
+                                                                    <th style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                        <LogLabel [ObjectFieldName]="'NumberOfVendors'" [TextCode]="'TaxDeductionReport.O.NumberOfVendors'"  [ObjectTableName]="DataObjectTableName"
+                                                                            [DataContext]="DataContext"></LogLabel>
+                                                                    </th>
+                                                                    <th style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                        <LogLabel [ObjectFieldName]="'Payments'" [TextCode]="'TaxDeductionReport.O.Payments'"  [ObjectTableName]="DataObjectTableName"
+                                                                            [DataContext]="DataContext"></LogLabel>
+                                                                    </th>
+                                                                    <th style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                        <LogLabel [ObjectFieldName]="'Deductions'" [TextCode]="'TaxDeductionReport.O.Deductions'"  [ObjectTableName]="DataObjectTableName"
+                                                                            [DataContext]="DataContext"></LogLabel>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let item of _TaxDeductionReportData.ByMonthList">
+                                                                    <td>{{ item.reportMonth }}</td>
+                                                                    <td>{{ item.totalVendors }}</td>
+                                                                    <td>{{ item.totalPaymentsWithoutDivided }}</td>
+                                                                    <td>{{ item.totalDeductionsWithoutDivided }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>-->
+                                                 <!--   </div>
+                                                </td>
+
+                                            </tr>-->
+
+                                            <tr><td><div></div></td></tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                         
+
+                        
+                                
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+

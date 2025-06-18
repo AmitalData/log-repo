@@ -1,15 +1,11 @@
 
 import { Injectable } from '@angular/core';
-import { defer, of } from 'rxjs';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
-import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
-import { Guid } from '../../../Infrastructure/Utilities/Guid';
-import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
-import { TaxDeductionReportPM } from '../../EntityPMs/TaxDeductionReportPM';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { TaxDeductionReportPM} from '../../EntityPMs/TaxDeductionReportPM';
+import { TaxDeductionReportData } from '../../DataContracts/TaxDeductionReportData';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
  
 
@@ -43,9 +39,9 @@ export class TaxDeductionReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
 
     }
+
 
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxDeductionReportPM = null) {
@@ -84,6 +80,67 @@ export class TaxDeductionReportExtendedPMService {
         entityPM.IsDirty = false;
         return entityPM;
     }
+
+
+    GetTaxDeductionReportData(reportId: string) {
+        const url = `${this._apiUrl}/GetTaxDeductionReportData?reportId=${encodeURIComponent(reportId)}`;
+        return this.httpClient.get<any[]>(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                const mappedList = (response || []).map(json =>
+                    this.MapJsonToEntityData(json)
+                );
+
+                const serviceResponse = new ServiceResponse();
+                serviceResponse.Result = mappedList;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError)
+        );
+    }
+
+
+
+    MapJsonToEntityData(jsonData: any, mapParent: boolean = true, entityData: TaxDeductionReportData = null) {
+
+
+        if (!entityData) {
+
+            entityData = new TaxDeductionReportData();
+        }
+
+        var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+        var jsonDataKeys = Object.keys(jsonData);
+
+        for (var key in jsonDataKeys) {
+            if (jsonDataKeys[key] === "UIProperties" || jsonDataKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+            var property = jsonDataKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
+                if (jsonData[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonData[property].Value, jsonData[property].FieldName, jsonData[property].TableName);
+                    entityData[property] = customFieldClass;
+                }
+            }
+            else {
+                entityData[property] = jsonData[property];
+            }
+
+        }
+
+        return entityData;
+    }
+
+
+
+
+
 
 
 }
