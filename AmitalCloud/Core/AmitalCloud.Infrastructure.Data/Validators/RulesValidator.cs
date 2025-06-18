@@ -12,9 +12,8 @@ using AmitalCloud.Infrastructure.Domain.EntityPMs;
 using System.Linq.Expressions;
 using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Data.Helpers;
-using AmitalCloud.Infrastructure.Web.Helpers;
-
-namespace AmitalCloud.Infrastructure.Web.Validators
+ 
+namespace AmitalCloud.Infrastructure.Data.Validators
 {
 
     public class RulesValidator : IRulesValidator

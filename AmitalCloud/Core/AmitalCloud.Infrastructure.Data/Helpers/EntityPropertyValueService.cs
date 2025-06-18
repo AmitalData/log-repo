@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace AmitalCloud.Infrastructure.Web.Helpers
+namespace AmitalCloud.Infrastructure.Data.Helpers
 {
     public class EntityPropertyValueService
     {
