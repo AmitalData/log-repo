@@ -488,6 +488,7 @@ import { InterConditionsRelationshipListService } from './Services/StandardLists
 import { EntryExitTypeListService } from './Services/StandardLists/EntryExitTypeListService';
 import { CustomsItemGroupListService } from './Services/StandardLists/CustomsItemGroupListService';
 import { DiscountTypeRegulationListService } from './Services/StandardLists/DiscountTypeRegulationListService';
+import { SIIDocumentTypeListService } from './Services/StandardLists/SIIDocumentTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -823,6 +824,7 @@ export class ModuleProviders {
             case "ManifestCargoStatusListService": { myResult = new ManifestCargoStatusListService(); break; }
             case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
             case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
+            case "SIIDocumentTypeListService" : { myResult = new SIIDocumentTypeListService(); break; }
             //#endregion                
 
             //#region StandardPMs

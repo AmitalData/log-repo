@@ -24,20 +24,23 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<SIIDocumentTypeList> query = (from a in iQueryable
                                             select new SIIDocumentTypeList()
 											{
-                     
 					                          SearchFields = a.SearchFields,
-					
 					                          Inactive = a.Inactive,
-					
-		                    	            });
+											  LocalName = a.LocalName,
+											  EnglishName = a.EnglishName,
+                                                PointerLevel = a.PointerLevel,
+                                                PointerLevelName = a.Pointer != null ? a.Pointer.LocalName : null,
+                                                Code = a.Code
+
+                                            });
             return query;
 		}
 
 		private IQueryable<SIIDocumentType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SIIDocumentType> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
-			}
+	}
 
 
 }

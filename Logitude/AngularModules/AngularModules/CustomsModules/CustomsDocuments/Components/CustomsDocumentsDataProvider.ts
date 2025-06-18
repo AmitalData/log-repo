@@ -9,6 +9,7 @@ import { DeclarationCancellationCustomsDocumentsController } from '../../Customs
 import { SpecialActivityCustomsDocumentsController } from '../../CustomsGeneralRequests/Components/Documents/SpecialActivityCustomsDocumentsController';
 import { LogisticActionRequestCustomsDocumentsController } from 'CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/LogisticActionRequestCustomsDocumentsController';
 import { ExportDeclarationClosingDataCustomsDocumentsController } from '../../CustomsDeclarationModules/DeclarationOthers/Components/CloseDeclaration/Documents/ExportDeclarationClosingDataCustomsDocumentsController';
+import { SIIRequestCustomsDocumentsController } from '../../CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/Documents/SIIRequestCustomsDocumentsController';
 
 export class CustomsDocumentsDataProvider {
     private declarationCustomsDocumentsController: DeclarationCustomsDocumentsController;
@@ -17,6 +18,7 @@ export class CustomsDocumentsDataProvider {
     private exportDeclarationClosingDataCustomsDocumentsController: ExportDeclarationClosingDataCustomsDocumentsController;
     private specialActivityCustomsDocumentsController: SpecialActivityCustomsDocumentsController;
     private logisticActionRequestCustomsDocumentsController: LogisticActionRequestCustomsDocumentsController;
+    private siiRequestCustomsDocumentsController : SIIRequestCustomsDocumentsController;
 
     private claimCustomsDocumentsController: ClaimCustomsDocumentsController;
     private vehicleCustomsDocumentsController: VehicleCustomsDocumentsController;
@@ -38,6 +40,9 @@ export class CustomsDocumentsDataProvider {
                     this.specialActivityCustomsDocumentsController = new SpecialActivityCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
                 else if (this.parentEntityCode == "ExportDeclarationClosingData")
                     this.exportDeclarationClosingDataCustomsDocumentsController = new ExportDeclarationClosingDataCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
+                else if (this.parentEntityCode == "SIIRequest")
+                    this.siiRequestCustomsDocumentsController = new SIIRequestCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
+
                 else
                 this.declarationCustomsDocumentsController = new DeclarationCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
                 break;

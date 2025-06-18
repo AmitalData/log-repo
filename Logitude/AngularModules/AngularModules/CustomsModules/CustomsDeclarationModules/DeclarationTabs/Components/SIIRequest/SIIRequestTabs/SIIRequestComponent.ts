@@ -187,11 +187,14 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     
     ViewDocumentsComponent(): void {
         const windowArgs = {
-            EntityPM: this.entityPM,
-            ObjectTableName: 'Customs.SIIRequest',
-            EntityParentPM: 'Customs.Declaration',
+            EntityPM: this.DecalarationData,
+            ObjectTableName: 'Customs.Declaration',
+            EntityParentPM: 'Customs.SIIRequest',
             IsFromStandAloneScreen: true,
             IsClose: true,
+            FromSIIRequest: true,
+            SkipCtor : true ,
+            SIIRequestPM: this.entityPM,
         };
 
         const logWindow = new LogitudeWindow();
