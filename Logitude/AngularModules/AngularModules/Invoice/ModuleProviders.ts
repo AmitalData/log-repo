@@ -11,6 +11,7 @@ import {APPaymentListService} from './Services/StandardLists/APPaymentListServic
 import {APPaymentStatusListService} from './Services/StandardLists/APPaymentStatusListService';
 import {ARInvoiceListService} from './Services/StandardLists/ARInvoiceListService';
 import {ARInvoiceStatusListService} from './Services/StandardLists/ARInvoiceStatusListService';
+import {ARInvoicesSignedStatusListService} from './Services/StandardLists/ARInvoicesSignedStatusListService';
 import {ARInvoiceTransferStatusListService} from './Services/StandardLists/ARInvoiceTransferStatusListService';
 import {ARInvoiceTypeListService} from './Services/StandardLists/ARInvoiceTypeListService';
 import {ARPaymentListService} from './Services/StandardLists/ARPaymentListService';
@@ -67,6 +68,7 @@ export class ModuleProviders {
             case "APPaymentStatusListService": { myResult = new APPaymentStatusListService(); break; }
             case "ARInvoiceListService": { myResult = new ARInvoiceListService(); break; }
             case "ARInvoiceStatusListService": { myResult = new ARInvoiceStatusListService(); break; }
+            case "ARInvoicesSignedStatusListService": { myResult = new ARInvoicesSignedStatusListService(); break; }
             case "ARInvoiceTransferStatusListService": { myResult = new ARInvoiceTransferStatusListService(); break; }
             case "ARInvoiceTypeListService": { myResult = new ARInvoiceTypeListService(); break; }
             case "ARPaymentListService": { myResult = new ARPaymentListService(); break; }
