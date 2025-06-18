@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <Reference Include="System.ServiceModel.DomainServices.Server">
-      <HintPath>..\..\Library\Bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
+      <HintPath>..\..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
   </ItemGroup>
 
