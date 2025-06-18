@@ -78,6 +78,16 @@ export class CustomsDocumentsComponent
             this.FilterCustomsDocumentsTickets();
         }
     }
+
+    private siiDocumentType: string;
+    get SIIDocumentType() { return this.siiDocumentType; }
+    set SIIDocumentType(value: string) {
+        if (this.SIIDocumentType != value) {
+            this.siiDocumentType = value;
+            //this.FilterCustomsDocumentsTickets();
+        }
+    }
+
     public AllTicketsCount: string;
     public NotUploadedCount: string;
     public UploadedCount: string;
@@ -102,6 +112,7 @@ export class CustomsDocumentsComponent
 
     public customs: string = "עמילות";
     public forwarding: string = "שילוח";
+    public IsFromSIIRequest : boolean = false;
     IsClose: boolean = false;
     //************************************//
     private CurrentSession = SessionLocator.SelectedSession;
@@ -242,6 +253,7 @@ export class CustomsDocumentsComponent
         }
     }
     InsureCustomsDocumentsController(reload = false) {
+        debugger;
         if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
             this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, null, null, this.ParentEntityCode);
         }
@@ -560,7 +572,7 @@ export class CustomsDocumentsComponent
     }
 
     DisplayOnlyCheck() {
-        this.iCustomsDocumentsController.DisplayOnlyCheck().subscribe((resp: ServiceResponse) => {
+        this.iCustomsDocumentsController.DisplayOnlyCheck().subscribe((resp: ServiceResponse) => { 
 
             this.IsDisplayOnly = resp.Result.IsDisplayOnly;
             this.DisplayOnlyMessage = resp.Result.DisplayOnlyMessage;
@@ -832,6 +844,9 @@ export class CustomsDocumentsComponent
 
     SetWindowArgs(windowArgs) {
         this.IsWindowMode = true;
+        if(windowArgs?.FromSIIRequest){
+            this.IsFromSIIRequest = true;
+        }
         this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM, windowArgs.IsFromStandAloneScreen, windowArgs.ClosingData,windowArgs.IsClose);
     }
 

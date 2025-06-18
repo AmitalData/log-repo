@@ -489,6 +489,7 @@ import { EntryExitTypeListService } from './Services/StandardLists/EntryExitType
 import { CustomsItemGroupListService } from './Services/StandardLists/CustomsItemGroupListService';
 import { DiscountTypeRegulationListService } from './Services/StandardLists/DiscountTypeRegulationListService';
 import { AzureSearchWebService } from './Services/WebServices/AzureSearchWebService';
+import { SIIDocumentTypeListService } from './Services/StandardLists/SIIDocumentTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -824,6 +825,7 @@ export class ModuleProviders {
             case "ManifestCargoStatusListService": { myResult = new ManifestCargoStatusListService(); break; }
             case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
             case "PhysicalCheckCodeListService": { myResult = new PhysicalCheckCodeListService(); break; }
+            case "SIIDocumentTypeListService" : { myResult = new SIIDocumentTypeListService(); break; }
             //#endregion                
 
             //#region StandardPMs
