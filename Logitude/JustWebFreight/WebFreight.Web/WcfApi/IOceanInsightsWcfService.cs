@@ -13,7 +13,7 @@ namespace WebFreight.Web.WcfApi
     public interface IOceanInsightsWcfService
     {
         [OperationContract]
-        Response Insert(int Tenant, string ScacCode, string ContainerNo,string Type);
+        Response Insert(int Tenant, string ScacCode, string ContainerNo,string Type,string System = null);
 
         [OperationContract]
         Response GetStatus(string RequestId, string Type);

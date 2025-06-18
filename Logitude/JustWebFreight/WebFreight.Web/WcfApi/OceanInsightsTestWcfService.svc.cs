@@ -29,7 +29,7 @@ namespace WebFreight.Web.WcfApi
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class OceanInsightsTestWcfService : IOceanInsightsWcfService
     {
-        public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type)
+        public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type, string System = null)
         {
             //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
@@ -100,8 +100,9 @@ namespace WebFreight.Web.WcfApi
                         OceanInsightsRequestPm.Tenant = Tenant;
                         OceanInsightsRequestPm.OceanInsigntId = Id;
                         OceanInsightsRequestPm.Type = Type;
+						OceanInsightsRequestPm.Type = System;
 
-                        service.Create(OceanInsightsRequestPm);
+						service.Create(OceanInsightsRequestPm);
 
                     }
                     response.Result = OceanInsightsRequestPm.OceanInsigntId;
