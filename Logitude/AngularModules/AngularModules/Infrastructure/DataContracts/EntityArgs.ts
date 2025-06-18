@@ -18,6 +18,7 @@ export class EntityArgs {
     public EditComponentArgument: any = null;
     public SelectedTabCode: string = null;
     public EntityArgEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+    public customObjectFields?: any[] = [];
     public SendMessage(token: any) {//itzik test 
         this.EntityArgEventEmitter.emit(token);
     }
