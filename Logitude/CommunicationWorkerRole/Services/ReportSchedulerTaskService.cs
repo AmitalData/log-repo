@@ -98,7 +98,7 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        private void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        public void SendReportToFTP(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             MemoryStream memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
@@ -155,7 +155,7 @@ namespace CommunicationWorkerRole.Services
             return memoryStream;
         }
 
-        private void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
+        public void SendPdfReportToReceipent(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, ReportFliter reportFilter)
         {
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Preparing report data"));
             schedulerDetails.ReportDetails.Recepients = GetReportPermittedContacts(reportTask, schedulerDetails);
@@ -231,7 +231,7 @@ namespace CommunicationWorkerRole.Services
             }
         }
 
-        private SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
+        public SchedulerDetails GetSchedulerDetails(TasksSchedulerPM reportTask)
         {
             SchedulerDetails schedulerDetails = LogitudeXmlSerializer.DeserializeObject<SchedulerDetails>(reportTask.SchedulerDetailsXML);
             schedulerDetails.Tenant = reportTask.Tenant;
@@ -399,7 +399,7 @@ namespace CommunicationWorkerRole.Services
             return schedulerDetails;
         }
 
-        private ReportFliter GetReportFilters(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
+        public ReportFliter GetReportFilters(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails)
         {
             ReportQuery reportQuery = new ReportQuery(reportTask.Tenant);
             string reportCode = reportQuery.GetReportCodeById(reportTask.EntityId, reportTask.Tenant);
