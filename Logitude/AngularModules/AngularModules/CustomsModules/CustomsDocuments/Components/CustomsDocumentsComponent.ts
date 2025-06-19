@@ -588,6 +588,7 @@ export class CustomsDocumentsComponent
         windowArgs.CustomsDocumentsTicket.Tenant = SessionLocator.Tenant;
         windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         windowArgs.IsNewState = true;
+        windowArgs.IsFromSIIRequest = this.IsFromSIIRequest;
         var entityInfo = this.iCustomsDocumentsController.GetParentAndChildrenEntityCodesAndIds();
         windowArgs.ParentEntityId = entityInfo.ParentEntityId;
         windowArgs.ParentEntityCode = entityInfo.ParentEntityCode;

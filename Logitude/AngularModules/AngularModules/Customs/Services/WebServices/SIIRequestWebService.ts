@@ -49,6 +49,27 @@ export class SIIRequestWebService {
         }
         );
     }
+    
+    postSendSIIRequest(siiRequestId: string, declarationId: string, tenant: number, selectedRows: any[]) {
+        return defer(() => {
+            let headers = new Headers();
+            headers.append('Token', SessionInfo.Token);
+            headers.append('Content-Type', 'application/json');
+
+            return this._http.post(
+                this._apiUrl + "/PostSendSIIRequest?siiRequestId=" + siiRequestId + "&declarationId=" + declarationId + "&tenant=" + tenant,
+                JSON.stringify(selectedRows),
+                ServiceHelper.GetHttpHeaders()
+            ).pipe(
+                map(response => {
+                    let serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
+        });
+    }
 }
 
 export class SupplierInvoiceItemsForSIIRequest {

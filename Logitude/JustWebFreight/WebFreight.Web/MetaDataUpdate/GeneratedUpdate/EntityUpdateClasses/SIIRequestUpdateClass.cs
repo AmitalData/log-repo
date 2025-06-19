@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "7e9e84031dc654084f3842dfdab632f5";
+		public const string HashString = "abc2747580cf06829f6b425b79442fd9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "בקשות למכון תקנים",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "22c5",
+			      				    Code =  "59ef",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1921,6 +1921,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOMissingPassword = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.MissingPassword", DefaultText = "Required field (%name) – Password",LocalDefaultText = @"הינו שדה חובה (%name) - סיסמא", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOUnSavedChanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.UnSavedChanges", DefaultText = "there is unsaved changes",LocalDefaultText = @"בנתוני הבקשה הנוכחית בוצעו שינויים שלא נשמרו, האם ברצונך לשמור אותם?", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOSendingRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.SendingRequest", DefaultText = "Sending Request",LocalDefaultText = @"שולח בקשה למכון תקנים", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestONoRowSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.NoRowSelected", DefaultText = "Please select at least one row to send the request.",LocalDefaultText = @"יש לבחור לפחות שורה אחת לשליחה.", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
