@@ -109,21 +109,9 @@ export class JournalMenuButtonsHandler {
                         case "JournalVoid":
                             {
 
-                                // the VOID button is only available on this case:          BUG #44819
-                                //    - Approved Journal, not storno
-
                                 this.SetVoidButtonEnability(button);
 
-                                // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if( this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.StatusCode == "2" && (this.EntityPM.OriginalJournalId != null)) // STORNO  1-Journal
-                                // {
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if (this.EntityPM.StatusCode == "2" && this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.OriginalJournalId == null) { // 2- Approved
-                                //     button.IsDisabled = false;
-                                // }
+                                
 
                                 break;
                             }
@@ -132,13 +120,7 @@ export class JournalMenuButtonsHandler {
                                 button.IsDisabled = false;
 
                                 if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.SecurityLevel) && SessionLocator.LoggedUserPM.SecurityLevel <= this.EntityPM.SecurityLevel)
-                                    button.IsDisabled = true;
-                                //    if (this.EntityPM.StatusCode == "2" && this.EntityPM.OriginalJournalId == null) {
-                                //    button.IsDisabled = false;
-                                //}
-                                //else {
-                                //    button.IsDisabled = true;
-                                //}
+                               
                                 break;
                             }
                         case "CopyJournal":
@@ -207,14 +189,13 @@ export class JournalMenuButtonsHandler {
 
     public async MenuButtonClick(menuButton: MenuButtonPM) {
 
-       
 
         switch (menuButton.EventCode) {
             case "JournalSave": // save and close
                 {
                     this.EntityPM.StatusCode = "1"; // Waiting
 
-                    this.SaveChenges();
+                    this.SaveChanges();
                     break;
                 }
             case "JournalApprove":
@@ -233,7 +214,7 @@ export class JournalMenuButtonsHandler {
                       this.entityArgs.EditComponent.ValidationErrorsList = validationErrors;                                     
                        return;
                     }
-                    this.SaveChenges();    
+                    this.SaveChanges();    
 
                     this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
                         if ($event == true) {                           
@@ -259,7 +240,7 @@ export class JournalMenuButtonsHandler {
                             x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
                         }
                     });
-                    this.SaveChenges();
+                    this.SaveChanges();
                     break;
                 }
             case "JournalVoid":
@@ -271,18 +252,7 @@ export class JournalMenuButtonsHandler {
                 {
                     this.PrintJournal();
 
-                    //if (this.EntityPM.StatusCode != "2") { // Approved
-                    //    this.PrintJournal();
-                    //} else {
-                    //    this.entityArgs.EditComponent.SaveChanges();
-                    //    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
-                    //        if ($event == true) {
-                    //            this.entityArgs.EditComponent.ReloadEntityPM();
-                    //            this.SetEntityPM(this.entityArgs);
-                    //            this.PrintJournal();
-                    //        }
-                    //    });
-                    //}
+                   
                     break;
                 }
             case "CopyJournal":
@@ -333,9 +303,8 @@ export class JournalMenuButtonsHandler {
             });
     }
 
-    SaveChenges() {
+    SaveChanges() {
 
-        // the validation will be in PM Service (custom validator)
         this.entityArgs.EditComponent.SaveChanges();
         this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
             if ($event == true) {
@@ -365,7 +334,6 @@ export class JournalMenuButtonsHandler {
             if (line.AccountingDate != this.EntityPM.AccountingDate) {
                 line.AccountingDate = this.EntityPM.AccountingDate;
             }
-            //line.ActionTypeCode = line.ActionCode;
         }
     }
 
@@ -450,11 +418,7 @@ export class JournalMenuButtonsHandler {
                                     }
 
                                 });
-                            //} else {
-                            //    console.warn("Cannot find document out copy, resend request...");
-                            //    //this.CurrentSession.StopBusyIndicator();
-                            //    this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
-                            //}
+                            
 
 
 
@@ -484,12 +448,7 @@ export class JournalMenuButtonsHandler {
 
     ViewPage(documentName: string, docoumentTypeCopyName: string, documentOut: DocumentOutPM) {
 
-        //ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, docoumentTypeCopyName + " Viewing");
-
-
-        //DownloadManager.DownloadPage(documentName , documentOut.SecurityId);
-
-        //this.StopBusyIndicator();
+        
 
         var myPrintHelper = new GeneralPrintHelper(this.ObjectTableName, "JRPR", this.EntityPM.Id, null, this.EntityPM.AccountingEntityReference, null);
         if (myPrintHelper.IsLoadPrintControl) {

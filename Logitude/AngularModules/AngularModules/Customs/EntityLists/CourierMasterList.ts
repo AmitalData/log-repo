@@ -78,6 +78,7 @@ export class CourierMasterList {
 	CourierManifestStatusCode: string;
 	IsCourierMissingClassification: string;
 	EffectiveFlight: boolean;
+	CourierMasterPaymentStatusCd: string;
 	
 }
  

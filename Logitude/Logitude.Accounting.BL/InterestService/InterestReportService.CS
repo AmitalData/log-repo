@@ -425,7 +425,7 @@ namespace Logitude.Accounting.BL.InterestService
                 InterestCalculationDate = interestReport.InterestCalculationDate,
                 SearchFields = interestReport.SearchFields,
                 InvoiceAmount = (decimal?)AmountInLocalCurrency,
-
+                
             };
 
             return interestReportPM;
@@ -482,8 +482,10 @@ namespace Logitude.Accounting.BL.InterestService
 
                                                                               SearchFields = a.InterestTransaction.SearchFields,
 
-                                                                              AccountingEntityCode = a.InterestTransaction.AccountingEntityCode
- 
+                                                                              AccountingEntityCode = a.InterestTransaction.AccountingEntityCode,
+                                                                              AccountingDate = a.InterestTransaction.AccountingDate,
+                                                                              JournalId =    a.InterestTransaction.JournalId
+
                                                                           });
             return interestTransactionLists;
 

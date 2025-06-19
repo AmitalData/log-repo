@@ -15,7 +15,7 @@ export class CurrencyRateRunInBatchSelectors {
 
 
     public static readonly RequestsSheets = "#GeneralMHCustomsRequestsSheets";
-    public static readonly ManageCustomsRequests = "#LogLov_Customs\\.CustomsRequestsSheet_InterfaceTypeCode";
+    public static readonly ManageCustomsRequests = "#Customs\\.CustomsRequestsSheet_InterfaceTypeCode";
     public static readonly RequestStatus = "#DropdownButtonComponent_1";
     public static readonly CheckAll = "#CheckBox_0_16_LBL";
     public static readonly Reference = "#Customs\\.CustomsRequestsSheet_EntityReference";

@@ -79,7 +79,7 @@
 
                                 <td style="width: 1px; padding-right: 5px;">Origin:</td>
                                 <td style="width: 190px;">
-                                    <LogLov [ObjectFieldName]="'MainCarriageFromPortId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFromPortId'"
                                             [NoObjectField]="true"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Port'"
@@ -94,7 +94,7 @@
                                 </td>
                                 <td style="width: 1px; padding-right: 5px;">Destination:</td>
                                 <td style="width: 190px;">
-                                    <LogLov [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'MainCarriageFinalDestinationPortId'"
                                             [NoObjectField]="true"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Port'"
@@ -109,7 +109,7 @@
 
                                 <td style="width: 1px; padding-right: 5px;">Clearing Agent:</td>
                                 <td style="width: 180px;">
-                                    <LogLov [ObjectFieldName]="'ClearingAgentId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'ClearingAgentId'"
                                             [NoObjectField]="true"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
@@ -119,7 +119,7 @@
 
                                 <td style="width: 1px; padding-right: 5px;">Consignee:</td>
                                 <td style="width: 180px;">
-                                    <LogLov [ObjectFieldName]="'ConsigneeId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'ConsigneeId'"
                                             [NoObjectField]="true"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"
@@ -133,7 +133,7 @@
 
                                 <td style="width: 1px; padding-right: 5px;">Shipper:</td>
                                 <td style="width: 180px;">
-                                    <LogLov [ObjectFieldName]="'ShipperId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'ShipperId'"
                                             [NoObjectField]="true"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"

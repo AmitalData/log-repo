@@ -73,12 +73,13 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string AccountingEntityCode { get; set; }
        [DataMember]
-       public DateTime AccountingDate { get; set; }
+       public DateTime? AccountingDate { get; set; }
        [DataMember]
        public string Notes { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
-   }
+
+    }
 
 }
 	 

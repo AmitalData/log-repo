@@ -60,7 +60,8 @@
                             <tr>
                                 <td>
                                     <ComboBox *ngIf="!IsListOfValuesVisible()" [ItemsSource]="UsersFilterList" [SelectedItem]="SelectedITemUsers" [IsDisabled]="CheckUsersEnabled()" [Binding]="'Name'"></ComboBox>
-                                    <LogLov *ngIf="IsListOfValuesVisible()"
+                                    <LogLov  *ngIf="IsListOfValuesVisible()"
+                                            [ShowInActive]="true" 
                                             [ObjectFieldName]="'ListOfValuesUserId'"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'User'">

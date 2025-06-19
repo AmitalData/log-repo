@@ -573,7 +573,53 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string controlAccountId ;
+        private string exchangeRateName;
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public string ExchangeRateName
+        {
+
+            get
+            {
+                return exchangeRateName;
+            }
+            set
+            {
+                if (exchangeRateName != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "ExchangeRateName", OldValue = exchangeRateName, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    exchangeRateName = value;
+                }
+
+            }
+        }
+
+        private string exchangeRateId;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public string ExchangeRateId
+        {
+
+            get
+            {
+                return exchangeRateId;
+            }
+            set
+            {
+                if (exchangeRateId != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "ExchangeRateId", OldValue = exchangeRateId, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    exchangeRateId = value;
+                }
+
+            }
+        }
+        private string controlAccountId ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]

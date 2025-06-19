@@ -34,6 +34,9 @@ namespace Logitude.FullAccounting.Test.Models
         public string CurrencyCode { get; set; }
         public string ReconcileMethodCode { get; set; }
         public string ReconcileMethodName { get; set; }
+        public string ExchangeRateId { get; set; }
+        public string ExchangeRateName { get; set; }
+
         public string ControlAccountId { get; set; }
         public string ControlAccountName { get; set; }
         public string ControlAccountNumber { get; set; }

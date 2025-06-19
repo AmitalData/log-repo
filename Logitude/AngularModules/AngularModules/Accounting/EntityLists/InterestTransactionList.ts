@@ -38,5 +38,5 @@ export class InterestTransactionList {
 	SourceType: string;
 	Notes: string;
 	UpdatedByUserName: string;
-	
+	AccountingDate: Date;
 }

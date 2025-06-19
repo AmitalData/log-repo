@@ -44,6 +44,12 @@ export class API_MainService extends BaseService {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/DeleteRemarksClassification`;
 		return this.Post(url, data);
 	}
+	
+	GetDefaultCB_CollapseSearchHierarchy(tenant: number) {
+		const url = `${this._apiUrl}CB_CustomsItemExtended/GetDefaultCB_CollapseSearchHierarchy?tenant=${tenant}`;
+		return this.Get(url);
+	}
+
 
 	GetCustomsBookMainView(filters: Filters) {
 		const url = `${this._apiUrl}CB_CustomsItemExtended/GetCustomsBookMainView?customsBookType=${filters.CustomsBookType}&Tenant=${filters.Tenant ? filters.Tenant : 0}&IsDiscountCodes=${filters.IsDiscountCodes}`;
