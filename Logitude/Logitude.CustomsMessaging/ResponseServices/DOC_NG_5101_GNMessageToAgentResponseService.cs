@@ -61,7 +61,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         }
         public void UpdateIt(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
-            const string firstName = "שם מעריך:";
             var context = CustomContext.GetContext(requestParams.Tenant);
             var myQueryService = new DeclarationQueryService(context);
 
@@ -583,7 +582,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string messageforUnf = customResponse.MessageToAgent.msgString?.Replace("00:00:00", "");
                 if (!string.IsNullOrWhiteSpace(messageforUnf) && !string.IsNullOrWhiteSpace(customResponse.MessageToAgent?.SenderName))
                 {
-                    messageforUnf += "\n" + firstName + customResponse.MessageToAgent.SenderName;
+                    var titleFirstName =TranslateTextsClass.Translate("Customs.Notification.O.PrivateName", requestParams.Tenant, true);
+                   
+                    messageforUnf += "\n" + titleFirstName + customResponse.MessageToAgent.SenderName;
                 }
                 RaiseEvent(this._MyDeclarationPM, notificationStatusCode, messageforUnf);
             }
