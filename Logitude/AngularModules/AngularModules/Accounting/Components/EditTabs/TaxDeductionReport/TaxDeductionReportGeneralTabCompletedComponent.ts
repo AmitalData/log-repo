@@ -44,7 +44,7 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
             this.Faild = true;
         }
         this. _TaxDeductionReportData = new TaxDeductionReportData();
-        //this.BuildTaxDeductionReportData();
+        this.BuildTaxDeductionReportData();
     }
 
     Building: boolean= false;

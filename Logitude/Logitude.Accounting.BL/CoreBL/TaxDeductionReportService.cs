@@ -26,7 +26,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
@@ -38,17 +40,22 @@ namespace Logitude.Accounting.BL.CoreBL
 {
     public class TaxDeductionReportService
     {
-
+        private string _AggregateKey;
         public static DocumentsFilingPM Create856File(string taxDeductionReportId, int tenant)
         {
-            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(tenant);
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(context);
             TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
 
             List<string> linesArray = new List<string>();
-            //GLAccountQueryService queryService = new GLAccountQueryService(tenant);
             TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant,null);
             TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
-            //TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
+
+            // Create an instance of the service to handle saving and updating the tax deduction report with concurrency control (locking)
+            TaxDeductionReportService taxDeductionReportServiceOcrnc = new TaxDeductionReportService();
+            taxDeductionReportServiceOcrnc.SaveAndUpdateReportWithLock(context, taxDeductionReportPM, data, tenant, taxDeductionReportId);
+
+
             string xml = LogitudeXmlSerializer.SerializeObjectToXmlString(data);
             StringBuilder myStringBuilder = new StringBuilder();
             string a = null;
@@ -729,6 +736,119 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
+
+        public void SaveAndUpdateReportWithLock(
+            IAccountingContext context,
+            TaxDeductionReportPM taxDeductionReportPM,
+            TaxDeductionReportData data,
+            int tenant,
+            string entityId)
+        {
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(1)))
+                {
+                    try
+                    {
+                        _AggregateKey = "TaxDeductionReportService.SaveAndUpdateReportWithLock-" + entityId; // VarChar 128 
+                        LockIt(tenant);
+                    }
+                    catch (Exception e)
+                    {
+                        var rootEx = e.GetBaseException();
+                        string message = rootEx.Message;
+                        string stackTrace = rootEx.StackTrace;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                            $"[TaxDeductionReportService.SaveAndUpdateReportWithLock-Locking] Unexpected error occurred. " +
+                            $"Message: {message} | StackTrace: {stackTrace}");
+
+                        throw;
+                    }
+                    taxDeductionReportPM.ReportSavedData = JsonSerializer.Serialize(data);
+
+                    taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    TaxDeductionReportUpdateService taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                    taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
+
+                    if (!String.IsNullOrEmpty(_AggregateKey))
+                    {
+                        TryDeleteLockRow(tenant);
+                    }
+                    scope.Complete();
+                }
+            }
+            catch (Exception e)
+            {
+                var rootEx = e.GetBaseException();
+                string message = rootEx.Message;
+                string stackTrace = rootEx.StackTrace;
+                using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
+                {
+                    if (!String.IsNullOrEmpty(_AggregateKey))
+                    {
+                        TryDeleteLockRow(tenant);
+                    }
+                    excScope.Complete();
+                }
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                    $"[TaxDeductionReportService.SaveAndUpdateReportWithLock] Unexpected error occurred. " +
+                    $"Message: {message} | StackTrace: {stackTrace}"
+                );
+                throw;
+            }
+        }
+
+        private void TryDeleteLockRow(int tenant)
+        {
+            //GeneralLock
+            {
+                try
+                {
+
+                    var repo = new GeneralLockRepository(tenant);
+
+                    repo.FastDelete(_AggregateKey, tenant);
+                    _AggregateKey = "";
+                }
+                catch (Exception e)
+                {
+                    throw (e);
+                }
+            }
+        }
+        private void LockIt(int tenant)
+        {
+            var repo = new GeneralLockRepository(tenant);
+
+            var lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
+            if (lockPoco == null)
+            {
+
+                repo.Add(new GeneralLock()
+                {
+                    Tenant = tenant,
+                    GeneralKey = _AggregateKey,
+                    CreatedAt = TenantServerConfigration.GetCurrentDateTime(tenant)
+                });
+                repo.SubmitChanges();
+
+                lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
+            }
+
+            if (lockPoco == null)
+            {
+                throw new Exception("lockPoco ==null");
+            }
+            else
+            {
+            }
+
+        }
+
+
+
+
         //public static DocumentOutPM CreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant, string userId = null)
         //{
         //    try
@@ -739,7 +859,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //        DocumentOutQuery documentOutQuery = new DocumentOutQuery(documentOutRepository);
 
         //        DocumentTypePM documentType = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
-              
+
 
         //        string documentTemplateId = null;
         //        string emailTemplateId = null;
@@ -750,13 +870,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
         //        //---------------------------------------- islam
         //        DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(objectContext);
-            
+
         //        if (string.IsNullOrEmpty(userId))
         //        {
-                  
-                 
+
+
         //            User loggedUser = GetLoggedUser(tenant);
-                        
+
         //            if (loggedUser != null)
         //            {
         //                userId = loggedUser.Id;
@@ -771,7 +891,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //        newDocumentFiling.CreatedByUserId = userId;
         //        newDocumentFiling.OwnerId = userId;
         //        newDocumentFiling.UpdatedByUserId = userId;
-              
+
         //        newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         //        newDocumentFiling.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         //        newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
