@@ -554,7 +554,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitializeCertificateOriginItemItems(certificateOriginItemItems: CertificateOfOriginItemPM[]) {
         this.CertificateOriginItemItems.Clear();
         this.originalItemSource.Clear();
-
+        certificateOriginItemItems = certificateOriginItemItems?.sort((a, b) => a.ItemSerial - b.ItemSerial);
         // update CertificateOriginItemItems list:
         certificateOriginItemItems.forEach((item) => {
             this.getMeasureNameFromCache(item.MeasureType, item);
@@ -1049,7 +1049,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.CertificateOriginItemItems.push(certificateOfOriginItem);
         this.entityPM.AddCertificateOfOriginItem(certificateOfOriginItem);
         this.entityPM.IsDirty = true;
-        this.reorderItemSerial();
+        this.reorderItemSerialBySelectedRow(this.SelectedRow, certificateOfOriginItemLine);
     }
 
     SelectedRow: CertificateOfOriginItemLine;
@@ -1060,6 +1060,28 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             item.entityPM.IsDirty = true;
         });
     }
+
+    reorderItemSerialBySelectedRow(selectedRow: CertificateOfOriginItemLine, addedItem: CertificateOfOriginItemLine) {
+        const collection = this.CertificateOriginItemItems.Collection;
+
+        const selectedIndex = collection.findIndex(item => item?.entityPM.Id === selectedRow?.entityPM.Id);
+        const addedItemIndex = collection.findIndex(item => item?.entityPM.Id === addedItem?.entityPM.Id);
+
+        if (selectedIndex !== -1) {
+            if (addedItemIndex !== -1) {
+                collection.splice(addedItemIndex, 1); // Remove the added item from its current position
+                const insertIndex = addedItemIndex < selectedIndex ? selectedIndex : selectedIndex + 1;
+                collection.splice(insertIndex, 0, addedItem); // Insert after the selected row
+            } else {
+                collection.splice(selectedIndex + 1, 0, addedItem);
+            }
+            this.CertificateOriginItemItems.Clear();
+            this.CertificateOriginItemItems.InsertCollection(collection);
+            
+            this.reorderItemSerial();
+        }
+    }
+
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
