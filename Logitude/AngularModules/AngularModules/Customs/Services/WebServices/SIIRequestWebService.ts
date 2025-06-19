@@ -70,4 +70,5 @@ export class SupplierInvoiceItemsForSIIRequest {
     RequestRequiredStatus: string;
     LineNumber: number;
     HasDemandState: boolean;
+    Counter: number;
 }

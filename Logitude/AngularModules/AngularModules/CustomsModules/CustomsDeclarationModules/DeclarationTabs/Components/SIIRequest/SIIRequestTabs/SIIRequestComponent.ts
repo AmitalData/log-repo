@@ -91,8 +91,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     buildSupplierInvoiceItemsCollection(): void {
         this.supplierInvoiceItemsCollection.Clear();
-        this.supplierInvoiceItemsForSIIRequest.forEach((item) => {
+        this.originalSupplierInvoiceItemsCollection.Clear();
+        this.supplierInvoiceItemsForSIIRequest.forEach((item, index) => {
             const supplierInvoiceItemLine = new SupplierInvoiceItemsForSIIRequestLine(item, this);
+            supplierInvoiceItemLine.Counter = index + 1;
             this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
             this.originalSupplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
         });
@@ -379,7 +381,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             filtered = original.filter(i => i.ClassificationCode?.toLowerCase().includes(this.SearchText) || i.ItemCode?.toLowerCase().includes(this.SearchText));
             this.supplierInvoiceItemsCollection.Clear();
             if (filtered.length > 0) {
-                filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+                filtered.forEach((i, index) => {
+                    i.Counter = index + 1;
+                    this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this));
+                });
             }
         }
         else this.DemandStateFilterItemClicked(this.DemandStateFilterSelectedValue, true);
@@ -424,8 +429,11 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => i.HasDemandState === true);
         if (!items.length) return;
         this.supplierInvoiceItemsCollection.Clear();
-        items.forEach(item => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this)));
-    }
+        items.forEach((item, index) => {
+            item.Counter = index + 1;
+            this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
+        });   
+     }
 
     InvoicesNumbersList: any[];
     FillInvoiceNumbersList() {
@@ -452,7 +460,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => i.HasDemandState === true);
                 }
                 this.supplierInvoiceItemsCollection.Clear();
-                items.forEach((item) => {
+                items.forEach((item, index) => {
+                    item.Counter = index + 1;
                     this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
                 });
             }
@@ -766,6 +775,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     }
     public set RequestRequiredStatus(newValue: string) {
         this.entityPM.RequestRequiredStatus = AppTool.IsNullOrEmpty(newValue) ? CompleteStatuses.UnCompleted : newValue;
+    }
+    public get Counter(): number {
+        return this.entityPM.Counter;
+    }
+    public set Counter(newValue: number) {
+        this.entityPM.Counter = newValue;
     }
 }
 
