@@ -41,7 +41,7 @@ namespace WebFreight.Web.WcfApi
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class OceanInsightsWcfService : IOceanInsightsWcfService
     {
-        public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type)
+        public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type,string System = null)
         {
 			try
 			{
@@ -57,7 +57,7 @@ namespace WebFreight.Web.WcfApi
 			}
 
 		}
-		public async Task<Response> UnitedRequest(int Tenant, string ScacCode, string ReferenceNo, string Type)
+		public async Task<Response> UnitedRequest(int Tenant, string ScacCode, string ReferenceNo, string Type, string System = null)
 		{
 			try
 			{
@@ -79,7 +79,7 @@ namespace WebFreight.Web.WcfApi
 					WriteLogMe("UnitedRequest After WindWard: " + WWtenant, Res, "UpsertTrackedShipments");
 
 				}				
-				return OceanInsight(Tenant, ScacCode, ReferenceNo, Type);
+				return OceanInsight(Tenant, ScacCode, ReferenceNo, Type, System);
 			}
 			catch (Exception ex)
 			{
@@ -89,7 +89,7 @@ namespace WebFreight.Web.WcfApi
 			}
 
 		}
-        public Response OceanInsight(int Tenant, string ScacCode, string ReferenceNo, string Type)
+        public Response OceanInsight(int Tenant, string ScacCode, string ReferenceNo, string Type, string System = null)
         {
 			//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
@@ -193,6 +193,7 @@ namespace WebFreight.Web.WcfApi
 								OceanInsightsRequestPm.Tenant = Tenant;
 								OceanInsightsRequestPm.OceanInsigntId = Id;
 								OceanInsightsRequestPm.Type = Type;
+								OceanInsightsRequestPm.System = System;
 
 
 								service.Create(OceanInsightsRequestPm);
@@ -221,6 +222,7 @@ namespace WebFreight.Web.WcfApi
 							OceanInsightsRequestPm.Tenant = Tenant;
 							OceanInsightsRequestPm.OceanInsigntId = Id;
 							OceanInsightsRequestPm.Type = Type;
+							OceanInsightsRequestPm.System = System;
 
 							service.Create(OceanInsightsRequestPm);
 						}
@@ -290,7 +292,7 @@ namespace WebFreight.Web.WcfApi
 				return response;
 			}
 		}
-		private async Task<Response> WindWard(int WWtenant, string ScacCode, string ReferenceNo, string Type,string Bol = "")
+		private async Task<Response> WindWard(int WWtenant, string ScacCode, string ReferenceNo, string Type,string Bol = "",string System = null)
         {
 			WriteLogMe("UnitedRequest ENTER WindWard: " + WWtenant, null, "UpsertTrackedShipments");
 
@@ -373,6 +375,7 @@ namespace WebFreight.Web.WcfApi
 							OceanInsightsRequestPm.Tenant = WWtenant;
 							OceanInsightsRequestPm.OceanInsigntId = Id;
 							OceanInsightsRequestPm.Type = Type;
+							OceanInsightsRequestPm.System = System;
 
 							service.Create(OceanInsightsRequestPm);								
 						}
