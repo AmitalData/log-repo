@@ -24,7 +24,7 @@
                                 <td style="width:85px;">Distributor:</td>
                                 <td style="width:200px;">
 
-                                    <LogLov [ObjectFieldName]="'DistributorCode'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'DistributorCode'"
                                             [DataContext]="DataContext"
                                             [SelectedValuePath]="'Code'"
                                             [LookUpTableName]="'Distributor'">
@@ -39,7 +39,7 @@
                                 <td style="width:70px;">Package:</td>
                                 <td style="width:200px;">
 
-                                    <LogLov [ObjectFieldName]="'PackageCode'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'PackageCode'"
                                             [DataContext]="DataContext"
                                             [DependencyFilter1Value]="'PK'"
                                             [LookUpTableName]="'Package'">
@@ -53,7 +53,7 @@
                                 <td style="width:65px;">Add on:</td>
                                 <td style="width:200px;">
 
-                                    <LogLov [ObjectFieldName]="'AddOnPackageCode'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'AddOnPackageCode'"
                                             [DataContext]="DataContext"
                                             [DependencyFilter1Value]="'AD'"
                                             [LookUpTableName]="'Package'">

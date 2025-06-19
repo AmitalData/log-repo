@@ -159,7 +159,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              MinimumInterestInvoiceBilling = a.MinimumInterestInvoiceBilling,
                              InterestCalculationStartDate = a.InterestCalculationStartDate,
 
-
+                             ExchangeRateId = a.ExchangeRateId,
                              // Created & Updated
                              CreateDate = a.CreateDate,
                              CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
@@ -335,6 +335,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              RevenueExpenseName = a.RevenueExpense != null ? a.RevenueExpense.EnglishName : null,
                              ReconcileMethodName = a.ReconcileMethod != null ? a.ReconcileMethod.EnglishName : null,
                              ReconcileMethodLocalName = a.ReconcileMethod != null ? a.ReconcileMethod.LocalName : null,
+                             ExchangeRateId = a.ExchangeRateId,
+                             ExchangeRateName = a.ExchangeRate != null ? a.ExchangeRate.Name : null,
+
                              CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                              ChartOfAccountsTypeName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
                              ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
@@ -650,10 +653,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
                                                    CurrencyName = a.Currency != null ? a.Currency.EnglishName : null,
                                                 CurrencyCode = a.IsMultiCurrency == true ? multi : a.Currency != null ? a.Currency.Code : null,
+                                                   ExchangeRateId = a.ExchangeRateId,
+
                                                    BalanceInLocalCurrency = (!settings.IsSecurityLevelActivated
                                                             || (settings.IsSecurityLevelActivated && chartOfAccount.ChartOfAccountSecurityLevel == null)
                                                             || (settings.IsSecurityLevelActivated && (chartOfAccount.ChartOfAccountSecurityLevel <= (loggedUser.SecurityLevel ?? 0) || (loggedUser.Tenant == 0 && !loggedUser.IsDistributor)))) ? MoreDatas.BalanceInLocalCurrency : 0,
-
 
 
                                                }); ;

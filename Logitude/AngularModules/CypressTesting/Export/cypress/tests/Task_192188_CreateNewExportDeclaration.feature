@@ -34,10 +34,10 @@ Feature: Create New Export Declaration
             | FirstCargoID           | 2023   |
             | SecondCargoID          | 00176096 |
             | ThirdCargoID           | 114 |
-            | FinalDestinationPortCode | ADORD Ordino |
+            | FinalDestinationPortCode | ADORD ORDINO |
             | LoadingPortCode        |  נתב |
-            | UnloadingPortCode      | ADORD Ordino |
-            | CargoDescription       | בדיקות אוטומציה, לא לגעת, שריה/אורית שלום |
+            | UnloadingPortCode      | ADORD ORDINO |
+            | CargoDescription       | בדיקות אוטומציה, לא לגעת, צוות QA |
             | StorageSite            | נתב |
             | RecieverWareHouse      | נתב |
             | InternalTransition     |  מעבר פנימי - שער אפרים |

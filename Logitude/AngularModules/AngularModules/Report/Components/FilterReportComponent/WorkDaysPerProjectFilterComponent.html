@@ -21,7 +21,7 @@
                                     <div style="width:80px;">Customer:</div>
                                 </td>
                                 <td style="width:250px;">
-                                    <LogLov [NoObjectField]="true" [ObjectFieldName]="'CustomerId'"
+                                    <LogLov [ShowInActive]="true" [NoObjectField]="true" [ObjectFieldName]="'CustomerId'"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="CustomerId"
                                             [LookUpTableName]="'Card'"
@@ -38,7 +38,7 @@
                                     <div style="width:80px;">Owner:</div>
                                 </td>
                                 <td style="width:250px;">
-                                    <LogLov [NoObjectField]="true" [ObjectFieldName]="'OwnerId'"
+                                    <LogLov [ShowInActive]="true" [NoObjectField]="true" [ObjectFieldName]="'OwnerId'"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="OwnerId"
                                             [LookUpTableName]="'User'"
@@ -103,7 +103,7 @@
                                     <div style="width:80px;">Category:</div>
                                 </td>
                                 <td style="width:250px;">
-                                    <LogLov [ObjectFieldName]="'CategoryId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'CategoryId'"
                                             [DataContext]="DataContext"
                                             [NoObjectField]="true"
                                             [SelectedValue]="CategoryId"
@@ -119,7 +119,7 @@
                                     <div style="width:80px;">Project:</div>
                                 </td>
                                 <td style="width:250px;">
-                                    <LogLov [NoObjectField]="true"
+                                    <LogLov  [NoObjectField]="true"
                                             [ObjectFieldName]="'ProjectId'"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="ProjectId"
@@ -164,7 +164,7 @@
                                     <div style="width:80px;">Employee:</div>
                                 </td>
                                 <td style="width:250px;">
-                                    <LogLov [NoObjectField]="true"
+                                    <LogLov [ShowInActive]="true" [NoObjectField]="true"
                                             [ObjectFieldName]="'EmployeeUserId'"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="EmployeeUserId"
@@ -180,7 +180,7 @@
                                     <div style="width:80px;">Budget:</div>
                                 </td>
                                 <td style="width:250px;">
-                                    <LogLov [ObjectFieldName]="'BudgetId'"
+                                    <LogLov [ShowInActive]="true" [ObjectFieldName]="'BudgetId'"
                                             [DataContext]="DataContext"
                                             [NoObjectField]="true"
                                             [SelectedValue]="BudgetId"

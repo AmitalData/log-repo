@@ -103,6 +103,7 @@ import { DSVMobileLoginProcessComponent } from './Components/LoginComponent/Priv
 import { BlockScreenComponent } from './Components/LoginComponent/BlockScreenComponent';
 import { HomeComponent } from './Components/HomeComponent/HomeComponent';
 import { NewChargifyAWBStockComponent } from './Components/HomeComponent/NewChargifyAWBStockComponent';
+import { NewAdditionalCurrencyRateComponent } from './Components/Maintenance/NewAdditionalCurrencyRateComponent';
 import { SessionComponent } from './Components/Session/SessionComponent';
 import { MainMenuComponent } from './Components/MainMenuComponent/MainMenuComponent';
 import { EditComponent } from './Components/EditComponent/EditComponent';
@@ -348,6 +349,7 @@ export const Components = [
     BlockScreenComponent,
     HomeComponent,
     NewChargifyAWBStockComponent,
+    NewAdditionalCurrencyRateComponent,
     SessionComponent,
     MainMenuComponent,
     EditComponent,
@@ -448,6 +450,7 @@ export class ModuleDeclarations {
             case 'BlockScreenComponent': { myResult = BlockScreenComponent; break; }
             case 'HomeComponent': { myResult = HomeComponent; break; }
             case "NewChargifyAWBStockComponent": { myResult = NewChargifyAWBStockComponent; break; }
+            case "NewAdditionalCurrencyRateComponent": { myResult = NewAdditionalCurrencyRateComponent; break; }
             case 'SessionComponent': { myResult = SessionComponent; break; }
             case 'MainMenuComponent': { myResult = MainMenuComponent; break; }
             case 'EditComponent': { myResult = EditComponent; break; }

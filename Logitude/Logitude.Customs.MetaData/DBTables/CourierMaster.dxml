@@ -252,6 +252,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CourierMasterPaymentStatusCd"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -120,6 +120,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string NoOfCourierHawbWithoutDelivery { get; set; }
         [Column("EffectiveFlight")]
 	    public bool EffectiveFlight { get; set; }
+        [Column("CourierMasterPaymentStatusCd")]
+	    public string CourierMasterPaymentStatusCd { get; set; }
     }
 }
 	 

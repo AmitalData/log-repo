@@ -379,6 +379,11 @@ export class CourierMasterPM {
     public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
        
 	 
+    private courierMasterPaymentStatusCd: string;
+    public get CourierMasterPaymentStatusCd() { return this.courierMasterPaymentStatusCd; }
+    public set CourierMasterPaymentStatusCd(newValue: string) { if (this.courierMasterPaymentStatusCd != newValue) { this.courierMasterPaymentStatusCd = newValue; this.MarkAsDirty("CourierMasterPaymentStatusCd"); } }
+       
+	 
 
     public OldEntityPM: CourierMasterPM;
 		

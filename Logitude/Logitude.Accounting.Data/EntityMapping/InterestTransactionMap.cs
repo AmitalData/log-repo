@@ -54,6 +54,12 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.IsClosed).HasColumnName("IsClosed");
 
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
+
+            this.Property(t => t.AccountingDate).HasColumnName("AccountingDate");
+
+            this.Property(t => t.JournalId).HasColumnName("JournalId").HasMaxLength(15).IsUnicode(false);
+
+
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {

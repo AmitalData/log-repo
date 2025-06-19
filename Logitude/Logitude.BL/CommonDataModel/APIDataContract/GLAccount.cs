@@ -1,6 +1,8 @@
 ﻿using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +29,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public Currency Currency { get; set; }
         public ReconcileMethod ReconcileMethod { get; set; }
         public ChartOfAccount ChartOfAccount { get; set; }
+        public ExchangeRate ExchangeRate { get; set; }
+
     }
 
     public class ReconcileMethod
@@ -35,6 +39,12 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
         public string Code { get; set; }
         public string EnglishName { get; set; }
         public string LocalName { get; set; }
+    }
+    public class ExchangeRate
+    {
+        [XmlAttribute]
+        public string RateCoefficient { get; set; }
+        public string Name { get; set; }
     }
 
     public class ChartOfAccount
@@ -61,6 +71,8 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
 
         public string CurrencyId { get; set; }
         public string ReconcileMethodCode { get; set; }
+        public string ExchangeRateId { get; set; }
+
         public string ChartOfAccountCode { get; set; }
     }
 
@@ -130,6 +142,11 @@ namespace Logitude.BL.CommonDataModel.APIDataContract
 
                 throw ex;
             }
+        }
+        public string GetExchangeRateIdById(string glaccountId, int tenant)
+        { 
+            GLAccountRepository repository = new GLAccountRepository(tenant);
+            return repository.GetExchangeRateIdById(glaccountId, tenant);
         }
 
 

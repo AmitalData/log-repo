@@ -222,7 +222,26 @@
                                                 </td>
                                                 <td><div></div></td>
                                             </tr>
+                                            <!-- ExchangeRate -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'ExchangeRateId'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
+                                                </td>
 
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'ExchangeRateId'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'AdditionalCurrencyRate'"
+                                                        [SelectedValue]="ExchangeRateId"
+                                                        [DisplayMemberPath]="'Name'" [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
                                             <!-- AllowEditChequePayToName -->
                                             <tr *ngIf="IsVendor" class="FormFieldRow">
                                                 <td>

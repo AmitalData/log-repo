@@ -126,6 +126,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                         {
                             declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
                             declarationPendingPM.Status = "S";
+                            _MyDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
                             if (_MyDeclarationCourierStatusPM.ChangeSetOp != ChangeSetOperation.Update) _MyDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
                     }
