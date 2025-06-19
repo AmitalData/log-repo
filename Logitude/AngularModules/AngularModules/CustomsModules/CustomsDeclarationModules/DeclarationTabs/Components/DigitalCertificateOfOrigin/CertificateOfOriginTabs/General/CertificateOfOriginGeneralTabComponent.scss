@@ -160,3 +160,9 @@ $spacing: 0px;
 .LogLovInputDiv:focus:not(:disabled) {
     border: 1px solid #3BB3E2;
 }
+
+.actionLineContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

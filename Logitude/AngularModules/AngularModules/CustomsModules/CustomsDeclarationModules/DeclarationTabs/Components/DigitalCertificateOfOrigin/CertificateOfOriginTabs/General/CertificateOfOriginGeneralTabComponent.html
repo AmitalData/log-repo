@@ -599,7 +599,7 @@
 
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
-                                                [binding]="'InvoiceSum'" [width]="'260'" [Alignment]="'right'">
+                                                [binding]="'InvoiceSum'" [width]="'251'" [Alignment]="'right'">
                                                 <!-- [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'"> -->
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
@@ -714,7 +714,7 @@
                 </table>
 
                 <!-- Part 3: -->
-                <table style="width:870px" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
+                <table style="width:890px" [ngClass]="{ 'opacityDimBox': disableOpacityBox }">
                     <tr>
                         <td class="TabTitleRow" style="float: right;width: 22px;">
                             <HelpIcon *ngIf="myDictionary['CertificateOriginItemItems']!=null" [HideHeader]="true"
@@ -746,11 +746,16 @@
                         </td>
 
                         <td *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'"
-                            style="width:130px">
-                            <SearchTextBox
-                                [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe"
-                                [ObjectTableName]="'Customs.CertificateOfOriginItem'"
-                                (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                            style="width: 165px;">
+                            <div class="actionLineContainer">
+                                <SearchTextBox
+                                    [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe"
+                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                    (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
+                                <div style="height: 20px;padding-bottom: 0px;top:2px; left:5px;width:30px">
+                                    <IconButton [IsEnabled]="!IsReadOnly" [Name]="'Add'" [IsSmall]="true" (click)="addItemLine()" style="top:18px; "></IconButton>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr style="height:5px"></tr>
@@ -758,7 +763,7 @@
                     <tr class="FieldRow" style="height : 120px">
                         <td colspan="6">
                             <div class="GeneratedGridContainer" style="height : 100%;">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" (SelectedItemChanged)="SelectedRow = $event" [SelectedRow]="SelectedRow"
                                     [ItemSource]="CertificateOriginItemItems">
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
@@ -806,7 +811,7 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
-                                        [binding]="'ItemDescription'" [width]="'125'" [Alignment]="'right'"
+                                        [binding]="'ItemDescription'" [width]="'115'" [Alignment]="'right'"
                                         [Editable]="true">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
@@ -935,7 +940,7 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.ContainerIsoCode' | TextCodeTranslationPipe"
-                                        [binding]="'ContainerIsoCode'" [width]="'80'" [Alignment]="'right'"
+                                        [binding]="'ContainerIsoCode'" [width]="'78'" [Alignment]="'right'"
                                         [Editable]="true">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
@@ -960,7 +965,7 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.ItemId' | TextCodeTranslationPipe"
-                                        [binding]="'ItemId'" [width]="'80'" [Alignment]="'right'" [Editable]="true">
+                                        [binding]="'ItemId'" [width]="'72'" [Alignment]="'right'" [Editable]="true">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
@@ -983,7 +988,7 @@
 
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.OriginCriterionCode' | TextCodeTranslationPipe"
-                                        [binding]="'OriginCriterionCode'" [width]="'70'" [Alignment]="'right'">
+                                        [binding]="'OriginCriterionCode'" [width]="'60'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
@@ -1026,6 +1031,17 @@
                                                         </IconButton>
                                                     </div>
                                                 </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column [width]="'30'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'" [header]="">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
+                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                    <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                        (click)="deleteItemLine(item)"
+                                                        [IsEnabled]="!IsDisplayOnly && !item.COONumber"></IconButton>
+                                                </div>              
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>

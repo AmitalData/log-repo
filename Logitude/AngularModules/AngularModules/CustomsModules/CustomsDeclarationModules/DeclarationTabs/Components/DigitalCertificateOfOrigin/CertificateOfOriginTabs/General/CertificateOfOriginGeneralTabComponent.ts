@@ -1021,7 +1021,45 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         logcelltemplate.IsEditMode = true;
     }
 
+    deleteItemLine(item: CertificateOfOriginItemLine) {
+        // Delete from screen:
+        this.CertificateOriginItemItems.Remove(item);
+        const oldItems = this.entityPM.CertificateOriginItemItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
+        const index = this.entityPM.CertificateOriginItemItems.findIndex(i => i.ItemSerial === item.entityPM.ItemSerial);
+        if (index > -1) this.entityPM.CertificateOriginItemItems.splice(index, 1);
 
+        // Mark the item for delete in the DB in next save operation:
+        oldItems.forEach(i => {
+            if (i.ItemSerial === item.entityPM.ItemSerial) {
+                i.ChangeSetOp = "Delete";
+                this.entityPM.CertificateOriginItemItems.push(i);
+            }
+        });
+        this.reorderItemSerial();
+        this.entityPM.IsDirty = true;
+        this.entityPM.IsChange = true;
+    }
+
+    addItemLine() {
+        const certificateOfOriginItem = new CertificateOfOriginItemPM(this.entityPM);
+        certificateOfOriginItem.Tenant = this.entityPM.Tenant;
+        certificateOfOriginItem.ItemSerial = this.CertificateOriginItemItems.Collection.length + 1;
+        const certificateOfOriginItemLine = new CertificateOfOriginItemLine(certificateOfOriginItem, this);
+        this.CertificateOriginItemItems.Insert(certificateOfOriginItemLine);
+        this.entityPM.CertificateOriginItemItems.push(certificateOfOriginItem);
+        this.entityPM.AddCertificateOfOriginItem(certificateOfOriginItem);
+        this.entityPM.IsDirty = true;
+        this.reorderItemSerial();
+    }
+
+    SelectedRow: CertificateOfOriginItemLine;
+    // reorder ItemSerial for the remaining items
+    reorderItemSerial() {
+        this.CertificateOriginItemItems.Collection.forEach((item, index) => {
+            item.entityPM.ItemSerial = index + 1;
+            item.entityPM.IsDirty = true;
+        });
+    }
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
