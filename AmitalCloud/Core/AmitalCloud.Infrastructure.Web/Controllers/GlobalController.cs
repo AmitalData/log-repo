@@ -2,6 +2,7 @@
 using AmitalCloud.Infrastructure.Application.Helpers;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
@@ -10,23 +11,11 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
     public class GlobalController : ControllerBase
     {
 
-
-        [HttpGet("GetTenantSetting")]
-        public IActionResult GetTenantSetting()
-        {
-            try
-            {
-                int tenant = AmitalCloudSecurityUtility.AuthenticateTenant();
-                var tenantSettings = new TenantSettingQueryService(tenant).GetMulti(a => a.Tenant == tenant);
-                return Ok(tenantSettings);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, AmitalCloudApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
         [HttpGet("GetTenantManagementStatus")]
+        [SwaggerOperation(
+        Summary = "Get tenant status",
+        Description = "Returns information about the current tenant’s status for a given user, including blocking due to payment, trial, or user expiration."
+        )]
         public IActionResult GetTenantManagementStatus(string loggeduserid)
         {
 

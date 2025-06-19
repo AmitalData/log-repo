@@ -5,6 +5,7 @@ using AmitalCloud.Infrastructure.Web.DataContracts;
 using AmitalCloud.Infrastructure.Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AmitalCloud.Infrastructure.Web.Controllers
 {
@@ -28,6 +29,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         }
 
         [HttpPost("PostUserValidation")]
+        [SwaggerOperation(
+        Summary = "Validate user credentials",
+        Description = "Validates user login credentials without initiating a full login session."
+        )]
         public IActionResult PostUserValidation(LoginParameters loginParameters)
         {
             try
@@ -45,6 +50,10 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(
+        Summary = "User login",
+        Description = "Authenticates a user by email and password and returns their user data."
+        )]
         public IActionResult PostLoginData(LoginParameters parameters, int tenant, bool? isFromCTool = false)
         {
             try
@@ -60,6 +69,6 @@ namespace AmitalCloud.Infrastructure.Web.Controllers
             }
         }
 
-     
+
     }
 }
