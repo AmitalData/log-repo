@@ -2265,6 +2265,18 @@
       LocalDefaultText="&quot;BS64:IteR16DXqteV16DXmSDXlNeR16fXqdeUINeU16DXldeb15fXmdeqINeR15XXptei15Ug16nXmdeg15XXmdeZ150g16nXnNeQINeg16nXnteo15UsINeU15DXnSDXkdeo16bXldeg15og15zXqdee15XXqCDXkNeV16rXnT8i&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.SendingRequest&quot;"
+      DefaultText="&quot;Sending Request&quot;"
+      LocalDefaultText="&quot;שולח בקשה למכון תקנים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.NoRowSelected&quot;"
+      DefaultText="&quot;Please select at least one row to send the request.&quot;"
+      LocalDefaultText="&quot;יש לבחור לפחות שורה אחת לשליחה.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

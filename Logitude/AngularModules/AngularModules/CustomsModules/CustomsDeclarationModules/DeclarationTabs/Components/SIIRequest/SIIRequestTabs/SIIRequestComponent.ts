@@ -18,7 +18,7 @@ import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationW
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
-import { SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
+import { SIIRequestWebService, SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
 import { UserPMService } from 'Common/Services/StandardPMs/UserPMService';
 import { SupplierInvoiceItemLine } from 'CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
 import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
@@ -39,6 +39,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public supplierInvoiceItemsReqListWebService: SupplierInvoiceItemsReqListWebService;
     public userPmService: UserPMService = new UserPMService();
     public supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
+    public siiRequestWebService: SIIRequestWebService;
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext = this;
     public ObjectTableName: string = "Customs.Declaration";
@@ -70,7 +71,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         super();
         this.SelectedInvoiceItemsReqList = new ObservableCollection([]);
         this.supplierInvoiceItemsReqListWebService = new SupplierInvoiceItemsReqListWebService();
-
+        this.siiRequestWebService = new SIIRequestWebService();
     }
 
     ngOnInit(): void {
@@ -91,8 +92,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     buildSupplierInvoiceItemsCollection(): void {
         this.supplierInvoiceItemsCollection.Clear();
-        this.supplierInvoiceItemsForSIIRequest.forEach((item) => {
+        this.originalSupplierInvoiceItemsCollection.Clear();
+        this.supplierInvoiceItemsForSIIRequest.forEach((item, index) => {
             const supplierInvoiceItemLine = new SupplierInvoiceItemsForSIIRequestLine(item, this);
+            supplierInvoiceItemLine.Counter = index + 1;
             this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
             this.originalSupplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
         });
@@ -184,7 +187,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             });
         }
     }
-    
+
     ViewDocumentsComponent(): void {
         const windowArgs = {
             EntityPM: this.DecalarationData,
@@ -193,7 +196,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             IsFromStandAloneScreen: true,
             IsClose: true,
             FromSIIRequest: true,
-            SkipCtor : true ,
+            SkipCtor: true,
             SIIRequestPM: this.entityPM,
         };
 
@@ -214,7 +217,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     onDocumentsWindowClosed(event: any): void {
         this.entityArgs.SkipCtor = false;
     }
-    
+
 
     checkMandatoryCustomsFields(ValidationErrors: any[]) {
         let windowArgs: any = {};
@@ -255,8 +258,52 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     //#region SendSiiRequest
     SendSiiRequest(event: any) {
-        this.RefreshEntity();
-        this.CurrentSession.CloseCurrentWindow();
+        if (this.SelectedRowsCheckBox.length === 0) {
+            const confirm = new ConfirmWindow();
+            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Close");
+            confirm.ShowNoButton = false;
+            confirm.Show(TextCodeTranslator.Translate("Customs.SIIRequest.O.NoRowsSelected"));
+            return;
+        }
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.SIIRequest.O.SendingRequest"));
+        const afterSave = () => {
+            const selectedRows = this.SelectedRowsCheckBox.map(row => ({
+                DeclarationId: this.DeclarationId,
+                LineNumber: row.entityPM.LineNumber,
+                SIIRequestID: this.entityPM.Id,
+                InvoiceCounterKey: row.entityPM.InvoiceCounterKey,
+                InvoiceItemLineNumber: row.entityPM.InvoiceLineNumber,
+            }));
+
+            this.siiRequestWebService.postSendSIIRequest(this.entityPM.Id, this.DeclarationId, this.entityPM.Tenant, selectedRows)
+                .subscribe({
+                    next: (response: ServiceResponse) => {
+                        this.CurrentSession.StopBusyIndicator();
+                        alert(response?.Result);
+                    },
+                    error: () => {
+                        this.CurrentSession.StopBusyIndicator();
+                        alert(TextCodeTranslator.Translate("General.B.Error"));
+                    }
+                });
+        };
+
+        if (this.entityPM.IsDirty) {
+            const confirm = new ConfirmWindow();
+            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+            confirm.ShowNoButton = true;
+            confirm.Show(TextCodeTranslator.Translate("Customs.SIIRequest.O.UnSavedChanges"));
+            confirm.WindowClosed.subscribe(() => {
+                if (confirm.Yes) {
+                    this.SaveSiiRequest();
+                    afterSave();
+                } else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
+        } else {
+            afterSave();
+        }
     }
     //#endregion SendSiiRequest
     //#endregion Actions
@@ -379,7 +426,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             filtered = original.filter(i => i.ClassificationCode?.toLowerCase().includes(this.SearchText) || i.ItemCode?.toLowerCase().includes(this.SearchText));
             this.supplierInvoiceItemsCollection.Clear();
             if (filtered.length > 0) {
-                filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+                filtered.forEach((i, index) => {
+                    i.Counter = index + 1;
+                    this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this));
+                });
             }
         }
         else this.DemandStateFilterItemClicked(this.DemandStateFilterSelectedValue, true);
@@ -424,7 +474,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => i.HasDemandState === true);
         if (!items.length) return;
         this.supplierInvoiceItemsCollection.Clear();
-        items.forEach(item => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this)));
+        items.forEach((item, index) => {
+            item.Counter = index + 1;
+            this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
+        });
     }
 
     InvoicesNumbersList: any[];
@@ -452,7 +505,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     items = this.DemandStateFilterSelectedValue === this.filterOptionsAll ? original : original.filter(i => i.HasDemandState === true);
                 }
                 this.supplierInvoiceItemsCollection.Clear();
-                items.forEach((item) => {
+                items.forEach((item, index) => {
+                    item.Counter = index + 1;
                     this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
                 });
             }
@@ -766,6 +820,12 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     }
     public set RequestRequiredStatus(newValue: string) {
         this.entityPM.RequestRequiredStatus = AppTool.IsNullOrEmpty(newValue) ? CompleteStatuses.UnCompleted : newValue;
+    }
+    public get Counter(): number {
+        return this.entityPM.Counter;
+    }
+    public set Counter(newValue: number) {
+        this.entityPM.Counter = newValue;
     }
 }
 
