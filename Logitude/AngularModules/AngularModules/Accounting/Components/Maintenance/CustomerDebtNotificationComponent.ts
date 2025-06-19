@@ -129,7 +129,7 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
             var myService = new ReportGroupService();
             groupService.getReportGroupListByCode('RACC').subscribe((myResponse: ServiceResponse) => {
             var groupList: ReportGroupList = myResponse.Result;
-            reportService.GetReportListsByGroupId(groupList.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
+            reportService.GetReportListsByGroupId(groupList.Id).subscribe((myResponse: ServiceResponse) => {
               
             var reportList = myResponse.Result.filter(x => x.Code === 'LTRP')[0];           
             var windowArgs: any = {};
