@@ -1,38 +1,37 @@
 ﻿ using AmitalCloud.Infrastructure.Domain.EntityPMs;
- using AmitalCloud.Infrastructure.Model.EntityClasses;
- using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AmitalCloud.Infrastructure.Domain.DataContracts
 {
     public class JSGlobalSettings
     {
-        public JSGlobalSettings(SettingPM mySetting = null) 
+        public JSGlobalSettings(SettingPM mySetting) 
         {
-             if (mySetting != null)
-             {
+            
                 Id = mySetting.Id;
                 AmitalURL = mySetting.LogitudeURL;
                 LogoCode = mySetting.LogoCode;
                 WorkEnvironment = mySetting.WorkEnvironment;
-                SameUserLoginEnabled = (bool)mySetting.SameUserLoginEnabled;
+                SameUserLoginEnabled = mySetting.SameUserLoginEnabled;
                 LayoutDirection = mySetting.LayoutDirection;
-                ReportsRunUsingWR = (bool)mySetting.ReportsRunUsingWR;
+                ReportsRunUsingWR = mySetting.ReportsRunUsingWR;
                 DocumentFilingEmailDomain = mySetting.DocumentFilingEmailDomain;
                 DeploymentStage = mySetting.DeploymentStage;
                 ReleaseNotesURL = mySetting.ReleaseNotesURL;
-                 AmitalDemoTenants = mySetting.LogitudeDemoTenants;
-                 TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
+                AmitalDemoTenants = mySetting.LogitudeDemoTenants;
+                TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
                 ReleaseDateString = mySetting.ReleaseDateString;
                 DNSZone = mySetting.DNSZone;
-            }
+                ProductInfo = AmitalCloudSettings.ProductInfo;
+                ProductMessage = AmitalCloudSettings.ProductMessage;
+
         }
 
         [Key]
         public string Id { get; set; }
         public string AmitalURL { get; set; }
         public string LogoCode { get; set; }
-        public string WorkEnvironment { get; set; } //customs,main....
+        public string WorkEnvironment { get; set; } 
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
         public string ProductInfo { get; set; }

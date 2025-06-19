@@ -1434,5 +1434,29 @@ namespace AmitalCloud.Infrastructure.Application.Helpers
             string browserType = $"{browser}{versionMajor}";
             return browserType;
         }
+
+        public static bool GetIsBlockingFromDB(HttpContext httpContext)
+        {
+            bool hasBlockingDBRecords = new GlobalDBQueryService(0)
+                .GetMulti(_ => true) 
+                .Any();
+
+            string? clientIp = GetClientIpAddress(httpContext);
+            string[]? trustedIps = AmitalCloudSettings.CustomerCareIP?.Split(',');
+
+            bool isTrustedIp = trustedIps?.Contains(clientIp) == true;
+
+            return !isTrustedIp && hasBlockingDBRecords;
+        }
+
+      
+        public static string? GetClientIpAddress(HttpContext httpContext)
+        {
+            var ip = httpContext.Request.Headers["X-Real-IP"].FirstOrDefault();
+            return !string.IsNullOrEmpty(ip)
+                ? ip
+                : httpContext.Connection.RemoteIpAddress?.ToString();
+        }
+
     }
 }

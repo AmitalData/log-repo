@@ -5,6 +5,7 @@ using AmitalCloud.Infrastructure.Domain.DataContracts;
 using AmitalCloud.Infrastructure.Web.Middlewares;
 using AmitalCloud.Infrastructure.Domain.Helpers;
 using AmitalCloud.Infrastructure.Application.Helpers;
+using System.Reflection;
 
 namespace AmitalCloud.Infrastructure.Web.Helpers
 {
@@ -31,7 +32,14 @@ namespace AmitalCloud.Infrastructure.Web.Helpers
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
+                options.EnableAnnotations();  
+
+            });
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll",
