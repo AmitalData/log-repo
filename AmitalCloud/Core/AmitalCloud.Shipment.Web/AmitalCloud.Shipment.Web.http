@@ -1,6 +1,0 @@
-@AmitalCloud.Shipment.Web_HostAddress = http://localhost:9997
-
-GET {{AmitalCloud.Shipment.Web_HostAddress}}/api/AWBInformationViews/GetAll
-Accept: application/json
-
-###
