@@ -91,7 +91,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             Tenant = tenant,
-                            ///journal.JournalNumber = "1";
                             CreateDate = @now,
                             AccountingDate = j1stLineDTO.AccountingDate,
                             TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
