@@ -54,7 +54,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
-   
+    NewJournalNumber: string;
 
     public UploadFileId: string = Guid.NewRandomString();
     FileName: string;
@@ -126,7 +126,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
 
         this.CurrentSession.StartBusyIndicatorCreating();
         if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {
-            this._JournalExtendedPMService.PostJournalAsCSV(this.fileUploadParamerter)
+            this._JournalExtendedPMService.PostJournalAsCSVWithSkip(this.fileUploadParamerter)
                 .subscribe((myServiceResponse: ServiceResponse) => {
                     console.log("[Send] Response/LoadBankPages: ", myServiceResponse.Result);
                     var response = myServiceResponse.Result;
@@ -140,13 +140,13 @@ export class JournalCSVLoadComponent extends BaseComponent {
                     } else {
 
                         if (!AppTool.IsNullOrEmpty(response)) {
-
                             var journalAnalyseResult: JournalAnalyseResult;
                             journalAnalyseResult = myServiceResponse.Result;
                             console.log(journalAnalyseResult);
+                            
                             this._NewJournalPM = journalAnalyseResult.JournalPM;
                             this._DuplicateLinesSkippedNumber = journalAnalyseResult.DuplicatesSkipped;
-
+                            this.NewJournalNumber = this._NewJournalPM.JournalNumber;
                         }
 
                     }
