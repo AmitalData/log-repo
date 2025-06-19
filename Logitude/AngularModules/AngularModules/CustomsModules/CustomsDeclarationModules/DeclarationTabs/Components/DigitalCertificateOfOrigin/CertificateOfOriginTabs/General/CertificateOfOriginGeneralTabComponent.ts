@@ -433,7 +433,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             // Map CertificateOfOriginItems to Unifreight:
             CertificateOfOriginItems: this.currentDeclaration.Consignments.map(consignment => ({
                 ItemSerial: consignment.ConsignmentNumber,
-                ManifestNumber: this.EntityPM.TransportModeId === "O" ? "" : consignment.ManifestNumber,
+                ManifestNumber: this.currentDeclaration.TransportModeId === 'O' ? "" : consignment.ManifestNumber,
                 Description: "",
                 MarksAndNumbers: "",
                 Weight: "",
