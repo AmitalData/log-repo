@@ -39,7 +39,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(CH_NG_190_MSG1_NoticeToClient customResponse, GenericRequestParams requestParams)
         {
-            const string updatePhysicalCheck = "004";
+            const string updatePhysicalCheck = "4";
             try
             {
                 CH_NG_190_MSG1_NoticeToClientNoticeToClient NoticeToClient = customResponse.NoticeToClient;
