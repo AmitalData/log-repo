@@ -292,7 +292,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         const oldItems = this.entityPM.CertificateOriginItemItems.filter(a => !AppTool.IsNullOrEmpty(a.Id));
         this.entityPM.CertificateOriginItemItems = [];
         result?.certificateOfOriginItems?.forEach((unifreightItem) => {
-            if(!unifreightItem) return;
+            if (!unifreightItem) return;
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             mappedConsignments.Tenant = EntityPM.Tenant;
 
@@ -302,6 +302,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedConsignments.Weight = unifreightItem.weight || '';
             mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
             mappedConsignments.ItemDescription = unifreightItem.description || '';
+            mappedConsignments.PackageQuantity = unifreightItem.packageQuantity || '';
+            mappedConsignments.PackageType = unifreightItem.packageType || '';
 
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
@@ -392,6 +394,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             const marksAndNumbers = item.getElementsByTagName('MarksAndNumbers')[0]?.textContent || '';
             const weight = item.getElementsByTagName('Weight')[0]?.textContent || '';
             const isoContainerType = item.getElementsByTagName('IsoContainerType')[0]?.textContent || '';
+            const PackageQuantity = item.getElementsByTagName('PackageQuantity')[0]?.textContent || '';
+            const PackageType = item.getElementsByTagName('PackageType')[0]?.textContent || '';
 
             certificateOfOriginItems.push({
                 itemSerial,
@@ -400,6 +404,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 marksAndNumbers,
                 weight,
                 isoContainerType,
+                PackageQuantity,
+                PackageType
             });
         }
 
@@ -424,20 +430,18 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             ExporterAddress: EntityPM.ExporterAddress,
             ConsigneeName: EntityPM.ConsigneeName,
             ConsigneeAddress: EntityPM.ConsigneeAddress,
-            // MAP CertificateOfOriginItems to Unifreight BY THIS STRUCTURE:
+            // Map CertificateOfOriginItems to Unifreight:
             CertificateOfOriginItems: this.currentDeclaration.Consignments.map(consignment => ({
                 ItemSerial: consignment.ConsignmentNumber,
-                ManifestNumber: consignment.ManifestNumber,
-                // this fields will return full from Unifreight:
+                ManifestNumber: this.EntityPM.TransportModeId === "O" ? "" : consignment.ManifestNumber,
                 Description: "",
                 MarksAndNumbers: "",
                 Weight: "",
-                IsoContainerType: ""
+                IsoContainerType: "",
+                PackageQuantity: "",
+                PackageType: ""
             }))
         };
-        // const xmlDataString = this.convertToXML(data);
-        // console.log(xmlDataString);
-
         return this.convertToXML(data);
     }
 
@@ -459,11 +463,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             const itemElement = items.ele('CertificateOfOriginItem');
             itemElement.ele('ItemSerial', item.ItemSerial);
             itemElement.ele('ManifestNumber', item.ManifestNumber);
-            // Explicitly add empty fields
             itemElement.ele('Description', item.Description || '');
             itemElement.ele('MarksAndNumbers', item.MarksAndNumbers || '');
             itemElement.ele('Weight', item.Weight || '');
             itemElement.ele('IsoContainerType', item.IsoContainerType || '');
+            itemElement.ele('PackageQuantity', item.PackageQuantity || '');
+            itemElement.ele('PackageType', item.PackageType || '');
         });
 
         const xmlString = root.end({ pretty: true });
