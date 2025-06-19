@@ -46,7 +46,7 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     }
 
     public GetGeneratedCustomTicketAndPointer(relatedEntityParams: RelatedEntityParams, documentTypeCode: string) {
-        var newTicket: CustomsDocumentsTicketPM = new CustomsDocumentsTicketPM();
+        let newTicket: CustomsDocumentsTicketPM = new CustomsDocumentsTicketPM();
         newTicket.DocumentTypeCode = documentTypeCode;
         newTicket.Tenant = SessionLocator.Tenant;
         newTicket.ConnectedInvoiceItemsSequences = relatedEntityParams.ChildEntity2Id;
@@ -73,7 +73,7 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     }
 
     FillConnectedToItems() {
-        var connectedItems: ConnectedToItem[] = [];
+        let connectedItems: ConnectedToItem[] = [];
         return connectedItems;
     }
 
@@ -110,10 +110,10 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     public GetCustomsInterfaceSettingsDocumentTypes(entityPM: any) {
         // in this method i expect you to return a list of customs documents type codes e.g: 270,IL70 ......etc to open tickets for the declaration.
         // you have the entityPM :DeclarationPM to take CargoTypeCode , ProcessTypeCode , TransportTypeCode from declaration as the design says.
-        var serviceResponse: ServiceResponse = new ServiceResponse();
+        let serviceResponse: ServiceResponse = new ServiceResponse();
 
         //this array should be replaced by your result.
-        var documentTypes: string[] = [];
+        let documentTypes: string[] = [];
 
 
         serviceResponse.Result = this.generatedCustomsDocumentTicketViewModel;
