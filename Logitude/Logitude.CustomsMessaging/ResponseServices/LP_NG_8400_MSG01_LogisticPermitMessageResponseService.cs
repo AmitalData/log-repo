@@ -275,6 +275,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 eventType = "Canceled";
             }
 
+            bool isExport = _MyDeclarationPM.Direction == "E";
             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
             {
                 Tenant = _MyDeclarationPM.Tenant,
@@ -288,7 +289,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 CommunicationSubject = "FU Status " + eventCode + " from logitude" + (eventType != "" ? " (Declaration Logistic Permit " + eventType + ")" : ""),
                 MyFUStatus = new AmitalEventTracerModel.FUStatus()
                 {
-                    entname = _MyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    entname = isExport ? "BFIFILE" : "CFIFILEM",
                     primary_number = primary_number,
                     status = "new",
                     xml_status = "new",
@@ -301,7 +302,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             };
 
             LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode =" + eventCode + "  CustomFileNo: " + _MyDeclarationPM.CustomFileNo + "   ");
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: suppress_RAISE_EVENT);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: suppress_RAISE_EVENT,isExport : isExport);
 
         }
 

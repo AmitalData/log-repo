@@ -42,6 +42,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
 
         DeclarationPM _MyDeclarationPM;
+        bool IsExportDeclaration;
 
         public override INF_MSG_GenericResponseData GetResponse(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
@@ -76,7 +77,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             var dec = myQueryService.GetDeclarationByDeclarationNum(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
-            bool IsExportDeclaration = dec?.Direction == "E";
+            IsExportDeclaration = dec?.Direction == "E";
 
             LogMessagingUtil.Instance.AppendLine("Analyze Message To Agent response" + requestParams.AppicationId);
 
@@ -682,7 +683,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + code + " CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true,isExport : IsExportDeclaration);
 
             }
             catch (System.Exception)

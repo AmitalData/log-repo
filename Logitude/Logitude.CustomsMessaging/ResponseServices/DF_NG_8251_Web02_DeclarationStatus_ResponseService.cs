@@ -476,7 +476,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     comments = ""
                                                 }
                                             };
-                                            AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+                                            AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel,isExport:true);
                                         }
                                     }
                                     else if ((declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue))
@@ -1146,6 +1146,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             try
             {
+                var isExport = dirtyDeclarationPM.Direction == "E";
                 if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
@@ -1174,7 +1175,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (!dirtyDeclarationPM.IsConnectedToUnifreight && dirtyDeclarationPM.IsAmendment != true) myAmitalEventTracerModel.NotConnectedToUniface = true;
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent Status " + statusId + "  CustomFileNo = " + dirtyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel,isExport : isExport);
 
             }
             catch (System.Exception)
@@ -1192,6 +1193,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 primary_number = $"{dirtyDeclarationPM.CustomFileNo},MFIFILEM";
             }
+            var isExport = dirtyDeclarationPM.Direction == "E";
 
             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
             {
@@ -1206,7 +1208,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 CommunicationSubject = "FU Status " + status_id + " from logitude",
                 MyFUStatus = new AmitalEventTracerModel.FUStatus()
                 {
-                    entname = dirtyDeclarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM",
+                    entname = isExport ? "BFIFILE" : "CFIFILEM",
                     primary_number = primary_number,
                     status = "new",
                     xml_status = "new",
@@ -1221,7 +1223,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true, isExport: isExport);
 
 
 
