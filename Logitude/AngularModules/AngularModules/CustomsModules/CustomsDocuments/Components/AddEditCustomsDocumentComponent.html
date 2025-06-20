@@ -225,7 +225,7 @@
 
     <tr style="height:23px;">
         <td colspan="3">
-            <div style="width:100%;text-align:center;margin:0 auto; height:22px;">
+            <div *ngIf="!IsFromSIIRequest" style="width:100%;text-align:center;margin:0 auto; height:22px;">
                 <div class="DisbleBox" *ngIf="ViewDisableMessageVisibility">
                     {{DisplayOnlyMessage}}
                 </div>
@@ -267,13 +267,22 @@
                                         </div>
 
                                     </td>
-                                    <td style="width: 200px;">
-                                        <LogLov [ObjectFieldName]="'DocumentTypeCode'"
+                                     <td style="width: 200px;">
+                                        <div *ngIf="!IsFromSIIRequest">
+                                            <LogLov [ObjectFieldName]="'DocumentTypeCode'"
                                                 [ObjectTableName]="'Customs.CustomsDocument'"
                                                 [DataContext]="DataContext"
-                                                [LookUpTableName]="'Customs.CustomDocumentType'"
-                                                [HideColumns]="true">
-                                        </LogLov>
+                                                [LookUpTableName]="'Customs.CustomDocumentType'" [HideColumns]="true">
+                                            </LogLov>
+                                        </div>
+                                        <div *ngIf="IsFromSIIRequest">
+                                            <LogLov [ObjectFieldName]="'SIIDocumentType'"
+                                                [ObjectTableName]="'Customs.CustomsDocument'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'Customs.SIIDocumentType'" [HideColumns]="true">
+                                            </LogLov>
+                                        </div>
+
                                     </td>
                                     <td>
                                         <div></div>
