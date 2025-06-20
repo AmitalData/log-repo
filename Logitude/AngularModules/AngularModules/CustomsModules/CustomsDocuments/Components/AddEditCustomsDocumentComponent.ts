@@ -41,7 +41,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     public ValidationErrorsList: any[];
     DataContext = this;
     private documentTypeCode: string;
-    public isFreeSIIRequest = false;
+    public IsFromSIIRequest = false;
     get DocumentTypeCode() {
         if (this.CustomsDocument) {
             this.documentTypeCode = this.CustomsDocument.DocumentTypeCode;
@@ -210,7 +210,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this.WindowArgs = windowArgs;
 
         this.CustomsDocumentsTicket = windowArgs.CustomsDocumentsTicket;
-        this.isFreeSIIRequest = windowArgs.isFreeSIIRequest;
+        this.IsFromSIIRequest = windowArgs.IsFromSIIRequest;
         
         if (this.CustomsDocumentsTicket) {
             this.CustomsDocumentsTicket.CloneMe();
