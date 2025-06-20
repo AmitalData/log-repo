@@ -561,6 +561,9 @@ export class CustomsDocumentsComponent
         windowArgs.iCustomsDocumentsController = this.iCustomsDocumentsController;
         windowArgs.EntityPM = this.EntityPM;
         var windowTitle = TextCodeTranslator.Translate("Customs.Declaration.O.AddCustomsDocument");
+        if( this.IsFromSIIRequest){
+            windowTitle = TextCodeTranslator.Translate("Customs.CustomsDocument.O.AddDocument");
+        }
 
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;

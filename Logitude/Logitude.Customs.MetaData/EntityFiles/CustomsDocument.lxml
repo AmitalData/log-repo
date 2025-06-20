@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Document&quot;"
-  Code="&quot;d9b5&quot;"
+  Code="&quot;d2d9&quot;"
   Name="&quot;Customs.CustomsDocument Query Group&quot;"
   GenerateDomainService="false"
   NoViewController="false"
@@ -2914,7 +2914,7 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.CustomsDocument.O.AddDocucment&quot;"
+      Code="&quot;Customs.CustomsDocument.O.AddDocument&quot;"
       DefaultText="&quot;Add Document&quot;"
       LocalDefaultText="&quot;הוסף מסמך&quot;"
       TextCodeTypeCode="&quot;O&quot;"

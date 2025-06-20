@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentUpdateClass
    {  		
-		public const string HashString = "3afac90ddaef5ad162fa40d471c6e40a";
+		public const string HashString = "2c891ea08f04b178a385948001b9436b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Document",
-			      				    Code =  "d9b5",
+			      				    Code =  "d2d9",
 			      				    Name =  "Customs.CustomsDocument Query Group",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2624,7 +2624,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentORequestedCustomsDocId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.RequestedCustomsDocId", DefaultText = "The document already has a reference, should I create a new version and link to the required document? , yes / no (confirmation / cancellation)",LocalDefaultText = @"למסמך קיים כבר סימוכין , האם ליצור גרסה חדשה ולקשר למסמך הנדרש ? ", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentOAddDocucment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.AddDocucment", DefaultText = "Add Document",LocalDefaultText = @"הוסף מסמך", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsDocumentTextCode_CustomsCustomsDocumentOAddDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsDocument.O.AddDocument", DefaultText = "Add Document",LocalDefaultText = @"הוסף מסמך", ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
