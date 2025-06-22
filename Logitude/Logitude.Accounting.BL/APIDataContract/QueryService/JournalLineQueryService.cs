@@ -25,7 +25,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             {
 
                 var lines = new List<JournalLinePM>();
-                // lines = query.GetJournalLinesByJournalId(MyEntity.Id);
                 foreach (var item in journalLines)
                 {
 
@@ -112,31 +111,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                         }
                     }
 
-
-                    //GLAccountQueryService CreditControlAccountGLAccountService = new GLAccountQueryService(Tenant);
-                    //if (item.CreditControlAccount != null)
-                    //{
-                    //    var myCreditControlAccountPM = CreditControlAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditControlAccount, Tenant, ComputingPartnerName);
-                    //    if (myCreditControlAccountPM != null)
-                    //    {
-                    //        temp.CreditControlAccountId = myCreditControlAccountPM.Id;
-                    //    }
-
-                    //}
-
-
-                    //GLAccountQueryService CreditAccountGLAccountService = new GLAccountQueryService(Tenant);
-                    //if (item.CreditAccount != null)
-                    //{
-                    //    var myCreditAccountPM = CreditAccountGLAccountService.GLAccountDataMappingAndValidatin(item.CreditAccount, Tenant, ComputingPartnerName);
-                    //    if (myCreditAccountPM != null)
-                    //    {
-                    //        temp.CreditAccountId = myCreditAccountPM.Id;
-                    //    }
-
-                    //}
-
-
                     temp.DocumentDate = item.DocumentDate;
                     temp.AccountingDate = item.AccountingDate;
                     temp.DueDate = item.DueDate;
@@ -158,13 +132,9 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.Reference1 = item.Reference1;
                     temp.Reference2 = item.Reference2;
                     temp.Reference3 = item.Reference3;
-                    //temp.CreditAccountNumber = item.CreditAccountNumber;
-                    //temp.DebitAccountNumber = item.DebitAccountNumber;
                     temp.Notes = item.Notes;
                     if(item.ExternalOpenAmount != null)
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
-                    //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-                    //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     temp.ConfirmationNumber = item.ConfirmationNumber; 
                     temp.ExcludeFromTaxReport = item.ExcludeFromTaxReport;
@@ -203,39 +173,10 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
 
                     var temp = new JournalLine();
 
-                    //JournalPM journalPM = journalQueryService.GetJournalPMById(item.JournalId, Tenant);
                     if (journalPM != null)
                         temp.JournalNumber = journalPM.JournalNumber;
                     temp.Line = item.Line;
                     temp.Tenant = item.Tenant;
-                    //if (item.DebitControlAccountId != null)
-                    //{
-                    //    GLAccountQueryService GLAccountService0 = new GLAccountQueryService(Tenant);
-                    //    temp.DebitControlAccount = GLAccountService0.GetGLAccountById(item.DebitControlAccountId, Tenant);
-
-                    //}
-
-                    //if (item.DebitAccountId != null)
-                    //{
-                    //    GLAccountQueryService GLAccountService1 = new GLAccountQueryService(Tenant);
-                    //    temp.DebitAccount = GLAccountService1.GetGLAccountById(item.DebitAccountId, Tenant);
-
-                    //}
-
-                    //if (item.CreditControlAccountId != null)
-                    //{
-                    //    GLAccountQueryService GLAccountService2 = new GLAccountQueryService(Tenant);
-                    //    temp.CreditControlAccount = GLAccountService2.GetGLAccountById(item.CreditControlAccountId, Tenant);
-
-                    //}
-
-                    //if (item.CreditAccountId != null)
-                    //{
-                    //    GLAccountQueryService GLAccountService3 = new GLAccountQueryService(Tenant);
-                    //    temp.CreditAccount = GLAccountService3.GetGLAccountById(item.CreditAccountId, Tenant);
-
-                    //}
-
                     temp.DocumentDate = item.DocumentDate;
                     temp.AccountingDate = item.AccountingDate;
                     temp.DueDate = item.DueDate;
@@ -256,13 +197,8 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     temp.CreditControlAccount = item.CreditControlAccountNumber;
                     temp.DebitControlAccount = item.DebitControlAccountNumber;
                     temp.DebitAccount = item.DebitAccountNumber;
-
-                    //temp.CreditAccountNumber = item.CreditAccountNumber;
-                    //temp.DebitAccountNumber = item.DebitAccountNumber;
                     temp.Notes = item.Notes;
                     temp.ExternalOpenAmount = item.ExternalOpenAmount;
-                    //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
-                    //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     temp.ActionCode = item.ActionCode;
                     temp.ConfirmationNumber = item.ConfirmationNumber;
