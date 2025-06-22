@@ -33,8 +33,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing or empty ID.");
 
                 InvoiceApiService invoiceApiService = new InvoiceApiService();
-                bool res = invoiceApiService.ReSendQueue(id, authToken.Tenant);
-                return Request.CreateResponse(HttpStatusCode.OK, res);
+               invoiceApiService.ReSendQueue(id, authToken.Tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (Exception ex)
             {

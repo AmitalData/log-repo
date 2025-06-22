@@ -18,6 +18,9 @@ export class InvoiceApiCommunicationLogList {
 	Exception: string;
 	StatusName: string;
 	StepName: string;
+	ExternalID: string;
+	ARInvoiceId: string;
+	InvoiceNumber: string;
 	
 }
  

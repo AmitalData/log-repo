@@ -34,6 +34,12 @@ namespace Logitude.Accounting.Data.EntityLists
        public string StatusName  { get; set; }
        [DataMember]
        public string StepName  { get; set; }
+       [DataMember]
+       public string ExternalID  { get; set; }
+       [DataMember]
+       public string ARInvoiceId  { get; set; }
+       [DataMember]
+       public string InvoiceNumber  { get; set; }
    }
 
 }

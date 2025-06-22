@@ -5304,7 +5304,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        public void PrintOrSendInvoice(string id, string reference, int tenant) {
+        public void PrintOrSendInvoice(string id, string reference, int tenant,string userId) {
             try
             {
                 ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
@@ -5319,9 +5319,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     SignHSM = true,
                     DocumentTypeId = documentTypeId,
                     ChildReference = reference,
+                    
                 };
                 DocumentHelper documentHelper = new DocumentHelper();
-                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs);
+                DocumentOutPM documentOutPM = documentHelper.PutCreateDocumentOut(documentOutArgs, userId);
             }
             catch (Exception ex)
             {

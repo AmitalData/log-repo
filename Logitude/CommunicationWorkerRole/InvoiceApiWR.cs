@@ -1,16 +1,13 @@
-﻿using Intuit.Ipp.Data;
-using Logitude.Accounting.BL.CloseTables;
+﻿using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Interfaces.Magaya;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
-using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
@@ -36,10 +33,6 @@ using System.Linq;
 using System.Threading;
 using System.Transactions;
 using System.Xml.Linq;
-using WebFreight.Web.InfrastructureModel.DomainServices;
-using static Dropbox.Api.Team.TeamMembershipType;
-using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
-using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 
 namespace CommunicationWorkerRole
 {
@@ -250,7 +243,7 @@ namespace CommunicationWorkerRole
             try
             {
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetInvoiceApiInvoice, InvoiceApiStatusEnum.InProgress);
-                invoiceXml = invoiceApiService.GetTransaction("IN", 0, response.MessageValues["Guid"]);
+                invoiceXml = invoiceApiService.GetTransaction("IN", 0, invoiceApiCommunicationLog.ExternalID);
                 if (string.IsNullOrWhiteSpace(invoiceXml))
                     throw new Exception("GetTransaction failed or returned empty XML");
                 AddDocumentToApiCommunicationLog(System.Text.Encoding.UTF8.GetBytes(invoiceXml));
@@ -300,7 +293,7 @@ namespace CommunicationWorkerRole
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
                 service.Create(aRInvoicePM);
-
+                 invoiceApiCommunicationLog.ARInvoiceId = aRInvoicePM.Id;
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, InvoiceApiStatusEnum.Done);
 
                 SetConfirmationNumberStatusInvoice(service);
@@ -331,7 +324,7 @@ namespace CommunicationWorkerRole
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetConfirmationNumber, InvoiceApiStatusEnum.InProgress);
 
                 service.SetConfirmationNumberStatus(aRInvoicePM);
-                service.Update(aRInvoicePM, true);
+                service.Update(aRInvoicePM, false);
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GetConfirmationNumber, InvoiceApiStatusEnum.Done);
 
                 ApproveInvoice(service);
@@ -366,8 +359,7 @@ namespace CommunicationWorkerRole
                     { "ARInvoiceId", aRInvoicePM.Id },
                     { "Tenant", tenant.ToString() },
                     { "BatchIdFromInterestInvoice", null },
-                    {"invoiceApiCommunicationLogId", invoiceApiCommunicationLog.Id},
-                    {"InvoiceApiCommunicationLogMessageBody" , response?.MessageValues?.ToString()},
+                    {"invoiceApiCommunicationLogId", invoiceApiCommunicationLog.Id}
                    }, tenant);
             }
             catch (Exception ex)
@@ -381,18 +373,19 @@ namespace CommunicationWorkerRole
         {
             try
             {
-                UpdateCommunicationStatus(InvoiceApiStepEnum.PrintOrSendInvoice, InvoiceApiStatusEnum.InProgress);
 
                 if (aRInvoicePM == null)
                 {
                     GetARInvoice();
                 }
+                UpdateCommunicationStatus(InvoiceApiStepEnum.PrintOrSendInvoice, InvoiceApiStatusEnum.InProgress);
+
                 IInvoiceContext invoiceContext = InvoiceContext.GetContext(tenant);
 
                 ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
-                invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant);
+                invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant, aRInvoicePM.CreatedByUserId);
 
-                UpdateCommunicationStatus(InvoiceApiStepEnum.ApproveInvoice, InvoiceApiStatusEnum.Done);
+                UpdateCommunicationStatus(InvoiceApiStepEnum.PrintOrSendInvoice, InvoiceApiStatusEnum.Done);
 
             }
             catch (Exception ex)
@@ -688,14 +681,7 @@ namespace CommunicationWorkerRole
                     IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                     InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
                     if (exception != null)
-                    {
-                        var exceptionDict = new Dictionary<string, object>
-                        {
-                            { "exception", exception },
-                            { "MessageValues", response?.MessageValues },
-                            { "ARInvoiceId" , aRInvoicePM?.Id}
-                        };
-                        exception = Newtonsoft.Json.JsonConvert.SerializeObject(exceptionDict);
+                    {                      
                         CreateEvent("ICFD", exception);
 
                     }
@@ -831,17 +817,9 @@ namespace CommunicationWorkerRole
         public void GetARInvoice()
         {
             ARInvoiceQuery aRInvoiceQueryService = new ARInvoiceQuery(tenant);
-            var exceptionJson = invoiceApiCommunicationLog.Exception;
-            var exceptionDict = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(exceptionJson);
-            var arInvoiceId = exceptionDict != null && exceptionDict.ContainsKey("ARInvoiceId")
-                ? exceptionDict["ARInvoiceId"]?.ToString()
-                : null;
-            if (string.IsNullOrWhiteSpace(arInvoiceId))
-                throw new Exception("ARInvoiceId not found in exception data for Guid: " + response.MessageValues["Guid"]);
-
-            aRInvoicePM = aRInvoiceQueryService.GetSinglePM(arInvoiceId, tenant);
+            aRInvoicePM = aRInvoiceQueryService.GetSinglePM(invoiceApiCommunicationLog?.ARInvoiceId, tenant);
             if (aRInvoicePM == null)
-                throw new Exception("ARInvoicePM not found for Id: " + arInvoiceId);
+                throw new Exception("ARInvoicePM not found for Id: " + invoiceApiCommunicationLog?.ARInvoiceId);
         }
 
 
