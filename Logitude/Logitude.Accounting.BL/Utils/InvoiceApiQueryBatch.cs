@@ -133,9 +133,10 @@ namespace Logitude.Accounting.BL.Utils
                     CreateDate = DateTime.Now,
                     StatusCode = InvoiceApiStatusEnum.Created,
                     Step = InvoiceApiStepEnum.OpenInvoiceApiSession,
-                    SearchFields = guid + "," + tenant,
-                    Tenant = tenant
-                    
+                    SearchFields = guid + "," + tenant ,
+                    Tenant = tenant,
+                     ExternalID = guid,
+
                 };
                 log.ChangeSetOp = ChangeSetOperation.Insert;
                 IAccountingContext accountingContext = AccountingContext.GetContext(tenant);

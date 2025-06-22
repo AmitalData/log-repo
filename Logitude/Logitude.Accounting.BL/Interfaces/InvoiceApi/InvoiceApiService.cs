@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.MagayaRef;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.MagayaRef;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.Data.Repositories;
 using Newtonsoft.Json;
@@ -135,37 +136,21 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
         }
 
 
-        public bool ReSendQueue(string  id,int tenant)
+        public void ReSendQueue(string  id,int tenant)
         {
             InvoiceApiQueryBatch invoiceApiQueryBatch = new InvoiceApiQueryBatch();
             try
             {
                 InvoiceApiCommunicationLogRepository invoiceApiCommunicationLogRepository = new InvoiceApiCommunicationLogRepository(tenant);
                var communicationLog= invoiceApiCommunicationLogRepository.GetSingle(id, tenant);
-                if(!string.IsNullOrWhiteSpace(communicationLog?.Exception))
-                {
-                    var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(communicationLog?.Exception);
-                    const string messageKey = "MessageValues";
-                    if (dict != null && dict.ContainsKey(messageKey))
-                    {
-                        Dictionary<string, string> messageValues = null;
-                        if (dict[messageKey] is JObject jObject)
-                        {
-                            messageValues = jObject.ToObject<Dictionary<string, string>>();
-                        }
-                        else if (dict[messageKey] is Dictionary<string, string> directDict)
-                        {
-                            messageValues = directDict;
-                        }
-                        if (messageValues != null)
-                        {
-                            invoiceApiQueryBatch.SaveInvoiceApiInvoiceInQueue(messageValues, tenant);
-                          
-                        }
-                        return true;
-                    }
-                }
-                return false;
+                communicationLog.StatusCode  = InvoiceApiStatusEnum.Pending;
+                        var messageBody = new Dictionary<string, string>
+                       {
+                        { "Guid", communicationLog?.ExternalID },
+                        { "InvoiceApiId", communicationLog?.Id},
+                        };
+                      invoiceApiQueryBatch.SaveInvoiceApiInvoiceInQueue(messageBody, tenant);
+                      
             }
             catch (Exception ex)
             {

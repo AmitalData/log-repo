@@ -199,14 +199,14 @@ namespace Logitude.BL.Helpers
 
         }
 
-        public DocumentOutPM PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs)
+        public DocumentOutPM PutCreateDocumentOut(CreateDocumentOutArgs createDocumentOutArgs ,string userId =null )
         {
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
             DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
             if (documentOutPM == null)
             {
                
-                documentOutPM = CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
+                documentOutPM = CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, userId, createDocumentOutArgs.DocumentTypeTemplateId);
                 if (createDocumentOutArgs.SignHSM)
                 {
                     IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;

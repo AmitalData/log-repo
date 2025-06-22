@@ -215,6 +215,7 @@ namespace CommunicationWorkerRole
             string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
             int tenant = 0;
             string invoiceApiCommunicationLogId = null;
+            string InvoiceApiCommunicationLogMessageBody = null;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
             string interestReportId = response.MessageValues.ContainsKey("InterestReportId") && response.MessageValues["InterestReportId"] != null
                         ? response.MessageValues["InterestReportId"].ToString()
@@ -248,17 +249,16 @@ namespace CommunicationWorkerRole
                     {
                         try
                         {
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Done, arinvoiceId,null);
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.InProgress, arinvoiceId, null);
+                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Done, invoiceApiCommunicationLogId, null);
+                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.InProgress, invoiceApiCommunicationLogId, null);
 
-                            invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant);
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Done, arinvoiceId, null);
+                            invoiceService.PrintOrSendInvoice(aRInvoicePM.Id, aRInvoicePM.InvoiceNumber, tenant, aRInvoicePM.CreatedByUserId);
+                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Done, invoiceApiCommunicationLogId, null);
 
                         }
                         catch (Exception e)
                         {
-                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, arinvoiceId, e.Message);
-                            throw e;
+                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.PrintOrSendInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, invoiceApiCommunicationLogId, e.Message );
                         }
                     }
 
@@ -346,7 +346,12 @@ namespace CommunicationWorkerRole
                     if (response.RetryNumber >= 4 || invoice.StatusCode == "AD")
                     {
                         InvoiceApprovalFailed(invoice, ex.Message, invoiceRepository);
+                        if (!string.IsNullOrEmpty(invoiceApiCommunicationLogId))
+                        {
+                            UpdateInvoiceApiCommunication(tenant, Logitude.Accounting.BL.CloseTables.InvoiceApiStepEnum.ApproveInvoice, Logitude.Accounting.BL.CloseTables.InvoiceApiStatusEnum.Failed, invoiceApiCommunicationLogId, ex.Message);
 
+
+                        }
                         if (aRInvoicePM.ARInvoiceTypeCode == "IT")
                         {
                             UpdateInterestReportsStatues(interestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
@@ -442,15 +447,7 @@ namespace CommunicationWorkerRole
             {
                 IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
                 InvoiceApiCommunicationLogUpdateService invoiceApiCommunicationLogUpdateService = new InvoiceApiCommunicationLogUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
-                if (exception != null)
-                {
-                    var exceptionDict = new Dictionary<string, object>
-                        {
-                            { "exception", exception },
-                            { "ARInvoiceId" , arInvoiceId}
-                        };
-                    exception = Newtonsoft.Json.JsonConvert.SerializeObject(exceptionDict);
-                }
+               
                 invoiceApiCommunicationLogUpdateService.UpdateCommunicationStatus(invoiceApiCommunicationLog, tenant, step, status, exception);
 
             }
@@ -486,7 +483,6 @@ namespace CommunicationWorkerRole
                 Notes = exception
             });
         }
-
      
 
     }

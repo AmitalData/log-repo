@@ -66,6 +66,31 @@ export class InvoiceApiCommunicationLogPM {
     public set Exception(newValue: string) { if (this.exception != newValue) { this.exception = newValue; this.MarkAsDirty("Exception"); } }
        
 	 
+    private statusName: string;
+    public get StatusName() { return this.statusName; }
+    public set StatusName(newValue: string) { if (this.statusName != newValue) { this.statusName = newValue; this.MarkAsDirty("StatusName"); } }
+       
+	 
+    private stepName: string;
+    public get StepName() { return this.stepName; }
+    public set StepName(newValue: string) { if (this.stepName != newValue) { this.stepName = newValue; this.MarkAsDirty("StepName"); } }
+       
+	 
+    private externalID: string;
+    public get ExternalID() { return this.externalID; }
+    public set ExternalID(newValue: string) { if (this.externalID != newValue) { this.externalID = newValue; this.MarkAsDirty("ExternalID"); } }
+       
+	 
+    private aRInvoiceId: string;
+    public get ARInvoiceId() { return this.aRInvoiceId; }
+    public set ARInvoiceId(newValue: string) { if (this.aRInvoiceId != newValue) { this.aRInvoiceId = newValue; this.MarkAsDirty("ARInvoiceId"); } }
+       
+	 
+    private invoiceNumber: string;
+    public get InvoiceNumber() { return this.invoiceNumber; }
+    public set InvoiceNumber(newValue: string) { if (this.invoiceNumber != newValue) { this.invoiceNumber = newValue; this.MarkAsDirty("InvoiceNumber"); } }
+       
+	 
 
     public OldEntityPM: InvoiceApiCommunicationLogPM;
 		
