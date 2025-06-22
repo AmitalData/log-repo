@@ -721,7 +721,7 @@
                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                     (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
                                 <div style="height: 20px;padding-bottom: 0px;top:2px; left:5px;width:30px">
-                                    <IconButton [IsEnabled]="!IsReadOnly" [Name]="'Add'" [IsSmall]="true" (click)="addItemLine()" style="top:18px; "></IconButton>
+                                    <IconButton [IsEnabled]="!IsDisplayOnly" [Name]="'Add'" [IsSmall]="true" (click)="addItemLine()" style="top:18px; "></IconButton>
                                 </div>
                             </div>
                         </td>

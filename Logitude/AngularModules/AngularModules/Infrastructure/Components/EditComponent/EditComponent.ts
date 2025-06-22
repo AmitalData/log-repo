@@ -1160,134 +1160,134 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
             case "Master":
             case "Shipment":
-                {
-                    // SHCO: Shipment Consolidations
-                    if (this.EntityPM.ShipmentLevelCode == "H" || this.EntityPM.ShipmentLevelCode == "D") {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHCO");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
+            {
+                // SHCO: Shipment Consolidations
+                if (this.EntityPM.ShipmentLevelCode == "H" || this.EntityPM.ShipmentLevelCode == "D") {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHCO");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
                     }
-
-                    // SHMS: Shipment Master
-                    if (this.EntityPM.ShipmentLevelCode != "H") {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHMS");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-
-                    if (this.EntityPM.ShipmentLevelCode == "C") {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHPI");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-
-                    // SHCF: Customs File
-                    if (this.EntityPM.ShipmentLevelCode != "D" && this.EntityPM.ShipmentLevelCode != "H") {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHCF");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-
-                    //Customs
-                    if (this.EntityPM.ShipmentLevelCode == "C") {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHCT");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-                    else {
-                        if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                            if (!ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
-                                var indexOfTab = allTabs.findIndex(t => t.Code == "SHCT");
-                                if (indexOfTab > -1) {
-                                    allTabs.splice(indexOfTab, 1);
-                                }
-                            }
-                        }
-                    }
-
-                    // SHFF: Freight Files
-                    if (this.EntityPM.ShipmentLevelCode != "A") {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHFF");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-                    if (this.EntityPM.TransportModeId == 'A') {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    } else {
-                        if (!this.EntityPM.IsCustomShipment) {
-                            var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
-                            if (indexOfTab > -1) {
-                                allTabs.splice(indexOfTab, 1);
-                            }
-                        }
-                    }
-                    
-                    if(!this.EntityPM.IsCustomShipment){
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "INTR");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-                    if (this.EntityPM.TransportModeId == 'A') {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    } else {
-                        if (!this.EntityPM.IsCustomShipment) {
-                            var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
-                            if (indexOfTab > -1) {
-                                allTabs.splice(indexOfTab, 1);
-                            }
-                        }
-                    }
-                    
-                    if(!this.EntityPM.IsCustomShipment){
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "INTR");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-
-
-                    // MHGC: Master General
-                    // SHGC: Shipment General
-                    if (this.EntityPM.ShipmentLevelCode == "C") {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHGC");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-
-                    else {
-                        var indexOfTab = allTabs.findIndex(t => t.Code == "MHGC");
-                        if (indexOfTab > -1) {
-                            allTabs.splice(indexOfTab, 1);
-                        }
-                    }
-
-                    break;
                 }
+
+                // SHMS: Shipment Master
+                if (this.EntityPM.ShipmentLevelCode != "H") {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHMS");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+
+                if (this.EntityPM.ShipmentLevelCode == "C") {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHPI");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+
+                // SHCF: Customs File
+                if (this.EntityPM.ShipmentLevelCode != "D" && this.EntityPM.ShipmentLevelCode != "H") {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHCF");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+
+                //Customs
+                if (this.EntityPM.ShipmentLevelCode == "C") {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHCT");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+                else {
+                    if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
+                        if (!ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
+                            var indexOfTab = allTabs.findIndex(t => t.Code == "SHCT");
+                            if (indexOfTab > -1) {
+                                allTabs.splice(indexOfTab, 1);
+                            }
+                        }
+                    }
+                }
+
+                // SHFF: Freight Files
+                if (this.EntityPM.ShipmentLevelCode != "A") {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHFF");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+                if (this.EntityPM.TransportModeId == 'A') {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                } else {
+                    if (!this.EntityPM.IsCustomShipment) {
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
+                }
+                
+                if(!this.EntityPM.IsCustomShipment){
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "INTR");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+                if (this.EntityPM.TransportModeId == 'A') {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                } else {
+                    if (!this.EntityPM.IsCustomShipment) {
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
+                }
+                
+                if(!this.EntityPM.IsCustomShipment){
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "INTR");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+
+
+                // MHGC: Master General
+                // SHGC: Shipment General
+                if (this.EntityPM.ShipmentLevelCode == "C") {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "SHGC");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+
+                else {
+                    var indexOfTab = allTabs.findIndex(t => t.Code == "MHGC");
+                    if (indexOfTab > -1) {
+                        allTabs.splice(indexOfTab, 1);
+                    }
+                }
+
+                break;
             }
+        
             case "User": {
                 if (SessionLocator.Tenant != 0) {
                     var indexOfTab = allTabs.findIndex(t => t.Code == "USDS");
@@ -1338,7 +1338,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
         this.EditComponentController.FilterTabs(allTabs);
 
-
+    
 
         return allTabs;
     }
