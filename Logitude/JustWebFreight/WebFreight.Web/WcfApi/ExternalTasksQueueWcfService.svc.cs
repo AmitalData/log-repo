@@ -421,10 +421,10 @@ namespace WebFreight.Web.WcfApi
                     {
                         foreach (var field in queryParams)
                         {
-                            //cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
+                            
                             cmd.Parameters.Add(sql_logi.get_SqlParameter(field.Key, field.Value));
                         }
-                        //if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        
                         if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter
                         {
                             ParameterName = "@Tenant",
@@ -620,7 +620,7 @@ namespace WebFreight.Web.WcfApi
                             XmlDocument doc = new XmlDocument();
                             MemoryStream ms = new MemoryStream(filedata);
                             doc.Load(ms);
-                            //result = doc.InnerXml;
+                            
 
                             List<QueueTask> taskslist = LogitudeXmlSerializer.DeserializeObject<List<QueueTask>>(doc.InnerXml);
                             envelope.CommunicationLogId = communicationLogId;

@@ -103,7 +103,7 @@ namespace WebFreight.Web
             paramer_type pt = parameters_type.Where(p => p.name.ToUpper() == name.ToUpper()).FirstOrDefault();
             if (pt==null)
             {
-                ret = new SqlParameter(name, val);
+                ret = new SqlParameter(name, SqlDbType.VarChar);
             }
             else
             {
@@ -111,7 +111,7 @@ namespace WebFreight.Web
                 {
                     ret = new SqlParameter(name, SqlDbType.VarChar, Convert.ToInt32(pt.psize));
                 }
-                else if (pt.ptype.ToLower() == "nvarnhar")
+                else if (pt.ptype.ToLower() == "nvarchar")
                 {
                     ret = new SqlParameter(name, SqlDbType.NVarChar, Convert.ToInt32(pt.psize));
                 }
@@ -131,8 +131,10 @@ namespace WebFreight.Web
                 {
                     ret = new SqlParameter(name, SqlDbType.Bit);
                 }
-                ret.SqlValue = val;
+                
             }
+            
+            ret.Value = val ?? string.Empty;
             return (ret);
         }
 
