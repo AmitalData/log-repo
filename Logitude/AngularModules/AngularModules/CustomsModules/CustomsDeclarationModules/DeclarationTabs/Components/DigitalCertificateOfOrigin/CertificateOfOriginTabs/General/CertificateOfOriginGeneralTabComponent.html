@@ -87,12 +87,8 @@
                         </td>
                         <td style="width: 30px;"></td>
                         <td style="width:130px">
-                            <!-- <LogLabel [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext"></LogLabel> -->
                         </td>
                         <td style="width:180px">
-                            <!-- <LogDatePicker [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker> -->
                         </td>
                     </tr>
 
@@ -600,7 +596,6 @@
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
                                                 [binding]="'InvoiceSum'" [width]="'251'" [Alignment]="'right'">
-                                                <!-- [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'"> -->
                                                 <ng-template let-item>
                                                     <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                                         #logcelltemplate>
@@ -613,33 +608,6 @@
                                                     </log-cell-template>
                                                 </ng-template>
                                             </log-column>
-                                            <!-- remove from ui -->
-                                            <!-- <log-column
-                                    [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
-                                    [binding]="'DescriptionOfInvoice'" [width]="'175'" [Alignment]="'right'"
-                                    [Editable]="true">
-                                    <ng-template let-item>
-                                        <log-cell-template #logcelltemplate
-                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
-                                                <span>{{item.DescriptionOfInvoice}}</span>
-                                            </div>
-                                            <div style="width: 164.5px;" class="DescriptionBox" *ngIf="!IsDisplayOnly">
-                                                <LogTextBox #DescriptionOfInvoiceTextBox
-                                                    [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
-                                                    [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
-                                                    [Text]="item.DescriptionOfInvoice"
-                                                    [ObjectTableName]="'Customs.CertificateOriginInvoice'"
-                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true"
-                                                    [Direction]="'LTR'">
-                                                </LogTextBox>
-                                            </div>
-                                        </log-cell-template>
-
-                                    </ng-template>
-                                </log-column> -->
-
                                             <log-column
                                                 [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
                                                 [binding]="'IsInvoicesForPrint'" [width]="'40'" [Alignment]="'right'">
@@ -786,11 +754,6 @@
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <!-- <div class="TextTrimming" style="text-align:right"
-                                                *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.MarksAndNumbers}}</span>
-                                            </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode"> -->
                                                 <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="IsDisplayOnly">
                                                     <span>{{item.MarksAndNumbers}}</span>
@@ -817,11 +780,6 @@
                                             <log-cell-template #logcelltemplate
                                                 (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                                 [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
-                                                <!-- <div class="TextTrimming" style="text-align:right"
-                                                *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.ItemDescription}}</span>
-                                            </div>
-                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="logcelltemplate.IsEditMode"> -->
                                                 <div class="TextTrimming" style="text-align:right"
                                                     *ngIf="IsDisplayOnly">
                                                     <span>{{item.ItemDescription}}</span>
