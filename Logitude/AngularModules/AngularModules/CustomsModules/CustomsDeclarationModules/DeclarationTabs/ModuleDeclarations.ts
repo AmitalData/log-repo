@@ -43,7 +43,6 @@ import { CertificateOfOriginMoreDetailsTabComponent } from './Components/Digital
 import { CertificateAnswersComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent';
 import { UpdateCertificateOfOriginGeneralFieldComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/UpdateCertificateOfOriginGeneralFieldComponent';
 
-
 export const Components =
     [
         DeclarationGeneralComponent,
@@ -88,7 +87,7 @@ export const Components =
         CertificateOfOriginGeneralTabComponent,
         UpdateCertificateOfOriginGeneralFieldComponent,
         CertificateOfOriginMoreDetailsTabComponent,
-        CertificateAnswersComponent
+        CertificateAnswersComponent,
 
     ];
 
