@@ -320,7 +320,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 bool from_global = false;
-                if(queryParams.ContainsKey("from_global"))
+                if (queryParams.ContainsKey("from_global"))
                 {
                     bool.TryParse(queryParams["from_global"], out from_global);
                     queryParams.Remove("from_global");
@@ -378,7 +378,7 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-                String remark ="";
+                String remark = "";
 
                 Dictionary<string, string> results = new Dictionary<string, string>();
                 List<List<string>> all_lines = new List<List<string>>();
@@ -410,27 +410,38 @@ namespace WebFreight.Web.WcfApi
                         string[] sourceConnectionArray = DBConnection.Split(',');
                         ConnectionStringArguments sourceConnectionStringArguments = GetConnectionStringArguments(sourceConnectionArray);
                         string ConnectionString = BuildConnectionString(sourceConnectionStringArguments);
-                        
+
                         connection.ConnectionString = ConnectionString;
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GlobalDB : " + connection.ConnectionString);
-                        remark = "GlobalDB tenant=" + tenant.ToString()+ " " + connection.ConnectionString;
+                        remark = "GlobalDB tenant=" + tenant.ToString() + " " + connection.ConnectionString;
                     }
-                    
+
                     connection.Open();
                     using (var cmd = new SqlCommand(sqlQuery, connection))
                     {
                         foreach (var field in queryParams)
                         {
-                            
+
                             cmd.Parameters.Add(sql_logi.get_SqlParameter(field.Key, field.Value));
                         }
-                        
-                        if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter
+                        if (sql_logi.HAS_TENANT)
                         {
-                            ParameterName = "@Tenant",
-                            SqlDbType = SqlDbType.Int,
-                            SqlValue = tenant
-                        });
+                            if (tenant > 0)
+                            {
+                                cmd.Parameters.Add(new SqlParameter
+                                {
+                                    ParameterName = "@Tenant",
+                                    SqlDbType = SqlDbType.Int,
+                                    SqlValue = tenant
+                                });
+                            }
+                            else
+                            {
+                                // Log the invalid tenant or handle the error appropriately
+                                throw new ArgumentException("Invalid tenant ID: " + tenant);
+                            }
+                        }
+
                         if (sql_logi.IS_INSERT)
                         {
                             rows_effected = cmd.ExecuteNonQuery();

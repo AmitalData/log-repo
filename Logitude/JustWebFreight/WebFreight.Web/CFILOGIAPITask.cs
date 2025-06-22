@@ -109,11 +109,13 @@ namespace WebFreight.Web
             {
                 if (pt.ptype.ToLower() == "varchar")
                 {
-                    ret = new SqlParameter(name, SqlDbType.VarChar, Convert.ToInt32(pt.psize));
+                    int size = string.IsNullOrEmpty(pt.psize) ? -1 : Convert.ToInt32(pt.psize);
+                    ret = new SqlParameter(name, SqlDbType.VarChar, size);
                 }
                 else if (pt.ptype.ToLower() == "nvarchar")
                 {
-                    ret = new SqlParameter(name, SqlDbType.NVarChar, Convert.ToInt32(pt.psize));
+                    int size = string.IsNullOrEmpty(pt.psize) ? -1 : Convert.ToInt32(pt.psize);
+                    ret = new SqlParameter(name, SqlDbType.NVarChar, size);
                 }
                 else if (pt.ptype.ToLower() == "int")
                 {
