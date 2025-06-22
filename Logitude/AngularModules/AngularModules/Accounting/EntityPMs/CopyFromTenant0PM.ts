@@ -59,6 +59,11 @@ export class CopyFromTenant0PM {
     public set CreatedByUserName(newValue: string) { if (this.createdByUserName != newValue) { this.createdByUserName = newValue; this.MarkAsDirty("CreatedByUserName"); } }
        
 	 
+    private alwaysEnabled: boolean;
+    public get AlwaysEnabled() { return this.alwaysEnabled; }
+    public set AlwaysEnabled(newValue: boolean) { if (this.alwaysEnabled != newValue) { this.alwaysEnabled = newValue; this.MarkAsDirty("AlwaysEnabled"); } }
+       
+	 
 
     public OldEntityPM: CopyFromTenant0PM;
 		

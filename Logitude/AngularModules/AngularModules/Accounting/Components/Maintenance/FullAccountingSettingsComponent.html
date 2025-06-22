@@ -1084,7 +1084,7 @@
 
                                                 <!-- CustomerControlAccountId -->
                                                 <tr class="FormFieldRow">
-                                                    <td style="width:170px">
+                                                    <td style="width:175px">
                                                         <div>
                                                             {{cft0.TableName}}
                                                         </div>
@@ -1092,7 +1092,7 @@
 
                                                     <td style="width: 75px;">
                                                         <button class="Button"
-                                                            [disabled]="disabledCopyFromTenant0 ? true:cft0.CreateDate?true:false"
+                                                            [disabled]="!cft0.AlwaysEnabled && (disabledCopyFromTenant0 || cft0.CreateDate)"
                                                             (click)="CopyTable(cft0.TableName)">העתק</button>
                                                     </td>
                                                     <td style="width: 20px;">

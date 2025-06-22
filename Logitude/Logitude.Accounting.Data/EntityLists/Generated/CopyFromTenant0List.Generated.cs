@@ -28,6 +28,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TableName  { get; set; }
        [DataMember]
        public string CreatedByUserName  { get; set; }
+       [DataMember]
+       public bool AlwaysEnabled  { get; set; }
    }
 
 }

@@ -132,6 +132,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsCopiedAtSignup"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OriginalTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReportId"
     ReferencedTable="Reports"
