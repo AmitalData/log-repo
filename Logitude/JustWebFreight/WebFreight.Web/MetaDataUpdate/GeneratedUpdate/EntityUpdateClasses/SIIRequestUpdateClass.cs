@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "6beaeb2dbdd9e01b93b1352e68b58a65";
+		public const string HashString = "53eb73231aec9d05a24e324481b10cc2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "935b",
+			      				    Code =  "d902",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1896,6 +1896,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOSendingRequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.SendingRequest", DefaultText = "Sending Request",LocalDefaultText = @"BS64:Itep15XXnNeXINeR16fXqdeUINec157Xm9eV158g16rXp9eg15nXnSI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestONoRowSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.NoRowSelected", DefaultText = "Please select at least one row to send the request.",LocalDefaultText = @"BS64:IteZ16kg15zXkdeX15XXqCDXnNek15fXldeqINep15XXqNeUINeQ15fXqiDXnNep15zXmdeX15QuIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestORequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Request", DefaultText = "Request",LocalDefaultText = @"BS64:IteR16fXqdeUIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
