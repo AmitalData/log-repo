@@ -1252,6 +1252,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);
                         }
+                    }
                     if (this.EntityPM.TransportModeId == 'A') {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
                         if (indexOfTab > -1) {
