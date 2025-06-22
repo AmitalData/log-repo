@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public JournalAnalyseResult AnalyseWithSkip(int? ptenant, string FileContent)
         {
             JournalAnalyseResult journalAnalyseResult = new JournalAnalyseResult();
-            journalAnalyseResult.Journal = this.Analyse(ptenant, FileContent);
+            journalAnalyseResult.JournalPM = this.Analyse(ptenant, FileContent);
             journalAnalyseResult.DuplicatesSkipped = this.DuplicatesSkippedCount;
             return journalAnalyseResult;
         }
@@ -91,7 +91,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             Tenant = tenant,
-                            ///journal.JournalNumber = "1";
                             CreateDate = @now,
                             AccountingDate = j1stLineDTO.AccountingDate,
                             TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
@@ -425,7 +424,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
     public class JournalAnalyseResult
     {
-        public JournalPM Journal { get; set; }
+        public JournalPM JournalPM { get; set; }
         public int DuplicatesSkipped { get; set; }
     }
 
