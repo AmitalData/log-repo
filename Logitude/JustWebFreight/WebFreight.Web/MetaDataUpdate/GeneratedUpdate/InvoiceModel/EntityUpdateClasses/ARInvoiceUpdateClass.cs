@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "9f8b4580bab3c8952ca0c3cc004ce428";
+		public const string HashString = "9f8b4580bab3c8952ca0c8ud004ce487";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
 
         {                     
@@ -17369,6 +17369,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceOReconfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.Reconfirm", DefaultText = "Reconfirm",LocalDefaultText = @"אשר מחדש", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceODraftInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.DraftInvoice", DefaultText = "Draft Invoice", LocalDefaultText = @"חשבונית טיוטה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOApprovalInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.ApprovalInvoice", DefaultText = "This invoice is already approved", LocalDefaultText = @"חשבונית זו כבר אושרה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOInvoiceInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.InvoiceInProgress", DefaultText = "The invoice is already in the approval process", LocalDefaultText = @"החשבונית כבר נמצאת בתהליך אישור", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

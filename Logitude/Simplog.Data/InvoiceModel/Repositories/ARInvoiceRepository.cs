@@ -121,7 +121,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
                 else if (!string.IsNullOrEmpty(entity.DraftNumber))
                 {
-                    myResult = entity.DraftNumber;
+                    myResult = "Draft: " + entity.DraftNumber;
                 }
             }
 

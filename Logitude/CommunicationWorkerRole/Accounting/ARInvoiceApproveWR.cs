@@ -217,6 +217,12 @@ namespace CommunicationWorkerRole
             string invoiceApiCommunicationLogId = null;
             string InvoiceApiCommunicationLogMessageBody = null;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+            string interestReportId = response.MessageValues.ContainsKey("InterestReportId") && response.MessageValues["InterestReportId"] != null
+                        ? response.MessageValues["InterestReportId"].ToString()
+                        : string.Empty;
+            string batchId = response.MessageValues.ContainsKey("BatchIdFromInterestInvoice") && response.MessageValues["BatchIdFromInterestInvoice"] != null
+                        ? response.MessageValues["BatchIdFromInterestInvoice"].ToString()
+                        : string.Empty;
 
             ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
             ARInvoicePM aRInvoicePM = aRInvoiceQuery.GetSinglePM(arinvoiceId, tenant);
@@ -264,41 +270,50 @@ namespace CommunicationWorkerRole
 
 
 
-                    if (aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber))
+                    if (aRInvoicePM.ARInvoiceTypeCode == "IT" && !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) && aRInvoicePM.InvoiceNumber != aRInvoicePM.Id)
                     {
-
-                        using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                        try
                         {
-                            InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
-                            InterestReportPM interestReportPM = interestReportQueryService.GetSingle(aRInvoicePM.InterestReportId, false, true);
-                            try
+                            aRInvoicePM.InterestReportId = interestReportId;
+                            UpdateInterestReportsStatues(interestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
+
+                            if (!string.IsNullOrEmpty(batchId))
                             {
+                                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                                {
+                                    InterestReportQueryService interestReportQueryService = new InterestReportQueryService(tenant);
+                                    InterestReportPM interestReportPM = interestReportQueryService.GetSingle(interestReportId, false, true);
+                                    try
+                                    {
 
-                                invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
-                                UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "2", aRInvoicePM.CreatedByUserId, aRInvoicePM);
-                                invoiceService.SignInvoice(aRInvoicePM, tenant);
-                                NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
-                                scope.Complete();
+                                        invoiceService.BuildDocumentsForNewInvoice(aRInvoicePM, interestReportPM);
+                                        invoiceService.SignInvoice(aRInvoicePM, tenant);
+                                        NetCommonHelper.Logger.DevLog.Instance.WriteTrace("End CreateInvoiceForInterestReport (*3*) aRInvoicePM.Id=" + aRInvoicePM.Id);
+                                        scope.Complete();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        scope.Dispose();
+                                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReportPM.Id);
+                                        UpdateInterestReportsStatues(interestReportId, tenant, "10", aRInvoicePM.CreatedByUserId, null, ex.Message);
+
+                                    }
+
+                                }
                             }
-                            catch (Exception ex)
-                            {
-                                scope.Dispose();
-                                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in CreateInvoiceForInterestReport (*4*) interestReport.Id=" + interestReportPM.Id);
-                                UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
-
-                            }
-
                         }
-
+                        catch (Exception ex)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in UpdateInterestInvoiceStatus");
+                        }
                     }
+                        
+
 
                 }
                 catch (BusinessErrorException ex)
                 {
-                    string batchId = response.MessageValues.ContainsKey("BatchIdFromInterestInvoice") && response.MessageValues["BatchIdFromInterestInvoice"] != null
-                        ? response.MessageValues["BatchIdFromInterestInvoice"].ToString()
-                        : string.Empty;
-
+                    
                     BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
                     BatchTaskExecutionPM batchTask = batchTaskExecutionQueryService.GetSingle(batchId, false, true);
                     if (batchTask == null) return;
@@ -336,7 +351,7 @@ namespace CommunicationWorkerRole
                         }
                         if (aRInvoicePM.ARInvoiceTypeCode == "IT")
                         {
-                            UpdateInterestReportsStatues(aRInvoicePM.InterestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
+                            UpdateInterestReportsStatues(interestReportId, tenant, "9", aRInvoicePM.CreatedByUserId, null, ex.Message);
                         }
                     }
 
