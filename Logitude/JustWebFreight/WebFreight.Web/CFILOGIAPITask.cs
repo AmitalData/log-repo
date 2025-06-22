@@ -135,8 +135,25 @@ namespace WebFreight.Web
                 }
                 
             }
+
+
+            switch (ret.SqlDbType)
+            {
+                case SqlDbType.Int:
+                    ret.Value = int.TryParse(val, out var i) ? (object)i : DBNull.Value;
+                    break;
+                case SqlDbType.DateTime:
+                    ret.Value = DateTime.TryParse(val, out var dt) ? (object)dt : DBNull.Value;
+                    break;
+                case SqlDbType.Bit:
+                    ret.Value = bool.TryParse(val, out var b) ? (object)b : DBNull.Value;
+                    break;
+                default:
+                    ret.Value = val ?? string.Empty;
+                    break;
+            }
+
             
-            ret.Value = val ?? string.Empty;
             return (ret);
         }
 
