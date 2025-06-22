@@ -12,6 +12,7 @@ import { ConnectedToItem } from '../../../../../CustomsDocuments/Components/Conn
 import { CustomsDocumentPM } from '../../../../../../Customs/EntityPMs/CustomsDocumentPM';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsController {
     private originalCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
@@ -79,15 +80,18 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     }
 
     FillConnectedToItems() {
-        let connectedItems: ConnectedToItem[] = [];
-        let item = new ConnectedToItem();
-        item.Id = 1;
-        item.Name = "בקשה";
-        let item2 = new ConnectedToItem();
-        item2.Id = 2;
-        item2.Name = "שורת פרט מכס";
-        connectedItems.push(item);
-        return connectedItems;
+        var connectedItems: ConnectedToItem[] = [];
+        
+        var connectedItem1 = new ConnectedToItem();
+        connectedItem1.Id = 2;
+        connectedItem1.Name = TextCodeTranslator.Translate("Customs.SupplierInvoiceItem");
+
+        var connectedItem2 = new ConnectedToItem();
+        connectedItem2.Id = 1;
+        connectedItem2.Name = TextCodeTranslator.Translate("Customs.SupplierInvoiceItem");
+        connectedItems.push(connectedItem1);
+        connectedItems.push(connectedItem2);
+        return
     }
 
     GetRelatedEntityLabel() {
@@ -113,28 +117,28 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     }
 
     ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean, selectedIndex: number) {
-            var selectInvoicesOnly = customParam;
-            var windowArgs: any = {};
-            var certificates: any[] = [];
-            windowArgs.DeclarationPM = entityPM;
-            windowArgs.selectInvoicesOnly = selectInvoicesOnly;
-            windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
-            windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
-            var logWindow = new LogitudeWindow();
-            logWindow.Height = 700;
-            logWindow.Width = 1000;
-            logWindow.ShowCloseButton = true;
-            logWindow.WindowArgs = windowArgs;
-    
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {
-                    if (s) {
-                        this.SelectionInvoicesCompleted(comp, customsDocumentsTicket);
-                    }
-                });
+        var selectInvoicesOnly = customParam;
+        var windowArgs: any = {};
+        var certificates: any[] = [];
+        windowArgs.DeclarationPM = entityPM;
+        windowArgs.selectInvoicesOnly = selectInvoicesOnly;
+        windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
+        windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
+        var logWindow = new LogitudeWindow();
+        logWindow.Height = 700;
+        logWindow.Width = 1000;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(s => {
+                if (s) {
+                    this.SelectionInvoicesCompleted(comp, customsDocumentsTicket);
+                }
             });
-    
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
+        });
+
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
     }
 
     SelectionInvoicesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM,) {
@@ -257,7 +261,7 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
 
         this.SelectionCompleted.emit(args);
     }
-        
+
     GetAddEditDocumentsEntitySpecialCondition() {
         return true;
     }
