@@ -1460,7 +1460,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             // ServerSideSortable: true,
             // SortByName: 'Notes'
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNotes", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
 
