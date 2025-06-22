@@ -28,6 +28,7 @@ using Logitude.Customs.BL.TraceEvents;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.EntityQueries;
 
+
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class CH_NG_190_MSG1_NoticeToClientResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, CH_NG_190_MSG1_NoticeToClient, GenericRequestParams>
@@ -38,6 +39,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(CH_NG_190_MSG1_NoticeToClient customResponse, GenericRequestParams requestParams)
         {
+            const string updatePhysicalCheck = "4";
             try
             {
                 CH_NG_190_MSG1_NoticeToClientNoticeToClient NoticeToClient = customResponse.NoticeToClient;
@@ -189,6 +191,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     myUpdateEventContextTagModel2.EventRemarks = myUpdateEventContextTagModel2.EventRemarks + ". " + DeclarationConvertionText;
                                     myUpdateEventContextTagModel2.FUStatusRemarks = myUpdateEventContextTagModel2.FUStatusRemarks + "\n" + DeclarationConvertionText;
+                                }
+                                if (string.Equals(physicalCheck.BringQueueForwardIndicatorS, updatePhysicalCheck, StringComparison.CurrentCultureIgnoreCase) )
+                                {
+                                    physicalCheck.BringQueueForwardIndicatorS = null;
                                 }
                                 eventContextTagModelList.Add(myUpdateEventContextTagModel2);
                             }
