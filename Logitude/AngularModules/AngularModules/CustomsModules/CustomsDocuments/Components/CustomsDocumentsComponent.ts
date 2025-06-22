@@ -34,6 +34,7 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { CustomsDocumentsTicketPMService } from 'Customs/Services/StandardPMs/CustomsDocumentsTicketPMService';
 import { CustomDocumentTypeMetaDataList } from 'Customs/EntityLists/CustomDocumentTypeMetaDataList';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 
 @Component({
 
@@ -111,12 +112,14 @@ export class CustomsDocumentsComponent
     public customs: string = "עמילות";
     public forwarding: string = "שילוח";
     public IsFromSIIRequest : boolean = false;
+    public SIIRequestPM : SIIRequestPM = null;
     IsClose: boolean = false;
     //************************************//
     private CurrentSession = SessionLocator.SelectedSession;
 
     constructor(public entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
+        debugger;
         if (entityArgs.EntityParentPM != null) {
             this.ParentEntityCode_args = entityArgs.EntityParentPM;
         }
@@ -236,14 +239,17 @@ export class CustomsDocumentsComponent
         }
     }
     InsureCustomsDocumentsController(reload = false) {
+        const child1Id   = this.IsFromSIIRequest ? this.SIIRequestPM.Id : null;
+        const child1Name = this.IsFromSIIRequest ? 'Customs.SIIRequest'       : null;
+        
         if (AppTool.IsNullOrEmpty(this.customsDocumentsDataProvider)) {
-            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, null, null, this.ParentEntityCode);
+            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, child1Id, child1Name, this.ParentEntityCode);
         }
         if (AppTool.IsNullOrEmpty(this.iCustomsDocumentsController)) {
             this.iCustomsDocumentsController = this.customsDocumentsDataProvider.GetCustomsDocumentsController();
         }
         else if (reload) {
-            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, null, null, this.ParentEntityCode);
+            this.customsDocumentsDataProvider = new CustomsDocumentsDataProvider(this.ObjectTableName, this.EntityPM, child1Id, child1Name, this.ParentEntityCode);
 
             this.iCustomsDocumentsController = this.customsDocumentsDataProvider.GetCustomsDocumentsController();
         }
@@ -814,6 +820,7 @@ export class CustomsDocumentsComponent
         this.IsWindowMode = true;
         if(windowArgs?.FromSIIRequest){
             this.IsFromSIIRequest = true;
+            this.SIIRequestPM = windowArgs.SIIRequestPM;
         }
         this.Start(windowArgs.EntityPM, windowArgs.ObjectTableName, windowArgs.EntityParentPM, windowArgs.IsFromStandAloneScreen, windowArgs.ClosingData,windowArgs.IsClose);
     }

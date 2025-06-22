@@ -27,10 +27,13 @@ export class CustomsDocumentsDataProvider {
     private parentEntityCode: string;
 
     constructor(private objectTableName: string, private entityPM: any, private childEntity1Id = null, private childEntity1Name = null, private _parentEntityCode =null) {
+        debugger;
         this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
         var objectTable = window.ObjectTables.filter(d => d.Name === this.objectTableName)[0];
         this.ObjectTableId = objectTable.Id;
         this.parentEntityCode = _parentEntityCode;
+        this.childEntity1Id = childEntity1Id;
+        this.childEntity1Name = childEntity1Name;
          switch (this.objectTableName) {
             case 'Customs.Declaration': {
                 if (this.parentEntityCode == "DeclarationCancellation")
@@ -40,7 +43,7 @@ export class CustomsDocumentsDataProvider {
                     this.specialActivityCustomsDocumentsController = new SpecialActivityCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
                 else if (this.parentEntityCode == "ExportDeclarationClosingData")
                     this.exportDeclarationClosingDataCustomsDocumentsController = new ExportDeclarationClosingDataCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
-                else if (this.parentEntityCode == "SIIRequest")
+                else if (this.parentEntityCode == "Customs.SIIRequest")
                     this.siiRequestCustomsDocumentsController = new SIIRequestCustomsDocumentsController(entityPM, childEntity1Id, childEntity1Name);
 
                 else
@@ -68,6 +71,7 @@ export class CustomsDocumentsDataProvider {
     }
 
     GetCustomsDocumentsController(): ICustomsDocumentsController {
+        debugger;
          switch (this.objectTableName) {
             case 'Customs.Declaration': {
                 if (this.parentEntityCode == "DeclarationCancellation")
@@ -76,6 +80,9 @@ export class CustomsDocumentsDataProvider {
                      return this.exportDeclarationClosingDataCustomsDocumentsController;
                 else if (this.parentEntityCode == "SpecialRequest")
                     return this.specialActivityCustomsDocumentsController;
+                else if(this.childEntity1Name  == "Customs.SIIRequest"){
+                    return this.siiRequestCustomsDocumentsController;
+                }
 
                    else
                 return this.declarationCustomsDocumentsController;

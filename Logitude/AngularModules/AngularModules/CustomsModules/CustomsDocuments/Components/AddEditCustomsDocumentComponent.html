@@ -497,7 +497,9 @@
                 <table>
                     <tr style="height: 32px;">
                         <td colspan="4">
-                            <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()" [disabled]="!IsSendDocumentEnabled">{{ 'Customs.Declaration.O.SendDocument' |TextCodeTranslationPipe }}</button>
+                            <div *ngIf="!IsFromSIIRequest">
+                                <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()" [disabled]="!IsSendDocumentEnabled">{{ 'Customs.Declaration.O.SendDocument' |TextCodeTranslationPipe }}</button>
+                            </div>
                         </td>
                     </tr>
                     <tr>

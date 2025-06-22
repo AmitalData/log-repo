@@ -11,6 +11,7 @@ import { ServiceResponse } from '../../../../../../Infrastructure/DataContracts/
 import { ConnectedToItem } from '../../../../../CustomsDocuments/Components/ConnectedToItem';
 import { CustomsDocumentPM } from '../../../../../../Customs/EntityPMs/CustomsDocumentPM';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsController {
     private originalCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
@@ -22,6 +23,11 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     }
 
     DisplayOnlyCheck() {
+        return defer(() => {
+            var response: ServiceResponse = new ServiceResponse();
+            response.Result = { IsDisplayOnly: false, DisplayOnlyMessage: null };
+            return of(response);
+        });
     }
     CheckRequestsInProgress(documentsFilings: string) {
     }
@@ -74,6 +80,13 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
 
     FillConnectedToItems() {
         let connectedItems: ConnectedToItem[] = [];
+        let item = new ConnectedToItem();
+        item.Id = 1;
+        item.Name = "בקשה";
+        let item2 = new ConnectedToItem();
+        item2.Id = 2;
+        item2.Name = "שורת פרט מכס";
+        connectedItems.push(item);
         return connectedItems;
     }
 
@@ -82,27 +95,169 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     }
 
     GetChildrenComboboxVisibility() {
-        return false;
+        return true;
     }
 
     IsRelatedDocumentsVisible() {
-        return false;
+        return true;
     }
     UpdateCustomsDocumentb4Send(customsDocument: CustomsDocumentPM) {
     }
 
     FillDefaultMetaData(customsDocumentsTicketViewModels: CustomsDocumentTicketViewModel[]) {
-        
+
     }
 
     GetSecondChildVisibility() {
         return false;
     }
 
-    ShowSelectionComponent() {
-        return;
+    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean, selectedIndex: number) {
+            var selectInvoicesOnly = customParam;
+            var windowArgs: any = {};
+            var certificates: any[] = [];
+            windowArgs.DeclarationPM = entityPM;
+            windowArgs.selectInvoicesOnly = selectInvoicesOnly;
+            windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
+            windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
+            var logWindow = new LogitudeWindow();
+            logWindow.Height = 700;
+            logWindow.Width = 1000;
+            logWindow.ShowCloseButton = true;
+            logWindow.WindowArgs = windowArgs;
+    
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(s => {
+                    if (s) {
+                        this.SelectionInvoicesCompleted(comp, customsDocumentsTicket);
+                    }
+                });
+            });
+    
+            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
     }
 
+    SelectionInvoicesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM,) {
+        if (args.SelectedInvoices != null) {
+            customsDocumentsTicket.ConnectedInvoicesSequences = args.ConnectedInvoices;
+            customsDocumentsTicket.ConnectedInvoiceItemsSequences = args.ConnectedInvoiceItems;
+            var pointers: CustomsDocumentPointerPM[] = [];
+            customsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
+                pointers.push(pointer);
+            });
+            pointers.forEach((pointer) => {
+                if (pointer.Child1EntityId != null) {
+                    var exists = args.SelectedInvoices.Collection.filter(d => d.InvoiceCounterKey + "" == pointer.Child1EntityId)[0];
+                    if (!exists) {
+                        var editedPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Id == pointer.Id)[0];
+                        if (editedPointer != null) {
+                            if (customsDocumentsTicket.CustomsDocumentPointers.length > 1) {
+                                customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
+                            }
+                            else {
+
+                                editedPointer.Child1EntityCode = null;
+                                editedPointer.Child1EntityId = null;
+
+                            }
+                        }
+                    }
+                }
+                if (pointer.Child2EntityId != null) {
+                    var exists = args.StaticSelectedInvoiceItems.Collection.filter(d => d.CounterKey + "" == pointer.Child1EntityId && d.LineNumber + "" == pointer.Child2EntityId)[0];
+                    if (!exists) {
+                        var editedPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Id == pointer.Id)[0];
+                        if (editedPointer != null) {
+                            if (customsDocumentsTicket.CustomsDocumentPointers.length > 1) {
+                                customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
+                            }
+                            else {
+
+
+                                //var deletedInvoice = args.SupplierInvoicesList.Collection.filter(d => d.InvoiceCounterKey + "" == editedPointer.Child1EntityId)[0];
+                                //args.SupplierInvoicesList.Remove(deletedInvoice);
+                                editedPointer.Child1EntityCode = null;
+                                editedPointer.Child1EntityId = null;
+                                editedPointer.Child2EntityCode = null;
+                                editedPointer.Child2EntityId = null;
+
+                            }
+                        }
+                    }
+                }
+            });
+
+            args.SelectedInvoices.Collection.forEach((invoice) => {
+                var hasLineschosen = args.StaticSelectedInvoiceItems.Collection.filter(d => d.DeclarationId == invoice.DeclarationId && d.CounterKey == invoice.InvoiceCounterKey)[0];
+                if (!hasLineschosen) {
+                    var exists = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Child1EntityId == invoice.InvoiceCounterKey + "")[0];
+                    if (!exists) {
+                        var declarationPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.ParentEntityId == invoice.DeclarationId && d.Child1EntityId == null && d.Child2EntityId == null)[0];
+                        if (declarationPointer == null) {
+                            var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+
+                            newPointer.Tenant = SessionLocator.Tenant;
+                            newPointer.ParentEntityId = this.declarationPM.Id;
+                            newPointer.ParentEntityCode = "Declaration";//"Declaration",
+                            newPointer.Child1EntityCode = "SupplierInvoice";
+                            newPointer.Child2EntityCode = null;
+                            newPointer.Child3EntityCode = null;
+                            newPointer.Child1EntityId = invoice.InvoiceCounterKey + "";
+                            newPointer.Child2EntityId = null;
+                            newPointer.Child3EntityId = null;
+                            customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+
+                        }
+                        else {
+                            declarationPointer.Child1EntityId = invoice.InvoiceCounterKey + "";
+                            declarationPointer.Child1EntityCode = "SupplierInvoice";
+                        }
+                    }
+                }
+                else {
+                    var existedPtr: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Child1EntityId == invoice.InvoiceCounterKey + "" && d.Child2EntityId == null)[0];
+                    if (existedPtr != null) {
+                        customsDocumentsTicket.RemoveCustomsDocumentPointer(existedPtr);
+                    }
+                }
+            });
+        }
+
+        if (args.StaticSelectedInvoiceItems != null) {
+            args.StaticSelectedInvoiceItems.Collection.forEach((invoiceItem) => {
+                var exists = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Child1EntityId == invoiceItem.CounterKey + "" && d.Child2EntityId == invoiceItem.LineNumber + "")[0];
+                if (!exists) {
+                    var declarationPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.ParentEntityId == invoiceItem.DeclarationId
+                        && d.Child1EntityId == null && d.Child2EntityId == null)[0];
+                    if (declarationPointer != null) {
+                        declarationPointer.Child1EntityId = invoiceItem.CounterKey + "";
+                        declarationPointer.Child1EntityCode = "SupplierInvoice";
+                        declarationPointer.Child2EntityId = invoiceItem.LineNumber + "";
+                        declarationPointer.Child2EntityCode = "SupplierInvoiceItem";
+                    }
+                    else {
+                        var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+                        {
+                            newPointer.Tenant = SessionLocator.Tenant;
+                            newPointer.ParentEntityId = this.declarationPM.Id;
+                            newPointer.ParentEntityCode = "Declaration";
+                            newPointer.Child1EntityCode = "SupplierInvoice";
+                            newPointer.Child2EntityCode = "SupplierInvoiceItem";
+                            newPointer.Child3EntityCode = null;
+                            newPointer.Child1EntityId = invoiceItem.CounterKey + "";
+                            newPointer.Child2EntityId = invoiceItem.LineNumber + "";
+                            newPointer.Child3EntityId = null;
+                        };
+                        customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+                    }
+                }
+
+            });
+        }
+
+        this.SelectionCompleted.emit(args);
+    }
+        
     GetAddEditDocumentsEntitySpecialCondition() {
         return true;
     }
