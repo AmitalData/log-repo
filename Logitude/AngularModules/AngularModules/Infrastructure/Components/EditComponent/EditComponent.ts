@@ -62,17 +62,6 @@ import { take } from 'rxjs/operators';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { resolve } from 'cypress/types/bluebird';
 import { AdditionalCurrencyRateValidator } from 'Infrastructure/Validators/AdditionalCurrencyRateValidator';
-import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
-import { AccountingPartnerPM } from 'Common/EntityPMs/AccountingPartnerPM';
-import { AgentPM } from 'Common/EntityPMs/AgentPM';
-import { AirlinePM } from 'Common/EntityPMs/AirlinePM';
-import { CustomAgentPM } from 'Common/EntityPMs/CustomAgentPM';
-import { CustomerPM } from 'Common/EntityPMs/CustomerPM';
-import { ShippingAgentPM } from 'Common/EntityPMs/ShippingAgentPM';
-import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
-import { TruckerPM } from 'Common/EntityPMs/TruckerPM';
-import { VendorPM } from 'Common/EntityPMs/VendorPM';
-import { PartnersDomainService, PartnerServicePM } from 'Common/Services/PartnersDomainService';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -1298,7 +1287,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                     break;
                 }
-
+            }
             case "User": {
                 if (SessionLocator.Tenant != 0) {
                     var indexOfTab = allTabs.findIndex(t => t.Code == "USDS");
