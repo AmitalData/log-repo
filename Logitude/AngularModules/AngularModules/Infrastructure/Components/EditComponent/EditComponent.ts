@@ -62,6 +62,17 @@ import { take } from 'rxjs/operators';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { resolve } from 'cypress/types/bluebird';
 import { AdditionalCurrencyRateValidator } from 'Infrastructure/Validators/AdditionalCurrencyRateValidator';
+import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
+import { AccountingPartnerPM } from 'Common/EntityPMs/AccountingPartnerPM';
+import { AgentPM } from 'Common/EntityPMs/AgentPM';
+import { AirlinePM } from 'Common/EntityPMs/AirlinePM';
+import { CustomAgentPM } from 'Common/EntityPMs/CustomAgentPM';
+import { CustomerPM } from 'Common/EntityPMs/CustomerPM';
+import { ShippingAgentPM } from 'Common/EntityPMs/ShippingAgentPM';
+import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
+import { TruckerPM } from 'Common/EntityPMs/TruckerPM';
+import { VendorPM } from 'Common/EntityPMs/VendorPM';
+import { PartnersDomainService, PartnerServicePM } from 'Common/Services/PartnersDomainService';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -1241,6 +1252,30 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);
                         }
+                    if (this.EntityPM.TransportModeId == 'A') {
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    } else {
+                        if (!this.EntityPM.IsCustomShipment) {
+                            var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                            if (indexOfTab > -1) {
+                                allTabs.splice(indexOfTab, 1);
+                            }
+                        }
+                    }
+                    
+                    if(!this.EntityPM.IsCustomShipment){
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "INTR");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
                     }
 
 
@@ -1936,7 +1971,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                             res.subscribe((myResponse: ServiceResponse) => {
 
 
-                                 
                         if (myResponse.HasError) {
                             this.StopBusyIndicator();
         
@@ -2697,6 +2731,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         ServiceHelper.DeleteGeneralLock(currentEditComponent.EntityId ,currentEditComponent.ObjectTableName)
         else if(!AppTool.IsNullOrEmpty(this.EntityId) && !AppTool.IsNullOrEmpty(this.ObjectTableName))
          ServiceHelper.DeleteGeneralLock(this.EntityId , this.ObjectTableName);
+
 
     }
 }

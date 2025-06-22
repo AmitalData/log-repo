@@ -336,6 +336,8 @@ export class JournalMenuButtonsHandler {
     SaveChenges() {
 
         // the validation will be in PM Service (custom validator)
+
+        // the validation will be in PM Service (custom validator)
         this.entityArgs.EditComponent.SaveChanges();
         this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
             if ($event == true) {

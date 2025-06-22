@@ -25,7 +25,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    {  		
 		public const string HashString = "7989f01d204839358ea761f55f7580d9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-        {                     
+         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -19675,6 +19675,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "Coo Status Code",
 					  						ListLocalDefaultTextBack_up =  "קוד תעודת מקור",
 					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXqtei15XXk9eqINee16fXldeoIg==",
+
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

@@ -119,12 +119,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime createDate ;
+	  private DateTime? createDate ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime CreateDate  
+       public DateTime? CreateDate  
 	   {
 	    
 	     get
@@ -135,7 +135,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(createDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   createDate=value;
 		   }

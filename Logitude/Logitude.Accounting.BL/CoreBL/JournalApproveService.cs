@@ -1524,7 +1524,7 @@ namespace Logitude.Accounting.BL.CoreBL
                               JournalLineNumber = r.JournalLineNumber,
                               Id = r.Id,
 
-                              CreateDate = r.CreateDate,
+                              CreateDate = r.CreateDate.GetValueOrDefault(),
                               ControlAccountId = r.ControlAccountId,
                               AccountId = r.AccountId,
 

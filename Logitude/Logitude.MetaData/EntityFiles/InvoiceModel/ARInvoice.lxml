@@ -18143,7 +18143,6 @@
            IsSpellCheckedShortLocalDefaultText="false"
            IsSpellCheckedListLocalDefaultText="false"
            EnableFullscreenTextBox="false" />
-
     <field Id="&quot;cfd5c4b8-9465-49ce-9ab4-046637821743&quot;"
            FieldName="&quot;ReferenceDate&quot;"
            OldNames="ReferenceDate"
@@ -18374,7 +18373,7 @@
            IsSpellCheckedShortLocalDefaultText="false"
            IsSpellCheckedListLocalDefaultText="false"
            EnableFullscreenTextBox="false" />
-    <Query Code="&quot;Draft General Invoices&quot;"
+    <Query Code="&quot;Draft General Invoices&quot;"  
            TextCode="&quot;Draft Invoices&quot;"
            LocalTextCode="&quot;חשבוניות בסטטוס טיוטה&quot;"
            QueryGroupCode="&quot;INVC&quot;"

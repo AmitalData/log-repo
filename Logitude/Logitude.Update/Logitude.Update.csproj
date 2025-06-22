@@ -75,10 +75,10 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
-   <PropertyGroup>
+  <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -118,18 +118,32 @@
   <ItemGroup>
     <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
-</Reference>
-    <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
-     </Reference>
+    </Reference>
     <Reference Include="Azure.Identity, Version=1.11.3.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Identity.1.11.3\lib\netstandard2.0\Azure.Identity.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Design, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity.Spatials.EF6">
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.Spatials.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Vs, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Vs.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
@@ -241,7 +255,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
-
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -275,7 +288,7 @@
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-   </Reference>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
