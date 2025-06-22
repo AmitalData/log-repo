@@ -1716,18 +1716,39 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return ledgerTransactionsListQuery;
         }
 
-        public List<LedgerTransaction> GetLedgerTransactionsByJournalIds(List<string> journalIds, int tenant)
+
+
+        // Get all journal transactions and journal transactions not excluded from tax report
+        // Used in the TaxReportService
+        // Combined select and return
+        public (HashSet<LedgerTransaction> allJournalTransactions, HashSet<LedgerTransaction> journalTransactionsNotExcluded)
+        GetLedgerTransactionsByJournalIdsCombined(List<string> journalIds, int tenant)
         {
+            // Single DB query (Include Account and JournalLine to capture all required data)
+            var query = context.LedgerTransactions
+                .Include("JournalLine")
+                .Where(a => journalIds.Contains(a.JournalId) && a.Tenant == tenant)
+                .Select(a => new
+                {
+                    LedgerTransaction = a,
+                    IsExcluded = a.JournalLine.ExcludeFromTaxReport
+                })
+                .ToHashSet();
 
+            // Separate results in memory
+            var allJournalTransactions = query
+                .Select(x => x.LedgerTransaction)
+                .ToHashSet();
 
-            return (from a in context.LedgerTransactions.Include("Account")
-                    where journalIds.Contains(a.JournalId) && a.Tenant == tenant
+            var journalTransactionsNotExcluded = query
+                .Where(x => x.IsExcluded != true)
+                .Select(x => x.LedgerTransaction)
+                .ToHashSet();
 
-                    select a
-                    ).ToList();
-
-
+            return (allJournalTransactions, journalTransactionsNotExcluded);
         }
+
+
         public List<LedgerTransaction> GetLedgerTransactionsByJournalIdsAndAccountId(List<string> journalIds, string accountId, int tenant)
         {
 
