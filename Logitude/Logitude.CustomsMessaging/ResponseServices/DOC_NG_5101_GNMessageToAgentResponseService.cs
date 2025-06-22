@@ -652,6 +652,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void RaiseEvent(DeclarationPM dirtyDeclarationPM, string code, string remarks)
         {
+            if (IsExportDeclaration)
+            {
+                return;
+            }
             try
             {
                 string loggingUserId = "";
@@ -683,7 +687,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent  eventCode = " + code + " CustomFileNo= " + dirtyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true,isExport : IsExportDeclaration);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
 
             }
             catch (System.Exception)
