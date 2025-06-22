@@ -264,12 +264,14 @@ namespace WebFreight.Web
                     IsMobileLogin = logintokenparam.IsMobileLogin,
                     MobileVersion = logintokenparam.MobileVersion,
                 };
-             
+                if (LogitudeSettings.IsCostomsDeploy)
+                {
                     IGlobalContext globalContext = GlobalContext.GetContext();
                     var contactPasswordRepository = new ContactPasswordRepository(globalContext);
 
                     var dbcontact =
-                         contactPasswordRepository.GetSingleContactPassword(auttoken.Email);
+                        //globalContext.ContactPasswords.Where(c => c.Email == auttoken.Email).FirstOrDefault();
+                        contactPasswordRepository.GetSingleContactPassword(auttoken.Email);
                     if (dbcontact != null)
                     {
                         dbcontact = dbcontact ?? new ContactPassword();
@@ -277,7 +279,8 @@ namespace WebFreight.Web
                         {
                             if (dbcontact.Password != loginParameters.Password)
                             {
-                                 loginParameters.Password = dbcontact.Password;
+                               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"ihab(@Itzik):SSO:the Hash Password from token irrelevant Allow Login even though HashPass  not match");
+                                loginParameters.Password = dbcontact.Password;
                             }
                         }
                         if (dbcontact.MustChangePassword)
@@ -287,7 +290,8 @@ namespace WebFreight.Web
                             globalContext.SaveChanges();
                         }
                     }
- 
+                }
+
                 userdata = PostUserValidation(loginParameters);
 
                 if (!userdata.HasError)
