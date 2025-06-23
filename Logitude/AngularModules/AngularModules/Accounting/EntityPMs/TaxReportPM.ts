@@ -272,4 +272,4 @@ export class TaxReportPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
