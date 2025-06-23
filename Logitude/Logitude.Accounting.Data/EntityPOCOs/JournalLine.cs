@@ -90,7 +90,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("ConfirmationNumber")]
 	    public string ConfirmationNumber { get; set; }
         [Column("ExcludeFromTaxReport")]
-        public bool? ExcludeFromTaxReport { get; set; }
+	    public bool? ExcludeFromTaxReport { get; set; }
     }
 }
 	 

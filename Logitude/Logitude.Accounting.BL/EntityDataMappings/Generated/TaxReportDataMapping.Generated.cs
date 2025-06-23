@@ -102,7 +102,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ClosingJournalId, 
 	         RecalculateData, 
 	         CanRecalculate, 
-	         RemoveDuplicates,
+	         RemoveDuplicates, 
 	         IsEdited,
 	      }
 

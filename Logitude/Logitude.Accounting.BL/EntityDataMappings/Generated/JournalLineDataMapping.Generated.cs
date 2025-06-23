@@ -45,9 +45,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ExternalReconcileNumber, 
 	         IsExternalReconcile, 
 	         ActionId, 
-	         ConfirmationNumber,
-            ExcludeFromTaxReport,
-        }
+	         ConfirmationNumber, 
+	         ExcludeFromTaxReport,
+	      }
 
 
 	      public enum PMPropertyNames
@@ -95,11 +95,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         DebitAccountEnglishName, 
 	         CreditAccountEnglishName, 
 	         ConfirmationNumber, 
-            ExcludeFromTaxReport,
+	         ExcludeFromTaxReport, 
 	         DebitAccountCountryCode,
 	      }
 
-        List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
         List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
     
 	    public void PMToPOCO(JournalLinePM entityPM, JournalLine entityPOCO)
@@ -214,12 +214,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.ConfirmationNumber = entityPM.ConfirmationNumber;
 			}
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromTaxReport))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromTaxReport))
             {
-                entityPOCO.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
-            }
-        }
+				entityPOCO.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
+			}
+			}
 
 		public void POCOToPM(JournalLinePM entityPM, JournalLine entityPOCO)
         {
@@ -344,11 +344,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ConfirmationNumber = entityPOCO.ConfirmationNumber;
             }
 
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromTaxReport))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExcludeFromTaxReport))
             {
-                    entityPM.ExcludeFromTaxReport = entityPOCO.ExcludeFromTaxReport;
+					entityPM.ExcludeFromTaxReport = entityPOCO.ExcludeFromTaxReport;
             }
-        }
+
+		}
 
 		public void PMToOldPM(JournalLinePM entityPM, JournalLinePM oldEntityPM)
         {
@@ -463,12 +464,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 oldEntityPM.ConfirmationNumber = entityPM.ConfirmationNumber;
             }
-
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromTaxReport))
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExcludeFromTaxReport))
             {
                 oldEntityPM.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
             }
-        }
+			
+		}
 
 	    public void EncodeBase64NVARCHARFields(JournalLinePM entityPM)
         {
