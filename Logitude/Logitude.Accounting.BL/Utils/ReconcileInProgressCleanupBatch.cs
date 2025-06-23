@@ -11,44 +11,31 @@ namespace Logitude.Accounting.BL.Utils
     public class ReconcileInProgressCleanupBatch
     {
 
-        private string _ResponseText;
-        private HttpStatusCode _StatusCode;
+        private string responseText;
+        private HttpStatusCode statusCode;
 
         public ReconcileInProgressCleanupBatch()
         {
-            _ResponseText = "";
-            _StatusCode = HttpStatusCode.Accepted;
+            responseText = "";
+            statusCode = HttpStatusCode.Accepted;
         }
 
-        public string ResponseText()
+        public string GetResponseText()
         {
-            return _ResponseText;
+            return responseText;
         }
 
-        public HttpStatusCode StatusCode()
+        public HttpStatusCode GetStatusCode()
         {
-            return _StatusCode;
+            return statusCode;
         }
 
-        public void ResetInProgressTransactions(List<int> tenantsAccountingActivated)
+        public void ResetInProgressTransactions()
         {
-
             IAccountingContext MyContext = AccountingContext.GetContext(0);
-            LedgerTransactionQueryService queryService = new LedgerTransactionQueryService(MyContext);
-            List<LedgerTransactionPM> ledgerTransactionInProgress = queryService.GetLedgerTransactionPMInProgress(tenantsAccountingActivated);
-
-            foreach (LedgerTransactionPM item in ledgerTransactionInProgress)
-            {        item.InProgressExternalReconcile = false;
-                    item.InReconcileProgress = false;
-                    item.ChangeSetOp = ChangeSetOperation.Update;
-             }
-            LedgerTransactionUpdateService service = new LedgerTransactionUpdateService(MyContext, new Dictionary<string, IContext>(), 0);
-
-            foreach (LedgerTransactionPM item in ledgerTransactionInProgress)
-            {
-                service.Update(item, true);
-            }
-            
+           JournalQueryService queryService = new JournalQueryService(MyContext);
+           queryService.FixFailedReconcileJournals();
+            responseText = "ResetInProgressTransactions:Success";
         }
 
         

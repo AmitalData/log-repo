@@ -60,15 +60,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             try
             {
                 var temp = new Journal();
-                //if (!string.IsNullOrEmpty(MyEntity.Id))
-                //{
-                //    temp = query.GetSinglePM(MyEntity.Id, Tenant);
-                //}
-
-                //if (temp == null)
-                //{
-                //    throw new ApplicationException("GLAccount with Id " + MyEntity.Id + " doesn't exist");
-                //}
+              
                 if (string.IsNullOrEmpty(temp.Id))
                 {
                     temp.Id = MyEntity.Id;
@@ -161,9 +153,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     if (myTypeCodePM != null)
                     {
                         temp.JournalType = myTypeCodePM.JournalTypeID;
-                        //temp.JournalType.Code = myTypeCodePM.JournalTypeID;
-                        //temp.JournalType.EnglishName = myTypeCodePM.EnglishName;
-                        //temp.JournalType.LocalName = myTypeCodePM.LocalName;
                       
                     }
 
@@ -177,9 +166,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     if (myStatusCodePM != null)
                     {
                         temp.JournalStatusType = myStatusCodePM.JournalStatusID;
-                    //    temp.JournalStatusType.Code = myStatusCodePM.JournalStatusID;
-                    //    temp.JournalStatusType.EnglishName = myStatusCodePM.EnglishName;
-                    //    temp.JournalStatusType.LocalName = myStatusCodePM.LocalName;
+                    
                     }
 
                 }
@@ -221,27 +208,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             }
         }
 
-        //public string SetVoidedByJournal(Journal MyEntity, int Tenant)
-        //{
-        //    string voidedBy = null;
-        //    Logitude.Accounting.BL.EntityQueryServices.JournalQueryService JournalService = new Logitude.Accounting.BL.EntityQueryServices.JournalQueryService(Tenant);
-        //    if (MyEntity.VoidedByJournal != null)
-        //    {
-        //        var myVoidedByJournalIdPM =JournalService.GetSingleJournalByNumber(MyEntity.VoidedByJournal, Tenant);
-        //        if (myVoidedByJournalIdPM != null)
-        //        {
-
-        //            voidedBy = myVoidedByJournalIdPM.Id;
-        //        }
-
-        //    }
-
-        //    return voidedBy;
-
-        //}
-
-     
-
+        
         public string SetOriginalJournal(Journal MyEntity, int Tenant)
         {
             string original = null;
@@ -326,8 +293,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             try
             {
                 JournalPM journalPM = query.GetByAccountingEntityIdAndAccountingEntityCode(accountingEntityId, accountingEntityCode, Tenant);
-                //if (journalPM == null)
-                //    throw new ApplicationException("Journal with accounting entity id " + accountingEntityId + " and accounting entity code " + accountingEntityCode + " doesn't exist");
 
                 ARInvoiceJournalLT aRInvoiceJournalLT = new ARInvoiceJournalLT()
                 {
@@ -350,8 +315,6 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             try
             {
                 Logitude.Accounting.Def.EntityPMs.JournalLite journalLite = query.GetJournalLiteByAccountingEntityId(accountingEntityId, accountingEntityCode, Tenant);
-                //if (journalPM == null)
-                //    throw new ApplicationException("Journal with accounting entity id " + accountingEntityId + " and accounting entity code " + accountingEntityCode + " doesn't exist");
 
                 ARInvoiceJournalLT aRInvoiceJournalLT = new ARInvoiceJournalLT()
                 {

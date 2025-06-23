@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
- 		public const string HashString = "c31a28a2a98a788008df96841148dsa80";
+		public const string HashString = "c31a28a2a98a788008df96841147da80";
  	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -5454,7 +5454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Process Start Date",
 					  						ListFieldLable =  "ProcessStartDateListLable",
 					  						ListLableDefaultText =  "Process Start Date",
-					  						ListLocalDefaultText =  "תאריך תחילת התהליך",
+					  						ListLocalDefaultText =  "תםריך תחילת התהליך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

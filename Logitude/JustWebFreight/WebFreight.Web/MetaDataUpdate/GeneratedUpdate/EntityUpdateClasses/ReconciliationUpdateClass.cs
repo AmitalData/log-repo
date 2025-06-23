@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "0299c653d753bb4b964fcbab4423a196";
+		public const string HashString = "31b06f30d4ddb58d437e36fb70977ffb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,7 +135,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "cad0",
+			      				    Code =  "bccc",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1337,6 +1337,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationsOReconciledForOpenTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ReconciledForOpenTransactions", DefaultText = "Reconciled was made only for open transactions.",LocalDefaultText = @"בוצעה התאמה רק לתנועות פתוחות", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationsOReviewAndCompleteReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ReviewAndCompleteReconcile.", DefaultText = "Please review and complete the reconcile.",LocalDefaultText = @"נא לסקור ולהשלים את ההתאמה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOFailedJournalInReconcileProcess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.FailedJournalInReconcileProcess", DefaultText = "Failed Journal In Reconcile Process",LocalDefaultText = @"קיימות פקודות באמצע תהליך", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

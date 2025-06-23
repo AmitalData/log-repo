@@ -5,28 +5,23 @@ import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {JournalPMService} from '../../Services/StandardPMs/JournalPMService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {JournalValidator} from '../../Validators/JournalValidator';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentOutPMService} from '../../../Common/Services/ExtendedPMs/DocumentOutPMService';
 import {JournalOpService} from '../../Services/Others/JournalOpService';
 import { DocumentOutPM } from '../../../Common/EntityPMs/DocumentOutPM';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {DocumentTypePM} from '../../../Common/EntityPMs/DocumentTypePM';
 import {DocumentTypePMExtendedService} from '../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 import {ExportDocumentService} from '../../../Common/Services/DocumentServices/ExportDocumentService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
-import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -137,6 +132,12 @@ export class JournalMenuButtonsHandler {
                                     button.IsDisabled = true;
                                 break;
                             }
+                        case "FixJournalReconcile":
+                            {
+                                if( this.EntityPM.StatusCode != "4" ) {
+                                    button.IsHidden = true;
+                                }
+                            }    
                     }
                 }
             }
@@ -258,6 +259,11 @@ export class JournalMenuButtonsHandler {
             case "CopyJournal":
                 {
                     this.OpenCopyJournalScreen();
+                    break;
+                }
+            case "FixJournalReconcile":
+                {
+                    this.FixJournal();
                     break;
                 }
         }
@@ -457,6 +463,34 @@ export class JournalMenuButtonsHandler {
         }
 
     }
-
+    private FixJournal() {
+ 
+        let messageWindow = new MessageWindow();
+        if(SessionLocator.LoggedUserPM.Tenant != 0) 
+        {
+            const msg = TextCodeTranslator.Translate("Journal.O.SuperPermissionRequired");
+            if(ObjectsLocator.GlobalSetting) 
+                messageWindow.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+            messageWindow.Show(msg);
+        }
+        else
+        {
+            this.StartBusyIndicator("Fixing journal...");
+            this._journalOpService.FixFailedReconcileJournals().subscribe((res: ServiceResponse) => {
+                this.StopBusyIndicator();
+                if (res.HasError) {
+                    const msg = "Error, try again.";
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(msg);
+                } else {
+                    const msg = "Succeeded";
+                    messageWindow.ShowSuccessIcon = true;
+                    messageWindow.Show(msg);
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
+        }
+    
+    }
 
 }

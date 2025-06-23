@@ -597,13 +597,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms;
         }
 
-        public List<LedgerTransactionPM> GetLedgerTransactionPMInProgress(List<int> tenantsAccountingActivated)
-        {
-            List<LedgerTransaction> ledgerTransactionPOCOs = null;
-            ledgerTransactionPOCOs = repository.GetLedgerTransactionsInProgress(tenantsAccountingActivated);
-            List<LedgerTransactionPM> pms = ledgerTransactionPOCOs.Select(poco => this.GetEntityPM(poco)).ToList();
-            return pms;
-        }
 
         public List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<string> idList, int tenant)
         {
