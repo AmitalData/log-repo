@@ -633,7 +633,14 @@
                         </div>
                     </div>
                 </div>
-
+                
+                <div *ngIf="ObjectTableName == 'InvoiceApiCommunicationLog'">
+                    <div *ngIf="FieldName == 'InvoiceNumber'">
+                        <div>
+                            <a href="#" (click)="OpenARInvoice(Entity.ARInvoiceId)">{{Entity.InvoiceNumber}}</a>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </td>

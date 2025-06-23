@@ -99,14 +99,14 @@
 
 
                             <!-- Buttons -->
-                            <log-column [width]="'70'" [visibility]="'visible'" [Alignment]="'center'">
+                            <log-column [width]="'80'" [visibility]="'visible'" [Alignment]="'center'">
                                 <ng-template let-item>
                                     <log-cell-template>
                                         <div style="display: flex; justify-content: center; gap: 10px;">
 
-                                            <button style="width:60px" class="Button" (click)="ResendClicked()"
+                                            <button style="width:70px" class="Button" (click)="ResendClicked()"
                                                 [disabled]="!item.AllowedResend">
-                                                Reanalyze 
+                                                ReAnalyze 
                                             </button>
                                         </div>
                                     </log-cell-template>
