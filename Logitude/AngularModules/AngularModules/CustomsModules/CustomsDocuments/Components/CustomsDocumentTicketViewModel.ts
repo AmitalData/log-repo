@@ -30,6 +30,9 @@ import { SessionComponent } from "Infrastructure/Components/Session/SessionCompo
 import { OcrDocumentExtendedListService } from "Customs/Services/ExtendedLists/OcrDocumentExtendedListService";
 import { OcrDocumentPM } from "Customs/EntityPMs/OcrDocumentPM";
 import { OcrDocumentPMService } from "Customs/Services/StandardPMs/OcrDocumentPMService";
+import { SIIRequestCustomsDocumentsController } from "CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/Documents/SIIRequestCustomsDocumentsController";
+import { SIIDocumentTypeList } from "Customs/EntityLists/SIIDocumentTypeList";
+import { SIIDocumentTypeListService } from "Customs/Services/StandardLists/SIIDocumentTypeListService";
 
 export class CustomsDocumentTicketViewModel {
 
@@ -136,10 +139,12 @@ export class CustomsDocumentTicketViewModel {
     _SInvoiceNumber: string = null;
     _IsClassified: boolean = false;
     private EntityResourceService: EntityResourceService;
+    private IsFromSIIRequest: boolean = false;
 
     private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
     //*****************************************//
     constructor(
+
         public customsDocumentsTicketPM: CustomsDocumentsTicketPM,
         customsDocumentMetaDataValuePMs: CustomsDocumentMetaDataValuePM[],
         private isNew: boolean,
@@ -154,11 +159,24 @@ export class CustomsDocumentTicketViewModel {
             this.customsDocumentMetaDataValuePMs = customsDocumentMetaDataValuePMs.filter(d => d.CustomsDocumentId == customsDocumentsTicketPM.DocumentsFilingId);
         }
         var customDocumentTypeListService: CustomDocumentTypeListService = new CustomDocumentTypeListService();
-        customDocumentTypeListService.getAllFromCache().subscribe((resp: ServiceResponse) => {
-            this.customsDocumentTypeLists = resp.Result;
-            var customDocumentType = this.customsDocumentTypeLists.filter(d => d.Code == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
-            this.DocumentTypeName = customDocumentType.LocalName;
-        });
+        if (iCustomsDocumentsController instanceof SIIRequestCustomsDocumentsController) {
+            this.IsFromSIIRequest = true;
+        }
+
+        if (this.IsFromSIIRequest) {
+            var siiRequestDocumentTypeListService: SIIDocumentTypeListService = new SIIDocumentTypeListService();
+            siiRequestDocumentTypeListService.getAll().subscribe((resp: ServiceResponse) => {
+                this.customsDocumentTypeLists = resp.Result;
+                var customDocumentType = this.customsDocumentTypeLists.filter(d => d.Code == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
+                this.DocumentTypeName = customDocumentType.LocalName;
+            });
+        } else {
+            customDocumentTypeListService.getAllFromCache().subscribe((resp: ServiceResponse) => {
+                this.customsDocumentTypeLists = resp.Result;
+                var customDocumentType = this.customsDocumentTypeLists.filter(d => d.Code == this.customsDocumentsTicketPM.DocumentTypeCode)[0];
+                this.DocumentTypeName = customDocumentType.LocalName;
+            });
+        }
         this.DocumentStatusName = this.customsDocumentsTicketPM.DocumentStatusName;
         this.CustomsDocIdLabelText = this.GetCustomsDocIdLabelText();
         this.SetStatusImages();
@@ -615,26 +633,26 @@ export class CustomsDocumentTicketViewModel {
 
             });
         }*/
-      
-            if ((relatedDocumentViewModel.CustomDocument!= null && relatedDocumentViewModel.CustomDocument.DocumentStatusCode == '7') ||(relatedDocumentViewModel.Status1ImageGreen==true && relatedDocumentViewModel.Status2ImageGreen!=true )) {
-                SessionLocator.SelectedSession.StopBusyIndicator();
- 
-                  var confirmWindow = new ConfirmWindow();
-                  confirmWindow.Width = 400;
-                  confirmWindow.Height = 200;
-                  confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                  confirmWindow.ShowNoButton = false;
-                  confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
-                  confirmWindow.Show("לא ניתן לקשר את המסמך - קיימת בקשה בתהליך");
-                  confirmWindow.WindowClosed.subscribe((event: any) => {
-                      if (confirmWindow.Yes) {
-                          confirmWindow.Close();
-                      }
-                  });
-                    return;
-            }  
-            
-            if (!AppTool.IsNullOrEmpty(relatedDocumentViewModel.CustomDocument.CustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
+
+        if ((relatedDocumentViewModel.CustomDocument != null && relatedDocumentViewModel.CustomDocument.DocumentStatusCode == '7') || (relatedDocumentViewModel.Status1ImageGreen == true && relatedDocumentViewModel.Status2ImageGreen != true)) {
+            SessionLocator.SelectedSession.StopBusyIndicator();
+
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 400;
+            confirmWindow.Height = 200;
+            confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            confirmWindow.ShowNoButton = false;
+            confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
+            confirmWindow.Show("לא ניתן לקשר את המסמך - קיימת בקשה בתהליך");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    confirmWindow.Close();
+                }
+            });
+            return;
+        }
+
+        if (!AppTool.IsNullOrEmpty(relatedDocumentViewModel.CustomDocument.CustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
             SessionLocator.SelectedSession.StopBusyIndicator();
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 400;
@@ -919,7 +937,11 @@ export class CustomsDocumentTicketViewModel {
 
 
     async ProcessConnectDocument(relatedDocumentViewModel: RelatedDocumentViewModel) {
-        debugger;
+        if (this.IsFromSIIRequest) {
+            this.connectDocument(relatedDocumentViewModel);
+            return;
+        }
+        
         if (relatedDocumentViewModel == null || await this.checkFileBiggerFrom200MB(relatedDocumentViewModel)) return;
 
         if (relatedDocumentViewModel.CustomDocument.DocumentTypeCode == null)
@@ -1082,6 +1104,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     private cnotConnectDiffrentTypeDocumentMessage() {
+        debugger;
         SessionLocator.SelectedSession.StopBusyIndicator();
         var messageWindow = new MessageWindow();
         messageWindow.Width = 400;

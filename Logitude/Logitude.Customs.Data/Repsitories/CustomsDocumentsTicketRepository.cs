@@ -112,7 +112,7 @@ namespace Logitude.Customs.Data.Repsitories
             {
                 
                     iqurable = from a in context.CustomsDocumentPointers
-                               where a.ParentEntityId == entityId && a.Tenant == tenant && a.ParentEntityCode == parentEntityCode
+                               where a.ParentEntityId == entityId && a.Tenant == tenant && a.ParentEntityCode == parentEntityCode && (a.Child1EntityCode == null || a.Child1EntityCode != "SIIRequest")
                                select a;
             }
 
