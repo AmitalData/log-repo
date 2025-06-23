@@ -341,7 +341,8 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     }
 
     public GetRefreshFrom() {
-        return "d";
+        const refreshSource  = "d";
+        return refreshSource ;
     }
 
     public SelectionCompleted: EventEmitter<any> = new EventEmitter();
