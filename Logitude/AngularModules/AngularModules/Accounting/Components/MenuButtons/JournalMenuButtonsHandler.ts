@@ -9,6 +9,7 @@ import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {JournalValidator} from '../../Validators/JournalValidator';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentOutPMService} from '../../../Common/Services/ExtendedPMs/DocumentOutPMService';
 import {JournalOpService} from '../../Services/Others/JournalOpService';
