@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "a546222e6d41ae475e9834e59fdec5f7";
+		public const string HashString = "1d3934968847ca85fe1f2ff5ae83fbf2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3472,7 +3472,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxReportTextCode_TaxReportODownloadPa = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.DownloadPa", DefaultText = "Download PA file",LocalDefaultText = "הורדת קובץ רש''פ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxReportTextCode_TaxReportOReportIsEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ReportIsEdited", DefaultText = "Report in editing - needs to be rebuilt",LocalDefaultText = @"דוח בעריכה - יש לבצע בניה מחדש", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode TaxReportTextCode_TaxReportOReportIsEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ReportIsEdited", DefaultText = "Report in editing - click to recalculate",LocalDefaultText = @"דוח בעריכה - לחץ לחישוב מחדש", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

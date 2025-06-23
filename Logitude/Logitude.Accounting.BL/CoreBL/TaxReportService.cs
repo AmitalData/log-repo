@@ -318,6 +318,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     OutputOrInput = "I",
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
                     VatAmountRound = InputVatAmount.Value - Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
+
                     VatableInvoiceAmount = 0, 
                     TotalInvoiceAmount = Math.Round(InputInvoiceAmountNotExcluded.Value, MidpointRounding.AwayFromZero),
                     SubTotalInLocalCurrency = Math.Round(((double)InputInvoiceAmount.Value), MidpointRounding.AwayFromZero),
@@ -583,6 +584,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     List<JournalPM> jPMs = journalQueryService.GetJournalPMs(all_dup_line_jIds, taxReportPM.Tenant);
                     if (jPMs != null && jPMs.Count > 0)
                     {
+
                         Dictionary<string, List<JournalPM>> journalLookup = jPMs
                                 .GroupBy(j => j.Id)
                                 .ToDictionary(g => g.Key, g => g.OrderByDescending(j => j.StatusCode).ToList());
@@ -601,6 +603,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                         }
                     }
+
 
 
                     foreach (var oneLine in taxReportLines.Where(ln => !BlockedStatuses.Contains(ln.TransmitStatusCode)))
@@ -632,6 +635,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
+
                             linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                         }
                         else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
@@ -1119,6 +1123,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     lastLine += "X";
                     lastLine += taxReport.VatNumber?.PadLeft(9, '0');
                     myStringBuilder.Append(lastLine);
+
+
 
 
 

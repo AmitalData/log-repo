@@ -15,6 +15,8 @@ namespace Logitude.Accounting.BL.CloseTables
        public const string Notfortransmitatall = "3";  
        public const string WithoutTransmit = "0";
        public const string TransmitevenifDuplicate = "4";
+
+
     }
 }
 
