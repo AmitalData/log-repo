@@ -276,7 +276,7 @@
                                             </LogLov>
                                         </div>
                                         <div *ngIf="IsFromSIIRequest">
-                                            <LogLov [ObjectFieldName]="'SIIDocumentType'"
+                                            <LogLov [ObjectFieldName]="'DocumentTypeCode'"
                                                 [ObjectTableName]="'Customs.CustomsDocument'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.SIIDocumentType'" [HideColumns]="true">
@@ -332,7 +332,18 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                <tr *ngIf="IsFromSIIRequest" style="height:28px;">
+                                    <td>
+                                        <div class="Label" style="text-align:right;">
+                                            {{'Customs.CustomsDocument.SupplierInvoiceItem' | TextCodeTranslationPipe}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="max-width:200px; overflow-x:auto;">
+                                            {{SupplierInvoiceItemNumber}}
+                                        </div>
+                                    </td>
+                                    </tr>
                             </table>
 
 

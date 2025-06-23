@@ -192,7 +192,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         const windowArgs = {
             EntityPM: this.DecalarationData,
             ObjectTableName: 'Customs.Declaration',
-            EntityParentPM: 'Customs.SIIRequest',
+            EntityParentPM: 'Declaration',
             IsFromStandAloneScreen: true,
             IsClose: true,
             FromSIIRequest: true,

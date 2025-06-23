@@ -170,9 +170,9 @@
                             </LogLov>
                         </div>
                         <div *ngIf="IsFromSIIRequest">
-                            <LogLov [ObjectFieldName]="'SIIDocumentType'"
-                                [ObjectTableName]="'Customs.CustomsDocument'" [DataContext]="DataContext"
-                                [LookUpTableName]="'Customs.SIIDocumentType'" [HideColumns]="true"></LogLov>
+                            <LogLov [ObjectFieldName]="'SIIDocumentType'" [ObjectTableName]="'Customs.CustomsDocument'"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.SIIDocumentType'"
+                                [HideColumns]="true"></LogLov>
                         </div>
                     </td>
                     <td style=" width:395px; padding-right:4px;">
@@ -429,7 +429,8 @@
                                                     <table>
                                                         <tr>
                                                             <td>
-                                                                <div style="font-size:11px; font-weight:bold; margin-right:8px; width:190px;"
+                                                                <div *ngIf="!IsFromSIIRequest"
+                                                                    style="font-size:11px; font-weight:bold; margin-right:8px; width:190px;"
                                                                     [style.color]="ticket.GetStatusFontColor()"
                                                                     class="TextTrimming">
                                                                     <span
@@ -448,7 +449,8 @@
                                                         </tr>
                                                         <tr>
                                                             <td>
-                                                                <div [attr.title]="ticket.CustomAnswerTitle"
+                                                                <div *ngIf="!IsFromSIIRequest"
+                                                                    [attr.title]="ticket.CustomAnswerTitle"
                                                                     (click)="ShowCustomAnswerClicked($event,ticket)"
                                                                     class="showCustomAnswerButton"
                                                                     style="margin-right:4px;margin-left:4px;">
@@ -470,6 +472,20 @@
                                                                         style="width:14px;filter:grayscale(100%); margin-top:3px;" />
 
 
+                                                                    <div style="font-size:11px;display: inline-block;vertical-align: bottom;overflow:hidden;"
+                                                                        *ngIf="ticket.ExternalAttachmentIdVisibility">
+                                                                        <span
+                                                                            style="float:right; font-size:11px;font-weight:bold; vertical-align: bottom;">
+                                                                            {{'Customs.CustomsDocument.ExternalAttachmentIdLabel'
+                                                                            | TextCodeTranslationPipe}}
+                                                                        </span>
+                                                                        <span
+                                                                            style="float:right;margin-right:3px; font-size:11px;font-weight:bold; vertical-align: bottom;">
+                                                                            {{ticket.ExternalAttachmentId}}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="IsFromSIIRequest">
                                                                     <div style="font-size:11px;display: inline-block;vertical-align: bottom;overflow:hidden;"
                                                                         *ngIf="ticket.ExternalAttachmentIdVisibility">
                                                                         <span

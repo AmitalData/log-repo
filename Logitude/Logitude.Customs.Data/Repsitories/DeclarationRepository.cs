@@ -1693,6 +1693,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
             return context.Declarations
                   .Where(a => a.Tenant == tenant && a.Id == declarationId)
+                  .AsEnumerable()
                   .Select(a => new Declaration
                   {
                       AgentId = a.AgentId,
