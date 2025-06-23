@@ -61,16 +61,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="StatusName"
+    Name="ExternalID"
     Type="nvarchar"
-    Size="30">
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="StepName"
-    Type="nvarchar"
-    Size="30">
+    Name="ARInvoiceId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -83,5 +83,10 @@
     ForeignKeyColumn="StatusCode"
     ReferencedTable="InvoiceApiStatuses"
     ReferencedColumn="StatusCode"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ARInvoiceId"
+    ReferencedTable="ARInvoices"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

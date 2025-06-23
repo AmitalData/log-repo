@@ -1382,6 +1382,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  DocumentFilingInbox = a.DocumentFilingInbox,
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowInboxToolTip = a.ShowInboxToolTip,
+                                 BranchId = a.BranchId
                              }).FirstOrDefault();
 
             if (entity == null)

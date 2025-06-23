@@ -48,10 +48,13 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual InvoiceApiStatus InvoiceApiStatus { get; set; }
         [Column("Exception")]
 	    public string Exception { get; set; }
-        [Column("StatusName")]
-	    public string StatusName { get; set; }
-        [Column("StepName")]
-	    public string StepName { get; set; }
+        [Column("ExternalID")]
+	    public string ExternalID { get; set; }
+        [ForeignKey("ARInvoice")]
+        [Column("ARInvoiceId")]
+	    public string ARInvoiceId { get; set; }
+	      
+        public virtual ARInvoice ARInvoice { get; set; }
     }
 }
 	 

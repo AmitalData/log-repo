@@ -211,6 +211,121 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string statusName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatusName  
+	   {
+	    
+	     get
+		{
+		   return statusName;
+		 }
+		 set
+		 {
+		   if(statusName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatusName",OldValue=statusName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statusName=value;
+		   }
+			
+		 }
+	   }
+	  private string stepName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StepName  
+	   {
+	    
+	     get
+		{
+		   return stepName;
+		 }
+		 set
+		 {
+		   if(stepName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StepName",OldValue=stepName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   stepName=value;
+		   }
+			
+		 }
+	   }
+	  private string externalID ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalID  
+	   {
+	    
+	     get
+		{
+		   return externalID;
+		 }
+		 set
+		 {
+		   if(externalID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalID",OldValue=externalID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalID=value;
+		   }
+			
+		 }
+	   }
+	  private string aRInvoiceId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ARInvoiceId  
+	   {
+	    
+	     get
+		{
+		   return aRInvoiceId;
+		 }
+		 set
+		 {
+		   if(aRInvoiceId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ARInvoiceId",OldValue=aRInvoiceId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   aRInvoiceId=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceNumber;
+		 }
+		 set
+		 {
+		   if(invoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceNumber",OldValue=invoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
