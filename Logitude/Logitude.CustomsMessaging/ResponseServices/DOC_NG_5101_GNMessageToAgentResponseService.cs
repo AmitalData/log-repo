@@ -42,6 +42,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
 
         DeclarationPM _MyDeclarationPM;
+        bool IsExportDeclaration;
 
         public override INF_MSG_GenericResponseData GetResponse(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
@@ -76,7 +77,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             var dec = myQueryService.GetDeclarationByDeclarationNum(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
-            bool IsExportDeclaration = dec?.Direction == "E";
+            IsExportDeclaration = dec?.Direction == "E";
 
             LogMessagingUtil.Instance.AppendLine("Analyze Message To Agent response" + requestParams.AppicationId);
 
@@ -658,6 +659,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void RaiseEvent(DeclarationPM dirtyDeclarationPM, string code, string remarks)
         {
+            if (IsExportDeclaration)
+            {
+                return;
+            }
             try
             {
                 string loggingUserId = "";
