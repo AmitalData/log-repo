@@ -951,8 +951,8 @@
 
                     <!-- Edit Grid reconciliations -->
                    
-                    <tr *ngIf="EntityPM?.StatusCode === 'AD'">
-                        <td colspan="5" style="height: 100%;">
+                    <tr *ngIf="['AD', 'DR', 'PR'].includes(EntityPM?.StatusCode)">
+                            <td colspan="5" style="height: 100%;">
 
                             <div class="GeneratedGridContainer">
                                 <logitude-grid #DataGrid GridWidth="100%" 
