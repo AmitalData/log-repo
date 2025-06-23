@@ -277,7 +277,15 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "DeleteOldDocumentsExecutionLogsTask", 
                 IsInternallyDefined = false, 
 			});
-			
+            all.Add(new SchedulerProcedureDetails()
+            {
+                Code = "ReconcileInProgressCleanupTask",
+                Name = "ReconcileInProgressCleanupTask",
+                SearchFields = "ReconcileInProgressCleanupTask",
+                Description = "ReconcileInProgressCleanupTask",
+                IsInternallyDefined = false,
+            });
+
             return all;
        }
 
