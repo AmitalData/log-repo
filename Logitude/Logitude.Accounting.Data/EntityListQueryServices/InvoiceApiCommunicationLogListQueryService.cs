@@ -43,7 +43,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                               StatusName = a.InvoiceApiStatus != null ? a.InvoiceApiStatus.StatusName : null,
 
-                                              StepName = a.InvoiceApiStep != null ? a.InvoiceApiStep.EnglishName?? a.InvoiceApiStep.LocalName : null
+                                              StepName = a.InvoiceApiStep != null ? a.InvoiceApiStep.EnglishName?? a.InvoiceApiStep.LocalName : null ,
+											  ExternalID = a.ExternalID,
+											  ARInvoiceId = a.ARInvoiceId,
+											  InvoiceNumber = a.ARInvoice != null ? a.ARInvoice.InvoiceNumber : null
 
 
                                             });
