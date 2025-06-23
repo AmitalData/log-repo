@@ -74,6 +74,11 @@ namespace Logitude.Accounting.BL.CoreBL
         const string CreatedStatusCode = "C";
         public static int recalculateDataAddedLanes = 0;
         const string RecalculateEventCode = "IREC";
+        private static HashSet<string> BlockedStatuses = new HashSet<string> 
+        {
+            TaxReportLineTransmitStatusValues.Notfortransmitatall,
+            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
+        };
 
         static bool CheckLastNineAreNine(string input)
         {
@@ -153,7 +158,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (invoice != null)
                     {
                         transmitStatus = SetTransmitStaus(invoice.InvoiceDate.Value, taxReport.TaxReportMonth, setting);
-                        VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
+                        VatAmount = invoice.TotalVAT;
                         InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
 
                         outputreference = invoice.CustomerRef != null ? invoice.CustomerRef : invoice.InvoiceNumber;
@@ -243,6 +248,7 @@ namespace Logitude.Accounting.BL.CoreBL
             glAccountIds.AddRange(oppositeglAccountIds);
             glAccountIds.AddRange(parentGLAccounts.Select(d => d.Id).ToList());
             cards = cardRepository.GetCardsByGLAccountIds(glAccountIds, tenant).ToList();
+
 
 
 
@@ -564,6 +570,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
+
                 if (duplicates != null && duplicates.Count > 0)
                 {
 
@@ -596,7 +603,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
 
-                    foreach (var oneLine in taxReportLines)
+                    foreach (var oneLine in taxReportLines.Where(ln => !BlockedStatuses.Contains(ln.TransmitStatusCode)))
                     {
                         if (all_dup_line_nos.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
@@ -604,12 +611,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            oneLine.StatusCode = "6"; // Ready for transmit 
+                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit; 
                         }
 
                         else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
-                            oneLine.StatusCode = "6"; // Ready for transmit 
+                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit; 
                         }
 
                         if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
@@ -621,15 +628,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else // no duplicates
                 {
-                    foreach (var linePM in taxReportLines)
+                    foreach (var linePM in taxReportLines.Where(ln => !BlockedStatuses.Contains(ln.TransmitStatusCode)))
                     {
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            linePM.StatusCode = "6";
+                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                         }
                         else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
-                            linePM.StatusCode = "6"; // Ready for transmit 
+                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;   
                         }
                     }
 
@@ -1024,7 +1031,6 @@ namespace Logitude.Accounting.BL.CoreBL
                     // Line: [1] 
                     //
 
-                    string firstLine = "";
                     myStringBuilder.Append("O");
 
                     myStringBuilder.Append(FormatString(taxReport.VatNumber, 9, paddingDigit: '0'));
@@ -1366,7 +1372,6 @@ namespace Logitude.Accounting.BL.CoreBL
             if (str.Length > wordSize)
             {
                 str = str.Substring(0, wordSize);
-                //throw new ApplicationException("There is a string with big value!");
             }
 
             //padding left

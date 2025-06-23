@@ -15,7 +15,6 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { TaxReportLineStatusListService } from '../../../Services/StandardLists/TaxReportLineStatusListService';
 import { TaxReportLineExtendedListService } from '../../../Services/ExtendedLists/TaxReportLineExtendedListService';
-import { TaxReportPMService } from '../../../Services/StandardPMs/TaxReportPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -27,6 +26,9 @@ import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGr
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
 import { HttpResponse } from '@angular/common/http';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
+import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
 
 declare var window: any;
 
@@ -50,6 +52,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
     private _TaxReportLineExtendedListService: TaxReportLineExtendedListService = new TaxReportLineExtendedListService();
     private taxReportLineTransmitStatusListService: TaxReportLineTransmitStatusListService = new TaxReportLineTransmitStatusListService();
+    private _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+    private TaxReportPMService: TaxReportPMService = new TaxReportPMService();
+
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
     public QueryColumns: QueryColumnPM[] = [];
     IsTesterButtonVisibile: boolean = false;
@@ -140,9 +145,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
 
     }
-
+    
     ReloadScreen() {
-        
+
         this.BuildColumns();
         this.buildQueryColumns();
         this.GetStatuses();
@@ -154,10 +159,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.GetReportCounter();
         
     }
-
+    
     public Export2ExcelClicked() {
         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('TaxReportLine', this.ListFilters, this.QueryColumns,"SaveToMicrosoftExcel2007",true);
-    }
+    }    
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OutputTaxAmount", this.ObjectTableName, false);
@@ -788,6 +793,93 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     GetErrorMsg() {
         var msg = TextCodeTranslator.Translate("Accounting.O.TaxReportErrorMsg");
         return msg.replace("#Number", this.errorsCount.toString());
+    }
+
+
+    Rebuild(){
+        this.ConfirmRecalculatingReport();
+    } 
+
+
+    timer: any;
+    timerInterval: number = 1000;
+    btePM: any;
+    bteList: BatchTaskExecutionList;
+
+    ConfirmRecalculatingReport() {
+        let confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 400;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate('InterestReport.O.Approve');
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate('InterestReport.O.Cancel');
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.CurrentSession.StartBusyIndicator("Refreshing ...");
+                this.EntityPM.RecalculateData = true;
+
+
+                this.TaxReportPMService.update(this.EntityPM).subscribe((myResult: any) => {
+                    var mm: ServiceResponse = myResult;
+                    if (!mm.HasError) {
+                        var entity = mm.Result;
+                        this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe((myResult: any) => {
+                            var mm: ServiceResponse = myResult;
+                            var entity = mm.Result;
+                            this.btePM = entity;
+
+
+                            this.timer = setInterval(() => {
+                                this.GetBTE();
+                            }, this.timerInterval);
+
+                        });
+                    }
+                });
+            }
+        });
+
+        confirmWindow.Show(TextCodeTranslator.Translate('TaxReport.O.ConfirmRecalculateReport'));
+    }
+
+
+    GetBTE() {
+        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult: any) => {
+            console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
+            var mm: ServiceResponse = myResult;
+            if (!mm.HasError) {
+                this.bteList = mm.Result;
+                if (this.bteList.StatusCode == "D") // D- Done
+                {
+
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                        this.CurrentSession.StopBusyIndicator();
+
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                    }
+
+
+                }
+                else if (this.bteList.StatusCode == "F") 
+                {
+
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("ok");
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                    }
+
+                  
+
+                }
+            }
+            else {
+            }
+        });
+
     }
 
 }

@@ -30,6 +30,7 @@ using Logitude.Accounting.BL.CloseTables;
 using System.Globalization;
 using System.Diagnostics;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.BL.EntityDataMappings;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -43,6 +44,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             InputsTaxReportLineTypes.ImportCustomsInputs,
             InputsTaxReportLineTypes.PalestinianVendorsInputs,
             InputsTaxReportLineTypes.LawDefinedDocumentInputs
+        };
+        private static HashSet<string> BlockedStatuses = new HashSet<string>
+        {
+            TaxReportLineTransmitStatusValues.Notfortransmitatall,
+            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
         };
 
         protected override void OnCreating(TaxReportPM entityPM, EntityPM entityParentPM)
@@ -213,9 +219,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
 
-            var reportLines = taxReportQuery.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToList();
+            var reportLines = taxReportQuery.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToHashSet();
             List<TaxReportLinePM> updateList = new List<TaxReportLinePM>();
-            reportLines.ForEach(row =>
+            foreach (var row in reportLines.Where(ln => !BlockedStatuses.Contains(ln.TransmitStatusCode)))
             {
                 bool isUpdate = false;
 
@@ -257,7 +263,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (row.IsManuallyChanged == false) taxReportLinePM.IsManuallyChanged = null;
                     updateList.Add(taxReportLinePM);
                 }
-            });
+            }
 
             new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant)
                 .UpdateMulti(updateList, new List<TaxReportLinePM>(), taxReportPM, true);
@@ -281,7 +287,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (taxReportPM.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal &&  taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted && taxReportPM.StatusCode != VatReportStatusValues.CancelationInProgress && taxReportPM.StatusCode != VatReportStatusValues.CancelationFailed && !(taxReportPM.StatusCode == VatReportStatusValues.InProgress && taxReportPM.RecalculateData))
             {
-                bool hasErrors = lines.Any(d => d.StatusCode != "6"); // 6- Ready for transmit
+                bool hasErrors = lines.Any(ln => ln.StatusCode != TaxReportLineStatusValues.Readyfortransmit && !BlockedStatuses.Contains(ln.TransmitStatusCode)); 
                 if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
                 {
                     taxReportPM.StatusCode = VatReportStatusValues.Error;
@@ -574,6 +580,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
             }
+        }
+
+
+        public TaxReport UpdateTaxReportIsEdited(TaxReportPM entityPM)
+        {
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
+
+                    TaxReportRepository repo = new TaxReportRepository(MyContext);
+                    var mapping = new TaxReportDataMapping();
+                    var poco = new Logitude.Accounting.Data.EntityPOCOs.TaxReport();
+                    mapping.CustomPMToPOCO(entityPM, poco);
+                    mapping.PMToPOCO(entityPM, poco);
+                    repo.Update(poco);
+                    repo.SubmitChanges();
+
+                    return  poco;
+                
         }
     }
 }
