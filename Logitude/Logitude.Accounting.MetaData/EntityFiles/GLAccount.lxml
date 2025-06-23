@@ -14447,6 +14447,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ExchangeRateId&quot;"
     ListPropertyPath="&quot;ExchangeRateId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -14525,6 +14526,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ExchangeRateName&quot;"
     ListPropertyPath="&quot;ExchangeRateName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -19618,12 +19620,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;GLAccount.O.ClosedBalanceInLocalCurrency&quot;"
-      DefaultText="&quot;Closed balance in Local Currency&quot;"
-      LocalDefaultText="&quot; סגירה יתרה במטבע מקומי&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;GLAccount.O.Collector&quot;"
       DefaultText="&quot;Collector&quot;"
       LocalDefaultText="&quot;גובה&quot;"
@@ -19663,12 +19659,6 @@
       Code="&quot;GLAccounts.O.FutureCheque&quot;"
       DefaultText="&quot;FutureCheque&quot;"
       LocalDefaultText="&quot;פירוט המחאות עתידיות&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue&quot;"
-      DefaultText="&quot;Closing balance according to the balance In Due&quot;"
-      LocalDefaultText="&quot;יתרת סגירה לפי יתרה לגביה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
