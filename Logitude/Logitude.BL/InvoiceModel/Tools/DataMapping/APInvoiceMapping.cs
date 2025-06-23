@@ -248,6 +248,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PrepaidCollectId = entityPM.PrepaidCollectId;
             entity.ContainerTypeId = entityPM.ContainerTypeId;
             entity.Quantity = entityPM.Quantity;
+            entity.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
             MapJournalAmount(entityPM);
 
             //ForeignCurrencyAmount = localCurrencyAmount/ForeignExchangeRate;

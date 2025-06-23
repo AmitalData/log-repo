@@ -1,24 +1,17 @@
-import { Validator } from './../../../../../Infrastructure/Validators/Validator';
-import { Component, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { SessionLocator } from '../../../../../Infrastructure/Utilities/SessionLocator';
 import { BaseComponent } from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { TaxReportPM } from '../../../../EntityPMs/TaxReportPM';
 import { TaxReportLinePM } from '../../../../EntityPMs/TaxReportLinePM';
-import { ApiQueryFilters, FilterItem } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, DateTool } from '../../../../../Infrastructure/Tools';
-import { EntityListService } from '../../../../../Infrastructure/Services/EntityListService';
-import { ReconcileExternalPageExtendedPMService } from '../../../../Services/ExtendedPMs/ReconcileExternalPageExtendedPMService';
-import { ReconcileExternalPagePMService } from '../../../../Services/StandardPMs/ReconcileExternalPagePMService';
-import { LogitudeWindow } from '../../../../../Controls/Windows/LogitudeWindow';
-import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
-import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { AppTool } from '../../../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../../Infrastructure/Locators/ObjectsLocator';
 import { TaxReportPMService } from '../../../../Services/StandardPMs/TaxReportPMService';
 import { TaxReportLinePMService } from '../../../../Services/StandardPMs/TaxReportLinePMService';
 import { ServiceResponse } from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import { DateTimePipe } from '../../../../../Controls/Pipes/DateTimePipe';
+import { TaxReportExtendedPMService } from 'Accounting/Services/ExtendedPMs/TaxReportExtendedPMService';
 
 
 
@@ -249,21 +242,12 @@ export class EditTaxReportLineComponent extends BaseComponent {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 // this.CurrentSession.CloseCurrentWindowEmit("ok");
-                this._TaxReportPMService.update(this.TaxReportPM).subscribe((myResult: any) => {
+                var taxReportExtendedPMService = new TaxReportExtendedPMService();
+                this.TaxReportPM.IsEdited = true;
+                taxReportExtendedPMService.PutTaxReportIsEdited(this.TaxReportPM).subscribe((myResult: any) => {
 
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
-                        // this._TaxReportLinePMService.update(this.TaxReportLinePM).subscribe((myResult:any) => {
-
-                        //     var mm: ServiceResponse = myResult;
-                        //     if (!mm.HasError) {
-                        //         this.CurrentSession.CloseCurrentWindowEmit("ok");
-                        //     }
-                        //     else {
-                        //         this.ValidationErrorsList = mm.ErrorsArray;
-                        //         this.CurrentSession.StopBusyIndicator();
-                        //     }
-                        // });
                         this.CurrentSession.CloseCurrentWindowEmit("ok");
                     }
                     else {

@@ -1,32 +1,32 @@
 ﻿using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Validators;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
+using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Logitude.Accounting.BL.Validators;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Security;
-using Logitude.BL.Interfaces;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
-using Logitude.BL.Resolvers;
-using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 
 namespace Logitude.Accounting.BL
 {
@@ -37,7 +37,7 @@ namespace Logitude.Accounting.BL
         private IAccountingContext _MainContext;
 
         private IJournalStornoService _JournalStornoService;
-        
+
 
 
         public JournalUpdateOnUpdating(IAccountingContext mainContext)
@@ -87,14 +87,22 @@ namespace Logitude.Accounting.BL
                 throw new ApplicationException("Journal is voided (Change is not Allowed)");
             }
 
-                /// 
-                foreach (var jl in journalPM.JournalLines)
+            var originalLines = journalPM.JournalLines.ToList();
+            for (int i = 0; i < originalLines.Count; i++)
             {
+                JournalLinePM jl = originalLines[i];
                 var JournalUpdateOnCreatingLine = CreateJournalLineOnUpdate();
-                //jl.EnsureAllDecimalPrecisionIfChangeChangeUpdate();
-                JournalUpdateOnCreatingLine.OnUpdate(jl, journalPM);
-            }
 
+                JournalUpdateService journalUpdateService = new JournalUpdateService(this._MainContext, new Dictionary<string, IContext>(), journalPM.Tenant);
+                var newJournalLinePM = journalUpdateService.CheckJournalActionCodeAndSplitedIt(jl, journalPM.JournalLines);
+                JournalUpdateOnCreatingLine.OnUpdate(jl, journalPM);
+
+                if (newJournalLinePM != null)
+                {
+                    journalPM.JournalLines.Add(newJournalLinePM);
+                    JournalUpdateOnCreatingLine.OnUpdate(newJournalLinePM, journalPM);
+                }
+            }
 
             string loggedContactId = //AddActivityGetLogContactId(entityPM.Tenant, entityPM.Id, "N");
                 //this.UpdateServiceProvider.
@@ -281,8 +289,7 @@ namespace Logitude.Accounting.BL
                     journalPM.VoidedByJournalId = Storno.Id;
                     journalPM.IsVoided = true;
                     journalPM.VoidDate = DateTime.UtcNow;
-
-                    //throw new ApplicationException("entityPM.VoidedBy = Storno.Id;// Add this line after VoidedBy convert from bool? to VC(15)");
+                    DeleteJournalExternalReconcileOfBankAdjustment(journalPM, Storno);
 
                     break;
 
@@ -297,6 +304,56 @@ namespace Logitude.Accounting.BL
             }
 
         }
+
+
+        public void DeleteJournalExternalReconcileOfBankAdjustment(JournalPM theOriginal, JournalPM theStorno)
+        {
+            // 1. Validate 'Storno'.
+            if (!IsStornoJournalOK(theOriginal, theStorno))
+            {
+                Debug.WriteLine("The original void and the storno have not been properly initialized.");
+                return;
+            }
+
+            // 2. Handle "Bank Adjustment" entity code.
+            const string bankAdjustmentAccountingEntityCode = "12";
+            if (theOriginal.AccountingEntityCode != bankAdjustmentAccountingEntityCode)
+            {
+                return;
+            }
+
+            // 3. Stop if 'Storno' already has external reconciles.
+            if (theStorno.JournalExternalReconciles?.Any() == true)
+            {
+                return;
+            }
+
+            // 4. Gather external reconciles to delete.
+            var itemsToDelete = theOriginal.JournalExternalReconciles?
+                .Where(r => r.JournalId == theOriginal.Id).ToList();
+
+            if (itemsToDelete == null || itemsToDelete.Count == 0)
+            {
+                return;
+            }
+
+            // 5. Update items for deletion.
+            foreach (var item in itemsToDelete)
+            {
+                item.ChangeSetOp = ChangeSetOperation.Delete;
+            }
+
+
+        }
+
+
+        private bool IsStornoJournalOK(JournalPM theOriginal, JournalPM theStorno)
+        {
+            return !string.IsNullOrWhiteSpace(theStorno.OriginalJournalId)
+                                && theStorno.OriginalJournalId == theOriginal.Id;
+        }
+
+
 
         private void CancelJournal(JournalPM journalPM)
         {

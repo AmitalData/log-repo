@@ -15,6 +15,7 @@ export class CopyFromTenant0List {
 	SearchFields: string;
 	TableName: string;
 	CreatedByUserName: string;
+	AlwaysEnabled: boolean;
 	
 }
  

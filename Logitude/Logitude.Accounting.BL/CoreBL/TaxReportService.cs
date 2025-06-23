@@ -62,7 +62,8 @@ namespace Logitude.Accounting.BL.CoreBL
         public static string FilePath = @"E:\PCN874.txt";
         private static Simplog.Data.CommonDataModel.EntityPOCOs.Card card;
         private static List<CustomTaxReportData> ledgerTransactons;
-        private static List<LedgerTransaction> journalsTransactions;
+        private static HashSet<LedgerTransaction> journalsTransactions;
+        private static HashSet<LedgerTransaction> journalsTransactionsNotExcluded;
         private static List<Simplog.Data.CommonDataModel.EntityPOCOs.Card> cards;
         private static List<GLAccountPM> oppositeAccounts;
         private static List<GLAccountPM> gLAccounts;
@@ -73,6 +74,11 @@ namespace Logitude.Accounting.BL.CoreBL
         const string CreatedStatusCode = "C";
         public static int recalculateDataAddedLanes = 0;
         const string RecalculateEventCode = "IREC";
+        private static HashSet<string> BlockedStatuses = new HashSet<string> 
+        {
+            TaxReportLineTransmitStatusValues.Notfortransmitatall,
+            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
+        };
 
         static bool CheckLastNineAreNine(string input)
         {
@@ -152,7 +158,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (invoice != null)
                     {
                         transmitStatus = SetTransmitStaus(invoice.InvoiceDate.Value, taxReport.TaxReportMonth, setting);
-                        VatAmount = invoice.TotalVAT != null ? invoice.TotalVAT : 0;
+                        VatAmount = invoice.TotalVAT;
                         InvoiceAmount = invoice.TotaVatableAmountForTaxReport != null ? invoice.TotaVatableAmountForTaxReport : 0;
 
                         outputreference = invoice.CustomerRef != null ? invoice.CustomerRef : invoice.InvoiceNumber;
@@ -219,9 +225,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<string> JournalIds = ledgerTransactons.Where(d => d.JournalId != null).Select(d => d.JournalId).ToList();
             List<JournalPM> journalPMs = journalQueryService.GetJournalsByIds(JournalIds, tenant);
-            journalsTransactions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIds(JournalIds, tenant);
 
-            bool isEquipment = false;
+
+
+            (journalsTransactions, journalsTransactionsNotExcluded) =
+                ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsCombined(JournalIds, tenant);
+
+
             List<string> glAccountIds = journalsTransactions.Select(d => d.AccountId).ToList();
             List<string> oppositeglAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
             gLAccountCurrencies = gLAccountCurrencyQueryService.GetGLAccountCurrenciesByAccountIds(tenant, oppositeglAccountIds);
@@ -241,11 +251,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
+
             foreach (CustomTaxReportData transaction in ledgerTransactons.Where(x => x.TaxReportId == null || x.TransmitStatusCode == "2" || x.TransmitStatusCode == null))
             {
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
+                InputInvoiceAmountNotExcluded = 0;
 
 
                 bool voidedAPInvoiceTaxMonthTransaction = CheckIfAPInvoiceTaxMonthTransactionIsVoided(taxReport, voidedAPInvoices, transaction);
@@ -306,8 +318,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     OutputOrInput = "I",
                     VatAmount = Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
                     VatAmountRound = InputVatAmount.Value - Math.Round(InputVatAmount.Value, MidpointRounding.AwayFromZero),
+
                     VatableInvoiceAmount = 0, 
-                    TotalInvoiceAmount = Math.Round(InputInvoiceAmount.Value, MidpointRounding.AwayFromZero),
+                    TotalInvoiceAmount = Math.Round(InputInvoiceAmountNotExcluded.Value, MidpointRounding.AwayFromZero),
                     SubTotalInLocalCurrency = Math.Round(((double)InputInvoiceAmount.Value), MidpointRounding.AwayFromZero),
                     IsEquipment = aPInvoicePM != null ? aPInvoicePM.IsEquipment : account != null ? account.IsEquipmentVendor : false,
                     IsManuallyChanged = true,
@@ -558,6 +571,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
 
+
                 if (duplicates != null && duplicates.Count > 0)
                 {
 
@@ -570,6 +584,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     List<JournalPM> jPMs = journalQueryService.GetJournalPMs(all_dup_line_jIds, taxReportPM.Tenant);
                     if (jPMs != null && jPMs.Count > 0)
                     {
+
                         Dictionary<string, List<JournalPM>> journalLookup = jPMs
                                 .GroupBy(j => j.Id)
                                 .ToDictionary(g => g.Key, g => g.OrderByDescending(j => j.StatusCode).ToList());
@@ -590,7 +605,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
 
-                    foreach (var oneLine in taxReportLines)
+
+                    foreach (var oneLine in taxReportLines.Where(ln => !BlockedStatuses.Contains(ln.TransmitStatusCode)))
                     {
                         if (all_dup_line_nos.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
@@ -598,12 +614,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            oneLine.StatusCode = "6"; // Ready for transmit 
+                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit; 
                         }
 
                         else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
-                            oneLine.StatusCode = "6"; // Ready for transmit 
+                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit; 
                         }
 
                         if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
@@ -615,15 +631,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 else // no duplicates
                 {
-                    foreach (var linePM in taxReportLines)
+                    foreach (var linePM in taxReportLines.Where(ln => !BlockedStatuses.Contains(ln.TransmitStatusCode)))
                     {
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference)
                         {
-                            linePM.StatusCode = "6";
+
+                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                         }
                         else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitevenifDuplicate)
                         {
-                            linePM.StatusCode = "6"; // Ready for transmit 
+                            linePM.StatusCode = TaxReportLineStatusValues.Readyfortransmit;   
                         }
                     }
 
@@ -834,25 +851,13 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             return account;
         }
-        static void SetVatFieldsForAPInvoiceTransaction(APInvoicePM aPInvoice)
-        {
-            aPInvoice.TotalVATs = totalvats.Where(d => d.APInvoiceId == aPInvoice.Id).ToList();
-            VatNumber = aPInvoice.VATNumber;
-            if (aPInvoice.StatusCode == "AC")
-            {
-                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount) * -1;
-                InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency * -1 ?? 0;
-            }
-            else if (aPInvoice.StatusCode == "AD")
-            {
-                InputVatAmount = (decimal?)aPInvoice.TotalVATs.Sum(d => d.LocalVATAmount);
-                InputInvoiceAmount = (decimal?)aPInvoice.SubTotalInLocalCurrency ?? 0;
-            }
-        }
+
+
         static List<APInvoiceTotalVATPM> totalvats;
         static string VatNumber = null;
         static decimal? InputVatAmount = 0;
         static decimal? InputInvoiceAmount = 0;
+        static decimal? InputInvoiceAmountNotExcluded = 0;
 
 
         private static void SetVatNumber(Simplog.Data.CommonDataModel.EntityPOCOs.Card card)
@@ -870,7 +875,9 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             var transactionSum = journalsTransactions.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
+            var transactionSumNotExcluded = journalsTransactionsNotExcluded.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountDebit);
             InputInvoiceAmount = transactionSum - InputVatAmount;
+            InputInvoiceAmountNotExcluded = transactionSumNotExcluded - InputVatAmount;
 
         }
 
@@ -1028,7 +1035,6 @@ namespace Logitude.Accounting.BL.CoreBL
                     // Line: [1] 
                     //
 
-                    string firstLine = "";
                     myStringBuilder.Append("O");
 
                     myStringBuilder.Append(FormatString(taxReport.VatNumber, 9, paddingDigit: '0'));
@@ -1117,6 +1123,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     lastLine += "X";
                     lastLine += taxReport.VatNumber?.PadLeft(9, '0');
                     myStringBuilder.Append(lastLine);
+
+
 
 
 
@@ -1370,7 +1378,6 @@ namespace Logitude.Accounting.BL.CoreBL
             if (str.Length > wordSize)
             {
                 str = str.Substring(0, wordSize);
-                //throw new ApplicationException("There is a string with big value!");
             }
 
             //padding left

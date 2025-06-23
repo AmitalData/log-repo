@@ -220,6 +220,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

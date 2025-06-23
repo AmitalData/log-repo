@@ -81,17 +81,13 @@
 
 
                                                         <tr>
-
                                                             <td style="width:60px; min-width:60px;max-width:60px">Default</td>
                                                             <td style="width: 200px; min-width: 200px;max-width:200px">{{'ReportsTemplate.F.Description' | TextCodeTranslationPipe}}</td>
                                                             <td style="width: 150px; min-width: 150px;max-width:150px">Last Update</td>
                                                             <td style="width: 150px; min-width: 150px;max-width:150px">{{'ReportsTemplate.F.UpdatedByUserId' | TextCodeTranslationPipe}}</td>
                                                             <td style="width: 60px; min-width: 60px;max-width:60px">{{'ReportsTemplate.F.InActive' | TextCodeTranslationPipe}}</td>
-                                                            <!--<td style="width: 27px; min-width: 27px;max-width:27px"></td>-->
-
-
+                                                            <td *ngIf="EntityPM.Tenant == 0" style="width: 105px; min-width: 105px;max-width:105px">{{'ReportsTemplate.F.IsCopiedAtSignup' | TextCodeTranslationPipe}}</td>
                                                             <td style="width: 100%; min-width: 100%;"></td>
-
                                                         </tr>
 
 
@@ -142,6 +138,16 @@
                                                                                 <div class="MediaFillRelative">
                                                                                     <div class="CenterCenter" style="width: 16px;">
                                                                                         <CheckBox [IsEnabled]="!item.IsDefault" [IsChecked]="item.InActive" (Checked)="CheckInActiveclick(item)"></CheckBox>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td *ngIf="item.Tenant == 0" class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                                                            <div class="MediaFill">
+                                                                                <div class="MediaFillRelative">
+                                                                                    <div class="CenterCenter" style="width: 16px;">
+                                                                                        <CheckBox [IsChecked]="item.IsCopiedAtSignup" (Checked)="CheckIsCopiedAtSignupclick(item)"></CheckBox>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -287,6 +293,7 @@
                                                             <td style="width: 150px; min-width: 150px;max-width:150px">Last Update</td>
                                                             <td style="width: 150px; min-width: 150px;max-width:150px">{{'ReportsTemplate.F.UpdatedByUserId' | TextCodeTranslationPipe}}</td>
                                                             <td style="width: 60px; min-width: 60px;max-width:60px">{{'ReportsTemplate.F.InActive' | TextCodeTranslationPipe}}</td>
+                                                            <td *ngIf="EntityPM.Tenant == 0" style="width: 60px; min-width: 60px;max-width:60px">{{'ReportsTemplate.F.IsCopiedAtSignup' | TextCodeTranslationPipe}}</td>
                                                             <!--<td style="width: 27px; min-width: 27px;max-width:27px"></td>-->
 
 
@@ -342,6 +349,16 @@
                                                                                 <div class="MediaFillRelative">
                                                                                     <div class="CenterCenter" style="width: 16px;">
                                                                                         <CheckBox [IsEnabled]="!item.IsDefault" [IsChecked]="item.InActive" (Checked)="CheckInActiveclick(item)"></CheckBox>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td *ngIf="item.Tenant == 0" class="GridViewCell" style="width: 60px; min-width: 60px; max-width: 60px;">
+                                                                            <div class="MediaFill">
+                                                                                <div class="MediaFillRelative">
+                                                                                    <div class="CenterCenter" style="width: 16px;">
+                                                                                        <CheckBox [IsEnabled]="!item.IsDefault" [IsChecked]="item.IsCopiedAtSignup" (Checked)="CheckIsCopiedAtSignupclick(item)"></CheckBox>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

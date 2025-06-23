@@ -53,6 +53,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.PrepaidCollectId).HasColumnName("PrepaidCollectId");
             this.Property(t => t.ContainerTypeId).HasColumnName("ContainerTypeId");
             this.Property(t => t.Quantity).HasColumnName("Quantity");
+            this.Property(t => t.ExcludeFromTaxReport).HasColumnName("ExcludeFromTaxReport");
             this.Property(t => t.PayableDebitGLAcountId).HasColumnName("PayableDebitGLAcountId");
 
             this.HasRequired(t => t.APInvoice).WithMany().HasForeignKey(d => d.APInvoiceId);

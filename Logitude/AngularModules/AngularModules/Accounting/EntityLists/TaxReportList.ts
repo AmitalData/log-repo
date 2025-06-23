@@ -44,6 +44,7 @@ export class TaxReportList {
 	ClosingJournalNumber: string;
 	ClosingJournalId: string;
 	RemoveDuplicates: boolean;
+	IsEdited: boolean;
 	
 }
  

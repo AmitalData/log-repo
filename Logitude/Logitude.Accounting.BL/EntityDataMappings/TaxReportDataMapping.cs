@@ -29,12 +29,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             ULog(text, stopLogAt);
 
             AddPOCOPropertyName(POCOPropertyNames.Id);
+            entityPOCO.Id = entityPM.Id;
+
             AddPOCOPropertyName(POCOPropertyNames.Tenant);
-            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
-            {
-                entityPOCO.Id = entityPM.Id;
-                entityPOCO.Tenant = entityPM.Tenant;
-            }
+            entityPOCO.Tenant = entityPM.Tenant;
+           
 
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SearchFields);
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);

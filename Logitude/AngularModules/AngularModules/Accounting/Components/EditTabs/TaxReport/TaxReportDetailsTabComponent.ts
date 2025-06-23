@@ -1,32 +1,31 @@
 import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TaxReportPM } from '../../../EntityPMs/TaxReportPM';
-import { TaxReportLinePM } from '../../../EntityPMs/TaxReportLinePM';
-import { RatesTableExtendedListService } from '../../../../Infrastructure/Services/ExtendedLists/RatesTableExtendedListService';
-import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { AppTool, DateTool } from '../../../../Infrastructure/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { TaxReportLineStatusListService } from '../../../Services/StandardLists/TaxReportLineStatusListService';
 import { TaxReportLineExtendedListService } from '../../../Services/ExtendedLists/TaxReportLineExtendedListService';
-import { TaxReportPMService } from '../../../Services/StandardPMs/TaxReportPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TaxReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
-import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { TaxReportLineTransmitStatusListService } from 'Accounting/Services/StandardLists/TaxReportLineTransmitStatusListService';
 import { HttpResponse } from '@angular/common/http';
-import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
+import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
+import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
+import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
+import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 
@@ -50,6 +49,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     private _TaxReportLineStatusListService: TaxReportLineStatusListService = new TaxReportLineStatusListService();
     private _TaxReportLineExtendedListService: TaxReportLineExtendedListService = new TaxReportLineExtendedListService();
     private taxReportLineTransmitStatusListService: TaxReportLineTransmitStatusListService = new TaxReportLineTransmitStatusListService();
+    private _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
+    private TaxReportPMService: TaxReportPMService = new TaxReportPMService();
+
     public TaxReportColumnsReady: EventEmitter<any> = new EventEmitter();
     public QueryColumns: QueryColumnPM[] = [];
     IsTesterButtonVisibile: boolean = false;
@@ -140,9 +142,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
 
     }
-
+    
     ReloadScreen() {
-        
+
         this.BuildColumns();
         this.buildQueryColumns();
         this.GetStatuses();
@@ -154,10 +156,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         this.GetReportCounter();
         
     }
-
+    
     public Export2ExcelClicked() {
         this.LogitudeGridExportToExcelComponent.ExportToExcelExcute('TaxReportLine', this.ListFilters, this.QueryColumns,"SaveToMicrosoftExcel2007",true);
-    }
+    }    
     SetUIProperty() {
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("OutputTaxAmount", this.ObjectTableName, false);
@@ -788,6 +790,22 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     GetErrorMsg() {
         var msg = TextCodeTranslator.Translate("Accounting.O.TaxReportErrorMsg");
         return msg.replace("#Number", this.errorsCount.toString());
+    }
+
+
+    Recalculation() {
+
+        this.CurrentSession.StartBusyIndicator("Refreshing ...");
+        this.EntityPM.IsEdited = false;
+
+        this.TaxReportPMService.update(this.EntityPM).subscribe((myResult: any) => {
+            var mm: ServiceResponse = myResult;
+                this.CurrentSession.StopBusyIndicator();
+            if (!mm.HasError) {
+                this.entityArgs.EditComponent.ReloadEntityPM();
+            }
+
+        });
     }
 
 }
