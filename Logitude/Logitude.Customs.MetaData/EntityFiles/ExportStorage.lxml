@@ -3567,8 +3567,6 @@
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
-    DefaultSortName="&quot;OpenDate&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -3649,8 +3647,6 @@
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
-    DefaultSortName="&quot;OpenDate&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -3731,8 +3727,6 @@
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
-    DefaultSortName="&quot;OpenDate&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
@@ -3813,8 +3807,6 @@
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
-    DefaultSortName="&quot;OpenDate&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
