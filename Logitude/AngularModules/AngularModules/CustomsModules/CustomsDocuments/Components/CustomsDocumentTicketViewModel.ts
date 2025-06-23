@@ -26,12 +26,10 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { DeclarationPM } from "../../../Customs/EntityPMs/DeclarationPM";
 import { DocumentTypeCustomsDataPMService } from '../../../Customs/Services/StandardPMs/DocumentTypeCustomsDataPMService';
 import { CustomDocumentNewVersionService } from "../services/CustomDocumentNewVersion.service";
-import { SessionComponent } from "Infrastructure/Components/Session/SessionComponent";
 import { OcrDocumentExtendedListService } from "Customs/Services/ExtendedLists/OcrDocumentExtendedListService";
 import { OcrDocumentPM } from "Customs/EntityPMs/OcrDocumentPM";
 import { OcrDocumentPMService } from "Customs/Services/StandardPMs/OcrDocumentPMService";
 import { SIIRequestCustomsDocumentsController } from "CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/SIIRequest/Documents/SIIRequestCustomsDocumentsController";
-import { SIIDocumentTypeList } from "Customs/EntityLists/SIIDocumentTypeList";
 import { SIIDocumentTypeListService } from "Customs/Services/StandardLists/SIIDocumentTypeListService";
 
 export class CustomsDocumentTicketViewModel {
@@ -1104,7 +1102,6 @@ export class CustomsDocumentTicketViewModel {
     }
 
     private cnotConnectDiffrentTypeDocumentMessage() {
-        debugger;
         SessionLocator.SelectedSession.StopBusyIndicator();
         var messageWindow = new MessageWindow();
         messageWindow.Width = 400;

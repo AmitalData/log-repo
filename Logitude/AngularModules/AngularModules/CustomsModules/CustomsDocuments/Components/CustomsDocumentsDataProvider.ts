@@ -27,7 +27,6 @@ export class CustomsDocumentsDataProvider {
     private parentEntityCode: string;
 
     constructor(private objectTableName: string, private entityPM: any, private childEntity1Id = null, private childEntity1Name = null, private _parentEntityCode =null) {
-        debugger; // focus
         this.custDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
         var objectTable = window.ObjectTables.filter(d => d.Name === this.objectTableName)[0];
         this.ObjectTableId = objectTable.Id;
