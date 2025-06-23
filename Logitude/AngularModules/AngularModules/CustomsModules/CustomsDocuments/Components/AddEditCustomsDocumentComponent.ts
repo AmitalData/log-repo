@@ -58,7 +58,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.documentTypeCode = value;
             //if (value != null) {
             if (this.CustomsDocument) {
-                debugger;
                 //not needed
                 //if (this.newVersionAdded) {
                 //    this.documentTypeCode = value;
@@ -210,7 +209,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     public isRequireDocumentTicket: string = null;
 
     SetWindowArgs(windowArgs) {
-        debugger;
         this.WindowArgs = windowArgs;
 
         this.CustomsDocumentsTicket = windowArgs.CustomsDocumentsTicket;
@@ -670,7 +668,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     }
 
     OkMethod(isSendToQueue: boolean) {
-        debugger;
         var errors = [];
 
         if (AppTool.IsNullOrEmpty(this.DocumentTypeCode) && this.EntityPM.Direction == 'E') {
@@ -728,7 +725,6 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         }
 
         var requiredFieldsErrors: string[] = [];
-        debugger;
 
         if (this.CustomsDocument != null) {
             requiredFieldsErrors = this.GetRequiredFieldsErrors();
