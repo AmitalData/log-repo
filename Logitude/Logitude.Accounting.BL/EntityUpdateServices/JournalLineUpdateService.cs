@@ -65,7 +65,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
                 //throw new ApplicationException("BLException :Approved Journal Can Only Change To Voided");
             }
-   
+
+            if (entityPM.ActionCode == "3")
+            {
+                throw new ApplicationException("ActionCode 3 (debit & credit) is not allowed in JournalLineOnUpdate");
+            }
+
+
             base.OnUpdating(entityPM);
         }
 
