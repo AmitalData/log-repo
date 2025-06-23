@@ -56,41 +56,17 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     set DocumentTypeCode(value: string) {
         if (value != this.documentTypeCode) {
             this.documentTypeCode = value;
-            //if (value != null) {
             if (this.CustomsDocument) {
-                //not needed
-                //if (this.newVersionAdded) {
-                //    this.documentTypeCode = value;
-                //    this.CurrentSession.StopBusyIndicator();
-                //    var confirmWindow = new ConfirmWindow();
-                //    confirmWindow.Width = 400;
-                //    confirmWindow.Height = 200;
-                //    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                //    confirmWindow.ShowNoButton = false;
-                //    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.No");
-                //    confirmWindow.Show(TextCodeTranslator.Translate("Customs.CustomsDocuments.DocMetadataWarning"));
-                //    confirmWindow.WindowClosed.subscribe((event: any) => {
-                //        if (confirmWindow.Yes) {
-                //            this.CustomsDocument.DocumentTypeCode = this.documentTypeCode;
-                //            //customDocumentMetaDataControlViewModel.LoadMetaData(previousValueList);
-                //            confirmWindow.Close();
-                //        }
-                //    });
-                //}
-                // else {
                 this.CustomsDocument.DocumentTypeCode = value;
                 if (!this.IsFromSIIRequest) {
                     this.ClearAllMetaDataValues();
                     this.InitializeMetaData(this.previousValueList);
                 }
-                // }
             }
             if (this.CustomsDocumentsTicket) {
                 this.CustomsDocumentsTicket.DocumentTypeCode = value;
-                //ChangePointersDocumentTypeCode(value);
-                //this.IsTicketChanged = true;
             }
-            //}
+        
         }
     }
     IsDisplayOnly: boolean;
@@ -380,23 +356,13 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     this.IsMetaDataEditEnabled = true;
                     this.IsSendDocumentEnabled = true;
                 }
-                else { //removed redundunt code
-                    //if (!isEditEnabled) {
-                    //    this.IsEditEnabled = falseca;
-                    //    this.IsMetaDataEditEnabled = false;
-                    //    this.IsSendDocumentEnabled = false;
-                    //    this.IsDocumentTypeEnabled = false;
-                    //    this.ViewDisableMessageVisibility = true;
-                    //    this.DisplayOnlyMessage = " המסך לתצוגה בלבד - סטטוס המסמך " + this.CustomsDocument.DocumentStatusName;
-                    //}
-                    //else {
+                else { 
                     this.IsEditEnabled = false;
                     this.IsMetaDataEditEnabled = false;
                     this.IsDocumentTypeEnabled = false;
                     this.IsSendDocumentEnabled = false;
                     this.ViewDisableMessageVisibility = true;
                     this.DisplayOnlyMessage = " המסך לתצוגה בלבד - סטטוס המסמך " + this.CustomsDocument.DocumentStatusName;
-                    //}
                 }
             }
             else {

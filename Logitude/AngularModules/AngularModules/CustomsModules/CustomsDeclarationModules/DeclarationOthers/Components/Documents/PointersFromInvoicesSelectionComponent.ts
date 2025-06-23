@@ -224,78 +224,21 @@ export class PointersFromInvoicesSelectionComponent {
         if (!exists) {
             this.StaticSelectedInvoiceItems.Insert(item.rowData);
         }
-
-        //var exists = this.SelectedInvoiceItems.Collection.filter(d => d.rowData.CounterKey == item.rowData.CounterKey && d.rowData.LineNumber==item.rowData.LineNumber)[0];
-        //if (!exists) {
-        //    this.SelectedInvoiceItems.Insert(item);
-        //    //this.StaticSelectedInvoiceItems.Insert(item);
-
-        //}
-        //this.SelectedInvoiceItems.Collection.forEach((invoiceItemLine) => {
-        //    var item = items.filter(d => d.CounterKey == invoiceItemLine.CounterKey && d.LineNumber == invoiceItemLine.LineNumber)[0];
-        //    if (!item) {
-        //        this.SelectedInvoiceItems.Remove(invoiceItemLine);
-        //    }
-        //});
     }
 
     OnDataLoaded(items: any[]) {
         var temp = [];
         this.StaticSelectedInvoiceItems.Collection.forEach((item) => {
-            //var exists = this.SelectedInvoiceItems.Collection.filter(d => d.rowData.CounterKey == item.CounterKey && d.rowData.LineNumber == item.LineNumber)[0];
             this.SelectedInvoiceItems.Clear();
             var invItem: any = items.filter(d => d.rowData.CounterKey + "" == item.CounterKey && d.rowData.LineNumber + "" == item.LineNumber)[0];
-            //if (this.SelectedInvoiceItems.Collection.indexOf(item) == -1) {exists == null &&
             if (invItem != null) {
                 this.SelectedInvoiceItems.Insert(invItem);
             }
         });
-
-        //if (!this.SelectedInvoiceItems.Collection.includes(invItem)) {
-        //this.SelectedInvoiceItems.AppendCollection(temp);//.push(invItem);
-        //}
-        //temp.forEach((invoiceItemLine) => {
-        //    this.SelectedInvoiceItems.Insert(invoiceItemLine);
-        //});
     }
 
     LoadSupplierInvoiceItems(invoices: SupplierInvoiceLine[]) {
         return;
-        //this.InvoiceItemsList.Clear();
-
-        //var keys = "";
-        //invoices.forEach((invoice) => {
-        //    keys = keys + "," + invoice.InvoiceCounterKey;
-        //});
-        //keys = keys.substr(1, keys.length - 1);
-        //if (keys.length > 0) {
-        //    this.supplierInvoiceExtendedListService.GetSupplierInvoiceItemsForInvoices(this.DeclarationPM.Id, keys, null, null).subscribe((response: any) => {
-        //        if (response) {
-        //            var invoiceItems: SupplierInvoiceItemList[] = response.Result;
-        //            if (invoiceItems) {
-
-        //                for (let item of invoiceItems) {
-        //                    var invoiceItem: SupplierInvoiceItemLine = new SupplierInvoiceItemLine(item, this);
-        //                    this.InvoiceItemsList.Insert(invoiceItem);
-        //                }
-        //                var temp = [];
-        //                this.CustomsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
-        //                    var invItem: SupplierInvoiceItemLine = this.InvoiceItemsList.Collection.filter(d => d.CounterKey + "" == pointer.Child1EntityId && d.LineNumber + "" == pointer.Child2EntityId)[0];
-        //                    if (invItem) {
-        //                        temp.push(invItem);
-        //                    }
-        //                    //if (!this.SelectedInvoiceItems.Collection.includes(invItem)) {
-        //                    this.SelectedInvoiceItems.Collection = temp;//.push(invItem);
-        //                    //}
-        //                });
-
-
-        //            }
-
-        //        }
-
-        //    });
-        //}
     }
 
     CancelButtonClicked() {
@@ -304,24 +247,8 @@ export class PointersFromInvoicesSelectionComponent {
     }
 
     OkButtonClicked() {
-        //this.parent.SelectedInvoiceItems = this.SelectedInvoiceItems;
-        //this.parent.SelectedInvoices = this.SelectedInvoices;
-        //this.CustomsDocumentsTicket.ConnectedInvoicesSequences
-
-        this.ConnectedInvoiceItems = "";
-        //var initallySelected: string[] = this.initialSelectedItems ? this.initialSelectedItems.split(',') : [];
-        //var deleted: string[] = this.deletedInvItems.substr(1, this.deletedInvItems.length - 1).split(',');
-        //for (var i = 0; i < initallySelected.length; i++) {
-        //    if (deleted.indexOf(initallySelected[i]) == -1) {
-        //        this.ConnectedInvoiceItems = this.ConnectedInvoiceItems + "," + initallySelected[i];
-        //    }
-        //}
-
-
         this.StaticSelectedInvoiceItems.Collection.forEach((item) => {
-            //if (initallySelected.indexOf(item.rowData.SequenceNumeric.toString()) == -1) {
             this.ConnectedInvoiceItems = this.ConnectedInvoiceItems + "," + item.SequenceNumeric;
-            // }
         });
         this.ConnectedInvoiceItems = this.ConnectedInvoiceItems.substr(1, this.ConnectedInvoiceItems.length - 1);
 
@@ -336,13 +263,8 @@ export class PointersFromInvoicesSelectionComponent {
     }
 
     ViewInitCompleted($event) {
-        //this.SelectedRow = this.ItemsSource.Collection[0];
-        //this.OnRowSelected(this.SelectedRow);
         this.SelectedRows = this.SelectedInvoices.Collection;
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-        //this.SelectedInvoiceItems.Changed.subscribe((isCollection) => {
-
-        //});
     }
 
     DataSource = {
@@ -360,32 +282,7 @@ export class PointersFromInvoicesSelectionComponent {
     };
 
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
-
-
-        //if (filters == null) {
-        //    filters = new ApiQueryFilters();
-        //}
-
-        //filters.PageSize = take;
-        //filters.PageIndex = skip;
-        //filters.GetAll = false;
-        //filters.GetCount = true;
-        //filters.SortBy = "SequenceNumeric";
-        //filters.SortDirection = "Ascending";
-        //if (this.SelectedRow) {
-        //    filters.addAdditionalFilter("DeclarationId", this.SelectedRow.DeclarationId, null, null, "Equals", false, false, false, "string");
-        //    filters.addAdditionalFilter("CounterKey", this.SelectedRow.InvoiceCounterKey, null, null, "Equals", false, false, false, "number");
-
-        //}
-        //else {
-        //    filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        //    //          filters.addAdditionalFilter("CounterKey", null, null, null, "Equals", false, false, false, "number");
-
-        //}
-        //return this._entityListService.getExtendedByFilters("Customs.SupplierInvoiceItem", filters);//this.ledgerTransactionListExtendedService.getByFilters(filters);
-
-        var keys = "";
+       var keys = "";
         this.SelectedRows.forEach((invoice) => {
             keys = keys + "," + invoice.InvoiceCounterKey;
         });

@@ -268,8 +268,18 @@ export class CustomsDocumentsComponent
 
         var custDocsTicketWebService: CustDocsTicketWebService = new CustDocsTicketWebService();
         var custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
-        //******Getting customs documents ticket for the entity*****//
-        custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(this.EntityPM.Id, child1IdForQuery, null, null, this.ParentEntityCode, this.EntityPM.TransportModeId == "A").subscribe((response: ServiceResponse) => {
+        
+        const TRANSPORT_MODE_AIR = "A"; 
+        const isAirTransport = this.EntityPM.TransportModeId === TRANSPORT_MODE_AIR;
+
+        custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(
+            this.EntityPM.Id,
+            child1IdForQuery,
+            null,
+            null,
+            this.ParentEntityCode,
+            isAirTransport
+        ).subscribe((response: ServiceResponse) => {
             this.CustomsDocumentsTickets = response.Result;
             var customsDocTickets: string = "";
             var tickets = this.CustomsDocumentsTickets.filter(d => !AppTool.IsNullOrEmpty(d.DocumentTypeCode));
@@ -764,13 +774,6 @@ export class CustomsDocumentsComponent
                         this.ApplyEditCustomsDocumentTicket(false, null, relatedDocumentViewModel.CustomDocument);
                     }
                     else {
-                        //DocumentsFilingId = CurrentDocument.Id, Tenant = TenantContext.Current.Id, DeclarationId = CurrentDocument.EntityId,
-                        //    ExternalEntityName = CurrentDocument.ExternalEntityName,
-                        //    ExternalEntityReference = CurrentDocument.ExternalEntityReference,
-                        //    DocumentId = CurrentDocument.DocumentId,
-                        //    Extension = CurrentDocument.FileExtension,
-                        //    CurrentEntityId = CurrentDocument.EntityId,
-                        //    FileSize = CurrentDocument.FileSize,
                         var customsDocumentPM: CustomsDocumentPM = new CustomsDocumentPM();
                         customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
                         customsDocumentPM.Tenant = SessionLocator.Tenant;
@@ -813,9 +816,6 @@ export class CustomsDocumentsComponent
                                     });
                                 }
                             }
-                            //this.CurrentSession.StartBusyIndicatorSaving();
-                            //                                this.CurrentSession.StopBusyIndicator();
-
                         });
                     }
                 }
@@ -847,12 +847,6 @@ export class CustomsDocumentsComponent
     public ListOfStatusCode2Show: string[] = ["1", "2"];
     ShowCustomAnswerClicked(event, customsDocumentsTicket: CustomsDocumentTicketViewModel) {
         event.stopPropagation();
-        //console.log(customsDocumentsTicket);
-
-        //if (AppTool.IsNullOrEmpty(customsDocumentsTicket.customsDocumentsTicketPM.DocumentStatusCode) ||
-        //    AppTool.IsNullOrEmpty(customsDocumentsTicket.customsDocumentsTicketPM.DocumentsFilingId) ||
-        //    //entityPm.DocumentStatusCode!= "1" 
-        //    this.ListOfStatusCode2Show.indexOf(customsDocumentsTicket.customsDocumentsTicketPM.DocumentStatusCode)==-1
         if (customsDocumentsTicket.ApprovedImageVisibility || customsDocumentsTicket.DeniedImageVisibility) {
         } else {
             if (!customsDocumentsTicket.HaveCustomAnswer) {
@@ -869,7 +863,6 @@ export class CustomsDocumentsComponent
 
 
         var myCommunicationLogStepListService = new CommunicationLogStepListService();
-        //logId=1-212245&tenant=1
 
 
         myCommunicationLogStepListService
