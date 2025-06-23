@@ -57,19 +57,19 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
     ValidationBeforeSave() {
     }
 
-    FindCustomsDocumentTicketViewModel(InvoiceCounterKey: string) {
-        this.originalCustomsDocumentTicketViewModel.forEach((ticketViewmodel) => {
-            let vm =
-                ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p =>
-                    p.Child2EntityCode == "SupplierInvoice" &&
-                    p.Child2EntityId === InvoiceCounterKey)[0];
+    FindCustomsDocumentTicketViewModel(invoiceCounterKey: string): CustomsDocumentPointerPM | null {
+        for (const ticketVm of this.originalCustomsDocumentTicketViewModel) {
+            const vm = ticketVm.customsDocumentsTicketPM.CustomsDocumentPointers
+                .find(p =>
+                    p.Child2EntityCode === EntityCode.SupplierInvoice &&
+                    p.Child2EntityId === invoiceCounterKey
+                );
 
             if (!AppTool.IsNullOrEmpty(vm)) {
-                return vm;
+                return vm;                
             }
-
-        });
-        return null;
+        }
+        return null;                 
     }
 
     CreateTicketsToEachSupplierInvoice() {
