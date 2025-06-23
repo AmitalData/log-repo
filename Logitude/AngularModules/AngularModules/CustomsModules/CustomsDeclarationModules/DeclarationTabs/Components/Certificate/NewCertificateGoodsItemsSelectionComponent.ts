@@ -1,5 +1,5 @@
 
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DeclarationPM} from '../../../../../Customs/EntityPMs/DeclarationPM';
 import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
 import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoicePM';
@@ -43,8 +43,8 @@ export class NewCertificateGoodsItemsSelectionComponent {
     @Output() MenuHeaderchangeevent = new EventEmitter();
     filterAgrs: ApiQueryFilters;
     SelectedItemChangedEvt: any;
-    private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
+    private CurrentSession = SessionLocator.SelectedSession; 
+       constructor() {
         this.SupplierInvoicesList = new ObservableCollection([SupplierInvoiceLine]);
         this.InvoiceItemsList = new ObservableCollection([]);
         this.SelectedInvoiceItems = new ObservableCollection([]);
@@ -207,6 +207,14 @@ export class NewCertificateGoodsItemsSelectionComponent {
         this.SelectedRows.forEach((invoice) => {
             keys = keys + "," + invoice.InvoiceCounterKey;
         });
+        
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string");
+        }
+        else{
+            filters = new ApiQueryFilters();
+        }
+       
         keys = keys.substr(1, keys.length - 1);
         return new Promise((resolve, reject) => {
             resolve(this.supplierInvoiceExtendedListService.GetSupplierInvoiceItemsForInvoices(this.DeclarationPM.Id, keys, skip, take, getCount));
@@ -287,6 +295,12 @@ export class NewCertificateGoodsItemsSelectionComponent {
         //this.SelectedItemChangedEvt.unsubscribe();
         //this.SelectedItemChangedEvt = null;
     }
+     
+SearchText: string = "";
+   SearchTextChanged(searchText: string) {
+    this.SearchText =!AppTool.IsNullOrEmpty(searchText)?searchText.toLowerCase():searchText;      
+    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+   } 
 }
 
 export class SupplierInvoiceLine {
