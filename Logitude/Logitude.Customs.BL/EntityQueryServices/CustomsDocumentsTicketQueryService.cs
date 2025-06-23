@@ -245,15 +245,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         {
             List<CustomsDocumentsTicket> tickets = repository.GetCustomsDocumentTickets(parameters, tenant);
             
-            List<CustomsDocumentsTicketPM> ticketPMs = (from a in tickets
-                                                        //select new CustomsDocumentsTicketPM()
-                                                        //{
-                                                        //    Id = a.Id,
-                                                        //    DocumentTypeCode = a.DocumentTypeCode,
-                                                        //    Tenant = a.Tenant,
-                                                        //    DocumentsFilingId = a.DocumentsFilingId,
-                                                        //    RequestedCustomsDocId = a.RequestedCustomsDocId,
-                                                        //}
+            List<CustomsDocumentsTicketPM> ticketPMs = (from a in tickets 
                                                         select this.GetEntityPM(a)
                                                         ).ToList();
             return ticketPMs;

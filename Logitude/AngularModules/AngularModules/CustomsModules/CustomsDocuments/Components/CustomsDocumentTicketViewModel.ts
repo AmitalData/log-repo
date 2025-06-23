@@ -1,6 +1,5 @@
 import { CustomsDocumentPM } from "../../../Customs/EntityPMs/CustomsDocumentPM";
 import { CustomsDocumentsTicketPM } from "../../../Customs/EntityPMs/CustomsDocumentsTicketPM";
-import { CustomsDocumentPointerPM } from "../../../Customs/EntityPMs/CustomsDocumentPointerPM";
 import { DocumentsFilingPM } from "../../../Common/EntityPMs/DocumentsFilingPM";
 import { CustomsDocumentMetaDataValuePM } from '../../../Customs/EntityPMs/CustomsDocumentMetaDataValuePM';
 import { CustomDocumentTypeList } from '../../../Customs/EntityLists/CustomDocumentTypeList';
@@ -9,7 +8,7 @@ import { CustomDocumentTypeMetaDataListService } from '../../../Customs/Services
 import { CustomDocumentTypeListService } from '../../../Customs/Services/StandardLists/CustomDocumentTypeListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { CustomDocumentTypeMetaDataList } from '../../../Customs/EntityLists/CustomDocumentTypeMetaDataList';
-import { AppTool, ArrayTool } from '../../../Infrastructure/Tools';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { RelatedDocumentViewModel } from './RelatedDocumentViewModel';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
@@ -442,12 +441,10 @@ export class CustomsDocumentTicketViewModel {
     SetApprovedDeniedImages() {
 
         if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "4" || this.customsDocumentsTicketPM.VerificationStatusTypeCode == "5") {
-            //approvedDeniedImageSource = "/Images/icons/ApprovedDocument.png";
             this.DeniedImageVisibility = false;
             this.ApprovedImageVisibility = true;
         }
         else if (this.customsDocumentsTicketPM.VerificationStatusTypeCode == "6") {
-            // approvedDeniedImageSource = "/Images/icons/DeniedStamp.png";
             this.DeniedImageVisibility = true;
             this.ApprovedImageVisibility = false;
         }
@@ -459,13 +456,7 @@ export class CustomsDocumentTicketViewModel {
 
     allowDrop(event: DragEvent) {
         event.preventDefault();
-
         var documentFilingPMId = event.dataTransfer.getData("Id");
-        //if (!documentFilingPMId) {
-        //    event.dataTransfer.effectAllowed = "none";
-        //    event.dataTransfer.dropEffect = "none";
-        //}
-
     }
 
     ConnectDocumentToTicket(event: DragEvent, RelatedDocuments: RelatedDocumentViewModel[], dataContext: CustomsDocumentsComponent, isExport: boolean) {
@@ -518,32 +509,13 @@ export class CustomsDocumentTicketViewModel {
                                     customsDocumentPM.DocumentsFilingId = relatedDocumentViewModel.Id;
                                     customsDocumentPM.Tenant = SessionLocator.Tenant;
                                     isExport = relatedDocumentViewModel.DocumentCategoryCode == 'E' ? true : false;
-                                    //if (isExport && AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId)) {
-                                    //    if (!AppTool.IsNullOrEmpty(res.Result)) { this.EntityPM
-                                    //        customsDocumentPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
-                                    //        this.customsDocumentsTicketPM.DocumentTypeCode = res.Result.CustomsDoucumentTypeCode;// relatedDocumentViewModel.DocumentTypeCode;
-
-                                    //    }
-                                    //    else {
-                                    //        customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-
-                                    //    }
-                                    //}
-                                    //else {
                                     customsDocumentPM.DocumentTypeCode = this.customsDocumentsTicketPM.DocumentTypeCode;
-
-                                    //}
                                     customsDocumentPM.DeclarationId = this.EntityPM.Id;
                                     customsDocumentPM.IsPartOfDeclaration = true;
                                     relatedDocumentViewModel.CustomDocument = customsDocumentPM;
                                     customsDocumentPMService.insert(customsDocumentPM).subscribe((resp: ServiceResponse) => {
                                         if (!resp.HasError) {
                                             this.StartCustomsDocumentMetaDataCheck(relatedDocumentViewModel);
-                                            //if (isExport) {
-                                            //    var customsDocumentsTicketPMService: CustomsDocumentsTicketPMService = new CustomsDocumentsTicketPMService();
-
-                                            //    customsDocumentsTicketPMService.update(this.customsDocumentsTicketPM).subscribe();
-                                            //}
                                         }
                                         else {
                                             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -568,9 +540,6 @@ export class CustomsDocumentTicketViewModel {
                                                 });
                                             }
                                         }
-                                        //SessionLocator.SelectedSession.StartBusyIndicatorSaving();
-                                        //                                SessionLocator.SelectedSession.StopBusyIndicator();
-
                                     });
                                 }
                             }
@@ -617,21 +586,7 @@ export class CustomsDocumentTicketViewModel {
                 }
             }
         });
-
-        /*if(!AppTool.IsNullOrEmpty(relatedDocumentViewModel.CustomDocument.CustomsDocId) && !AppTool.IsNullOrEmpty(this.customsDocumentsTicketPM.RequestedCustomsDocId) && relatedDocumentViewModel.CustomDocument.CustomsDocId != this.customsDocumentsTicketPM.RequestedCustomsDocId){
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            var messageWindow = new MessageWindow();
-            messageWindow.Width = 400;
-            messageWindow.Height = 200;
-            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-            messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DocumentAndDocumentWithDifferentCustomsReference"));
-            messageWindow.WindowClosed.subscribe((event: any) => {
-
-                messageWindow.Close();
-
-            });
-        }*/
-
+        
         if ((relatedDocumentViewModel.CustomDocument != null && relatedDocumentViewModel.CustomDocument.DocumentStatusCode == '7') || (relatedDocumentViewModel.Status1ImageGreen == true && relatedDocumentViewModel.Status2ImageGreen != true)) {
             SessionLocator.SelectedSession.StopBusyIndicator();
 

@@ -57,7 +57,6 @@ namespace Logitude.Customs.BL.CloseTables
         public List<InterfaceDetails> GetAllInterfaceDetails()
         {
             var all = new List<InterfaceDetails>() { 
-            //all.Add(new KeyValuePair<string, string>("", ""));
 
             new InterfaceDetails()
             {
