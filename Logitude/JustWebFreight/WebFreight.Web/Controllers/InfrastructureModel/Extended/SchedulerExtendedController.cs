@@ -199,6 +199,36 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage PutRunTaskNow([FromBody] RunTaskNowRequest request)
+        {
+
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                   AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    int tenant = authToken.Tenant;
+                    SecurityUtility.AuthenticationOnTenant(tenant);
+
+                    IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
+                    TasksSchedulerService service = new TasksSchedulerService(MyContext, tenant);
+                    if (request == null || string.IsNullOrEmpty(request.TaskSchedulerId))
+                    {
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, "TaskSchedulerId is required.");
+                    }
+                    service.RunTaskNow(request?.TaskSchedulerId, tenant, request.FromDate, request.ToDate);
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                }
+            }
+
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage GetIsExceedsScheduledTasksLimitPerReport(int tenant, string entityId)
         {
@@ -274,5 +304,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 			}
 		}
-	}
+        public class RunTaskNowRequest
+        {
+            public DateTime FromDate { get; set; }
+            public string TaskSchedulerId { get; set; }
+            public DateTime ToDate { get; set; }
+        }
+    }
 }

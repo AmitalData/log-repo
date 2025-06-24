@@ -471,7 +471,7 @@ namespace CommunicationWorkerRole
                     }
                 }
                 var invoiceNumber = invoice.Element(ns + "Number")?.Value;
-                aRInvoicePM.InvoiceNumber = invoiceNumber;
+                aRInvoicePM.DraftNumber = invoiceNumber;
                 var dueDateStr = invoice.Element(ns + "DueDate")?.Value;
                 DateTime dueDate;
                 if (!string.IsNullOrWhiteSpace(dueDateStr) && DateTime.TryParse(dueDateStr, out dueDate))
@@ -527,7 +527,7 @@ namespace CommunicationWorkerRole
                         }
                         else {
                             ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
-                            var logitudeChargeTypeCode = "201";// computingPartnerTranslationHelper.GetLogitudeCodeTranslation(chargeTypeCode, "Magaya", "ChargesType");
+                            var logitudeChargeTypeCode =  computingPartnerTranslationHelper.GetLogitudeCodeTranslation(chargeTypeCode, "Magaya", "ChargesType");
                             var chargeTypeQuery = new ChargesTypeQuery(tenant);
                             chargeType = chargeTypeQuery.GetSinglePMByCode(logitudeChargeTypeCode, tenant);
                             if (chargeType == null)

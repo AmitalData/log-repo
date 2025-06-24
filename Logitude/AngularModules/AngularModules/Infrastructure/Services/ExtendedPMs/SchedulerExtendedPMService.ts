@@ -126,7 +126,22 @@ export class SchedulerExtendedPMService {
             return of(serviceResponse);
         }
     }
+    RunNowButtonClicked(taskSchedulerId: string, fromDate: Date, toDate: Date) {
+              
+            const body = {
+                TaskSchedulerId: taskSchedulerId,
+                FromDate: fromDate,
+                ToDate: toDate
+            };
+            var url = this.apiUrl + '/PutRunTaskNow' ;
 
+            return this.httpClient.put(url, body, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+                if (response instanceof HttpResponse) {
+                    return response;
+                }
+            }), catchError(ServiceHelper.HandleServiceError));
+       
+    }
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TasksSchedulerPM = null) {
 
 
