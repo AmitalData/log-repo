@@ -246,7 +246,8 @@ export class PointersFromInvoicesSelectionComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    OkButtonClicked() {
+     OkButtonClicked() {
+        this.ConnectedInvoiceItems = "";
         this.StaticSelectedInvoiceItems.Collection.forEach((item) => {
             this.ConnectedInvoiceItems = this.ConnectedInvoiceItems + "," + item.SequenceNumeric;
         });

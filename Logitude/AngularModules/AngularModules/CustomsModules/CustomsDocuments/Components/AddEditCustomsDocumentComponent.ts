@@ -66,7 +66,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             if (this.CustomsDocumentsTicket) {
                 this.CustomsDocumentsTicket.DocumentTypeCode = value;
             }
-        
+
         }
     }
     IsDisplayOnly: boolean;
@@ -356,7 +356,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     this.IsMetaDataEditEnabled = true;
                     this.IsSendDocumentEnabled = true;
                 }
-                else { 
+                else {
                     this.IsEditEnabled = false;
                     this.IsMetaDataEditEnabled = false;
                     this.IsDocumentTypeEnabled = false;
@@ -743,10 +743,16 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                     newPointer.Tenant = SessionLocator.Tenant;
                     newPointer.ParentEntityId = this.ParentEntityId;
                     newPointer.ParentEntityCode = this.ParentEntityCode;
-                    newPointer.Child1EntityCode = null;
+                    if (this.IsFromSIIRequest) {
+                        newPointer.Child1EntityCode = this.Child1EntityCode;
+                        newPointer.Child1EntityId = this.Child1EntityId;
+                    }
+                    else {
+                        newPointer.Child1EntityCode = null;
+                        newPointer.Child1EntityId = null;
+                    }
                     newPointer.Child2EntityCode = null;
                     newPointer.Child3EntityCode = null;
-                    newPointer.Child1EntityId = null;
                     newPointer.Child2EntityId = null;
                     newPointer.Child3EntityId = null;
                     newPointer.DocumentTypeCode = this.CustomsDocumentsTicket.DocumentTypeCode;

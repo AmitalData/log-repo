@@ -182,7 +182,7 @@ export class CustomsDocumentTicketViewModel {
         if (!this.isNew) {
             this.SetCustomDocumentMetaData();
         }
-        if (customsDocumentsTicketPM.DocumentTypeCode == "380" || (customsDocumentsTicketPM.DocumentTypeCode == "325" && EntityPM?.Direction == "E")) {
+        if (customsDocumentsTicketPM.DocumentTypeCode == "380" || (customsDocumentsTicketPM.DocumentTypeCode == "325" && EntityPM?.Direction == "E") || this.IsFromSIIRequest) {
 
             var dec: DeclarationPM = EntityPM as DeclarationPM;
             if (dec) {
