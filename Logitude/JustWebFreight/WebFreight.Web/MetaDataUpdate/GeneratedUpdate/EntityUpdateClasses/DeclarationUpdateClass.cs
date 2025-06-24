@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
- 		public const string HashString = "5906b954aca8ec72f7bfb5e59f063d72";
+		public const string HashString = "1b47c6ef6065c0322e6fdc12348fb677";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
          {                     
             
@@ -20918,6 +20918,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_ADDNEWDECLARATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDNEWDECLARATION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ADDNEWDECLARATION", NameTextCodeDefaultText = @"Add New Declaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
 
 		   Feature DeclarationFeature_IsSendSFTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsSendSFTP", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IsSendSFTP", NameTextCodeDefaultText = @"Is Send SFTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
+
+		   Feature DeclarationFeature_ImportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ImportDiamonds", NameTextCodeDefaultText = @"Diamond Declaration - Import" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    

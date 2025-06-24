@@ -102,6 +102,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreditAccountEnglishName, 
 	         ConfirmationNumber, 
 	         DebitAccountCountryCode, 
+	         DebitAccountCountryCode,
 	         ExcludeFromTaxReport,
 	      }
 

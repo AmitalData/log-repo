@@ -679,7 +679,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
             shipments = FilterShipments(shipmentSearchInput, shipments);
             shipments = AddShipmentSearch(shipmentSearchInput, shipments);
-            shipments = SortShipments(shipmentSearchInput, shipments);
+           // shipments = SortShipments(shipmentSearchInput, shipments);
             shipments = GetPageOfShipments(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
             shipments = AddCards(shipments);
 

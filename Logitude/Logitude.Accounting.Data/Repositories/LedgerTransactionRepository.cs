@@ -1424,6 +1424,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             return ledgerTransactionPOCOs;
         }
 
+       
 
         public List<LedgerTransactionJournalLineLT> GetAPInvoiceLedgerTransactionsByIdList(List<String> ledgerTransactionIds, int tenant)
         {
@@ -1728,6 +1729,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             // Single DB query (Include Account and JournalLine to capture all required data)
             var query = context.LedgerTransactions
                 .Include("JournalLine")
+                .Include("Account")
                 .Where(a => journalIds.Contains(a.JournalId) && a.Tenant == tenant)
                 .Select(a => new
                 {

@@ -293,6 +293,15 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "InvoiceApiQueryTask", 
 			});
 			
+            all.Add(new SchedulerProcedureDetails()
+            {
+                Code = "ReconcileInProgressCleanupTask",
+                Name = "ReconcileInProgressCleanupTask",
+                SearchFields = "ReconcileInProgressCleanupTask",
+                Description = "ReconcileInProgressCleanupTask",
+                IsInternallyDefined = false,
+            });
+
             return all;
        }
 

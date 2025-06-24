@@ -74,12 +74,12 @@ namespace Logitude.Accounting.BL.CoreBL
         const string CreatedStatusCode = "C";
         public static int recalculateDataAddedLanes = 0;
         const string RecalculateEventCode = "IREC";
-        private static HashSet<string> BlockedStatuses = new HashSet<string> 
+         private static HashSet<string> BlockedStatuses = new HashSet<string> 
         {
-            TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
-            TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
+            TaxReportLineTransmitStatusValues.Notfortransmitatall,
+            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
         };
-
+ 
 
 
         static bool CheckLastNineAreNine(string input)
@@ -599,6 +599,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     List<JournalPM> jPMs = journalQueryService.GetJournalPMs(all_dup_line_jIds, taxReportPM.Tenant);
                     if (jPMs != null && jPMs.Count > 0)
                     {
+
                         Dictionary<string, List<JournalPM>> journalLookup = jPMs
                                 .GroupBy(j => j.Id)
                                 .ToDictionary(g => g.Key, g => g.OrderByDescending(j => j.StatusCode).ToList());
@@ -628,14 +629,14 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference)
                         {
-;
+ ;
                             oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
-                        }
+                         }
 
                         else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
-                            oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit; 
-                        }
+                             oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit; 
+                         }
 
                         if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
@@ -651,12 +652,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference)
                         {
 
-                            linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
-                        }
+                             linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
+                         }
                         else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
-                            linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;   
-                        }
+                             linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;   
+                         }
                     }
 
                 }
@@ -855,7 +856,8 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
-                LedgerTransaction ledgerTransaction = journalsTransactions.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference && d.LocalAmountCredit != 0 && d.Account.ChartOfAccountsTypeCode != "5").FirstOrDefault();
+                LedgerTransaction ledgerTransaction = journalsTransactions.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference && d.LocalAmountCredit != 0
+                && (d.Account == null || d.Account.ChartOfAccountsTypeCode != "5")).FirstOrDefault();
                 account = ledgerTransaction != null ? gLAccounts.Where(d => d.Id == ledgerTransaction.AccountId).FirstOrDefault() : null;
             }
             if (account != null)
@@ -890,7 +892,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             var transactionSum = journalsTransactions.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
-            var transactionSumNotExcluded = journalsTransactionsNotExcluded.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountCredit);
+            var transactionSumNotExcluded = journalsTransactionsNotExcluded.Where(d => d.JournalId == report.JournalId && d.Reference1 == report.Reference).Sum(d => d.LocalAmountDebit);
             InputInvoiceAmount = transactionSum - InputVatAmount;
             InputInvoiceAmountNotExcluded = transactionSumNotExcluded - InputVatAmount;
 

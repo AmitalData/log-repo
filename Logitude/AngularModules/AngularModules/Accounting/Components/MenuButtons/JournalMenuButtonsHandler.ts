@@ -270,18 +270,8 @@ export class JournalMenuButtonsHandler {
                 {
                     this.PrintJournal();
 
-                    //if (this.EntityPM.StatusCode != "2") { // Approved
-                    //    this.PrintJournal();
-                    //} else {
-                    //    this.entityArgs.EditComponent.SaveChanges();
-                    //    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
-                    //        if ($event == true) {
-                    //            this.entityArgs.EditComponent.ReloadEntityPM();
-                    //            this.SetEntityPM(this.entityArgs);
-                    //            this.PrintJournal();
-                    //        }
-                    //    });
-                    //}
+
+                   
                     break;
                 }
             case "CopyJournal":

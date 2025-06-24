@@ -95,6 +95,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 item.InProgressExternalReconcile = /*true*/ Value_ExternalReconcileInProgress;
+
             }
             this.UpdateMulti(pmList, new List<ReconcileExternalPageLinePM>(), new ReconcileExternalPagePM(), true);
         }

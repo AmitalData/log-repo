@@ -3332,7 +3332,6 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RemoveDuplicates&quot;"
     ListPropertyPath="&quot;RemoveDuplicates&quot;"
-    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"

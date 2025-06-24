@@ -235,7 +235,15 @@
                                     </LogTextBox>
                                 </div>
                             </td>
+                            <td style="width: 35px;"></td>
+                            <td style="width: 160px; padding-right: 5px;" class="Label">
+                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLaccount.O.IsGroupMultiAccounts'"
+                                    [ObjectFieldName]="'IsGroupMultiAccounts'" [DataContext]="DataContext"></LogLabel>
 
+                            </td>
+                            <td>
+                                <CheckBox [IsChecked]="IsGroupMultiAccounts" (Checked)="IsGroupMultiAccounts = $event"></CheckBox>
+                            </td>
                         </tr>
 
                         <tr>
@@ -310,11 +318,7 @@
 
 
                             <td colspan="3" style="padding-right: 100px;">
-                                <div style="width: 90px;">
-                                    <button class="GreenButton" (click)="RunButtonClicked()">
-                                        {{RunReportTitle}}
-                                    </button>
-                                </div>
+                                
                             </td>
                         </tr>
 
@@ -465,14 +469,24 @@
                             </td>
 
 
+                            <td style="width: 100px;"></td>
+                            <td style="width: 35px;"></td>
 
 
-
+                            <td  style="padding-right: 100px;">
+                                <div style="width: 90px;">
+                                    <button class="GreenButton" (click)="RunButtonClicked()">
+                                        {{RunReportTitle}}
+                                    </button>
+                                </div>
+                            </td>
 
 
 
                         </tr>
-
+                        <tr style="height: 15px;">
+                            
+                        </tr>
                         <tr style="height: 15px;">
                             <td></td>
                         </tr>

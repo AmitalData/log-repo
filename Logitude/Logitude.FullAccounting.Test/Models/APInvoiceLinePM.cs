@@ -82,8 +82,8 @@
         public int? Quantity { get; set; }
         public double? ForiegnAmountWithRecognizedVat { get; set; }
         public double? LocalAmountWithVatRecognized { get; set; }
+        public bool? ExcludeFromTaxReport { get; set; }
         public string PayableDebitGLAcountName { get; set; }
         public string PayableDebitGLAcountId { get; set; }
-        public bool? ExcludeFromTaxReport { get; set; }
     }
 }
