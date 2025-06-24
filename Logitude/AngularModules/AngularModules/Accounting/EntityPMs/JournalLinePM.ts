@@ -244,10 +244,7 @@ export class JournalLinePM {
     public set DebitAccountCountryCode(newValue: string) { if (this.debitAccountCountryCode != newValue) { this.debitAccountCountryCode = newValue; this.MarkAsDirty("DebitAccountCountryCode"); } }
        
 	 
-    private excludeFromTaxReport: boolean;
-    public get ExcludeFromTaxReport() { return this.excludeFromTaxReport; }
-    public set ExcludeFromTaxReport(newValue: boolean) { if (this.excludeFromTaxReport != newValue) { this.excludeFromTaxReport = newValue; this.MarkAsDirty("ExcludeFromTaxReport"); } }
-       
+  
 	 
 
     public OldEntityPM: JournalLinePM;
@@ -291,4 +288,4 @@ export class JournalLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
