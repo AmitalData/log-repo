@@ -16,9 +16,7 @@ import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGeneric
 import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {ARInvoicesSignedStatusList} from '../../EntityLists/ARInvoicesSignedStatusList';
 
 @Injectable()
@@ -52,7 +50,7 @@ export class ARInvoicesSignedStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatus", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatuses", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -84,7 +82,7 @@ export class ARInvoicesSignedStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatus", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatuses", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -152,7 +150,7 @@ export class ARInvoicesSignedStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatuses", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -181,7 +179,7 @@ export class ARInvoicesSignedStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatus").pipe(
+            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatuses").pipe(
 				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ARInvoicesSignedStatusList> = [];
@@ -199,7 +197,7 @@ export class ARInvoicesSignedStatusListService {
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatus", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatuses", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -247,7 +245,7 @@ export class ARInvoicesSignedStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatus").pipe(
+            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatuses").pipe(
 				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ARInvoicesSignedStatusList> = [];
@@ -268,7 +266,7 @@ export class ARInvoicesSignedStatusListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatuses", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;
