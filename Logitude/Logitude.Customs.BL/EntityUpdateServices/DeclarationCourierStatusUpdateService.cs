@@ -47,7 +47,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnCreating(DeclarationCourierStatusPM entityPM, EntityPM entityParentPM)
         {
-
             //if (entityParentPM != null)
             //{
             //    entityPM.DeclarationId = entityParentPM.Id;
