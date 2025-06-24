@@ -26,7 +26,16 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
         public ARInvoicesSignedStatusPM GetSingleInvoicesSignedStatus(string code, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                throw new Exception("Authentication failed: " + ex.Message);
+            }
+
 
             aRInvoicesSignedStatusQuery = new ARInvoicesSignedStatusQuery(tenant);
 
@@ -40,7 +49,15 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
         public ARInvoicesSignedStatusList GetSingleInvoicesSignedStatusList(string code, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                throw new Exception("Authentication failed: " + ex.Message);
+            }
 
             ARInvoicesSignedStatusList entityList = null;
             aRInvoicesSignedStatusRepository = new ARInvoicesSignedStatusRepository(tenant);
@@ -62,7 +79,15 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
         public IQueryable<ARInvoicesSignedStatusList> GetInvoicesSignedStatusLists(int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                throw new Exception("Authentication failed: " + ex.Message);
+            }
 
             aRInvoicesSignedStatusRepository = new ARInvoicesSignedStatusRepository(tenant);
             aRInvoicesSignedStatusQuery = new ARInvoicesSignedStatusQuery(aRInvoicesSignedStatusRepository);
@@ -75,7 +100,15 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
         [Query(HasSideEffects = true)]
         public IQueryable<ARInvoicesSignedStatusList> GetARInvoicesSignedStatusFilters(byte[] xmlFilters, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                throw new Exception("Authentication failed: " + ex.Message);
+            }
 
             aRInvoicesSignedStatusRepository = new ARInvoicesSignedStatusRepository(tenant);
             aRInvoicesSignedStatusQuery = new ARInvoicesSignedStatusQuery(aRInvoicesSignedStatusRepository);
@@ -83,6 +116,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            if (queryOperations == null) throw new InvalidOperationException("Failed to deserialize filters.");
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
@@ -151,7 +185,15 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
         public int GetARInvoicesSignedStatusCount(byte[] xmlFilters, int tenant)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                throw new Exception("Authentication failed: " + ex.Message);
+            }
 
             aRInvoicesSignedStatusRepository = new ARInvoicesSignedStatusRepository(tenant);
             aRInvoicesSignedStatusQuery = new ARInvoicesSignedStatusQuery(aRInvoicesSignedStatusRepository);
@@ -159,6 +201,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
             MemoryStream memorystream = new MemoryStream(xmlFilters);
             XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
+            if (queryOperations == null) throw new InvalidOperationException("Failed to deserialize filters.");
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 

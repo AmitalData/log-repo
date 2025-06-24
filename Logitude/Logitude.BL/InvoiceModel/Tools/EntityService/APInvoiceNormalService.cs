@@ -699,7 +699,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
 
                 entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                entityPM.ApprovedByUserId = initializer.LoggedContactId; //loggedContactId;
+                entityPM.ApprovedByUserId = initializer.LoggedContactId; 
 
                 if (string.IsNullOrEmpty(this.entityPM.MasterNumber) || string.IsNullOrEmpty(this.entityPM.HouseNumber))
                 {
@@ -1229,8 +1229,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void UpdatePayable(APInvoiceLinePM item, ShipmentPayable shipmentPayable = null)
         {
-            //if (!entityPM.CreatedFromAPI)
-            //{
+
             ShipmentPayable payable;
             if (shipmentPayable != null)
             {
@@ -1300,7 +1299,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 shipmentPayableRepository.Update(payable);
             }
-            //}
         }
 
         private void DisconnectPayable(string payableId, double? myForiegnCurrencyAmount)
@@ -1416,7 +1414,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             GlobalDB currentDb;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
 
             }
@@ -1427,7 +1424,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
-            return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
+            return context.Database.Connection.ConnectionString;
         }
         private void UpdateAllPayablesAccountedAmountAndStatus()
         {
@@ -1468,10 +1465,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             {
                                 payableToBeDeletedIds += "'" + id + "',";
                             }
-                            //if (payablesId != null && payablesId.Count > 0)
-                            //{
-                            //    payableToBeDeletedIds = "''";
-                            //}
+
                             payableToBeDeletedIds = "(" + payableToBeDeletedIds.TrimEnd(',') + ")";
                             using (SqlConnection cn = new SqlConnection(strConnString))
                             {
@@ -1484,14 +1478,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             }
                         }
                         
-                        //List<PayableProratedAmount> payableProratedAmounts = payableProratedAmountRepository.GetPayableProratedAmountsByPayablesIds(payablesId, tenant);
-                        //foreach (PayableProratedAmount item in payableProratedAmounts)
-                        //{
-                        //    item.Tenant = -1;
-                        //    item.PayableId = null;
-                        //    payableProratedAmountRepository.Update(item);
-                        //}
-                        //payableProratedAmountRepository.SubmitChanges();
                     }
 
                     shipmentPayableRepository.SubmitChanges();
@@ -1636,7 +1622,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     item.LineNumber = lineNumber;
                     this.CreateInvoiceLine(item);
                     this.UpdatePayable(item);
-                    //this.isInvoiceLinesChanged = true;
                 }
             }
 
@@ -1663,7 +1648,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                         item.LineNumber = lastLineNumber;
                                         this.CreateInvoiceLine(item);
                                         this.UpdatePayable(item);
-                                        //this.isInvoiceLinesChanged = true;
                                         break;
                                     }
 
@@ -1671,14 +1655,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     {
                                         this.UpdateInvoiceLine(item);
                                         this.UpdatePayable(item);
-                                        //isInvoiceLinesChanged = true;
                                         break;
                                     }
 
                                 case ChangeSetOperation.Delete:
                                     {
                                         this.DeleteInvoiceLine(item);
-                                        //this.isInvoiceLinesChanged = true;
                                         break;
                                     }
 
@@ -2204,7 +2186,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine = new JournalLinePM();
 
                     List<JournalLinePM> journalDebitLines = new List<JournalLinePM>();
-                    // theEntityPm.InvoiceLines.ToList().ForEach(d => { d.LocalCurrencyAmount = ((d.VatRecognizedPercentage == null) ? d.LocalCurrencyAmount : (d.LocalCurrencyAmount + ((1 - d.VatRecognizedPercentage) * Math.Round((double)((d.VatPercentage / 100) * d.LocalCurrencyAmount), 2)))); });
 
 
 
@@ -2236,11 +2217,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.JournalLines.AddRange(journalLines);
                     var totalDebitLines = journal.JournalLines.Where(d => d.ActionCode == AccountingActionCodes.Debit).Sum(d => d.LocalAmount);
                     // [Vats]
-                    //List<APInvoiceTotalVAT> APInvoiceTotalVATs = new List<APInvoiceTotalVAT>();
+
 
                     APInvoiceTotalVATRepository vatRepository = new APInvoiceTotalVATRepository(tenant);
                     APInvoiceTotalVATQuery aPInvoiceTotalVATQuery = new APInvoiceTotalVATQuery(tenant);
-                    //APInvoiceTotalVATs = vatRepository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant).ToList();
                     List<APInvoiceTotalVATPM> totalVats = aPInvoiceTotalVATQuery.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant);
                     counter = journal.JournalLines.Count();
 

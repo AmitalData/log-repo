@@ -40,7 +40,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsCopiedAtSignup = entityPM.IsCopiedAtSignup;
             entityPOCO.OriginalTemplateId = entityPM.OriginalTemplateId;
 
-            //  entityPOCO.CurrentVersion = entityPM.CurrentVersion;
 
         }
     }
