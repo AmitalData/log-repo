@@ -483,7 +483,7 @@
                         |TextCodeTranslationPipe}}</button>
                 </div>
             </div>
-            <div style="display: flex; align-items: flex-end; justify-content: space-around; width: 270px;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-around; width: 225px; margin-left: 3vh;">
                 <div style="width: 57px;vertical-align: bottom;">
                     <button class="Button" (click)="CancelSiiRequest()">{{'Customs.General.B.Cancel'
                         |TextCodeTranslationPipe}}</button>
@@ -493,10 +493,9 @@
                         TextCodeTranslationPipe}}</button>
                 </div>
 
-                <div style="width: 110px;vertical-align: bottom;">
-                    <custom-send-options [IsDisabled]="IsDisplayOnly" [AvoidDoubleClick]="true"
-                        #MyCustomSendOptionsComponent (SendButtonClicked)="SendSiiRequest($event)">
-                    </custom-send-options>
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="x-button x-button-main" (click)="SendSiiRequest()" [disabled]="IsDisplayOnly">{{'Customs.Declaration.O.Send' |
+                        TextCodeTranslationPipe}}</button>
                 </div>
 
             </div>
