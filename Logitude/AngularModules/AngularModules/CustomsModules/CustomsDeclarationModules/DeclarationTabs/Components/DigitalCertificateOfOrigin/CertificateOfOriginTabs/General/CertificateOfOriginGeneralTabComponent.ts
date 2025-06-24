@@ -2072,7 +2072,7 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         return this.entityPM.PackageType;
     }
     public set PackageType(newValue: string) {
-        this.entityPM.PackageType = newValue;
+        this.entityPM.PackageType = newValue === '' ? null : newValue;
         this.updateIsDirty();
     }
 
