@@ -239,11 +239,6 @@ export class JournalLinePM {
     public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
        
 	 
-    private excludeFromTaxReport: boolean;
-    public get ExcludeFromTaxReport() { return this.excludeFromTaxReport; }
-    public set ExcludeFromTaxReport(newValue: boolean) { if (this.excludeFromTaxReport != newValue) { this.excludeFromTaxReport = newValue; this.MarkAsDirty("ExcludeFromTaxReport"); } }
-       
-	 
     private debitAccountCountryCode: string;
     public get DebitAccountCountryCode() { return this.debitAccountCountryCode; }
     public set DebitAccountCountryCode(newValue: string) { if (this.debitAccountCountryCode != newValue) { this.debitAccountCountryCode = newValue; this.MarkAsDirty("DebitAccountCountryCode"); } }
