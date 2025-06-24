@@ -42,7 +42,7 @@ export class AddEditTaskSchedulerComponent  {
     SetDataContext(dataContext: TaskSchedulerItemClass) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
-        this.ShowDateFields = this.EntityPM?.Name === " InvoiceApiQueryTask";
+        this.ShowDateFields = this.EntityPM?.ProcedureCode === "InvoiceApiQueryTask";
         if (this.ShowDateFields) {
             this.RunNowFromDate = DateTool.GetCurrentDateAsUtc();
             this.RunNowFromDate.setDate(this.RunNowFromDate.getDate() - 1);
