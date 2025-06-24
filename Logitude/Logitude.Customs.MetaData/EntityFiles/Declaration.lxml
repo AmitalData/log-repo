@@ -22271,6 +22271,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateTaxationDateTime&quot;"
     ListPropertyPath="&quot;UpdateTaxationDateTime&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -29257,6 +29258,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.IsSendSFTP&quot;"
       FeatureDefaultText="&quot;Is Send SFTP&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ImportDiamonds&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ImportDiamonds&quot;"
+      FeatureDefaultText="&quot;Diamond Declaration - Import&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
