@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ImportAddOwner = "IMPORT_ADD_OWNER";
         public const string InterfaceName_ImportPrintTracking = "IMPORT_PRINT_TRACKING";
         public const string InterfaceName_SIIProductFileCheck = "SII_PRODUCT_FILE_CHECK";
-        public const string InterfaceName_SIISendRequest = "SII_Send_Request";
+        public const string InterfaceName_SIISendRequest = "SII_SEND_REQUEST";
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
@@ -57,7 +57,6 @@ namespace Logitude.Customs.BL.CloseTables
         public List<InterfaceDetails> GetAllInterfaceDetails()
         {
             var all = new List<InterfaceDetails>() { 
-            //all.Add(new KeyValuePair<string, string>("", ""));
 
             new InterfaceDetails()
             {

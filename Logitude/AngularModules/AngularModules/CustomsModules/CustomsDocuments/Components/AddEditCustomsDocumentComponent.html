@@ -276,7 +276,7 @@
                                             </LogLov>
                                         </div>
                                         <div *ngIf="IsFromSIIRequest">
-                                            <LogLov [ObjectFieldName]="'SIIDocumentType'"
+                                            <LogLov [ObjectFieldName]="'DocumentTypeCode'"
                                                 [ObjectTableName]="'Customs.CustomsDocument'"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Customs.SIIDocumentType'" [HideColumns]="true">
@@ -332,7 +332,18 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                <tr *ngIf="IsFromSIIRequest" style="height:28px;">
+                                    <td>
+                                        <div class="Label" style="text-align:right;">
+                                            {{'Customs.CustomsDocument.SupplierInvoiceItem' | TextCodeTranslationPipe}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="max-width:200px; overflow-x:auto;">
+                                            {{SupplierInvoiceItemNumber}}
+                                        </div>
+                                    </td>
+                                    </tr>
                             </table>
 
 
@@ -497,7 +508,9 @@
                 <table>
                     <tr style="height: 32px;">
                         <td colspan="4">
-                            <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()" [disabled]="!IsSendDocumentEnabled">{{ 'Customs.Declaration.O.SendDocument' |TextCodeTranslationPipe }}</button>
+                            <div *ngIf="!IsFromSIIRequest">
+                                <button style="width: 100px; float: left; " class="GreenButton" (click)="SendButtonClicked()" [disabled]="!IsSendDocumentEnabled">{{ 'Customs.Declaration.O.SendDocument' |TextCodeTranslationPipe }}</button>
+                            </div>
                         </td>
                     </tr>
                     <tr>

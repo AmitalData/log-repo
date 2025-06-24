@@ -144,6 +144,9 @@ namespace Logitude.Customs.Data.Repsitories
                 .Where(s => s.Tenant == tenant)
                 .Select(s => s.FromApplicationId)
                 .ToList();
+
+            ids = ids.Where(id => !string.IsNullOrEmpty(id)).ToList();
+
             if (ids.Count == 0)
                 return 0;
             var maxNumber = ids
