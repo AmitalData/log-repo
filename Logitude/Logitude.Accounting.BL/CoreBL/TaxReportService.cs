@@ -840,7 +840,8 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             else
             {
-                LedgerTransaction ledgerTransaction = journalsTransactions.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference && d.LocalAmountCredit != 0 && d.Account.ChartOfAccountsTypeCode != "5").FirstOrDefault();
+                LedgerTransaction ledgerTransaction = journalsTransactions.Where(d => d.JournalId == transaction.JournalId && d.Reference1 == transaction.Reference && d.LocalAmountCredit != 0
+                && (d.Account == null || d.Account.ChartOfAccountsTypeCode != "5")).FirstOrDefault();
                 account = ledgerTransaction != null ? gLAccounts.Where(d => d.Id == ledgerTransaction.AccountId).FirstOrDefault() : null;
             }
             if (account != null)
