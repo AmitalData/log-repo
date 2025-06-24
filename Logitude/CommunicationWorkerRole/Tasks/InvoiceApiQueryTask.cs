@@ -8,6 +8,7 @@ using System.Linq;
 
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CommunicationWorkerRole.Tasks
 {
@@ -33,8 +34,27 @@ namespace CommunicationWorkerRole.Tasks
                    {
                     InvoiceApiQueryBatch invoiceApiQueryBatch = new InvoiceApiQueryBatch();
                     int tenant = this.Task != null ? this.Task.Tenant : 0 ;
-                    string startDate = DateTime.UtcNow.AddDays(-1).Date.ToString("yyyy-MM-dd'T'00:00:00");
-                    string endDate = DateTime.UtcNow.Date.ToString("yyyy-MM-dd'T'00:00:00");
+                    string xml = Task?.SchedulerDetailsXML;
+                    var element = xml !=null ? XElement.Parse(xml) :null;
+                    XNamespace ns = element.GetDefaultNamespace();
+                    string fromDate = element.Element(ns + "FromDate")?.Value;
+                    string toDate = element.Element(ns + "ToDate")?.Value;
+
+                    string startDate, endDate;
+                    DateTime parsedFromDate, parsedToDate;
+                    bool isFromDateValid = DateTime.TryParse(fromDate, out parsedFromDate);
+                    bool isToDateValid = DateTime.TryParse(toDate, out parsedToDate);
+
+                    if (isFromDateValid && isToDateValid && parsedFromDate <= parsedToDate)
+                    {
+                        startDate = parsedFromDate.Date.ToString("yyyy-MM-dd'T'00:00:00");
+                        endDate = parsedToDate.Date.ToString("yyyy-MM-dd'T'00:00:00");
+                    }
+                    else
+                    {
+                        startDate = DateTime.UtcNow.AddDays(-1).Date.ToString("yyyy-MM-dd'T'00:00:00");
+                        endDate = DateTime.UtcNow.Date.ToString("yyyy-MM-dd'T'00:00:00");
+                    }
 
                     invoiceApiQueryBatch.RunInvoiceApiInvoicesQuery(startDate, endDate, tenant);
                     string responseText = invoiceApiQueryBatch.ResponseText();
