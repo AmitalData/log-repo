@@ -782,7 +782,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             if (EditComponent._CustomsSettingList?.CompanyType !== "B") {
                 myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "IsCourierManadatory");
             }
-            if(!FeatureLocator.HasFeaturePermession("Customs.Declaration", "ExportDiamonds")) {
+            if(!FeatureLocator.HasFeaturePermession("Customs.Declaration", "ImportDiamonds")) {
                 myScreenFields = myScreenFields.filter(d => d.ObjectFieldName !== "IsDiamondManadatory");
             }
             if(!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "IsDocumentUpload")){
