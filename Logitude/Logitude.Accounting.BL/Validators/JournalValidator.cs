@@ -42,7 +42,6 @@ namespace Logitude.Accounting.BL.Validators
         //public const string M_ExternalNoAlreadyExists_3 = "Journals.O.ExternalNoAlreadyExists_3";
         //public const string M_ExternalNoAlreadyExists_4 = "Journals.O.ExternalNoAlreadyExists_4";
         public const string M_ExchangeRateEmpty = "Journal.M.ExchangeRateEmpty";
-        // ForeignAmount Allowed ...  public const string M_ForeignAmountNotZero = "Journal.M.ForeignAmountNotZero";אות
         public const string M_LocalAmountNotZero = "Allowed  !!!Journal.M.LocalAmountNotZero"; // LocalAmountNotZero   Allowed  
         public const string M_ActionCode = "Journal.M.ActionCode";
         public const string M_ActionCodeDebit = "Journal.M.ActionCodeDebit";

@@ -951,7 +951,7 @@
 
                     <!-- Edit Grid reconciliations -->
                    
-                    <tr *ngIf="['AD', 'DR', 'PR'].includes(EntityPM?.StatusCode)">
+                    <tr *ngIf="RECONCILIATION_STATUS_CODES.includes(EntityPM?.StatusCode)">
                             <td colspan="5" style="height: 100%;">
 
                             <div class="GeneratedGridContainer">
