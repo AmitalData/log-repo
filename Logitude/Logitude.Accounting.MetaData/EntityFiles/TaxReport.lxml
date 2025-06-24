@@ -3919,12 +3919,6 @@
 
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;TaxReport.O.ReportIsEdited&quot;"
-      DefaultText="&quot;Report in editing - click to recalculate&quot;"
-      LocalDefaultText="&quot;דוח בעריכה - לחץ לחישוב מחדש&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

@@ -261,10 +261,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תםריך יצירה",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -588,10 +588,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Exception",
 					  						DefaultText =  "Exception",
-					  						FullLocalDefaultText =  "שגיםה",
+					  						FullLocalDefaultText =  "שגיאה",
 					  						ListFieldLable =  "ExceptionListLable",
 					  						ListLableDefaultText =  "Exception",
-					  						ListLocalDefaultText =  "שגיםה",
+					  						ListLocalDefaultText =  "שגיאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1047,7 +1047,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature InvoiceApiCommunicationLogDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Details", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.MGGT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
  
                  
-			   TextCode InvoiceApiCommunicationLogEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode InvoiceApiCommunicationLogEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature InvoiceApiCommunicationLogEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Events", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.ICEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
