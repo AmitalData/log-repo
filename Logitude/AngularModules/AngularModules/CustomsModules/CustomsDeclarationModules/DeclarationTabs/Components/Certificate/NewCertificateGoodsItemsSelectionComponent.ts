@@ -209,9 +209,18 @@ export class NewCertificateGoodsItemsSelectionComponent {
         });
         
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            filters.addAdditionalFilter("SearchFields", this.SearchText, null, null, "Contains", false, false, false, "string");
+            filters.addAdditionalFilter(
+                "SearchFields",
+                this.SearchText,
+                null, 
+                null,
+                "Contains", 
+                false,
+                false, 
+                false, 
+                "string");
         }
-        else{
+        else{            
             filters = new ApiQueryFilters();
         }
        
@@ -298,8 +307,15 @@ export class NewCertificateGoodsItemsSelectionComponent {
      
 SearchText: string = "";
    SearchTextChanged(searchText: string) {
-    this.SearchText =!AppTool.IsNullOrEmpty(searchText)?searchText.toLowerCase():searchText;      
-    this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    if (!AppTool.IsNullOrEmpty(searchText)) {
+        this.SearchText = searchText.toLowerCase();
+    } else {
+        this.SearchText = "";
+    }
+    this.MenuHeaderchangeevent.emit({
+         Filters: this.filterAgrs,
+         IgnoreFilter: false
+        });
    } 
 }
 
