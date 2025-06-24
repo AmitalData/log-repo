@@ -5,28 +5,24 @@ import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {JournalPMService} from '../../Services/StandardPMs/JournalPMService';
 import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {JournalValidator} from '../../Validators/JournalValidator';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {DocumentOutPMService} from '../../../Common/Services/ExtendedPMs/DocumentOutPMService';
 import {JournalOpService} from '../../Services/Others/JournalOpService';
 import { DocumentOutPM } from '../../../Common/EntityPMs/DocumentOutPM';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {DocumentTypePM} from '../../../Common/EntityPMs/DocumentTypePM';
 import {DocumentTypePMExtendedService} from '../../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 import {ExportDocumentService} from '../../../Common/Services/DocumentServices/ExportDocumentService';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
-import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager';
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -109,21 +105,9 @@ export class JournalMenuButtonsHandler {
                         case "JournalVoid":
                             {
 
-                                // the VOID button is only available on this case:          BUG #44819
-                                //    - Approved Journal, not storno
-
                                 this.SetVoidButtonEnability(button);
 
-                                // if (this.EntityPM.StatusCode == "3" || this.EntityPM.AccountingEntityCode != "1") { // 3- Voided | 1- Journal
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if( this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.StatusCode == "2" && (this.EntityPM.OriginalJournalId != null)) // STORNO  1-Journal
-                                // {
-                                //     button.IsDisabled = true;
-                                // }
-                                // else if (this.EntityPM.StatusCode == "2" && this.EntityPM.AccountingEntityCode == "1" && this.EntityPM.OriginalJournalId == null) { // 2- Approved
-                                //     button.IsDisabled = false;
-                                // }
+                                
 
                                 break;
                             }
@@ -132,13 +116,7 @@ export class JournalMenuButtonsHandler {
                                 button.IsDisabled = false;
 
                                 if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.SecurityLevel) && SessionLocator.LoggedUserPM.SecurityLevel <= this.EntityPM.SecurityLevel)
-                                    button.IsDisabled = true;
-                                //    if (this.EntityPM.StatusCode == "2" && this.EntityPM.OriginalJournalId == null) {
-                                //    button.IsDisabled = false;
-                                //}
-                                //else {
-                                //    button.IsDisabled = true;
-                                //}
+                               
                                 break;
                             }
                         case "CopyJournal":
@@ -155,6 +133,12 @@ export class JournalMenuButtonsHandler {
                                     button.IsDisabled = true;
                                 break;
                             }
+                        case "FixJournalReconcile":
+                            {
+                                if( this.EntityPM.StatusCode != "4" ) {
+                                    button.IsHidden = true;
+                                }
+                            }    
                     }
                 }
             }
@@ -207,14 +191,13 @@ export class JournalMenuButtonsHandler {
 
     public async MenuButtonClick(menuButton: MenuButtonPM) {
 
-       
 
         switch (menuButton.EventCode) {
             case "JournalSave": // save and close
                 {
                     this.EntityPM.StatusCode = "1"; // Waiting
 
-                    this.SaveChenges();
+                    this.SaveChanges();
                     break;
                 }
             case "JournalApprove":
@@ -233,7 +216,7 @@ export class JournalMenuButtonsHandler {
                       this.entityArgs.EditComponent.ValidationErrorsList = validationErrors;                                     
                        return;
                     }
-                    this.SaveChenges();    
+                    this.SaveChanges();    
 
                     this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
                         if ($event == true) {                           
@@ -259,7 +242,7 @@ export class JournalMenuButtonsHandler {
                             x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
                         }
                     });
-                    this.SaveChenges();
+                    this.SaveChanges();
                     break;
                 }
             case "JournalVoid":
@@ -271,23 +254,17 @@ export class JournalMenuButtonsHandler {
                 {
                     this.PrintJournal();
 
-                    //if (this.EntityPM.StatusCode != "2") { // Approved
-                    //    this.PrintJournal();
-                    //} else {
-                    //    this.entityArgs.EditComponent.SaveChanges();
-                    //    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
-                    //        if ($event == true) {
-                    //            this.entityArgs.EditComponent.ReloadEntityPM();
-                    //            this.SetEntityPM(this.entityArgs);
-                    //            this.PrintJournal();
-                    //        }
-                    //    });
-                    //}
+                   
                     break;
                 }
             case "CopyJournal":
                 {
                     this.OpenCopyJournalScreen();
+                    break;
+                }
+            case "FixJournalReconcile":
+                {
+                    this.FixJournal();
                     break;
                 }
         }
@@ -333,9 +310,7 @@ export class JournalMenuButtonsHandler {
             });
     }
 
-    SaveChenges() {
-
-        // the validation will be in PM Service (custom validator)
+    SaveChanges() {
 
         // the validation will be in PM Service (custom validator)
         this.entityArgs.EditComponent.SaveChanges();
@@ -367,7 +342,6 @@ export class JournalMenuButtonsHandler {
             if (line.AccountingDate != this.EntityPM.AccountingDate) {
                 line.AccountingDate = this.EntityPM.AccountingDate;
             }
-            //line.ActionTypeCode = line.ActionCode;
         }
     }
 
@@ -452,11 +426,7 @@ export class JournalMenuButtonsHandler {
                                     }
 
                                 });
-                            //} else {
-                            //    console.warn("Cannot find document out copy, resend request...");
-                            //    //this.CurrentSession.StopBusyIndicator();
-                            //    this.BuildDocument(); // resend the request, the method [getCreateDocumentOut] does not create document out copy!!
-                            //}
+                            
 
 
 
@@ -486,12 +456,7 @@ export class JournalMenuButtonsHandler {
 
     ViewPage(documentName: string, docoumentTypeCopyName: string, documentOut: DocumentOutPM) {
 
-        //ServiceLocator.SendTotangoUserActivity(this.ObjectTableName, docoumentTypeCopyName + " Viewing");
-
-
-        //DownloadManager.DownloadPage(documentName , documentOut.SecurityId);
-
-        //this.StopBusyIndicator();
+        
 
         var myPrintHelper = new GeneralPrintHelper(this.ObjectTableName, "JRPR", this.EntityPM.Id, null, this.EntityPM.AccountingEntityReference, null);
         if (myPrintHelper.IsLoadPrintControl) {
@@ -500,6 +465,34 @@ export class JournalMenuButtonsHandler {
         }
 
     }
-
+    private FixJournal() {
+ 
+        let messageWindow = new MessageWindow();
+        if(SessionLocator.LoggedUserPM.Tenant != 0) 
+        {
+            const msg = TextCodeTranslator.Translate("Journal.O.SuperPermissionRequired");
+            if(ObjectsLocator.GlobalSetting) 
+                messageWindow.RTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+            messageWindow.Show(msg);
+        }
+        else
+        {
+            this.StartBusyIndicator("Fixing journal...");
+            this._journalOpService.FixFailedReconcileJournals().subscribe((res: ServiceResponse) => {
+                this.StopBusyIndicator();
+                if (res.HasError) {
+                    const msg = "Error, try again.";
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(msg);
+                } else {
+                    const msg = "Succeeded";
+                    messageWindow.ShowSuccessIcon = true;
+                    messageWindow.Show(msg);
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
+        }
+    
+    }
 
 }

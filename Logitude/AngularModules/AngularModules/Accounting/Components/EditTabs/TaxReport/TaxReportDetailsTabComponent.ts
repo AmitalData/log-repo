@@ -12,7 +12,6 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { TaxReportLineStatusListService } from '../../../Services/StandardLists/TaxReportLineStatusListService';
 import { TaxReportLineExtendedListService } from '../../../Services/ExtendedLists/TaxReportLineExtendedListService';
-import { TaxReportPMService } from '../../../Services/StandardPMs/TaxReportPMService';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
@@ -26,6 +25,7 @@ import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExec
 import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { HttpResponse } from '@angular/common/http';
+import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 
 declare var window: any;
 

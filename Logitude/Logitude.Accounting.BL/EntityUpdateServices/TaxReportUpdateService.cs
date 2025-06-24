@@ -31,6 +31,7 @@ using System.Globalization;
 using System.Diagnostics;
 using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.BL.EntityDataMappings;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -289,7 +290,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (taxReportPM.StatusCode != VatReportStatusValues.TransmittedAndAClosingJournalWasCreated &&  taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted && taxReportPM.StatusCode != VatReportStatusValues.CancelationInProgress && taxReportPM.StatusCode != VatReportStatusValues.CancelationFailed && !(taxReportPM.StatusCode == VatReportStatusValues.InProgress && taxReportPM.RecalculateData))
             {
-                bool hasErrors = lines.Any(ln => ln.StatusCode != TaxReportLineStatusValues.ReadyForTransmit && !BlockedStatuses.Contains(ln.TransmitStatusCode)); 
+                bool hasErrors = lines.Any(ln => ln.StatusCode != TaxReportLineStatusValues.ReadyForTransmit && !BlockedStatuses.Contains(ln.TransmitStatusCode));
                 if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
                 {
                     taxReportPM.StatusCode = VatReportStatusValues.Error;

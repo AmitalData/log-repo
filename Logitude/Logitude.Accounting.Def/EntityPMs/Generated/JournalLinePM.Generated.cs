@@ -995,6 +995,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private string debitAccountCountryCode ;
 	  	  
        
@@ -1018,6 +1019,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
 	  private bool? excludeFromTaxReport ;
 	  	  
        

@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "b4051eb52fb3913be875ec31fe0ee074";
+		public const string HashString = "65ba10b2192effd4093c2811d60a36dc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
          {                     
             
@@ -4434,7 +4434,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOAccountIdenticalToFullAccountingSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIdenticalToFullAccountingSetting", DefaultText = "{account} is identical to {setting} in the full accounting settings",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlteU15Qg15x7c2V0dGluZ30g16nXkdeU15LXk9eo15XXqiDXlNeg15TXnNeqINeX16nXkdeV16DXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalOAccountIsAccountControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIsAccountControl", DefaultText = "{account} is a control account",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlNeV15Ag15fXqdeR15XXnyDXnteo15vXliI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
- 
    
 	    
 }

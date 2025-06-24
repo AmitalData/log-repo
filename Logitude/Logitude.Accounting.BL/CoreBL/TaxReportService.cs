@@ -599,6 +599,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     List<JournalPM> jPMs = journalQueryService.GetJournalPMs(all_dup_line_jIds, taxReportPM.Tenant);
                     if (jPMs != null && jPMs.Count > 0)
                     {
+
                         Dictionary<string, List<JournalPM>> journalLookup = jPMs
                                 .GroupBy(j => j.Id)
                                 .ToDictionary(g => g.Key, g => g.OrderByDescending(j => j.StatusCode).ToList());
@@ -628,7 +629,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference)
                         {
-;
                             oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
                         }
 

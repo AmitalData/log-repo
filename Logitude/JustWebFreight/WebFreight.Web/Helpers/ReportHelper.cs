@@ -3335,12 +3335,13 @@ namespace WebFreight.Web.Helpers
 
                             isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemReportTemplate });
 
+
                     }
                     ReportsTemplate systemEmailReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultMessageTemplateId).FirstOrDefault();
                     if (systemEmailReportTemplate != null)
 						isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemEmailReportTemplate });
-				}
 
+				}
 
 				if (isChangeReport)
 				{

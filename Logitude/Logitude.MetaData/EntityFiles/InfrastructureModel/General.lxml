@@ -40,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-    Code="&quot;6049&quot;"
+  Code="&quot;6063&quot;"
    Name="&quot;General&quot;"
    GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -6735,7 +6735,7 @@
       LocalDefaultText="&quot;דוח מעמ&quot;"
        TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />    
-     <TextCode
+    <TextCode
        Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
       DefaultText="&quot;Cancel Tax Report&quot;"
       LocalDefaultText="&quot;ביטול דוח מעמ&quot;"
@@ -6751,6 +6751,18 @@
       Code="&quot;General.O.FastSearch&quot;"
       DefaultText="&quot;Fast Search&quot;"
       LocalDefaultText="&quot;חיפוש מהיר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.CreateANewTaxReport&quot;"
+      DefaultText="&quot;Tax Report&quot;"
+      LocalDefaultText="&quot;דוח מעמ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
+      DefaultText="&quot;Cancel Tax Report&quot;"
+      LocalDefaultText="&quot;ביטול דוח מעמ&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
