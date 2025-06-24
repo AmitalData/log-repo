@@ -17,7 +17,7 @@ import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
 import { AppTool } from 'Infrastructure/Tools';
 import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { RelatedDocumentViewModel } from 'CustomsModules/CustomsDocuments/Components/RelatedDocumentViewModel';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsController {
     private originalCustomsDocumentTicketViewModel: CustomsDocumentTicketViewModel[];
@@ -95,26 +95,21 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
                             this.GeneratedCustomsDocumentTicketViewModel.push(vm);
                         });
 
-                        const proformaCode = '325';
-                        const form130Code = 'I01';
-                        const siiDocTypeCode = '2';
+                        const PROFORMA_CODE = '325';
+                        const FORM_130_CODE = 'I01';
+                        const SII_DOC_TYPE_CODE = '2';
 
                         this.loadedSupplierInvoices.forEach(inv => {
-                            if (!inv.AccountTypeCode ||
-                                inv.AccountTypeCode === proformaCode ||
-                                inv.AccountTypeCode === form130Code) {
+                            if (!inv.AccountTypeCode || [PROFORMA_CODE, FORM_130_CODE].includes(inv.AccountTypeCode)) {
                                 return;
                             }
 
-                            let alreadyExists = false;
-                            for (let i = 0; i < this.originalCustomsDocumentTicketViewModel.length; i++) {
-                                const vm = this.originalCustomsDocumentTicketViewModel[i];
-                                const ptr = vm.customsDocumentsTicketPM.CustomsDocumentPointers.find(p =>
+                            const alreadyExists = this.originalCustomsDocumentTicketViewModel.some(vm =>
+                                vm.customsDocumentsTicketPM.CustomsDocumentPointers.some(p =>
                                     p.Child2EntityCode === EntityCode.SupplierInvoice &&
                                     p.Child2EntityId === (inv.InvoiceCounterKey + '')
-                                );
-                                if (ptr) { alreadyExists = true; break; }
-                            }
+                                )
+                            );
                             if (alreadyExists) { return; }
 
                             const params = new RelatedEntityParams();
@@ -125,7 +120,7 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
                             params.ChildEntity2Code = EntityCode.SupplierInvoice;
                             params.ChildEntity2Id = inv.InvoiceCounterKey + '';
 
-                            const ticketPM = this.GetGeneratedCustomTicketAndPointer(params, siiDocTypeCode);
+                            const ticketPM = this.GetGeneratedCustomTicketAndPointer(params, SII_DOC_TYPE_CODE);
                             const ticketVM = new CustomsDocumentTicketViewModel(
                                 ticketPM,
                                 null,
@@ -140,6 +135,12 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
                             this.originalCustomsDocumentTicketViewModel.push(ticketVM);
                         });
                         return of(this.GeneratedCustomsDocumentTicketViewModel);
+                    }),
+
+                    catchError(err => {
+                        console.error('Failed to fetch supplier invoices', err);
+                        this.loadedSupplierInvoices = [];
+                        return of([]);
                     })
                 );
         });
@@ -250,134 +251,134 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
 
     SelectionInvoicesCompleted(args: any, customsDocumentsTicket: CustomsDocumentsTicketPM): void {
         try {
-        if (args.SelectedInvoices != null) {
-            customsDocumentsTicket.ConnectedInvoicesSequences = args.ConnectedInvoices;
-            customsDocumentsTicket.ConnectedInvoiceItemsSequences = args.ConnectedInvoiceItems;
+            if (args.SelectedInvoices != null) {
+                customsDocumentsTicket.ConnectedInvoicesSequences = args.ConnectedInvoices;
+                customsDocumentsTicket.ConnectedInvoiceItemsSequences = args.ConnectedInvoiceItems;
 
-            const pointers: CustomsDocumentPointerPM[] = [];
-            customsDocumentsTicket.CustomsDocumentPointers.forEach(pointer => pointers.push(pointer));
+                const pointers: CustomsDocumentPointerPM[] = [];
+                customsDocumentsTicket.CustomsDocumentPointers.forEach(pointer => pointers.push(pointer));
 
-            pointers.forEach(pointer => {
-                if (pointer.Child2EntityId != null) {
-                    const exists = args.SelectedInvoices.Collection
-                        .filter(d => d.InvoiceCounterKey + '' == pointer.Child2EntityId)[0];
+                pointers.forEach(pointer => {
+                    if (pointer.Child2EntityId != null) {
+                        const exists = args.SelectedInvoices.Collection
+                            .filter(d => d.InvoiceCounterKey + '' == pointer.Child2EntityId)[0];
 
-                    if (!exists) {
-                        const editedPointer = customsDocumentsTicket.CustomsDocumentPointers
-                            .filter(d => d.Id == pointer.Id)[0];
+                        if (!exists) {
+                            const editedPointer = customsDocumentsTicket.CustomsDocumentPointers
+                                .filter(d => d.Id == pointer.Id)[0];
 
-                        if (editedPointer != null) {
-                            this.clearOrRemovePointer(customsDocumentsTicket, editedPointer);
+                            if (editedPointer != null) {
+                                this.clearOrRemovePointer(customsDocumentsTicket, editedPointer);
+                            }
                         }
                     }
-                }
 
-                if (pointer.Child3EntityId != null) {
-                    const exists = args.StaticSelectedInvoiceItems.Collection
+                    if (pointer.Child3EntityId != null) {
+                        const exists = args.StaticSelectedInvoiceItems.Collection
+                            .filter(d =>
+                                d.CounterKey + '' == pointer.Child2EntityId &&
+                                d.LineNumber + '' == pointer.Child3EntityId
+                            )[0];
+
+                        if (!exists) {
+                            const editedPointer = customsDocumentsTicket.CustomsDocumentPointers
+                                .filter(d => d.Id == pointer.Id)[0];
+
+                            if (editedPointer != null) {
+                                this.clearOrRemovePointer(customsDocumentsTicket, editedPointer);
+                            }
+                        }
+                    }
+                });
+
+                args.SelectedInvoices.Collection.forEach(invoice => {
+                    const hasLinesChosen = args.StaticSelectedInvoiceItems.Collection
                         .filter(d =>
-                            d.CounterKey + '' == pointer.Child2EntityId &&
-                            d.LineNumber + '' == pointer.Child3EntityId
+                            d.DeclarationId == invoice.DeclarationId &&
+                            d.CounterKey == invoice.InvoiceCounterKey
                         )[0];
 
-                    if (!exists) {
-                        const editedPointer = customsDocumentsTicket.CustomsDocumentPointers
-                            .filter(d => d.Id == pointer.Id)[0];
+                    if (!hasLinesChosen) {
+                        const exists = customsDocumentsTicket.CustomsDocumentPointers
+                            .filter(d => d.Child2EntityId == invoice.InvoiceCounterKey + '')[0];
 
-                        if (editedPointer != null) {
-                            this.clearOrRemovePointer(customsDocumentsTicket, editedPointer);
+                        if (!exists) {
+                            const declarationPointer = customsDocumentsTicket.CustomsDocumentPointers
+                                .filter(d =>
+                                    d.ParentEntityId == invoice.DeclarationId &&
+                                    d.Child1EntityId == this.childEntity1Code &&
+                                    d.Child2EntityId == null &&
+                                    d.Child3EntityId == null
+                                )[0];
+
+                            if (declarationPointer == null) {
+                                const newPointer = new CustomsDocumentPointerPM(customsDocumentsTicket);
+                                newPointer.Tenant = SessionLocator.Tenant;
+                                newPointer.ParentEntityId = this.declarationPM.Id;
+                                newPointer.ParentEntityCode = EntityCode.Declaration;
+                                newPointer.Child1EntityCode = EntityCode.SIIRequest;
+                                newPointer.Child2EntityCode = EntityCode.SupplierInvoice;
+                                newPointer.Child3EntityCode = null;
+                                newPointer.Child1EntityId = this.childEntity1Id;
+                                newPointer.Child2EntityId = invoice.InvoiceCounterKey + '';
+                                newPointer.Child3EntityId = null;
+                                customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+                            } else {
+                                declarationPointer.Child2EntityId = invoice.InvoiceCounterKey + '';
+                                declarationPointer.Child2EntityCode = EntityCode.SupplierInvoice;
+                            }
+                        }
+                    } else {
+                        const existedPtr = customsDocumentsTicket.CustomsDocumentPointers
+                            .filter(d =>
+                                d.Child2EntityId == invoice.InvoiceCounterKey + '' &&
+                                d.Child3EntityId == null
+                            )[0];
+
+                        if (existedPtr != null) {
+                            customsDocumentsTicket.RemoveCustomsDocumentPointer(existedPtr);
                         }
                     }
-                }
-            });
+                });
+            }
 
-            args.SelectedInvoices.Collection.forEach(invoice => {
-                const hasLinesChosen = args.StaticSelectedInvoiceItems.Collection
-                    .filter(d =>
-                        d.DeclarationId == invoice.DeclarationId &&
-                        d.CounterKey == invoice.InvoiceCounterKey
-                    )[0];
-
-                if (!hasLinesChosen) {
+            if (args.StaticSelectedInvoiceItems != null) {
+                args.StaticSelectedInvoiceItems.Collection.forEach(invoiceItem => {
                     const exists = customsDocumentsTicket.CustomsDocumentPointers
-                        .filter(d => d.Child2EntityId == invoice.InvoiceCounterKey + '')[0];
+                        .filter(d =>
+                            d.Child2EntityId == invoiceItem.CounterKey + '' &&
+                            d.Child3EntityId == invoiceItem.LineNumber + ''
+                        )[0];
 
                     if (!exists) {
                         const declarationPointer = customsDocumentsTicket.CustomsDocumentPointers
                             .filter(d =>
-                                d.ParentEntityId == invoice.DeclarationId &&
-                                d.Child1EntityId == this.childEntity1Code &&
+                                d.ParentEntityId == invoiceItem.DeclarationId &&
                                 d.Child2EntityId == null &&
                                 d.Child3EntityId == null
                             )[0];
 
-                        if (declarationPointer == null) {
+                        if (declarationPointer != null) {
+                            declarationPointer.Child2EntityId = invoiceItem.CounterKey + '';
+                            declarationPointer.Child2EntityCode = EntityCode.SupplierInvoice;
+                            declarationPointer.Child3EntityId = invoiceItem.LineNumber + '';
+                            declarationPointer.Child3EntityCode = EntityCode.SupplierInvoiceItem;
+                        } else {
                             const newPointer = new CustomsDocumentPointerPM(customsDocumentsTicket);
                             newPointer.Tenant = SessionLocator.Tenant;
                             newPointer.ParentEntityId = this.declarationPM.Id;
                             newPointer.ParentEntityCode = EntityCode.Declaration;
                             newPointer.Child1EntityCode = EntityCode.SIIRequest;
                             newPointer.Child2EntityCode = EntityCode.SupplierInvoice;
-                            newPointer.Child3EntityCode = null;
+                            newPointer.Child3EntityCode = EntityCode.SupplierInvoiceItem;
                             newPointer.Child1EntityId = this.childEntity1Id;
-                            newPointer.Child2EntityId = invoice.InvoiceCounterKey + '';
-                            newPointer.Child3EntityId = null;
+                            newPointer.Child2EntityId = invoiceItem.CounterKey + '';
+                            newPointer.Child3EntityId = invoiceItem.LineNumber + '';
                             customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
-                        } else {
-                            declarationPointer.Child2EntityId = invoice.InvoiceCounterKey + '';
-                            declarationPointer.Child2EntityCode = EntityCode.SupplierInvoice;
                         }
                     }
-                } else {
-                    const existedPtr = customsDocumentsTicket.CustomsDocumentPointers
-                        .filter(d =>
-                            d.Child2EntityId == invoice.InvoiceCounterKey + '' &&
-                            d.Child3EntityId == null
-                        )[0];
-
-                    if (existedPtr != null) {
-                        customsDocumentsTicket.RemoveCustomsDocumentPointer(existedPtr);
-                    }
-                }
-            });
-        }
-
-        if (args.StaticSelectedInvoiceItems != null) {
-            args.StaticSelectedInvoiceItems.Collection.forEach(invoiceItem => {
-                const exists = customsDocumentsTicket.CustomsDocumentPointers
-                    .filter(d =>
-                        d.Child2EntityId == invoiceItem.CounterKey + '' &&
-                        d.Child3EntityId == invoiceItem.LineNumber + ''
-                    )[0];
-
-                if (!exists) {
-                    const declarationPointer = customsDocumentsTicket.CustomsDocumentPointers
-                        .filter(d =>
-                            d.ParentEntityId == invoiceItem.DeclarationId &&
-                            d.Child2EntityId == null &&
-                            d.Child3EntityId == null
-                        )[0];
-
-                    if (declarationPointer != null) {
-                        declarationPointer.Child2EntityId = invoiceItem.CounterKey + '';
-                        declarationPointer.Child2EntityCode = EntityCode.SupplierInvoice;
-                        declarationPointer.Child3EntityId = invoiceItem.LineNumber + '';
-                        declarationPointer.Child3EntityCode = EntityCode.SupplierInvoiceItem;
-                    } else {
-                        const newPointer = new CustomsDocumentPointerPM(customsDocumentsTicket);
-                        newPointer.Tenant = SessionLocator.Tenant;
-                        newPointer.ParentEntityId = this.declarationPM.Id;
-                        newPointer.ParentEntityCode = EntityCode.Declaration;
-                        newPointer.Child1EntityCode = EntityCode.SIIRequest;
-                        newPointer.Child2EntityCode = EntityCode.SupplierInvoice;
-                        newPointer.Child3EntityCode = EntityCode.SupplierInvoiceItem;
-                        newPointer.Child1EntityId = this.childEntity1Id;
-                        newPointer.Child2EntityId = invoiceItem.CounterKey + '';
-                        newPointer.Child3EntityId = invoiceItem.LineNumber + '';
-                        customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
-                    }
-                }
-            });
-        }
+                });
+            }
 
             this.SelectionCompleted.emit(args);
         } catch (err) {
