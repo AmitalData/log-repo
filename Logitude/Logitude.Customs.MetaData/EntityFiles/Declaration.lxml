@@ -22989,6 +22989,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <Query
     Code="&quot;OpenCourierMaster&quot;"
     TextCode="&quot;Courier Master Open&quot;"
@@ -30605,6 +30606,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.IsSendSFTP&quot;"
       FeatureDefaultText="&quot;Is Send SFTP&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ImportDiamonds&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.ImportDiamonds&quot;"
+      FeatureDefaultText="&quot;Diamond Declaration - Import&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
