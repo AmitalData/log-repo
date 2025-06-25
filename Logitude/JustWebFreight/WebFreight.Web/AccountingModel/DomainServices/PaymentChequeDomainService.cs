@@ -34,18 +34,6 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             //service = ContainerAccessor.Container.Resolve(typeof(IDomainServiceUpdateClass<PaymentChequePM>), "AccountingDomainServiceUpdateClass", new ParameterOverride("", 1)) as IDomainServiceUpdateClass<PaymentChequePM>;
         }
 
-        public PaymentChequePM GetSinglePaymentChequePM(string id, int tenant)
-        {
-            if (MyContext == null)
-            {
-                MyContext = AccountingContext.GetContext(tenant);
-            }
-
-            PaymentChequeQueryService paymentChequeQuery = new PaymentChequeQueryService(MyContext);
-            PaymentChequePM paymentChequePM = paymentChequeQuery.GetSingle(id, false, false);
-            return paymentChequePM;
-
-        }
 
 
         public PaymentChequeList GetSinglePaymentChequeList(string id, int tenant)
@@ -100,55 +88,6 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             return queryService.GetListCount(queryOperations, tenant);
 
         }
-
-        public void InsertPaymentCheque(PaymentChequePM entityPM)
-        {
-            SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-            SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant); if (MyContext == null)
-            {
-                MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            }
-            ;
-            PaymentChequeUpdateService service = new PaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-            service.Update(entityPM, true);
-
-            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("PaymentCheque", 0, true);
-            string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-            if (loggedContact != null)
-            {
-                ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
-            }
-        }
-
-
-        public void UpdatePaymentCheque(PaymentChequePM entityPM)
-        {
-            SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
-            SecurityUtility.CheckContactFeature("PaymentCheque", "UPDATE", entityPM.Tenant); if (MyContext == null)
-            {
-                MyContext = AccountingContext.GetContext(entityPM.Tenant);
-            }
-            ;
-            PaymentChequeUpdateService service = new PaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
-            entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-
-            service.Update(entityPM, true);
-
-            ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
-            ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("PaymentCheque", 0, true);
-            string email = HttpContext.Current.User.Identity.Name;
-            ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
-            Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
-            if (loggedContact != null)
-            {
-                ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
-            }
-        }
-
 
 
 
