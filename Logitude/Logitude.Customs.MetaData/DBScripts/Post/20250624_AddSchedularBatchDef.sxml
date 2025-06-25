@@ -6,17 +6,7 @@
         ]]>
 	</Sql>
   
-  <Oracle Version="1">
-	  MERGE INTO batchservicesdefinitionmods  tgt
-	  USING (SELECT 'CustomsSchedularWR' AS CODE,
-	  0                   AS INACTIVE,
-	  1                   AS NUMBEROFTHREADS
-	  FROM   dual) src
-	  ON (tgt.CODE = src.CODE)
-	  WHEN NOT MATCHED THEN
-	  INSERT (CODE, INACTIVE, NUMBEROFTHREADS)
-	  VALUES (src.CODE, src.INACTIVE, src.NUMBEROFTHREADS);
-
+  <Oracle Version="2">
 	  MERGE INTO batchservicesdefinitions  tgt
 	  USING (SELECT 'CustomsSchedularWR' AS CODE,
 	  'CustomsSchedularWR' AS CLASSNAME,
@@ -31,7 +21,17 @@
 	  QUEUEDEFINITIONCODE, USERABBITMQ)
 	  VALUES (src.CODE, src.CLASSNAME, src.PARAMETER1, src.PARAMETER2,
 	  src.QUEUEDEFINITIONCODE, src.USERABBITMQ);
-	  
+
+	  MERGE INTO batchservicesdefinitionmods  tgt
+	  USING (SELECT 'CustomsSchedularWR' AS CODE,
+	  0                   AS INACTIVE,
+	  1                   AS NUMBEROFTHREADS
+	  FROM   dual) src
+	  ON (tgt.CODE = src.CODE)
+	  WHEN NOT MATCHED THEN
+	  INSERT (CODE, INACTIVE, NUMBEROFTHREADS)
+	  VALUES (src.CODE, src.INACTIVE, src.NUMBEROFTHREADS);
+
 	  commit;
   </Oracle>
 </Script>
