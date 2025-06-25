@@ -5569,6 +5569,12 @@
       LocalDefaultText="&quot;BS64:InthY2NvdW50fSDXlNeV15Ag15fXqdeR15XXnyDXnteo15vXliI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.SplitByDifferentExchangeRate&quot;"
+      DefaultText="&quot;The %debitAccountName card has a conversion rate of %debitExchangeRateName and the %creditAccountName card has a conversion rate of %creditExchangeRateName. A debit/credit transaction cannot be recorded. Please split the transactions.&quot;"
+      LocalDefaultText="&quot;לכרטיס %debitAccountName מוגדר שער המרה %debitExchangeRateName ולכרטיס %creditAccountName מוגדר שער המרה %creditExchangeRateName, לא ניתן לרשום תנועת חיוב/זיכוי, נא לפצל את התנועות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

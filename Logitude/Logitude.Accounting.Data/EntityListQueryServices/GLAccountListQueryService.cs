@@ -161,7 +161,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              InterestCalculationStartDate = a.InterestCalculationStartDate,
 
                              ExchangeRateId = a.ExchangeRateId,
-                             // Created & Updated
+                             ExchangeRateName = a.ExchangeRate != null ? a.ExchangeRate.Name : null,
+
                              CreateDate = a.CreateDate,
                              CreatedByLocalName = a.CreatedByUser != null ? a.CreatedByUser.Contact.LocalName : null,
                              CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
