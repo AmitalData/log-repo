@@ -76,8 +76,8 @@ namespace Logitude.Accounting.BL.CoreBL
         const string RecalculateEventCode = "IREC";
          private static HashSet<string> BlockedStatuses = new HashSet<string> 
         {
-            TaxReportLineTransmitStatusValues.Notfortransmitatall,
-            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
+            TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
+            TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
         };
  
 

@@ -48,8 +48,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         };
          private static HashSet<string> BlockedStatuses = new HashSet<string>
         {
-            TaxReportLineTransmitStatusValues.Notfortransmitatall,
-            TaxReportLineTransmitStatusValues.Notfortransmitforthisreport
+            TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
+            TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
         };
  
         protected override void OnCreating(TaxReportPM entityPM, EntityPM entityParentPM)

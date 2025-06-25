@@ -30,7 +30,6 @@ namespace Logitude.Customs.BL.CloseTables
         public const string WaitingForSigning = "5";
         public const string Cancelled_6 = "6";
         public const string Cancelled = "99";
- 
-     }
+    }
  }
  

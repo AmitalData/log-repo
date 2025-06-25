@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Logitude.Customs.BL.CloseTables
 {
     public struct PhysicalCheckOperationValues
-    {  
+    {
         public const string Invite = "1";
         public const string Update = "2";
         public const string Cancel = "3";
