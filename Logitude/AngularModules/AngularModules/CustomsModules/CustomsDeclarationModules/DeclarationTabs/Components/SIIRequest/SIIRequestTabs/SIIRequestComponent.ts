@@ -257,7 +257,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#endregion SaveSiiRequest
 
     //#region SendSiiRequest
-    SendSiiRequest(event: any) {
+    SendSiiRequest() {
         const supplierInvoiceItemsSelectedCount = this.supplierInvoiceItemsCollection.Collection?.filter(i => i.IsSelected)?.length ?? 0;
 
         if (supplierInvoiceItemsSelectedCount === 0) {
