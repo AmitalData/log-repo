@@ -121,7 +121,7 @@ stages:
         API_URL="https://dev.azure.com/amitaldata/amital/_apis/git/pullrequests/${SYSTEM_PULLREQUEST_PULLREQUESTID}?api-version=7.1-preview.1"
         AUTH_HEADER="Authorization: Bearer $(azure_devops_pat)"
         echo "$API_URL"
-        REPO_NAME=$(curl -s -H "$AUTH_HEADER" "$API_URL" | jq -r '.repository.name')    
+        REPO_NAME=$(basename "$SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI")    
         echo "$REPONAME"
         echo "${system.pullRequest.sourceRepositoryUri}"
         # Construct PR_URL
