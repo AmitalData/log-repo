@@ -193,7 +193,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             EntityPM: this.DecalarationData,
             ObjectTableName: 'Customs.Declaration',
             EntityParentPM: 'Declaration',
-            IsFromStandAloneScreen: true,
+            IsFromStandAloneScreen: false,
             IsClose: true,
             FromSIIRequest: true,
             SkipCtor: true,
@@ -257,8 +257,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     //#endregion SaveSiiRequest
 
     //#region SendSiiRequest
-    SendSiiRequest(event: any) {
-        if (this.SelectedRowsCheckBox.length === 0) {
+    SendSiiRequest() {
+        const supplierInvoiceItemsSelectedCount = this.supplierInvoiceItemsCollection.Collection?.filter(i => i.IsSelected)?.length ?? 0;
+
+        if (supplierInvoiceItemsSelectedCount === 0) {
             const confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Close");
             confirm.ShowNoButton = false;

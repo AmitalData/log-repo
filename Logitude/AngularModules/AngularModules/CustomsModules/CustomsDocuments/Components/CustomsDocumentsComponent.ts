@@ -268,8 +268,8 @@ export class CustomsDocumentsComponent
 
         var custDocsTicketWebService: CustDocsTicketWebService = new CustDocsTicketWebService();
         var custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
-        
-        const TRANSPORT_MODE_AIR = "A"; 
+
+        const TRANSPORT_MODE_AIR = "A";
         const isAirTransport = this.EntityPM.TransportModeId === TRANSPORT_MODE_AIR;
 
         custDocsTicketWebService.GetCustomsDocumentsTicketsByEntityIdAndChilds(
@@ -330,7 +330,11 @@ export class CustomsDocumentsComponent
 
 
         if (!AppTool.IsNullOrEmpty(this.ParentEntityCode_args)) {
-            if (this.ParentEntityCode_args != "ExportDeclarationClosingData" || !this.DontClear) {
+            if (this.IsFromSIIRequest) {
+            } else if (
+                this.ParentEntityCode_args !== 'ExportDeclarationClosingData' ||
+                !this.DontClear
+            ) {
                 this.CustomsDocumentsTicketViewModels = [];
                 this.StaticCustomsDocumentsTicketViewModels = [];
             }

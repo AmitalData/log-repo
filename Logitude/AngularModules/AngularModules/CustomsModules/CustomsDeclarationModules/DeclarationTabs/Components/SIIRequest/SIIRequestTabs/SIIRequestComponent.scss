@@ -216,3 +216,37 @@
 tr {
     height: 5px;
 }
+
+.x-button {
+    width: initial !important;
+    position: relative;
+    margin: 0;
+    height: 22px;
+    outline: none;
+    line-height: 21px;
+    box-shadow: 1px 1px 2px #45494A;
+    border: 1px solid #6A8299;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.6) 100%);
+}
+
+.x-button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.x-button:hover {
+    cursor: pointer;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(0, 145, 97, 0.3) 100%);
+}
+
+.x-button:active {
+    background: #F2F2F2;
+}
+
+.x-button-main {
+    border-radius: 5px;
+    min-width: 80px;
+    background: linear-gradient(to bottom, #7ad6ba 0%, #a2e5cd 7%, #7ad6ba 9%, #199e7a 100%);
+    color: #fff;
+    border: 1px solid #529267;
+}
