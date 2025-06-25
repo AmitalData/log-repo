@@ -234,7 +234,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     { "Version", poco.Version.ToString() },
                     { "IsStartedFromUI", true.ToString() }
                 },
-                tenant, null, null, null, new DateTime()
+                tenant, null, null, null, DateTime.Now
             );
         }
 
