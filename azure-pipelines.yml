@@ -123,7 +123,6 @@ stages:
         echo "$API_URL"
         REPO_NAME=$(basename "$SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI")    
         echo "$REPONAME"
-        echo "${system.pullRequest.sourceRepositoryUri}"
         # Construct PR_URL
         PR_URL="${SYSTEM_COLLECTIONURI}${SYSTEM_TEAMPROJECT}/_git/$REPO_NAME/pullrequest/${SYSTEM_PULLREQUEST_PULLREQUESTID}"
         #PR_URL="https://amitaldata.visualstudio.com/Amital/_git/log-repo/pullrequest/5152"
