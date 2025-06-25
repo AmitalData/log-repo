@@ -53,7 +53,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             var siiRepo = new SIIRequestRepository(entityPOCO.Tenant);
             var defaultValueQueryService = new DefaultValueQueryService(entityPOCO.Tenant);
-            var userQueryService = new UserQuery(entityPOCO.Tenant);
+            var contactQuery = new ContactQuery(entityPOCO.Tenant);
 
             var agg = siiRepo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
 
@@ -77,7 +77,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         var defaultContact = defaultValueQueryService.GetDefault("ISRAEL", "CGG_CONT_STDI", "NON", customerCard.Code, entityPOCO.Tenant);
                         if(defaultContact != null)
                         {
-                            var userPM = userQueryService.GetSinglePMByCode(defaultContact, entityPOCO.Tenant);
+                            /*var contactPM = contactQuery.getsingle(defaultContact, entityPOCO.Tenant);
                             if(userPM != null)
                             {
                                 entityPM.ContactName = userPM.LocalName;
@@ -86,7 +86,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                                 entityPM.ContactFax = userPM.Fax;
                                 entityPM.ContactTel = userPM.BusinessPhone;
                                 entityPM.ContactId = userPM.Id;
-                            }
+                            }*/
 
                         }
                     }

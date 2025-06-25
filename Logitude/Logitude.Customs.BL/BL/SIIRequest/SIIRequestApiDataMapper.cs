@@ -152,14 +152,12 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 DeliveryComment = sii.Remarks,
                 ShipFlightNumber = sii.VesselName,
                 BillOfLadingId = sii.ManifestNumber,
-
-                ContactPersonFirstName = sii.ContactName,
-                ContactPersonLastName = sii.ContactName,
-                ContactPersonEmail = sii.ContactEmail,
-                ContactPersonPhone = sii.ContactCellPhone,
-                ContactPersonCellPhone = sii.ContactCellPhone,
-                ContactPersonFax = sii.ContactFax,
-
+                ContactPersonFirstName = contact.LocalName,
+                ContactPersonLastName = contact.LocalName,
+                ContactPersonEmail = contact.Email,
+                ContactPersonPhone = contact.BusinessPhone,
+                ContactPersonCellPhone = contact.Mobile,
+                ContactPersonFax = contact.Fax,
                 IsNumericCountryCode = CountryCode.alphaCode.ToString(),
                 ImportCountry = new CountryAlphaDto { AlphaCode = sii.OriginCountryCode },
 
