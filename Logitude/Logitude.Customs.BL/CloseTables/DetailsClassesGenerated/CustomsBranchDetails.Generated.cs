@@ -27,7 +27,6 @@ namespace Logitude.Customs.BL
        public List<CustomsBranchDetails> GetAll()
        {
 		    var all = new List<CustomsBranchDetails>(); 
-
             return all;
        }
 

@@ -23,9 +23,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "1b47c6ef6065c0322e6fdc12348fb677";
+		public const string HashString = "d8d189cd7c806de7b71b6549f5336a44";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-         {                     
+        {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
@@ -19752,7 +19752,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
-			 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -20919,7 +20918,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_IsSendSFTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsSendSFTP", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IsSendSFTP", NameTextCodeDefaultText = @"Is Send SFTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
 
-		   Feature DeclarationFeature_ImportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ImportDiamonds", NameTextCodeDefaultText = @"Diamond Declaration - Import" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+		   Feature DeclarationFeature_ImportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ImportDiamonds", NameTextCodeDefaultText = @"Diamond Declaration - Import" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
 
    
 	    
