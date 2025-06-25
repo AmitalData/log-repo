@@ -14,6 +14,7 @@ import {SchedulerExtendedPMService} from '../../../../Infrastructure/Services/Ex
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {Component, OnInit, ChangeDetectorRef, QueryList, ViewChild, ViewContainerRef}  from '@angular/core';
 import {LocationDirective} from '../../../../Infrastructure/Utilities/LocationDirective';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     
@@ -417,9 +418,14 @@ export class AddEditTaskSchedulerComponent  {
 
         this.schedulerExtendedPMService.RunNowButtonClicked(this.EntityPM.Id ,this.RunNowFromDate,this.RunNowToDate).subscribe((myResult: ServiceResponse) => {
             var myResponse: ServiceResponse = myResult;
+            var messageWindow: MessageWindow = new MessageWindow();
             if (!myResponse.HasError) {
-                
+                messageWindow.ShowSuccessIcon = true;
+                messageWindow.Show("The task has been started successfully")
+        
             } else {
+                messageWindow.ShowErrorIcon = true;
+                messageWindow.Show("The task could not be started. " + myResponse.ErrorsArray.join(", "));  
                 this.ValidationErrorsList = myResponse.ErrorsArray;
             }
             this.CurrentSession.StopBusyIndicator();
