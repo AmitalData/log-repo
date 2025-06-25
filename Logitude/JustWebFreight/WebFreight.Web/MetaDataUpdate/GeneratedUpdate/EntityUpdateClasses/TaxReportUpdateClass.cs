@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "72b29a313d0f4a09001792c38aac2264";
+		public const string HashString = "e9565ffe14292ddafd8de96c2d92b1f7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -289,7 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreateDate",
 					  						ObjectTableName =  "TaxReport",
-					  						FieldsDataType =  "DateTime",
+					  						FieldsDataType =  "DateTime2",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
