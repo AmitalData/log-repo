@@ -170,13 +170,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (LinePM.ActionCode == ActionCode_DebitAndCredit)
             {
-                var additionalCurrencyRateFeature = SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", LinePM.Tenant);
-                RatesTableQuery ratesTableQuery = new RatesTableQuery();
-                TenantQuery tenantQuery = new TenantQuery(LinePM.Tenant);
-                TenantPM tPM = tenantQuery.GetSinglePM(LinePM.Tenant);
-                string accountingCurrencyId = tPM.CurrencyId;
-                decimal? rateValue = additionalCurrencyRateFeature ? (decimal?)ratesTableQuery.GetLastRecordByValueDateAndExchangeRateId(LinePM.Tenant, LinePM.CurrencyId, tPM?.CurrencyId, LinePM.AccountingDate, LinePM.DebitAccountId) ?? LinePM.ExchangeRate : LinePM.ExchangeRate;
-                decimal ForeignAmountValue = additionalCurrencyRateFeature ? Math.Round(LinePM.LocalAmount / rateValue.Value, 2) : LinePM.ForeignAmount;
                 newLine = new JournalLinePM
                 {
                     ActionTypeCode = ActionCode_Debit,
@@ -194,8 +187,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     DueDate = LinePM.DueDate,
                     Line = JournalLines.Count() + 1,
                     DocumentDate = LinePM.DocumentDate,
-                    ExchangeRate = rateValue,
-                    ForeignAmount = ForeignAmountValue,
+                    ExchangeRate = LinePM.ExchangeRate,
+                    ForeignAmount = LinePM.ForeignAmount,
                     LocalAmount = LinePM.LocalAmount,
                     CurrencyId = LinePM.CurrencyId,
                     CurrencyCode = LinePM.CurrencyCode,

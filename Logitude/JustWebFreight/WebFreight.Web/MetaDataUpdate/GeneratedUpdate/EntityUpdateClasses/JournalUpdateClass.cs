@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "65ba10b2192effd4093c2811d60a36dc";
+		public const string HashString = "58dfe3f1684d894ec1a853bcb14db679";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4470,6 +4470,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode JournalTextCode_JournalOPermissionSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.PermissionSetting", DefaultText = "Permission Setting",LocalDefaultText = @"הגדרת הרשאה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalTextCode_JournalOSuperPermissionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SuperPermissionRequired", DefaultText = "Correction requires super permission. Please contact Amital.",LocalDefaultText = @"תיקון דורש הרשאת על. נא לפנות לעמיטל", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalTextCode_JournalOSplitByDifferentExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SplitByDifferentExchangeRate", DefaultText = "The %debitAccountName card has a conversion rate of %debitExchangeRateName and the %creditAccountName card has a conversion rate of %creditExchangeRateName. A debit/credit transaction cannot be recorded. Please split the transactions.",LocalDefaultText = @"לכרטיס %debitAccountName מוגדר שער המרה %debitExchangeRateName ולכרטיס %creditAccountName מוגדר שער המרה %creditExchangeRateName, לא ניתן לרשום תנועת חיוב/זיכוי, נא לפצל את התנועות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
