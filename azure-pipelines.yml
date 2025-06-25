@@ -117,10 +117,12 @@ stages:
       displayName: 'Generate .secrets.toml'    
 
     - script: |
-        echo "Running PR Agent action step"
+        echo "Installing jq..."
+        apt-get update && apt-get install -y jq
+        ECHO "Running PR Agent action step"
         API_URL="https://dev.azure.com/amitaldata/amital/_apis/git/pullrequests/${SYSTEM_PULLREQUEST_PULLREQUESTID}?api-version=7.1-preview.1"
         AUTH_HEADER="Authorization: Bearer $(azure_devops_pat)"
-        echo "$API_URL"
+        ECHO "$API_URL"
         REPO_NAME=$(curl -s -H "$AUTH_HEADER" "$API_URL" | jq -r '.repository.name')    
         ECHO "$REPONAME"
         # Construct PR_URL
