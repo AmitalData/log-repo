@@ -74,7 +74,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             transactionsDataProvider = new NewLedgerTransactionDataProvider();
 
             transactionsDataProvider.FromDate = GetFromDate();
-            transactionsDataProvider.ToDate = GetToDate();
+            //transactionsDataProvider.ToDate = GetToDate();
 
             FillGLAccountFields(cardIndexReportService);
             FillTenantFields();
@@ -351,7 +351,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             string loggedContactEnglishName = GetLoggedContactEnglishName();           
             transactionsDataProvider.PrintedByUser = loggedContactName;
             transactionsDataProvider.UserEnglishName = loggedContactEnglishName;
-            transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            //transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
         private string GetContactName(ContactPM loggedContact)
@@ -476,7 +476,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             CardIndexReportParams cardIndexParameters = new CardIndexReportParams()
             {
                 Tenant = tenant,
-                From = GetFromDate(),
+              //  From = GetFromDate(),
                 To = GetToDate(),
                 CurrencyId = GetFilterValue<string>("CurrencyId"),
                 DateTypeCode = GetFilterValue<string>("DateTypeCode"),
