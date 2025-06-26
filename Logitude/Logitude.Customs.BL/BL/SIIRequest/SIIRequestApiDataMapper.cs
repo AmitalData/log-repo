@@ -137,11 +137,11 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 AgentFileId = dec?.CustomFileNo,
                 CustomsAgentName = agentName,
 
-                ImporterNumber = importer?.Id ?? dec?.ImporterCode,
-                ImporterEmail = importer?.Email,
-                ImporterPhone = importer?.BusinessPhone,
-                ImporterCellPhone = importer?.BusinessPhone,
-                ImporterFax = importer?.Fax,
+                ImporterNumber = importer?.Code ?? dec?.ImporterCode,
+                ImporterEmail = sii.ContactEmail,
+                ImporterPhone = sii.ContactTel,
+                ImporterCellPhone = sii.ContactCellPhone,
+                ImporterFax = sii.ContactFax,
 
                 ApplicantFullName = contact?.LocalName,
                 ApplicantIdNumber = contact == null
