@@ -545,29 +545,25 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DocumentTypeCustomsDataPM documentTypeCustomsDataPM=null;
                 if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("_DocumentsFilingPM != null id:{0}   , documenttypecode : {2}", _DocumentsFilingPM.Id, documentTypePM?.Code));
-
+ 
                      DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
                      documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
                     if (documentTypeCustomsDataPM != null && !String.IsNullOrWhiteSpace(documentTypeCustomsDataPM.CustomsDoucumentTypeCode))
                     {
-                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("documentTypeCustomsDataPM != null  id:{0}   , documenttypecode : {2}", _DocumentsFilingPM.Id, documentTypeCustomsDataPM?.CustomsDoucumentTypeCode));
-
+ 
                          CustomDocumentTypeQueryService customDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
 
                          CustomDocumentTypePM customDocumentTypePM = customDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(documentTypeCustomsDataPM.CustomsDoucumentTypeCode, _DocumentsFilingPM.Tenant);
 
                         if (customDocumentTypePM != null && !String.IsNullOrEmpty(customDocumentTypePM.CustomsDocumentUpload))
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("customDocumentTypePM != null  id:{0}   , documenttypecode : {2}", _DocumentsFilingPM.Id, customDocumentTypePM?.CustomsDocumentUpload));
-
+ 
                              CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
 
                             if (customDocumentTypePM.CustomsDocumentUpload == "C" )
                             {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("customDocumentTypePM.CustomsDocumentUpload == C  id:{0}   , documenttypecode : {2}", _DocumentsFilingPM.Id, customDocumentTypePM?.CustomsDocumentUpload));
-
+ 
                                  AutoSending = true;
 
                             }
