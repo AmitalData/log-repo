@@ -17,6 +17,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using static Logitude.Customs.Data.Repsitories.SIIRequestRepository;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -71,7 +72,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
         }
 
 
-        private static void MapAggregateToPM(SIIRequestPM entityPM, dynamic agg)
+        private static void MapAggregateToPM(SIIRequestPM entityPM, SiiAgg agg)
         {
             entityPM.ImporterId = string.IsNullOrEmpty(agg.ImporterInternalId)
                                        ? agg.ImporterCode

@@ -108,14 +108,19 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     ?? throw new InvalidOperationException($"Did not receive a response from SII for request '{siiRequestId}'."); 
                 var saver = new SIIRequestApiResponseSaver(auth.Tenant);
                 saver.Save(apiResp, siiRequestId);
-                var payload = apiResp?.Result
-                    ?? new ReleaseRequestApiResponseDto
-                    {
-                        RequestNumber = 0,
-                        ResponseCode = apiResp?.ErrorCode ?? -1,
-                        ValidationMessages = apiResp?.ErrorMessage
-                    };
-                return Request.CreateResponse(HttpStatusCode.OK, "Request Number:"  + payload.RequestNumber);
+                if (apiResp.Success && apiResp.Result?.ResponseCode == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, apiResp.Result);
+                }
+
+                // error → 400 + error payload
+                var errorPayload = new
+                {
+                    ResponseCode = apiResp != null ? apiResp.ErrorCode : -1,
+                    ValidationMessages = apiResp.ErrorMessage
+                };
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorPayload);
 
             }
             catch (Exception ex)
