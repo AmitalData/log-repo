@@ -1077,8 +1077,8 @@
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\PMControllers\DefaultAndConfigurationKeyController.Generated.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
-     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
-     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
+    <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
+    <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
     <Compile Include="Controllers\AccountingModel\CopyFromTenant0ExtendedController.cs" />
     <Compile Include="Controllers\AccountingModel\ChartOfAccountsTypesExtendedController.cs" />
@@ -2061,6 +2061,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataProviders\NewLedgerTransactionDataProvider.cs" />
     <Compile Include="DataProviders\NewAccountingAgingDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginCountDataProvider.cs" />
     <Compile Include="DataProviders\CertificateOfOriginDataProvider.cs" />
@@ -6828,6 +6829,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\NewLedgerTransactionReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\NewAgingReportDataProviderLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ARinvoiceSequencesService.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\MonthlyBalancesLinesLoader.cs" />

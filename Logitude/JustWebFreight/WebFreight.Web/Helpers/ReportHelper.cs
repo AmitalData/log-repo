@@ -1420,8 +1420,13 @@ namespace WebFreight.Web.Helpers
 						dataProvider = myDataManager.GetData();
 						break;
 					}
-					#endregion
-			}
+                case "NTRP":
+                    {
+                        dataProvider = logitudeReportsWebService.LoadNewLedgerTransactionDataProvider(filters, reportFliter, reportFliter.tenant);
+                        break;
+                    }
+                    #endregion
+            }
 			return dataProvider;
 		}
 		public object dataprovider;
@@ -1930,8 +1935,14 @@ namespace WebFreight.Web.Helpers
 
 						break;
 					}
-					#endregion
-			}
+                case "NTRP":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.NewLedgerTransactionDataProvider";
+
+                        break;
+                    }
+                    #endregion
+            }
 
 			return dataProviderName;
 		}
@@ -2794,7 +2805,18 @@ namespace WebFreight.Web.Helpers
 
 						break;
 					}
-			}
+                case "NTRP":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(NewLedgerTransactionDataProvider));
+                        NewLedgerTransactionDataProvider reportDataProvider = (NewLedgerTransactionDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.Logo = stimulReportDataProviderDetails.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "NTRP", Name = "NewLedgerTransactionDataProvider", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
+            }
 			return stimulReportDataProviderDetails;
 		}
 
@@ -3143,7 +3165,8 @@ namespace WebFreight.Web.Helpers
                     case "LOCR":
                     case "SRQR":
 					case "NAGR":
-						return true;
+					case "NTRP":
+                        return true;
 
 					default:
 						return false;
