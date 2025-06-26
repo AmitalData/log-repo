@@ -595,6 +595,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime requestDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime RequestDate  
+	   {
+	    
+	     get
+		{
+		   return requestDate;
+		 }
+		 set
+		 {
+		   if(requestDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestDate",OldValue=requestDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   requestDate=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

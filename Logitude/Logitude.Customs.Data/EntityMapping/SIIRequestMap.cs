@@ -46,6 +46,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ContactId).HasColumnName("ContactId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.FromApplicationId).HasColumnName("FromApplicationId").HasMaxLength(30).IsUnicode(false);
+
+            this.Property(t => t.RequestDate).HasColumnName("RequestDate");
         }
     }
 }
