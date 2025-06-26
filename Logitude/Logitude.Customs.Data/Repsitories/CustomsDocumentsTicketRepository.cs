@@ -244,6 +244,58 @@ namespace Logitude.Customs.Data.Repsitories
 
             return customsDocumentsTicket;
         }
+        public IList<PointerTicketDto> GetPointersWithFilingId(IReadOnlyCollection<SupplierInvoiceItemsReqListKeys> items, int tenant)
+        {
+            var decIds = items.Select(i => i.DeclarationId).Distinct().ToList();
+            var sirIds = items.Select(i => i.SIIRequestID).Distinct().ToList();
+            var invIds = items.Select(i => i.InvoiceCounterKey.ToString()).Distinct().ToList();
+            var itemLines = items.Select(i => i.InvoiceItemLineNumber.ToString()).Distinct().ToList();
+
+            const string PARENT_DECL = "Declaration";
+            const string CHILD1_SIIREQUEST = "SIIRequest";
+            const string CHILD2_SUPPINVOICE = "SupplierInvoice";
+            const string CHILD3_SUPPINVITEM = "SupplierInvoiceItem";
+
+            var query =
+                from p in context.CustomsDocumentPointers
+                join t in context.CustomsDocumentsTickets
+                      on p.CustomsDocumentsTicketId equals t.Id
+                where p.Tenant == tenant
+                      && p.ParentEntityCode == PARENT_DECL
+                      && t.DocumentsFilingId != null
+                      && decIds.Contains(p.ParentEntityId)
+
+                      && p.Child1EntityCode == CHILD1_SIIREQUEST
+                      && sirIds.Contains(p.Child1EntityId)
+
+                      && (
+                            (p.Child2EntityCode == null && p.Child2EntityId == null)
+
+                         || (p.Child2EntityCode == CHILD2_SUPPINVOICE
+                             && invIds.Contains(p.Child2EntityId)
+                             && p.Child3EntityCode == null
+                             && p.Child3EntityId == null)
+
+                         || (p.Child2EntityCode == CHILD2_SUPPINVOICE
+                             && invIds.Contains(p.Child2EntityId)
+                             && p.Child3EntityCode == CHILD3_SUPPINVITEM
+                             && itemLines.Contains(p.Child3EntityId))
+                         )
+                select new PointerTicketDto
+                {
+                    CustomsDocumentsTicketId = p.CustomsDocumentsTicketId,
+                    DocumentsFilingId = t.DocumentsFilingId,
+                    DocumentTypeCode = t.DocumentTypeCode,
+
+                    ParentEntityId = p.ParentEntityId,
+                    Child1EntityId = p.Child1EntityId,
+                    Child2EntityId = p.Child2EntityId,
+                    Child3EntityId = p.Child3EntityId
+                };
+
+            return query.ToList();
+        }
+
     }
     public class GetTicketsParams
     {
@@ -252,6 +304,18 @@ namespace Logitude.Customs.Data.Repsitories
         public string Child1EntityCode2 { get; set; }
         public string Child2EntityCode { get; set; }
         public string Child3EntityCode { get; set; }
+        public string ParentEntityId { get; set; }
+        public string Child1EntityId { get; set; }
+        public string Child2EntityId { get; set; }
+        public string Child3EntityId { get; set; }
+    }
+
+    public class PointerTicketDto
+    {
+        public string CustomsDocumentsTicketId { get; set; }
+        public string DocumentsFilingId { get; set; }
+        public string DocumentTypeCode { get; set; }
+
         public string ParentEntityId { get; set; }
         public string Child1EntityId { get; set; }
         public string Child2EntityId { get; set; }
