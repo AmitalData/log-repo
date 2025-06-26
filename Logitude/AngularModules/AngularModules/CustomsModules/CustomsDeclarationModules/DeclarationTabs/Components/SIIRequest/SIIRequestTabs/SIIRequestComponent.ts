@@ -12,17 +12,17 @@ import { SupplierInvoiceItemExtendedListService } from 'Customs/Services/Extende
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from 'Infrastructure/Tools';
-import { UserPM } from 'Common/EntityPMs/UserPM';
 import { SupplierInvoiceItemsReqListPM } from 'Customs/EntityPMs/SupplierInvoiceItemsReqListPM';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SIIRequestWebService, SupplierInvoiceItemsForSIIRequest } from 'Customs/Services/WebServices/SIIRequestWebService';
-import { UserPMService } from 'Common/Services/StandardPMs/UserPMService';
 import { SupplierInvoiceItemLine } from 'CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/SupplierInvoiceGeneralTabComponent';
 import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServices/SupplierInvoiceItemsReqListWebService';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { ContactPMService } from 'Common/Services/StandardPMs/ContactPMService';
+import { ContactPM } from 'Common/EntityPMs/ContactPM';
 
 @Component({
     selector: 'SIIRequestComponent',
@@ -37,7 +37,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     private declarationWebService: DeclarationWebService = new DeclarationWebService;
     public siiRequestPMService: SIIRequestPMService = new SIIRequestPMService();
     public supplierInvoiceItemsReqListWebService: SupplierInvoiceItemsReqListWebService;
-    public userPmService: UserPMService = new UserPMService();
+    public contactPmService: ContactPMService = new ContactPMService();
     public supplierinvoiceitemsWebService: SupplierInvoiceItemExtendedListService = new SupplierInvoiceItemExtendedListService();
     public siiRequestWebService: SIIRequestWebService;
     public entityResourceService: EntityResourceService = new EntityResourceService();
@@ -52,7 +52,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public entityPM: SIIRequestPM = new SIIRequestPM();
     public initfilterAgrs: ApiQueryFilters;
     public filterAgrs: ApiQueryFilters;
-    private userData: UserPM = new UserPM();
+    private contactData: ContactPM = new ContactPM();
     public IsLoaded: boolean = false;
     public supplierInvoiceItemsForSIIRequest: SupplierInvoiceItemsForSIIRequest[] = [];
     public supplierInvoiceItemsCollection: ObservableCollection;
@@ -128,7 +128,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     initFullData() {
         this.buildSupplierInvoiceItemsCollection();
         this.DemandStateFilterItemClicked(this.filterOptionsWithResponse);
-        if (!AppTool.IsNullOrEmpty(this.entityPM?.ContactId)) this.getUserData(this.entityPM.ContactId);
+        if (!AppTool.IsNullOrEmpty(this.entityPM?.ContactId)) this.getContactData(this.entityPM.ContactId);
     }
 
     // #region Actions:
@@ -258,26 +258,29 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     //#region SendSiiRequest
     SendSiiRequest() {
-        const supplierInvoiceItemsSelectedCount = this.supplierInvoiceItemsCollection.Collection?.filter(i => i.IsSelected)?.length ?? 0;
+        const selectedItems = (this.supplierInvoiceItemsCollection.Collection || [])
+            .filter(i => i.IsSelected);
 
-        if (supplierInvoiceItemsSelectedCount === 0) {
+        if (selectedItems.length === 0) {
             const confirm = new ConfirmWindow();
-            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Close");
+            confirm.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
             confirm.ShowNoButton = false;
-            confirm.Show(TextCodeTranslator.Translate("Customs.SIIRequest.O.NoRowsSelected"));
+            confirm.Show(TextCodeTranslator.Translate('Customs.SIIRequest.O.NoRowsSelected'));
             return;
         }
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.SIIRequest.O.SendingRequest"));
-        const afterSave = () => {
-            const selectedRows = this.SelectedRowsCheckBox.map(row => ({
-                DeclarationId: this.DeclarationId,
-                LineNumber: row.entityPM.LineNumber,
-                SIIRequestID: this.entityPM.Id,
-                InvoiceCounterKey: row.entityPM.InvoiceCounterKey,
-                InvoiceItemLineNumber: row.entityPM.InvoiceLineNumber,
-            }));
 
-            this.siiRequestWebService.postSendSIIRequest(this.entityPM.Id, this.DeclarationId, this.entityPM.Tenant, selectedRows)
+        const selectedRows = selectedItems.map(item => ({
+            DeclarationId: this.DeclarationId,
+            LineNumber: item.LineNumber,
+            SIIRequestID: this.entityPM.Id,
+            InvoiceCounterKey: item.InvoiceCounterKey,
+            InvoiceItemLineNumber: item.InvoiceLineNumber,
+        }));
+
+
+        const afterSave = () => {
+            this.siiRequestWebService
+                .postSendSIIRequest(this.entityPM.Id, this.DeclarationId, this.entityPM.Tenant, selectedRows)
                 .subscribe({
                     next: (response: ServiceResponse) => {
                         this.CurrentSession.StopBusyIndicator();
@@ -285,18 +288,21 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     },
                     error: () => {
                         this.CurrentSession.StopBusyIndicator();
-                        alert(TextCodeTranslator.Translate("General.B.Error"));
+                        alert(TextCodeTranslator.Translate('General.B.Error'));
                     }
                 });
         };
 
         if (this.entityPM.IsDirty) {
             const confirm = new ConfirmWindow();
-            confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+            confirm.YesButtonText = TextCodeTranslator.Translate('General.B.Yes');
             confirm.ShowNoButton = true;
-            confirm.Show(TextCodeTranslator.Translate("Customs.SIIRequest.O.UnSavedChanges"));
+            confirm.Show(TextCodeTranslator.Translate('Customs.SIIRequest.O.UnSavedChanges'));
             confirm.WindowClosed.subscribe(() => {
                 if (confirm.Yes) {
+                    this.CurrentSession.StartBusyIndicator(
+                        TextCodeTranslator.Translate('Customs.SIIRequest.O.SendingRequest')
+                    );
                     this.SaveSiiRequest();
                     afterSave();
                 } else {
@@ -304,9 +310,13 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 }
             });
         } else {
+            this.CurrentSession.StartBusyIndicator(
+                TextCodeTranslator.Translate('Customs.SIIRequest.O.SendingRequest')
+            );
             afterSave();
         }
     }
+
     //#endregion SendSiiRequest
     //#endregion Actions
 
@@ -516,23 +526,23 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     //#endregion LevelSelection Filter Methods   
 
-    //#region user data
-    getUserData(userId: string) {
-        this.userPmService.get(userId).subscribe((response: ServiceResponse) => {
+    //#region contact data
+    getContactData(contactId: string) {
+        this.contactPmService.get(contactId).subscribe((response: ServiceResponse) => {
             if (response?.Result !== null) {
-                this.userData = response.Result;
-                this.setUserData();
+                this.contactData = response.Result;
+                this.setContactData();
             }
         });
     }
-    setUserData() {
-        this.ContactEmail = this.userData.Email || '';
-        this.ContactTel = this.userData.BusinessPhone || '';
-        this.ContactCellPhone = this.userData.Mobile || '';
-        this.ContactFax = this.userData.Fax || '';
+    setContactData() {
+        this.ContactEmail = this.contactData.Email || '';
+        this.ContactTel = this.contactData.BusinessPhone || '';
+        this.ContactCellPhone = this.contactData.Mobile || '';
+        this.ContactFax = this.contactData.Fax || '';
     }
 
-    //#endregion user data
+    //#endregion contact data
 
     //#region  SiiRequest properties
     public get Id(): string {
@@ -685,7 +695,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     public set ContactId(newValue: string) {
         let oldValue = this.entityPM.ContactId;
         this.entityPM.ContactId = newValue;
-        if (!AppTool.IsNullOrEmpty(newValue) && oldValue !== newValue) this.getUserData(newValue);
+        if (!AppTool.IsNullOrEmpty(newValue) && oldValue !== newValue) this.getContactData(newValue);
         this.entityPM.IsDirty = true;
     }
     //#endregion SiiRequest properties

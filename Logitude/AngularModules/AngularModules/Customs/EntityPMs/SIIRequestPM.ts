@@ -151,6 +151,11 @@ export class SIIRequestPM {
     public set UnloadPortCode(newValue: string) { if (this.unloadPortCode != newValue) { this.unloadPortCode = newValue; this.MarkAsDirty("UnloadPortCode"); } }
        
 	 
+    private requestDate: Date;
+    public get RequestDate() { return this.requestDate; }
+    public set RequestDate(newValue: Date) { if (this.requestDate != newValue) { this.requestDate = newValue; this.MarkAsDirty("RequestDate"); } }
+       
+	 
 
     public OldEntityPM: SIIRequestPM;
 		
