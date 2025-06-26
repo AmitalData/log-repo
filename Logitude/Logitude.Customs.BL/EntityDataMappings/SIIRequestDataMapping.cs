@@ -16,6 +16,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -63,46 +64,74 @@ namespace Logitude.Customs.BL.EntityDataMappings
             var contactQuery = new ContactQuery(entityPOCO.Tenant);
 
             var agg = siiRepo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
+            if (agg == null) return;                       
 
-            if (agg != null)
-            {
-                entityPM.ImporterId = !string.IsNullOrEmpty(agg.ImporterInternalId)
-                                    ? agg.ImporterInternalId
-                                    : agg.ImporterCode;
-
-                entityPM.VesselName = agg.VesselLocalName;
-                entityPM.ManifestNumber = agg.ManifestNumber;
-                entityPM.OriginCountryCode = agg.OriginCountryCode;
-                entityPM.UnloadPortCode = agg.UnloadPortCode;
-                if (agg.UnloadDate.HasValue)
-                    entityPM.UnloadDate = agg.UnloadDate.Value;
-                if (entityPOCO.ContactId == null && agg.CustomerId != null)
-                {
-                    var customerCard = CardRepository.GetSingleCard(agg.CustomerId, entityPOCO.Tenant, true);
-                    if (customerCard != null)
-                    {
-                        var defaultContact = defaultValueQueryService.GetDefault("ISRAEL", "CGG_CONT_STDI", "NON", customerCard.Code, entityPOCO.Tenant);
-                        if(defaultContact != null)
-                        {
-                            var contactPM = contactQuery.GetSingleContactByExternalId(defaultContact, entityPOCO.Tenant);
-                            if(contactPM != null)
-                            {
-                                entityPM.ContactName = contactPM.LocalName;
-                                entityPM.ContactEmail = contactPM.Email;
-                                entityPM.ContactCellPhone = contactPM.Mobile;
-                                entityPM.ContactFax = contactPM.Fax;
-                                entityPM.ContactTel = contactPM.BusinessPhone;
-                                entityPM.ContactId = contactPM.Id;
-                            }
-
-                        }
-                    }
-                }
-            }
+            MapAggregateToPM(entityPM, agg);
+            MapContact(entityPM, entityPOCO, agg, defaultValueQueryService, contactQuery);
         }
 
 
+        private static void MapAggregateToPM(SIIRequestPM entityPM, dynamic agg)
+        {
+            entityPM.ImporterId = string.IsNullOrEmpty(agg.ImporterInternalId)
+                                       ? agg.ImporterCode
+                                       : agg.ImporterInternalId;
 
+            entityPM.VesselName = agg.VesselLocalName;
+            entityPM.ManifestNumber = agg.ManifestNumber;
+            entityPM.OriginCountryCode = agg.OriginCountryCode;
+            entityPM.UnloadPortCode = agg.UnloadPortCode;
+
+            if (agg.UnloadDate.HasValue)
+                entityPM.UnloadDate = agg.UnloadDate.Value;
+        }
+
+ 
+        private static void MapContact(
+            SIIRequestPM entityPM,
+            SIIRequest entityPOCO,
+            dynamic agg,
+            DefaultValueQueryService defaultValueQueryService,
+            ContactQuery contactQuery)
+        {
+            ContactPM contactPM = null;
+
+            if (entityPOCO.ContactId == null && agg.CustomerId != null)
+            {
+                var customerCard = CardRepository.GetSingleCard(agg.CustomerId, entityPOCO.Tenant, true);
+                if (customerCard != null)
+                {
+                    var defaultContactKey = defaultValueQueryService.GetDefault(
+                                                 "ISRAEL",
+                                                 "CGG_CONT_STDI",
+                                                 "NON",
+                                                 customerCard.Code,
+                                                 entityPOCO.Tenant);
+
+                    if (!string.IsNullOrEmpty(defaultContactKey))
+                    {
+                        contactPM = contactQuery.GetSingleContactByExternalId(
+                                        defaultContactKey,
+                                        entityPOCO.Tenant);
+                    }
+                }
+            }
+            else if (entityPOCO.ContactId != null)
+            {
+                contactPM = contactQuery.GetSinglePMFromCache(
+                                entityPOCO.ContactId,
+                                entityPOCO.Tenant);
+            }
+
+            if (contactPM == null) return;
+
+            entityPM.ContactName = contactPM.LocalName;
+            entityPM.ContactEmail = contactPM.Email;
+            entityPM.ContactCellPhone = contactPM.Mobile;
+            entityPM.ContactFax = contactPM.Fax;
+            entityPM.ContactTel = contactPM.BusinessPhone;
+            entityPM.ContactId = contactPM.Id;
+        }
 
 
         private void BuildSearchFields(SIIRequestPM entityPM, SIIRequest entityPOCO, bool v)
