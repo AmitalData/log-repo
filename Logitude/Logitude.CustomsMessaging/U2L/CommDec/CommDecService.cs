@@ -76,6 +76,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 		private decimal _SupplierInvoiceAmount;
 		private string mode;
 		private bool IsProcedureCurrentCodeChanged = false;
+		private bool IsConnectedToUniFreight;
 
 		public CommDecService()
 			: base(
@@ -101,7 +102,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 			MessageOut = "";
 			_tenant = ResolvedTenant();
 			var user = AuthenticationUtil.ResolveUserId(_tenant);
-			DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
+			var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
+			IsConnectedToUniFreight = setting != null && setting.IsConnectedToUniFreight;
+
+				DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_tenant);
 
 			string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_OPN_DEC_MET", "NON", "NON", _tenant);
 
@@ -123,8 +127,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
 			if (message == "SUCCESS")
 			{
-				var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-				if (setting != null && !setting.IsConnectedToUniFreight)
+				if (!IsConnectedToUniFreight)
 				{
 					DeserilazeObject(xmlLOGICOMMDEC);
 					DeclarationCounterQueryService declarationCounterQueryService = new DeclarationCounterQueryService(_tenant);
@@ -458,8 +461,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 						string countryCode = "";
 						if (_LogitudeCommDecFile.OriginCountryCode.Length > 2)
 						{
-							var setting1 = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-							if (setting1 != null && setting1.IsConnectedToUniFreight)
+							if (IsConnectedToUniFreight)
 							{
 								countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryCode);
 							}
@@ -495,8 +497,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 						string countryCode = "";
 						if (_LogitudeCommDecFile.OriginCountryId.Length > 2)
 						{
-							var setting1 = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-							if (setting1 != null && setting1.IsConnectedToUniFreight)
+							if (IsConnectedToUniFreight)
 							{
 								countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeCommDecFile.OriginCountryId);
 							}
@@ -815,9 +816,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
 			// if (!string.IsNullOrEmpty(defValueB) && defValueB == "B")
 				// {
-				var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
 
-				if (setting.IsConnectedToUniFreight)
+				if (IsConnectedToUniFreight)
 				{
 					AppendLogLine("update UpdateLOGITUDE_FILE");
 					var repo = new CFIFILEMRepository(_MyDeclarationPM.Tenant);
@@ -910,8 +910,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 					if (myinternalBorderSiteType == null)
 
 					{
-						var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-						if (setting != null && setting.IsConnectedToUniFreight)
+						if (IsConnectedToUniFreight)
 						{
 							PackageTypeCode = GetTranslationL2P("IIGC", "CTBBONDED", _LogitudeCommDecFile.SiteCode);
 						}
@@ -1793,8 +1792,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 			string PackageTypeCode = "";
 			if (myPackingType == null)
 			{
-				var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-				if (setting != null && setting.IsConnectedToUniFreight)
+				if (IsConnectedToUniFreight)
 				{
 					PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", amitalPackingTypeCode);
 				}
@@ -2201,9 +2199,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 				var myfreightCurrency = freightCurrency.GetSingle(this._INVOICE.CURRENCYCODE);
 				if (myfreightCurrency == null)
 				{
-					var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
 					string freightCurrencyCode = "";
-					if (setting != null && setting.IsConnectedToUniFreight)
+					if (IsConnectedToUniFreight)
 					{
 						freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
 					}
@@ -2239,8 +2236,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 				string countryCode = "";
 				if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
 				{
-					var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-					if (setting != null && setting.IsConnectedToUniFreight)
+					if (IsConnectedToUniFreight)
 					{
 						countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
 					}
@@ -2289,8 +2285,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 					if (myfreightCurrency == null)
 					{
 						string freightCurrencyCode = "";
-						var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-						if (setting != null && setting.IsConnectedToUniFreight)
+						if (IsConnectedToUniFreight)
 						{
 							freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
 						}
@@ -2344,8 +2339,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 					if (myinsuranceCurrency == null)
 					{
 						string insuranceCurrencyCode = "";
-						var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-						if (setting != null && setting.IsConnectedToUniFreight)
+						if (IsConnectedToUniFreight)
 						{
 							insuranceCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.INSURANCE_CURR);
 						}
@@ -2371,8 +2365,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 				if (myTradeAgreement == null)
 				{
 					string TradeAgreementCode = "";
-					var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-					if (setting != null && setting.IsConnectedToUniFreight)
+					if (IsConnectedToUniFreight)
 					{
 						TradeAgreementCode = GetTranslationL2P("IIGC", "CTBTARIFF", this._INVOICE.TRADE_AGREEMENT);
 					}
@@ -2465,8 +2458,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 						if (myfreightCurrency == null)
 						{
 							string freightCurrencyCode = "";
-							var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-							if (setting != null && setting.IsConnectedToUniFreight)
+							if (IsConnectedToUniFreight)
 							{
 								freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", transpValItem.TRANSP_VALUE_CURR_L);
 							}
@@ -2578,8 +2570,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 						if (myagentFeeCurrency == null)
 						{
 							string agentFeeCurrencyCode = "";
-							var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-							if (setting != null && setting.IsConnectedToUniFreight)
+							if (IsConnectedToUniFreight)
 							{
 								agentFeeCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
 							}
@@ -2688,8 +2679,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 					if (myTradeAgreement == null)
 					{
 						string TradeAgreementCode = "";
-						var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-						if (setting != null && setting.IsConnectedToUniFreight)
+						if (IsConnectedToUniFreight)
 						{
 							TradeAgreementCode = GetTranslationL2P("IIGC", "CTBTARIFF", invoiceItem.TRADEAGREEMENTCODE);
 						}
@@ -2755,8 +2745,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 					string countryCode = "";
 					if (invoiceItem.ITEMORIGINCOUNTRY.Length > 2)
 					{
-						var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
-						if (setting != null && setting.IsConnectedToUniFreight)
+						if (IsConnectedToUniFreight)
 						{
 							countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", invoiceItem.ITEMORIGINCOUNTRY);
 						}
