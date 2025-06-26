@@ -25,6 +25,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
         
         public void CustomPMToPOCO(SIIRequestPM entityPM, SIIRequest entityPOCO)
         {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.RequestDate);
+                entityPOCO.RequestDate = DateTime.Now;
+            }
+           
+                
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
             entityPOCO.Id = entityPM.Id;
 
@@ -53,7 +60,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             var siiRepo = new SIIRequestRepository(entityPOCO.Tenant);
             var defaultValueQueryService = new DefaultValueQueryService(entityPOCO.Tenant);
-            var userQueryService = new UserQuery(entityPOCO.Tenant);
+            var contactQuery = new ContactQuery(entityPOCO.Tenant);
 
             var agg = siiRepo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
 
@@ -77,15 +84,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         var defaultContact = defaultValueQueryService.GetDefault("ISRAEL", "CGG_CONT_STDI", "NON", customerCard.Code, entityPOCO.Tenant);
                         if(defaultContact != null)
                         {
-                            var userPM = userQueryService.GetSinglePMByCode(defaultContact, entityPOCO.Tenant);
-                            if(userPM != null)
+                            var contactPM = contactQuery.GetSingleContactByExternalId(defaultContact, entityPOCO.Tenant);
+                            if(contactPM != null)
                             {
-                                entityPM.ContactName = userPM.LocalName;
-                                entityPM.ContactEmail = userPM.Email;
-                                entityPM.ContactCellPhone = userPM.BusinessPhone;
-                                entityPM.ContactFax = userPM.Fax;
-                                entityPM.ContactTel = userPM.BusinessPhone;
-                                entityPM.ContactId = userPM.Id;
+                                entityPM.ContactName = contactPM.LocalName;
+                                entityPM.ContactEmail = contactPM.Email;
+                                entityPM.ContactCellPhone = contactPM.Mobile;
+                                entityPM.ContactFax = contactPM.Fax;
+                                entityPM.ContactTel = contactPM.BusinessPhone;
+                                entityPM.ContactId = contactPM.Id;
                             }
 
                         }
