@@ -4,8 +4,8 @@ import { PropertyChangedArgs } from "Infrastructure/EventEmitterArgs/PropertyCha
 
 export class TaxDeductionReportData {
 
-      @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
-      public UIProperties: UIProperties;
+      readonly PropertyChanged = new EventEmitter<PropertyChangedArgs>();
+      public readonly UIProperties = new UIProperties(this);
       constructor() {
                     this.UIProperties = new UIProperties(this); 
       }
@@ -25,24 +25,33 @@ export class TaxDeductionReportData {
     totalTaxDeductionInLocalCurrency08?: number;
     totalEndBalance?: number;
     vendorsCount?: number;
-    deductionLines: any;
-    fromDate: Date;
-    toDate: Date;
-    tenantAddress1: string;
-    tenantAddress2: string;
+    deductionLines: TaxDeductionReportLine[];
+    fromDate?: Date;
+    toDate?: Date;
+    tenantAddress1?: string;
+    tenantAddress2?: string;
+}
+
+export interface TaxDeductionReportLine {
+    vendorId?: string;
+    MonthOfRegisterDate?: number;
+    amountInLocalCurrency?: number;
+    taxDeductionLocalAmount?: number;
+    taxDeductionPercentage?: string;
+    deductionType?: string;
 }
 
 export interface TotalForCompany {
-    companyName: string;
-    deductionFileNumber: string;
+    companyName?: string;
+    deductionFileNumber?: string;
     totalPayments?: number;
     totalDeductions?: number;
 }
 
 export interface DBVendorsList {
     rigesterDate?: Date;
-    vendorId: string;
-    glAccountId: string;
+    vendorId?: string;
+    glAccountId?: string;
     amountInLocalCurrency?: number;
     taxDeductionLocalAmount?: number;
     deductionFileTypeCode: string;
@@ -62,7 +71,7 @@ export interface ByMonthList {
 }
 
 export interface ByVendorList {
-    vendorName: string;
-    month: number;
-    deductionFileNumber: string;
+    vendorName?: string;
+    month?: number;
+    deductionFileNumber?: string;
 }

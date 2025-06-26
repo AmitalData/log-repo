@@ -44,12 +44,31 @@ namespace WebFreight.Web.AccountingModel.Reports.TaxDeductionReport
 
             TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM, tenant, null);
             TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
-            data.TaxYear = taxDeductionReportPM.ByMonth && taxDeductionReportPM.FromMonth.HasValue ?
-                $"{taxDeductionReportPM.FromMonth.Value.Month}/{taxDeductionReportPM.TaxYear} - {taxDeductionReportPM.Month.Value.Month}/{taxDeductionReportPM.TaxYear}" :
-                taxDeductionReportPM.ByMonth ? taxDeductionReportPM.Month.Value.Month + "/" + taxDeductionReportPM.TaxYear : taxDeductionReportPM.TaxYear.ToString();
+
+            if (taxDeductionReportPM.ByMonth)
+            {
+                if (taxDeductionReportPM.FromMonth.HasValue && taxDeductionReportPM.Month.HasValue)
+                {
+                    data.TaxYear = $"{taxDeductionReportPM.FromMonth.Value.Month}/{taxDeductionReportPM.TaxYear} - {taxDeductionReportPM.Month.Value.Month}/{taxDeductionReportPM.TaxYear}";
+                }
+                else if (taxDeductionReportPM.Month.HasValue)
+                {
+                    data.TaxYear = $"{taxDeductionReportPM.Month.Value.Month}/{taxDeductionReportPM.TaxYear}";
+                }
+                else
+                {
+                    data.TaxYear = taxDeductionReportPM.TaxYear.ToString();
+                }
+            }
+            else
+            {
+                data.TaxYear = taxDeductionReportPM.TaxYear.ToString();
+            }
+
+
             data.ByVendorList = data.ByVendorList.OrderBy(d => d.VendorLocalName).ToList();
-            TaxDeductionReportService taxDeductionReportService = new TaxDeductionReportService();
-            taxDeductionReportService.SaveAndUpdateReportWithLock(context, taxDeductionReportPM, data, tenant, entityId);
+
+            new TaxDeductionReportService().SaveAndUpdateReportWithLock(context, taxDeductionReportPM, data, tenant, entityId);
 
             return data;
         }

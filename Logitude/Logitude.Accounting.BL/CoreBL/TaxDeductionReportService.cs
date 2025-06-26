@@ -756,21 +756,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     catch (Exception e)
                     {
                         var rootEx = e.GetBaseException();
-                        string message = rootEx.Message;
-                        string stackTrace = rootEx.StackTrace;
                         NetCommonHelper.Logger.DevLog.Instance.WriteError(
-                            $"[TaxDeductionReportService.SaveAndUpdateReportWithLock-Locking] Unexpected error occurred. " +
-                            $"Message: {message} | StackTrace: {stackTrace}");
-
+                        $"[TaxDeductionReportService.SaveAndUpdateReportWithLock-Locking] Unexpected error occurred.",
+                        rootEx);
                         throw;
                     }
+
                     taxDeductionReportPM.ReportSavedData = JsonSerializer.Serialize(data);
 
                     taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                    TaxDeductionReportUpdateService taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                    var taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
                     taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
 
-                    if (!String.IsNullOrEmpty(_AggregateKey))
+                    if (!String.IsNullOrWhiteSpace(_AggregateKey))
                     {
                         TryDeleteLockRow(tenant);
                     }
@@ -784,7 +782,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 string stackTrace = rootEx.StackTrace;
                 using (TransactionScope excScope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(1)))
                 {
-                    if (!String.IsNullOrEmpty(_AggregateKey))
+                    if (!String.IsNullOrWhiteSpace(_AggregateKey))
                     {
                         TryDeleteLockRow(tenant);
                     }
@@ -811,9 +809,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     repo.FastDelete(_AggregateKey, tenant);
                     _AggregateKey = "";
                 }
-                catch (Exception e)
+                catch 
                 {
-                    throw (e);
+                    throw;
                 }
             }
         }
@@ -836,127 +834,16 @@ namespace Logitude.Accounting.BL.CoreBL
                 lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
             }
 
+
             if (lockPoco == null)
             {
-                throw new Exception("lockPoco ==null");
+                throw new InvalidOperationException($"Failed to acquire lock for key {_AggregateKey}.");
             }
-            else
-            {
-            }
+
 
         }
 
 
-
-
-        //public static DocumentOutPM CreateDocumentOut(string documentTypeId, string entityId, string childEntityId, string childReference, string objectTableId, int tenant, string userId = null)
-        //{
-        //    try
-        //    {
-        //        ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-        //        DocumentOutRepository documentOutRepository = new DocumentOutRepository(objectContext);
-        //        DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
-        //        DocumentOutQuery documentOutQuery = new DocumentOutQuery(documentOutRepository);
-
-        //        DocumentTypePM documentType = documentTypeQuery.GetSinglePM(documentTypeId, tenant);
-
-
-        //        string documentTemplateId = null;
-        //        string emailTemplateId = null;
-
-        //        documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
-        //        emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;
-
-
-        //        //---------------------------------------- islam
-        //        DocumentsFilingRepository documentsFilingRepository = new DocumentsFilingRepository(objectContext);
-
-        //        if (string.IsNullOrEmpty(userId))
-        //        {
-
-
-        //            User loggedUser = GetLoggedUser(tenant);
-
-        //            if (loggedUser != null)
-        //            {
-        //                userId = loggedUser.Id;
-        //            }
-        //        }
-
-        //        DocumentsFiling newDocumentFiling = new DocumentsFiling() { DocumentTypeId = documentTypeId, EntityId = entityId, Tenant = tenant, ObjectTableId = objectTableId, ChildEntityId = childEntityId, ChildEntityReference = childReference, DirectionCode = "O" };
-
-        //        newDocumentFiling.Id = IdCounter.GetNumber("Document", tenant).ToString();
-        //        newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
-        //        newDocumentFiling.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
-        //        newDocumentFiling.CreatedByUserId = userId;
-        //        newDocumentFiling.OwnerId = userId;
-        //        newDocumentFiling.UpdatedByUserId = userId;
-
-        //        newDocumentFiling.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-        //        newDocumentFiling.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-        //        newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
-        //        documentsFilingRepository.Add(newDocumentFiling);
-
-        //        //----------------------------------------
-        //        DocumentOut newDocument = new DocumentOut() { EmailTemplateId = emailTemplateId, DocumentTemplateId = documentTemplateId, Tenant = tenant, Issued = false, };
-        //        newDocument.Id = newDocumentFiling.Id;
-        //        documentOutRepository.Add(newDocument);
-
-
-
-        //        objectContext.SaveChanges();
-        //        string documentTypeOutId = null;
-        //        if(documentType.DocumentTypeCopies.Count > 0)
-        //        {
-        //            documentTypeOutId = documentType.DocumentTypeCopies.FirstOrDefault().Id;
-        //        }
-        //        //ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
-        //        //exportDocumentHelper.ExportDocument2Pdf(documentType.Id, entityId, objectTableId, null, null, newDocument.Id, tenant, documentTypeOutId);
-
-        //        DocumentOutPM docPM = documentOutQuery.GetSinglePM(newDocument.Id, newDocument.Tenant);
-        //        return docPM;
-        //    }
-        //    catch (System.Data.Entity.Validation.DbEntityValidationException e)
-        //    {
-        //        string Error = "";
-        //        foreach (var eve in e.EntityValidationErrors)
-        //        {
-        //            Error += "Entity of type " + eve.Entry.Entity.GetType().Name + " in state " + eve.Entry.State + " has the following validation errors:";
-        //            foreach (var ve in eve.ValidationErrors)
-        //            {
-        //                //Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-        //                //ve.PropertyName, ve.ErrorMessage);
-
-        //                Error += "- Property:" + ve.PropertyName + ", Error:" + ve.ErrorMessage + Environment.NewLine;
-        //            }
-        //        }
-
-
-        //        string authenticateduser = "";
-
-        //        try
-        //        {
-        //            authenticateduser = Logitude.BL.Security.SecurityUtility.GetAuthenticatedUser();
-        //        }
-
-        //        catch
-        //        {
-        //            authenticateduser = "UnKnown";
-        //        }
-        //        string ip = "";
-        //        if (HttpContext.Current != null && HttpContext.Current.Request != null)
-        //        {
-        //            string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-        //            if (string.IsNullOrEmpty(currentIP))
-        //            {
-        //                currentIP = HttpContext.Current.Request.UserHostAddress;
-        //            }
-        //            ip = currentIP;
-        //        }
-        //      //  ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
-        //        throw new ApplicationException(Error);
-        //    }
-        //}
 
         private static string RandomString(int length)
         {

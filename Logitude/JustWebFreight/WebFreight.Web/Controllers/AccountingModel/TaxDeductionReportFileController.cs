@@ -52,29 +52,38 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                if (!HttpContext.Current.Request.Headers.AllKeys.Contains("Token"))
+                {
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, "Missing authentication token.");
+                }
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                if (authToken.Tenant != tenant)
+                {
+                    return Request.CreateResponse(HttpStatusCode.Forbidden, "Tenant mismatch.");
+                }
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
-                TaxDeductionReportQueryService taxDeductionReportQuery = new TaxDeductionReportQueryService(MyContext);
+                
+                IAccountingContext context = AccountingContext.GetContext(authToken.Tenant);
+                TaxDeductionReportQueryService taxDeductionReportQuery = new TaxDeductionReportQueryService(context);
                 taxDeductionReportQuery.InitializeSettings();
                 TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQuery.GetSingle(taxDeductionReport, true, false);
                 if (taxDeductionReportPM == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Tax Deduction Report not found.");
                 }
-                TaxDeductionReportData taxDeductionReportData = new TaxDeductionReportData();
-                if (!String.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData))
-                {
-                    taxDeductionReportData = JsonSerializer.Deserialize<TaxDeductionReportData>(taxDeductionReportPM.ReportSavedData);
-                }
+                TaxDeductionReportData taxDeductionReportData = string.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData)
+                                ? new TaxDeductionReportData()
+                                : JsonSerializer.Deserialize<TaxDeductionReportData>(taxDeductionReportPM.ReportSavedData);
                 return Request.CreateResponse(HttpStatusCode.OK, taxDeductionReportData);
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                NetCommonHelper.Logger.DevLog.Instance.WriteError(
+                            $"[GetTaxDeductionReportData] Unexpected error: {ex.GetBaseException().Message} {ex}");
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ApiExceptionBuilder.BuildException(ex));
+
             }
         }
 

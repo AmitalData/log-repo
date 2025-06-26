@@ -29,8 +29,9 @@
                                                 </td>
 
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
-                                                    <LogTextBox [ObjectFieldName]="'ReportType'" [InputType]="'Text'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [ForceDisable]="true"></LogTextBox>
+                                                    <LogTextBox [Text]="ReportType"
+                                                                [InputType]="'Text'"
+                                                                [ForceDisable]="true"></LogTextBox>
                                                 </td>
                                                 <td></td>
 
@@ -44,8 +45,9 @@
                                                 </td>
 
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:500px;">
-                                                    <LogTextBox [ObjectFieldName]="'ReportPeriod'" [InputType]="'Text'" [DataContext]="DataContext"
-                                                                [ObjectTableName]="ObjectTableName" [ForceDisable]="true"></LogTextBox>
+                                                    <LogTextBox [Text]="ReportPeriod"
+                                                                [InputType]="'Text'"
+                                                                [ForceDisable]="true"></LogTextBox>
                                                 </td>
                                                 <td></td>
 
