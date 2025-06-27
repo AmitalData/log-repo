@@ -232,6 +232,9 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
       this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
       ;
     }
+    if(this.EntityPM.HatraDate || this.EntityPM.PaymentDate){
+      this.IsDisplayOnly = true;
+    }
   }
 
   get IsAllowChange(): boolean {
