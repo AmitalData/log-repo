@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer } from 'rxjs';
+import { defer, throwError } from 'rxjs';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
@@ -34,7 +34,7 @@ export class SIIRequestWebService {
         );
     }
 
-    getSupplierInvoiceItemsForSIIRequest(declarationId: string,siiRequestId: string) {
+    getSupplierInvoiceItemsForSIIRequest(declarationId: string, siiRequestId: string) {
         return defer(() => {
             let authHeader = new Headers();
             authHeader.append('Token', SessionInfo.Token);
@@ -49,7 +49,7 @@ export class SIIRequestWebService {
         }
         );
     }
-    
+
     postSendSIIRequest(siiRequestId: string, declarationId: string, tenant: number, selectedRows: any[]) {
         return defer(() => {
             let headers = new Headers();
@@ -61,12 +61,8 @@ export class SIIRequestWebService {
                 JSON.stringify(selectedRows),
                 ServiceHelper.GetHttpHeaders()
             ).pipe(
-                map(response => {
-                    let serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = response;
-                    return serviceResponse;
-                }),
-                catchError(ServiceHelper.HandleServiceError)
+                map(resp => resp),              
+                catchError(err => throwError(err))
             );
         });
     }

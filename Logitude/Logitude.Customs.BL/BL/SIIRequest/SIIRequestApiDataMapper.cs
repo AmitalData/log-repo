@@ -8,7 +8,6 @@ using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
-using Microsoft.Azure.Management.Network.Fluent.Models;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -17,6 +16,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -31,6 +31,10 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         readonly string ComputingPartnerTableUnloadingSiteType = "Customs.UnloadingSiteType";
         public const string NoProduct = "0";
         public const string DutchGroup1 = "1";
+        private static readonly HashSet<string> AllowedExts =
+     new HashSet<string>(
+         new[] { "pdf", "gif", "jpg" },          // allowed types by SII 
+         StringComparer.OrdinalIgnoreCase);
 
         public SIIRequestApiDataMapper(int tenant)
         {
@@ -67,7 +71,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 var contact = contactRepo.GetSingleContactByEmail(email, _tenant);
 
                 var pointers = _pointerRepo.GetPointersWithFilingId(requestItemsKeys, _tenant);
-                var filingIds = pointers.Select(p => p.DocumentsFilingId).Distinct().ToList();
+                var filingIds = pointers.Select(p => p.DocumentsFilingId).Where(id => id != null).Distinct().ToList();
                 var security = filingRepo.GetSecurityIdsByFilingIds(filingIds, _tenant)
                                    .ToDictionary(x => x.Id, x => x.SecurityId);
 
@@ -78,17 +82,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
                 int nextIndex = 0;
 
-                var urlTemplate = DefaultService.Instance.Get(_tenant, "DownloadDocumentURL", "DownloadDocumentURL")?.Value1;
-
-                if (string.IsNullOrWhiteSpace(urlTemplate))
-                    throw new ConfigurationErrorsException(
-                        $"Default key 'DownloadDocumentURL' is missing for tenant {_tenant}.");
-
-                var cloudTenant = DefaultService.Instance.Get(_tenant, "CloudTenant", "CloudTenant")?.Value1;
-
-                if (string.IsNullOrWhiteSpace(cloudTenant))
-                    throw new ConfigurationErrorsException(
-                        $"Default key 'CloudTenant' is missing for tenant {_tenant}.");
+                var urlTemplate = GetMandatoryDefault(_tenant, "DownloadDocumentURL");
+                var cloudTenant = GetMandatoryDefault(_tenant, "CloudTenant");
 
                 foreach (var ptr in pointers)
                 {
@@ -107,7 +102,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                         FormAttachmentIndex = idx,
                         AttachmentType = new IdDto { Id = ptr.DocumentTypeCode },
                         FormAttachment = url,
-                        FileExtension = "pdf"
+                        FileExtension = GetSafeExtension(url)
                     });
 
                     bool hasChild2 = !string.IsNullOrEmpty(ptr.Child2EntityId);
@@ -135,7 +130,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 }
 
                 var form = BuildForm(sii, dec, importer, contact, defService, siiService);
-                form.FormAttachmentIndex = mainFormAttachmentIndexes.FirstOrDefault();
+                form.FormAttachmentIndex = mainFormAttachmentIndexes.Count > 0? mainFormAttachmentIndexes[0] : -1;
 
                 _lineCounter = 0;
 
@@ -146,12 +141,11 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     string invoiceKey = $"{k.DeclarationId}|{k.InvoiceCounterKey}";
                     string itemKey = $"{k.DeclarationId}|{k.InvoiceCounterKey}|{k.InvoiceItemLineNumber}";
 
-                    var idxs = new List<int>();
-
-                    if (invoiceDict.TryGetValue(invoiceKey, out var inv)) idxs.AddRange(inv);
-                    if (itemDict.TryGetValue(itemKey, out var itm)) idxs.AddRange(itm);
-
-                    line.FormAttachmentIndexes = idxs.Distinct().ToList();
+                    var idxs = (invoiceDict.TryGetValue(invoiceKey, out var inv) ? inv : Enumerable.Empty<int>())
+                    .Concat(itemDict.TryGetValue(itemKey, out var itm) ? itm : Enumerable.Empty<int>())
+                    .Distinct()
+                    .ToList();
+                    line.FormAttachmentIndexes = idxs;
                     return line;
                 }).ToList();
 
@@ -167,6 +161,25 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             {
                 throw new ApplicationException("Error building SII Request API data mapper", ex);
             }
+        }
+
+        private static string GetMandatoryDefault(int tenant, string key)
+        {
+            var value = DefaultService.Instance.Get(tenant, key, key)?.Value1;
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ConfigurationErrorsException(
+                    $"Default key '{key}' is missing for tenant {tenant}.");
+            return value;
+        }
+        private static string GetSafeExtension(string url)
+        {
+            // strip any query-string before checking the file name
+            var ext = Path.GetExtension(new Uri(url).AbsolutePath)
+                           ?.TrimStart('.')
+                           ?.ToLowerInvariant();
+
+            // if ext is null / empty / “aspx” / anything not in the list → default to pdf
+            return AllowedExts.Contains(ext) ? ext : "pdf";
         }
 
 
