@@ -23,6 +23,8 @@ import { SupplierInvoiceItemsReqListWebService } from 'Customs/Services/WebServi
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { ContactPMService } from 'Common/Services/StandardPMs/ContactPMService';
 import { ContactPM } from 'Common/EntityPMs/ContactPM';
+import { HttpErrorResponse } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'SIIRequestComponent',
@@ -142,6 +144,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 if (confirm.Yes) {
                     confirm.Close();
                     this.SaveSiiRequest();
+                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else {
                     this.entityPM = this.oldEntityPM;
@@ -165,7 +168,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     this.IsDisplayOnly = false;
                     this.isAllowChange = true;
                     this.RefreshEntity();
-                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else if (response.ErrorsArray.length > 0) {
                     this.validationErrors = response.ErrorsArray;
@@ -178,7 +180,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 if (response?.Result) {
                     this.entityPM = response.Result;
                     this.RefreshEntity();
-                    this.CurrentSession.CloseCurrentWindow();
                 }
                 else if (response.ErrorsArray.length > 0) {
                     this.validationErrors = response.ErrorsArray;
@@ -265,7 +266,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             const confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
             confirm.ShowNoButton = false;
-            confirm.Show(TextCodeTranslator.Translate('Customs.SIIRequest.O.NoRowsSelected'));
+            confirm.Show(TextCodeTranslator.Translate('Customs.SIIRequest.O.NoRowSelected'));
             return;
         }
 
@@ -277,20 +278,35 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             InvoiceItemLineNumber: item.InvoiceLineNumber,
         }));
 
-
         const afterSave = () => {
             this.siiRequestWebService
-                .postSendSIIRequest(this.entityPM.Id, this.DeclarationId, this.entityPM.Tenant, selectedRows)
-                .subscribe({
-                    next: (response: ServiceResponse) => {
+                .postSendSIIRequest(
+                    this.entityPM.Id,
+                    this.DeclarationId,
+                    this.entityPM.Tenant,
+                    selectedRows
+                )
+                .pipe(
+                    map(
+                        (resp: ServiceResponse) => resp.Result as ReleaseRequestApiResponseDto
+                    )
+                )
+                .subscribe(
+                    (payload: ReleaseRequestApiResponseDto) => {
                         this.CurrentSession.StopBusyIndicator();
-                        alert(response?.Result);
                     },
-                    error: () => {
+
+                    (err: HttpErrorResponse) => {
+                        debugger;
                         this.CurrentSession.StopBusyIndicator();
-                        alert(TextCodeTranslator.Translate('General.B.Error'));
+
+                        const dlg = new ConfirmWindow();
+                        dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
+                        dlg.ShowNoButton = false;
+
+                        dlg.Show(extractMessage(err));
                     }
-                });
+                );
         };
 
         if (this.entityPM.IsDirty) {
@@ -316,6 +332,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             afterSave();
         }
     }
+
 
     //#endregion SendSiiRequest
     //#endregion Actions
@@ -856,4 +873,19 @@ export enum CompleteStatuses {
     UnCompleted = "0",
     PartiallyCompleted = "1",
     FullyCompleted = "2"
+}
+export interface ReleaseRequestApiResponseDto {
+    RequestNumber: number;
+    ResponseCode: number;
+    ValidationMessages?: string;
+}
+
+function extractMessage(err: HttpErrorResponse): string {
+    return (
+        err.error?.Details?.ValidationMessages ||
+        err.error?.ValidationMessages ||
+        err.error?.Message ||
+        err.message ||
+        TextCodeTranslator.Translate('General.B.Error')
+    );
 }
