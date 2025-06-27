@@ -244,17 +244,19 @@ namespace Logitude.Customs.Data.Repsitories
 
             return customsDocumentsTicket;
         }
+        private const string PARENT_DECL = "Declaration";
+        private const string CHILD1_SIIREQUEST = "SIIRequest";
+        private const string CHILD2_SUPPINVOICE = "SupplierInvoice";
+        private const string CHILD3_SUPPINVITEM = "SupplierInvoiceItem";
+
         public IList<PointerTicketDto> GetPointersWithFilingId(IReadOnlyCollection<SupplierInvoiceItemsReqListKeys> items, int tenant)
         {
-            var decIds = items.Select(i => i.DeclarationId).Distinct().ToList();
-            var sirIds = items.Select(i => i.SIIRequestID).Distinct().ToList();
-            var invIds = items.Select(i => i.InvoiceCounterKey.ToString()).Distinct().ToList();
-            var itemLines = items.Select(i => i.InvoiceItemLineNumber.ToString()).Distinct().ToList();
+            var decIds = items.Select(i => i.DeclarationId).Where(id => id != null).Distinct().ToList();
+            var sirIds = items.Select(i => i.SIIRequestID).Where(id => id != null).Distinct().ToList();
+            var invIds = items.Select(i => i.InvoiceCounterKey.ToString()).Where(id => id != null).ToHashSet();
+            var itemLines = items.Select(i => i.InvoiceItemLineNumber.ToString()).Where(id => id != null).Distinct().ToList();
 
-            const string PARENT_DECL = "Declaration";
-            const string CHILD1_SIIREQUEST = "SIIRequest";
-            const string CHILD2_SUPPINVOICE = "SupplierInvoice";
-            const string CHILD3_SUPPINVITEM = "SupplierInvoiceItem";
+
 
             var query =
                 from p in context.CustomsDocumentPointers
@@ -321,5 +323,6 @@ namespace Logitude.Customs.Data.Repsitories
         public string Child2EntityId { get; set; }
         public string Child3EntityId { get; set; }
     }
+
 
 }
