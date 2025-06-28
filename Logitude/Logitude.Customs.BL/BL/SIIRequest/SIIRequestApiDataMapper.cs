@@ -150,12 +150,14 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 }).ToList();
 
 
-                return new ReleaseRequestApiDto
+                var dto = new ReleaseRequestApiDto
                 {
                     Credentials = credentials,
                     ReleaseRequestForm = form,
                     FormAttachments = attachments
                 };
+
+                SIIRequestValidator.Validate(dto, _tenant); return dto;
             }
             catch (Exception ex)
             {
