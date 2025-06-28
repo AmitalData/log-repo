@@ -120,8 +120,16 @@ namespace Simplog.Data.CommonDataModel.Mapping
             {
                 this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInTheMobileApp");
             }
+             if (dbms == "oracle")
+            {
+                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticateEnabled");
+            }
+            //#else
+            else
+            {
+                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticationEnabled");
+            }
             //#endif
-            this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticationEnabled");
 
             this.Property(t => t.PersonalId).HasColumnName("PersonalId");
      // Relationships
