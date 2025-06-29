@@ -74,7 +74,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             transactionsDataProvider = new NewLedgerTransactionDataProvider();
 
             transactionsDataProvider.FromDate = GetFromDate();
-            //transactionsDataProvider.ToDate = GetToDate();
+            transactionsDataProvider.ToDate = GetToDate();
 
             FillGLAccountFields(cardIndexReportService);
             FillTenantFields();
@@ -113,13 +113,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private DateTime GetToDate()
         {
-            return new DateTime(GetFilterValue<DateTime>("ToDate").Year, GetFilterValue<DateTime>("ToDate").Month, GetFilterValue<DateTime>("ToDate").Day, 23, 59, 59);
+            var fromDate = GetFilterValue<DateTime?>("FromDate");
+            if (fromDate.HasValue)
+                return new DateTime(fromDate.Value.Year, fromDate.Value.Month, fromDate.Value.Day, 0, 0, 0);
+            throw new InvalidOperationException("FromDate filter is required.");
         }
 
         private DateTime GetFromDate()
         {
-            return new DateTime(GetFilterValue<DateTime>("FromDate").Year, GetFilterValue<DateTime>("FromDate").Month, GetFilterValue<DateTime>("FromDate").Day, 0, 0, 0);
-        }
+            var fromDate = GetFilterValue<DateTime?>("FromDate");
+            if (fromDate.HasValue)
+                return new DateTime(fromDate.Value.Year, fromDate.Value.Month, fromDate.Value.Day, 0, 0, 0);
+            throw new InvalidOperationException("FromDate filter is required.");
+           }
 
         private void FillGLAccountBalance(List<LedgerTransactionBalanceResponse> cardIndexs)
         {           
@@ -351,7 +357,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             string loggedContactEnglishName = GetLoggedContactEnglishName();           
             transactionsDataProvider.PrintedByUser = loggedContactName;
             transactionsDataProvider.UserEnglishName = loggedContactEnglishName;
-            //transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
         private string GetContactName(ContactPM loggedContact)
@@ -476,7 +482,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             CardIndexReportParams cardIndexParameters = new CardIndexReportParams()
             {
                 Tenant = tenant,
-              //  From = GetFromDate(),
+                From = GetFromDate(),
                 To = GetToDate(),
                 CurrencyId = GetFilterValue<string>("CurrencyId"),
                 DateTypeCode = GetFilterValue<string>("DateTypeCode"),
