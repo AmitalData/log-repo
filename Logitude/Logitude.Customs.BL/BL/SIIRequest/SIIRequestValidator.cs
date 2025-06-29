@@ -4,18 +4,19 @@ using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 internal static class SIIRequestValidator
 {
     internal const string RequiredFieldsTextCode = "Customs.SIIRequest.O.RequiredFields";
+    internal const string LineCode = "Customs.SIIRequest.O.Line";
+    internal const string AttachmentCode = "Customs.SIIRequest.O.Attachment";
 
     public static void Validate(ReleaseRequestApiDto dto, int tenant)
     {
         var errors = new List<string>();
 
-        /* -------------------------------------------------  
-         *  ReleaseRequestForm  (always‐required fields)  
-         * ------------------------------------------------- */
+      
         var f = dto.releaseRequestForm;
         Check(f.formApplicationId, "formApplicationId", errors);
         Check(f.importerNumber, "importerNumber", errors);
@@ -37,13 +38,11 @@ internal static class SIIRequestValidator
         Check(f.contactPersonEmail, "contactPersonEmail", errors);
         Check(f.isNumericCountryCode, "isNumericCountryCode", errors);
 
-        /* -------------------------------------------------  
-         *  ReleaseRequestLinesForm  
-         * ------------------------------------------------- */
         foreach (var (line, i) in dto.releaseRequestForm.releaseRequestLinesForm
                                          .Select((l, idx) => (l, idx + 1)))
         {
             string p = $"line[{i}]";
+
             Check(line.lineSerialNumber, $"{p}.lineSerialNumber", errors);
             Check(line.customsItem, $"{p}.customsItem", errors);
             Check(line.originCountry?.alphaCode, $"{p}.originCountry", errors);
@@ -66,35 +65,57 @@ internal static class SIIRequestValidator
                 Check(line.productCode, $"{p}.productCode", errors);
             }
 
-            bool declaredMismatch = line.quantityByDecaredUnit == null
-                                    ^ string.IsNullOrWhiteSpace(line.declaredUnitCode);
-            if (declaredMismatch)
-                errors.Add($"{p}.quantityByDeclaredUnit/declaredUnitCode must both be supplied or both empty");
+            bool declaredMismatch =
+                (line.quantityByDecaredUnit == null && !string.IsNullOrWhiteSpace(line.declaredUnitCode)) ||
+                (line.quantityByDecaredUnit != null && string.IsNullOrWhiteSpace(line.declaredUnitCode));
+
+            if(declaredMismatch)
+                errors.Add($"{p}.quantityByDeclaredUnit");
         }
 
-        /* -------------------------------------------------  
-         *  FormAttachments  
-         * ------------------------------------------------- */
+        
         foreach (var (att, i) in dto.formAttachments.Select((a, idx) => (a, idx)))
         {
             string p = $"attachment[{i}]";
             CheckIndex(att.formAttachmentIndex, $"{p}.formAttachmentIndex", errors);
         }
 
+        string lineLabel = Translate(LineCode, tenant);
+        string attachmentLabel = Translate(AttachmentCode, tenant);
+
         if (errors.Count > 0)
         {
+            var translatedErrors = errors.Select(raw =>
+            {
+                var m = Regex.Match(raw, @"^(?<type>line|attachment)\[(?<idx>\d+)\]\.(?<field>.+)$");
+                if (m.Success)
+                {
+                    string context = m.Groups["type"].Value == "line"
+                                     ? $"{lineLabel} {m.Groups["idx"].Value} – "
+                                     : $"{attachmentLabel} {m.Groups["idx"].Value} – ";
+
+                    string fieldKey = m.Groups["field"].Value;    
+                    string hebrew = Translate($"Customs.SIIRequest.O.{fieldKey}", tenant);
+
+                    return context + hebrew;
+                }
+
+
+                return Translate($"Customs.SIIRequest.O.{raw}", tenant);
+            });
+
             var prefix = Translate(RequiredFieldsTextCode, tenant);
+
             throw new InvalidOperationException(
-                $"{prefix}: {string.Join("; ", errors)}");
+                prefix + ":" + Environment.NewLine +
+                "• " + string.Join(Environment.NewLine + "• ", translatedErrors));
         }
     }
 
     private static string Translate(string code, int tenant)
     {
         if (SIIRequestApiRequestFactory.OverrideITextCodeTranslator != null)
-            return SIIRequestApiRequestFactory
-                   .OverrideITextCodeTranslator
-                   .Translate(code, tenant);
+            return SIIRequestApiRequestFactory.OverrideITextCodeTranslator.Translate(code, tenant);
 
         bool useLocal = true;
         var contact = SIIRequestApiRequestFactory.GetLoggedContact(tenant);
@@ -111,8 +132,6 @@ internal static class SIIRequestValidator
         switch (value)
         {
             case null:
-                errs.Add(name);
-                break;
             case string s when string.IsNullOrWhiteSpace(s):
                 errs.Add(name);
                 break;
@@ -132,6 +151,6 @@ internal static class SIIRequestValidator
 
 internal enum ValidationScenario
 {
-    WithProductFile,   // ”תיק מוצר חובה“  
-    AlphaNoProduct     // ”לקוח אלפא“ – product file missing   
+    WithProductFile,   // ”תיק מוצר חובה“
+    AlphaNoProduct     // ”לקוח אלפא“ – product file missing
 }
