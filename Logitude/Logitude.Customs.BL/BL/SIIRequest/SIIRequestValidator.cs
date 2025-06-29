@@ -78,13 +78,27 @@ internal static class SIIRequestValidator
             CheckIndex(att.formAttachmentIndex, $"{p}.formAttachmentIndex", errors);
         }
 
-      
+
         if (errors.Count > 0)
         {
-            var translatedErrors = errors
-                .Select(ExtractBaseCode)                      
-                .Distinct()
-                .Select(code => Translate($"Customs.SIIRequest.O.{code}", tenant));
+            var translatedErrors = errors.Select(raw =>
+            {
+                var m = Regex.Match(raw, @"^(?<type>line|attachment)\[(?<idx>\d+)\]\.(?<field>.+)$");
+                if (m.Success)
+                {
+                    string context = m.Groups["type"].Value == "line"
+                                     ? $"שורה {m.Groups["idx"].Value} – "
+                                     : $"צרופה {m.Groups["idx"].Value} – ";
+
+                    string fieldKey = m.Groups["field"].Value;    
+                    string hebrew = Translate($"Customs.SIIRequest.O.{fieldKey}", tenant);
+
+                    return context + hebrew;
+                }
+
+
+                return Translate($"Customs.SIIRequest.O.{raw}", tenant);
+            });
 
             var prefix = Translate(RequiredFieldsTextCode, tenant);
 
