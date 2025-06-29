@@ -573,7 +573,7 @@ namespace WebFreight.Web.InfrastructureModel
                 if (setting.WorkEnvironment == "customs")
                 {
                     AddCustomsRequiredFields(tenant, customsRequiredFieldRepository, tenantZeroCustomsRequiredFields);
-                    AddDocumentType(tenant, documentTypeRepository, tenantZeroDocumentTypes);
+                    AddDocumentType(tenant, documentTypeRepository, tenantZeroDocumentTypes.Where(a => !currentTenantDocumentTypes.Any(c => c.Code == a.Code)).ToList());
                     AddDocumentTypeCustomsData(tenant, documentTypeCustomsDataRepository, tenantZeroDocumentTypeCustomsDatas);
                     AddPendingsOver900(tenant);
                 }
