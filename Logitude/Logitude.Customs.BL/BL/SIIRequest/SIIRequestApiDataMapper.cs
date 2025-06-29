@@ -6,6 +6,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -14,6 +15,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -28,6 +31,10 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         readonly string ComputingPartnerTableUnloadingSiteType = "Customs.UnloadingSiteType";
         public const string NoProduct = "0";
         public const string DutchGroup1 = "1";
+        private static readonly HashSet<string> AllowedExts =
+     new HashSet<string>(
+         new[] { "pdf", "gif", "jpg" },          // allowed types by SII 
+         StringComparer.OrdinalIgnoreCase);
 
         public SIIRequestApiDataMapper(int tenant)
         {
@@ -45,41 +52,137 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 var siiService = new SIIRequestQueryService(context);
                 var decService = new DeclarationQueryService(context);
                 var requestItemsService = new SupplierInvoiceItemsReqListQueryService(context);
+                var _pointerRepo = new CustomsDocumentsTicketRepository(context);
+                var filingRepo = new DocumentsFilingRepository(_tenant);
                 var defService = new DefaultValueQueryService(context);
                 var userService = new UserQuery(_tenant);
                 var contactRepo = new ContactRepository(_tenant);
 
-                var sii = siiService.GetSingle(siiRequestId, true, false) 
+                var sii = siiService.GetSingle(siiRequestId, true, false)
                     ?? throw new ArgumentException($"SII Request {siiRequestId} not found");
 
                 var dec = decService.GetDataForSIIRequest(sii.DeclarationId, _tenant);
                 var importer = dec?.ImporterId != null
-                    ? userService.GetSinglePM(dec.ImporterId, _tenant) 
+                    ? userService.GetSinglePM(dec.ImporterId, _tenant)
                     : null;
 
                 // get the logged‐in contact
                 var email = HttpContext.Current.User.Identity.Name;
                 var contact = contactRepo.GetSingleContactByEmail(email, _tenant);
 
-                var form = BuildForm(sii, dec, importer, contact, defService, siiService);
+                var pointers = _pointerRepo.GetPointersWithFilingId(requestItemsKeys, _tenant);
+                var filingIds = pointers.Select(p => p.DocumentsFilingId).Where(id => id != null).Distinct().ToList();
+                var security = filingRepo.GetSecurityIdsByFilingIds(filingIds, _tenant)
+                                   .ToDictionary(x => x.Id, x => x.SecurityId);
 
-                form.ReleaseRequestLinesForm = requestItemsKeys
-                    .Select(k => BuildLine(k, requestItemsService))
+                var mainFormAttachmentIndexes = new List<int>();              // Pattern A (type 1 only)
+                var invoiceDict = new Dictionary<string, List<int>>();   // pattern B
+                var itemDict = new Dictionary<string, List<int>>();   // pattern C
+                var attachments = new List<FormAttachmentDto>(); // all attachments 
+
+                int nextIndex = 0;
+
+                var urlTemplate = GetMandatoryDefault(_tenant, "DownloadDocumentURL");
+                var cloudTenant = GetMandatoryDefault(_tenant, "CloudTenant");
+
+                foreach (var ptr in pointers)
+                {
+                    if (!security.TryGetValue(ptr.DocumentsFilingId, out var secId)
+                        || string.IsNullOrEmpty(secId))
+                        continue; // skip if SecurityId missing
+
+                    string url = urlTemplate
+                                             .Replace("<SecurityID>", secId)
+                                             .Replace("<Tenant>", cloudTenant);
+
+                    int idx = nextIndex++;
+
+                    attachments.Add(new FormAttachmentDto
+                    {
+                        FormAttachmentIndex = idx,
+                        AttachmentType = new IdDto { Id = ptr.DocumentTypeCode },
+                        FormAttachment = url,
+                        FileExtension = GetSafeExtension(url)
+                    });
+
+                    bool hasChild2 = !string.IsNullOrEmpty(ptr.Child2EntityId);
+                    bool hasChild3 = !string.IsNullOrEmpty(ptr.Child3EntityId);
+
+                    if (!hasChild2)
+                    {
+                        if (ptr.DocumentTypeCode == "1")                  
+                            mainFormAttachmentIndexes.Add(idx);
+                    }
+                    else if (!hasChild3)
+                    {
+                        string key = $"{ptr.ParentEntityId}|{ptr.Child2EntityId}";
+                        if (!invoiceDict.TryGetValue(key, out var list))
+                            invoiceDict[key] = list = new List<int>();
+                        list.Add(idx);
+                    }
+                    else
+                    {
+                        string key = $"{ptr.ParentEntityId}|{ptr.Child2EntityId}|{ptr.Child3EntityId}";
+                        if (!itemDict.TryGetValue(key, out var list))
+                            itemDict[key] = list = new List<int>();
+                        list.Add(idx);
+                    }
+                }
+
+                var form = BuildForm(sii, dec, importer, contact, defService, siiService);
+                form.FormAttachmentIndex = mainFormAttachmentIndexes.Count > 0? mainFormAttachmentIndexes[0] : -1;
+
+                _lineCounter = 0;
+
+                form.ReleaseRequestLinesForm = requestItemsKeys.Select(k =>
+                {
+                    var line = BuildLine(k, requestItemsService);
+
+                    string invoiceKey = $"{k.DeclarationId}|{k.InvoiceCounterKey}";
+                    string itemKey = $"{k.DeclarationId}|{k.InvoiceCounterKey}|{k.InvoiceItemLineNumber}";
+
+                    var idxs = (invoiceDict.TryGetValue(invoiceKey, out var inv) ? inv : Enumerable.Empty<int>())
+                    .Concat(itemDict.TryGetValue(itemKey, out var itm) ? itm : Enumerable.Empty<int>())
+                    .Distinct()
                     .ToList();
 
-                var attachments = new List<FormAttachmentDto>();
+                    line.FormAttachmentIndexes = idxs;
+                    return line;
+                }).ToList();
 
-                return new ReleaseRequestApiDto
+
+                var dto = new ReleaseRequestApiDto
                 {
                     Credentials = credentials,
                     ReleaseRequestForm = form,
                     FormAttachments = attachments
                 };
+
+                SIIRequestValidator.Validate(dto, _tenant); return dto;
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Error building SII Request API data mapper", ex);
             }
+        }
+
+        private static string GetMandatoryDefault(int tenant, string key)
+        {
+            var value = DefaultService.Instance.Get(tenant, key, key)?.Value1;
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ConfigurationErrorsException(
+                    $"Default key '{key}' is missing for tenant {tenant}.");
+            return value;
+        }
+        private static string GetSafeExtension(string url)
+        {
+            // strip any query-string before checking the file name
+            var ext = Path.GetExtension(new Uri(url).AbsolutePath)
+                           ?.TrimStart('.')
+                           ?.ToLowerInvariant();
+
+            // if ext is null / empty / “aspx” / anything not in the list → default to pdf
+            return AllowedExts.Contains(ext) ? ext : "pdf";
         }
 
 
@@ -197,7 +300,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
             var line = new ReleaseRequestLineDto
             {
-                LineSerialNumber = ++_lineCounter, 
+                LineSerialNumber = ++_lineCounter,
                 CustomsItem = item.ClassificationCode,
                 ProductFileNumber = item.ProductFileNumber,
                 QuantityToRelease = item.InvoiceQuantity,
@@ -239,6 +342,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
 
     }
+
     enum CountryCode
     {
         numeric = 1,

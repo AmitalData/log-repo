@@ -39,8 +39,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          IsClosed = a.IsClosed,
 											  Remarks = a.Remarks,
-											  DeclarationId = a.DeclarationId
-		                    	            });
+											  DeclarationId = a.DeclarationId,
+                                                RequestNo = a.RequestNo,
+												RequestDate = a.RequestDate,
+                                            });
             return query;
 		}
 

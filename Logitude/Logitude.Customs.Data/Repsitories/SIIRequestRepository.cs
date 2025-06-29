@@ -162,7 +162,7 @@ namespace Logitude.Customs.Data.Repsitories
 
         public class SiiAgg
         {
-            public string ImporterInternalId { get; set; }   // can be null
+            public string ImporterInternalId { get; set; }   
             public string ImporterCode { get; set; }
             public string VesselCode { get; set; }
             public string VesselLocalName { get; set; }

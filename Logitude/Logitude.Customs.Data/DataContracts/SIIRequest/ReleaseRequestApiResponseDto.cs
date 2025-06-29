@@ -8,7 +8,7 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
 {
     public class ReleaseRequestApiResponseDto
     {
-        public int RequestNumber { get; set; }
+        public string RequestNumber { get; set; }
         public int ResponseCode { get; set; }
         public string ValidationMessages { get; set; }
     }

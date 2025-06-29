@@ -74,8 +74,8 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
     {
         public int FormAttachmentIndex { get; set; }
         public IdDto AttachmentType { get; set; }
-        public string FormAttachment { get; set; } // Optional  
-        public string TemporaryUrlToDownload { get; set; } // Optional  
+        public string AttachmentDescription { get; set; } 
+        public string FormAttachment { get; set; }        
         public string FileExtension { get; set; }
     }
 
