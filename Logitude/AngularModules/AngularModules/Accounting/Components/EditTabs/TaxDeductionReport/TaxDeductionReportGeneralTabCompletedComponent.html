@@ -54,7 +54,7 @@
                                             </tr>
                                             <!-- IsAdditionalReportExist -->
                                             <tr class="FormFieldRow">
-                                                <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <td [ngStyle]="{ 'text-align': isRTL ? 'right' : 'left', 'vertical-align': 'top', 'width': '150px' }">
                                                     <LogLabel [ObjectFieldName]="'IsAdditionalReportExist'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>

@@ -27,10 +27,10 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
     showLocals: boolean = false;
     taxDeductionReportExtendedPMService: TaxDeductionReportExtendedPMService = new TaxDeductionReportExtendedPMService();
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
-    Faild: boolean = false;
+    failed: boolean = false;
     taxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
    
-    private CurrentSession = SessionLocator.SelectedSession;
+    
     _TaxDeductionReportData: TaxDeductionReportData;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -41,10 +41,11 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
         this.UIProperties.SetEnabled("Email", "TaxDeductionReport", false);
       
         if (this.entityPM.StatusTypeCode == "4") {
-            this.Faild = true;
+            this.failed = true;
         }
-        this. _TaxDeductionReportData = new TaxDeductionReportData();
+        this._TaxDeductionReportData = new TaxDeductionReportData();
         this.BuildTaxDeductionReportData();
+
     }
 
     Building: boolean= false;
@@ -52,53 +53,59 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
 
 
 
-    get ReportType() { 
-            return this.entityPM.ByMonth === false
-                        ? TextCodeTranslator.Translate("TaxDeductionReport.O.ByYear")
-                        : this.entityPM.FromMonth === this.entityPM.Month
-                            ? TextCodeTranslator.Translate("TaxDeductionReport.O.ByMonth")
-                            :  TextCodeTranslator.Translate("TaxDeductionReport.O.Periodic") ;
+    get ReportType(): string {
+        if (!this.entityPM) return '';
+        if (!this.entityPM.ByMonth) return TextCodeTranslator.Translate("TaxDeductionReport.O.ByYear");
+        if (this.entityPM.FromMonth === this.entityPM.Month) return TextCodeTranslator.Translate("TaxDeductionReport.O.ByMonth");
+        return TextCodeTranslator.Translate("TaxDeductionReport.O.Periodic");
     }
 
 
     private FormatDateToMonthYear(dateInput: Date | string): string {
         const date = new Date(dateInput);
         if (isNaN(date.getTime())) {
-            throw new Error("Invalid date input");
+            console.error("Invalid date input in FormatDateToMonthYear:", dateInput);
+            return '';
         }
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-        return `${month}/${year}`;
+        return `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
     }
 
 
-    get ReportPeriod() {
-        return this.entityPM.ByMonth === false
-            ? this.entityPM.TaxYear.toString()
-            : this.entityPM.FromMonth === this.entityPM.Month
-                ? `${TextCodeTranslator.Translate("TaxDeductionReport.F.Month")} ${this.FormatDateToMonthYear(this.entityPM.Month)}`
-                : `${TextCodeTranslator.Translate("TaxDeductionReport.F.FromMonth")} ` +
-                  `${this.FormatDateToMonthYear(this.entityPM.FromMonth)} ` +
-                  `${TextCodeTranslator.Translate("Accounting.General.O.To")} ` +
-                  `${TextCodeTranslator.Translate("TaxDeductionReport.O.ToMonth")} ` +
-                  `${this.FormatDateToMonthYear(this.entityPM.Month)}`;
+    get ReportPeriod(): string {
+        if (!this.entityPM) return '';
+
+
+        if (!this.entityPM.ByMonth) {
+            return this.entityPM.TaxYear.toString();
+        }
+
+        if (this.entityPM.FromMonth === this.entityPM.Month) {
+            return `${TextCodeTranslator.Translate("TaxDeductionReport.F.Month")} ${this.FormatDateToMonthYear(this.entityPM.Month)}`;
+        }
+
+        return `${TextCodeTranslator.Translate("TaxDeductionReport.F.FromMonth")} ` +
+            `${this.FormatDateToMonthYear(this.entityPM.FromMonth)} ` +
+            `${TextCodeTranslator.Translate("Accounting.General.O.To")} ` +
+            `${TextCodeTranslator.Translate("TaxDeductionReport.O.ToMonth")} ` +
+            `${this.FormatDateToMonthYear(this.entityPM.Month)}`;
     }
-
-
 
     get Email() { return this.entityPM?.Email ?? ''; }
 
     BuildTaxDeductionReportData() {
 
-        this.taxDeductionReportExtendedPMService.GetTaxDeductionReportData(this.entityPM.Id).subscribe((myResponse: ServiceResponse) => {
 
-            if (myResponse) {
-                if (!myResponse.HasError) {
-                        this._TaxDeductionReportData = myResponse.Result;
-
-                }
+        this.taxDeductionReportExtendedPMService
+            .GetTaxDeductionReportData(this.entityPM.Id)
+            .subscribe({
+            next: (response: ServiceResponse) => {
+            if (!response?.HasError) {
+            this._TaxDeductionReportData = response.Result;
             }
-
+            },
+            error: err => {
+            console.error("Failed to load TaxDeductionReportData", err);
+            }
         });
 
     }
