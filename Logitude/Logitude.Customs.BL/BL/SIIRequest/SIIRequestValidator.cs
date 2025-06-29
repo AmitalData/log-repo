@@ -4,6 +4,7 @@ using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 internal static class SIIRequestValidator
 {
@@ -13,9 +14,7 @@ internal static class SIIRequestValidator
     {
         var errors = new List<string>();
 
-        /* -------------------------------------------------  
-         *  ReleaseRequestForm  (always‐required fields)  
-         * ------------------------------------------------- */
+      
         var f = dto.releaseRequestForm;
         Check(f.formApplicationId, "formApplicationId", errors);
         Check(f.importerNumber, "importerNumber", errors);
@@ -37,13 +36,11 @@ internal static class SIIRequestValidator
         Check(f.contactPersonEmail, "contactPersonEmail", errors);
         Check(f.isNumericCountryCode, "isNumericCountryCode", errors);
 
-        /* -------------------------------------------------  
-         *  ReleaseRequestLinesForm  
-         * ------------------------------------------------- */
         foreach (var (line, i) in dto.releaseRequestForm.releaseRequestLinesForm
                                          .Select((l, idx) => (l, idx + 1)))
         {
             string p = $"line[{i}]";
+
             Check(line.lineSerialNumber, $"{p}.lineSerialNumber", errors);
             Check(line.customsItem, $"{p}.customsItem", errors);
             Check(line.originCountry?.alphaCode, $"{p}.originCountry", errors);
@@ -66,35 +63,57 @@ internal static class SIIRequestValidator
                 Check(line.productCode, $"{p}.productCode", errors);
             }
 
-            bool declaredMismatch = line.quantityByDecaredUnit == null
-                                    ^ string.IsNullOrWhiteSpace(line.declaredUnitCode);
+            bool declaredMismatch =
+                line.quantityByDecaredUnit == null ^
+                string.IsNullOrWhiteSpace(line.declaredUnitCode);
+
             if (declaredMismatch)
-                errors.Add($"{p}.quantityByDeclaredUnit/declaredUnitCode must both be supplied or both empty");
+                errors.Add($"{p}.quantityByDeclaredUnit/declaredUnitCode");
         }
 
-        /* -------------------------------------------------  
-         *  FormAttachments  
-         * ------------------------------------------------- */
+        
         foreach (var (att, i) in dto.formAttachments.Select((a, idx) => (a, idx)))
         {
             string p = $"attachment[{i}]";
             CheckIndex(att.formAttachmentIndex, $"{p}.formAttachmentIndex", errors);
         }
 
+      
         if (errors.Count > 0)
         {
+            var translatedErrors = errors
+                .Select(ExtractBaseCode)                      
+                .Distinct()
+                .Select(code => Translate($"Customs.SIIRequest.O.{code}", tenant));
+
             var prefix = Translate(RequiredFieldsTextCode, tenant);
+
             throw new InvalidOperationException(
-                $"{prefix}: {string.Join("; ", errors)}");
+                prefix + ":" + Environment.NewLine +
+                "• " + string.Join(Environment.NewLine + "• ", translatedErrors));
         }
+    }
+
+    /* ---------- helpers ---------- */
+
+    private static string ExtractBaseCode(string raw)
+    {
+        int dot = raw.LastIndexOf('.');
+        string candidate = (dot >= 0 && dot + 1 < raw.Length)
+            ? raw.Substring(dot + 1)
+            : raw;
+
+        candidate = Regex.Replace(candidate, @"^.*\]", string.Empty);
+
+        if (candidate.Contains("/")) return "quantityByDeclaredUnit";
+
+        return candidate;
     }
 
     private static string Translate(string code, int tenant)
     {
         if (SIIRequestApiRequestFactory.OverrideITextCodeTranslator != null)
-            return SIIRequestApiRequestFactory
-                   .OverrideITextCodeTranslator
-                   .Translate(code, tenant);
+            return SIIRequestApiRequestFactory.OverrideITextCodeTranslator.Translate(code, tenant);
 
         bool useLocal = true;
         var contact = SIIRequestApiRequestFactory.GetLoggedContact(tenant);
@@ -111,8 +130,6 @@ internal static class SIIRequestValidator
         switch (value)
         {
             case null:
-                errs.Add(name);
-                break;
             case string s when string.IsNullOrWhiteSpace(s):
                 errs.Add(name);
                 break;
@@ -132,6 +149,6 @@ internal static class SIIRequestValidator
 
 internal enum ValidationScenario
 {
-    WithProductFile,   // ”תיק מוצר חובה“  
-    AlphaNoProduct     // ”לקוח אלפא“ – product file missing   
+    WithProductFile,   // ”תיק מוצר חובה“
+    AlphaNoProduct     // ”לקוח אלפא“ – product file missing
 }
