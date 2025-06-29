@@ -110,7 +110,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
                     if (!hasChild2)
                     {
-                        if (ptr.DocumentTypeCode == "1")                  
+                        if (ptr.DocumentTypeCode == "1")
                             mainFormAttachmentIndexes.Add(idx);
                     }
                     else if (!hasChild3)
@@ -130,7 +130,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 }
 
                 var form = BuildForm(sii, dec, importer, contact, defService, siiService);
-                form.FormAttachmentIndex = mainFormAttachmentIndexes.Count > 0? mainFormAttachmentIndexes[0] : -1;
+                form.FormAttachmentIndex = mainFormAttachmentIndexes.Count > 0 ? mainFormAttachmentIndexes[0] : -1;
 
                 _lineCounter = 0;
 
@@ -160,6 +160,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
                 SIIRequestValidator.Validate(dto, _tenant); return dto;
             }
+            catch (InvalidOperationException) { throw; }
+            catch (ArgumentException) { throw; }
             catch (Exception ex)
             {
                 throw new ApplicationException("Error building SII Request API data mapper", ex);
@@ -233,6 +235,12 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             var nextSequence = siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1;
             var nextId = $"{siiCompanyName}-{nextSequence}";
 
+            var contactName = !string.IsNullOrWhiteSpace(contact?.LocalName)
+                ? contact.LocalName
+                : !string.IsNullOrWhiteSpace(contact?.EnglishName)
+                ? contact.EnglishName
+                : string.Empty;
+
             return new ReleaseRequestFormDto
             {
                 FormApplicationId = nextId,
@@ -246,7 +254,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 ImporterCellPhone = sii.ContactCellPhone,
                 ImporterFax = sii.ContactFax,
 
-                ApplicantFullName = contact?.LocalName,
+                ApplicantFullName = contactName,
                 ApplicantIdNumber = contact == null
                                                 ? null
                                                 : new UserQuery(_tenant).GetPersonalIdByUserId(contact.Id, _tenant),
@@ -255,11 +263,11 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 DeliveryComment = sii.Remarks,
                 ShipFlightNumber = sii.VesselName,
                 BillOfLadingId = sii.ManifestNumber,
-                ContactPersonFirstName = contact.LocalName,
-                ContactPersonLastName = contact.LocalName,
+                ContactPersonFirstName = contactName,
+                ContactPersonLastName = contactName,
                 ContactPersonEmail = contact.Email,
-                ContactPersonPhone = contact.BusinessPhone,
-                ContactPersonCellPhone = contact.Mobile,
+                ContactPersonPhone = contact.BusinessPhone ?? contact.Mobile,
+                ContactPersonCellPhone = contact.Mobile ?? contact.BusinessPhone,
                 ContactPersonFax = contact.Fax,
                 IsNumericCountryCode = CountryCode.alphaCode.ToString(),
                 ImportCountry = new CountryAlphaDto { AlphaCode = sii.OriginCountryCode },

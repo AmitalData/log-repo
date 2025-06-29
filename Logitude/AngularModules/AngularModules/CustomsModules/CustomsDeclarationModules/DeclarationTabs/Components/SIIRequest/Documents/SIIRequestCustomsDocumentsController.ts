@@ -77,6 +77,36 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
         this.GeneratedCustomsDocumentTicketViewModel = [];
         const supplierInvoiceService = new SupplierInvoiceExtendedPMService();
 
+        const PROFORMA_CODE = '325';
+        const FORM_130_CODE = 'I01';
+        const SII_DOC_SUPPLIERINVOICE_TYPE_CODE = '2';
+        const SII_DOC_AWB_TYPE_CODE = '1';
+
+        customsDocumentsTicketViewModels.forEach(vm => {
+            this.originalCustomsDocumentTicketViewModel.push(vm);
+            this.GeneratedCustomsDocumentTicketViewModel.push(vm);
+        });
+
+        const existingAWBTicket = this.originalCustomsDocumentTicketViewModel.some(vm =>
+            vm.customsDocumentsTicketPM.CustomsDocumentPointers.some(p =>
+                p.DocumentTypeCode == SII_DOC_AWB_TYPE_CODE
+            )
+        );
+        if (!existingAWBTicket) {
+            const params = new RelatedEntityParams();
+            params.ParentEntityCode = EntityCode.Declaration;
+            params.ParentEntityId = this.declarationPM.Id;
+            params.ChildEntity1Code = EntityCode.SIIRequest;
+            params.ChildEntity1Id = this.childEntity1Id;
+            
+            const ticketPM = this.GetGeneratedCustomTicketAndPointer(params, SII_DOC_AWB_TYPE_CODE);
+            const ticketVM = new CustomsDocumentTicketViewModel(ticketPM,null, true, false, this.declarationPM,'Customs.Declaration',   this);
+
+            this.GeneratedCustomsDocumentTicketViewModel.push(ticketVM);
+            this.originalCustomsDocumentTicketViewModel.push(ticketVM);
+        }
+
+
 
         return defer(() => {
             return supplierInvoiceService
@@ -90,14 +120,7 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
 
                         this.declarationPM.SupplierInvoices = this.loadedSupplierInvoices;
 
-                        customsDocumentsTicketViewModels.forEach(vm => {
-                            this.originalCustomsDocumentTicketViewModel.push(vm);
-                            this.GeneratedCustomsDocumentTicketViewModel.push(vm);
-                        });
 
-                        const PROFORMA_CODE = '325';
-                        const FORM_130_CODE = 'I01';
-                        const SII_DOC_TYPE_CODE = '2';
 
                         this.loadedSupplierInvoices.forEach(inv => {
                             if (!inv.AccountTypeCode || [PROFORMA_CODE, FORM_130_CODE].includes(inv.AccountTypeCode)) {
@@ -120,7 +143,7 @@ export class SIIRequestCustomsDocumentsController implements ICustomsDocumentsCo
                             params.ChildEntity2Code = EntityCode.SupplierInvoice;
                             params.ChildEntity2Id = inv.InvoiceCounterKey + '';
 
-                            const ticketPM = this.GetGeneratedCustomTicketAndPointer(params, SII_DOC_TYPE_CODE);
+                            const ticketPM = this.GetGeneratedCustomTicketAndPointer(params, SII_DOC_SUPPLIERINVOICE_TYPE_CODE);
                             const ticketVM = new CustomsDocumentTicketViewModel(
                                 ticketPM,
                                 null,
