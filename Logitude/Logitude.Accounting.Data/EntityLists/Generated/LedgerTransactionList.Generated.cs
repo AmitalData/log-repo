@@ -23,7 +23,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public int JournalLineNumber  { get; set; }
        [DataMember]
-       public DateTime CreateDate  { get; set; }
+       public DateTime? CreateDate  { get; set; }
        [DataMember]
        public string ControlAccountId  { get; set; }
        [DataMember]
