@@ -8,72 +8,77 @@ using System.Linq;
 internal static class SIIRequestValidator
 {
     internal const string RequiredFieldsTextCode = "Customs.SIIRequest.O.RequiredFields";
+
     public static void Validate(ReleaseRequestApiDto dto, int tenant)
-                         
     {
         var errors = new List<string>();
 
         /* -------------------------------------------------  
-         *  ReleaseRequestForm  (always-required fields)  
+         *  ReleaseRequestForm  (always‐required fields)  
          * ------------------------------------------------- */
-        var f = dto.ReleaseRequestForm;
-        Check(f.FormApplicationId, "formApplicationId", errors);
-        Check(f.ImporterNumber, "importerNumber", errors);
-        Check(f.ImporterEmail, "importerEmail", errors);
-        Check(f.ApplicantIdNumber, "applicantIdNumber", errors);
-        Check(f.ApplicantFullName, "applicantFullName", errors);
-        Check(f.CustomsAgentRegisteredNumber, "customsAgentRegisteredNumber", errors);
-        Check(f.CustomsAgentName, "customsAgentName", errors);
-        Check(f.DeliveryArrivalDate, "deliveryArrivalDate", errors);
-        Check(f.BillOfLadingId, "billOfLadingId", errors);
-        CheckIndex(f.FormAttachmentIndex, "formAttachmentIndex", errors);
-        Check(f.ImportCountry?.AlphaCode, "importCountry", errors);
-        Check(f.DestinationPort?.Id, "destinationPort", errors);
-        Check(f.WarehouseLocationName, "warehouseLocationName", errors);
-        Check(f.WarehouseSettlement?.Id, "warehouseSettlement", errors);
-        Check(f.ContactPersonFirstName, "contactPersonFirstName", errors);
-        Check(f.ContactPersonLastName, "contactPersonLastName", errors);
-        Check(f.ContactPersonPhone, "contactPersonPhone", errors);
-        Check(f.ContactPersonEmail, "contactPersonEmail", errors);
-        Check(f.IsNumericCountryCode, "isNumericCountryCode", errors);
+        var f = dto.releaseRequestForm;
+        Check(f.formApplicationId, "formApplicationId", errors);
+        Check(f.importerNumber, "importerNumber", errors);
+        Check(f.importerEmail, "importerEmail", errors);
+        Check(f.applicantIdNumber, "applicantIdNumber", errors);
+        Check(f.applicantFullName, "applicantFullName", errors);
+        Check(f.customsAgentRegisteredNumber, "customsAgentRegisteredNumber", errors);
+        Check(f.customsAgentName, "customsAgentName", errors);
+        Check(f.deliveryArrivalDate, "deliveryArrivalDate", errors);
+        Check(f.billOfLadingId, "billOfLadingId", errors);
+        CheckIndex(f.formAttachmentIndex, "formAttachmentIndex", errors);
+        Check(f.importCountry?.alphaCode, "importCountry", errors);
+        Check(f.destinationPort?.id, "destinationPort", errors);
+        Check(f.warehouseLocationName, "warehouseLocationName", errors);
+        Check(f.warehouseSettlement?.id, "warehouseSettlement", errors);
+        Check(f.contactPersonFirstName, "contactPersonFirstName", errors);
+        Check(f.contactPersonLastName, "contactPersonLastName", errors);
+        Check(f.contactPersonPhone, "contactPersonPhone", errors);
+        Check(f.contactPersonEmail, "contactPersonEmail", errors);
+        Check(f.isNumericCountryCode, "isNumericCountryCode", errors);
 
-
-        foreach (var (line, i) in dto.ReleaseRequestForm.ReleaseRequestLinesForm.Select((l, idx) => (l, idx + 1)))
+        /* -------------------------------------------------  
+         *  ReleaseRequestLinesForm  
+         * ------------------------------------------------- */
+        foreach (var (line, i) in dto.releaseRequestForm.releaseRequestLinesForm
+                                         .Select((l, idx) => (l, idx + 1)))
         {
             string p = $"line[{i}]";
-            Check(line.LineSerialNumber, $"{p}.lineSerialNumber", errors);
-            Check(line.CustomsItem, $"{p}.customsItem", errors);
-            Check(line.OriginCountry?.AlphaCode, $"{p}.originCountry", errors);
-            Check(line.ModelCode, $"{p}.modelCode", errors);
-            Check(line.ModelDescription, $"{p}.modelDescription", errors);
-            Check(line.SupplierInvoiceNumber, $"{p}.supplierInvoiceNumber", errors);
-            Check(line.SupplierInvoiceDate, $"{p}.supplierInvoiceDate", errors);
-            CheckIndexList(line.FormAttachmentIndexes, $"{p}.formAttachmentIndexes", errors);
-            Check(line.IsDutchGroup1Requested, $"{p}.isDutchGroup1Requested", errors);
+            Check(line.lineSerialNumber, $"{p}.lineSerialNumber", errors);
+            Check(line.customsItem, $"{p}.customsItem", errors);
+            Check(line.originCountry?.alphaCode, $"{p}.originCountry", errors);
+            Check(line.modelCode, $"{p}.modelCode", errors);
+            Check(line.modelDescription, $"{p}.modelDescription", errors);
+            Check(line.supplierInvoiceNumber, $"{p}.supplierInvoiceNumber", errors);
+            Check(line.supplierInvoiceDate, $"{p}.supplierInvoiceDate", errors);
+            CheckIndexList(line.formAttachmentIndexes, $"{p}.formAttachmentIndexes", errors);
+            Check(line.isDutchGroup1Requested, $"{p}.isDutchGroup1Requested", errors);
 
-            bool hasProductFile = !string.IsNullOrWhiteSpace(line.ProductFileNumber);
-
+            bool hasProductFile = !string.IsNullOrWhiteSpace(line.productFileNumber);
             if (hasProductFile)
             {
-                Check(line.ProductFileNumber, $"{p}.productFileNumber", errors);
-                Check(line.QuantityToRelease, $"{p}.quantityToRelease", errors);
-                Check(line.SiiUnitCode, $"{p}.siiUnitCode", errors);
+                Check(line.productFileNumber, $"{p}.productFileNumber", errors);
+                Check(line.quantityToRelease, $"{p}.quantityToRelease", errors);
+                Check(line.siiUnitCode, $"{p}.siiUnitCode", errors);
             }
             else
             {
-                Check(line.ProductCode, $"{p}.productCode", errors);
+                Check(line.productCode, $"{p}.productCode", errors);
             }
 
-            bool declaredMismatch = line.QuantityByDecaredUnit == null ^ string.IsNullOrWhiteSpace(line.DeclaredUnitCode);
+            bool declaredMismatch = line.quantityByDecaredUnit == null
+                                    ^ string.IsNullOrWhiteSpace(line.declaredUnitCode);
             if (declaredMismatch)
                 errors.Add($"{p}.quantityByDeclaredUnit/declaredUnitCode must both be supplied or both empty");
         }
 
-
-        foreach (var (att, i) in dto.FormAttachments.Select((a, idx) => (a, idx)))
+        /* -------------------------------------------------  
+         *  FormAttachments  
+         * ------------------------------------------------- */
+        foreach (var (att, i) in dto.formAttachments.Select((a, idx) => (a, idx)))
         {
             string p = $"attachment[{i}]";
-            CheckIndex(att.FormAttachmentIndex, $"{p}.formAttachmentIndex", errors);
+            CheckIndex(att.formAttachmentIndex, $"{p}.formAttachmentIndex", errors);
         }
 
         if (errors.Count > 0)
@@ -82,22 +87,24 @@ internal static class SIIRequestValidator
             throw new InvalidOperationException(
                 $"{prefix}: {string.Join("; ", errors)}");
         }
-
-
     }
+
     private static string Translate(string code, int tenant)
     {
         if (SIIRequestApiRequestFactory.OverrideITextCodeTranslator != null)
-            return SIIRequestApiRequestFactory.OverrideITextCodeTranslator.Translate(code, tenant);
+            return SIIRequestApiRequestFactory
+                   .OverrideITextCodeTranslator
+                   .Translate(code, tenant);
 
         bool useLocal = true;
         var contact = SIIRequestApiRequestFactory.GetLoggedContact(tenant);
         if (contact != null) useLocal = !contact.DontShowLocal;
 
         var txt = TranslateTextsClass.Translate(code, tenant, useLocal);
-        return string.IsNullOrWhiteSpace(txt) ? $"$Text({code})" : txt;
+        return string.IsNullOrWhiteSpace(txt)
+            ? $"$Text({code})"
+            : txt;
     }
-
 
     private static void Check(object value, string name, IList<string> errs)
     {
@@ -111,10 +118,12 @@ internal static class SIIRequestValidator
                 break;
         }
     }
+
     private static void CheckIndex(int idx, string name, IList<string> errs)
     {
         if (idx < 0) errs.Add(name);
     }
+
     private static void CheckIndexList(ICollection<int> list, string name, IList<string> errs)
     {
         if (list == null || list.Count == 0) errs.Add(name);
