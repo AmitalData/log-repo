@@ -43,7 +43,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     private documentTypeCode: string;
     public IsFromSIIRequest = false;
     get DocumentTypeCode() {
-        if (this.CustomsDocument) {
+        if (this.CustomsDocument && !this.IsFromSIIRequest) {
             this.documentTypeCode = this.CustomsDocument.DocumentTypeCode;
         }
         else if (this.CustomsDocumentsTicket) {
