@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;בקשות למכון תקנים&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;6f7d&quot;"
+  Code="&quot;9210&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2487,6 +2487,18 @@
       Code="&quot;Customs.SIIRequest.O.productCode&quot;"
       DefaultText="&quot;Product Code&quot;"
       LocalDefaultText="&quot;קוד מוצר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Line&quot;"
+      DefaultText="&quot;Line&quot;"
+      LocalDefaultText="&quot;שורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Attachment&quot;"
+      DefaultText="&quot;Attachment&quot;"
+      LocalDefaultText="&quot;צרופה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
