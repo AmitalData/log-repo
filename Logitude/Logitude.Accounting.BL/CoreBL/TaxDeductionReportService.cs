@@ -757,8 +757,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         var rootEx = e.GetBaseException();
                         NetCommonHelper.Logger.DevLog.Instance.WriteError(
-                        $"[TaxDeductionReportService.SaveAndUpdateReportWithLock-Locking] Unexpected error occurred.",
-                        rootEx);
+                        $"[TaxDeductionReportService.SaveAndUpdateReportWithLock-Locking] Unexpected error occurred. " +
+                        $"Message: {rootEx.Message} | StackTrace: {rootEx.StackTrace}");
                         throw;
                     }
 
