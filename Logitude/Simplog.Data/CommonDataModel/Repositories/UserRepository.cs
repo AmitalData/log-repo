@@ -480,7 +480,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public string GetPersonalIdByUserId(string userId, int tenant)
         {
             return context.Users
-                          .Where(a => a.Id == userId && a.Tenant == tenant)
+                          .Where(a => a.Id == userId && (a.Tenant == tenant || a.Tenant == 0))
                           .Select(a => a.PersonalId)
                           .FirstOrDefault();
         }

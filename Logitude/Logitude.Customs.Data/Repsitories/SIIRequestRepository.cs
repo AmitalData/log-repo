@@ -50,7 +50,7 @@ namespace Logitude.Customs.Data.Repsitories
                         VesselLocalName = rd.Vessel != null
                                      ? (rd.VesselCode.LocalName ?? rd.VesselCode.EnglishName)
                                      : null,
-                        ManifestNumber = con == null ? null : con.ManifestNumber,
+                        ManifestNumber = rd.Hawb != null ? rd.Hawb : rd.Mawb,
                         UnloadDate = con == null ? null : (DateTime?)con.UnloadDate,
                         CustomerId = d.CustomerId,
                         OriginCountryCode = con.OriginCountryCode,
