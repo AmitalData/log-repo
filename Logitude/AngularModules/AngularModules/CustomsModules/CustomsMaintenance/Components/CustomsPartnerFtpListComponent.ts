@@ -358,9 +358,7 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
     public get Password() { return this._WebApiDefinition.Password; }
     public set Password(newValue: string) { if (this._WebApiDefinition.Password != newValue) { this._WebApiDefinition.Password = newValue; } }
 
-    public get CustomerUniqueCode() { return this._WebApiDefinition.CustomerUniqueCode; }
-    public set CustomerUniqueCode(newValue: string) { if (this._WebApiDefinition.CustomerUniqueCode != newValue) { this._WebApiDefinition.CustomerUniqueCode = newValue; } }
-
+    
     ClearScreen() {
         this.ValidationErrorsList = [];
         this._SettingsHost = null;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SIIRequestPM } from 'Customs/EntityPMs/SIIRequestPM';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
@@ -158,14 +158,25 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
       if (!myResponse?.HasError && myResponse?.Result) {
         this.selectedSIIRequest = myResponse.Result;
         args.SIIRequest = myResponse.Result;
-        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId).subscribe(myResult => {
+        args.errorMassage = [];
+        this.siiRequestWebService.getSupplierInvoiceItemsForSIIRequest(declarationId,this.selectedSIIRequest?.Id).subscribe(myResult => {
           let myResponse: ServiceResponse = myResult;
           if (!myResponse?.HasError && myResponse?.Result) {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
             args.supplierInvoiceItemsForSIIRequest = myResponse.Result;
+            args.errorMassage = [];
+            this.openLogWindow(siiRequestMode, args);
+          }
+          else {
+            this.supplierInvoiceItemsForSIIRequest = [];
+            args.supplierInvoiceItemsForSIIRequest = [];
+            args.errorMassage = ["error in getting supplier invoice items for SII request"];
             this.openLogWindow(siiRequestMode, args);
           }
         });
+      }
+      else {
+        args.errorMassage = ["error in getting SII request data"];
       }
     });
   }
@@ -220,6 +231,9 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
     } else if (this.IsDisplayOnly) {
       this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DisplayOnly");
       ;
+    }
+    if(this.EntityPM.HatraDate || this.EntityPM.PaymentDate){
+      this.IsDisplayOnly = true;
     }
   }
 

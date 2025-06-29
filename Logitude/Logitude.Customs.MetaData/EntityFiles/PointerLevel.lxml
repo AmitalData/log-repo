@@ -430,6 +430,11 @@
       LocalName="&quot;הצהרה&quot;"
       SearchFields="&quot;D,הצהרה&quot;"
       EnglishName="&quot;Declaration&quot;" />
+    <Record
+      Code="&quot;S&quot;"
+      LocalName="&quot;מכון תקנים&quot;"
+      SearchFields="&quot;מכון תקנים,S&quot;"
+      EnglishName="&quot;SIIRequest&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

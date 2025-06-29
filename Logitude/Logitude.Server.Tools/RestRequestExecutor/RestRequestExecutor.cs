@@ -9,7 +9,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace CommunicationWorkerRole.RestRequestExecutor
+namespace Logitude.Server.Tools.RestRequestExecutor
 {
     public class RestRequestExecutor
     {
@@ -78,7 +78,8 @@ namespace CommunicationWorkerRole.RestRequestExecutor
                 JsonConvert.SerializeObject(request.Data),
                 rawResponseContent,
                 responseToReturn.Success,
-                request.Tenant));                       
+                request.Tenant,
+                request.Communications));                       
             return responseToReturn;
         }
 
@@ -144,12 +145,17 @@ namespace CommunicationWorkerRole.RestRequestExecutor
             return ApiResponse<TResponse>.Fail(message, code);
         }
 
-        private async Task LogCommunicationAsync(ApiCommunicationLog logger, string request, string responseOrException,bool success,  int tenant)
+        private async Task LogCommunicationAsync(ApiCommunicationLog logger,
+            string request,
+            string responseOrException,
+            bool success,
+            int tenant,
+            ApiCommunicationConstants communications)
         {
             try
             {
                 var status = success==true? StatusTypeCommunication.Done: StatusTypeCommunication.Failed;
-                await logger.AddCommunicationLogAsync(request, responseOrException, tenant, status);
+                await logger.AddCommunicationLogAsync(request, responseOrException, tenant, status, communications);
             }
             catch (Exception ex)
             {
@@ -165,12 +171,17 @@ namespace CommunicationWorkerRole.RestRequestExecutor
         {
             if (request == null)
                 throw new ValidationServiceException("request is null");            
-            if (string.IsNullOrWhiteSpace(request.Url))
-                throw new ValidationServiceException("Url must be provided.", nameof(request.Url));
+            ValidateField(request.Url, nameof(request.Url));               
             if (request.Header == null)
                 throw new ValidationServiceException("Header must be provided.", nameof(request.Header));
             if (request.Header.Method == null)
                 throw new ValidationServiceException("Method must be provided.", nameof(request.Header.Method));
+            if (request?.Communications == null)
+                throw new ValidationServiceException("Communications is null.", nameof(request.Communications));
+
+            ValidateField(request.Communications.EntityId, nameof(request.Communications.EntityId));
+            ValidateField(request.Communications.Subject, nameof(request.Communications.Subject));
+            ValidateField(request.Communications.ObjectTableId, nameof(request.Communications.ObjectTableId));
         }        
         private string SerializeToXml<T>(T data)
         {
@@ -180,6 +191,11 @@ namespace CommunicationWorkerRole.RestRequestExecutor
 
             xmlSerializer.Serialize(xmlWriter, data);
             return stringWriter.ToString();
+        }
+        void ValidateField(string value, string paramName)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ValidationServiceException( $"{paramName} must be provided.");
         }
 
     }

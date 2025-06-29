@@ -1919,6 +1919,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 throw ex;
             }
         }
+        public string GetPersonalIdByUserId(string userId, int tenant)
+        {
+            return repository.GetPersonalIdByUserId(userId, tenant);
+        }
 
 
 

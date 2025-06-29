@@ -4,11 +4,13 @@
 <table *ngIf="DecalarationData != null && IsLoaded">
     <tr style="height:100%;">
         <td style="vertical-align:top">
+            <div *ngIf="generalErrors?.length > 0">
+                <ValidationSummary [ItemsSource]="generalErrors" [SingleLine]="true"></ValidationSummary>
+            </div>
             <div style="vertical-align:top; margin:5px">
                 <table>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
+                        <td>
                             <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.ProductFileNumber'"
                                 [ObjectFieldName]="'ProductFileNumber'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -17,14 +19,9 @@
                             <LogTextBox [ObjectFieldName]="'ProductFileNumber'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td>
-                            <img class="SearchIcon" src="./Images/Search.png" (click)="SearchProductFileNumber()" title="" />
-                        </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
+                        <td>
                             <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.ManufactureCountryCode'"
                                 [ObjectFieldName]="'ManufactureCountryCode'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -35,11 +32,9 @@
                                 [SelectedValue]="ManufactureCountryCode" [HideColumns]="true" [CustomizedWidth]="180">
                             </LogLov>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
+                        <td>
                             <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.ManufacturerName'"
                                 [ObjectFieldName]="'ManufacturerName'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -48,71 +43,75 @@
                             <LogTextBox [ObjectFieldName]="'ManufacturerName'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
-                            <LogLabel [Text]="'ItemNo'" [ObjectFieldName]="'ItemNo'" [ObjectTableName]="ObjectTableName"
+                        <td>
+                            <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.ItemNo'"
+                                [ObjectFieldName]="'ItemNo'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'ItemNo'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
-                            <LogLabel [Text]="'ItemName'" [ObjectFieldName]="'ItemName'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td>
+                            <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.ItemName'"
+                                [ObjectFieldName]="'ItemName'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'ItemName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
-                            <LogLabel [Text]="'InvoiceQuantity'" [ObjectFieldName]="'InvoiceQuantity'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td>
+                            <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.InvoiceQuantity'"
+                                [ObjectFieldName]="'InvoiceQuantity'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'InvoiceQuantity'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
-                            <LogLabel [Text]="'InvoiceQuantityType'" [ObjectFieldName]="'InvoiceQuantityType'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td>
+                            <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.InvoiceQuantityType'"
+                                [ObjectFieldName]="'InvoiceQuantityType'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'InvoiceQuantityType'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
-                            <LogLabel [Text]="'StatisticQuantity'" [ObjectFieldName]="'StatisticQuantity'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td>
+                            <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.StatisticQuantity'"
+                                [ObjectFieldName]="'StatisticQuantity'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'StatisticQuantity'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
-                            <LogLabel [Text]="'StatisticQuantityType'" [ObjectFieldName]="'StatisticQuantityType'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td>
+                            <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.StatisticQuantityType'"
+                                [ObjectFieldName]="'StatisticQuantityType'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">
+                            <LogTextBox [ObjectFieldName]="'StatisticQuantityType'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true" [ForceDisabled]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:150px">
+                        <td>
                             <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.Remarks'"
                                 [ObjectFieldName]="'Remarks'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
@@ -121,21 +120,18 @@
                             <LogTextBox [ObjectFieldName]="'Remarks'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                     <tr class="FieldRow">
-                        <td style="width:50px"></td>
-                        <td style="width:170px">
-                            <!-- TODO: change to textcode -->
-                            <LogLabel [Text]="'האם מבוקש החמרה לקבוצה 1 '" [ObjectFieldName]="'IsAggravationGroup1Req'"
-                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <td>
+                            <LogLabel [TextCode]="'Customs.SupplierInvoiceItemsReqList.F.DutchRequested'"
+                                [ObjectFieldName]="'DutchRequested'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:200px">
-                            <LogCheckBox [ObjectFieldName]="'IsAggravationGroup1Req'" [Checked]="IsAggravationGroup1Req"
+                            <LogCheckBox [ObjectFieldName]="'DutchRequested'" [Checked]="DutchRequested"
                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                [Value]="IsAggravationGroup1Req"></LogCheckBox>
+                                [Value]="DutchRequested"></LogCheckBox>
                         </td>
-                        <td style="width:50px"></td>
                     </tr>
                 </table>
             </div>
@@ -152,7 +148,7 @@
                     </button>
                 </div>
                 <div style="width: 57px;vertical-align: bottom;">
-                    <button class="RedButton" (click)="SaveSupplierInvoiceItemsReqList()"
+                    <button class="RedButton" (click)="SaveAndSearchSupplierInvoiceItemsReqList(ProductFileNumber)"
                         [disabled]="IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}
                     </button>
                 </div>

@@ -1,14 +1,9 @@
 ﻿
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
-using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -17,13 +12,10 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using System.Transactions;
-using Logitude.Customs.BL.AzureSearch;
 using System.Threading.Tasks;
-using Logitude.CustomsMessaging.MessagingServices;
-using Logitude.CustomsMessaging.Common.ResponseData;
-using Logitude.CustomsMessaging.Common.RequestParams;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Customs.BL.BL.SIIRequest;
+using Logitude.Customs.Data.EntityKeys;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -64,7 +56,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
-        public HttpResponseMessage GetSupplierInvoiceItemsForSIIRequest(string declarationId)
+        public HttpResponseMessage GetSupplierInvoiceItemsForSIIRequest(string declarationId,string siiRequestId)
         {
             try
             {
@@ -77,7 +69,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var ctx = CustomContext.GetContext(auth.Tenant);
                 var svc = new SIIRequestQueryService(ctx);
                 svc.InitializeSettings();
-                var list = svc.GetSupplierInvoiceItems(declarationId, auth.Tenant);
+                var list = svc.GetSupplierInvoiceItems(declarationId, siiRequestId,auth.Tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 return Request.CreateResponse(HttpStatusCode.OK, list);
@@ -89,6 +81,51 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] List<SupplierInvoiceItemsReqListKeys> selectedRows)
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                var sender = new SIIRequestApiSender(auth.Tenant);
+                var apiResp = await sender.SendAsync(siiRequestId, declarationId, selectedRows)
+                    ?? throw new InvalidOperationException($"Did not receive a response from SII for request '{siiRequestId}'."); 
+                var saver = new SIIRequestApiResponseSaver(auth.Tenant);
+                saver.Save(apiResp, siiRequestId);
+                if (apiResp?.Success == true && apiResp.Result?.ResponseCode == 0)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, apiResp.Result);
+                }
+
+                // error → 400 + error payload
+                var errorPayload = new
+                {
+                    ResponseCode = apiResp?.ErrorCode ?? -1,
+                    ValidationMessages = apiResp?.ErrorMessage ?? "Unknown error"
+                };
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, new
+                {
+                    Error = true,
+                    Details = errorPayload
+                });
+            }
+            catch (Exception ex)
+            {
+                var errorPayload = new
+                {
+                    Error = true,
+                    Details = new
+                    {
+                        ResponseCode = -1,
+                        ValidationMessages = ex.Message
+                    }
+                };
+                return Request.CreateResponse(HttpStatusCode.BadRequest, errorPayload);   // 400
+            }
         }
     }
 }

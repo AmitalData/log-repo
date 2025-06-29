@@ -25,6 +25,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.InvoiceItemLineNumber);
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.LineNumber);
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Tenant);
+            this.CustomMappedPOCOProperties.Add(POCOPropertyNames.SIIRequestID);
+
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
 
@@ -33,6 +35,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.InvoiceItemLineNumber = entityPM.InvoiceItemLineNumber;
                 entityPOCO.LineNumber = entityPM.LineNumber;
                 entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.SIIRequestID = entityPM.SIIRequestID;
             }
         }
 
@@ -46,7 +49,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 PMPropertyNames.InvoiceQuantity,
                 PMPropertyNames.InvoiceQuantityType,
                 PMPropertyNames.StatisticQuantity,
-                PMPropertyNames.StatisticQuantityType  
+                PMPropertyNames.StatisticQuantityType,
+                PMPropertyNames.OriginCountryCode,
+                PMPropertyNames.IssueDate,
+                PMPropertyNames.InvoiceNumber,
+                PMPropertyNames.InvoiceQuantityTypeCode,
+                PMPropertyNames.ClassificationCode,
+                PMPropertyNames.StatisticQuantityTypeCode,
+                PMPropertyNames.VendorName,
+
             });
 
             if (entityPOCO.ManufactureCountryCode != null)
@@ -63,6 +74,23 @@ namespace Logitude.Customs.BL.EntityDataMappings
                        i.CounterKey == entityPOCO.InvoiceCounterKey &&
                        i.LineNumber == entityPOCO.InvoiceItemLineNumber);
             if (item == null) return;
+            
+            var invoice = ctx.SupplierInvoices.FirstOrDefault(si =>
+            si.Tenant == entityPOCO.Tenant &&
+            si.DeclarationId == entityPOCO.DeclarationId &&
+            si.InvoiceCounterKey == entityPOCO.InvoiceCounterKey);
+
+            if (invoice != null)
+            {
+                entityPM.IssueDate = invoice.IssueDate;
+                entityPM.InvoiceNumber = invoice.InvoiceNumber;
+                if (!string.IsNullOrEmpty(invoice.VendorId))
+                {
+                    CustomsVendorQueryService vendorQueryService = new CustomsVendorQueryService(entityPOCO.Tenant);
+                    CustomsVendorPM vendor = vendorQueryService.GetSingle(invoice.VendorId, false, true);
+                    entityPM.VendorName = vendor?.VendorName;
+                }
+            }
 
             bool isNewEntity = string.IsNullOrWhiteSpace(entityPOCO.SIIRequestID);
 
@@ -78,6 +106,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
             }
             entityPM.InvoiceQuantity = item.InvoiceQuantity;
             entityPM.StatisticQuantity = item.StatisticQuantity;
+            entityPM.OriginCountryCode = item.OriginCountryCode;
+            entityPM.InvoiceQuantityTypeCode = item.InvoiceQuantityType;
+            entityPM.ClassificationCode = item.ClassificationCode;
+            entityPM.StatisticQuantityTypeCode = item.StatisticQuantityType;
+            
+
             var muQS = new MeasurmentUnitQueryService(entityPOCO.Tenant);
 
             if (!string.IsNullOrWhiteSpace(item.InvoiceQuantityType))

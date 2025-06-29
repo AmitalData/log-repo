@@ -80,6 +80,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="FromApplicationId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RequestDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Status"
     ReferencedTable="SIIRequestStatuses"
@@ -92,7 +105,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ContactId"
-    ReferencedTable="Users"
+    ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

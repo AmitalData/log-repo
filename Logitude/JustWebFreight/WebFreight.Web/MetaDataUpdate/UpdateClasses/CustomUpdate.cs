@@ -17461,8 +17461,10 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "P", EnglishName = null, LocalName = "פרט מכס", SearchFields = "פרט מכס,P" }, pointerLevelRepository);
             AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "D", EnglishName = "Declaration, הצהרה", LocalName = "הצהרה", SearchFields = "הצהרה,D" }, pointerLevelRepository);
 			AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "C", EnglishName = "Closing Export Declaration", LocalName = "סגירת הצהרת יצוא", SearchFields = "סגירת הצהרת יצוא,C" }, pointerLevelRepository);
+            AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "S", EnglishName = "SIIRequest", LocalName = "מכון תקנים", SearchFields = "מכון תקנים,S" }, pointerLevelRepository);
 
-			pointerLevelRepository.SubmitChanges();
+
+            pointerLevelRepository.SubmitChanges();
 
         }
 
@@ -17567,6 +17569,18 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             sIIRequestStatusRepository.SubmitChanges();
 
 
+        }
+        public void FillSIIDocumentType(int tenant)
+        {
+            SIIDocumentTypeRepository sIIDocumentTypeRepository = new SIIDocumentTypeRepository(tenant);
+            Dictionary<string,SIIDocumentType> keyValuePairs=sIIDocumentTypeRepository.GetAll().ToDictionary(d => d.Code, a => a);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "1", LocalName= "שטר מטען" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "2", LocalName = "חשבון ספק" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "4", LocalName = "תצהיר נלווה לבקשה למתן אישור עמידה בדרישות הממונה על התקינה" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "8", LocalName = "דוחות בדיקה חיצוניים" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "9", LocalName = "קטלוגים/תצהירים" }, sIIDocumentTypeRepository);
+            AddClosedTables.AddOrUpdateSIIDocumentType(new SIIDocumentType() { Code = "101", LocalName = "אחר" }, sIIDocumentTypeRepository);
+            sIIDocumentTypeRepository.SubmitChanges();
         }
 
     }

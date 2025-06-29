@@ -37,7 +37,8 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
     Name="InvoiceCounterKey"

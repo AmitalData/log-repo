@@ -36,11 +36,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, int tenant)
+        public List<SupplieInvoiceItemsForSIIRequest> GetSupplierInvoiceItems(string declarationId, string siiRequestId, int tenant)
         {
-            List<SupplieInvoiceItemsForSIIRequest> items= repository.GetSupplierInvoiceItems(declarationId, tenant);
+            List<SupplieInvoiceItemsForSIIRequest> items= repository.GetSupplierInvoiceItems(declarationId, siiRequestId, tenant);
             return items;
 
+        }
+        public int GetSIIFormApplicationMaxNumber(int tenant)
+        {
+            return repository.GetSIIFormApplicationMaxNumber(tenant);
         }
 
     }

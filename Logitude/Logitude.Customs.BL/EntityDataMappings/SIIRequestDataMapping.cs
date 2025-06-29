@@ -14,6 +14,10 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.Data.Repsitories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using static Logitude.Customs.Data.Repsitories.SIIRequestRepository;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -23,6 +27,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
         
         public void CustomPMToPOCO(SIIRequestPM entityPM, SIIRequest entityPOCO)
         {
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                this.CustomMappedPOCOProperties.Add(POCOPropertyNames.RequestDate);
+                entityPOCO.RequestDate = DateTime.Now;
+            }
+           
+                
             this.CustomMappedPOCOProperties.Add(POCOPropertyNames.Id);
             entityPOCO.Id = entityPM.Id;
 
@@ -39,7 +50,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         }
 
-       
+
 
         public void CustomPOCOToPM(SIIRequestPM entityPM, SIIRequest entityPOCO)
         {
@@ -49,22 +60,80 @@ namespace Logitude.Customs.BL.EntityDataMappings
             this.CustomMappedPMProperties.Add(PMPropertyNames.UnloadDate);
 
 
-            var repo = new SIIRequestRepository(entityPOCO.Tenant);
-            var agg = repo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
+            var siiRepo = new SIIRequestRepository(entityPOCO.Tenant);
+            var defaultValueQueryService = new DefaultValueQueryService(entityPOCO.Tenant);
+            var contactQuery = new ContactQuery(entityPOCO.Tenant);
 
-            if (agg != null)
+            var agg = siiRepo.GetAggregateForSii(entityPOCO.Tenant, entityPOCO.DeclarationId);
+            if (agg == null) return;                       
+
+            MapAggregateToPM(entityPM, agg);
+            MapContact(entityPM, entityPOCO, agg, defaultValueQueryService, contactQuery);
+        }
+
+
+        private static void MapAggregateToPM(SIIRequestPM entityPM, SiiAgg agg)
+        {
+            entityPM.ImporterId = string.IsNullOrEmpty(agg.ImporterInternalId)
+                                       ? agg.ImporterCode
+                                       : agg.ImporterInternalId;
+
+            entityPM.VesselName = agg.VesselLocalName;
+            entityPM.ManifestNumber = agg.ManifestNumber;
+            entityPM.OriginCountryCode = agg.OriginCountryCode;
+            entityPM.UnloadPortCode = agg.UnloadPortCode;
+
+            if (agg.UnloadDate.HasValue)
+                entityPM.UnloadDate = agg.UnloadDate.Value;
+        }
+
+ 
+        private static void MapContact(
+            SIIRequestPM entityPM,
+            SIIRequest entityPOCO,
+            dynamic agg,
+            DefaultValueQueryService defaultValueQueryService,
+            ContactQuery contactQuery)
+        {
+            ContactPM contactPM = null;
+
+            if (entityPOCO.ContactId == null && agg.CustomerId != null)
             {
-                entityPM.ImporterId = !string.IsNullOrEmpty(agg.ImporterInternalId)
-                                    ? agg.ImporterInternalId
-                                    : agg.ImporterCode;
+                var customerCard = CardRepository.GetSingleCard(agg.CustomerId, entityPOCO.Tenant, true);
+                if (customerCard != null)
+                {
+                    var defaultContactKey = defaultValueQueryService.GetDefault(
+                                                 "ISRAEL",
+                                                 "CGG_CONT_STDI",
+                                                 "NON",
+                                                 customerCard.Code,
+                                                 entityPOCO.Tenant);
 
-                entityPM.VesselName = agg.VesselLocalName;
-                entityPM.ManifestNumber = agg.ManifestNumber;
-                if (agg.UnloadDate.HasValue)
-                    entityPM.UnloadDate = agg.UnloadDate.Value;
+                    if (!string.IsNullOrEmpty(defaultContactKey))
+                    {
+                        contactPM = contactQuery.GetSingleContactByExternalId(
+                                        defaultContactKey,
+                                        entityPOCO.Tenant);
+                    }
+                }
+            }
+            else if (entityPOCO.ContactId != null)
+            {
+                contactPM = contactQuery.GetSinglePMFromCache(
+                                entityPOCO.ContactId,
+                                entityPOCO.Tenant);
             }
 
+            if (contactPM == null) return;
+
+            entityPM.ContactName = contactPM.LocalName;
+            entityPM.ContactEmail = contactPM.Email;
+            entityPM.ContactCellPhone = contactPM.Mobile;
+            entityPM.ContactFax = contactPM.Fax;
+            entityPM.ContactTel = contactPM.BusinessPhone;
+            entityPM.ContactId = contactPM.Id;
         }
+
 
         private void BuildSearchFields(SIIRequestPM entityPM, SIIRequest entityPOCO, bool v)
         {

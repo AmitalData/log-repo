@@ -12,19 +12,25 @@ using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityDataMappings;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
 using Logitude.Customs.Data.DataContracts;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
-    public partial class SupplierInvoiceItemsReqListQueryService : EntityQueryService<SupplierInvoiceItemsReqList, SupplierInvoiceItemsReqListKeys, SupplierInvoiceItemsReqListPM, SupplierInvoiceItemPM, SupplierInvoiceItemKeys>
+    public partial class SupplierInvoiceItemsReqListQueryService : EntityQueryService<SupplierInvoiceItemsReqList, SupplierInvoiceItemsReqListKeys, SupplierInvoiceItemsReqListPM, object, SupplierInvoiceItemsReqListKeys>
     {
-        public SupplierInvoiceItemsReqListPM GetSinglePM(string siiRequestId, string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,int tenant)
+        public SupplierInvoiceItemsReqListPM GetOrCreate(string siiRequestId, string declarationid, int linenumber, int invoicecounterkey, int invoiceitemlinenumber,int tenant)
         {
-            
+            var pm = GetSingle(declarationid, linenumber, siiRequestId, invoicecounterkey, invoiceitemlinenumber, true, false);
+            if(pm != null)
+            {
+                return pm;
+            }
+
             var newPo = new SupplierInvoiceItemsReqList
             {
                 Tenant = tenant,
                 DeclarationId = declarationid,
-                LineNumber = linenumber,
+                LineNumber = 1,  // not clear what linenumber shud be right now so we return 1 for now -- linenumber is key 
                 InvoiceCounterKey = invoicecounterkey,
                 InvoiceItemLineNumber = invoiceitemlinenumber,
             };

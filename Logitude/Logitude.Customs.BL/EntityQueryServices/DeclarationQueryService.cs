@@ -2334,6 +2334,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationPM;
         }
 
+        public Declaration GetDataForSIIRequest(string declarationId, int tenant)
+        {
+            Declaration declaration = repository.GetDataForSIIRequest(declarationId, tenant);
+            return declaration;
+        }
+
         public List<Declaration> GetDeclarationById(int tenant, string id)
         {
             List<Declaration> declarations = repository.GetDeclarationById(tenant, id);
