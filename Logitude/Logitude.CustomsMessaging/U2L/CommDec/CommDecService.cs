@@ -3052,4 +3052,3 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
         }          
 	}
-}
