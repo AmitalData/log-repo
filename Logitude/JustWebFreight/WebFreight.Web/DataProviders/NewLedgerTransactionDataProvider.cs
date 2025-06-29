@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebFreight.Web.DataProviders
 {
-    public class LedgerTransactionsDataProvider : BaseDataProvider
+    public class NewLedgerTransactionDataProvider : BaseDataProvider
     {
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -29,17 +29,18 @@ namespace WebFreight.Web.DataProviders
         public decimal ForeignClosedBalance { get; set; }
         public decimal LastCumulativeOpenAmount { get; set; }
 
-        public List<ReportLedgerTransaction> Transactions { get; set; }
 
-       
-        public List<GLAccountBalanceList> LocalOpenBalanceList { get; set; }
-        public List<GLAccountBalanceList> LocalClosedBalanceList { get; set; }
+      
+        public List<NewReportLedgerTransaction> Transactions { get; set; }
+
+        public List<NewGLAccountBalanceList> LocalOpenBalanceList { get; set; }
+        public List<NewGLAccountBalanceList> LocalClosedBalanceList { get; set; }
         public decimal StartTotalOpenAmount { get; set; }
 
 
     }
 
-    public class ReportLedgerTransaction
+    public class NewReportLedgerTransaction
     {
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
@@ -84,7 +85,7 @@ namespace WebFreight.Web.DataProviders
         public string OppositeAccountDisplayNumber { get; set; }
         public string OppositeAccountLocalName { get; set; }
         public string OppositeAccountEnglishName { get; set; }
-        public string PaymentNotes { get; set; }
+
         // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
         public string TenantCurrencySign { get; set; }
@@ -186,7 +187,7 @@ namespace WebFreight.Web.DataProviders
             }
         }
     }
-    public class GLAccountBalanceList
+    public class NewGLAccountBalanceList
     {
         public string CurrencyId { get; set; }
         public decimal? BalanceForeign { get; set; }

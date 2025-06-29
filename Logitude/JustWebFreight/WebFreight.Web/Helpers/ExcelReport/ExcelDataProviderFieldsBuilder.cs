@@ -137,6 +137,10 @@ namespace WebFreight.Web.Helpers.ExcelReport
                     {
                         return typeof(NewAccountingAgingDataProvider);
                     }
+                case "NTRP":
+                    {
+                        return typeof(NewLedgerTransactionDataProvider);
+                    }
                 default:
                     return null;
             }
