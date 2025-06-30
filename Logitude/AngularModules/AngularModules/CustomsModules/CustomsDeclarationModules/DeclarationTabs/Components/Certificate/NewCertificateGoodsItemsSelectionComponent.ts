@@ -190,7 +190,7 @@ export class NewCertificateGoodsItemsSelectionComponent {
 
     DataSource = {
 
-        pageSize: 10,
+        pageSize: 1000000,
         rowCount: null,
         sortingCol: "SequenceNumeric",
         sortingDir: "Ascending",
@@ -207,29 +207,10 @@ export class NewCertificateGoodsItemsSelectionComponent {
         this.SelectedRows.forEach((invoice) => {
             keys = keys + "," + invoice.InvoiceCounterKey;
         });
-        
-        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            if (AppTool.IsNullOrEmpty(filters)) 
-                filters = new ApiQueryFilters();
-            
-            filters?.addAdditionalFilter(
-                "SearchFields",
-                this.SearchText,
-                null, 
-                null,
-                "Contains", 
-                false,
-                false, 
-                false, 
-                "string");
-        }
-        else{            
-            filters = new ApiQueryFilters();
-        }
        
         keys = keys.substr(1, keys.length - 1);
         return new Promise((resolve, reject) => {
-            resolve(this.supplierInvoiceExtendedListService.GetSupplierInvoiceItemsForInvoices(this.DeclarationPM.Id, keys, skip, take, getCount));
+            resolve(this.supplierInvoiceExtendedListService.GetSupplierInvoiceItemsForInvoices(this.DeclarationPM.Id, keys, skip, take, getCount, this.SearchText));
         });
 
     }
