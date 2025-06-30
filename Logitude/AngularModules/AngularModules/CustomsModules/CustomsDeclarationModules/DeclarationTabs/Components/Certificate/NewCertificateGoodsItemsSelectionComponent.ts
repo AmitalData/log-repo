@@ -209,7 +209,10 @@ export class NewCertificateGoodsItemsSelectionComponent {
         });
         
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            filters.addAdditionalFilter(
+            if (AppTool.IsNullOrEmpty(filters)) 
+                filters = new ApiQueryFilters();
+            
+            filters?.addAdditionalFilter(
                 "SearchFields",
                 this.SearchText,
                 null, 
