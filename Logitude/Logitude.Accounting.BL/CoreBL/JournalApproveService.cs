@@ -144,9 +144,6 @@ namespace Logitude.Accounting.BL.CoreBL
 							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
                              scope.Complete();
 						}
-                        IAccountingContext context = AccountingContext.GetContext(_Tenant);
-                        JournalQueryService journalQueryService = new JournalQueryService(context);
-                        journalQueryService.FixFailedReconcileJournals(_Tenant);
                     }
 					catch (Exception updateEx)
 					{
