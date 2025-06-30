@@ -368,6 +368,7 @@ export class LoginParameters {
     GetToken: boolean;
     IsAngularLogin: boolean;
     ClientType: string;
+    IgnoreMFA: boolean;
     //contructor() {
     //    this.IsAngularLogin = true;
     //}
