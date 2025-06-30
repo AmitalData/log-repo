@@ -151,6 +151,8 @@
                         </LogLov>
                     </td>
 
+                   
+
                     <!-- <td style="width:15px"></td> -->
                     <!-- 3 -->
                     <td style="width:150px">
@@ -271,18 +273,18 @@
                     <!-- 2 -->
                     <td>
                         <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
-                            <li float-start id="filter_accounting" (click)="FilterItemClicked('filter_accounting')"
+                            <li float-start id="filter_accounting" (click)="FilterDateClicked('filter_accounting')"
                                 style="height: 22px;"
-                                [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
+                                [class.SelectedFilter]="filterDateSelectedValue === 'filter_accounting'">
                                 {{'GLAccounts.O.filter_accounting' | TextCodeTranslationPipe}}
                             </li>
-                            <li float-start id="filter_reference" (click)="FilterItemClicked('filter_reference')"
+                            <li float-start id="filter_reference" (click)="FilterDateClicked('filter_reference')"
                                 style="height: 22px;"
-                                [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
+                                [class.SelectedFilter]="filterDateSelectedValue === 'filter_reference'">
                                 {{'GLAccounts.O.filter_reference' | TextCodeTranslationPipe}}
                             </li>
-                            <li float-start id="filter_due" (click)="FilterItemClicked('filter_due')"
-                                style="height: 22px;" [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
+                            <li float-start id="filter_due" (click)="FilterDateClicked('filter_due')"
+                                style="height: 22px;" [class.SelectedFilter]="filterDateSelectedValue === 'filter_due'">
                                 {{'GLAccounts.O.filter_due' | TextCodeTranslationPipe}}
                             </li>
                         </ul>
@@ -420,27 +422,75 @@
                     <td>
                         <LogLov  [ShowInActive]="true" [ObjectFieldName]="'Collector'" [ObjectTableName]="'GLAccount'"
                             style="display: block; width: 150px;" float-start [DataContext]="DataContext"
-                            [SelectedValue]="Collector" [LookUpTableName]="'User'" [HideColumns]="true" [QueryFilterItems]="CollectorFilterItems">
+                            [SelectedValue]="Collector" [LookUpTableName]="'User'" [HideColumns]="true" >
                         </LogLov>
                     </td>
                     <td style="width: 200px"></td>
 
 
                 </tr>
+                <!-- Row 5 -->
+                <tr class="FieldRow">
+                    <!-- Category -->
+                   
+                   
+                    <td style="width: 130px;">
+                        <LogLabel 
+                            [Text]="'GLTransactionReport.O.GLAccountList' | TextCodeTranslationPipe"
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                        </LogLabel>
+                    </td>
 
-                <!-- Row 5 [hidden]="!IsSchedulerReport"-->
-                <!-- <tr  [hidden]="!IsSchedulerReport" class="FieldRow">
-                    <td style="width:150px">
-                        <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'" [ObjectTableName]="'GLAccount'"
-                                  [DataContext]="DataContext"></LogLabel>
+                    <td style="width: 245px;;">
+                        <MultiSelectLOV [DataContext]="DataContext"
+                                        [PlaceHolder]="'Accounting.General.O.GLAccount' | TextCodeTranslationPipe"
+                                        [LayoutDirection]="isRTL ?'rtl' : 'ltr'"
+                                        [LOVListComponentPropName]="'ListGLAccounts'"
+                                        [ButtonAddLabel]="'GLAccounts.O.Choose' | TextCodeTranslationPipe">
+                            <span class="class-MultiSelectLOV-content">
+                                <LogLov [ShowInActive]="true" style="display: block;width: 150px;"  
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"
+                                        [HideColumns]="true"
+                                        [LookUpTableName]="'GLAccount'"
+                                        [DisplayMemberPath]="'LocalName'"
+                                        [QueryFilterItems]="GLAccountFilterItems"
+                                        [ForceShowAddLink]="true" [HideAddLink]="true">
+                                </LogLov>
+                            </span>
+                        </MultiSelectLOV>
                     </td>
-                    <td style="width:245px">
-                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'BalanceInLocalCurrency'" [InputType]="'decimal'" 
-                        [DataContext]="DataContext" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="BalanceInLocalCurrency"
-                        >
-                                </LogTextBox>
+
+                    <!-- 3 -->
+                    <td>
+                        <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
+                            [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
                     </td>
-                </tr> -->
+
+                    <!-- 4 -->
+                    <td>
+                        <LogLov  [ShowInActive]="true" style="display: block; width: 150px;" float-start [ObjectFieldName]="'Salesman'"
+                            [ObjectTableName]="'GLAccount'" [DataContext]="DataContext" [LookUpTableName]="'User'"
+                            [SelectedValue]="Salesman" [QueryFilterItems]="SalesmanFilterItems" [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <!-- Collector -->
+                    <td style="padding-right: 5px;" class="Label">
+                        <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'"
+                            [Text]="'Accounting.General.O.Collector'| TextCodeTranslationPipe"
+                            [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td>
+                        <LogLov  [ShowInActive]="true" [ObjectFieldName]="'Collector'" [ObjectTableName]="'GLAccount'"
+                            style="display: block; width: 150px;" float-start [DataContext]="DataContext"
+                            [SelectedValue]="Collector" [LookUpTableName]="'User'" [HideColumns]="true" >
+                        </LogLov>
+                    </td>
+                    <td style="width: 200px"></td>
+
+
+                </tr>
+              
                 <tr [hidden]="!IsSchedulerReport" class="FieldRow">
                     <td style="width:210px">
                         <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'"
@@ -451,7 +501,7 @@
                     <td>
                         <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList"
                             [Binding]="'LocalName'" [SelectedItem]="selectedAmountOperator"
-                            (SelectedItemChanged)="AmountOperatorChanged($event)"></ComboBox>
+                            (SelectedItemChanged)="selectedAmountOperator = $event"></ComboBox>
                     </td>
 
                     <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">
@@ -482,7 +532,7 @@
                     <td>
                         <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList"
                             [Binding]="'LocalName'" [SelectedItem]="selectedAmountOperatorLocalBalanceInDue"
-                            (SelectedItemChanged)="AmountOperatorLocalBalanceInDueChanged($event)"></ComboBox>
+                            (SelectedItemChanged)="selectedAmountOperatorLocalBalanceInDue = $event"></ComboBox>
                     </td>
 
                     <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">

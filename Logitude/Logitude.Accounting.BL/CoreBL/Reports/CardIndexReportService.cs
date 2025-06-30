@@ -122,7 +122,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string CollectorId { get; set; }
         public bool UseSecurityLevel { get; set; }
 
-        //public bool IncludeRelatedCurrenciesAccount { get; set; }
-
+        public List<string> ListGLAccounts { get; set; }
     }
 }
