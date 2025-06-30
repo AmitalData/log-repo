@@ -546,7 +546,7 @@ export class LoginComponent implements OnInit {
     }
 
     ShowTenantList: boolean = false;
-    PostUserValidation(loginParameters) {
+    PostUserValidation(loginParameters) {    
         this.loginService
             .PostUserValidation(loginParameters)
             .subscribe((userData: any) => {
@@ -573,7 +573,19 @@ export class LoginComponent implements OnInit {
                         this.loginService.CurrentTenant = this.Tenant;
 
                         var f = { valid: true };
-                        this.ChooseTenant(f, null);
+                        if (
+                        !userData.IsTwoFactorAuthenticationRequired ||
+                        userData.IsTwoFactorAuthenticationRequired == false
+                    )
+                        {
+                            this.ChooseTenant(f, null);
+                        }
+                        else {
+                        this.LoggedUserData = userData;
+                        this.UserMobileNumber = userData.UserMobileNumber;
+                        this.ShowTwoFactorAuthenScreen = true;
+
+                          }
                     } else {
                         var i = 0;
                         this.TenantList.forEach((item) => {
@@ -673,6 +685,7 @@ export class LoginComponent implements OnInit {
                     if (res == true) {
                         this.ShowTwoFactorAuthenScreen = false;
                         //this.StartLoading(this.LoggedUserData);
+                        this.LoginParams.IgnoreMFA=true;
                         this.PostLoginData();
                     } else {
                         this.InvalidVerificationCode = true;
