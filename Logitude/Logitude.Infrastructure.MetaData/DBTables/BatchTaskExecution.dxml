@@ -105,6 +105,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="NotDisplayInMenu"
+    Type="bit"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

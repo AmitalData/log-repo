@@ -36,6 +36,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string ClassName { get; set; }
         [Column("PrametersXml")]
 	    public string PrametersXml { get; set; }
+        [Column("NotDisplayInMenu")]
+        public bool NotDisplayInMenu { get; set; }
         [ForeignKey("BatchTaskExecutionStatus")]
         [Column("StatusCode")]
 	    public string StatusCode { get; set; }

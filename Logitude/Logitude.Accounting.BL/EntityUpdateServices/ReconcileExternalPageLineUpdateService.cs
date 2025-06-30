@@ -5,9 +5,6 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
-//using Logitude.BL.CommonDataModel.EntityPMs;
-//using Logitude.BL.CommonDataModel.EntityQueries;
-//using Logitude.BL.Security;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
@@ -98,6 +95,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                 item.InProgressExternalReconcile = /*true*/ Value_ExternalReconcileInProgress;
+
             }
             this.UpdateMulti(pmList, new List<ReconcileExternalPageLinePM>(), new ReconcileExternalPagePM(), true);
         }

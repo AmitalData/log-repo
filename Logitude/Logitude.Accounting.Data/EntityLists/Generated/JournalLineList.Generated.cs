@@ -93,6 +93,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string ConfirmationNumber  { get; set; }
        [DataMember]
+       public bool? ExcludeFromTaxReport  { get; set; }
+       [DataMember]
        public string DebitAccountCountryCode  { get; set; }
    }
 

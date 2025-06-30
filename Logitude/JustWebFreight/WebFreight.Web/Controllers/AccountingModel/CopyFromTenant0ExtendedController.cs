@@ -141,6 +141,18 @@ namespace WebFreight.Web.Controllers.AccountingModel
                                 computingPartnerQuery.CopyFromTenant0(0, authToken.Tenant);
                                 break;
                             }
+                        case "DocumentTypesandTemplates":
+                            {
+                                DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(authToken.Tenant);
+                                documentTypeTemplateQuery.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
+                        case "ReportTemplates":
+                            {
+                                ReportHelper reportHelper = new ReportHelper();
+                                reportHelper.CopyFromTenant0(0, authToken.Tenant);
+                                break;
+                            }
 
 
                         default:

@@ -20,7 +20,7 @@
   </Column>
   <Column
     Name="CreateDate"
-    Type="datetime">
+    Type="datetime2">
     <Constraints
       Nullable="false" />
   </Column>
@@ -219,6 +219,12 @@
     Size="200">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsEdited"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"

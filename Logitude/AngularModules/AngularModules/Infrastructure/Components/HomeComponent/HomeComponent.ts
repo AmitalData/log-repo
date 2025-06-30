@@ -29,24 +29,13 @@ import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { RatesTableExtendedService } from 'Infrastructure/Services/ExtendedPMs/RatesTableExtendedService';
-import { RelatedDocumentViewModel } from 'CustomsModules/CustomsDocuments/Components/RelatedDocumentViewModel';
-import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
-import { ReportExecutionLogPM } from 'Common/EntityPMs/ReportExecutionLogPM';
-import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
-import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
-import { transform } from 'cypress/types/lodash';
-import { parseString } from 'xml2js';
-import { ReportsWorkspaceComponent } from 'TimeManagement/Components/Workspaces/ReportsWorkspaceComponent';
-import { ReportPMService } from 'Common/Services/StandardPMs/ReportPMService';
-import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
-import { ReportPM } from 'Common/EntityPMs/ReportPM';
-import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
-import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
-import { ReportMenuComponent } from 'Report/Components/ReportMenuComponent';
+import { ProcessMenuComponent } from 'Report/Components/ProcessMenuComponent';
+import { ProcessMenuService } from 'Common/Services/ProcessMenuService';
 
 @Component({
     templateUrl: './HomeComponent.html',
-    providers: [ReportService]
+    providers: [ProcessMenuService]
+
 
 })
 
@@ -72,14 +61,14 @@ export class HomeComponent implements OnDestroy{
     public PaymentChanelCode: string;
     public AccountingActivated=false;
 
-    isReportPanelVisible: boolean = false;
-    currentReportId: string = "";
-    private reportPanelTimeout: any;
+    isProcessMenuVisible: boolean = false;
+    currentProcessId : string = "";
     public isPinned: boolean = false;
-    countDoneRepors: number =0;
+    countCompletedProcesses : number = 0;
+    selectedTab: string = '0';
 
 
-    constructor(private reportService: ReportService) {
+    constructor(private processMenuService: ProcessMenuService) {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
         SessionLocator.AllSessions = new Array<SessionComponent>();
@@ -140,7 +129,7 @@ export class HomeComponent implements OnDestroy{
         this.InitializeBluesnapComponents();
         this.InitializeChargifyComponents();
         this.IsCountryIsrael = SessionLocator.TenantManagementJS.CountryName == "Israel";
-        this.InitializeReport();
+        this.InitializeProcess ();
         this.SetIsINTTRAPackage();
         var isNewSignupTenant = false;
 
@@ -176,10 +165,10 @@ export class HomeComponent implements OnDestroy{
     InitializeChargifyComponents() {
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
-    InitializeReport(){
-        this.reportService.LoadReports();
-        this.reportService.reportsCount$.subscribe(count => {
-            this.countDoneRepors = count;
+    InitializeProcess(){
+        this.processMenuService.LoadMenuItems();
+        this.processMenuService.processCount$.subscribe(count => {
+            this.countCompletedProcesses  = count;
           });
       
     }
@@ -791,7 +780,7 @@ export class HomeComponent implements OnDestroy{
         );
 
     }
-    ReportMenuComponent:ReportMenuComponent
+    ProcessMenuComponent:ProcessMenuComponent
     // Notification Bell
     badjCount: number;
     IsBadjCountVisibile: boolean;
@@ -810,33 +799,41 @@ export class HomeComponent implements OnDestroy{
             this.showLockIndicator = newValue;
         }
     }
-    public HasFeatureReport:boolean= FeatureLocator.HasFeaturePermession("Report", "Module");
+    public HasFeatureProcessMenu: boolean= FeatureLocator.HasFeaturePermession("Report", "Module");
 
-    get IsReportPanelVisible() { return this.isReportPanelVisible; }
-    set IsReportPanelVisible(newValue: boolean) {
+    get IsProcessMenuVisible() { return this.isProcessMenuVisible; }
+    set IsProcessMenuVisible(newValue: boolean) {
        
        
-        this.isReportPanelVisible = newValue;
+        this.isProcessMenuVisible = newValue;
         
         if(!newValue){
             this.isPinned = false;
 
         }
     }
-    get CurrentReportId() { return this.currentReportId; }
-    set CurrentReportId(newValue: string) {
+    get CurrentProcessId () { return this.currentProcessId ; }
+    set CurrentProcessId (newValue: string) {
         
-        if (this.currentReportId != newValue) {
-            this.currentReportId = newValue;
-            this.reportService.LoadReports()
+        if (this.currentProcessId  != newValue) {
+            this.currentProcessId = newValue;
+            this.processMenuService.LoadMenuItems()
            
         }
     }
-    IsReportPanelVisibleChanged() {
-        this.IsReportPanelVisible =!this.isReportPanelVisible;
-        this.CurrentReportId = "";
+    get SelectedTab() { return this.selectedTab; }
+    set SelectedTab(newValue: string) {
+        
+        if (this.selectedTab != newValue) {
+            this.selectedTab = newValue;
+           
+        }
     }
-    TogglePinReportPanel(event: any) {
+    IsProcessMenuVisibleChanged() {
+        this.IsProcessMenuVisible =!this.isProcessMenuVisible;
+        this.CurrentProcessId = "";
+    }
+    TogglePinMenu(event: any) {
        
         if (event==true) {
             this.isPinned = true;
@@ -845,13 +842,13 @@ export class HomeComponent implements OnDestroy{
         }
     }
     
-    keepReportPanelOpen() {
-        this.IsReportPanelVisible = true;
+    KeepMenuOpen() {
+        this.IsProcessMenuVisible = true;
     }
 
-    closeReportPanel() {
+    CloseMenu() {
         if(!this.isPinned)
-           this.IsReportPanelVisible = false;
+           this.IsProcessMenuVisible = false;
     }
     
     notificationExtendedListService: NotificationExtendedListService = new NotificationExtendedListService();

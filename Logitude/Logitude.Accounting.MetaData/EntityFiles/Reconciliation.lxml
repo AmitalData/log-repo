@@ -43,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;Reconciliation&quot;"
-  Code="&quot;cad0&quot;"
+  Code="&quot;bccc&quot;"
   Name="&quot;Reconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1413,6 +1413,12 @@
       Code="&quot;Reconciliations.O.ReviewAndCompleteReconcile.&quot;"
       DefaultText="&quot;Please review and complete the reconcile.&quot;"
       LocalDefaultText="&quot;נא לסקור ולהשלים את ההתאמה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliation.O.FailedJournalInReconcileProcess&quot;"
+      DefaultText="&quot;Failed Journal In Reconcile Process&quot;"
+      LocalDefaultText="&quot;קיימות פקודות באמצע תהליך&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

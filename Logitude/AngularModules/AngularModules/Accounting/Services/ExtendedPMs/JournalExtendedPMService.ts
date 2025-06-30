@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import { defer, of } from 'rxjs';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {JournalPM} from '../../EntityPMs/JournalPM';
 import {JournalLinePM} from '../../EntityPMs/JournalLinePM';
-import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
  
@@ -85,6 +83,19 @@ export class JournalExtendedPMService {
 
 
     }
+
+    GetFailedJournalsInReconcileProcess(accountId: string) {
+   
+        return this.httpClient.get(this._apiUrl + '/GetFailedJournalInReconcileProcess?accountId=' + accountId, ServiceHelper.GetHttpHeaders()).pipe(
+          map(res => {
+              var serviceResponse: ServiceResponse = new ServiceResponse();
+              serviceResponse.Result = res;
+              return serviceResponse;
+          }),
+          catchError(ServiceHelper.HandleServiceError));
+       
+  
+      }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 

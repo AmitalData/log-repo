@@ -89,6 +89,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     command.Parameters.AddWithValue("@CurrencyFilterSelectedValue", GetFilterValue<string>("CurrencyOriginalLocalValue"));
                     command.Parameters.AddWithValue("@CurrencyId", GetFilterValue<string>("CurrencyId"));
                     command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@GroupMultiAccounts", GetFilterValue<bool>("IsGroupMultiAccounts"));
+
 
                     using (var reader = command.ExecuteReader())
                     {
@@ -111,7 +113,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                               AccountSalesmanLocalName = reader["AccountSalesmanLocalName"] != DBNull.Value ? (string)reader["AccountSalesmanLocalName"] : null,
                                AccountCollectorName = reader["AccountCollectorName"] != DBNull.Value ? (string)reader["AccountCollectorName"] : null,
                                 AccountCollectorLocalName = reader["AccountCollectorLocalName"] != DBNull.Value ? (string)reader["AccountCollectorLocalName"] : null,
-                              AccountCurrencyCode = reader["AccountCurrencyCode"] != DBNull.Value ? (string)reader["AccountCurrencyCode"] : null,
+                                AccountBusinessPhone = reader["AccountBusinessPhone"] != DBNull.Value ? (string)reader["AccountBusinessPhone"] : null,
+                                MinimumInterestInvoiceBilling = reader["MinimumInterestInvoiceBilling"] != DBNull.Value ? (string)reader["MinimumInterestInvoiceBilling"] : null,
+                                CreditAllotmentPercentage = reader["CreditAllotmentPercentage"] != DBNull.Value ? (string)reader["CreditAllotmentPercentage"] : null,
+                               AccountCurrencyCode = reader["AccountCurrencyCode"] != DBNull.Value ? (string)reader["AccountCurrencyCode"] : null,
                                Minus30Days = reader["Minus30Days"] != DBNull.Value ? (decimal?)reader["Minus30Days"] : 0,
                                   Minus60Days = reader["Minus60Days"] != DBNull.Value ? (decimal?)reader["Minus60Days"] : 0,
                               Minus90Days = reader["Minus90Days"] != DBNull.Value ? (decimal?)reader["Minus90Days"] : 0,

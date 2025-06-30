@@ -597,6 +597,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms;
         }
 
+
         public List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<string> idList, int tenant)
         {
             List<LedgerTransactionJournalLineLT> LTs = repository.GetLedgerTransactionJournalLineLTsByIdList(idList, tenant);

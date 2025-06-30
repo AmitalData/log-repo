@@ -42,6 +42,8 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                             ErrorLog = a.ErrorLog,
 
                                                             PrametersXml = a.PrametersXml,
+                                                            NotDisplayInMenu = a.NotDisplayInMenu,
+
 
                                                             ProgressMessage = a.ProgressMessage,
 

@@ -43,7 +43,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public string ObjectTableId { get; set; }
         public string EntityId { get; set; }
-
-
+        public bool IsCopiedAtSignup { get; set; }
+        public string OriginalTemplateId { get; set; }
     }
 }

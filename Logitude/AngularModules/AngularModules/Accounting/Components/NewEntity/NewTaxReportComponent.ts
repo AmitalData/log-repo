@@ -7,14 +7,14 @@ import { TaxReportPM } from '../../EntityPMs/TaxReportPM';
 import { TaxReportPMService } from '../../Services/StandardPMs/TaxReportPMService';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { UIProperties } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { TaxReportExtendedPMService } from '../../Services/ExtendedPMs/TaxReportExtendedPMService';
 import { BatchTaskExecutionListService } from '../../../Infrastructure/Services/StandardLists/BatchTaskExecutionListService';
 import { BatchTaskExecutionList } from '../../../Infrastructure/EntityLists/BatchTaskExecutionList';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
 
 
 @Component({
@@ -142,31 +142,23 @@ export class NewTaxReportComponent extends BaseComponent {
                 var mm: ServiceResponse = myResult;
                 if (!mm.HasError) {
                     var entity = mm.Result;
-                    //this.CurrentSession.StartBusyIndicator("");
-                //    this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                     this._TaxReportExtendedPMService.PostCreateTaxReportInBatch(entity).subscribe((myResult:any) => {
-                        var mm: ServiceResponse = myResult;
-                        var entity = mm.Result;
-                        this.btePM = entity;
-
-                      //  this.ChangeStatus("inprogress");
-
-                        this.timer = setInterval(() => {
-                            this.GetBTE();
-                        }, this.timerInterval);
+                       if (!myResult.HasError) {
+                           
+                          this.CurrentSession.StopBusyIndicator();
+                          this.CurrentSession.CloseCurrentWindowEmit("ok");
+                          var messageWindow = new MessageWindow();
+                          messageWindow.ShowSuccessIcon = true;
+                          messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
+                          SessionLocator.HomeComponent.IsProcessMenuVisible = true;
+                          SessionLocator.HomeComponent.CurrentProcessId = myResult.ReportKey;
+                          SessionLocator.HomeComponent.SelectedTab = MenuTypes.BatchTaskExecution.toString();
+                          SessionLocator.HomeComponent.isPinned = true;
+                      }
 
                     });
-                    //SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    //    this.CurrentSession.SessionLocation.viewContainerRef)
-                    //    .then(cmpRef => {
-                    //        cmpRef.instance.ComponentRef = cmpRef;
-                    //        cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName });
-                    //        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                    //            this.CancelButtonClicked();
-                    //        });
-                    //    });
-                    //this.CurrentSession.StopBusyIndicator();
+                   
                 }
 
                 else {
@@ -183,55 +175,7 @@ export class NewTaxReportComponent extends BaseComponent {
     }
 
 
-    GetBTE() {
-        this._BatchTaskExecutionListService.getSingle(this.btePM.Id).subscribe((myResult:any) => {
-            console.log("[_BatchTaskExecutionListService.getSingle]", myResult);
-            var mm: ServiceResponse = myResult;
-            if (!mm.HasError) {
-                this.bteList = mm.Result;
-                if (this.bteList.StatusCode == "D") // D- Done
-                {
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-
-                     SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                        this.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: this.entityPM.Id, ObjectTableName: this.ObjectTableName });
-                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                this.CancelButtonClicked();
-                            });
-                        });
-                    this.CurrentSession.StopBusyIndicator();
-                    //stop timer
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-
-                }
-                else if (this.bteList.StatusCode == "F") // F- Failed
-                {
-                    //stop timer
-
-                    this.CurrentSession.StopBusyIndicator();
-                    this.CurrentSession.CloseCurrentWindowEmit("ok");
-                    if (this.timer) {
-                        clearInterval(this.timer);
-                    }
-
-                    //update status
-                 //   this.ChangeStatus("failed");
-
-                }
-            }
-            else {
-            }
-        });
-
-    }
+   
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();

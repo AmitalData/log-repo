@@ -239,6 +239,11 @@ export class TaxReportPM {
     public set RemoveDuplicates(newValue: boolean) { if (this.removeDuplicates != newValue) { this.removeDuplicates = newValue; this.MarkAsDirty("RemoveDuplicates"); } }
        
 	 
+    private isEdited: boolean;
+    public get IsEdited() { return this.isEdited; }
+    public set IsEdited(newValue: boolean) { if (this.isEdited != newValue) { this.isEdited = newValue; this.MarkAsDirty("IsEdited"); } }
+       
+	 
 
     public OldEntityPM: TaxReportPM;
 		

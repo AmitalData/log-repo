@@ -57,6 +57,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      Reference3 = a.Reference3,
                                                      Tenant = a.Tenant,
                                                      ExternalOpenAmount = a.ExternalOpenAmount,
+                                                     ExcludeFromTaxReport = a.ExcludeFromTaxReport,
                                                  });
             return query;
         }
@@ -93,6 +94,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                 CreditAccountId = a.CreditAccountId,
                                 CreditAccountName = a.CreditAccount != null ? a.CreditAccount.LocalName : null,
                                 ActionName = a.JournalActionType != null ? a.JournalActionType.LocalName : null,
+                                ExcludeFromTaxReport = a.ExcludeFromTaxReport,
                             });
 
             return Journallines;

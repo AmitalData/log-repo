@@ -42,12 +42,17 @@ using System.Data.SqlClient;
 using System.Data;
 using Logitude.Customs.BL.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
     public partial class JournalUpdateService : EntityUpdateService<Journal, JournalPM, EntityPM>
         , IJournalUpdateService
     {
+        const string ActionCode_Credit = "1";
+        const string ActionCode_Debit = "2";
+        const string ActionCode_DebitAndCredit = "3";
+
         class JournalLineUpdateServicePriv : JournalLineUpdateService
         {
             public JournalLineUpdateServicePriv(IContext mainContext, Dictionary<string, IContext> additionalContexts, int tenant)
@@ -157,6 +162,80 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 }
 
             }
+        }
+
+        public JournalLinePM CheckJournalActionCodeAndSplitedIt(JournalLinePM LinePM, List<JournalLinePM> JournalLines)
+        {
+            JournalLinePM newLine = null;
+
+            if (LinePM.ActionCode == ActionCode_DebitAndCredit)
+            {
+                var additionalCurrencyRateFeature = SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", LinePM.Tenant);
+                RatesTableQuery ratesTableQuery = new RatesTableQuery();
+                TenantQuery tenantQuery = new TenantQuery(LinePM.Tenant);
+                TenantPM tPM = tenantQuery.GetSinglePM(LinePM.Tenant);
+                string accountingCurrencyId = tPM.CurrencyId;
+                decimal? rateValue = additionalCurrencyRateFeature ? (decimal?)ratesTableQuery.GetLastRecordByValueDateAndExchangeRateId(LinePM.Tenant, LinePM.CurrencyId, tPM?.CurrencyId, LinePM.AccountingDate, LinePM.DebitAccountId) ?? LinePM.ExchangeRate : LinePM.ExchangeRate;
+                decimal ForeignAmountValue = additionalCurrencyRateFeature ? Math.Round(LinePM.LocalAmount / rateValue.Value, 2) : LinePM.ForeignAmount;
+                newLine = new JournalLinePM
+                {
+                    ActionTypeCode = ActionCode_Debit,
+                    Reference1 = LinePM.Reference1,
+                    Reference2 = LinePM.Reference2,
+                    Reference3 = LinePM.Reference3,
+                    AccountingDate = LinePM.AccountingDate,
+                    Notes = LinePM.Notes,
+                    ActionId = LinePM.ActionId,
+                    CurrentContextTag = LinePM.CurrentContextTag,
+                    CreditAccountId = LinePM.CreditAccountId,
+                    DebitAccountId = LinePM.DebitAccountId,
+                    DebitControlAccountId = LinePM.DebitControlAccountId,
+                    Tenant = LinePM.Tenant,
+                    DueDate = LinePM.DueDate,
+                    Line = JournalLines.Count() + 1,
+                    DocumentDate = LinePM.DocumentDate,
+                    ExchangeRate = rateValue,
+                    ForeignAmount = ForeignAmountValue,
+                    LocalAmount = LinePM.LocalAmount,
+                    CurrencyId = LinePM.CurrencyId,
+                    CurrencyCode = LinePM.CurrencyCode,
+                    ExternalOpenAmount = LinePM.ExternalOpenAmount,
+                    ExternalReconcileNumber = LinePM.ExternalReconcileNumber,
+                    IsExternalReconcile = LinePM.IsExternalReconcile,
+                    IsCreditAccountMulti = LinePM.IsCreditAccountMulti,
+                    IsDebitAccountMulti = LinePM.IsDebitAccountMulti,
+                    EncodeBase64NVARCHARFieldsBy = LinePM.EncodeBase64NVARCHARFieldsBy,
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                };
+                LinePM.ActionTypeCode = ActionCode_Credit;
+                LinePM.ActionCode = null;
+                LinePM.DebitAccountId = LinePM.DebitAccountId;
+                SetActionDatatForJournalLine(newLine);
+                SetActionDatatForJournalLine(LinePM);
+            }
+
+            return newLine;
+        }
+
+        private void SetActionDatatForJournalLine(JournalLinePM journalLinePM)
+        {
+            if (!String.IsNullOrWhiteSpace(journalLinePM.ActionTypeCode))
+            {
+                JournalActionTypeList action = GetJournalActionTypeListByCode(journalLinePM);
+                if (action != null)
+                {
+                    journalLinePM.ActionId = action.Id;
+                    journalLinePM.ActionCode = action.Code;
+                    journalLinePM.ActionName = action.EnglishName;
+                }
+            }
+        }
+
+        private JournalActionTypeList GetJournalActionTypeListByCode(JournalLinePM item)
+        {
+            var _IJournalActionTypeListQueryService = new JournalActionTypeListQueryService(this.MainContext as IAccountingContext);
+            JournalActionTypeList action = _IJournalActionTypeListQueryService.GetByCode(item.ActionTypeCode, item.Tenant);
+            return action;
         }
 
         private void UpdateLedgerTransactionWithNewValuesFromJournalLines(JournalPM entityPM)
@@ -914,7 +993,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return true;
         }
 
-
+        
 
 
     }

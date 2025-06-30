@@ -36,6 +36,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string TableName { get; set; }
         [Column("CreatedByUserName")]
 	    public string CreatedByUserName { get; set; }
+        [Column("AlwaysEnabled")]
+	    public bool AlwaysEnabled { get; set; }
     }
 }
 	 

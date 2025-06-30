@@ -444,7 +444,7 @@
                 <tr [hidden]="!IsSchedulerReport" class="FieldRow">
                     <td style="width:210px">
                         <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'"
-                            [Text]="'GLAccount.O.ClosedBalanceInLocalCurrency' | TextCodeTranslationPipe"
+                            [Text]="'GLAccount.F.BalanceInLocalCurrency' | TextCodeTranslationPipe"
                             [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
@@ -475,7 +475,7 @@
                 <tr [hidden]="!IsSchedulerReport" class="FieldRow">
                     <td style="width:210px">
                         <LogLabel [ObjectFieldName]="'LocalBalanceInDue'"
-                            [Text]="'GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue' | TextCodeTranslationPipe"
+                            [Text]="'GLAccount.F.LocalBalanceInDue' | TextCodeTranslationPipe"
                             [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
                         </LogLabel>
                     </td>
