@@ -141,9 +141,9 @@ namespace Logitude.Accounting.BL.CoreBL
 						{
 							var updater = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
 							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
-							scope.Complete();
+                             scope.Complete();
 						}
-					}
+                    }
 					catch (Exception updateEx)
 					{
 						NetCommonHelper.Logger.DevLog.Instance.WriteError(

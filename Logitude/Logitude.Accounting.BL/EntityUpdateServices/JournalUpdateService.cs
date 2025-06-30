@@ -328,6 +328,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             var poco = repoPriv.GetSingle(seedJournalId, tenant);
             poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
             repoPriv.Update(poco);
+            var journalQueryService = new JournalQueryService(this.MainContext as IAccountingContext);
+            journalQueryService.FixFailedReconcileJournals(tenant);
+
             return poco;
 
         }
