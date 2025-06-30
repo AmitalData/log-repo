@@ -380,7 +380,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     }
                                 }
 
-								float DecVersionId = 0;
+                                UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
+
+                                float DecVersionId = 0;
                                 float ResVersionId = 0;
 								float.TryParse(declarationPM.VersionId, out DecVersionId);
                                 float.TryParse(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion, out ResVersionId);
@@ -1095,6 +1097,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             return true;
+        }
+
+        private void UpdateAvaliabilityDate(DF_NG_8251_Web02_DeclarationStatus_ResponseDeclarationStatusAnswer declarationStatus_ResponseDeclarationStatusAnswer, DeclarationPM declarationPM)
+        {
+            DateTime? AvaliabilityDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog?.AvailabiltyLogRunDetails?.TimeStamp;
+            if (AvaliabilityDate != null)
+            {
+                string strDeclarationAvaliabilityDate = AvaliabilityDate?.ToString("dd/MM/yyyy HH:mm:ss.fff");
+                AvaliabilityDate = DateTime.Parse(strDeclarationAvaliabilityDate);
+            }
+            declarationPM.AvailabilityDate = AvaliabilityDate ?? DateTime.Now;
         }
 
         private static void TesterSendOption(DeclarationStatusRequestParams requestParams)
