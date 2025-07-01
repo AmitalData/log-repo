@@ -18,6 +18,8 @@ using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
