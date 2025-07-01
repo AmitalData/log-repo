@@ -19,7 +19,7 @@ using UnifreightIIG.Common.MessageLib.CargoTracking;
 using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
-{// moran 25.1.15 - Task 9967
+{
     public class LP_NG_8400_MSG01_LogisticPermitMessageResponseService :
       ResponseServiceBase<INF_MSG_GenericResponseData, LP_NG_8400_MSG01_LogisticPermitMessage, GenericRequestParams>
     {
@@ -29,7 +29,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override INF_MSG_GenericResponseData GetResponse(LP_NG_8400_MSG01_LogisticPermitMessage customResponse, GenericRequestParams requestParams)
         {
             return this.MyResponseData;
-            //return null;
+        
         }
 
 
@@ -296,7 +296,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     status_id = eventCode,
                     status_DateTime = DateTime.Now,
                     //status_place = "FRA",
-                    //status_save = "no_fail",
                     comments = remarks,
                 }
             };

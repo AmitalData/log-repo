@@ -79,7 +79,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (System.Exception)
             {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                 
                 throw;
             }
         }

@@ -1713,7 +1713,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_id = statusId,
                         status_DateTime = DateTime.Now,
                         //status_place = "",
-                        //status_save = "no_fail",
+                         
                         comments = "",
                     }
                 };
@@ -1725,7 +1725,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (System.Exception)
             {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                 
                 throw;
             }
         }

@@ -1181,7 +1181,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status_id = statusId,
                         status_DateTime = dirtyDeclarationPM.AvailabilityDate ?? DateTime.Now,
                         //status_place = "FRA",
-                        //status_save = "no_fail",
+                         
                         comments = "",
                     }
                 };
@@ -1193,7 +1193,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             catch (System.Exception)
             {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                 
                 throw;
             }
         }
