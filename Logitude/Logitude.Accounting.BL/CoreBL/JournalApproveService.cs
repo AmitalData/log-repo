@@ -144,8 +144,12 @@ namespace Logitude.Accounting.BL.CoreBL
 							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
                              scope.Complete();
 						}
+                        var journalQueryService = new JournalQueryService(_AccountingContext);
+                        journalQueryService.FixFailedReconcileJournals(_Tenant);
+
+
                     }
-					catch (Exception updateEx)
+                    catch (Exception updateEx)
 					{
 						NetCommonHelper.Logger.DevLog.Instance.WriteError(
 							$"[usp_AccountingStreaming] Failed to update journal status after primary exception. JournalId={_JournalPM?.Id} | Update Exception: {updateEx}");
@@ -1451,6 +1455,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     myDbQueueService.Complete();
                 }
+                var accountingContext = AccountingContext.GetContext(tenant);
+               var journalQueryService = new JournalQueryService(accountingContext);
+                journalQueryService.FixFailedReconcileJournals(tenant);
+
             }
         }
         /// <summary>
@@ -1623,6 +1631,10 @@ namespace Logitude.Accounting.BL.CoreBL
                             up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
                             scope.Complete();
                         }
+                        var journalQueryService = new JournalQueryService(_AccountingContext);
+                        journalQueryService.FixFailedReconcileJournals(_Tenant);
+
+
                     }
                     catch (Exception updateEx)
                     {

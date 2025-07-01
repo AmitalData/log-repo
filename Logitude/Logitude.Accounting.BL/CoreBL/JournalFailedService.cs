@@ -67,7 +67,10 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
                 scope.Complete();
+
             }
+
+
         }
 
         public void InsertJournalMoreData(IAccountingContext accountingContext, StringBuilder sb)
