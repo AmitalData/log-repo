@@ -21,6 +21,7 @@ using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -182,6 +183,11 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     payment.VoidedByJournalNumber = voidedByJournal.JournalNumber;
                     securedPM.VoidedByJournalNumber = voidedByJournal.JournalNumber;
                 }
+            }
+
+            if (string.IsNullOrEmpty(securedPM.PrintNotes))
+            {
+                securedPM.PrintNotes = TextCodesTranslator.TranslateText("ARPayment.S.ShortTitle", tenant, true);
             }
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
