@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomBankUpdateClass
    {  		
-		public const string HashString = "b88c24866b03c2224ffb09c36fd14033";
+		public const string HashString = "0fb8db638fa932efb8236d2cd49e3f77";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -41,6 +41,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  false,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -81,6 +82,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -297,7 +299,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.Bank",
 					  						MinLength =  0,
 					  						MaxLength =  2,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -368,7 +370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						LookUpTableName =  "Customs.CustomsBranch",
 					  						MinLength =  0,
 					  						MaxLength =  3,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -436,7 +438,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  11,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -504,7 +506,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  30,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  false,
