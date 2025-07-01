@@ -158,6 +158,12 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         }
     }
 
+    private closeAfterSave = false;
+    onSaveClick() {
+        this.closeAfterSave = true;
+        this.SaveSiiRequest();
+    }
+
     //#region SaveSiiRequest
     SaveSiiRequest() {
         if (this.IsNewOrEdit === SiiRequestMode.IsNew) {
@@ -168,6 +174,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     this.IsDisplayOnly = false;
                     this.isAllowChange = true;
                     this.RefreshEntity();
+                    if (this.closeAfterSave) {
+                        this.CurrentSession.CloseCurrentWindow();
+                        this.closeAfterSave = false;
+                    }
                 }
                 else if (response.ErrorsArray.length > 0) {
                     this.validationErrors = response.ErrorsArray;
@@ -180,6 +190,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 if (response?.Result) {
                     this.entityPM = response.Result;
                     this.RefreshEntity();
+                    if (this.closeAfterSave) {
+                        this.CurrentSession.CloseCurrentWindow();
+                        this.closeAfterSave = false;
+                    }
                 }
                 else if (response.ErrorsArray.length > 0) {
                     this.validationErrors = response.ErrorsArray;
@@ -309,7 +323,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 );
         };
 
-        if (this.entityPM.IsDirty) {
+        if (this.entityPM.IsDirty || this.entityPM.Id == null) {
             const confirm = new ConfirmWindow();
             confirm.YesButtonText = TextCodeTranslator.Translate('General.B.Yes');
             confirm.ShowNoButton = true;
@@ -320,6 +334,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                         TextCodeTranslator.Translate('Customs.SIIRequest.O.SendingRequest')
                     );
                     this.SaveSiiRequest();
+                    this.CurrentSession?.CurrentEditComponent?.ReloadEntityPM();
                     afterSave();
                 } else {
                     this.CurrentSession.StopBusyIndicator();
@@ -566,8 +581,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM.Id;
     }
     public set Id(newValue: string) {
-        this.entityPM.Id = newValue;
-        this.entityPM.IsDirty = true;
+        if (this.entityPM.Id != newValue) {
+            this.entityPM.Id = newValue;
+            this.entityPM.IsDirty = true;
+        }
     }
 
     public get RequestNo(): string {
@@ -595,29 +612,33 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM?.WareHouseAddress;
     }
     public set WareHouseAddress(newValue: string) {
-        this.entityPM.WareHouseAddress = newValue;
-        this.entityPM.IsDirty = true;
+        if (this.entityPM.WareHouseAddress != newValue) {
+            this.entityPM.WareHouseAddress = newValue;
+            this.entityPM.IsDirty = true;
+        }
     }
 
     public get WareHouseCity(): string {
         return this.entityPM?.WareHouseCity;
     }
     public set WareHouseCity(newValue: string) {
-        this.entityPM.WareHouseCity = newValue;
-        this.entityPM.IsDirty = true;
+        if (this.entityPM.WareHouseCity != newValue) {
+            this.entityPM.WareHouseCity = newValue;
+            this.entityPM.IsDirty = true;
+        }
     }
 
     public get WareHouseCityName(): string {
         return this.entityPM?.WareHouseCityName;
     }
     public set WareHouseCityName(newValue: string) {
-        this.entityPM.WareHouseCityName = newValue;
-        this.entityPM.IsDirty = true;
+        if (this.entityPM.WareHouseCityName != newValue) {
+            this.entityPM.WareHouseCityName = newValue;
+        }
     }
 
     SetLocalName(entity, fieldName) {
         this.entityPM[fieldName] = !AppTool.IsNullOrEmpty(entity) ? entity?.LocalName : null;
-        this.entityPM.IsDirty = true;
     }
 
     public get IsClosed(): boolean {
@@ -631,8 +652,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM?.Remarks;
     }
     public set Remarks(newValue: string) {
-        this.entityPM.Remarks = newValue;
-        this.entityPM.IsDirty = true;
+        if (this.entityPM.Remarks != newValue) {
+            this.entityPM.Remarks = newValue;
+            this.entityPM.IsDirty = true;
+        }
     }
 
     public get ListCounter(): number {
@@ -675,7 +698,6 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set VesselName(newValue: string) {
         this.entityPM.VesselName = newValue;
-        this.entityPM.IsDirty = true;
     }
 
     public get ContactEmail(): string {
@@ -710,10 +732,12 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM?.ContactId;
     }
     public set ContactId(newValue: string) {
-        let oldValue = this.entityPM.ContactId;
-        this.entityPM.ContactId = newValue;
-        if (!AppTool.IsNullOrEmpty(newValue) && oldValue !== newValue) this.getContactData(newValue);
-        this.entityPM.IsDirty = true;
+        if (this.entityPM.ContactId != newValue) {
+            let oldValue = this.entityPM.ContactId;
+            this.entityPM.ContactId = newValue;
+            if (!AppTool.IsNullOrEmpty(newValue) && oldValue !== newValue) this.getContactData(newValue);
+            this.entityPM.IsDirty = true;
+        }
     }
     //#endregion SiiRequest properties
 }
