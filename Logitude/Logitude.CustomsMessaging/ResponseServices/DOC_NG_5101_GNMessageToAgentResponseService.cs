@@ -34,14 +34,12 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using System.ComponentModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
-{ 
+{  // moran 6.10.14 - Task 8066 -->
     public class DOC_NG_5101_GNMessageToAgentResponseService :
       ResponseServiceBase<INF_MSG_GenericResponseData, DOC_NG_5101_GNMessageToAgent, GenericRequestParams>
     {
-        
 
         DeclarationPM _MyDeclarationPM;
         bool IsExportDeclaration;
@@ -50,8 +48,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
-
-
 
         public override void Update(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
@@ -81,7 +77,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             var dec = myQueryService.GetDeclarationByDeclarationNum(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
-            IsExportDeclaration = dec?.Direction == Utils.DirectionsUtil.ShippingDirection("Export");
+            IsExportDeclaration = dec?.Direction == "E";
 
             LogMessagingUtil.Instance.AppendLine("Analyze Message To Agent response" + requestParams.AppicationId);
 
@@ -164,7 +160,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 case 7:
                     notificationDefinitionCode = "5101D";
                     notificationDescription = "הצהרה נותבה לתור בקרת מסמכים";
-                    notificationStatusCode = "VCI";
+                    notificationStatusCode = "VCI"; // moran 1.8.16 - Task 21654 - change CDC to VCI
                     assigneToNotificationTypeCode = "I";
                     break;
                 case 8:
@@ -194,7 +190,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "נוצרה בקשת אחסנה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
                     break;
-                case 16: 
+                case 16: // moran 17.1.17 - Task 21101
                     notificationDefinitionCode = "5101B";
                     assigneToNotificationTypeCode = "I";
                     notificationDescription = "בדיקה בטחונית להצהרה " + customResponse.MessageToAgent.RelatedEntity.entityIdKey1;
@@ -621,7 +617,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string referentUserId = null;
             if (this._MyDeclarationPM != null)
             {
-                if (this._MyDeclarationPM.Direction == Utils.DirectionsUtil.ShippingDirection("Export"))
+                if (this._MyDeclarationPM.Direction == "E")
                     newNotificationPM.ResponseToMessage = responseToMessage;
 
                 newNotificationPM.EntityId = this._MyDeclarationPM.Id;
@@ -641,7 +637,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 newNotificationPM.EntityId = MyRequestSheetParam.EntityId1;
                 newNotificationPM.ObjectTableId = MyRequestSheetParam.ObjectTableId1;
             }
-            if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId)) newNotificationPM.CustomerId = this._MyDeclarationPM.CustomerId; 
+            if (this._MyDeclarationPM != null && !string.IsNullOrWhiteSpace(this._MyDeclarationPM.CustomerId)) newNotificationPM.CustomerId = this._MyDeclarationPM.CustomerId; // moran 20.6.16 - Task 20789
 
             newNotificationPM.AssigneToId =
                NotificationBase.CalcAssigneToId(newNotificationPM.Tenant, customerId, referentUserId, notificationDefinitionCode, "");
@@ -685,6 +681,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         xml_status = "new",
                         status_id = code,
                         status_DateTime = DateTime.Now,
+                        //status_save = "no_fail",
                         comments = remarks,
                     }
                 };
@@ -695,7 +692,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             catch (System.Exception)
             {
-             
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
 

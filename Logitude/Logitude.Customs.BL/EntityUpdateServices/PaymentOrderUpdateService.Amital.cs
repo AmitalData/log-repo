@@ -152,7 +152,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_id = "POP",
                         status_DateTime = DateTime.Now,
                         status_place = "FRA",
-                         
+                        //status_save = "no_fail",
                         comments = eventContextTagModel.FUStatusRemarks,
                     }
                 };
@@ -160,7 +160,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }
@@ -203,7 +203,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             status_id = statusId,
                             status_DateTime = DateTime.Now,
                             //status_place = "FRA",
-                             
+                            //status_save = "no_fail",
                             comments = eventContextTagModel.FUStatusRemarks,
                         }
                     };
@@ -215,7 +215,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 catch (Exception)
                 {
-                     
+                    // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                     throw;
                 }
             }
@@ -488,7 +488,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }
@@ -682,7 +682,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 status_id = status_id,
                 status_DateTime = DateTime.Now,
                 //status_place = status_place,
-                 
+                //status_save = "no_fail",
                 comments = comments,
             };
 
@@ -719,7 +719,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_id = status_id,
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
-                         
+                        //status_save = "no_fail",
                         comments = eventContextTagModel.FUStatusRemarks,
                     }
                 };
@@ -728,7 +728,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }

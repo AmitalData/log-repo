@@ -214,7 +214,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_id = eventCode,
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
-                         
+                        //status_save = "no_fail",
                         comments = "",
                     }
                 };
@@ -225,7 +225,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }
@@ -254,7 +254,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_id = "INR",
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
-                         
+                        //status_save = "no_fail",
                         comments = "",
                     }
                 };
@@ -266,7 +266,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (System.Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
 
@@ -292,7 +292,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_id = "INR",
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
-                         
+                        //status_save = "no_fail",
                         comments = "",
                     }
                 };
@@ -304,7 +304,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (System.Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }

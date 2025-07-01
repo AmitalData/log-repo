@@ -515,7 +515,7 @@ namespace Logitude.Customs.Def.ClosedTable
 
             });
 
-            all.Add(new NotificationDefinitionDetails()     
+            all.Add(new NotificationDefinitionDetails() // moran 25.1.15 - Task 9967  
             {
                 Code = "8400A",
                 EnglishName = "Customs Approved Logistic Permit",
@@ -525,7 +525,7 @@ namespace Logitude.Customs.Def.ClosedTable
 
             });
 
-            all.Add(new NotificationDefinitionDetails()     
+            all.Add(new NotificationDefinitionDetails() // moran 25.1.15 - Task 9967  
             {
                 Code = "8400C",
                 EnglishName = "Customs Cancelled Logistic Permit",

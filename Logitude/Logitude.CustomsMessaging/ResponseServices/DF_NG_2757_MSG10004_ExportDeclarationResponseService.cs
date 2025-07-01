@@ -356,9 +356,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-          
+            //לא רלוונטי ליצוא
+            /*if (this._MyDeclarationPM.IsConvertedDeclaration) // Mirit 24/01/16 19918
+            {
+                LogMessagingUtil.Instance.AppendLine("נתוני ההצהרה לא עודכנו מכיוון שמדובר בהצהרה מוסבת");
+                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                this.MyResponseData.Succeeded = true;
+                this.MyResponseData.UserMessage = "נתוני ההצהרה לא עודכנו מכיוון שמדובר בהצהרה מוסבת";
+                this.MyResponseData.HasException = false;
+
+                return;
+            }*/
 
 
+
+
+
+            //<--- Yuval Chalup 28.05.2015 TASK-13252
             if (!string.IsNullOrWhiteSpace(this._MyDeclarationPM.Id))
             {
                 if (this.MyRequestSheetParam == null)
@@ -2385,7 +2399,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             catch (System.Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }
@@ -2417,7 +2431,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status_id = statusId,
                         status_DateTime = DateTime.Now,
                         //status_place = "",
-                         
+                        //status_save = "no_fail",
                         comments = "",
                     }
                 };
@@ -2429,7 +2443,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             catch (System.Exception)
             {
-                 
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }

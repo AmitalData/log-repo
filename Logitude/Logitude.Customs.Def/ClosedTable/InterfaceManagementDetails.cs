@@ -1848,9 +1848,9 @@ namespace Logitude.Customs.Def.ClosedTable
                 //   NeedSignature = false
             });
 
-            
+            // moran 8.1.15 - Task 10004 <--
 
-             
+            // moran 25.1.15 - Task 9967 -->
             //DCAInLP_NG_8400_MSG01_LogisticPermitMessageMessagingService
             all.Add(new InterfaceManagementDetails()
             {
@@ -1884,7 +1884,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 //   NeedSignature = false
             });
 
-             
+            // moran 25.1.15 - Task 9967 <--
 
             all.Add(new InterfaceManagementDetails()
             {

@@ -6,6 +6,7 @@ import {SessionLocator} from '../../../../../Infrastructure/Utilities/SessionLoc
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {ObservableCollection} from '../../../../../Infrastructure/Utilities/ObservableCollection';
+import {ConfirmWindow} from '../../../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../../../Controls/Windows/MessageWindow';
 import {ServiceResponse} from '../../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../../Controls/Windows/LogitudeWindow';
@@ -18,6 +19,7 @@ import {DeclarationEventManager} from '../../../../../Customs/Utilities/Declarat
 import {DeclarationWebService} from '../../../../../Customs/Services/WebServices/DeclarationWebService';
 import {DeclarationPMService} from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import {ConstraintApprovalRequestParams} from '../../../../../Customs/DataContract/RequestParams/ConstraintApprovalRequestParams';
+declare var UploadLogoFile, HideImage , SetImage, ArrayBufferToBase64: any;
 
 // Send Request
 import {INF_MSG_GenericResponseData} from '../../../../../Customs/DataContract/ResponseData/INF_MSG_GenericResponseData';
