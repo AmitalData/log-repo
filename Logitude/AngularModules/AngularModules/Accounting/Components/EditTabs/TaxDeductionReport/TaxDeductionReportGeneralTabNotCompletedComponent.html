@@ -1,9 +1,3 @@
-<style>
-    .subTitle {
-        color: #1b90cb;
-        font-size: 16px;
-    }
-</style>
 <table>
     <tr>
         <td>
@@ -51,7 +45,7 @@
                                             </tr>
 
                                             <!-- From Month -->
-                                            <tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">
+                                            <tr class="FormFieldRow"  *ngIf="entityPM?.ByMonth && !!entityPM?.FromMonth">
                                                 <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <LogLabel [ObjectFieldName]="'FromMonth'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
@@ -82,7 +76,7 @@
                                             <tr class="FormFieldRow">
 
 
-                                                <td *ngIf="Faild" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                <td *ngIf="Failed" [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <button style="display: inline-block;width:100px;" class="Button" [disabled]="Building" (click)="RunService()">{{'Accounting.O.Rebuild' | TextCodeTranslationPipe}}</button>
                                                 </td>
                                                 <td></td>

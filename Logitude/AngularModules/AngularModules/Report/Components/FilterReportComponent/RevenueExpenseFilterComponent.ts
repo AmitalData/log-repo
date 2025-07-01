@@ -420,7 +420,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
                      break;
                  case "CardFilter":
                  {  this.BuildFilterList();
-                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[0];
+                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[1];
                     this.UseBalanceFilter = queryFilterItem.FieldValue == "1" || queryFilterItem.FieldValue == "2";                            
                     break;
                  }

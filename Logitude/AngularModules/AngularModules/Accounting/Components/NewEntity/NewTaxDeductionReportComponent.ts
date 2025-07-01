@@ -108,11 +108,13 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
         }
     }
 
-    private SetEmailValue() {
-        if (!AppTool.IsNullOrEmpty(this.entityPM.Email))
+
+    private SetEmailValue(): void {
+        if (!AppTool.IsNullOrEmpty(this.entityPM.Email)) {
             this.enterdEmail = this.entityPM.Email;
+        }
         this.entityPM.Email =
-            this.FilterSelectedValue == this.TimePeriod.Month ? ' ' : this.enterdEmail;
+                this.FilterSelectedValue === this.TimePeriod.Month ? ' ' : this.enterdEmail;
     }
 
     get Email() {
@@ -197,7 +199,9 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
             errors.push(s);
         }
 
-        if (this.FilterSelectedValue == this.TimePeriod.Periodic && this.entityPM.Month.getMonth() <= this.entityPM.FromMonth.getMonth()) {
+
+        if (this.FilterSelectedValue == this.TimePeriod.Periodic &&
+            this.entityPM.Month.getMonth() <= this.entityPM.FromMonth.getMonth()) {
             errors.push(TextCodeTranslator.Translate('TaxDeductionReport.O.InvalidMonthPeriod'));
         }
         
@@ -205,7 +209,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
-            if (this.FilterSelectedValue != this.TimePeriod.Periodic) {
+            if (this.FilterSelectedValue !== this.TimePeriod.Periodic) {
                 this.entityPM.FromMonth = null;
             }
 
