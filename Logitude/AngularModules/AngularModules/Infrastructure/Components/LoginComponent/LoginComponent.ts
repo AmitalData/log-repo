@@ -538,6 +538,7 @@ export class LoginComponent implements OnInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
+                IgnoreMFA: false,
             };
 
             this.HidePendingLoading = false;
@@ -621,6 +622,7 @@ export class LoginComponent implements OnInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
+                IgnoreMFA: false,
             };
 
             this.loginService.CurrentTenant = this.Tenant;
