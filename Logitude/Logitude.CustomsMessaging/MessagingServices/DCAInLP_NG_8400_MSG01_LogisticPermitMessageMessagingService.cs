@@ -14,7 +14,7 @@ using UnifreightIIG.Common.MessageLib.CargoTracking;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.CustomsMessaging.MessagingServices
-{  
+{// moran 25.1.15 - Task 9967
     public class DCAInLP_NG_8400_MSG01_LogisticPermitMessageMessagingService : MessagingServiceBase<
         GenericRequestParams,
         INF_MSG_GenericResponseData,

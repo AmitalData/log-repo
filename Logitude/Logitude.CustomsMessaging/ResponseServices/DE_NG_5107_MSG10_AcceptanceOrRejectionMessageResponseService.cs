@@ -165,7 +165,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     status_id = eventCode,
                     status_DateTime = DateTime.Now,
                     //status_place = "DCA",
-                     
+                    //status_save = "no_fail",
                     comments = remarks,
                 }
             };

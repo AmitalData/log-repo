@@ -7,6 +7,7 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools.Helpers;
+///using Logitude.CustomsMessaging.Utils;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -168,7 +169,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         xml_status = "new",
                         status_id = unifrieghtStatus,
                         status_DateTime = date.HasValue?date.GetValueOrDefault():DateTime.Now,
-                         
+                        //status_save = "no_fail",
                         comments = FUStatusRemarks,
                     };
                 }
@@ -176,7 +177,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             catch (System.Exception)
             {
-          
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
                 throw;
             }
         }
