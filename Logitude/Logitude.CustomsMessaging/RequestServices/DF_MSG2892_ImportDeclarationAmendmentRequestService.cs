@@ -398,7 +398,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                     status_id = "DCH",
                     status_DateTime = DateTime.Now,
                     //status_place = "FRA",
-                    //status_save = "no_fail",
+                     
                     comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
                 }
             };

@@ -140,7 +140,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception)
             {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                 
                 throw;
             }
         }

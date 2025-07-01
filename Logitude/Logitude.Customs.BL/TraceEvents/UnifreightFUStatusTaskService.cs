@@ -220,7 +220,7 @@ namespace Logitude.Customs.BL.TraceEvents
                 xml_status = xmlStatus,
                 status_id = status_id,
                 status_DateTime = statusDateTime,
-                //status_save = "no_fail",
+                 
                 comments = comments,
                 OwnerUnifreightUserCode = myUnifreightFUStatusParam.OwnerUnifreightUserCode
             };

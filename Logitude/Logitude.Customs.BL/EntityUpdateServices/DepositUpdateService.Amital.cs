@@ -79,7 +79,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_id = unifrieghtStatus,
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
-                        //status_save = "no_fail",
+                         
                         comments = eventContextTagModel.FUStatusRemarks,
                     }
                 };
@@ -87,7 +87,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             catch (Exception)
             {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                 
                 throw;
             }
         }

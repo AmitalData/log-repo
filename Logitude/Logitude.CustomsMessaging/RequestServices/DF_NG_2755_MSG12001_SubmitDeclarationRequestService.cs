@@ -506,7 +506,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         status_id = "PHF",
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
-                        //status_save = "no_fail",
+                         
                         comments = "Declaration Payment:" + connectedDeclarationPM.DeclarationNumber + ", Payment Date:" + declarationPaymentPM.PaymentDate,
                     }
                 };
@@ -514,7 +514,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             catch (System.Exception)
             {
-                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                 
                 throw;
             }
         }
