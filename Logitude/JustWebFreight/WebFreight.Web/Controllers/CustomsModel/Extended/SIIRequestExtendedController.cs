@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.BL.SIIRequest;
 using Logitude.Customs.Data.EntityKeys;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
