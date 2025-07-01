@@ -39,6 +39,15 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = "3",
                 Partner = "",
                 ViaMethod = ""
+            },
+
+            new InterfaceDetails()
+            {
+                Code = "4",
+                Name = "מיקוד",
+                TypeCode = "4",
+                Partner = "",
+                ViaMethod = ""
             }
 
             };
