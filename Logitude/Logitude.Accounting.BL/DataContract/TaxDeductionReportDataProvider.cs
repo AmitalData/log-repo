@@ -1038,7 +1038,11 @@ namespace Logitude.Accounting.BL.DataContract
         }
         private void GenerateGLAccountRequiredFieldsError(string Fieldname, GLAccountList gLAccount)
         {
-            taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + "Glaccount without " + TextCodesTranslator.TranslateText("GLaccount.F." + Fieldname, Tenant) + " , " + TextCodesTranslator.TranslateText("GLAccount.F.DisplayNumber", Tenant) + ": " + gLAccount.DisplayNumber;
+            string missingField = TextCodesTranslator.TranslateText("GLAccounts.O.MissingFieldInAccount", Tenant, true)
+                .Replace("{field}", TextCodesTranslator.TranslateText("GLaccount.F." + Fieldname, Tenant, true))
+                .Replace("{account}", gLAccount.DisplayNumber);
+
+            taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + missingField;
         }
         private List<TaxDeductionReportLine> GroupDeductionLinesByVendorAndPercentage(List<TaxDeductionReportLine> deductionLines)
         {
