@@ -19709,6 +19709,12 @@
       LocalDefaultText="&quot;לאחד כרטיסי פיצול&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.MissingFieldInAccount&quot;"
+      DefaultText="&quot;Missing {field} in vendor account: {account} &quot;"
+      LocalDefaultText="&quot;לא נמצא {field} בכרטיס ספק: {account}&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
