@@ -463,7 +463,6 @@
   </Column>
   <Column
     Name="TransImporterEntitleTypeCode"
-    ShortName="TransImporEntTypeCode"
     Type="varchar"
     Size="3">
     <Constraints
@@ -1125,6 +1124,12 @@
     Name="ShipmentId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RowVer"
+    Type="varbinary">
     <Constraints
       Nullable="true" />
   </Column>
