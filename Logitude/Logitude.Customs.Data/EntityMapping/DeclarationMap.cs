@@ -17,19 +17,19 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using POCO = Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
- 
+
 namespace Logitude.Customs.Data.EntityMapping
 {
- 
+
     public class DeclarationMap : EntityTypeConfiguration<POCO.Declaration>
     {
-	    string dbms;
+        string dbms;
         public DeclarationMap()
-        { 
-			  this.ToTable("Declarations", "Customs");
-		
-		    this.HasKey(t => new { t.Id });
-	 
+        {
+            this.ToTable("Declarations", "Customs");
+
+            this.HasKey(t => new { t.Id });
+
             this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
@@ -160,27 +160,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsConnectedToUnifreight).HasColumnName("IsConnectedToUnifreight");
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.MainImporterEntitlemntTypeCode).HasColumnName("MainImporterEntiTypeCode").HasMaxLength(3).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.MainImporterEntitlemntTypeCode).HasColumnName("MainImporterEntitlemntTypeCode").HasMaxLength(3).IsUnicode(false);
-			}
+            this.Property(t => t.MainImporterEntitlemntTypeCode).HasColumnName("MainImporterEntitlemntTypeCode").HasMaxLength(3).IsUnicode(false);
 
-
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.TransImporterEntitleTypeCode).HasColumnName("TransImporEntTypeCode").HasMaxLength(3).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.TransImporterEntitleTypeCode).HasColumnName("TransImporterEntitleTypeCode").HasMaxLength(3).IsUnicode(false);
-			}
-
+            this.Property(t => t.TransImporterEntitleTypeCode).HasColumnName("TransImporterEntitleTypeCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.ImporterAddress).HasColumnName("ImporterAddress").HasMaxLength(236).IsUnicode(true);
 
@@ -306,16 +288,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CancelRequestReasonCode).HasColumnName("CancelRequestReasonCode").HasMaxLength(3).IsUnicode(false);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExpl").HasMaxLength(512).IsUnicode(true);
-			}
-			else
-			{
-              this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExplanation").HasMaxLength(512).IsUnicode(true);
-			}
-
+            this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExplanation").HasMaxLength(512).IsUnicode(true);
 
             this.Property(t => t.CancelRequestNumber).HasColumnName("CancelRequestNumber");
 
@@ -363,27 +336,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ClosingXml).HasColumnName("ClosingXml").IsMaxLength().IsUnicode(true);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ExportCloseAmendRequestNumber).HasColumnName("ExportCloseAmendReqNum").HasMaxLength(9).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.ExportCloseAmendRequestNumber).HasColumnName("ExportCloseAmendRequestNumber").HasMaxLength(9).IsUnicode(false);
-			}
+            this.Property(t => t.ExportCloseAmendRequestNumber).HasColumnName("ExportCloseAmendRequestNumber").HasMaxLength(9).IsUnicode(false);
 
-
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmenStatus").HasMaxLength(2).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmendmentStatus").HasMaxLength(2).IsUnicode(false);
-			}
-
+            this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmendmentStatus").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.CasualImporterCountry).HasColumnName("CasualImporterCountry").HasMaxLength(4).IsUnicode(false);
 
@@ -402,7 +357,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.SystemConnection).HasColumnName("SystemConnection").HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.ShipmentId).HasColumnName("ShipmentId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.RowVer).HasColumnName("RowVer");
         }
     }
 }
-	 
