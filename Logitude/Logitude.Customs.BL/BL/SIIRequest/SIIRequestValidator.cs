@@ -9,12 +9,14 @@ using System.Text.RegularExpressions;
 internal static class SIIRequestValidator
 {
     internal const string RequiredFieldsTextCode = "Customs.SIIRequest.O.RequiredFields";
+    internal const string LineCode = "Customs.SIIRequest.O.Line";
+    internal const string AttachmentCode = "Customs.SIIRequest.O.Attachment";
 
     public static void Validate(ReleaseRequestApiDto dto, int tenant)
     {
         var errors = new List<string>();
 
-      
+
         var f = dto.releaseRequestForm;
         Check(f.formApplicationId, "formApplicationId", errors);
         Check(f.importerNumber, "importerNumber", errors);
@@ -64,20 +66,22 @@ internal static class SIIRequestValidator
             }
 
             bool declaredMismatch =
-                line.quantityByDecaredUnit == null ^
-                string.IsNullOrWhiteSpace(line.declaredUnitCode);
+                (line.quantityByDecaredUnit == null && !string.IsNullOrWhiteSpace(line.declaredUnitCode)) ||
+                (line.quantityByDecaredUnit != null && string.IsNullOrWhiteSpace(line.declaredUnitCode));
 
             if (declaredMismatch)
-                errors.Add($"{p}.quantityByDeclaredUnit/declaredUnitCode");
+                errors.Add($"{p}.quantityByDeclaredUnit");
         }
 
-        
+
         foreach (var (att, i) in dto.formAttachments.Select((a, idx) => (a, idx)))
         {
             string p = $"attachment[{i}]";
             CheckIndex(att.formAttachmentIndex, $"{p}.formAttachmentIndex", errors);
         }
 
+        string lineLabel = Translate(LineCode, tenant);
+        string attachmentLabel = Translate(AttachmentCode, tenant);
 
         if (errors.Count > 0)
         {
@@ -87,10 +91,10 @@ internal static class SIIRequestValidator
                 if (m.Success)
                 {
                     string context = m.Groups["type"].Value == "line"
-                                     ? $"שורה {m.Groups["idx"].Value} – "
-                                     : $"צרופה {m.Groups["idx"].Value} – ";
+                                     ? $"{lineLabel} {m.Groups["idx"].Value} – "
+                                     : $"{attachmentLabel} {m.Groups["idx"].Value} – ";
 
-                    string fieldKey = m.Groups["field"].Value;    
+                    string fieldKey = m.Groups["field"].Value;
                     string hebrew = Translate($"Customs.SIIRequest.O.{fieldKey}", tenant);
 
                     return context + hebrew;
@@ -108,23 +112,7 @@ internal static class SIIRequestValidator
         }
     }
 
-    /* ---------- helpers ---------- */
-
-    private static string ExtractBaseCode(string raw)
-    {
-        int dot = raw.LastIndexOf('.');
-        string candidate = (dot >= 0 && dot + 1 < raw.Length)
-            ? raw.Substring(dot + 1)
-            : raw;
-
-        candidate = Regex.Replace(candidate, @"^.*\]", string.Empty);
-
-        if (candidate.Contains("/")) return "quantityByDeclaredUnit";
-
-        return candidate;
-    }
-
-    private static string Translate(string code, int tenant)
+    public static string Translate(string code, int tenant)
     {
         if (SIIRequestApiRequestFactory.OverrideITextCodeTranslator != null)
             return SIIRequestApiRequestFactory.OverrideITextCodeTranslator.Translate(code, tenant);

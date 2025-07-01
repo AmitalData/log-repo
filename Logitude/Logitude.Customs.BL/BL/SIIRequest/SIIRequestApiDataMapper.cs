@@ -28,6 +28,10 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         readonly string SIIRequestComputingPartner = "SIIRequest";
         readonly string ComputingPartnerTableMeasurmentUnit = "Customs.MeasurmentUnit";
         readonly string ComputingPartnerTableUnloadingSiteType = "Customs.UnloadingSiteType";
+
+        internal const string ItemNotCompleted = "Customs.SIIRequest.O.DataNotCompleted";
+        internal const string LineCode = "Customs.SIIRequest.O.Line";
+
         public const string NoProduct = "0";
         public const string DutchGroup1 = "1";
         private static readonly HashSet<string> AllowedExts = new HashSet<string>(new[] { "pdf", "gif", "jpg" }, StringComparer.OrdinalIgnoreCase);
@@ -277,8 +281,15 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 key.InvoiceCounterKey,
                 key.InvoiceItemLineNumber,
                 true,
-                false)
-                ?? throw new ArgumentException($"Line {key.LineNumber} not found in {key.SIIRequestID}", nameof(key));
+                false);
+            if (item == null)
+            {
+                var lineLbl = SIIRequestValidator.Translate(LineCode, _tenant);
+                var dataMsg = SIIRequestValidator.Translate(ItemNotCompleted, _tenant);
+
+                throw new InvalidOperationException(
+                    $"{lineLbl} {key.LineNumber} - {dataMsg}");
+            }
 
             var line = new ReleaseRequestLineDto
             {
