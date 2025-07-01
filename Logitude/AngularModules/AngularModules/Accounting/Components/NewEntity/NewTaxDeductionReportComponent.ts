@@ -83,35 +83,31 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
         }
     }
 
-    private _selectedFromMonth: CodeNameClass;
-        get SelectedFromMonth(): CodeNameClass {
-        return this._selectedFromMonth;
+    private selectedFromMonth: CodeNameClass;
+    get SelectedFromMonth() {
+        return this.selectedFromMonth;
     }
-
     set SelectedFromMonth(value: CodeNameClass) {
-        if (this._selectedFromMonth !== value) {
-        this._selectedFromMonth = value;
-            if (value) {
-                const fromMonth = new Date();
-                fromMonth.setMonth(+value.Code - 1);
-                this.entityPM.FromMonth = fromMonth;
-            } else {
-                this.entityPM.FromMonth = null;
+        if (this.selectedFromMonth != value) {
+            this.selectedFromMonth = value;
+            if (value != null) {
+                this.entityPM.FromMonth = new Date();
+                this.entityPM.FromMonth.setMonth(+value.Code - 1);
             }
             this.UIProperties.SetRequired('FromMonth', this.ObjectTableName, AppTool.IsNullOrEmpty(value));
         }
     }
 
-
     public FilterSelectedValue: string = this.TimePeriod.Year;
+    FilterItemClicked(itemValue: string) {
+        if (this.FilterSelectedValue != itemValue) {
+            this.FilterSelectedValue = itemValue;
 
-    FilterItemClicked(itemValue: string): void {
-        if (this.FilterSelectedValue !== itemValue) {
-        this.FilterSelectedValue = itemValue;
-        this.ByMonth = ([this.TimePeriod.Month, this.TimePeriod.Periodic] as string[]).includes(itemValue);
-        this.SetEmailValue();
+            this.ByMonth = itemValue == this.TimePeriod.Month || itemValue == this.TimePeriod.Periodic;
+            this.SetEmailValue();
         }
     }
+
 
     private SetEmailValue(): void {
         if (!AppTool.IsNullOrEmpty(this.entityPM.Email)) {

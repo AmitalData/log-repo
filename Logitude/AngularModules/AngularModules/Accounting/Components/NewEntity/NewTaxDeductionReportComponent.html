@@ -35,22 +35,18 @@
 
         <td></td>
     </tr>
-    <tr style="height:32px" *ngIf="FilterSelectedValue === TimePeriod.Periodic">
+    <tr style="height:32px" *ngIf="FilterSelectedValue == TimePeriod.Periodic">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'FromMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
         </td>
 
         <td style="width:150px">
-            <ComboBox [ItemsSource]="MonthsList"
-                [Binding]="'Name'"
-                [SelectedItem]="SelectedFromMonth"
-                (SelectedItemChanged)="SelectedFromMonth = $event">
-            </ComboBox>
+            <ComboBox [ItemsSource]="MonthsList" [Binding]="'Name'" [SelectedItem]="SelectedFromMonth" (SelectedItemChanged)="SelectedFromMonth=$event"></ComboBox>
         </td>
 
         <td></td>
     </tr>
-    <tr style="height:32px" *ngIf="FilterSelectedValue === TimePeriod.Month || FilterSelectedValue === TimePeriod.Periodic">
+    <tr style="height:32px" *ngIf="FilterSelectedValue == TimePeriod.Month || FilterSelectedValue == TimePeriod.Periodic">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'Month'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -63,7 +59,7 @@
         <td></td>
     </tr>
 
-    <tr style="height:32px" *ngIf="FilterSelectedValue === 'Year'">
+    <tr style="height:32px" *ngIf="FilterSelectedValue == 'Year'">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'IsAdditionalReportExist'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
@@ -76,13 +72,14 @@
 
         <td></td>
     </tr>
-    <tr style="height:32px" *ngIf="FilterSelectedValue === 'Year'">
+    <tr style="height:32px" *ngIf="FilterSelectedValue == 'Year'">
         <td style="width:100px">
             <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName"
                       [DataContext]="DataContext"></LogLabel>
         </td>
         <td style="width:150px">
-            <LogTextBox [(Text)]="Email" [HideColumns]="true">
+            <LogTextBox [Text]="Email" [HideColumns]="true" [ObjectFieldName]="'Email'" [InputType]="'text'" [DataContext]="DataContext" [ObjectTableName]="ObjectTableName">
+
             </LogTextBox>
         </td>
 
