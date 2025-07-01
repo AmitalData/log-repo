@@ -34,12 +34,14 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.ComponentModel;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 { 
     public class DOC_NG_5101_GNMessageToAgentResponseService :
       ResponseServiceBase<INF_MSG_GenericResponseData, DOC_NG_5101_GNMessageToAgent, GenericRequestParams>
     {
+        
 
         DeclarationPM _MyDeclarationPM;
         bool IsExportDeclaration;
@@ -48,6 +50,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             return this.MyResponseData;
         }
+
+
 
         public override void Update(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
@@ -77,7 +81,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             var dec = myQueryService.GetDeclarationByDeclarationNum(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
-            IsExportDeclaration = dec?.Direction == "E";
+            IsExportDeclaration = dec?.Direction == Utils.DirectionsUtil.ShippingDirection("Export");
 
             LogMessagingUtil.Instance.AppendLine("Analyze Message To Agent response" + requestParams.AppicationId);
 
@@ -617,7 +621,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             string referentUserId = null;
             if (this._MyDeclarationPM != null)
             {
-                if (this._MyDeclarationPM.Direction == "E")
+                if (this._MyDeclarationPM.Direction == Utils.DirectionsUtil.ShippingDirection("Export"))
                     newNotificationPM.ResponseToMessage = responseToMessage;
 
                 newNotificationPM.EntityId = this._MyDeclarationPM.Id;
