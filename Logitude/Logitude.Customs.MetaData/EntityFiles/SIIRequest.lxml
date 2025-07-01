@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;fe97&quot;"
+  Code="&quot;1d7f&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2499,6 +2499,12 @@
       Code="&quot;Customs.SIIRequest.O.Attachment&quot;"
       DefaultText="&quot;Attachment&quot;"
       LocalDefaultText="&quot;צרופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.DataNotCompleted&quot;"
+      DefaultText="&quot;Request data not completed&quot;"
+      LocalDefaultText="&quot;לא הושלמו נתוני בקשה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

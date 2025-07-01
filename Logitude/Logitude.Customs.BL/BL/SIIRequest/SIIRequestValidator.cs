@@ -16,7 +16,7 @@ internal static class SIIRequestValidator
     {
         var errors = new List<string>();
 
-      
+
         var f = dto.releaseRequestForm;
         Check(f.formApplicationId, "formApplicationId", errors);
         Check(f.importerNumber, "importerNumber", errors);
@@ -69,11 +69,11 @@ internal static class SIIRequestValidator
                 (line.quantityByDecaredUnit == null && !string.IsNullOrWhiteSpace(line.declaredUnitCode)) ||
                 (line.quantityByDecaredUnit != null && string.IsNullOrWhiteSpace(line.declaredUnitCode));
 
-            if(declaredMismatch)
+            if (declaredMismatch)
                 errors.Add($"{p}.quantityByDeclaredUnit");
         }
 
-        
+
         foreach (var (att, i) in dto.formAttachments.Select((a, idx) => (a, idx)))
         {
             string p = $"attachment[{i}]";
@@ -94,7 +94,7 @@ internal static class SIIRequestValidator
                                      ? $"{lineLabel} {m.Groups["idx"].Value} – "
                                      : $"{attachmentLabel} {m.Groups["idx"].Value} – ";
 
-                    string fieldKey = m.Groups["field"].Value;    
+                    string fieldKey = m.Groups["field"].Value;
                     string hebrew = Translate($"Customs.SIIRequest.O.{fieldKey}", tenant);
 
                     return context + hebrew;
@@ -112,7 +112,7 @@ internal static class SIIRequestValidator
         }
     }
 
-    private static string Translate(string code, int tenant)
+    public static string Translate(string code, int tenant)
     {
         if (SIIRequestApiRequestFactory.OverrideITextCodeTranslator != null)
             return SIIRequestApiRequestFactory.OverrideITextCodeTranslator.Translate(code, tenant);
