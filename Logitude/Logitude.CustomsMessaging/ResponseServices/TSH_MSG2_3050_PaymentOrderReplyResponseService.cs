@@ -818,7 +818,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.DirectionCode = "I";
             documentsFilingPM.Description = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber;
-            documentsFilingPM.ExternalEntityName = _DeclarationPM.Direction=="E" ? "EFIFILEM": "CFIFILEM";
+            documentsFilingPM.ExternalEntityName = _DeclarationPM?.Direction=="E" ? "EFIFILEM": "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
             documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
