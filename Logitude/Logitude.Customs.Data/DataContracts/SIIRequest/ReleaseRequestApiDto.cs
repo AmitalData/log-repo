@@ -60,13 +60,12 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public string supplier { get; set; }
         public decimal? quantityToRelease { get; set; }
         public string siiUnitCode { get; set; }
-        public decimal? quantityByDecaredUnit { get; set; }
+        public decimal? quantityByDeclaredUnit { get; set; }
         public string comment { get; set; }
         public List<int> formAttachmentIndexes { get; set; }
         public string supplierInvoiceNumber { get; set; }
         public DateTime? supplierInvoiceDate { get; set; }
         public string declaredUnitCode { get; set; }
-        public string vendorName { get; set; }
         public string productDutchGroup { get; set; }
     }
 
