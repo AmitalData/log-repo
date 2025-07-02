@@ -1129,7 +1129,7 @@
   </Column>
   <Column
     Name="RowVer"
-    Type="varbinary">
+    Type="timestamp">
     <Constraints
       Nullable="true" />
   </Column>

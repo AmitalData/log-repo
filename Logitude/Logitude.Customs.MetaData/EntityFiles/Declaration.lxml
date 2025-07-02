@@ -22997,7 +22997,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.Declaration&quot;"
-    FieldsDataType="&quot;Binary&quot;"
+    FieldsDataType="&quot;TimeStamp&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
