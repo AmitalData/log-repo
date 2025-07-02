@@ -674,6 +674,10 @@ namespace WebFreight.Web.Helpers
 
 				}
 			}
+			else
+			{
+				throw new NotImplementedException("Export to excel is not implemented for this table");
+			}
 			//}
 			//catch (Exception e)
 			//{
