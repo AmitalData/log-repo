@@ -374,10 +374,22 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         if(this.ListGLAccounts.length > 0) {
             queryFilterItem = new QueryFilterItem();
             queryFilterItem.FieldName = "ListGLAccounts";
-            queryFilterItem.FieldValue = this.ListGLAccounts.map(x => x.Id);
+            queryFilterItem.FieldValue = this.ListGLAccounts.map(x => x.Id).join(',');
             queryFilterItem.Operator = "InList";
             queryFilterItems.push(queryFilterItem);
         }
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "FromGLAccountId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.FromGLAccountId);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "ToGLAccountId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ToGLAccountId);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
         return queryFilterItems;
     }
 
@@ -470,9 +482,10 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
     ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
+
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman) {
+        if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
             isValid = false;
         }
@@ -834,6 +847,20 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     set GLAccountIdentifier(value: string) {
         if (this.glaccountIdentifier != value) {
             this.glaccountIdentifier = value;
+        }
+    }
+    fromGLAccountId: string;
+    get FromGLAccountId() { return this.fromGLAccountId; }
+    set FromGLAccountId(value: string) {
+        if (this.fromGLAccountId != value) {
+            this.fromGLAccountId = value;
+        }
+    }
+    toGLAccountId: string;
+    get ToGLAccountId() { return this.toGLAccountId; }
+    set ToGLAccountId(value: string) {
+        if (this.toGLAccountId != value) {
+            this.toGLAccountId = value;
         }
     }
    

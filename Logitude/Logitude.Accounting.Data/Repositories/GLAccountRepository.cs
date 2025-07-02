@@ -307,12 +307,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
              string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel)
+             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel, List<string> listGLAccounts,string fromGLAccountId , string toGLAccountId)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId, listGLAccounts, fromGLAccountId, toGLAccountId)
             .Select(a => a.Id);
 
         }
@@ -437,16 +437,31 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
             string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId)
+            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId,List<string> listGLAccounts,string fromGLAccountId, string toGLAccountId)
         {
             IQueryable<GLAccount> q;
+            HashSet<string> idSet = new HashSet<string>();
             if (!string.IsNullOrWhiteSpace(AccountId))
+            {
+                idSet.Add(AccountId);
+            }
+            if (listGLAccounts != null && listGLAccounts.Count > 0)
+            {
+                foreach (var id in listGLAccounts)
+                {
+                    idSet.Add(id);
+                }
+            }
+
+            if (idSet.Count > 0)
             {
                 q = (from a in context.GLAccounts
                      where a.Tenant == tenant
-                     where a.Id == AccountId
+                     where idSet.Contains(a.Id)
                      select a);
             }
+
+           
             else
             {
                 q = (from a in context.GLAccounts

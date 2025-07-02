@@ -67,7 +67,6 @@ namespace WebFreight.Web.DataProviders
         public string OppositeAccountLocalName { get; set; }
         public string OppositeAccountEnglishName { get; set; }
 
-        // foreign fields
         public string GLAccountRecoMethodCode { get; set; }
         public string TenantCurrencySign { get; set; }
         public string Source { get; set; }
@@ -86,7 +85,6 @@ namespace WebFreight.Web.DataProviders
 
         public bool IsExternalEntity { get; set; }
 
-        // calculated fields
         public decimal OriginalAmount
         {
             get
@@ -95,7 +93,7 @@ namespace WebFreight.Web.DataProviders
                 if (!string.IsNullOrEmpty(GLAccountRecoMethodCode))
                 {
 
-                    if (GLAccountRecoMethodCode == "0")  // 0-local currency
+                    if (GLAccountRecoMethodCode == "0")  
                     {
 
                         if (LocalAmountCredit == 0)
@@ -108,7 +106,7 @@ namespace WebFreight.Web.DataProviders
                         }
 
                     }
-                    else if (GLAccountRecoMethodCode == "1") // 1-foreign currency
+                    else if (GLAccountRecoMethodCode == "1") 
                     {
 
                         if (ForeignAmountCredit == 0)
@@ -205,6 +203,7 @@ namespace WebFreight.Web.DataProviders
 
     public class NewGLAccountList
     {
+        public string Id { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public string AccountNumber { get; set; }
