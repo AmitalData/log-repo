@@ -208,6 +208,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode == "4")
                                 {
                                     availableStatus = "SMG";
+                                    UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
                                 }
                                 else if (new[] { "2", "5", "9" }.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
                                 {
@@ -231,6 +232,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     if (declarationQuantity > 0 && declarationQuantity == cargoQuantity && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null)
                                     {
                                         availableStatus = "SMG";
+                                        UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
                                     }
                                 }
                                 if (!string.IsNullOrWhiteSpace(availableStatus))
@@ -380,7 +382,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     }
                                 }
 
-                                UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
 
                                 float DecVersionId = 0;
                                 float ResVersionId = 0;
