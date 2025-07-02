@@ -30,6 +30,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
+using System.Transactions;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -344,14 +345,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 //var responseData = messService.SendSheet(genericRequestParams);
 
 
-                using (var trans = TransactionFactory.GetNewTransaction())
+                using (new TransactionScope(TransactionScopeOption.Suppress))
                 {
                     try
                     {
                         SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.GenericRequestParams>(genericRequestParams
                             , false
                             );
-                        trans.Complete();
                     }
                     catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                     {
