@@ -78,14 +78,14 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
 
     constructor(private _CD: ChangeDetectorRef, myElement: ElementRef) {
         this._ElementRef = myElement;
-        ///this.DataContext = this; 
+        // this.DataContext = this; 
         //this._CustomSendOptionsArgs = new CustomSendOptionsArgs();
         //this._CustomSendOptionsArgs.ForcePersonalSign = false;
         var curId = MultiSelectLOVComponent.MyId++;
         this.MyDropdownMenuFilterId = curId;
         this._MultiSelectLOVId = "MultiSelectLOV_" + curId;
         this._MultiSelectLOVMenuId = "MultiSelectLOVMenuId_" + curId;
-
+          
     }
 
     handleClick(event) {
@@ -139,7 +139,7 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
     }
 
     ngAfterContentChecked() {
-        //  this.FormatList();
+        this.FormatList();
         this._CD.detectChanges();
     }
 

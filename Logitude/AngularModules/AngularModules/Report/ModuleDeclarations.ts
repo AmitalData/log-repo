@@ -107,6 +107,7 @@ import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/
 import { CertificateOfOriginReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginReportFilterComponent';
 import { CertificateOfOriginCountReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/CertificateOfOriginCountReportFilterComponent';
 import { NewAgingFilterComponent } from './Components/FiltersComponent/Accounting/NewAgingFilterComponent';
+import { NewLedgerTransactionsFilterControl } from './Components/FiltersComponent/Accounting/NewLedgerTransactionsFilterControl';
  
 
 export const Components =
@@ -200,6 +201,7 @@ export const Components =
         CertificateOfOriginCountReportFilterComponent,
         MonthlyBalancesReportFilterComponent,
         CustomsCollateralFilterComponent,
+         NewLedgerTransactionsFilterControl
  
     ];
 
@@ -297,6 +299,7 @@ export class ModuleDeclarations {
             case "CertificateOfOriginReportFilterComponent": { myResult = CertificateOfOriginReportFilterComponent; break; }
             case "CertificateOfOriginCountReportFilterComponent": { myResult = CertificateOfOriginCountReportFilterComponent; break; }
             case "NewAgingFilterComponent": { myResult = NewAgingFilterComponent; break; }
+            case "NewLedgerTransactionsFilterControl": { myResult = NewLedgerTransactionsFilterControl; break; }
 
         }
 

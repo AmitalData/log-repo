@@ -3,10 +3,13 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -17,12 +20,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Security;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Customs.BL.CloseTables;
-using System.Globalization;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -33,59 +31,46 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public const int PAGE_RECORD_START_INDEX = 0;
 
         private QueryOperations reportQueryOperations;
-        private bool showLocals = false;
-        private int tenant;
-        private IAccountingContext accountingContext;
-        NewLedgerTransactionDataProvider transactionsDataProvider;
-        private GLAccountPM glaccountPM;
+        private readonly int tenant;
+        private readonly IAccountingContext accountingContext;
+        private NewLedgerTransactionDataProvider transactionsDataProvider;
         private List<GLAccountList> transactionsAccounts = new List<GLAccountList>();
+        private TenantPM tenantPM;
 
         public NewLedgerTransactionReportLoader(int _tenant)
         {
             tenant = _tenant;
-            showLocals = LoggedContactResolver.GetLoggedContactShowLocal(_tenant);
             accountingContext = AccountingContext.GetContext(tenant);
+            tenantPM = GetTenantPM();
 
         }
 
         public NewLedgerTransactionDataProvider LoadFromXML(byte[] xmlFilters)
         {
             reportQueryOperations = DeserializeQueryOperationFromXml(xmlFilters);
+            var reportParams = BuildReportParameters();
+            CheckSalesmanAbilities(reportParams);
+           CardIndexReportService cardIndexService = new CardIndexReportService(accountingContext, reportParams);
+            cardIndexService.Run();
 
-            CheckSalesmanAbilities(BuildReportParameters());
-
-            CardIndexReportService cardIndexReportService = new CardIndexReportService(accountingContext, BuildReportParameters());
-            cardIndexReportService.Run();
-
-            glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
-
-
-
-
-            return BuildDataProvider(cardIndexReportService);
+            return BuildDataProvider(cardIndexService);
         }
 
 
 
-
-
-        private NewLedgerTransactionDataProvider BuildDataProvider(CardIndexReportService cardIndexReportService)
+        private NewLedgerTransactionDataProvider BuildDataProvider(CardIndexReportService cardIndexService)
         {
-            transactionsDataProvider = new NewLedgerTransactionDataProvider();
+            transactionsDataProvider = new NewLedgerTransactionDataProvider
+            {
+                FromDate = GetFromDate(),
+                ToDate = GetToDate()
+            };
 
-            transactionsDataProvider.FromDate = GetFromDate();
-            transactionsDataProvider.ToDate = GetToDate();
-
-            FillGLAccountFields(cardIndexReportService);
             FillTenantFields();
             FillPrintingInformation();
-            FillLedgerTransactions(cardIndexReportService);
-            if (GetFilterValue<string>("GLAccountId") != null && cardIndexReportService.CardIndexs.Count()>0)
-                FillGLAccountBalance(cardIndexReportService.CardIndexs);
-
+            FillGLAccountsData(cardIndexService.CardIndexs);
             return transactionsDataProvider;
         }
-
         private void CheckSalesmanAbilities(CardIndexReportParams args)
         {
             UserPM loggedUser = GetLoggedUser();
@@ -97,191 +82,158 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private UserPM GetLoggedUser()
         {
-            UserPM loggedUser;
-            UserQuery userQuery = new UserQuery(tenant);
+            var userQuery = new UserQuery(tenant);
             if (AuthenticationUtil.AuthenticatedUserEmail != null)
-            { // user set and passed from from WR
-                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
-            }
-            else
-            {
-                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-                loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
-            }
-            return loggedUser;
-        }
+                return userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
 
+            var loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+            return userQuery.GetSinglePM(loggedContact.Id, tenant);
+        }
         private DateTime GetToDate()
         {
-            var fromDate = GetFilterValue<DateTime?>("FromDate");
-            if (fromDate.HasValue)
-                return new DateTime(fromDate.Value.Year, fromDate.Value.Month, fromDate.Value.Day, 0, 0, 0);
-            throw new InvalidOperationException("FromDate filter is required.");
+            var toDate = GetFilterValue<DateTime?>("ToDate");
+            return toDate?.Date ?? throw new InvalidOperationException("ToDate filter is required.");
         }
 
         private DateTime GetFromDate()
         {
             var fromDate = GetFilterValue<DateTime?>("FromDate");
-            if (fromDate.HasValue)
-                return new DateTime(fromDate.Value.Year, fromDate.Value.Month, fromDate.Value.Day, 0, 0, 0);
-            throw new InvalidOperationException("FromDate filter is required.");
-           }
-
-        private void FillGLAccountBalance(List<LedgerTransactionBalanceResponse> cardIndexs)
-        {           
-            LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = BuildLTBFilterCallback(cardIndexs);
-                SetBalanceForMultiCurrencyAccount(LTBFilterCallBack);
-                SetBalanceForSingleCurrencyAccount(LTBFilterCallBack);
-
-
+            return fromDate?.Date ?? throw new InvalidOperationException("FromDate filter is required.");
         }
 
-        private void SetBalanceForSingleCurrencyAccount(LedgerTransactionBalanceFilterCallBack LTBFilterCallBack)
+        private void FillGLAccountsData(List<LedgerTransactionBalanceResponse> cardIndexs)
         {
-            transactionsDataProvider.LocalOpenBalance = (decimal)LTBFilterCallBack.StartBalanceLocal;
-            transactionsDataProvider.LocalClosedBalance = (decimal)LTBFilterCallBack.EndBalanceLocal;
+            var glAccountQueryService = new GLAccountListQueryService(accountingContext);
+
+            transactionsDataProvider.NewGLAccountList = new List<NewGLAccountList>();
+            var allTransactions = cardIndexs.SelectMany(ci => ci.MyLedgerTransactionList ?? Enumerable.Empty<LedgerTransactionList>()).ToList();
+            var accountIds = cardIndexs.Select(t => t.GLAccountId).Distinct().ToList();
+             var glAccounts = glAccountQueryService.GetByIds(accountIds, tenant, false).ToList();
+
+            foreach (LedgerTransactionBalanceResponse index in cardIndexs)
+            {
+                var ltbCallback = BuildLTBFilterCallback(new List<LedgerTransactionBalanceResponse> { index });
+                var accountTransactions = allTransactions
+                    .Where(t => t.AccountId == index.GLAccountId).ToList();
+                var glAccount = glAccounts.FirstOrDefault(g => g.Id == index.GLAccountId);
+                if (glAccount == null) continue;
+
+                var accountList = new NewGLAccountList
+                {
+                    Id = glAccount.Id,
+                    AccountNumber = glAccount.DisplayNumber,
+                    AccountEnglishName = glAccount.EnglishName,
+                    AccountLocalName = glAccount.LocalName,
+                    IsAccountMulticurrency = glAccount.IsMultiCurrency ?? false,
+                    AccountCurrencySign = glAccount.CurrencySign,
+                    AccountCurrencyCode = glAccount.CurrencyCode,
+                    AccountReconcileMethod = glAccount.ReconcileMethodCode,
+                    LastCumulativeOpenAmount = accountTransactions.LastOrDefault()?.CumulativeOpenAmount ?? 0,
+                    StartTotalOpenAmount = index.StartTotalOpenAmount
+                };
+
+                 SetOpenBalanceForGLAccount(ltbCallback, accountList);
+                 SetClosedBalanceForGLAccount(ltbCallback, accountList);
+                 SetBalanceForSingleCurrencyAccount(ltbCallback, accountList);
+                 accountList.Transactions = accountTransactions
+                                    .Select(transaction =>
+                                    {
+                                        var reportTransaction = GetReportNewLedgerTransaction(transaction);
+                                        FillReportTransactionGLAccountFields(glAccounts, reportTransaction);
+                                        return reportTransaction;
+                                    }).ToList();
+
+                 transactionsDataProvider.NewGLAccountList.Add(accountList);
+
+                
+            }
         }
 
-        private void SetBalanceForMultiCurrencyAccount(LedgerTransactionBalanceFilterCallBack LTBFilterCallBack)
+        private void SetBalanceForSingleCurrencyAccount(LedgerTransactionBalanceFilterCallBack LTBFilterCallBack , NewGLAccountList newGLAccountList)
         {
-            SetOpenBalanceForGLAccount(LTBFilterCallBack);
-            SetClosedBalanceForGLAccount(LTBFilterCallBack);
+            newGLAccountList.LocalOpenBalance = (decimal)LTBFilterCallBack.StartBalanceLocal;
+            newGLAccountList.LocalClosedBalance = (decimal)LTBFilterCallBack.EndBalanceLocal;
         }
 
-        private void SetClosedBalanceForGLAccount(LedgerTransactionBalanceFilterCallBack LTBFilterCallBack)
+
+        private void SetClosedBalanceForGLAccount(LedgerTransactionBalanceFilterCallBack ltbCallback, NewGLAccountList newGLAccountList)
         {
-            transactionsDataProvider.LocalClosedBalanceList = new List<NewGLAccountBalanceList>();
-            if (LTBFilterCallBack.EndBalanceForeignList.Count == 0)
+            newGLAccountList.LocalClosedBalanceList = new List<NewGLAccountBalanceList>();
+            if (ltbCallback.EndBalanceForeignList == null || ltbCallback.EndBalanceForeignList.Count == 0)
             {
-                transactionsDataProvider.LocalClosedBalanceList.Add(new NewGLAccountBalanceList()
-                {
-                    BalanceForeign = 0,
-                    BalanceLocal = 0,
-                    CurrencyId = "",
-                    LocalCurrencySign = "",
-                    ForeignCurrencySign = "",
-                    LocalBalanceInDue = 0,
-                    BalanceInForeignCurrency=0,
-                    ForeignBalanceInDue = 0
-
-                });
+                newGLAccountList.LocalClosedBalanceList.Add(new NewGLAccountBalanceList());
             }
-
-            foreach (var item in LTBFilterCallBack.EndBalanceForeignList)
+            else
             {
-                // get currency
-                CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
-                Currency currency = currencyRepo.GetSingleCurrency(item.CurrencyId, tenant);
-
-                GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
-                var gLAccountMoreData = gLAccountMoreDataRepository.GetSingle(LTBFilterCallBack.GLAccountId, tenant);
-               
-
-                transactionsDataProvider.LocalClosedBalanceList.Add(new NewGLAccountBalanceList()
+                foreach (var item in ltbCallback.EndBalanceForeignList)
                 {
-                    BalanceForeign = item.BalanceForeign,
-                    BalanceLocal = item.BalanceLocal,
-                    CurrencyId = item.CurrencyId,
-                    LocalCurrencySign = GetTenantPM().CurrencySign,
-                    ForeignCurrencySign = currency.Sign,
-                    LocalBalanceInDue = gLAccountMoreData.LocalBalanceInDue,
-                    BalanceInForeignCurrency = gLAccountMoreData.BalanceInForeignCurrency,
-                    ForeignBalanceInDue = gLAccountMoreData.ForeignBalanceInDue,
-                   
+                    var currency = GetCurrencyById(item.CurrencyId);
+                    var glAccountMoreData = new GLAccountMoreDataRepository(tenant).GetSingle(ltbCallback.GLAccountId, tenant);
 
-
-
-                });
+                    newGLAccountList.LocalClosedBalanceList.Add(new NewGLAccountBalanceList
+                    {
+                        BalanceForeign = item.BalanceForeign,
+                        BalanceLocal = item.BalanceLocal,
+                        CurrencyId = item.CurrencyId,
+                        LocalCurrencySign = tenantPM.CurrencySign,
+                        ForeignCurrencySign = currency.Sign,
+                        LocalBalanceInDue = glAccountMoreData.LocalBalanceInDue,
+                        BalanceInForeignCurrency = glAccountMoreData.BalanceInForeignCurrency,
+                        ForeignBalanceInDue = glAccountMoreData.ForeignBalanceInDue
+                    });
+                }
             }
-
-            transactionsDataProvider.LocalClosedBalance = transactionsDataProvider.LocalClosedBalanceList.Sum(d => d.BalanceLocal).Value;
-            transactionsDataProvider.ForeignClosedBalance = transactionsDataProvider.LocalClosedBalanceList.Sum(d => d.BalanceForeign).Value;
-
+            newGLAccountList.LocalClosedBalance = newGLAccountList.LocalClosedBalanceList.Sum(d => d.BalanceLocal).GetValueOrDefault();
+            newGLAccountList.ForeignClosedBalance = newGLAccountList.LocalClosedBalanceList.Sum(d => d.BalanceForeign).GetValueOrDefault();
         }
-
-        private void SetOpenBalanceForGLAccount(LedgerTransactionBalanceFilterCallBack LTBFilterCallBack)
+        private void SetOpenBalanceForGLAccount(LedgerTransactionBalanceFilterCallBack ltbCallback,NewGLAccountList newGLAccountList)
         {
-            transactionsDataProvider.LocalOpenBalanceList = new List<NewGLAccountBalanceList>();
-            if (LTBFilterCallBack.StartBalanceForeignList.Count == 0)
+            newGLAccountList.LocalOpenBalanceList = new List<NewGLAccountBalanceList>();
+            if (ltbCallback.StartBalanceForeignList == null || ltbCallback.StartBalanceForeignList.Count == 0)
             {
-                transactionsDataProvider.LocalOpenBalanceList.Add(new NewGLAccountBalanceList()
-                {
-                    BalanceForeign = 0,
-                    BalanceLocal = 0,
-                    CurrencyId = "",
-                    LocalCurrencySign = "",
-                    ForeignCurrencySign = ""
-                });
+                newGLAccountList.LocalOpenBalanceList.Add(new NewGLAccountBalanceList());
             }
-
-            foreach (var item in LTBFilterCallBack.StartBalanceForeignList)
+            else
             {
-                // get currency
-                Currency currency = GetCurrencyById(item.CurrencyId);
-
-                transactionsDataProvider.LocalOpenBalanceList.Add(new NewGLAccountBalanceList()
+                foreach (var item in ltbCallback.StartBalanceForeignList)
                 {
-                    BalanceForeign = item.BalanceForeign,
-                    BalanceLocal = item.BalanceLocal,
-                    CurrencyId = item.CurrencyId,
-                    LocalCurrencySign = GetTenantPM().CurrencySign,
-                    ForeignCurrencySign = currency.Sign
-                });
+                    var currency = GetCurrencyById(item.CurrencyId);
+                    newGLAccountList.LocalOpenBalanceList.Add(new NewGLAccountBalanceList
+                    {
+                        BalanceForeign = item.BalanceForeign,
+                        BalanceLocal = item.BalanceLocal,
+                        CurrencyId = item.CurrencyId,
+                        LocalCurrencySign =tenantPM.CurrencySign,
+                        ForeignCurrencySign = currency.Sign
+                    });
+                }
             }
-
-            transactionsDataProvider.LocalOpenBalance = transactionsDataProvider.LocalOpenBalanceList.Sum(d=>d.BalanceLocal).Value;
-            transactionsDataProvider.ForeignOpenBalance = transactionsDataProvider.LocalOpenBalanceList.Sum(d=>d.BalanceForeign).Value;
-
+            newGLAccountList.LocalOpenBalance = newGLAccountList.LocalOpenBalanceList.Sum(d => d.BalanceLocal).GetValueOrDefault();
+            newGLAccountList.ForeignOpenBalance = newGLAccountList.LocalOpenBalanceList.Sum(d => d.BalanceForeign).GetValueOrDefault();
         }
 
         private Currency GetCurrencyById(string currencyId)
         {
-            CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
-            Currency currency = currencyRepo.GetSingleCurrency(currencyId, tenant);
-            return currency;
+            return new CurrencyRepository(tenant).GetSingleCurrency(currencyId, tenant);
         }
-        private void FillLedgerTransactions(CardIndexReportService cardIndexReportService)
-        {
-            List<LedgerTransactionList> transactions = new List<LedgerTransactionList>();
 
-            List<List<LedgerTransactionList>> transactionsCollections = cardIndexReportService.CardIndexs.Select(d => d.MyLedgerTransactionList).ToList();
-
-            transactionsCollections.ForEach(collection =>
-            {
-                transactions.AddRange(collection);
-            });
-
-
-            //if (GetFilterValue<string>("ChartOfAccountId") != null)
-                transactionsAccounts = GetGLAccountsInsideTransactions(transactions);
-
-            transactionsDataProvider.Transactions = new List<NewReportLedgerTransaction>();
-
-            foreach (LedgerTransactionList transaction in transactions)
-            {
-                NewReportLedgerTransaction reportTransaction = GetReportNewLedgerTransaction(transaction);
-                FillReportTransactionGLAccountFields(transactionsAccounts, reportTransaction);
-                transactionsDataProvider.Transactions.Add(reportTransaction);
-            }
-
-            transactionsDataProvider.LastCumulativeOpenAmount = transactions.Count >= 1 ? transactions[transactions.Count - 1].CumulativeOpenAmount : 0;
-        }
-     
         private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
         {
-            List<string> accountsIds = transactions.GroupBy(d => d.AccountId).Select(d => d.Key).ToList();
-            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);        
-              var   glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant, false).ToList();
-            return glaccounts;
+            var accountIds = transactions.Select(t => t.AccountId).Distinct().ToList();
+            var glAccountListQueryService = new GLAccountListQueryService(accountingContext);
+            return glAccountListQueryService.GetByIds(accountIds, tenant, false).ToList();
         }
-      
+
+
         private void FillReportTransactionGLAccountFields(List<GLAccountList> accounts, NewReportLedgerTransaction reportTransaction)
         {
-                GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
-                reportTransaction.GLAccountRecoMethodCode = account.ReconcileMethodCode;
-                reportTransaction.AccountNumber = account.DisplayNumber;
-                reportTransaction.AccountEnglishName = account.EnglishName;
-                reportTransaction.AccountLocalName = account.LocalName;
+            var account = accounts.FirstOrDefault(a => a.Id == reportTransaction.AccountId);
+            if (account == null) return;
+
+            reportTransaction.GLAccountRecoMethodCode = account.ReconcileMethodCode;
+            reportTransaction.AccountNumber = account.DisplayNumber;
+            reportTransaction.AccountEnglishName = account.EnglishName;
+            reportTransaction.AccountLocalName = account.LocalName;
             reportTransaction.Collector = account.Collector;
             reportTransaction.PaymentTerms = account.PaymentTerms;
             reportTransaction.Category1Id = account.Category1LocalName;
@@ -289,9 +241,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             reportTransaction.Category3Id = account.Category3LocalName;
             reportTransaction.Category4Id = account.Category4LocalName;
             reportTransaction.Category5Id = account.Category5LocalName;
-
         }
-
         private NewReportLedgerTransaction GetReportNewLedgerTransaction(LedgerTransactionList transaction)
         {
             return new NewReportLedgerTransaction
@@ -334,7 +284,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Source = transaction.Source,
                 JournalNumber = transaction.JournalNumber,
                 JournalCreatedByUser = transaction.JournalCreatedByUser,
-                TenantCurrencySign = GetTenantPM().CurrencySign,
+                TenantCurrencySign = tenantPM.CurrencySign,
 
                 OppositeAccountDisplayNumber = transaction.OppositeAccountDisplayNumber,
                 OppositeAccountEnglishName = transaction.OppositeAccountEnglishName,
@@ -353,133 +303,56 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void FillPrintingInformation()
         {
-            string loggedContactName = GetLoggedContactName();           
-            string loggedContactEnglishName = GetLoggedContactEnglishName();           
-            transactionsDataProvider.PrintedByUser = loggedContactName;
-            transactionsDataProvider.UserEnglishName = loggedContactEnglishName;
+            var contact = AuthenticationUtil.AuthenticatedUserEmail != null
+                ? GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail)
+                : GetLoggedContact();
+
+            transactionsDataProvider.PrintedByUser = GetContactName(contact);
+            transactionsDataProvider.UserEnglishName = contact.EnglishName;
             transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
-        private string GetContactName(ContactPM loggedContact)
-        {
-            return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
-        }
-
-        private ContactPM  GetLoggedContact()
-        {
-            return LoggedContactResolver.GetLoggedContact(tenant);
-           
-        }
-        private string GetLoggedContactName()
-        {
-            ContactPM loggedContact;
-            if (AuthenticationUtil.AuthenticatedUserEmail != null)
-            {
-                loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
-                return GetContactName(loggedContact);
-            }
-            else
-            {
-
-                loggedContact = GetLoggedContact();
-               return GetContactName(loggedContact);
-            }
-        }
-        private string GetLoggedContactEnglishName()
-        {
-            ContactPM loggedContactEnglishName;
-            if (AuthenticationUtil.AuthenticatedUserEmail != null)
-            {
-                loggedContactEnglishName = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
-                return loggedContactEnglishName.EnglishName;
-            }
-            else
-            {
-                loggedContactEnglishName = GetLoggedContact();
-                return loggedContactEnglishName.EnglishName;
-            }
-        }
-        private ContactPM GetContactByEmail(string email)
-        {
-            ContactQuery contactQuery = new ContactQuery(tenant);
-            return contactQuery.GetContactByEmailOnly(email, tenant);
-        }
-
+         private ContactPM GetLoggedContact() => LoggedContactResolver.GetLoggedContact(tenant);
+        private ContactPM GetContactByEmail(string email) => new ContactQuery(tenant).GetContactByEmailOnly(email, tenant);
+        private string GetContactName(ContactPM contact) => contact.DontShowLocal ? contact.EnglishName : contact.LocalName;
+   
         private void FillTenantFields()
         {
-            TenantPM tenantPM = GetTenantPM();
-            if (tenantPM != null)
-            {
-                transactionsDataProvider.TenantCurrencyCode = tenantPM.CurrencyCode;
-                transactionsDataProvider.TenantCurrencySign = tenantPM.CurrencySign;
-            }
-
+            if (tenantPM == null) return;
+            transactionsDataProvider.TenantCurrencyCode = tenantPM.CurrencyCode;
+            transactionsDataProvider.TenantCurrencySign = tenantPM.CurrencySign;
         }
 
         private TenantPM GetTenantPM()
         {
-            TenantQuery tenantQuery = new TenantQuery(tenant);
-            TenantPM tenantPM = tenantQuery.GetSinglePM(tenant);
-            return tenantPM;
+            return new TenantQuery(tenant).GetSinglePM(tenant);
         }
 
-        private void FillGLAccountFields(CardIndexReportService cardIndexReportService)
-        {
-            string glAccountId = GetFilterValue<string>("GLAccountId");
-            if (glAccountId != null)
-            {
-                GLAccountPM glaccountPM = GetGLAccountById(glAccountId);
-
-                transactionsDataProvider.AccountNumber = glaccountPM.DisplayNumber;
-                transactionsDataProvider.AccountEnglishName = glaccountPM.EnglishName;
-                transactionsDataProvider.AccountLocalName = glaccountPM.LocalName;
-                transactionsDataProvider.IsAccountMulticurrency = (bool)glaccountPM.IsMultiCurrency;
-                transactionsDataProvider.AccountCurrencySign = glaccountPM.CurrencySign;
-                transactionsDataProvider.AccountCurrencyCode = glaccountPM.CurrencyCode;
-                transactionsDataProvider.AccountReconcileMethod = glaccountPM.ReconcileMethodCode;
-                SetGLAccountStartTotalOpenAmountField(cardIndexReportService);
-            }
-        }
-
-        private void SetGLAccountStartTotalOpenAmountField(CardIndexReportService cardIndexReportService)
-        {
-            var cardIndex = cardIndexReportService.CardIndexs.FirstOrDefault();
-            if (cardIndex != null)
-                transactionsDataProvider.StartTotalOpenAmount = cardIndex.StartTotalOpenAmount;
-        }
-
-        private Logitude.Accounting.Def.EntityPMs.GLAccountPM GetGLAccountById(string glAccountId)
-        {
-            GLAccountQueryService glaQueryService = new GLAccountQueryService(accountingContext);
-            var glaccountPM = glaQueryService.GetSingle(glAccountId, false, false);
-            return glaccountPM;
-        }
 
         private static LedgerTransactionBalanceFilterCallBack BuildLTBFilterCallback(List<LedgerTransactionBalanceResponse> cardIndexs)
         {
-            LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = new LedgerTransactionBalanceFilterCallBack()
+            var first = cardIndexs.FirstOrDefault();
+            if (first == null) return new LedgerTransactionBalanceFilterCallBack();
+            return new LedgerTransactionBalanceFilterCallBack
             {
-                //EndBalanceForeign = cardIndexs.First().EndBalanceForeign,
-                EndBalanceForeignList = cardIndexs.FirstOrDefault().EndBalanceForeignList,
-                EndBalanceLocal = cardIndexs.FirstOrDefault().EndBalanceLocal,
-                Have1CurrencyIdInPeriod = cardIndexs.FirstOrDefault().Have1CurrencyIdInPeriod,
-                MaxCreateAt = cardIndexs.FirstOrDefault().MaxCreateAt,
+                EndBalanceForeignList = first.EndBalanceForeignList,
+                EndBalanceLocal = first.EndBalanceLocal,
+                Have1CurrencyIdInPeriod = first.Have1CurrencyIdInPeriod,
+                MaxCreateAt = first.MaxCreateAt,
+                StartBalanceForeignList = first.StartBalanceForeignList,
+                StartBalanceLocal = first.StartBalanceLocal,
+                TotalRowCount = first.TotalRowCount,
+                YearTransferLedgerTransactionIds = first.YearTransferLedgerTransactionIds,
+                SuppressCumulativeDueMultiCurrencyInPeriod = first.SuppressCumulativeDueMultiCurrencyInPeriod,
+                GLAccountId = first.GLAccountId
+            };
 
-                //StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
-                StartBalanceForeignList = cardIndexs.FirstOrDefault().StartBalanceForeignList,
-                StartBalanceLocal = cardIndexs.FirstOrDefault().StartBalanceLocal,
-                TotalRowCount = cardIndexs.FirstOrDefault().TotalRowCount,
-                YearTransferLedgerTransactionIds = cardIndexs.FirstOrDefault().YearTransferLedgerTransactionIds,
-                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.FirstOrDefault().SuppressCumulativeDueMultiCurrencyInPeriod,
-                GLAccountId = cardIndexs.FirstOrDefault().GLAccountId
-        };
-            return LTBFilterCallBack;
         }
 
         private CardIndexReportParams BuildReportParameters()
         {
 
-            CardIndexReportParams cardIndexParameters = new CardIndexReportParams()
+            var p = new CardIndexReportParams
             {
                 Tenant = tenant,
                 From = GetFromDate(),
@@ -504,58 +377,47 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IncludeChildAccounts = GetFilterValue<bool>("IncludeChildAccounts"),
                 IncludeRelatedCurrenciesAccount = GetFilterValue<bool>("IncludeRelatedCurrenciesAccount"),
                 UseSecurityLevel = GetFilterValue<bool>("UseSecurityLevel"),
+                ListGLAccounts = GetFilterValue<string>("ListGLAccounts"),
+                FromGLAccountDisplayNumber = GetFilterValue<string>("FromGLAccountDisplayNumber"),
+                ToGLAccountDisplayNumber = GetFilterValue<string>("ToGLAccountDisplayNumber"),
             };
-            SetReportCategoryParameters(cardIndexParameters);
+            SetReportCategoryParameters(p);
+            return p;
 
-            return cardIndexParameters;
         }
 
-        private void SetReportCategoryParameters(CardIndexReportParams reportParameters)
+        private void SetReportCategoryParameters(CardIndexReportParams p)
         {
-            string category1Id = null;
-            string category2Id = null;
-            string category3Id = null;
-            string category4Id = null;
-            string category5Id = null;
-
             string categoryIndex = GetFilterValue<string>("CategoryIndex");
             string categoryValue = GetFilterValue<string>("CategoryValue");
 
             if (!string.IsNullOrEmpty(categoryIndex))
             {
-
                 switch (categoryIndex)
                 {
-                    case "Category1": { category1Id = categoryValue; break; }
-                    case "Category2": { category2Id = categoryValue; break; }
-                    case "Category3": { category3Id = categoryValue; break; }
-                    case "Category4": { category4Id = categoryValue; break; }
-                    case "Category5": { category5Id = categoryValue; break; }
+                    case "Category1": p.Category1Id = categoryValue; break;
+                    case "Category2": p.Category2Id = categoryValue; break;
+                    case "Category3": p.Category3Id = categoryValue; break;
+                    case "Category4": p.Category4Id = categoryValue; break;
+                    case "Category5": p.Category5Id = categoryValue; break;
                 }
             }
-
-            reportParameters.Category1Id = category1Id;
-            reportParameters.Category2Id = category2Id;
-            reportParameters.Category3Id = category3Id;
-            reportParameters.Category4Id = category4Id;
-            reportParameters.Category5Id = category5Id;
         }
         private QueryOperations DeserializeQueryOperationFromXml(byte[] xmlFilters)
         {
-            MemoryStream memorystream = new MemoryStream(xmlFilters);
-            XmlSerializer serializer = new XmlSerializer(typeof(QueryOperations));
-            QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
-            return queryOperations;
+            using (var memorystream = new MemoryStream(xmlFilters))
+            {
+                var serializer = new XmlSerializer(typeof(QueryOperations));
+                return (QueryOperations)serializer.Deserialize(memorystream);
+            }
         }
-        public T GetFilterValue<T>(string FieldName)
+        public T GetFilterValue<T>(string fieldName)
         {
-            QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
-                .Where(d => d.FieldName == FieldName).FirstOrDefault();
+            var filterItem = reportQueryOperations.QueryFilterItems
+                .FirstOrDefault(d => d.FieldName == fieldName);
 
             if (filterItem != null && filterItem.FieldValue != null)
-            {
                 return (T)filterItem.FieldValue;
-            }
 
             return default(T);
         }

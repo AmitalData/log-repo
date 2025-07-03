@@ -1,23 +1,20 @@
  
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.EntityKeys;
-using Simplog.Server.Infrastructure;
-using System.Diagnostics;
-using Simplog.Data.CommonDataModel;
-using Logitude.Server.Tools;
 using Logitude.Accounting.Data.DataContract;
+using Logitude.Accounting.Data.EntityKeys;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Server.Tools;
 using System.Data.Entity.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System.Runtime.Remoting.Contexts;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -307,12 +304,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
              string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel)
+             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel, List<string> listGLAccounts,string fromGLAccountDisplayNumber, string toGLAccountDisplayNumber)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId, listGLAccounts, fromGLAccountDisplayNumber, toGLAccountDisplayNumber)
             .Select(a => a.Id);
 
         }
@@ -437,21 +434,51 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
             string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId)
+            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId,List<string> listGLAccounts,string fromGLAccountDisplayNumber, string toGLAccountDisplayNumber)
         {
             IQueryable<GLAccount> q;
+            HashSet<string> idSet = new HashSet<string>();
+
+            q = (from a in context.GLAccounts
+                 where a.Tenant == tenant
+                 select a);
+
             if (!string.IsNullOrWhiteSpace(AccountId))
             {
-                q = (from a in context.GLAccounts
-                     where a.Tenant == tenant
-                     where a.Id == AccountId
-                     select a);
+                idSet.Add(AccountId);
             }
-            else
+            if (listGLAccounts != null && listGLAccounts.Count > 0)
+            {
+                foreach (var id in listGLAccounts)
+                {
+                    idSet.Add(id);
+                }
+            }
+
+            if (idSet.Count > 0)
             {
                 q = (from a in context.GLAccounts
                      where a.Tenant == tenant
+                     where idSet.Contains(a.Id)
                      select a);
+            }
+            if (!string.IsNullOrWhiteSpace(toGLAccountDisplayNumber) && !string.IsNullOrWhiteSpace(fromGLAccountDisplayNumber))
+            {
+                if (int.TryParse(fromGLAccountDisplayNumber, out int fromNum) && int.TryParse(toGLAccountDisplayNumber, out int toNum))
+                {
+                    q = q.AsEnumerable()
+                             .Where(g =>
+                             {
+                               
+                                 var numericPart = g.DisplayNumber?
+                                     .Split(new[] { '\\', '/' })[0];
+                                 if (int.TryParse(numericPart, out int num))
+                                 {
+                                     return num > fromNum && num < toNum;
+                                 }
+                                 return false;
+                             }).AsQueryable();
+                }
             }
             if (!includeControlAccount)
             {

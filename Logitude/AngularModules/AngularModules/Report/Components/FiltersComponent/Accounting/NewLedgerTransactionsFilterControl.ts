@@ -9,12 +9,8 @@ import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQue
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
-import { GLAccountPM } from '../../../../Accounting/EntityPMs/GLAccountPM';
-import { CardListService } from '../../../../Common/Services/StandardLists/CardListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import { GLAccountExtendedListService } from '../../../../Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 import { ReportsPreviewComponent } from '../../ReportsPreviewComponent';
-import { EntityPartner } from '../../../../Infrastructure/DataContracts/EntityPartner';
 import { CardExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CardExtendedPMService';
 import { AdvancedDatePickerResolverComponent } from '../../../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 import { ChartOfAccountPMService } from '../../../../Accounting/Services/StandardPMs/ChartOfAccountPMService';
@@ -25,6 +21,8 @@ import { UserPM } from '../../../../Common/EntityPMs/UserPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
 import { Operators } from 'Accounting/DataContracts/Operators';
+import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
+import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 
 
 @Component({
@@ -34,7 +32,12 @@ import { Operators } from 'Accounting/DataContracts/Operators';
 
 export class NewLedgerTransactionsFilterControl extends BaseComponent implements OnInit {
     public CurrencyFilters: any;
+    public List: string;
+    public Range: string;
+    public GLAccountFilterRadio: string;
 
+
+    public IsListGLAccounts: boolean = false;
     ObjectTableName: string = "LedgerTransaction";
     public ReportsPreview: ReportsPreviewComponent;
     public RunReportTitle: string = 'Run Report';
@@ -51,17 +54,8 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     selectedAmountOperator: { Code: string, EnglishName: string, LocalName: string };
     selectedAmountOperatorLocalBalanceInDue: { Code: string, EnglishName: string, LocalName: string };
 
-    amount: number;
-    get Amount() { return this.amount; }
-    set Amount(value: number) {
-        if (this.amount != value) {
-            this.amount = value;
-        }
-    }
-
     public IsSchedulerReport: boolean = false;
     public GLAccountChanged: boolean = false;
-    @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = false;
@@ -70,356 +64,186 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     private entityListService: EntityListService = new EntityListService();
     public IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
-    public CollectorFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public GLAccountFilterItems: ApiQueryFilters;
     private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
     private fullAccountingSetting: FullAccountingSettingList = new FullAccountingSettingList();
     private ChartOfAccountSecurityLevel: any;
-    constructor(private CD: ChangeDetectorRef) {
+    private securityLevel: any;
+    private glaccountPM: any;
+    private loggedUser: UserPM;
+
+    @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
+
+    constructor(private changeDetector: ChangeDetectorRef) {
         super();
-
-        this.InitLOVFilters();
-
-        this.GetSalesmanFeature();
-
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
-        this.GetResources();
-        this.GetFullAccountingSettings();
+        this.initializeComponent();
 
     }
-    GetFullAccountingSettings() {
-        this.entityListService.getSingle(SessionLocator.Tenant.toString(), "FullAccountingSetting").then((res: any) => {
-            this.CurrentSession.StopBusyIndicator();
-            res.subscribe(myResponse => {
-                if (myResponse != null) {
+    //#region Lifecycle
 
-                    var res = myResponse.Result;
-                    this.fullAccountingSetting = res;
-                }
-            })
-        });
+    ngOnInit() {
+        this.SetUIProperties();
+        this.SetDefaultDates();
     }
 
-    private GetResources() {
-        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
-            this.entityResourceService.getEntityResourceByTableName("LedgerTransaction").subscribe((response: any) => {
+    private initializeComponent(): void {
+        this.InitFilters();
+        this.SetLayoutDirection();
+        this.LoadResources();
+        this.LoadAccountingSettings();
+        this.InitializeSalesmanFeature();
+    }
+
+    private SetLayoutDirection(): void {
+        const layout = ObjectsLocator.GlobalSetting?.LayoutDirection;
+        this.isRTL = layout === 'rtl';
+    }
+    //#endregion
+
+    private LoadAccountingSettings(): void {
+        const tenantId = SessionLocator.Tenant.toString();
+        this.entityListService.getSingle(tenantId, 'FullAccountingSetting')
+            .then((res: any) => {
+                res.subscribe(response => {
+                    this.CurrentSession.StopBusyIndicator();
+                    if (response?.Result) {
+                        this.fullAccountingSetting = response.Result;
+                    }
+                });
+            });
+    }
+    private LoadResources(): void {
+        this.entityResourceService.getEntityResourceByTableName('GLAccount').subscribe(() => {
+            this.entityResourceService.getEntityResourceByTableName('LedgerTransaction').subscribe(() => {
                 this.isReady = true;
                 this.SetRunReportTitle();
             });
         });
     }
 
-    private InitLOVFilters() {
+    SetRunReportTitle(): void {
+        const key = this.IsSchedulerReport ? "AgingReport.O.PreviewReport" : "AgingReport.O.RunReport";
+        this.RunReportTitle = TextCodeTranslator.Translate(key);
+    }
+
+    InitFilters(): void {
         this.ChartOfAccountTypeFilterItems = new ApiQueryFilters();
         this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", "3,4", null, null, "Exclude", false, false, false, "string", false, true);
 
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
-        this.CollectorFilterItems = new ApiQueryFilters();
-        // GLAccount lov field filtera
+
         this.GLAccountFilterItems = new ApiQueryFilters();
         this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
-    }
-    private loggedUser: UserPM;
 
-    GetSalesmanFeature() {
-        var salesmanLedger = FeatureLocator.HasFeaturePermession("LedgerTransaction", "SalesmanLTRP");
-        var isSalesmanRestrictionsEnabled = !!salesmanLedger;
-        console.log("[Salesman Ledger Transactions]", salesmanLedger);
+        this.List = "List_" + this.CurrentSession.SessionIndex+ this.CurrentSession.GetNewId("List");
+        this.Range = "Range_" + this.CurrentSession.SessionIndex +this.CurrentSession.GetNewId("Range");
+        this.GLAccountFilterRadio = "GLAccountFilterRadio_" + this.CurrentSession.SessionIndex + this.CurrentSession.GetNewId("GLAccountFilterRadio");
+
+    }
+
+    private InitializeSalesmanFeature(): void {
+        const hasSalesmanPermission = FeatureLocator.HasFeaturePermession("LedgerTransaction", "SalesmanLTRP");
         this.loggedUser = SessionLocator.LoggedUserPM;
-        if (this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled) {
+
+        if (this.loggedUser?.IsSalesman && hasSalesmanPermission) {
             this.IsSalesmanRestricted = true;
             this.Salesman = this.loggedUser.Id;
             this.GLAccountFilterItems.addAdditionalFilter("ConnectedToSalesmanId", this.loggedUser.Id, null, null, "Equals", true, true, false, "string", false, false);
         }
-
     }
 
-    SetRunReportTitle() {
-        if (this.isReady) {
-            if (this.IsSchedulerReport) {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
-            }
-            else {
-                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
-            }
-        }
+    private SetDefaultDates(): void {
+        if (this.IsSchedulerReport) return;
+
+        const today = new Date();
+        const lastMonth = new Date(today);
+        lastMonth.setMonth(today.getMonth() - 1);
+
+        this.ToDate = this.ToDate ?? today;
+        this.FromDate = this.FromDate ?? lastMonth;
     }
 
-    InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
-        this.ReportsPreview = myReportsPreview;
-    }
-
-    ngOnInit() {
-        this.SetUIProperties();
-        this.FillDefaultDateDetails();
-    }
-
-    FillDefaultDateDetails() {
-        if (!this.IsSchedulerReport) {
-            this.ToDate = AppTool.IsNullOrEmpty(this.ToDate) ? new Date() : this.ToDate;
-            const today = new Date();
-            const lastmonth = today.setMonth(today.getMonth() - 1);
-            this.FromDate = AppTool.IsNullOrEmpty(this.FromDate) ? new Date(lastmonth) : this.FromDate;
-        }
-    }
-
-    SetUIProperties() {
-        this.UIProperties.SetRequired("FromDate", this.ObjectTableName, !this.FromDate);
-        this.UIProperties.SetRequired("ToDate", this.ObjectTableName, !this.ToDate);
+    private SetUIProperties(): void {
+        this.UIProperties.SetRequired('FromDate', this.ObjectTableName, !this.FromDate);
+        this.UIProperties.SetRequired('ToDate', this.ObjectTableName, !this.ToDate);
 
         if (this.IsSalesmanRestricted) {
-            this.UIProperties.SetRequired("Salesman", "GLAccount", true);
-            this.UIProperties.SetEnabled("Salesman", "GLAccount", false);
-        }
-        if (this.glaccountPM) {
-            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", true);
-            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", true);
-
-        } else {
-            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", false);
-            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", false);
-
+            this.UIProperties.SetRequired('Salesman', 'GLAccount', true);
+            this.UIProperties.SetEnabled('Salesman', 'GLAccount', false);
         }
 
-
+        const isEnabled = !!this.glaccountPM;
+        this.UIProperties.SetEnabled('BalanceInLocalCurrency', 'GLAccount', isEnabled);
+        this.UIProperties.SetEnabled('LocalBalanceInDue', 'GLAccount', isEnabled);
     }
 
-    //#region Filters
+    ValidateDate(): void {
+        const isValidRange = new AdvancedDatePickerResolverComponent()
+            .SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate);
 
-    //row 1
-    private agingForDate: Date = null;
-    public get AgingForDate() { return this.agingForDate; }
-    public set AgingForDate(value: Date) {
-        if (this.agingForDate != value) {
-            this.agingForDate = value;
-
-            this.ValidationErrorsList = [];
-            this.ValidateDate();
-        }
+        setTimeout(() => {
+            if (isValidRange) {
+                this.UIProperties.SetValidity('ToDate', this.ObjectTableName, true, '');
+                this.UIProperties.SetValidity('FromDate', this.ObjectTableName, true, '');
+            } else {
+                if (!this.IsOldDate('ToDate')) {
+                    this.UIProperties.SetValidity('ToDate', this.ObjectTableName, false,
+                        TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                }
+                if (!this.IsOldDate('FromDate')) {
+                    this.UIProperties.SetValidity('FromDate', this.ObjectTableName, false,
+                        TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                }
+            }
+            this.changeDetector.detectChanges();
+        }, 200);
+    }
+    IsOldDate(fieldName: string): boolean {
+        const prop = this.UIProperties.UIPropertyList.find(ui => ui.FieldName === fieldName);
+        return prop?.ValidationError === "Date time is too way in the past!" ||
+            prop?.ValidationError === "Invalid Date" || false;
     }
 
-    private customer: string;
-    public get Customer() { return this.customer; }
-    public set Customer(value: string) {
-        if (this.customer != value) {
-            this.customer = value;
-
-            if (value)
-                this.IsCategoryDisabled = true;
-            else
-                this.IsCategoryDisabled = false;
-        }
+    InitializeComponent(reportPreview: any): void {
+        this.ReportsPreview = reportPreview;
     }
 
-    AmountOperatorChanged($event) {
-        this.selectedAmountOperator = $event;
-    }
-    AmountOperatorLocalBalanceInDueChanged($event) {
-        this.selectedAmountOperatorLocalBalanceInDue = $event;
-    }
-    ValidateDate() {
-        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
-        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
-
-            setTimeout(() => {
-                if (!this.IsOldDate("ToDate"))
-                    this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
-                if (!this.IsOldDate("FromDate"))
-                    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
-                this.CD.detectChanges();
-            }, 200);
-
-        } else {
-            setTimeout(() => {
-                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
-                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
-                this.CD.detectChanges();
-            }, 200);
-
-        }
-    }
-
-    private IsOldDate(fieldName) {
-        let isOldDate: boolean = false;
-        const uiProperty = this.UIProperties.UIPropertyList.filter(uiProp => uiProp.FieldName == fieldName)[0];
-        if (uiProperty)
-            isOldDate = uiProperty.ValidationError == "Date time is too way in the past!" || uiProperty.ValidationError == "Invalid Date";
-
-        return isOldDate;
-    }
-
-    private chartOfAccountId: string;
-
-    get ChartOfAccountId() { return this.chartOfAccountId; }
-    set ChartOfAccountId(value: string) {
-        if (this.chartOfAccountId != value) {
-            this.chartOfAccountId = value;
-
-
-        }
-    }
-
-    private _ChartOfAccountsTypeCode: string;
-    public get ChartOfAccountsTypeCode(): string {
-        return this._ChartOfAccountsTypeCode;
-    }
-    public set ChartOfAccountsTypeCode(v: string) {
-        this._ChartOfAccountsTypeCode = v;
-    }
-
-    private chartOfAccount: ChartOfAccountList;
-    public get ChartOfAccount() { return this.chartOfAccount; }
-    public set ChartOfAccount(value: ChartOfAccountList) {
-        if (this.chartOfAccount != value) {
-            this.chartOfAccount = value;
-            if (value)
-                this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel == undefined ? 0 : value.ChartOfAccountSecurityLevel;
-        }
-    }
-
-    private numberOfMonths: number;
-    public get NumberOfMonths() { return this.numberOfMonths; }
-    public set NumberOfMonths(value: number) {
-        if (this.numberOfMonths != value) {
-            this.numberOfMonths = value;
-        }
-    }
-
-
-    //row 2
-
-    private collector: string;
-    public get Collector() { return this.collector; }
-    public set Collector(value: string) {
-        if (this.collector != value) {
-            this.collector = value;
-        }
-    }
-
-    private salesman: string;
-    public get Salesman() { return this.salesman; }
-    public set Salesman(value: string) {
-        if (this.salesman != value) {
-            this.salesman = value;
-        }
-    }
-   
-    //row 3
-
-    private category1: string;
-    public get Category1() { return this.category1; }
-    public set Category1(value: string) {
-        if (this.category1 != value) {
-            this.category1 = value;
-        }
-    }
-
-
-    private category2: string;
-    public get Category2() { return this.category2; }
-    public set Category2(value: string) {
-        if (this.category2 != value) {
-            this.category2 = value;
-        }
-    }
-
-    private category3: string;
-    public get Category3() { return this.category3; }
-    public set Category3(value: string) {
-        if (this.category3 != value) {
-            this.category3 = value;
-        }
-    }
-
-    private category4: string;
-    public get Category4() { return this.category4; }
-    public set Category4(value: string) {
-        if (this.category4 != value) {
-            this.category4 = value;
-        }
-    }
-
-    //row 4
-    private category5: string;
-    public get Category5() { return this.category5; }
-    public set Category5(value: string) {
-        if (this.category5 != value) {
-            this.category5 = value;
-        }
-    }
-
-    private currenciesDetailed: boolean;
-    public get CurrenciesDetailed() { return this.currenciesDetailed; }
-    public set CurrenciesDetailed(value: boolean) {
-        if (this.currenciesDetailed != value) {
-            this.currenciesDetailed = value;
-        }
-    }
-
-    private _BalanceInLocalCurrency: string;
-    public get BalanceInLocalCurrency(): string {
-        return this._BalanceInLocalCurrency;
-    }
-    public set BalanceInLocalCurrency(v: string) {
-        this._BalanceInLocalCurrency = v;
-    }
-
-    private _LocalBalanceInDue: string;
-    public get LocalBalanceInDue(): string {
-        return this._LocalBalanceInDue;
-    }
-    public set LocalBalanceInDue(v: string) {
-        this._LocalBalanceInDue = v;
-    }
-
-    //#endregion
-
-    //#region Filter Methods
-    public filterSelectedValue: string = 'filter_accounting';
-    public _dateTypeCode: string = '1';
-    FilterItemClicked(itemValue: string) {
-        if (this.filterSelectedValue != itemValue) {
-            this.filterSelectedValue = itemValue;
+    public filterDateSelectedValue: string = 'filter_accounting';
+    public dateTypeCode: string = '1';
+    FilterDateClicked(itemValue: string) {
+        if (this.filterDateSelectedValue != itemValue) {
+            this.filterDateSelectedValue = itemValue;
             this.FilterLines();
         }
     }
     FilterLines() {
-
-        //Task 46666: Transaction Tab - date filter new design
-        // <DateTypeCode>2</DateTypeCode> 1/2/3
-        // Accounting- - code 1- חשבונםי
-        // Due - code 2 - לגביה
-        // Reference -code-3-  םסמכתם
-
-        switch (this.filterSelectedValue) {
+        switch (this.filterDateSelectedValue) {
             case 'filter_accounting':
-                this._dateTypeCode = '1';
+                this.dateTypeCode = '1';
                 break;
             case 'filter_due':
-                this._dateTypeCode = '2';
+                this.dateTypeCode = '2';
                 break;
             case 'filter_reference':
-                this._dateTypeCode = '3';
+                this.dateTypeCode = '3';
                 break;
             default:
                 break;
         }
     }
-    //#endregion
 
     SetFilterSelectedValue() {
-        switch (this._dateTypeCode) {
+        switch (this.dateTypeCode) {
             case '1':
-                this.filterSelectedValue = 'filter_accounting';
+                this.filterDateSelectedValue = 'filter_accounting';
                 break;
             case '2':
-                this.filterSelectedValue = 'filter_due';
+                this.filterDateSelectedValue = 'filter_due';
                 break;
             case '3':
-                this.filterSelectedValue = 'filter_reference';
+                this.filterDateSelectedValue = 'filter_reference';
                 break;
             default:
                 break;
@@ -427,7 +251,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     }
 
     GetMainCustomerFieldName() {
-        return 'GLAccountId';
+        return  null;
     }
 
     IsPartnersChanged(SelectedTab) {
@@ -454,33 +278,27 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
-        queryFilterItem = new QueryFilterItem();
-        queryFilterItem.FieldName = "GLAccountId";
-        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.GLAccountId);
-        queryFilterItem.Operator = "Equals";
-        queryFilterItems.push(queryFilterItem);
-
-        queryFilterItem = new QueryFilterItem();
+       
 
         queryFilterItem.FieldName = "CollectorId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.collector);
         queryFilterItem.Operator = "Equals";
-        queryFilterItem.DisplayInList = true; // server code will take this value from DB.ObjectField.DisplayInList
+        queryFilterItem.DisplayInList = true; 
         queryFilterItems.push(queryFilterItem);
-        
+
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "SalesmanUserId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.salesman);
         queryFilterItem.Operator = "Equals";
-        queryFilterItem.DisplayInList = true; // server code will take this value from DB.ObjectField.DisplayInList
+        queryFilterItem.DisplayInList = true; 
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "CollectorId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.collector);
         queryFilterItem.Operator = "Equals";
-        queryFilterItem.DisplayInList = true; // server code will take this value from DB.ObjectField.DisplayInList
+        queryFilterItem.DisplayInList = true; 
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
@@ -507,14 +325,9 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
-        //queryFilterItem = new QueryFilterItem();
-        //queryFilterItem.FieldName = "SearchFields";
-        //queryFilterItem.FieldValue = this.SearchFields ? this.SearchFields : null;
-        //queryFilterItems.push(queryFilterItem);
-
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "DateTypeCode";
-        queryFilterItem.FieldValue = this._dateTypeCode;
+        queryFilterItem.FieldValue = this.dateTypeCode;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
@@ -535,11 +348,11 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         var categoryIndex = null;
         var categoryValue = null;
         if (this.SelectedCategory) {
-            categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
+            categoryIndex = this.SelectedCategory.replace(' ', ''); 
             if (categoryIndex)
-                categoryValue = this.DataContext[categoryIndex]; // select the value from the context
+                categoryValue = this.DataContext[categoryIndex]; 
         }
-        queryFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
+        queryFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); 
         queryFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
 
         queryFilterItems.push(new QueryFilterItem("UseSecurityLevel", this.fullAccountingSetting.IsSecurityLevelActivated));
@@ -550,7 +363,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             queryFilterItem.FieldName = "BalanceInLocalCurrency";
             queryFilterItem.FieldValue = this.BalanceInLocalCurrency;
             if (this.selectedAmountOperator) {
-                queryFilterItem.Operator = this.selectedAmountOperator.Code; //ayed
+                queryFilterItem.Operator = this.selectedAmountOperator.Code; 
                 this.selectedAmountOperator
             }
             queryFilterItems.push(queryFilterItem);
@@ -565,6 +378,27 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             }
             queryFilterItems.push(queryFilterItem);
         }
+        if(this.ListGLAccounts.length > 0) {
+            queryFilterItem = new QueryFilterItem();
+            queryFilterItem.FieldName = "ListGLAccounts";
+            queryFilterItem.FieldValue = this.ListGLAccounts.map(x => x.Id).join(',');
+            queryFilterItem.Operator = "InList";
+            queryFilterItems.push(queryFilterItem);
+        }
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "FromGLAccountDisplayNumber";
+        queryFilterItem.FieldValue = this.FromGLAccount?.DisplayNumber;
+        queryFilterItem.FieldValue2 = this.FromGLAccountId ? this.FromGLAccountId : null; 
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "ToGLAccountDisplayNumber";
+        queryFilterItem.FieldValue = this.ToGLAccount?.DisplayNumber;
+        queryFilterItem.FieldValue2 = this.ToGLAccountId ? this.ToGLAccountId : null;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
+
         return queryFilterItems;
     }
 
@@ -576,16 +410,16 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         return null
     }
 
-    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { //For Scheduler Report
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) { //For Scheduler Report
         this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
+            queryFilterItems.forEach(async queryFilterItem => {
+               await this.SetFilterItem(queryFilterItem);
             });
         }
     }
 
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+    private async  SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
                 case "FromDate":
@@ -594,9 +428,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                 case "ToDate":
                     this.ToDate = queryFilterItem.FieldValue;
                     break;
-                case "GLAccountId":
-                    this.GLAccountId = queryFilterItem.FieldValue;
-                    break;
+                
                 case "ChartOfAccountId":
                     this.ChartOfAccountId = queryFilterItem.FieldValue;
                     break;
@@ -610,23 +442,23 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     this.SearchFields = queryFilterItem.FieldValue;
                     break;
                 case "DateTypeCode":
-                    this._dateTypeCode = queryFilterItem.FieldValue;
+                    this.dateTypeCode = queryFilterItem.FieldValue;
                     this.SetFilterSelectedValue();
                     break;
                 case "IncludeRelatedCurrenciesAccount":
                     this.IncludeRelatedCurrenciesAccount = queryFilterItem.FieldValue;
                     break;
-                case "IsReconciled":{
+                case "IsReconciled": {
                     this.IsReconciled = queryFilterItem.FieldValue;
-                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue==null;
+                    this.AttachedGLAccountCheckBox = queryFilterItem.FieldValue == null;
                     break;
                 }
                 case "SalesmanUserId":
                     this.Salesman = queryFilterItem.FieldValue;
                     break;
                 case "CollectorId":
-                        this.Collector = queryFilterItem.FieldValue;
-                        break;
+                    this.Collector = queryFilterItem.FieldValue;
+                    break;
                 case "CollectorId":
                     this.Collector = queryFilterItem.FieldValue;
                     break;
@@ -651,16 +483,53 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                         this.selectedAmountOperatorLocalBalanceInDue = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
                     }
                     break;
+                case "ListGLAccounts":{
+                    if (queryFilterItem.FieldValue) {
+                        this.IsListGLAccounts = true;
+                        this.ListGLAccounts = await this.FetchGLAccountDataFromServer(queryFilterItem.FieldValue);
+                    } else {
+                        this.ListGLAccounts = [];
+                    }
+                    break;
+                }
+                case "FromGLAccountDisplayNumber":
+                    this.FromGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    break;
+                case "ToGLAccountDisplayNumber":
+                    this.ToGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    break;
+            
             }
         }
     }
+   async FetchGLAccountDataFromServer(ids: string): Promise<any> {
+        if (ids) {
+            let apiQueryFilters = new ApiQueryFilters(true);
+            apiQueryFilters.addAdditionalFilter("Id", ids, null, null, "InListExact", false, false, false, "string", false, true);
 
+            const gLAccountListService = new GLAccountListService();
+            return new Promise((resolve, reject) => {
+                gLAccountListService.getByFilters(apiQueryFilters).subscribe(
+                    (response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            resolve(response.Result);
+                        } else {
+                            reject(new Error('Error fetching GL Account data'));
+                        }
+                    },
+                    (error) => reject(error)
+                );
+            });
+        }
+        return Promise.resolve(null);
+    }
     ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
+
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
+        if ( !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId)) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFieldsForNew"));
             isValid = false;
         }
 
@@ -706,42 +575,17 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
 
     PrepareContactList() {
-        var cardExtendedPMService = new CardExtendedPMService();
-        var glAccountId = this.GetLookUpFieldValue(this.GLAccountId);
-        if (glAccountId != null) {
-            cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var allContacts = response.Result;
-                    if (allContacts != null && allContacts.length > 0) {
-                        allContacts.forEach(contact => {
-                            if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
-                        });
-                        this.ReportsPreview.PartnersObslist.reverse();
-                    }
-                }
-            });
-        }
+      
     }
 
     RunButtonClicked() {
         this.SetUIProperties();
 
-        var errors: string[] = [];
-        var categoryValue = null;
-        var categoryIndex = null;
 
         if (this.ValidateSelectedFilters()) {
 
 
-            // // Selecting category
-            // if (this.SelectedCategory) {
-            //     categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
-
-            //     if (categoryIndex)
-            //         categoryValue = this.DataContext[categoryIndex]; // select the value from the context
-            // }
-            // myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
-            // myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
+           
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
@@ -766,10 +610,302 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     SelectedItemChanged(item) {
         this.SelectedCategory = item;
     }
-    //#endregion
 
-    //#region Properties
-    //OpenAmountHint: string = "";
+    private SetGLAccountChanged(value: string) {
+        if (value != undefined)
+            this.GLAccountChanged = true;
+    }
+
+
+    private SetChartOfAccountSecurityLevel(ChartOfAccountId: string) {
+        this.chartOfAccountPMService.get(ChartOfAccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var chartOfAccount: ChartOfAccountPM = response.Result;
+                this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel == undefined ? 0 : chartOfAccount.ChartOfAccountSecurityLevel;
+            }
+        });
+    }
+    private CheckGLAccountChartOfAccountSecurityLevel() {
+        if (this.GLAccount) {
+            return this.CheckSecurityLevel(this.securityLevel);
+        } else return true;
+
+    }
+    private CheckChartOfAccountSecurityLevel() {
+        if (this.ChartOfAccount) {
+            return this.CheckSecurityLevel(this.ChartOfAccountSecurityLevel);
+        }
+        else return true;
+    }
+    private CheckSecurityLevel(securityLevel: any) {
+        if (!this.loggedUser.IsCustomerCare && (securityLevel > this.loggedUser.SecurityLevel)) {
+
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
+            return false;
+        }
+        else return true;
+    }
+    SettingListOrRangGlaccount() {
+        this.IsListGLAccounts = !this.IsListGLAccounts;
+    }
+
+
+    get GLAccount() { return this.glaccountPM; }
+    set GLAccount(value: any) {
+        if (this.glaccountPM != value) {
+            this.glaccountPM = value;
+            if (this.glaccountPM) {
+                if (this.glaccountPM.IsMultiCurrency) {
+
+                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : null;
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+                } else {
+                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : this.glaccountPM.CurrencyId;
+                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+                }
+
+                this.SetChartOfAccountSecurityLevel(value.ChartOfAccountsId);
+            }
+
+        }
+
+        if (this.glaccountPM) {
+            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", true);
+            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", true);
+
+        } else {
+            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", false);
+            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", false);
+
+            this.BalanceInLocalCurrency = '';
+            this.LocalBalanceInDue = '';
+
+        }
+    }
+    private fromGLAccount: GLAccountList;
+    get FromGLAccount() { return this.fromGLAccount; }
+    set FromGLAccount(value: GLAccountList) {
+        if (this.fromGLAccount != value) {
+            this.fromGLAccount = value;
+        }
+    } 
+    private toGLAccount: GLAccountList;
+    get ToGLAccount() { return this.toGLAccount; }
+    set ToGLAccount(value: GLAccountList) {
+        if (this.toGLAccount != value) {
+            this.toGLAccount = value;
+        }
+    }
+    private chartOfAccountId: string;
+
+    get ChartOfAccountId() { return this.chartOfAccountId; }
+    set ChartOfAccountId(value: string) {
+        if (this.chartOfAccountId != value) {
+            this.chartOfAccountId = value;
+
+
+        }
+    }
+
+    private chartOfAccountsTypeCode: string;
+    public get ChartOfAccountsTypeCode(): string {
+        return this.chartOfAccountsTypeCode;
+    }
+    public set ChartOfAccountsTypeCode(v: string) {
+        this.chartOfAccountsTypeCode = v;
+    }
+
+    private chartOfAccount: ChartOfAccountList;
+    public get ChartOfAccount() { return this.chartOfAccount; }
+    public set ChartOfAccount(value: ChartOfAccountList) {
+        if (this.chartOfAccount != value) {
+            this.chartOfAccount = value;
+            if (value)
+                this.ChartOfAccountSecurityLevel = value.ChartOfAccountSecurityLevel == undefined ? 0 : value.ChartOfAccountSecurityLevel;
+        }
+    }
+
+    private numberOfMonths: number;
+    public get NumberOfMonths() { return this.numberOfMonths; }
+    public set NumberOfMonths(value: number) {
+        if (this.numberOfMonths != value) {
+            this.numberOfMonths = value;
+        }
+    }
+
+
+
+    private collector: string;
+    public get Collector() { return this.collector; }
+    public set Collector(value: string) {
+        if (this.collector != value) {
+            this.collector = value;
+        }
+    }
+
+    private salesman: string;
+    public get Salesman() { return this.salesman; }
+    public set Salesman(value: string) {
+        if (this.salesman != value) {
+            this.salesman = value;
+        }
+    }
+
+
+    private category1: string;
+    public get Category1() { return this.category1; }
+    public set Category1(value: string) {
+        if (this.category1 != value) {
+            this.category1 = value;
+        }
+    }
+
+
+    private category2: string;
+    public get Category2() { return this.category2; }
+    public set Category2(value: string) {
+        if (this.category2 != value) {
+            this.category2 = value;
+        }
+    }
+
+    private category3: string;
+    public get Category3() { return this.category3; }
+    public set Category3(value: string) {
+        if (this.category3 != value) {
+            this.category3 = value;
+        }
+    }
+
+    private category4: string;
+    public get Category4() { return this.category4; }
+    public set Category4(value: string) {
+        if (this.category4 != value) {
+            this.category4 = value;
+        }
+    }
+
+    private category5: string;
+    public get Category5() { return this.category5; }
+    public set Category5(value: string) {
+        if (this.category5 != value) {
+            this.category5 = value;
+        }
+    }
+
+    private currenciesDetailed: boolean;
+    public get CurrenciesDetailed() { return this.currenciesDetailed; }
+    public set CurrenciesDetailed(value: boolean) {
+        if (this.currenciesDetailed != value) {
+            this.currenciesDetailed = value;
+        }
+    }
+    private agingForDate: Date = null;
+    public get AgingForDate() { return this.agingForDate; }
+    public set AgingForDate(value: Date) {
+        if (this.agingForDate != value) {
+            this.agingForDate = value;
+
+            this.ValidationErrorsList = [];
+            this.ValidateDate();
+        }
+    }
+
+    private customer: string;
+    public get Customer() { return this.customer; }
+    public set Customer(value: string) {
+        if (this.customer != value) {
+            this.customer = value;
+
+            if (value)
+                this.IsCategoryDisabled = true;
+            else
+                this.IsCategoryDisabled = false;
+        }
+    }
+    private balanceInLocalCurrency: string;
+    public get BalanceInLocalCurrency(): string {
+        return this.balanceInLocalCurrency;
+    }
+    public set BalanceInLocalCurrency(v: string) {
+        this.balanceInLocalCurrency = v;
+    }
+
+    private localBalanceInDue: string;
+    public get LocalBalanceInDue(): string {
+        return this.localBalanceInDue;
+    }
+    public set LocalBalanceInDue(v: string) {
+        this.localBalanceInDue = v;
+    }
+    private isReconciled: boolean;
+    public get IsReconciled(): boolean {
+        return this.isReconciled;
+    }
+    public set IsReconciled(v: boolean) {
+        this.isReconciled = v;
+    }
+
+
+    private includeChildAccounts: boolean;
+    public get IncludeChildAccounts(): boolean {
+        return this.includeChildAccounts;
+    }
+    public set IncludeChildAccounts(v: boolean) {
+        this.includeChildAccounts = v;
+    }
+
+    private includeRelatedCurrenciesAccount: boolean;
+    public get IncludeRelatedCurrenciesAccount(): boolean {
+        return this.includeRelatedCurrenciesAccount;
+    }
+    public set IncludeRelatedCurrenciesAccount(v: boolean) {
+        this.includeRelatedCurrenciesAccount = v;
+    }
+
+    private searchFields: string;
+    public get SearchFields(): string {
+        return this.searchFields;
+    }
+    public set SearchFields(v: string) {
+        this.searchFields = v;
+    }
+    amount: number;
+    get Amount() { return this.amount; }
+    set Amount(value: number) {
+        if (this.amount != value) {
+            this.amount = value;
+        }
+    }
+    listGLAccounts: any[] = [];
+    get ListGLAccounts() { return this.listGLAccounts; }
+    set ListGLAccounts(value) {
+        if (this.listGLAccounts != value) {
+            this.listGLAccounts = value;
+        }
+    }
+    glaccountIdentifier: string;
+    get GLAccountIdentifier() { return this.glaccountIdentifier; }
+    set GLAccountIdentifier(value: string) {
+        if (this.glaccountIdentifier != value) {
+            this.glaccountIdentifier = value;
+        }
+    }
+    fromGLAccountId: string;
+    get FromGLAccountId() { return this.fromGLAccountId; }
+    set FromGLAccountId(value: string) {
+        if (this.fromGLAccountId != value) {
+            this.fromGLAccountId = value;
+        }
+    }
+    toGLAccountId: string;
+    get ToGLAccountId() { return this.toGLAccountId; }
+    set ToGLAccountId(value: string) {
+        if (this.toGLAccountId != value) {
+            this.toGLAccountId = value;
+        }
+    }
+   
     private openAmountHint: string;
     get OpenAmountHint() { return this.openAmountHint; }
     set OpenAmountHint(value: string) {
@@ -832,119 +968,6 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         }
     }
 
-    private _GLAccountId: string;
-    get GLAccountId() { return this._GLAccountId; }
-    set GLAccountId(value: string) {
-        if (this._GLAccountId != value) {
-            this.SetGLAccountChanged(this._GLAccountId);
-            this._GLAccountId = value;
-        }
-    }
-
-
-    private SetGLAccountChanged(value: string) {
-        if (value != undefined)
-            this.GLAccountChanged = true;
-    }
-
-    private securityLevel: any;
-    private glaccountPM: any;
-
-    get GLAccount() { return this.glaccountPM; }
-    set GLAccount(value: any) {
-        if (this.glaccountPM != value) {
-            this.glaccountPM = value;
-            if (this.glaccountPM) {
-                if (this.glaccountPM.IsMultiCurrency) {
-
-                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : null;
-                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
-                } else {
-                    this.CurrencyId = !AppTool.IsNullOrEmpty(this.CurrencyId) && this.IsSchedulerReport ? this.CurrencyId : this.glaccountPM.CurrencyId;
-                    this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
-                }
-
-                this.SetChartOfAccountSecurityLevel(value.ChartOfAccountsId);
-            }
-
-        }
-
-        if (this.glaccountPM) {
-            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", true);
-            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", true);
-
-        } else {
-            this.UIProperties.SetEnabled("BalanceInLocalCurrency", "GLAccount", false);
-            this.UIProperties.SetEnabled("LocalBalanceInDue", "GLAccount", false);
-
-            this.BalanceInLocalCurrency = '';
-            this.LocalBalanceInDue = '';
-
-        }
-    }
-
-    private SetChartOfAccountSecurityLevel(ChartOfAccountId: string) {
-        this.chartOfAccountPMService.get(ChartOfAccountId).subscribe((response: ServiceResponse) => {
-            if (!response.HasError) {
-                var chartOfAccount: ChartOfAccountPM = response.Result;
-                this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel == undefined ? 0 : chartOfAccount.ChartOfAccountSecurityLevel;
-            }
-        });
-    }
-    private CheckGLAccountChartOfAccountSecurityLevel() {
-        if (this.GLAccount) {
-            return this.CheckSecurityLevel(this.securityLevel);
-        } else return true;
-
-    }
-    private CheckChartOfAccountSecurityLevel() {
-        if (this.ChartOfAccount) {
-            return this.CheckSecurityLevel(this.ChartOfAccountSecurityLevel);
-        }
-        else return true;
-    }
-    private CheckSecurityLevel(securityLevel: any) {
-        if (!this.loggedUser.IsCustomerCare && (securityLevel > this.loggedUser.SecurityLevel)) {
-
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
-            return false;
-        }
-        else return true;
-    }
-
-    private _IsReconciled: boolean;
-    public get IsReconciled(): boolean {
-        return this._IsReconciled;
-    }
-    public set IsReconciled(v: boolean) {
-        this._IsReconciled = v;
-    }
-
-
-    private _IncludeChildAccounts: boolean;
-    public get IncludeChildAccounts(): boolean {
-        return this._IncludeChildAccounts;
-    }
-    public set IncludeChildAccounts(v: boolean) {
-        this._IncludeChildAccounts = v;
-    }
-
-    private _IncludeRelatedCurrenciesAccount: boolean;
-    public get IncludeRelatedCurrenciesAccount(): boolean {
-        return this._IncludeRelatedCurrenciesAccount;
-    }
-    public set IncludeRelatedCurrenciesAccount(v: boolean) {
-        this._IncludeRelatedCurrenciesAccount = v;
-    }
-
-
-    private _SearchFields: string;
-    public get SearchFields(): string {
-        return this._SearchFields;
-    }
-    public set SearchFields(v: string) {
-        this._SearchFields = v;
-    }
 
     //#endregion
 
