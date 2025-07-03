@@ -17401,7 +17401,7 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
@@ -17409,6 +17409,7 @@
     DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -18072,7 +18073,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <field
+  <field
     Id="&quot;d915fe83-f3fe-48e0-85f2-5d584d8bcecc&quot;"
     FieldName="&quot;BillToDisplayNumber&quot;"
     OldNames="BillToDisplayNumber"
@@ -18149,7 +18150,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <field
+  <field
     Id="&quot;570fbf01-a1fe-4b3b-9fd0-37aae5bc0d46&quot;"
     FieldName="&quot;SequenceStatus&quot;"
     OldNames="SequenceStatus"
@@ -18378,7 +18379,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-   <Query
+  <Query
     Code="&quot;Draft General Invoices&quot;"
     TextCode="&quot;Draft Invoices&quot;"
     LocalTextCode="&quot;חשבוניות בסטטוס טיוטה&quot;"

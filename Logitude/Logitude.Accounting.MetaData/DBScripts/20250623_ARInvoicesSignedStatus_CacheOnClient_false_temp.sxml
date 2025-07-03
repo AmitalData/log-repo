@@ -1,9 +1,22 @@
 <Script DBType="Main"  TargetTableName="ARInvoicesSignedStatuses" AOT="false" >
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
    UPDATE ObjectTables 
-   SET CacheOnClient=0
+   SET CacheOnClient=0, LookUp1='Code', LookUp2='LocalName'
    WHERE Name ='ARInvoicesSignedStatus' AND Id='1-961' 
+   
+   
+   
+    UPDATE ObjectFields
+    SET DisplayOnLookUp=1,DisplayInLookUpIndex=0,DisplayInSearchWindowList=1
+    WHERE ObjectTableId='1-961'
+    AND Id='1-169951'
+
+
+    UPDATE ObjectFields
+    SET DisplayOnLookUp=1,DisplayInLookUpIndex=2,DisplayInSearchWindowList=1
+    WHERE ObjectTableId='1-961'
+    AND Id='1-169952'
     ]]>      
   </Sql>
 </Script>
