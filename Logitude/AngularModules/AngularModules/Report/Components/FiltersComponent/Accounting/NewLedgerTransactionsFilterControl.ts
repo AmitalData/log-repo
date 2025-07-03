@@ -32,7 +32,12 @@ import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 
 export class NewLedgerTransactionsFilterControl extends BaseComponent implements OnInit {
     public CurrencyFilters: any;
+    public List: string;
+    public Range: string;
+    public GLAccountFilterRadio: string;
 
+
+    public IsListGLAccounts: boolean = false;
     ObjectTableName: string = "LedgerTransaction";
     public ReportsPreview: ReportsPreviewComponent;
     public RunReportTitle: string = 'Run Report';
@@ -73,6 +78,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     constructor(private changeDetector: ChangeDetectorRef) {
         super();
         this.initializeComponent();
+
     }
     //#region Lifecycle
 
@@ -130,6 +136,11 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
         this.GLAccountFilterItems = new ApiQueryFilters();
         this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
+
+        this.List = "List_" + this.CurrentSession.SessionIndex+ this.CurrentSession.GetNewId("List");
+        this.Range = "Range_" + this.CurrentSession.SessionIndex +this.CurrentSession.GetNewId("Range");
+        this.GLAccountFilterRadio = "GLAccountFilterRadio_" + this.CurrentSession.SessionIndex + this.CurrentSession.GetNewId("GLAccountFilterRadio");
+
     }
 
     private InitializeSalesmanFeature(): void {
@@ -240,7 +251,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     }
 
     GetMainCustomerFieldName() {
-        return 'GLAccountId';
+        return  null;
     }
 
     IsPartnersChanged(SelectedTab) {
@@ -267,13 +278,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
-        queryFilterItem = new QueryFilterItem();
-        queryFilterItem.FieldName = "GLAccountId";
-        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.GLAccountId);
-        queryFilterItem.Operator = "Equals";
-        queryFilterItems.push(queryFilterItem);
-
-        queryFilterItem = new QueryFilterItem();
+       
 
         queryFilterItem.FieldName = "CollectorId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.collector);
@@ -423,9 +428,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                 case "ToDate":
                     this.ToDate = queryFilterItem.FieldValue;
                     break;
-                case "GLAccountId":
-                    this.GLAccountId = queryFilterItem.FieldValue;
-                    break;
+                
                 case "ChartOfAccountId":
                     this.ChartOfAccountId = queryFilterItem.FieldValue;
                     break;
@@ -482,6 +485,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 case "ListGLAccounts":{
                     if (queryFilterItem.FieldValue) {
+                        this.IsListGLAccounts = true;
                         this.ListGLAccounts = await this.FetchGLAccountDataFromServer(queryFilterItem.FieldValue);
                     } else {
                         this.ListGLAccounts = [];
@@ -524,7 +528,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId)) {
+        if ( !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFieldsForNew"));
             isValid = false;
         }
@@ -571,21 +575,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
 
     PrepareContactList() {
-        var cardExtendedPMService = new CardExtendedPMService();
-        var glAccountId = this.GetLookUpFieldValue(this.GLAccountId);
-        if (glAccountId != null) {
-            cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
-                if (!response.HasError) {
-                    var allContacts = response.Result;
-                    if (allContacts != null && allContacts.length > 0) {
-                        allContacts.forEach(contact => {
-                            if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
-                        });
-                        this.ReportsPreview.PartnersObslist.reverse();
-                    }
-                }
-            });
-        }
+      
     }
 
     RunButtonClicked() {
@@ -655,7 +645,9 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         }
         else return true;
     }
-
+    SettingListOrRangGlaccount() {
+        this.IsListGLAccounts = !this.IsListGLAccounts;
+    }
 
 
     get GLAccount() { return this.glaccountPM; }
@@ -976,14 +968,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         }
     }
 
-    private glAccountId: string;
-    get GLAccountId() { return this.glAccountId; }
-    set GLAccountId(value: string) {
-        if (this.glAccountId != value) {
-            this.SetGLAccountChanged(this.glAccountId);
-            this.glAccountId = value;
-        }
-    }
+
     //#endregion
 
 

@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "2d7196f9ce07552f7c86a6158f5e45ba";
+		public const string HashString = "dddc0c652f367eec67fac8eb82fb6153";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14860,6 +14860,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLTransactionReportOFromGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.FromGLAccount", DefaultText = "From GLAccount",LocalDefaultText = @"מכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLTransactionReportOToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.ToGLAccount", DefaultText = "To GLAccount ",LocalDefaultText = @"עד כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים לפי מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

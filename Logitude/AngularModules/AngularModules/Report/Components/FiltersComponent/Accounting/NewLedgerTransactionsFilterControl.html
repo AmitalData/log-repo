@@ -127,32 +127,154 @@
 
     <!-- Filters and Balance -->
     <tr style="height:32px">
-        <td colspan="4">
+        <td colspan="5">
             <table *ngIf="isReady">
+
+                <tr class="FieldRow">
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:5px;">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td style="width:100px">
+                                    <div class="RadioButton" style="width:100px">
+                                        <input type="radio" [attr.id]="List" [attr.name]="GLAccountFilterRadio"
+                                            (click)="SettingListOrRangGlaccount()" [checked]="IsListGLAccounts"
+                                            style="width:15px" />
+                                        <label [attr.for]="List" style="font-size: 12px">
+                                            {{'Accounting.General.O.GLAccount' | TextCodeTranslationPipe}}
+                                        </label>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width: 40px;"></td>
+
+                                <td style="width:100px">
+                                    <div class="RadioButton" style="width:100px">
+
+                                        <input type="radio" [attr.id]="Range" [attr.name]="GLAccountFilterRadio"
+                                            (click)="SettingListOrRangGlaccount() " [checked]="!IsListGLAccounts"
+                                            style="width:15px" />
+                                        <label [attr.for]="Range" style="font-size: 12px">
+                                            {{'GLTransactionReport.O.GLAccountsRange' | TextCodeTranslationPipe}}
+
+                                        </label>
+
+                                    </div>
+
+                                </td>
+                                
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+                    <td *ngIf="IsListGLAccounts">
+                        <table>
+                            <tr>
+
+
+
+                                <td style="width: 235px;">
+                                    <MultiSelectLOV [DataContext]="DataContext"
+                                        [PlaceHolder]="'Accounting.General.O.GLAccount' | TextCodeTranslationPipe"
+                                        [LayoutDirection]="isRTL ?'rtl' : 'ltr'"
+                                        [LOVListComponentPropName]="'ListGLAccounts'"
+                                        [ButtonAddLabel]="'GLAccounts.O.Choose' | TextCodeTranslationPipe">
+                                        <span class="class-MultiSelectLOV-content">
+                                            <LogLov [ShowInActive]="true" style="display: block;width: 150px;"
+                                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                [HideColumns]="true" [LookUpTableName]="'GLAccount'"
+                                                [DisplayMemberPath]="'LocalName'"
+                                                [QueryFilterItems]="GLAccountFilterItems" [ForceShowAddLink]="true"
+                                                [HideAddLink]="true">
+                                            </LogLov>
+                                        </span>
+                                    </MultiSelectLOV>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                    </td>
+
+                    <td *ngIf="!IsListGLAccounts">
+                        <table>
+
+                            <td class="FieldRow">
+                                <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
+                                    [ObjectFieldName]="'FromGLAccountId'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
+                                    [QueryFilterItems]="GLAccountFilterItems"
+                                    (SelectedItemChanged)="FromGLAccount = $event" [ForceShowAddLink]="true"
+                                    [HideAddLink]="true" [HideColumns]="true" [StartSearchFromChar]="3"
+                                    [StartSearchFromNumber]="5"
+                                    [PlaceHolder]="'GLTransactionReport.O.FromGLAccount' | TextCodeTranslationPipe">
+
+                                </LogLov>
+
+                                <div style="display: inline-block; width: 117px;padding: 0 5px;">
+                                    <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
+                                        [ObjectFieldName]="'ToGLAccountId'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
+                                        [QueryFilterItems]="GLAccountFilterItems"
+                                        (SelectedItemChanged)="ToGLAccount = $event" [ForceShowAddLink]="true"
+                                        [HideAddLink]="true" [HideColumns]="true" [StartSearchFromChar]="3"
+                                        [StartSearchFromNumber]="5"
+                                        [PlaceHolder]="'GLTransactionReport.O.ToGLAccount' | TextCodeTranslationPipe">
+
+                                    </LogLov>
+
+
+                                </div>
+                            </td>
+                        </table>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td></td>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+
+
+                </tr>
 
                 <!-- Row 1 -->
                 <tr class="FieldRow">
                     <!-- 1 -->
                     <td style="width: 130px;">
-                        <LogLabel [ObjectFieldName]="'GLAccountId'"
-                            [Text]="'GLTransactionReport.O.GLAccountNo' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                        </LogLabel>
+                        <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'"
+                            [Text]="'Accounting.General.O.Collector'| TextCodeTranslationPipe"
+                            [DataContext]="DataContext"></LogLabel>
                     </td>
 
                     <!-- 2 -->
                     <td style="width:245px">
-                        <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
-                            [ObjectFieldName]="'GLAccountId'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
-                            [QueryFilterItems]="GLAccountFilterItems" (SelectedItemChanged)="GLAccount = $event"
-                            [ForceShowAddLink]="true" [HideAddLink]="true" [HideColumns]="true"
-                            [StartSearchFromChar]="3" [StartSearchFromNumber]="5">
-
+                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'Collector'" [ObjectTableName]="'GLAccount'"
+                            style="display: block; width: 150px;" float-start [DataContext]="DataContext"
+                            [SelectedValue]="Collector" [LookUpTableName]="'User'" [HideColumns]="true">
                         </LogLov>
                     </td>
-
-
 
                     <!-- <td style="width:15px"></td> -->
                     <!-- 3 -->
@@ -347,7 +469,7 @@
                 <tr class="FieldRow">
                     <!-- Category -->
                     <!-- 1 -->
-                    <td style="padding-right: 5px;" class="Label">
+                    <td  class="Label">
                         <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'"
                             [Text]="'GLAccount.O.Category' | TextCodeTranslationPipe" [DataContext]="DataContext">
                         </LogLabel>
@@ -415,78 +537,17 @@
                             [QueryFilterItems]="SalesmanFilterItems" [HideColumns]="true">
                         </LogLov>
                     </td>
-                    <!-- Collector -->
-                    <td style="padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'"
-                            [Text]="'Accounting.General.O.Collector'| TextCodeTranslationPipe"
-                            [DataContext]="DataContext"></LogLabel>
+                    <td>
+
                     </td>
                     <td>
-                        <LogLov [ShowInActive]="true" [ObjectFieldName]="'Collector'" [ObjectTableName]="'GLAccount'"
-                            style="display: block; width: 150px;" float-start [DataContext]="DataContext"
-                            [SelectedValue]="Collector" [LookUpTableName]="'User'" [HideColumns]="true">
-                        </LogLov>
+
                     </td>
                     <td style="width: 200px"></td>
 
 
                 </tr>
-                <!-- Row 5 -->
-                <tr class="FieldRow">
 
-
-                    <td style="padding-right: 5px;" class="Label">
-                        <LogLabel [Text]="'GLTransactionReport.O.GLAccountList' | TextCodeTranslationPipe"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
-                        </LogLabel>
-                    </td>
-
-                    <td style="width: 235px;">
-                        <MultiSelectLOV [DataContext]="DataContext"
-                            [PlaceHolder]="'Accounting.General.O.GLAccount' | TextCodeTranslationPipe"
-                            [LayoutDirection]="isRTL ?'rtl' : 'ltr'" [LOVListComponentPropName]="'ListGLAccounts'"
-                            [ButtonAddLabel]="'GLAccounts.O.Choose' | TextCodeTranslationPipe">
-                            <span class="class-MultiSelectLOV-content">
-                                <LogLov [ShowInActive]="true" style="display: block;width: 150px;"
-                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"
-                                    [LookUpTableName]="'GLAccount'" [DisplayMemberPath]="'LocalName'"
-                                    [QueryFilterItems]="GLAccountFilterItems" [ForceShowAddLink]="true"
-                                    [HideAddLink]="true">
-                                </LogLov>
-                            </span>
-                        </MultiSelectLOV>
-                    </td>
-                    <td style="padding-right: 5px;" class="Label">
-                        <LogLabel [ObjectTableName]="'GLAccount'"
-                            [Text]="'Accounting.General.O.GLAccount' | TextCodeTranslationPipe"
-                            [DataContext]="DataContext">
-                        </LogLabel>
-                    </td>
-                    <td class="FieldRow">
-                        <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
-                            [ObjectFieldName]="'FromGLAccountId'" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
-                            [QueryFilterItems]="GLAccountFilterItems" (SelectedItemChanged)="FromGLAccount = $event"
-                            [ForceShowAddLink]="true" [HideAddLink]="true" [HideColumns]="true"
-                            [StartSearchFromChar]="3" [StartSearchFromNumber]="5" [PlaceHolder]="'GLTransactionReport.O.FromGLAccount' | TextCodeTranslationPipe">
-
-                        </LogLov>
-
-                        <div style="display: inline-block; width: 117px;padding: 0 5px;">
-                            <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
-                                [ObjectFieldName]="'ToGLAccountId'" [ObjectTableName]="ObjectTableName"
-                                [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
-                                [QueryFilterItems]="GLAccountFilterItems" (SelectedItemChanged)="ToGLAccount = $event"
-                                [ForceShowAddLink]="true" [HideAddLink]="true" [HideColumns]="true"
-                                [StartSearchFromChar]="3" [StartSearchFromNumber]="5" [PlaceHolder]="'GLTransactionReport.O.ToGLAccount' | TextCodeTranslationPipe">
-
-                            </LogLov>
-
-
-                        </div>
-                    </td>
-
-                </tr>
 
                 <tr [hidden]="!IsSchedulerReport" class="FieldRow">
                     <td style="width:210px">
