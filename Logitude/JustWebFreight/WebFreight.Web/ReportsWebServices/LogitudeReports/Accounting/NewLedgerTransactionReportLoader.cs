@@ -107,7 +107,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             transactionsDataProvider.NewGLAccountList = new List<NewGLAccountList>();
             var allTransactions = cardIndexs.SelectMany(ci => ci.MyLedgerTransactionList ?? Enumerable.Empty<LedgerTransactionList>()).ToList();
-            var accountIds = allTransactions.Select(t => t.AccountId).Distinct().ToList();
+            var accountIds = cardIndexs.Select(t => t.GLAccountId).Distinct().ToList();
              var glAccounts = glAccountQueryService.GetByIds(accountIds, tenant, false).ToList();
 
             foreach (LedgerTransactionBalanceResponse index in cardIndexs)
@@ -378,8 +378,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IncludeRelatedCurrenciesAccount = GetFilterValue<bool>("IncludeRelatedCurrenciesAccount"),
                 UseSecurityLevel = GetFilterValue<bool>("UseSecurityLevel"),
                 ListGLAccounts = GetFilterValue<string>("ListGLAccounts"),
-                FromGLAccountId = GetFilterValue<string>("FromGLAccountId"),
-                ToGLAccountId = GetFilterValue<string>("ToGLAccountId"),
+                FromGLAccountDisplayNumber = GetFilterValue<string>("FromGLAccountDisplayNumber"),
+                ToGLAccountDisplayNumber = GetFilterValue<string>("ToGLAccountDisplayNumber"),
             };
             SetReportCategoryParameters(p);
             return p;

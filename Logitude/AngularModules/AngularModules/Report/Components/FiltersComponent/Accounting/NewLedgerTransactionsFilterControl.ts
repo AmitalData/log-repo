@@ -21,6 +21,8 @@ import { UserPM } from '../../../../Common/EntityPMs/UserPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
 import { Operators } from 'Accounting/DataContracts/Operators';
+import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
+import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 
 
 @Component({
@@ -379,14 +381,16 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             queryFilterItems.push(queryFilterItem);
         }
         queryFilterItem = new QueryFilterItem();
-        queryFilterItem.FieldName = "FromGLAccountId";
-        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.FromGLAccountId);
+        queryFilterItem.FieldName = "FromGLAccountDisplayNumber";
+        queryFilterItem.FieldValue = this.FromGLAccount?.DisplayNumber;
+        queryFilterItem.FieldValue2 = this.FromGLAccountId ? this.FromGLAccountId : null; 
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
-        queryFilterItem.FieldName = "ToGLAccountId";
-        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ToGLAccountId);
+        queryFilterItem.FieldName = "ToGLAccountDisplayNumber";
+        queryFilterItem.FieldValue = this.ToGLAccount?.DisplayNumber;
+        queryFilterItem.FieldValue2 = this.ToGLAccountId ? this.ToGLAccountId : null;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
 
@@ -404,13 +408,13 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) { //For Scheduler Report
         this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
-            queryFilterItems.forEach(queryFilterItem => {
-                this.SetFilterItem(queryFilterItem);
+            queryFilterItems.forEach(async queryFilterItem => {
+               await this.SetFilterItem(queryFilterItem);
             });
         }
     }
 
-    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+    private async  SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
                 case "FromDate":
@@ -476,17 +480,52 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                         this.selectedAmountOperatorLocalBalanceInDue = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
                     }
                     break;
+                case "ListGLAccounts":{
+                    if (queryFilterItem.FieldValue) {
+                        this.ListGLAccounts = await this.FetchGLAccountDataFromServer(queryFilterItem.FieldValue);
+                    } else {
+                        this.ListGLAccounts = [];
+                    }
+                    break;
+                }
+                case "FromGLAccountDisplayNumber":
+                    this.FromGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    break;
+                case "ToGLAccountDisplayNumber":
+                    this.ToGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    break;
+            
             }
         }
     }
+   async FetchGLAccountDataFromServer(ids: string): Promise<any> {
+        if (ids) {
+            let apiQueryFilters = new ApiQueryFilters(true);
+            apiQueryFilters.addAdditionalFilter("Id", ids, null, null, "InListExact", false, false, false, "string", false, true);
 
+            const gLAccountListService = new GLAccountListService();
+            return new Promise((resolve, reject) => {
+                gLAccountListService.getByFilters(apiQueryFilters).subscribe(
+                    (response: ServiceResponse) => {
+                        if (!response.HasError) {
+                            resolve(response.Result);
+                        } else {
+                            reject(new Error('Error fetching GL Account data'));
+                        }
+                    },
+                    (error) => reject(error)
+                );
+            });
+        }
+        return Promise.resolve(null);
+    }
     ValidateSelectedFilters() {
         this.ValidationErrorsList = [];
 
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFields"));
+        if (!this.GLAccountId && !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId)) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFieldsForNew"));
             isValid = false;
         }
 
@@ -552,9 +591,6 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     RunButtonClicked() {
         this.SetUIProperties();
 
-        var errors: string[] = [];
-        var categoryValue = null;
-        var categoryIndex = null;
 
         if (this.ValidateSelectedFilters()) {
 
@@ -652,6 +688,20 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             this.BalanceInLocalCurrency = '';
             this.LocalBalanceInDue = '';
 
+        }
+    }
+    private fromGLAccount: GLAccountList;
+    get FromGLAccount() { return this.fromGLAccount; }
+    set FromGLAccount(value: GLAccountList) {
+        if (this.fromGLAccount != value) {
+            this.fromGLAccount = value;
+        }
+    } 
+    private toGLAccount: GLAccountList;
+    get ToGLAccount() { return this.toGLAccount; }
+    set ToGLAccount(value: GLAccountList) {
+        if (this.toGLAccount != value) {
+            this.toGLAccount = value;
         }
     }
     private chartOfAccountId: string;

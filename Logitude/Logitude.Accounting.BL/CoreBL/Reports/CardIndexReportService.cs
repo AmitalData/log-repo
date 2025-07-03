@@ -61,7 +61,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts,
                     _Param.ChartOfAccountsTypeCode,
                     _Param.SalesmanId,
-                    includeControlAccount,_Param.UseSecurityLevel,_Param.CollectorId, listGLAccounts,_Param.FromGLAccountId,_Param.ToGLAccountId);
+                    includeControlAccount,_Param.UseSecurityLevel,_Param.CollectorId, listGLAccounts,_Param.FromGLAccountDisplayNumber,_Param.ToGLAccountDisplayNumber);
                 var hash = new HashSet<string>(hashsetallIdAccounts);
                 _allIdAccounts = new List<string>(hash);
            
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private void GLAccountFilterIsMust()
         {
-            if (string.IsNullOrWhiteSpace(this._Param.Category1Id + this._Param.Category2Id + this._Param.Category3Id + this._Param.Category4Id + this._Param.Category5Id + this._Param.ChartOfAccountsId + this._Param.AccountTypeCode + this._Param.GLAccountId + _Param.ChartOfAccountsTypeCode + _Param.SalesmanId + _Param.ListGLAccounts))
+            if (string.IsNullOrWhiteSpace(this._Param.Category1Id + this._Param.Category2Id + this._Param.Category3Id + this._Param.Category4Id + this._Param.Category5Id + this._Param.ChartOfAccountsId + this._Param.AccountTypeCode + this._Param.GLAccountId + _Param.ChartOfAccountsTypeCode + _Param.SalesmanId + _Param.ListGLAccounts + _Param.FromGLAccountDisplayNumber +_Param.ToGLAccountDisplayNumber))
             {
 
                 throw new Exception("GLAccountFilterIsMust");
@@ -115,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public bool UseSecurityLevel { get; set; }
 
         public string ListGLAccounts { get; set; }
-        public string ToGLAccountId { get; set; }
-        public string FromGLAccountId { get; set; }
+        public string ToGLAccountDisplayNumber { get; set; }
+        public string FromGLAccountDisplayNumber { get; set; }
     }
 }
