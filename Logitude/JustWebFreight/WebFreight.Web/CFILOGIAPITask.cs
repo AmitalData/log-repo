@@ -174,7 +174,20 @@ namespace WebFreight.Web
     {
         static public string DB = @"<root>
 <OCC>
+<DAT name=""CODE"">A81</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIUDEL.IsOK2Delete</DAT>
+<DAT name=""REFERENCE"">CFIUDEL.IsOK2Delete</DAT>
+<DAT name=""PARAMETERS"">CUSTOMFILENO=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select COUNT(*) from CUSTOMS.CUSTOMSREQUESTSSHEETS where CUSTOMSREQUESTSSHEETS.INTERFACETYPECODE = '2755' and CUSTOMSREQUESTSSHEETS.CUSTOMFILENO = '123' and TENANT=1</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select COUNT(*) from CUSTOMS.CUSTOMSREQUESTSSHEETS where CUSTOMSREQUESTSSHEETS.INTERFACETYPECODE = '2755' and CUSTOMSREQUESTSSHEETS.CUSTOMFILENO = @CUSTOMFILENO and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"">1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">CUSTOMFILENO=varchar,12</DAT>
+</OCC>
+<OCC>
 <DAT name=""CODE"">A80</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>PrepareCourierDefault</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>PrepareCourierDefault</DAT>
 <DAT name=""REFERENCE"">GGGQWBLOGITUDE.Lp_PrepareCourierDefault</DAT>
 <DAT name=""PARAMETERS"">CODE=True</DAT>
