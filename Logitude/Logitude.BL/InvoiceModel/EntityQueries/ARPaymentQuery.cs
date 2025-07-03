@@ -185,11 +185,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                 }
             }
 
-            if (string.IsNullOrEmpty(securedPM.PrintNotes))
-            {
-                securedPM.PrintNotes = TextCodesTranslator.TranslateText("ARPayment.S.ShortTitle", tenant, true);
-            }
-
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), securedPM, tenant);
         }
 
