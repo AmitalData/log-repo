@@ -334,6 +334,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this._IsDisplayOnly = v;
     }
 
+    RefreshData() {
+        this.checkLedgerCreated();
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+    }
+
     checkLedgerCreated(firstCall: boolean = false)
     {
 
@@ -1082,8 +1087,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     RECONCILIATION_STATUS_CODES = [
         this.APPROVED_STATUS,
-        this.DRAFT_STATUS,
-        this.PRINTED_STATUS
     ];
 
 
