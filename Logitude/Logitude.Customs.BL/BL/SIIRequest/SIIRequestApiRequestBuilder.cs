@@ -13,7 +13,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         public static ApiRequest<TData> Build<TData>(
             int tenant,
             SIIRequestWebApiEndpointConfig config,
-            TData data, ApiCommunicationConstants communicationsDto)
+            TData data, ApiCommunicationConstants requestComm,
+            ApiCommunicationConstants responseComm)
         {
             return new ApiRequest<TData>
             {
@@ -21,7 +22,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 Url = config.Url,
                 Header = config.Header,
                 Data = data,
-                Communications = communicationsDto,
+                RequestComm = requestComm,
+                ResponseComm = responseComm,
             };
         }
     }

@@ -46,7 +46,9 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_ImportAddOwner = "IMPORT_ADD_OWNER";
         public const string InterfaceName_ImportPrintTracking = "IMPORT_PRINT_TRACKING";
         public const string InterfaceName_SIIProductFileCheck = "SII_PRODUCT_FILE_CHECK";
+        public const string InterfaceName_SIIProductFileCheck_Response = "SII_PRODUCT_FILE_CHECK_R";
         public const string InterfaceName_SIISendRequest = "SII_SEND_REQUEST";
+        public const string InterfaceName_SIISendRequest_Response = "SII_SEND_REQUEST_R";
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
@@ -380,6 +382,16 @@ namespace Logitude.Customs.BL.CloseTables
                 Partner = PartnerCode_SII,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
             },
+           
+            new InterfaceDetails()
+            {
+                Code= InterfaceName_SIIProductFileCheck_Response,
+                Name = "מכון תקנים - איתור תיק מוצר",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_SII,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                ServerInternalDef= true,
+            },
             new InterfaceDetails()
             {
                 Code= InterfaceName_SIISendRequest,
@@ -387,6 +399,15 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_SII,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+            },
+            new InterfaceDetails()
+            {
+                Code= InterfaceName_SIISendRequest_Response,
+                Name = "מכון תקנים - שליחת בקשה",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_SII,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                ServerInternalDef= true,
             }
             };
             ///
@@ -409,6 +430,7 @@ namespace Logitude.Customs.BL.CloseTables
             return all;
 
         }
+       
 
         public List<KeyValuePair<string, string>> GetAllPartnerCode()
         {

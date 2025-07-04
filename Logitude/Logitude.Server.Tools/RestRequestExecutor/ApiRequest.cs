@@ -17,6 +17,8 @@ namespace Logitude.Server.Tools.RestRequestExecutor
         public bool IsSoapRequest =>
         Header?.ContentType?.Equals("text/xml", StringComparison.OrdinalIgnoreCase) == true;
 
-        public  ApiCommunicationConstants Communications { get; set; }
+        public ApiCommunicationConstants RequestComm { get; set; }
+        public ApiCommunicationConstants ResponseComm { get; set; }
+
     }
 }

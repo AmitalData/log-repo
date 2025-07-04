@@ -42,7 +42,7 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public string contactPersonCellPhone { get; set; }
         public string contactPersonFax { get; set; }
 
-        public string isNumericCountryCode { get; set; }
+        public bool isNumericCountryCode { get; set; }
         public List<ReleaseRequestLineDto> releaseRequestLinesForm { get; set; }
     }
 

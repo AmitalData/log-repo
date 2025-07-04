@@ -260,7 +260,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 contactPersonCellPhone = contact?.Mobile ?? contact?.BusinessPhone,
                 contactPersonFax = contact?.Fax,
 
-                isNumericCountryCode = CountryCode.alphaCode.ToString(),
+                isNumericCountryCode = false, // we always send AlphaCode
                 importCountry = new CountryAlphaDto { alphaCode = sii.OriginCountryCode },
 
                 warehouseLocationName = sii.WareHouseAddress,
@@ -326,11 +326,5 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         }
 
         private int _lineCounter;
-    }
-
-    enum CountryCode
-    {
-        numeric = 1,
-        alphaCode = 2
     }
 }
