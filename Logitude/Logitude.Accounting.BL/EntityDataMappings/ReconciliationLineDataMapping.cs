@@ -6,6 +6,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data.Repositories;
+using System;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -69,7 +70,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
                 if (transaction != null)
                 {
-                    entityPM.CreateDate = transaction.CreateDate;
+                    entityPM.CreateDate = transaction.CreateDate ?? DateTime.Now;
                     entityPM.DueDate = transaction.DueDate;
                     entityPM.AmountCredit = transaction.ForeignAmountCredit;
                     entityPM.AmountDebit = transaction.ForeignAmountDebit;
