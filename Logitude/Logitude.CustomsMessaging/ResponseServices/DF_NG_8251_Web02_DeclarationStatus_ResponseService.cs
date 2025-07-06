@@ -208,7 +208,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode == "4")
                                 {
                                     availableStatus = "SMG";
-                                    UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
                                 }
                                 else if (new[] { "2", "5", "9" }.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
                                 {
@@ -232,7 +231,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     if (declarationQuantity > 0 && declarationQuantity == cargoQuantity && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null)
                                     {
                                         availableStatus = "SMG";
-                                        UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
                                     }
                                 }
                                 if (!string.IsNullOrWhiteSpace(availableStatus))
@@ -305,6 +303,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                                 }
 
+                                if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode == "4")
+                                {
+                                    UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
+                                }
+                                else if (new[] { "2", "5", "9" }.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
+                                {
+                                    int? cargoQuantity = 0, declarationQuantity = 0;
+                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null
+                                   && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities != null
+                                       && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities.Length > 0)
+                                    {
+                                        foreach (var availabiltyItem in declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities)
+                                        {
+                                            if (availabiltyItem.CargoPackageQuantitySpecified == true)
+                                            {
+                                                cargoQuantity += availabiltyItem.CargoPackageQuantity;
+                                            }
+                                            if (availabiltyItem.DeclarationPackgeQuantitySpecified == true)
+                                            {
+                                                declarationQuantity += availabiltyItem.DeclarationPackgeQuantity;
+                                            }
+                                        }
+                                    }
+                                    if (declarationQuantity > 0 && declarationQuantity == cargoQuantity && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null)
+                                    {
+                                        UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
+                                    }
+                                }
                                 if (declarationPM.IsCourierDeclaration)
                                 {
                                     //declarationPM.CourierSuspentionReasonCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
