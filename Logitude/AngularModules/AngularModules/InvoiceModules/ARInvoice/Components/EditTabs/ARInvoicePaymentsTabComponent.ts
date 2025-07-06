@@ -11,7 +11,6 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
@@ -100,11 +99,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
             isAddButtonEnabled = false;
         }
 
-        //else if (this.EntityPM.ARInvoiceTypeCode == "CD") {
-        //    isAddButtonEnabled = false;
-        //}
-
-        else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
+        else if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode === "DR" || this.EntityPM.StatusCode === "PR") {
             isAddButtonEnabled = false;
         }
 
@@ -141,7 +136,7 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
 
         this.LoadConnectedPayments();
 
-        if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "VD") {
+        if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode === "DR" || this.EntityPM.StatusCode === "VD" || this.EntityPM.StatusCode === "PR") {
             isLoading = false;
         }
 
@@ -275,6 +270,12 @@ export class ARInvoicePaymentsTabComponent implements OnDestroy {
         if (this.EntityPM.StatusCode == "DR") {
             var messageText = TextCodeTranslator.Translate("ARInvoice.M.CantAddPaymentForDraftInvoice");
             var window = new MessageWindow();
+            window.Width = 300;
+            window.Show(messageText);
+        }
+        else if (this.EntityPM.StatusCode === "PR") {
+            const messageText = "Cant add payment for processing invoice";
+            let window = new MessageWindow();
             window.Width = 300;
             window.Show(messageText);
         }

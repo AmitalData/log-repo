@@ -21,7 +21,13 @@ namespace Logitude.Accounting.Data.Repositories
 			throw new NotImplementedException();
         }
 
-   }
+
+        public IQueryable<TenantIdleStatus> GetAllByObjectTable(int tenant, string objectTable)
+        {
+            return context.TenantIdleStatuses
+                          .Where(a => a.Tenant == tenant && a.ObjectTable == objectTable);
+        }
+    }
 
 }
    

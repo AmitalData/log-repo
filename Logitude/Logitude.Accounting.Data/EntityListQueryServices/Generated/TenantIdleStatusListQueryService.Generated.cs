@@ -137,10 +137,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public TenantIdleStatusList GetSingle(string id)
+        public TenantIdleStatusList GetSingle(string id, string objecttable)
         {
             IQueryable<TenantIdleStatus> TenantIdleStatusQuery = (from a in context.TenantIdleStatuses
-                                                       where a.Id == id
+                                                       where a.Id == id && a.ObjectTable == objecttable
                                                        select a);
 
              

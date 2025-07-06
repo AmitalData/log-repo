@@ -144,6 +144,8 @@ namespace Logitude.FullAccounting.Test.Models
 
 
         public string CreditedByARInvoiceId { get; set; }
+        public bool IsApprovalFailed { get; set; }
+        public bool ApprovalInProgress { get; set; }
 
         public string ExternalAccountingEntityId { get; set; }
 

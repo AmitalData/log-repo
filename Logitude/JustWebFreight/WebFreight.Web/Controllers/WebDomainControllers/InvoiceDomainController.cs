@@ -818,7 +818,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     IQueryable<ARInvoice> iQueryable_Data = aRInvoiceRepository.GetIQueryableInvoices(tenant);
 
-                    iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
+                    iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
                     iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
                     iQueryable_Data = iQueryable_Data.Where(d => d.TransferStatusCode == "NR");
 
@@ -1140,7 +1140,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                 IQueryable<ARInvoice> iQueryable_Data = entityRepository.GetIQueryableInvoices(tenant);
 
-                                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
+                                iQueryable_Data = iQueryable_Data.Where(d => d.StatusCode != "DR" && d.StatusCode !="PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsConstituentInvoice == false);
                                 iQueryable_Data = BranchPermitionsFilter.AddUserBranchRestrictionFilters<ARInvoice>(new QueryOperations(), iQueryable_Data, tenant);
                                 iQueryable_Data = iQueryable_Data.Where(d => d.TransferStatusCode == "RD" || d.TransferStatusCode == "NR");
 

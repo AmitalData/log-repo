@@ -27,7 +27,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreateDate, 
 	         UpdateDate, 
 	         SearchFields, 
-	         Idle,
+	         Idle, 
+	         ObjectTable,
 	      }
 
 
@@ -38,7 +39,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         CreateDate, 
 	         UpdateDate, 
-	         SearchFields,
+	         SearchFields, 
+	         ObjectTable,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -96,6 +98,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SearchFields))
             {
 					entityPM.SearchFields = entityPOCO.SearchFields;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ObjectTable))
+            {
+					entityPM.ObjectTable = entityPOCO.ObjectTable;
             }
 
 		}

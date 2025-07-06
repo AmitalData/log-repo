@@ -2305,7 +2305,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                         if (item.Id == item.InvoiceNumber)
                         {
-                            entityPM.InvoiceNumber = item.DraftNumber;
+                            entityPM.InvoiceNumber = "Draft: " + item.DraftNumber;
                         }
 
                         if (!string.IsNullOrEmpty(item.ConsolidationInvoiceId))

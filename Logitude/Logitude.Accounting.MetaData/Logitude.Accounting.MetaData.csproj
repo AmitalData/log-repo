@@ -72,10 +72,12 @@
     </Compile>
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
     <None Include="DBOthers\SProcedures\usp_FixFailedReconcileJournals.dxml" />
+    <None Include="DBOthers\SProcedures\usp_SetTenantIdleProcedure.dxml" />
+    <None Include="DBOthers\SProcedures\usp_Queue_Peek_ThreadPerTenant.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateJournalLinesSequence.dxml" />
     <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
-     <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
-     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
+    <None Include="DBOthers\SProcedures\usp_MonthlyBalancesReport.dxml" />
+    <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateLTForeign.dxml" />
     <None Include="DBOthers\SProcedures\usp_UpdateLTLocal.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
@@ -155,7 +157,6 @@
     <None Include="DBScripts\2023030_JournalApprovalMLInsertGlobalRecords.sxml" />
     <None Include="DBScripts\2023030_CreateIndexInLedgerTransactions_AccountIdMarkTenant.sxml" />
     <None Include="DBScripts\20230619_QueuePeekJouranlApprovalSetUpdateDate.dxml" />
-    <None Include="DBScripts\20230619_SetTenantIdleProcedure.dxml" />
     <None Include="DBScripts\202404011909_AddTableGLAccountCardsData.sxml" />
     <None Include="DBScripts\202405021130_UpdateObjectField_DisplayInRequiredFields.sxml" />
     <None Include="DBScripts\20250202_Create_PIX_GLAccounts_ChartOfAccountsTypeCode.sxml" />
@@ -165,6 +166,7 @@
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
     <None Include="DBScripts\202103240820_usp_AccountingStreamingTypes.sxml" />
+    <None Include="DBScripts\Post\202503121241_InsertValuesToTenantIdleStatuses.sxml" />
     <None Include="DBScripts\Post\202302191141_InsertValuesInCopyFromTenant0.sxml" />
     <None Include="DBTables\AccountingCompanyType.dxml" />
     <None Include="DBTables\AccountingEntity.dxml" />

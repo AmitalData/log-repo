@@ -101,25 +101,25 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                     {
                         skipConstituentFilter = true;
                         queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false && d.StatusCode != "LL");
-                        queryableData = queryableData.Where(d => (d.StatusCode != "DR" && d.StatusCode != "VD" && d.IsAutoCredit == false) || (d.IsConstituentInvoice && !string.IsNullOrEmpty(d.ConsolidationInvoiceId)));
+                        queryableData = queryableData.Where(d => (d.StatusCode != "DR" && d.StatusCode !="PR" && d.StatusCode != "VD" && d.IsAutoCredit == false) || (d.IsConstituentInvoice && !string.IsNullOrEmpty(d.ConsolidationInvoiceId)));
                     }
 
                     else if (item.FieldName == "NotReadyInvoices")
                     {
                         showIsConstituentInvoice = false;
-                        queryableData = queryableData.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && d.TransferStatusCode == "NR" && d.StatusCode != "LL");
+                        queryableData = queryableData.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.TransferStatusCode == "NR" && d.StatusCode != "LL");
                     }
 
                     else if (item.FieldName == "ErrorInTransferInvoices")
                     {
                         showIsConstituentInvoice = false;
-                        queryableData = queryableData.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && !d.IsCancelled && d.TransferStatusCode == "ET");
+                        queryableData = queryableData.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && !d.IsCancelled && d.TransferStatusCode == "ET");
                     }
 
                     else if (item.FieldName == "MarkedAsBlockedForTransfer")
                     {
                         showIsConstituentInvoice = false;
-                        queryableData = queryableData.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && !d.IsCancelled && d.TransferStatusCode == "BL");
+                        queryableData = queryableData.Where(d => d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && !d.IsCancelled && d.TransferStatusCode == "BL");
                     }
 
                     else if (item.FieldName == "TransferedInvoices")
@@ -148,7 +148,7 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
 
                     else if (item.FieldName == "ApprovalGeneralInvoices")
                     {
-                        queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false  && (d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsAutoCredit == false));
+                        queryableData = queryableData.Where(d => d.IsClosed == false && d.IsCancelled == false  && (d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && d.IsAutoCredit == false));
                     }
 
                     else if (item.FieldName == "IsCustomsInvoice")

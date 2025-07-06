@@ -1516,7 +1516,7 @@ namespace WebFreight.Web.ReportsWebServices
                     string str = "";
                     foreach (ARInvoice item in invoices)
                     {
-                        string printedNumber = item.StatusCode == "DR" ? item.DraftNumber : item.InvoiceNumber;
+                        string printedNumber = item.StatusCode == "DR" || item.StatusCode == "PR" ? "Draft: " + item.DraftNumber : item.InvoiceNumber;
 
                         if (string.IsNullOrEmpty(str))
                         {

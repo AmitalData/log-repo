@@ -59,6 +59,10 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools.Models;
 using Logitude.Accounting.Data.Enums;
 using AccountingEntityValues = Logitude.BL.InvoiceModel.CloseTables.AccountingEntityValues;
+using Logitude.Server.Tools.QueueService;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+
+
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -375,20 +379,36 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 if (entityPM.InvoiceEntities != null && entityPM.InvoiceEntities.Count > 0) logtext += ", Interest Report Id" + entityPM.InvoiceEntities[0].EntityId;
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
-         
-                    
-               this.UpdateInterestReportFields(entityPM);
+
+               if (CheckIfReportConnectedToInvoice(entityPM))
+                {
+                    string status = "2";
+                   UpdateInterestReportStatus(entityPM, status);
+
+                    invoiceRepository.Remove(invoice);
+                    invoiceRepository.SubmitChanges();
+                    return;
+                }
+
+
+                this.UpdateInterestReportFields(entityPM);
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
 
             new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
 
             entityAutomationService.RunAutomationThatDependencyOnLastEntityUpdate();
+            this.InsertToQueue();
 
         }
         private bool CheckIfReportConnectedToInvoice(ARInvoicePM theEntityPM)
         {
-
+            if(theEntityPM.InvoiceEntities == null || theEntityPM.InvoiceEntities.Count == 0)
+            {
+                return false;
+            }
+            entityPM.InterestReportNumber =  theEntityPM.InvoiceEntities[0]?.EntityReference ;
+            entityPM.InterestReportId = theEntityPM.InvoiceEntities[0]?.EntityId ;
             IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
             return  InterestReportsConnectedInvoiceUpdate.CheckInterestReportsConnected(theEntityPM.InvoiceEntities[0].EntityId, tenant, null);
 
@@ -584,10 +604,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
            new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented });
 
         }
-        private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
+        public void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
             IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
-            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InvoiceEntities[0].EntityId);
+            InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InterestReportId, theEntityPM.StatusCode);
 
         }
         private void UpdateInterestReportStatus(ARInvoicePM theEntityPM, string Statues)
@@ -597,10 +617,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
-        private void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
+        public void UpdateInterestReportsConnectedInvoice(ARInvoicePM theEntityPM)
         {
             IInterestReportsConnectedInvoiceUpdateServiceExt InterestReportsConnectedInvoiceUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportsConnectedInvoiceUpdateServiceExt), "InterestReportsConnectedInvoiceUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportsConnectedInvoiceUpdateServiceExt;
-            InterestReportsConnectedInvoiceUpdate.UpdateInterestLastBatchService(theEntityPM.InvoiceEntities[0].EntityId, tenant, null, theEntityPM.Id);
+            InterestReportsConnectedInvoiceUpdate.UpdateInterestLastBatchService(theEntityPM.InterestReportId, tenant, null, theEntityPM.Id);
         }
         private void ValidateInvoiceConnected()
         {
@@ -681,11 +701,25 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.SetApproved = false;
             }
+            if (entityPM.ARInvoiceTypeCode == "IT")
+            {
+                if (CheckIfReportConnectedToInvoice(entityPM))
+                {
+                    UpdateInterestReportStatus(entityPM, InterestReportStatusCodes.Invoiced);
+                    throw new BusinessErrorException("An invoice has already been created for this report.");
+                
+                }
+            }
 
             this.isApprovingInvoice = entityPM.SetApproved;
 
             this.invoice = invoiceRepository.GetSingleInvoice(entityPM.Id);
-
+            if(entityPM.SetApproved && !entityPM.ApprovalInProgress &&  invoice.ApprovalInProgress)
+            {
+                invoice.ApprovalInProgress = false;
+                invoiceRepository.Update(invoice);
+                invoiceRepository.SubmitChanges();
+            }
             if (invoice.StatusCode == "AR")
             {
                 if (this.entityPM.StatusCode == "AD")
@@ -764,7 +798,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.ARInvoiceStockNumber();
 
                 ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
-                ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+                //ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
 
                 if (entityPM.IsConsolidationInvoice)
                 {
@@ -870,6 +904,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.GetForeignFields();
             this.RunStoredProcedures();
             this.AfterServiceFinished();
+            ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
+            this.InsertToQueue();
         }
 
         private bool IsSendInvoiceSATCancellation(bool discardStatus)
@@ -1437,12 +1473,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         documentOutRepository.SubmitChanges();
                     }
 
-                    //DateTime startTime = DateTime.Now;
-                    //DateTime endTime = DateTime.Now;
-                    //int executionTime = (int)((endTime.Ticks - startTime.Ticks) / TimeSpan.TicksPerMillisecond);
-
-                    //string logMessage = "Set DocumentOut NeedsRebuild: StartTime = " + startTime.ToString() + ", EndTime = " + endTime.ToString() + ", ExecutionTime: " + executionTime.ToString();
-                    //AzureLog.SaveLogsInStorage(logMessage, "VD", DateTime.Now, "", "", 0, loggedContactId, loggedContactName, HttpContext.Current.Request.UserHostAddress);
                 }
             }
 
@@ -1455,9 +1485,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (!entityPM.IsConstituentInvoice)
             {
-                if (string.IsNullOrEmpty(entityPM.StatusCode) || entityPM.StatusCode == "DR")
+                if (string.IsNullOrEmpty(entityPM.StatusCode) || entityPM.StatusCode == "DR" || entityPM.StatusCode == "PR")
                 {
-                    entityPM.StatusCode = "DR";
+                    entityPM.StatusCode = string.IsNullOrEmpty(entityPM.StatusCode) ? "DR" : entityPM.StatusCode;
 
                     if (string.IsNullOrEmpty(entityPM.DraftNumber))
                     {
@@ -1524,7 +1554,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             else
             {
-                if (entityPM.StatusCode != "DR") return;
+                if (entityPM.StatusCode != "DR" && entityPM.StatusCode != "PR") return;
 
                 if (entityPM.DueDate == null || (expectedDueDate != null && expectedDueDate != entityPM.DueDate))
                 {
@@ -1644,7 +1674,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             if (entityPM.IsConstituentInvoice)
                             {
-                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null, counterAdditionalParameters);
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "CNST", "CNS", null, counterAdditionalParameters, true);
                             }
 
                             else if (entityPM.IsConsolidationInvoice)
@@ -1652,14 +1682,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                 CounterDefinitionRepository counterDefinitionRepository = new CounterDefinitionRepository(tenant);
                                 if (entityPM.ARInvoiceTypeCode == "CD" && counterDefinitionRepository.IsCounterDefinitionActive("COD", tenant))
                                 {
-                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "COD", null, counterAdditionalParameters);
+                                    entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "COD", null, counterAdditionalParameters, true);
                                 }
-                                else entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null, counterAdditionalParameters);
+                                else entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", "CON", null, counterAdditionalParameters, true);
                             }
 
                             else
                             {
-                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null, counterAdditionalParameters);
+                                entityPM.InvoiceNumber = TableCounter.GetNumber(tenant, "INVC", entityPM.ARInvoiceTypeCode, null, counterAdditionalParameters, true);
                             }
                         }
                     }
@@ -1844,7 +1874,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             bool isInitializing = false;
 
-            if (entityPM.StatusCode != null && entityPM.StatusCode != "DR")
+            if (entityPM.StatusCode != null && entityPM.StatusCode != "DR" && entityPM.StatusCode != "PR")
             {
                 isInitializing = true;
             }
@@ -4714,6 +4744,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.OnVoidingInvoise();
                 this.OnResendToSAT();
             }
+           
         }
 
         private void SendInvoiceToSAT()
@@ -5026,7 +5057,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     string ConsolidationNumber = this.entityPM.InvoiceNumber;
 
-                    if (this.entityPM.StatusCode == "DR" || this.entityPM.StatusCode == "VD" || this.isAutoCreditingInvoice)
+                    if (this.entityPM.StatusCode == "DR" || this.entityPM.StatusCode == "VD" || this.isAutoCreditingInvoice || this.entityPM.StatusCode =="PR")
                     {
                         ConsolidationNumber = null;
                     }
@@ -5209,6 +5240,72 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 EventTypeCode = eventCode,
                 Notes = Notes,
             });
+        }
+
+        public void InsertToQueue()
+        {
+            if (entityPM.StatusCode == "PR")
+            {
+                //send to queue
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ARInvoiceApproveWR", entityPM.Tenant);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "ARInvoiceId", entityPM.Id },
+                    { "Tenant", tenant.ToString() },
+                    { "BatchIdFromInterestInvoice", entityPM.BatchTaskExecutionId },
+                    { "InterestReportId", entityPM.InterestReportId }
+
+                }, tenant);
+            }
+        }
+        public void SignInvoice(ARInvoicePM aRInvoicePM, int tenant)
+        {
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            DocumentHelper DocumentHelper = new DocumentHelper();
+            DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)tenant);
+            ARInvoiceQuery ARInvoiceService = new ARInvoiceQuery(tenant);
+
+            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+            string aRInvoicePMId = ARInvoiceService.GetSingleInvoiceIdByInvoiceNumber(aRInvoicePM.InvoiceNumber, tenant);
+            string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", tenant);
+            DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(aRInvoicePMId, null, documentTypeId, tenant);
+
+            if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) && !string.IsNullOrEmpty(accountingSettings.HSMaddress) && !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+                DocumentHelper.Sign(documentOutPM.Id, tenant, accountingSettings);
+
+        }
+
+        public void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM, InterestReportPM interestReport)
+        {
+
+            ObjectTableQuery objectTableQuery = new ObjectTableQuery(interestReport.Tenant);
+            string InterestReportObjectTableId = objectTableQuery.GetObjectTableIdByName("InterestReport");
+            string ARInvoiceObjectTableId = objectTableQuery.GetObjectTableIdByName("ARInvoice");
+            string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
+            BuildDocument(aRInvoicePM.Id, "999G", ARInvoiceObjectTableId, ARInvoiceChildEntityReference , aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
+            BuildDocument(interestReport.Id, "ITDT", InterestReportObjectTableId, interestReport.ReportNumber, aRInvoicePM.CreatedByUserId, aRInvoicePM.Tenant);
+        }
+        public void BuildDocument(string EntityId, string DocumentCode, string ObjecTableId, string ChildEntityReference,string userId, int tenant)
+        {
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+            string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(DocumentCode, tenant);
+            BuildDocsOutService buildDocsOutService = new BuildDocsOutService();
+            BuildDocsOutArgs buildDocsOutArgs = new BuildDocsOutArgs()
+            {
+                EntityId = EntityId,
+                Tenant = tenant,
+                ChildEntityId = null,
+                LoggedUserId = userId,
+                ChildEntityReference = ChildEntityReference,
+                ChildObjectTableId = null,
+                ObjectTableId = ObjecTableId,
+                DocumentTypeId = documentTypeId,
+            };
+
+            buildDocsOutService.BuildDocsOut(buildDocsOutArgs);
+
         }
 
 

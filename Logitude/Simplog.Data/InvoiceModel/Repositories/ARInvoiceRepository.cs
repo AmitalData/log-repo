@@ -114,14 +114,14 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
             if (entity != null)
             {
-                if (!string.IsNullOrEmpty(entity.InvoiceNumber))
+                if (entity.StatusCode != "PR" && entity.StatusCode != "DR" && !string.IsNullOrEmpty(entity.InvoiceNumber))
                 {
                     myResult = entity.InvoiceNumber;
                 }
 
                 else if (!string.IsNullOrEmpty(entity.DraftNumber))
                 {
-                    myResult = entity.DraftNumber;
+                    myResult = "Draft: " + entity.DraftNumber;
                 }
             }
 
@@ -328,7 +328,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<ARInvoice> GetUnpaidARInvoices(int tenant)
         {
-            return context.ARInvoices.Include("Status").Where(d => d.Tenant == tenant && d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
+            return context.ARInvoices.Include("Status").Where(d => d.Tenant == tenant && d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
         }
 
         public IQueryable<ARInvoice> GetNotReadyARInvoices(int tenant)
@@ -348,7 +348,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public IQueryable<ARInvoice> GetAccountingLedgerARInvoices(int tenant)
         {
-            return context.ARInvoices.Where(d => d.Tenant == tenant && d.StatusCode != "DR" && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsConstituentInvoice );
+            return context.ARInvoices.Where(d => d.Tenant == tenant && d.StatusCode != "DR" && d.StatusCode != "PR" && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsConstituentInvoice );
         }
 
         public List<string> GetReadyForTransferORerrorInTransferARInvoices(int tenant)
@@ -501,6 +501,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return (from a in context.ARInvoices where a.Tenant == tenant select a).FirstOrDefault();
         }
 
+        public ARInvoice GetSingle(string id, int tenant)
+        {
+            return context.ARInvoices
+                .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
+        }
+
         public double GetOpenARInvoicesForCustomer(int tenant, string customerid)
         {
 
@@ -508,6 +514,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                       where a.BillToId == customerid 
                                       && a.Tenant == tenant 
                                       && a.StatusCode != "DR" 
+                                      && a.StatusCode != "PR" 
                                       && a.StatusCode != "PD" 
                                       && a.StatusCode != "VD" 
                                       && a.StatusCode != "LL"
@@ -517,16 +524,8 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                       && !a.IsConstituentInvoice
                                       select a.AmountDueInLocalCurrency).Sum();
 
-            //double? autoCredit = (from a in context.ARInvoices
-            //                      where a.BillToId == customerid && a.Tenant == tenant && a.StatusCode != "DR" && a.StatusCode != "PD" && a.StatusCode != "VD" && a.IsClosed != true && !a.IsAutoCredit && a.ARInvoiceTypeCode == "CD" && !a.IsCancelled
-            //                      select a.AmountDueInLocalCurrency).Sum();
-
-
-            double? result = openarinvioces;// != null ? openarinvioces : 0;
-            //if (autoCredit != null)
-            //{
-            //    result = openarinvioces - autoCredit;
-            //}
+            double? result = openarinvioces;
+           
             return result != null ? result.Value : 0;
         }
       
@@ -606,6 +605,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
             {
                 "VD",
                 "DR",
+                "PR",
                 "LL",
                 "AR",
                 "NT"
@@ -623,6 +623,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
             {
                 "VD",
                 "DR",
+                "PR",
                 "LL",
                 "AR",
                 "NT",

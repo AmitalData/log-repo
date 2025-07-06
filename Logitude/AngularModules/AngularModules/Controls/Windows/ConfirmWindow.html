@@ -115,8 +115,18 @@
                                     <div [ngStyle]="{color: StringColor}" style="width: 100%; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px;">{{Message}}</div>
                                 </td>
                                 <td *ngIf="IsMultipleMessages" style="vertical-align: middle;" [ngStyle]="{color: StringColor}">
-                                    <div [ngStyle]="{color: StringColor}" style="width: 100%; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px;" *ngFor="let singleMessage of MultipleMessages;">{{singleMessage}}</div>
-                                </td>
+                                    <div [ngStyle]="{
+                                          color: StringColor,
+                                          width: '100%',
+                                          'white-space': 'pre-line',
+                                          'overflow-x': 'hidden',
+                                          'overflow-y': 'auto',
+                                          'max-height': MultipleMessagesHeight, 
+                                          'font-size': '11px'
+                                        }">
+                                      {{Message}}
+                                    </div>
+                                  </td>
                             </tr>
 
                             <tr *ngIf="ShowCheckBox">

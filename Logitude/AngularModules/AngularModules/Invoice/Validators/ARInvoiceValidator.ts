@@ -2,9 +2,7 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {InvoiceTool} from "../Tools";
 import {ARInvoicePM} from '../EntityPMs/ARInvoicePM';
-//import {InvoiceTotalsClass} from '../Args';
 import {VatTypeList} from '../../Common/EntityLists/VatTypeList';
 import {VatTypesValidator} from '../../Infrastructure/Validators/VatTypesValidator';
 import { EntityListService } from '../../Infrastructure/Services/EntityListService';
@@ -22,7 +20,7 @@ export class ARInvoiceValidator {
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
     }
 
-    Validate(entity: ARInvoicePM) {
+    Validate(entity: ARInvoicePM, statusCode: string = null, approvedDate: Date = null) { 
         this.Errors = [];
         this.EntityPM = entity;
 
@@ -41,6 +39,13 @@ export class ARInvoiceValidator {
         if (this.EntityPM.IsInvoiceNumberFromStock && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && this.EntityPM.IsAutoCredit) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
+        if(!AppTool.IsNullOrEmpty(approvedDate)) {
+            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.O.ApprovalInvoice"));
+        }
+        if(statusCode == "PR"){
+            this.Errors.push(TextCodeTranslator.Translate("ARInvoice.O.InvoiceInProgress"));
+        }
+        
         var date1 = new Date(this.EntityPM.InvoiceDate.toString());
         var date2 = new Date();
         date2.setHours(23);
@@ -50,7 +55,7 @@ export class ARInvoiceValidator {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
-            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
+            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "PR") {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.VatNumber)) {
                     this.Errors.push(this.message.replace("%FieldName", "Vat Number"));
                 }
@@ -59,7 +64,7 @@ export class ARInvoiceValidator {
 
         if (!SessionLocator.AccountingSettingPM.AllowManualInvoiceNumber) {
             if (this.EntityPM.IsInvoiceNumberManuallySet) {
-                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR" || this.EntityPM.StatusCode == "PR") {
                     this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.ManualInvoiceNumberNotAllowed"));
                 }
             }
