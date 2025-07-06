@@ -426,28 +426,56 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
                 if (declarationReadyForSending)
                 {
-                    GenericRequestParams requestParamsData = new GenericRequestParams()
+                    var toggleSendDiamondDec = FeatureToggleHelper.HasFeatureToggle("SDD", declaration.Tenant);
+                    if (toggleSendDiamondDec)
                     {
-                        AppicationId = declaration.Id,
-                        Tenant = declaration.Tenant,
-                        RequestVIA = SendRequestVIA.WebServiceBatch,
-                        ForcePersonalSign = true,
-                        LoggingEnabled = true,
-                        LoggingEntityId = declaration.Id,
-                        LoggingEntityReference = declaration.DeclarationNumber,
-                        LoggingUserId = loggedUserId,
-                        RequestName = "Declaration Request",
-                        ResponseName = "Declaration Response",
-                        ForceCompanySign = false,
-                        LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
-                        FutureSendDateTime= DateTime.Now.AddMinutes(5),
-                        
-                    };
+                        GenericRequestParams requestParamsData = new GenericRequestParams()
+                        {
+                            AppicationId = declaration.Id,
+                            Tenant = declaration.Tenant,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            ForcePersonalSign = true,
+                            LoggingEnabled = true,
+                            LoggingEntityId = declaration.Id,
+                            LoggingEntityReference = declaration.DeclarationNumber,
+                            LoggingUserId = loggedUserId,
+                            RequestName = "Declaration Request",
+                            ResponseName = "Declaration Response",
+                            ForceCompanySign = false,
+                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                            FutureSendDateTime = DateTime.Now.AddMinutes(5),
 
-                    LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
-                    INF_MSG_GenericResponseData responseData;
-                    var messagingService = new DF_NG_2751_MSG10000_ExportDeclarationMessagingService();
-                    responseData = messagingService.Send(requestParamsData);
+                        };
+
+                        LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
+                        INF_MSG_GenericResponseData responseData;
+                        var messagingService = new DF_NG_2751_MSG10000_ExportDeclarationMessagingService();
+                        responseData = messagingService.Send(requestParamsData);
+                    }
+                    else
+                    {
+                        var futureSendTime = DateTime.Now.AddMinutes(5);
+
+                        GenericRequestParams requestParamsData = new GenericRequestParams()
+                        {
+                            AppicationId = declaration.Id,
+                            Tenant = declaration.Tenant,
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            ForcePersonalSign = true,
+                            LoggingEnabled = true,
+                            LoggingEntityId = declaration.Id,
+                            LoggingEntityReference = declaration.DeclarationNumber,
+                            LoggingUserId = loggedUserId,
+                            InterfaceTypeCode = "2751",
+                            ForceCompanySign = false,
+                            LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                            FutureSendDateTime = futureSendTime,
+
+                        };
+
+                        LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
+                        SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParamsData, false, futureSendTime);
+                    }
                 }
             }
         }
