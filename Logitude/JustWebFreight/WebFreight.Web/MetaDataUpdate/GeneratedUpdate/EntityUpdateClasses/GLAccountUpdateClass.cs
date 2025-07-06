@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "26567a5d5cbbc2a2a3d3e34da26343bd";
+		public const string HashString = "8df632bedafcae4cb41a0e9917e103a4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -664,11 +664,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Account No. / Name",
-					  						FullLocalDefaultText =  "מספר / שם כרטיס",
+					  						DefaultText =  "Account No. / Name / VAT No.",
+					  						FullLocalDefaultText =  " מספר ח.פ / מספר / שם כרטיס",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Account No. / Name",
-					  						ListLocalDefaultText =  "מספר / שם כרטיס",
+					  						ListLocalDefaultText =  " מספר ח.פ / מספר / שם כרטיס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
