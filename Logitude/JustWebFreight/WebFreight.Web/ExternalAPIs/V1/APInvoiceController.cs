@@ -97,7 +97,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        GetAndCreateAPInvoice(apinvoice, oldEntity);
+                        ProcessAndCreateAPInvoice(apinvoice, oldEntity);
                         scope.Complete();
 
                         return Request.CreateResponse(HttpStatusCode.OK, apinvoice);
@@ -120,7 +120,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return Request.CreateResponse(HttpStatusCode.InternalServerError, "Unknown error");
 
         }
-        public void GetAndCreateAPInvoice(APInvoice apinvoice, APInvoice oldEntity)
+        private void ProcessAndCreateAPInvoice(APInvoice apinvoice, APInvoice oldEntity)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
