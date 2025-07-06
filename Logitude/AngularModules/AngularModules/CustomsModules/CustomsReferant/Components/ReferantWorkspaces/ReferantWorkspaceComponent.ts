@@ -125,9 +125,9 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
 
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
-        this.setFilters();
         this.CurrentSession.StartBusyIndicatorLoading();
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
+                    this.setFilters();
         });
 
     }
