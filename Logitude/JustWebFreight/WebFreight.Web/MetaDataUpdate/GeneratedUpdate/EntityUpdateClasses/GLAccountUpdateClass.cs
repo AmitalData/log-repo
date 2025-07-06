@@ -14853,6 +14853,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLaccountOIsGroupMultiAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.IsGroupMultiAccounts", DefaultText = "To consolidate split GLAccount",LocalDefaultText = @"לאחד כרטיסי פיצול", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"לא נמצא {field} בכרטיס ספק: {account}", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
    
 	    
 }

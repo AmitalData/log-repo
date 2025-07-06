@@ -32,7 +32,7 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [Column("JournalLineNumber" ,Order = 2)]
 	    public int JournalLineNumber { get; set; }
         [Column("CreateDate")]
-	    public DateTime CreateDate { get; set; }
+	    public DateTime? CreateDate { get; set; }
         [ForeignKey("ControlAccount")]
         [Column("ControlAccountId")]
 	    public string ControlAccountId { get; set; }
