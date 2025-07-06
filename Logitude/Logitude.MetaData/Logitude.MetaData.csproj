@@ -159,6 +159,7 @@
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
     <None Include="DBScripts\CommonModel\FillTenantManagmentArchiveShipmentFilters.sxml" />
     <None Include="DBScripts\CommonModel\FillContactsLanguageCode.sxml" />
+    <None Include="DBScripts\CommonModel\DropNotesInFeatuersChanges.sxml" />
     <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
     <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
     <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
@@ -186,6 +187,7 @@
     <None Include="DBScripts\InfrastructureModel\202209260235_UpdateEntityStatusDelivery.sxml" />
     <None Include="DBScripts\InfrastructureModel\202303081102_UpdateAvailableInDocumentTypesForCustomObjects.sxml" />
     <None Include="DBScripts\InfrastructureModel\ChangeTypeOfSPLITCOMPONENTPATH.sxml" />
+    <None Include="DBScripts\InfrastructureModel\UpdateDataTypeField.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\202209061205_FillPaidStatusOfARInvoices.sxml" />

@@ -16,6 +16,7 @@ using Logitude.Server.Tools.Helpers;
 using System;
 using UnifreightIIG.Common.CommonIIGInterface;
 using UnifreightIIG.Common.Faults;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -73,7 +74,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override CertificateOfOriginRequestRequestParams CreateDefaultRequestParamsFromCustomsResponse(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customsResponse)
         {
-			CertificateOfOriginPM entity = new CertificateOfOriginQueryService(CustomContext.GetContext(RequestParams.Tenant)).GetCertificateOfOriginByCounter(
+			CertificateOfOriginPM entity = new CertificateOfOriginQueryService(CustomContext.GetContext(SettingUtil.GetCurrentTenant())).GetCertificateOfOriginByCounter(
 			   customsResponse.CertificateOfOriginRequestFeedback.internalApplication);
 			var myRequestParams = new CertificateOfOriginRequestRequestParams()
             {

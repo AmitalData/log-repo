@@ -29,7 +29,6 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Accounting.BL.CloseTables;
 using System.Globalization;
 using System.Diagnostics;
-using Logitude.Accounting.BL.EntityDataMappings;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.BL.EntityDataMappings;
 
@@ -42,7 +41,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
             TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
         };
-        private string[] _InputsTaxReportLineTypes = new[]
+   
+         private string[] _InputsTaxReportLineTypes = new[]
         {
             InputsTaxReportLineTypes.IsraeliVendorInputs,
             InputsTaxReportLineTypes.SelfInputs,
@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             InputsTaxReportLineTypes.PalestinianVendorsInputs,
             InputsTaxReportLineTypes.LawDefinedDocumentInputs
         };
-
+ 
         protected override void OnCreating(TaxReportPM entityPM, EntityPM entityParentPM)
         {
 
@@ -168,8 +168,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
         protected override void AfterUpdating(TaxReportPM entityPM, EntityPM entityParentPM)
-        {
-            UpdateReportStatus(entityPM);
+         {
+             UpdateReportStatus(entityPM);
 
         }
 

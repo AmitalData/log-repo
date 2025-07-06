@@ -22,7 +22,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Server.Tools.Helpers;
-
+ 
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {

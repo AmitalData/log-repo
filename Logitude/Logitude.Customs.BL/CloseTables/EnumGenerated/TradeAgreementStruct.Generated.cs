@@ -16,7 +16,6 @@ namespace Logitude.Customs.BL.CloseTables
 {
     public struct TradeAgreementValues
     {
-
     }
-  }
+ }
  

@@ -233,13 +233,13 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
-                    invoiceApiCommunicationLogId = response.MessageValues.ContainsKey("invoiceApiCommunicationLogId")
+                     invoiceApiCommunicationLogId = response.MessageValues.ContainsKey("invoiceApiCommunicationLogId")
                                                                                  ? response.MessageValues["invoiceApiCommunicationLogId"]?.ToString()
                                                                                   : null;
 
             
 
-                    aRInvoicePM.SetApproved = true;
+                     aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.Update(aRInvoicePM, true);

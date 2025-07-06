@@ -20,6 +20,6 @@ namespace Logitude.Customs.BL.CloseTables
         public const string NoStatus = "0";
         public const string Suspended = "2";
         public const string Suspended_3 = "3";
-     }
+    }
  }
  

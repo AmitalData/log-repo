@@ -995,29 +995,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string debitAccountCountryCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string DebitAccountCountryCode  
-	   {
-	    
-	     get
-		{
-		   return debitAccountCountryCode;
-		 }
-		 set
-		 {
-		   if(debitAccountCountryCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAccountCountryCode",OldValue=debitAccountCountryCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   debitAccountCountryCode=value;
-		   }
-			
-		 }
-	   }
 	  private bool? excludeFromTaxReport ;
 	  	  
        
@@ -1037,6 +1014,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExcludeFromTaxReport",OldValue=excludeFromTaxReport,NewValue=value,PropertyType="bool?"};
 		    NotifyPropertyChanged(values);
 		   excludeFromTaxReport=value;
+		   }
+			
+		 }
+	   }
+	  private string debitAccountCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DebitAccountCountryCode  
+	   {
+	    
+	     get
+		{
+		   return debitAccountCountryCode;
+		 }
+		 set
+		 {
+		   if(debitAccountCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAccountCountryCode",OldValue=debitAccountCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   debitAccountCountryCode=value;
 		   }
 			
 		 }

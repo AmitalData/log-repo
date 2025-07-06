@@ -74,16 +74,9 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.HeaderScreenCode).HasColumnName("HeaderScreenCode");
 
             this.Property(t => t.CacheOnClient).HasColumnName("CacheOnClient");
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-                this.Property(t => t.EditableFromAutoCompleteWindow).HasColumnName("EditableFromAutoCompleteWin");
-             }
-            //#else
-            else
-            {
-                this.Property(t => t.EditableFromAutoCompleteWindow).HasColumnName("EditableFromAutoCompleteWindow");
-            }
+         
+            this.Property(t => t.EditableFromAutoCompleteWindow).HasColumnName("EditableFromAutoCompleteWindow");
+          
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
             this.Property(t => t.HasCounter).HasColumnName("HasCounter");
             this.Property(t => t.EnableEditFromLOV).HasColumnName("EnableEditFromLOV");

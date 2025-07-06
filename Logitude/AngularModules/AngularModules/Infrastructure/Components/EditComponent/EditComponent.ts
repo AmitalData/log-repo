@@ -2041,7 +2041,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
            
 
             }
-        
         }
         else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
             this.SaveDraftVersion(isClosing);

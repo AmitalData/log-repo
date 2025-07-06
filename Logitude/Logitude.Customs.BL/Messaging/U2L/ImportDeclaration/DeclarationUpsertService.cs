@@ -422,9 +422,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						}
 					}
 				}
+				
 				this._MyDeclarationPM.TransportModeId = _AmitalCustomsFile.TransportModeId;
-				//this._MyDeclarationPM.CreatedByUserId = _AmitalCustomsFile.CreatedByUserId;
-				if (_AmitalCustomsFile.SystemConnection != "N" || (_AmitalCustomsFile.SystemConnection == "N" && _MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)) 
+				if(this._MyDeclarationPM.TransportModeId=="L") this._MyDeclarationPM.TransportModeId="I";
+                //this._MyDeclarationPM.CreatedByUserId = _AmitalCustomsFile.CreatedByUserId;
+                if (_AmitalCustomsFile.SystemConnection != "N" || (_AmitalCustomsFile.SystemConnection == "N" && _MyDeclarationPM.ChangeSetOp == ChangeSetOperation.Insert)) 
 				{
 
 					this._MyDeclarationPM.CreatedByUserId = _AmitalCustomsFile.SystemConnection == "N" ? _AmitalCustomsFile.CreatedByUserId : TranslateUser(_AmitalCustomsFile.CreatedByUserId);

@@ -19741,7 +19741,7 @@
       LocalDefaultText="&quot;חובה לתחום אחת מהאפשרויות הבאות : כרטיס/טווח כרטיסים/קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
-    <TextCode
+     <TextCode
       Code="&quot;GLTransactionReport.O.FromGLAccount&quot;"
       DefaultText="&quot;From GLAccount&quot;"
       LocalDefaultText="&quot;מכרטיס&quot;"

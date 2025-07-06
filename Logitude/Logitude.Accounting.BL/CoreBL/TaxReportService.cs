@@ -74,12 +74,12 @@ namespace Logitude.Accounting.BL.CoreBL
         const string CreatedStatusCode = "C";
         public static int recalculateDataAddedLanes = 0;
         const string RecalculateEventCode = "IREC";
-        private static HashSet<string> BlockedStatuses = new HashSet<string> 
+         private static HashSet<string> BlockedStatuses = new HashSet<string> 
         {
             TaxReportLineTransmitStatusValues.NotForTransmitAtAll,
             TaxReportLineTransmitStatusValues.NotForTransmitForThisReport
         };
-
+ 
 
 
         static bool CheckLastNineAreNine(string input)
@@ -630,12 +630,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         else if (oneLine.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference)
                         {
                             oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
-                        }
+                         }
 
                         else if (oneLine.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
-                            oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit; 
-                        }
+                             oneLine.StatusCode = TaxReportLineStatusValues.ReadyForTransmit; 
+                         }
 
                         if (voidedLineNumbers.Contains(oneLine.Line) && oneLine.TransmitStatusCode != TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
@@ -651,12 +651,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (linePM.StatusCode == TaxReportLineStatusValues.DuplicateThereIsAnotherTransactionWithTheSameVATNoAndReference)
                         {
 
-                            linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
-                        }
+                             linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;
+                         }
                         else if (linePM.TransmitStatusCode == TaxReportLineTransmitStatusValues.TransmitEvenIfDuplicate)
                         {
-                            linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;   
-                        }
+                             linePM.StatusCode = TaxReportLineStatusValues.ReadyForTransmit;   
+                         }
                     }
 
                 }
