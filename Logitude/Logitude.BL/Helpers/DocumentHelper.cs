@@ -891,7 +891,7 @@ namespace Logitude.BL.Helpers
                     this.CreatePdfDoc(documentsFiling, invoice.Id, invoice.Tenant, "ARInvoice", true);
                     if (this.isInterestReport && invoice.ARInvoiceTypeCode == "IT")
                     {
-                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id);
+                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id ,null);
                     }
                     this.StartSignPDFInvoice(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
                 }
@@ -901,7 +901,7 @@ namespace Logitude.BL.Helpers
         }
 
 
-        public bool CheckPDFInvoiceInStorage(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings)
+        public bool CheckPDFInvoiceInStorage(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings , string loggedContactId)
         {
 
             bool rv = false;
@@ -921,7 +921,7 @@ namespace Logitude.BL.Helpers
                     this.CreatePdfDoc(documentsFiling, invoice.Id, invoice.Tenant, "ARInvoice", true);
                     if (this.isInterestReport && invoice.ARInvoiceTypeCode == "IT")
                     {
-                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id);
+                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id, loggedContactId);
                     }
                    rv = this.CheckPDFInvoiceInStorage_Inner(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
                 }
@@ -980,7 +980,7 @@ namespace Logitude.BL.Helpers
 
         }
 
-        public void CreateDocumentInterestReport(int tenant, string arinvoiceId)
+        public void CreateDocumentInterestReport(int tenant, string arinvoiceId ,string loggedContactId)
         {
             ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
             DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
@@ -998,7 +998,7 @@ namespace Logitude.BL.Helpers
             {
                 var LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("InterestReport");
                 DocumentHelper documentHelper = new DocumentHelper();
-                documentOutPM = documentHelper.CreateDocumentOut(documentTypeId, interestReport.Id, null, interestReport.ReportNumber, LoggingObjectTableId, tenant, null, null);
+                documentOutPM = documentHelper.CreateDocumentOut(documentTypeId, interestReport.Id, null, interestReport.ReportNumber, LoggingObjectTableId, tenant, loggedContactId, null);
             }
             var documentsFiling = commoncontext.DocumentsFilings.Where(doc => doc.Id == documentOutPM.Id).FirstOrDefault();
             DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(interestReport.Id, tenant).FirstOrDefault();
