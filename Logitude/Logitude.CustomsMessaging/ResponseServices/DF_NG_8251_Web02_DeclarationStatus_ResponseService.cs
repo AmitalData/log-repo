@@ -205,13 +205,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
 
                                 string availableStatus = null;
+                                int? cargoQuantity = 0, declarationQuantity = 0;
                                 if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.LogisticStatusCode == "4")
                                 {
                                     availableStatus = "SMG";
                                 }
                                 else if (new[] { "2", "5", "9" }.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
                                 {
-                                    int? cargoQuantity = 0, declarationQuantity = 0;
+                                    cargoQuantity = 0;
+                                    declarationQuantity = 0;
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null
                                    && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities != null
                                        && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities.Length > 0)
@@ -309,23 +311,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                                 else if (new[] { "2", "5", "9" }.Contains(declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode))
                                 {
-                                    int? cargoQuantity = 0, declarationQuantity = 0;
-                                    if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null
-                                   && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities != null
-                                       && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities.Length > 0)
-                                    {
-                                        foreach (var availabiltyItem in declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogDeclarationCargoQuantities)
-                                        {
-                                            if (availabiltyItem.CargoPackageQuantitySpecified == true)
-                                            {
-                                                cargoQuantity += availabiltyItem.CargoPackageQuantity;
-                                            }
-                                            if (availabiltyItem.DeclarationPackgeQuantitySpecified == true)
-                                            {
-                                                declarationQuantity += availabiltyItem.DeclarationPackgeQuantity;
-                                            }
-                                        }
-                                    }
                                     if (declarationQuantity > 0 && declarationQuantity == cargoQuantity && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null)
                                     {
                                         UpdateAvaliabilityDate(declarationStatus_ResponseDeclarationStatusAnswer, declarationPM);
