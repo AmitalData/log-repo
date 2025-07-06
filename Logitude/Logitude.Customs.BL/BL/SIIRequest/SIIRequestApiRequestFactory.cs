@@ -64,25 +64,21 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         }
         public ApiCommunicationConstants BuildCommunicationsDto(string interfaceName, string partnerCode,string declarationId)
         {
-            if (interfaceDetails == null)
-            {
-                interfaceDetails = GetInterfaceDefinition(interfaceName);
-            }
+            interfaceDetails = GetInterfaceDefinition(interfaceName);
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             return new ApiCommunicationConstants
             {
                 EntityId = declarationId,
                 Subject = interfaceDetails.Name,
-                ObjectTableId = objectTableId
+                ObjectTableId = objectTableId,
+                InOut = ToShortDirection(interfaceDetails.TypeCode),
             };
         }
         public SIIRequestWebApiEndpointConfig GetEndpointConfig(string interfaceName, string partnerCode)
         {
-            if (interfaceDetails == null)
-            {
-                interfaceDetails = GetInterfaceDefinition(interfaceName);
-                customsPartnerFtpPM = GetPartnerFtpRow(interfaceName, partnerCode, interfaceDetails);
-            }
+            interfaceDetails = GetInterfaceDefinition(interfaceName);
+            customsPartnerFtpPM = GetPartnerFtpRow(interfaceName, partnerCode, interfaceDetails);
+            
             var dto = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(customsPartnerFtpPM.CommunicationDetails);
 
             Validate(dto, interfaceDetails.Name, _tenant);
@@ -158,19 +154,24 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         public ApiRequest<TData> Create<TData>(
             string interfaceName,
             string partnerCode,
-            TData data, ApiCommunicationConstants communicationsDto)
+            TData data, ApiCommunicationConstants requestComm,
+            ApiCommunicationConstants responseComm)
         {
             var config = GetEndpointConfig(interfaceName, partnerCode);
-            return ApiRequestBuilder.Build(_tenant, config, data, communicationsDto);
+            return ApiRequestBuilder.Build(_tenant, config, data, requestComm, responseComm);
         }
         private InterfaceDetails GetInterfaceDefinition(string interfaceName)
         {
-            var defJson = _ftpDetailsHelper
-                          .GetAllInterfaceName()
-                          .First(r => r.Key == interfaceName)
-                          .Value ?? throw new Exception($"Interface '{interfaceName}' not found.");
+            var allDefs = _ftpDetailsHelper.GetAllInterfaceDetails();
 
-            return ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defJson);
+            var details = allDefs
+                .FirstOrDefault(d =>
+                    d.Code.Equals(interfaceName, StringComparison.OrdinalIgnoreCase));
+
+            if (details == null)
+                throw new Exception($"Interface '{interfaceName}' not found.");
+
+            return details;
         }
 
         private CustomsPartnerFtpPM GetPartnerFtpRow(
@@ -196,5 +197,14 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             Require(dto.User, MissingUsername, tenant, name);
             Require(dto.Password, MissingPassword, tenant, name);
         }
-}
+        private static string ToShortDirection(string typeCode)
+        {
+            switch (typeCode)
+            {
+                case "IN": return "I";
+                case "OUT": return "O";
+                default: return typeCode;  
+            }
+        }
+    }
 }

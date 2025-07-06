@@ -66,8 +66,8 @@ internal static class SIIRequestValidator
             }
 
             bool declaredMismatch =
-                (line.quantityByDecaredUnit == null && !string.IsNullOrWhiteSpace(line.declaredUnitCode)) ||
-                (line.quantityByDecaredUnit != null && string.IsNullOrWhiteSpace(line.declaredUnitCode));
+                (line.quantityByDeclaredUnit == null && !string.IsNullOrWhiteSpace(line.declaredUnitCode)) ||
+                (line.quantityByDeclaredUnit != null && string.IsNullOrWhiteSpace(line.declaredUnitCode));
 
             if (declaredMismatch)
                 errors.Add($"{p}.quantityByDeclaredUnit");

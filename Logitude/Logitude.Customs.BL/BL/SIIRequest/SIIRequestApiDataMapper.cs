@@ -260,7 +260,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 contactPersonCellPhone = contact?.Mobile ?? contact?.BusinessPhone,
                 contactPersonFax = contact?.Fax,
 
-                isNumericCountryCode = CountryCode.alphaCode.ToString(),
+                isNumericCountryCode = false, // we always send AlphaCode
                 importCountry = new CountryAlphaDto { alphaCode = sii.OriginCountryCode },
 
                 warehouseLocationName = sii.WareHouseAddress,
@@ -298,7 +298,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 productFileNumber = item.ProductFileNumber,
                 quantityToRelease = item.InvoiceQuantity,
                 siiUnitCode = GetComputingPartnerCodeTranslation(item.InvoiceQuantityTypeCode, SIIRequestComputingPartner, ComputingPartnerTableMeasurmentUnit, _tenant),
-                quantityByDecaredUnit = item.StatisticQuantity,
+                quantityByDeclaredUnit = item.StatisticQuantity,
                 declaredUnitCode = GetComputingPartnerCodeTranslation(item.StatisticQuantityTypeCode, SIIRequestComputingPartner, ComputingPartnerTableMeasurmentUnit, _tenant),
                 originCountry = new CountryAlphaDto { alphaCode = item.OriginCountryCode },
                 manufacturer = item.ManufacturerName,
@@ -308,7 +308,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 isDutchGroup1Requested = item.DutchRequested,
                 supplierInvoiceNumber = item.InvoiceNumber,
                 supplierInvoiceDate = item.IssueDate,
-                vendorName = item.VendorName,
+                supplier = item.VendorName,
                 formAttachmentIndexes = new List<int>()
             };
 
@@ -317,7 +317,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 line.productCode = NoProduct;
                 line.quantityToRelease = null;
                 line.siiUnitCode = null;
-                line.quantityByDecaredUnit = null;
+                line.quantityByDeclaredUnit = null;
                 line.declaredUnitCode = null;
                 line.productDutchGroup = DutchGroup1;
             }
@@ -326,11 +326,5 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         }
 
         private int _lineCounter;
-    }
-
-    enum CountryCode
-    {
-        numeric = 1,
-        alphaCode = 2
     }
 }
