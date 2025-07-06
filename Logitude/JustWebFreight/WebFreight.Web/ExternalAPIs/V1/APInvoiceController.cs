@@ -120,7 +120,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
             return Request.CreateResponse(HttpStatusCode.InternalServerError, "Unknown error");
 
         }
-        public void ProcessAndCreateAPInvoice(APInvoice apinvoice, APInvoice oldEntity)
+        private void ProcessAndCreateAPInvoice(APInvoice apinvoice, APInvoice oldEntity)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
