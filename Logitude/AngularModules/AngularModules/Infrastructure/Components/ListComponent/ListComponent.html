@@ -513,8 +513,8 @@
                         </td>
 
                         <td [attr.data-cy]="ObjectTableName + '_AddFilterIcon'" style="width: 17px; vertical-align: middle; position:relative;">
-                            <img  *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
-                            <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
+                            <img  *ngIf="IsAdvancedSearchOpened == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
+                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                         </td>
 
                         <td style="width: 3px;">
@@ -539,8 +539,7 @@
                         </td>
 
                         <td style="width: 15px; vertical-align: middle; position:relative;">
-                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;pointer-events:none;opacity:0.5" class="CenterCenter" />
-                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
+                            <img src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                         </td>
                     </tr>
                 </table>

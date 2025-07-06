@@ -88,12 +88,16 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (!paymentPM.SetVoided && paymentPM.StatusCode != "CL")
             {
                 ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
-                ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
-                arPaymentsJournal.Tenant = tenant;
-                arPaymentsJournal.IsVoided = false;
-                arPaymentsJournal.PaymentId = paymentPM.Id;
-                arPaymentsJournalRepository.Add(arPaymentsJournal);
-                arPaymentsJournalRepository.SubmitChanges();
+                ARPaymentsJournal arPaymentsJournal = arPaymentsJournalRepository.GetSingle(tenant, paymentPM.Id, false);
+                if (arPaymentsJournal == null)
+                {
+                    arPaymentsJournal = new ARPaymentsJournal();
+                    arPaymentsJournal.Tenant = tenant;
+                    arPaymentsJournal.IsVoided = false;
+                    arPaymentsJournal.PaymentId = paymentPM.Id;
+                    arPaymentsJournalRepository.Add(arPaymentsJournal);
+                    arPaymentsJournalRepository.SubmitChanges();
+                }
             }
         }
 

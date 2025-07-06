@@ -367,7 +367,6 @@ namespace Logitude.BL.Helpers
 
                     byte[] signBytes = HSMSignFileService
                         .SignCustomsRequest(tenant, invoice.Id, filedata, document.FileName, vatNumber, loggedcontact?.Id, accountingSettings);
-                    //invoice.IsSigned
 
                     if (signBytes != null)
                     {
@@ -616,8 +615,24 @@ namespace Logitude.BL.Helpers
                     documentInterestReportId = this.GetDocumentInterestReportId(arinvoice.Id, tenant);
                     subject = accountingSettings?.InterestInvoiceNotes;
                 }
-                
-                 string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvoice.InvoiceNumber, null, null, userId, arinvoice.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null,loggedUserEmail);
+
+                string tenantDotCom = "system@tenant" + tenant + ".com";
+                string xxxDotCom = "unifreight@xxxxxxx.com";
+                string system = "SYSTEM";
+
+                string fromEmail = arinvoice?.IssuedByUser?.Contact?.Email;
+                if (String.IsNullOrWhiteSpace(fromEmail) || fromEmail.ToLowerInvariant() == tenantDotCom)
+                {
+                    fromEmail = arinvoice?.UpdatedByUser?.Contact?.Email;
+                    if (String.IsNullOrWhiteSpace(fromEmail) || fromEmail.ToLowerInvariant() == tenantDotCom)
+                    {
+                        ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                        ContactRepository contactRepository = new ContactRepository(commonDataContext);
+                        ContactQuery contactQuery = new ContactQuery(contactRepository);
+                        fromEmail = contactQuery.GetRealEmailByEnglishName(system, tenant, xxxDotCom);
+                    }
+                }
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvoice.InvoiceNumber, null, null, userId, arinvoice.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, fromEmail, null,loggedUserEmail);
                  if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvoice.IsSigned = ARInvoiceSignedStatusValues.SignedAndSentByEmail;
@@ -790,7 +805,6 @@ namespace Logitude.BL.Helpers
                                     }
                                     if (copy != null && copy.DocumentTypeCopyId == documentType.LimitedPrintCopyId)
                                     {
-                                        //string email = HttpContext.Current.User.Identity.Name;
                                         UserRepository userRep = new UserRepository(tenant);
                                         User printedBy = userRep.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, false);
                                         copy.LastPrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);

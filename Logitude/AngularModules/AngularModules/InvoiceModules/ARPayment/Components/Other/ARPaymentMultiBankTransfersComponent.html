@@ -53,8 +53,7 @@
                                     </ng-template>
                                 </log-column>
 
-
-                                <log-column [header]="('ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe) + ' (' + paymentPM.PaymentCurrencyCode + ')'" [binding]="'ForeignAmount'" [width]="'150'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
+                                <log-column [header]="('ARPayment.F.AmountInPaymentCurrency' | TextCodeTranslationPipe) + (paymentPM.PaymentCurrencyCode ? ' (' + paymentPM.PaymentCurrencyCode + ')' : '')" [binding]="'ForeignAmount'" [width]="'150'" [Editable]="true" [Alignment]="isLTR?'left':'right'"  >
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate>
                                             <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode" >
