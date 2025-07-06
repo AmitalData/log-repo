@@ -1,8 +1,8 @@
 <Script DBType="Main"  TargetTableName="ARInvoicesSignedStatuses" AOT="false" >
-  <Sql Version="2">
+  <Sql Version="3">
     <![CDATA[
    UPDATE ObjectTables 
-   SET CacheOnClient=0, LookUp1='Code', LookUp2='LocalName'
+   SET CacheOnClient=1, LookUp1='Code', LookUp2='LocalName'
    WHERE Name ='ARInvoicesSignedStatus' AND Id='1-961' 
    
    
