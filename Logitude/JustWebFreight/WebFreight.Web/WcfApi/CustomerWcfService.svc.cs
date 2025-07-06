@@ -457,7 +457,11 @@ namespace WebFreight.Web.WcfApi
                         {
                             entityPM.CreditLimitAmount = entity.CreditLimitAmount;
                         }
-
+                        if(entity.Card != null && (entity.Card.EmailForSendingSingArinvoice != null || entity.Card.SendingInterestReport))
+                        {
+                            entityPM.Card.EmailForSendingSingArinvoice = entity.Card.EmailForSendingSingArinvoice;
+                            entityPM.Card.SendingInterestReport = entity.Card.SendingInterestReport;
+                        }
                         if (IsPrivateLabelFieldChanged(entityPM, entity, "cloud"))
                         {
                             return GetIsPrivateLabelFieldErrorResponse(response);
