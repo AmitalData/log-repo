@@ -43,25 +43,25 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return this.context.TenantManagements.Include("GlobalTenant");
         }
 
-        public TenantManagement GetSingleTenantManagement(int id)
+        public TenantManagement GetSingleTenantManagement(int id, bool getFromCache = true)
         {
-            string entityName = "TenantManagement" + id;
-            TenantManagement entity = (from a in context.TenantManagements.Include("GlobalTenant") where a.Id == id select a).FirstOrDefault(); ;
+            string cacheKey = $"TenantManagement{id}";
 
-            if (CacheManager.CacheWrapper != null)
+            if (getFromCache)
             {
-                if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                var cachedValue = CacheManager.CacheWrapper.Get(cacheKey);
+                if (cachedValue != null)
                 {
-                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                }
-                else
-                {
-                    entity = (TenantManagement)CacheManager.CacheWrapper.Get(entityName);
+                    return (TenantManagement)cachedValue;
                 }
             }
-            return entity;
+            TenantManagement result = context.TenantManagements.Include("GlobalTenant").Where(x => x.Id == id).FirstOrDefault();
+            if (getFromCache && result != null)
+            {
+                CacheManager.CacheWrapper.Insert(cacheKey, result, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+            }
+            return result;
 
-            // return (from a in context.TenantManagements.Include("GlobalTenant") where a.Id == id select a).FirstOrDefault();
         }
 
         public TenantManagement GetSingleTenantManagementByBluesnapAccountId(string bluesnapaccountId)

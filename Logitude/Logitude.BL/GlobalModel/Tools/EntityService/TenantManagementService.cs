@@ -76,7 +76,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             this.isNewEntity = false;
             this.tenant = entityPM.Id;
             this.entityPM = entityPM;
-            this.entityPoco = entityRepository.GetSingleTenantManagement(entityPM.Id);
+            this.entityPoco = entityRepository.GetSingleTenantManagement(entityPM.Id,false);
 
             if (mapComposition)
             {
