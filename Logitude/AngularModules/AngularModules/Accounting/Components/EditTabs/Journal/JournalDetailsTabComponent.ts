@@ -1101,7 +1101,7 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.CreditAccountId = value;
             this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
-                if(entity){
+                if(entity ){
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
                     this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
@@ -1162,11 +1162,7 @@ class JournalLineModel extends BaseComponent {
            
 
         }
-        else {
-            if (this.CurrencyId !== SessionLocator.TenantPM.CurrencyId) {
-                this.GetExchangeRate(value);
-            }
-        }
+        
     }
     ClearAmounts() {
         this.LocalAmount = null;
