@@ -503,7 +503,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                             CheckMilestone(current, milestone, item.DeliveredDate);
                         break;
 					case CargoTrackingMilestoneValues.DeliveryArrived:
-                        var DeliveryArrivedDate = GetDefaultEventMilstone(item.Tenant,item.EntityId,item.ForwardingShipmentHeaderId);
+                      
+                        var DeliveryArrivedDate = GetDefaultEventMilstone(item.Tenant,item.EntityId,item.ForwardingShipmentHeaderId)?.EventDateTime;
 						if (DeliveryArrivedDate.HasValue)
 							CheckMilestone(current, milestone, DeliveryArrivedDate);
 						break;
@@ -518,18 +519,26 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             item.CurrentMilestoneDate = current.CurrentMilestoneDate;
 
         }
-		public static DateTime? GetDefaultEventMilstone(int tenant, string entityId, string forwardingShipmentHeaderId)
-		{
-            var defaultEventAddMilestone = DefaultService.Instance.Get(tenant, "EventAddMilestone", "EventAddMilestone")?.Value1;
 
-            if (string.IsNullOrEmpty(defaultEventAddMilestone)) return null;
+		public static EventMilestoneResult GetDefaultEventMilstone( int tenant,string entityId, string forwardingShipmentHeaderId)		
+		{
+			var defaultEventAddMilestone = DefaultService.Instance.Get(tenant, "EventAddMilestone", "EventAddMilestone")?.Value1;
+
+			if (string.IsNullOrEmpty(defaultEventAddMilestone)) return null;
 
 			var eventTypeQuery = new EventTypeQuery(tenant);
 			var shipmentEvents = eventTypeQuery.GetEventByShipment(entityId, tenant, forwardingShipmentHeaderId, true);
 
-			return shipmentEvents
-			 .FirstOrDefault(e => e.Code == defaultEventAddMilestone)
-			 ?.EventDatetime;
+
+			var matchedEvent = shipmentEvents.FirstOrDefault(e => e.Code == defaultEventAddMilestone);
+
+			if (matchedEvent == null) return null;
+
+			return new EventMilestoneResult
+			{
+				EventDateTime = matchedEvent.EventDatetime,
+				Notes = matchedEvent.Notes
+			};
 
 		}
 		private static void CheckMilestone(CurrentMilestone current, CargoTrackingMilestoneList milestone, DateTime? date)
@@ -593,4 +602,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
         public string CurrentMilestoneCode = null;
         public DateTime? CurrentMilestoneDate = null;
     }
+	public class EventMilestoneResult
+	{
+		public DateTime? EventDateTime { get; set; }
+		public string Notes { get; set; }
+	}
 }

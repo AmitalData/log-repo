@@ -471,7 +471,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
 
 			
 			var deliveryArrived = milestonesDictionaryByCode[CargoTrackingMilestoneValues.DeliveryArrived];
-            var defaultEventDate = CargoTrackingShipmentsService.GetDefaultEventMilstone(shipment.Tenant, shipment.EntityId, shipment.ForwardingShipmentHeaderId);
+            var eventMilestoneResult = CargoTrackingShipmentsService.GetDefaultEventMilstone(shipment.Tenant, shipment.EntityId, shipment.ForwardingShipmentHeaderId);
 
 			milestones.Add(new Milestone()
 			{
@@ -480,9 +480,9 @@ namespace Logitude.CargoTracking.BL.CoreBL
 				LocalName = deliveryArrived.LocalName,
 				Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? deliveryArrived.Weight.HasValue ? deliveryArrived.Weight.Value : 0
 				: shipment.DirectionId == "E" ? deliveryArrived.ExportWeight.HasValue ? deliveryArrived.ExportWeight.Value : 0 : 0,
-				Date = defaultEventDate,
-				Done = defaultEventDate == null ? false : true,
-				Notes = null,
+				Date = eventMilestoneResult.EventDateTime,
+				Done = eventMilestoneResult.EventDateTime == null ? false : true,
+				Notes = eventMilestoneResult.Notes,
 				IsCurrent = false,
 				InActive = deliveryArrived.Inactive
 			});
