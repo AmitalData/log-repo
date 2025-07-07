@@ -66,7 +66,7 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public string supplierInvoiceNumber { get; set; }
         public DateTime? supplierInvoiceDate { get; set; }
         public string declaredUnitCode { get; set; }
-        public string productDutchGroup { get; set; }
+        public IdProductDutchGroup productDutchGroup { get; set; }
     }
 
     public class FormAttachmentDto
@@ -84,6 +84,10 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
     }
 
     public class IdDto
+    {
+        public string id { get; set; }
+    }
+    public class IdProductDutchGroup
     {
         public string id { get; set; }
     }

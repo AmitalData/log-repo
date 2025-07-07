@@ -704,28 +704,36 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM?.ContactEmail;
     }
     public set ContactEmail(newValue: string) {
-        this.entityPM.ContactEmail = newValue;
+        if (this.entityPM.ContactEmail != newValue) {
+            this.entityPM.ContactEmail = newValue;
+        }
     }
 
     public get ContactTel(): string {
         return this.entityPM?.ContactTel;
     }
     public set ContactTel(newValue: string) {
-        this.entityPM.ContactTel = newValue;
+        if (this.entityPM.ContactTel != newValue) {
+            this.entityPM.ContactTel = newValue;
+        }
     }
 
     public get ContactCellPhone(): string {
         return this.entityPM?.ContactCellPhone;
     }
     public set ContactCellPhone(newValue: string) {
-        this.entityPM.ContactCellPhone = newValue;
+        if (this.entityPM.ContactCellPhone != newValue) {
+            this.entityPM.ContactCellPhone = newValue;
+        }
     }
 
     public get ContactFax(): string {
         return this.entityPM?.ContactFax;
     }
     public set ContactFax(newValue: string) {
+        if (this.entityPM.ContactFax != newValue){
         this.entityPM.ContactFax = newValue;
+        }
     }
 
     public get ContactId(): string {
