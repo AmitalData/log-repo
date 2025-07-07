@@ -31,7 +31,6 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var newPm = new SIIRequestPM();
             SIIRequestDataMapping mapping = new SIIRequestDataMapping();
             mapping.CustomPOCOToPM(newPm, newPo);
-            mapping.POCOToPM(newPm, newPo);
             return newPm;
         }
 
