@@ -128,7 +128,8 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 input = input.Substring(5);//REMOVE BS64:
                 byte[] data = Convert.FromBase64String(input);
                 string decodedString = Encoding.UTF8.GetString(data);
-               
+                decodedString = decodedString.Replace("\\\"", "\"").Replace("\\\\", "\\");
+
                 return decodedString;
 
             }

@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "e9565ffe14292ddafd8de96c2d92b1f7";
+		public const string HashString = "8648621a548fffc287c9852da1436cc9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,6 +44,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -71,10 +72,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewTaxReportComponent",
 			      				    LocalDefaultTextBack_up =  "דוח מע\"מ",
-			      				    LocalDefaultText =  "BS64:IteT15XXlyDXnteiXCLXniI=",
+			      				    LocalDefaultText =  BS64:IteT15XXlyDXnteiXCLXniI=,
 			      				    DefaultText =  "Tax Report",
 			      				    NewButtonLocalDefaultTextBack_up =  "דוח מע\"מ חדש",
-			      				    NewButtonLocalDefaultText =  "BS64:IteT15XXlyDXnteiXCLXniDXl9eT16ki",
+			      				    NewButtonLocalDefaultText =  BS64:IteT15XXlyDXnteiXCLXniDXl9eT16ki,
 			      				    NewButtonDefaultText =  "New Tax Report",
 			      				    Code =  "97c2",
 			      				    Name =  " Query Group",
@@ -85,6 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -2890,6 +2892,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RemoveDuplicates",
 					  						ListPropertyPath =  "RemoveDuplicates",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
