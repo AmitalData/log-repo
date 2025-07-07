@@ -92,10 +92,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 var sender = new SIIRequestApiSender(auth.Tenant);
-                var apiResp = await sender.SendAsync(siiRequestId, declarationId, selectedRows)
-                    ?? throw new InvalidOperationException($"Did not receive a response from SII for request '{siiRequestId}'."); 
-                var saver = new SIIRequestApiResponseSaver(auth.Tenant);
-                saver.Save(apiResp, siiRequestId);
+
+                var (apiResp, dto) = await sender.SendAsync(siiRequestId, declarationId, selectedRows);
+
+                if (apiResp == null)
+                    throw new InvalidOperationException(
+                        $"Did not receive a response from SII for request '{siiRequestId}'.");
+                new SIIRequestApiResponseSaver(auth.Tenant)
+                           .Save(apiResp, siiRequestId, dto);
                 if (apiResp?.Success == true && apiResp.Result?.ResponseCode == 0)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, apiResp.Result);

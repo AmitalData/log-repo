@@ -19,7 +19,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         }
 
         public void Save(ApiResponse<ReleaseRequestApiResponseDto> apiResp,
-                         string siiRequestId)
+                         string siiRequestId , ReleaseRequestApiDto dto)
+
         {
             if (apiResp == null)
                 throw new InvalidOperationException($"No response was received from the SII for request '{siiRequestId}'.");
@@ -31,43 +32,42 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 Success = apiResp.Success,
                 ResponseCode = apiResp.Result?.ResponseCode ?? -1,
                 RequestNumber = apiResp.Result?.RequestNumber,
-                ValidationMessages = apiResp.Result?.ValidationMessages
+                ValidationMessages = apiResp.Result?.ValidationMessages,
+                FormApplicationId = dto.releaseRequestForm.formApplicationId
             };
             UpdateSIIRequest(entity);
         }
         private void UpdateSIIRequest(SIIRequestApiCallLog response)
         {
-
             var ctx = CustomContext.GetContext(_tenant);
             try
             {
-                if (response == null || response.ResponseCode != 0)
-                    return;
-
                 var repo = new SIIRequestQueryService(ctx);
                 var updater = new SIIRequestUpdateService(ctx,
                                   new Dictionary<string, IContext>(), _tenant);
 
                 var siiReq = repo.GetSingle(response.SIIRequestId,
-                                                getComposition: true,
-                                                getFromCache: false);
+                                            getComposition: true,
+                                            getFromCache: false);
 
                 if (siiReq == null)
                     return;
 
-                siiReq.RequestNo = response.RequestNumber;
+                if (!string.IsNullOrWhiteSpace(response.FormApplicationId))
+                    siiReq.FromApplicationId = response.FormApplicationId;
+
+                if (response.ResponseCode == 0)
+                {
+                    siiReq.RequestNo = response.RequestNumber;
+                }
+
                 siiReq.ChangeSetOp = ChangeSetOperation.Update;
-
                 updater.Update(siiReq, true);
-                return;
-
-
             }
             finally
             {
                 if (ctx is IDisposable d) d.Dispose();
             }
-
         }
         private class SIIRequestApiCallLog
         {
@@ -77,6 +77,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             public int ResponseCode { get; set; }
             public string RequestNumber { get; set; }
             public string ValidationMessages { get; set; }
+            public string FormApplicationId { get; set; } 
+
         }
     }
 }
