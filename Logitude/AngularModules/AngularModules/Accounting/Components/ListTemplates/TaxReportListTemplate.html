@@ -60,6 +60,10 @@
 
 </style>
 <div>
+    <!-- Line -->
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'Line'">{{ rowData[fieldName]}}</div>
+    <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'LineTypeCode'">{{ rowData[fieldName] }}</div>
+    
     <!-- ReferenceDate -->
     <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'ReferenceDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
     <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'" *ngIf="fieldName == 'VatNumber'">{{ rowData[fieldName] }}</div>
