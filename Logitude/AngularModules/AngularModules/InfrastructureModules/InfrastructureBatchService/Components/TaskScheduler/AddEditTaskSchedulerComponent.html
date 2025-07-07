@@ -380,7 +380,7 @@
                                                                                                 <LogLabel [Text]="'From'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                             </td>
                                                                                             <td  style="width:90px">
-                                                                                                <LogDatePicker [IsFreeValue]="true" [SelectedDateValue]="RunNowFromDate" (ValueChanged) ="RunNowFromDate=$event" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowFromDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                                                                                <LogDatePicker  [SelectedDateValue]="RunNowFromDate" (ValueChanged) ="DatePickerFromValueChange($event)" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowFromDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
 
                                                                                             </td>
 
@@ -389,7 +389,7 @@
                                                                                                 <LogLabel [Text]="'To'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                                             </td>
                                                                                             <td  style="width:90px">
-                                                                                                <LogDatePicker  [IsFreeValue]="true" [SelectedDateValue]="RunNowToDate" (ValueChanged) ="RunNowToDate=$event" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowToDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
+                                                                                                <LogDatePicker  [SelectedDateValue]="RunNowToDate" (ValueChanged) ="DatePickerToValueChange($event)" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'RunNowToDate'" [DataContext]="DataContext" [NoObjectField]="true" [HideColumns]="true"></LogDatePicker>
                                                                                             </td>
                                                                                         </tr>
                                                                                     </table>

@@ -76,7 +76,8 @@ namespace CommunicationWorkerRole
 
         private void RescheduleTask(TasksSchedulerPM Task)
         {
-      
+            if (IsStartedFromUI)
+                return;
             string taskExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
             if(Task.ExecutedByServerName != taskExecutedByServerName)
             {

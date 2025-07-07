@@ -46,6 +46,7 @@ namespace CommunicationWorkerRole
         string invoiceXml = null;
         int tenant = 0;
         ARInvoicePM aRInvoicePM = null;
+        string exception = string.Empty;
 
         public InvoiceApiWR()
         {
@@ -404,11 +405,11 @@ namespace CommunicationWorkerRole
         {
             try
             {
+                exception = string.Empty;
                 ARInvoicePM aRInvoicePM = new ARInvoicePM();
                 XDocument xdoc = XDocument.Parse(xml);
                 XNamespace ns = "http://www.magaya.com/XMLSchema/V1";
                 var invoice = xdoc.Descendants(ns + "Invoice").FirstOrDefault();
-                string exception = string.Empty;
 
                 if (invoice == null)
                 {
@@ -416,8 +417,8 @@ namespace CommunicationWorkerRole
                 }
                 var tenantPM = TenantQuery.GetSingleTenantPM(tenant);
 
-                CreateArinvoice(aRInvoicePM, invoice, tenantPM,exception);
-                CreateArinvoiceLines(aRInvoicePM , invoice, tenantPM,exception);
+                CreateArinvoice(aRInvoicePM, invoice, tenantPM);
+                CreateArinvoiceLines(aRInvoicePM , invoice, tenantPM);
                 CalculatedTotals(aRInvoicePM);
                 if (!string.IsNullOrWhiteSpace(exception))
                 {
@@ -432,7 +433,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void CreateArinvoice(ARInvoicePM aRInvoicePM, XElement invoice , TenantPM tenantPM, string exception)
+        private void CreateArinvoice(ARInvoicePM aRInvoicePM, XElement invoice , TenantPM tenantPM)
         {
             XNamespace ns = "http://www.magaya.com/XMLSchema/V1";
 
@@ -509,7 +510,7 @@ namespace CommunicationWorkerRole
             }
         }
 
-        private void CreateArinvoiceLines(ARInvoicePM aRInvoicePM, XElement invoice , TenantPM tenantPM ,string exception)
+        private void CreateArinvoiceLines(ARInvoicePM aRInvoicePM, XElement invoice , TenantPM tenantPM)
         {
             XNamespace ns = "http://www.magaya.com/XMLSchema/V1";
             if (invoice != null)
@@ -529,7 +530,8 @@ namespace CommunicationWorkerRole
                             ComputingPartnerTranslationHelper computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(tenant);
                             var logitudeChargeTypeCode =  computingPartnerTranslationHelper.GetLogitudeCodeTranslation(chargeTypeCode, "Magaya", "ChargesType");
                             var chargeTypeQuery = new ChargesTypeQuery(tenant);
-                            chargeType = chargeTypeQuery.GetSinglePMByCode(logitudeChargeTypeCode, tenant);
+                            if(logitudeChargeTypeCode !=null)
+                                      chargeType = chargeTypeQuery.GetSinglePMByCode(logitudeChargeTypeCode, tenant);
                             if (chargeType == null)
                             {
                                 chargeType = chargeTypeQuery.GetSinglePMByCode(chargeTypeCode, tenant);
@@ -593,8 +595,8 @@ namespace CommunicationWorkerRole
                                 LocalDescription = chargeType?.LocalName,
                                 Description = (string)c.Element(ns + "Description") ?? chargeType?.EnglishName,
                                 VatTypeId = chargeType?.VatTypeId,
-                                LineActionCode = chargeType.IsExpense ? "2" : "1",
-                                ForiegnCurrencyId = accCurrency?.Id,
+                               LineActionCode = chargeType != null && chargeType.IsExpense ? "2" : "1",
+                            ForiegnCurrencyId = accCurrency?.Id,
                                ForiegnExchangeRate =rate,
                                ForiegnCurrencyAmount = foriegnCurrencyAmount,
                                LocalCurrencyAmount = foriegnCurrencyAmount*rate ,

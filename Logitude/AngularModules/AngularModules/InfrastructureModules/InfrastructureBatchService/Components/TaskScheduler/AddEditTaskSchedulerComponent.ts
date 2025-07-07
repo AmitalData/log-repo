@@ -407,9 +407,14 @@ export class AddEditTaskSchedulerComponent  {
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
-    DatePickerValueChange(value: Date) {
+    DatePickerFromValueChange(value: Date) {
         if (value != null) {
             this.RunNowFromDate = value;
+        }
+    }
+    DatePickerToValueChange(value: Date) {
+        if (value != null) {
+            this.RunNowToDate = value;
         }
     }
     RunNowButtonClicked() {
