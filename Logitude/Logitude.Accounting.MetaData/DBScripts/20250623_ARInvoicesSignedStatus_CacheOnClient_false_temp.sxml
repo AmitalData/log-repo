@@ -1,9 +1,0 @@
-<Script DBType="Main"  TargetTableName="ARInvoicesSignedStatuses" AOT="false" >
-  <Sql Version="1">
-    <![CDATA[
-   UPDATE ObjectTables 
-   SET CacheOnClient=0
-   WHERE Name ='ARInvoicesSignedStatus' AND Id='1-961' 
-    ]]>      
-  </Sql>
-</Script>
