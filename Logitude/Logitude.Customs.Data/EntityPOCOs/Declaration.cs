@@ -498,7 +498,5 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public string ShipmentId { get; set; }
 
         public virtual Shipment Shipment { get; set; }
-        [Column("RowVer")]
-        public string RowVer { get; set; }
     }
 }
