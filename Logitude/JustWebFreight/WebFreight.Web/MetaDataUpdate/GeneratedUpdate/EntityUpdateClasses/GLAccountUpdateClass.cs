@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "8df632bedafcae4cb41a0e9917e103a4";
+		public const string HashString = "4650bbc8b53821b0bf039a7705df33a6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -12510,271 +12510,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "MarkDate",
-					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MarkDate",
-					  						ListPropertyPath =  "MarkDate",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "GLAccount",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MarkDate",
-					  						DefaultText =  "Mark Date",
-					  						FullLocalDefaultText =  "תאריך סימון",
-					  						ListFieldLable =  "MarkDateListLable",
-					  						ListLableDefaultText =  "Mark Date",
-					  						ListLocalDefaultText =  "תאריך סימון",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "CardCountryCode",
-					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  100,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  100,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CardCountryCode",
-					  						ListPropertyPath =  "CardCountryCode",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "GLAccount",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CardCountryCode",
-					  						DefaultText =  "Card Country Code",
-					  						FullLocalDefaultText =  "קוד מדינת כרטיס",
-					  						ListFieldLable =  "CardCountryCodeListLable",
-					  						ListLableDefaultText =  "Card Country Code",
-					  						ListLocalDefaultText =  "קוד מדינת כרטיס",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ExchangeRateId",
-					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "AdditionalCurrencyRate",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExchangeRateId",
-					  						ListPropertyPath =  "ExchangeRateId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "GLAccount",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExchangeRateId",
-					  						DefaultText =  "Exchange Rate",
-					  						FullLocalDefaultText =  "שער המרה",
-					  						ListFieldLable =  "ExchangeRateIdListLable",
-					  						ListLableDefaultText =  "Exchange Rate",
-					  						ListLocalDefaultText =  "שער המרה",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "AdditionalCurrencyRate",
-					  						NavigationPropertyName =  "AdditionalCurrencyRate",
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "ExchangeRateName",
-					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  200,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  200,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExchangeRateName",
-					  						ListPropertyPath =  "ExchangeRateName",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "GLAccount",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExchangeRateName",
-					  						DefaultText =  "Exchange Rate",
-					  						FullLocalDefaultText =  "שער המרה",
-					  						ListFieldLable =  "ExchangeRateNameListLable",
-					  						ListLableDefaultText =  "Exchange Rate",
-					  						ListLocalDefaultText =  "שער המרה",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
@@ -14399,24 +14134,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "RCLC",
-                EnglishName =  "Account Recalculated",
-                LocalName =  "בוצע חישוב מחדש",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = GLAccountObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
                 Code =  "DSCS",
                 EnglishName =  "Card is connected",
                 LocalName =  "Card is connected",
@@ -15074,23 +14791,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionInProgress", DefaultText = "There are Ledger Transaction in the process.",LocalDefaultText = @"יש התאמות בתהליך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"יתרה שונה מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
-
  		   TextCode GLAccountTextCode_GLAccountsONoAddressToVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NoAddressToVendor", DefaultText = "To Vendor no country specified in default address",LocalDefaultText = @"לספק לא צוינה מדינה בכתובת ברירת המחדל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"יתרה שונה מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLaccountOIsGroupMultiAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.IsGroupMultiAccounts", DefaultText = "To consolidate split GLAccount",LocalDefaultText = @"לאחד כרטיסי פיצול", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"לא נמצא {field} בכרטיס ספק: {account}", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"לא נמצא {field} בכרטיס ספק: {account}", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountList", DefaultText = "GLAccount List",LocalDefaultText = @"רשימת כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountList", DefaultText = "GLAccount List",LocalDefaultText = @"רשימת כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFieldsForNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFieldsForNew", DefaultText = "One of the following filters is required: GLAccount /GLAccounts range/Chartofaccount/ Chart Of Accounts Type / Category / Salesman",LocalDefaultText = @"חובה לתחום אחת מהאפשרויות הבאות : כרטיס/טווח כרטיסים/קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFieldsForNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFieldsForNew", DefaultText = "One of the following filters is required: GLAccount /GLAccounts range/Chartofaccount/ Chart Of Accounts Type / Category / Salesman",LocalDefaultText = @"חובה לתחום אחת מהאפשרויות הבאות : כרטיס/טווח כרטיסים/קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOFromGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.FromGLAccount", DefaultText = "From GLAccount",LocalDefaultText = @"מכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOFromGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.FromGLAccount", DefaultText = "From GLAccount",LocalDefaultText = @"מכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.ToGLAccount", DefaultText = "To GLAccount ",LocalDefaultText = @"עד כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.ToGLAccount", DefaultText = "To GLAccount ",LocalDefaultText = @"עד כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים לפי מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים לפי מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
