@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "73c719486307ed7494138e10ad7287ec";
+		public const string HashString = "8ca5006c5c5c5f4a44cca925cd1d85ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -4158,24 +4158,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 ObjectTableId = JournalObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes,contextTenant);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
-                Code =  "JFTE",
-                EnglishName =  "Journal Failed",
-                LocalName =  "Journal Failed",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = JournalObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
 
 
 	    }

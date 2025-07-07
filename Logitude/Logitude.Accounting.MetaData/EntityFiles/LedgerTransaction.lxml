@@ -441,7 +441,7 @@
     ListLableDefaultText="&quot;Create Date&quot;"
     ListLocalDefaultTextBack_up="&quot;תאריך יצירה&quot;"
     ListLocalDefaultText="&quot;BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
