@@ -255,7 +255,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         let XMLOfConsignmentsDetailsToCertificateOfOriginOut = UnifreightMessageM.GetStringValue(mess, "XMLOfConsignmentsDetailsToCertificateOfOriginOut");
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         const result = this.parseXml(xmlData(XMLOfConsignmentsDetailsToCertificateOfOriginOut));
-
+                        
                         EntityPM.ExporterName = result?.ExporterName || this.entityPM.ExporterName;
                         EntityPM.ExporterAddress = result?.ExporterAddress || this.entityPM.ExporterAddress;
                         EntityPM.ConsigneeName = result?.ConsigneeName || this.entityPM.ConsigneeName;
@@ -295,16 +295,17 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (!unifreightItem) return;
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             mappedConsignments.Tenant = EntityPM.Tenant;
-
+           
             // Initialize from Unifreight data if available
             mappedConsignments.ItemSerial = unifreightItem.itemSerial || '';
             mappedConsignments.MarksAndNumbers = unifreightItem.marksAndNumbers || '';
             mappedConsignments.Weight = unifreightItem.weight || '';
             mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
             mappedConsignments.ItemDescription = unifreightItem.description || '';
-            mappedConsignments.PackageQuantity = unifreightItem.packageQuantity || '';
-            mappedConsignments.PackageType = unifreightItem.packageType || '';
-
+            mappedConsignments.PackageQuantity = unifreightItem.PackageQuantity || '';
+            mappedConsignments.PackageType = unifreightItem.PackageType || '';
+            this.getPackageTypeNameFromCache(mappedConsignments.PackageType, mappedConsignments);
+            
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
 
