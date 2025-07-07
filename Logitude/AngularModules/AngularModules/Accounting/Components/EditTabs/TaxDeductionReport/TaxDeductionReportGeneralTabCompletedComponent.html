@@ -107,17 +107,17 @@
                                                         <table class="TableHolder" style="width: 500%;">-->
 
                                                             <!-- Total Payments -->
-                                                         <!--   <tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">
+                                                            <tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">
                                                                 <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                                     <LogLabel [ObjectFieldName]="'TotalPayments'" [ObjectTableName]="DataObjectTableName"
                                                                             [DataContext]="DataContext"></LogLabel>
                                                                 </td>
 
                                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="width:200px;">
-                                                                    {{_TaxDeductionReportData.totalForCompany.TotalPayments}}
+                                                                    {{_TaxDeductionReportData?.TotalForCompany?[0]?.TotalPayments}}
                                                                 </td>
                                                                 <td></td>
-                                                            </tr>-->
+                                                            </tr>
                                                                                                                     
                                                             <!-- Total Deductions -->
                                                          <!--  <tr class="FormFieldRow"  *ngIf="entityPM.ByMonth && !!entityPM.FromMonth">

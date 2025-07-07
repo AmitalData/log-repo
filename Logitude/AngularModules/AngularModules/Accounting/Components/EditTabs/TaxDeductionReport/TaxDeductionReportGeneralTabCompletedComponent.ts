@@ -96,7 +96,7 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
 
 
         this.taxDeductionReportExtendedPMService
-            .GetTaxDeductionReportData(this.entityPM.Id)
+            .GetTaxDeductionReportData(this.entityPM.Tenant, this.entityPM.Id)
             .subscribe({
             next: (response: ServiceResponse) => {
             if (!response?.HasError) {

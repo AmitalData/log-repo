@@ -19,6 +19,7 @@ using System.Text.Json;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
+    //[RoutePrefix("api/TaxDeductionReportFile")]
     public class TaxDeductionReportFileController: ApiController
     {
 
@@ -47,8 +48,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-
-        public HttpResponseMessage GetTaxDeductionReportData(int tenant, string taxDeductionReport)
+        [HttpGet]
+        public HttpResponseMessage GetTaxDeductionReportDataField(int tenant, string taxDeductionReport)
         {
             try
             {
