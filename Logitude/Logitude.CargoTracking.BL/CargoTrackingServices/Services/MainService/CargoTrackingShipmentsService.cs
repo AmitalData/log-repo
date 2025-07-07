@@ -520,7 +520,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
         }
 		public static DateTime? GetDefaultEventMilstone(int tenant, string entityId, string forwardingShipmentHeaderId)
 		{
-            var defaultEventAddMilestone = DefaultService.Instance.Get(0, "EventAddMilestone", "EventAddMilestone")?.Value1;
+            var defaultEventAddMilestone = DefaultService.Instance.Get(tenant, "EventAddMilestone", "EventAddMilestone")?.Value1;
 
             if (string.IsNullOrEmpty(defaultEventAddMilestone)) return null;
 
