@@ -1127,12 +1127,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="RowVer"
-    Type="timestamp">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
