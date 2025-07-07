@@ -84,7 +84,9 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                 return;
             string description = objectField.FullNameTextCodeDefaultText;
 
-			if (objectField.LookUpTableId != null)
+
+
+            if (objectField.LookUpTableId != null)
             {
                 string lookupTableName = new ObjectTableRepository(tenantId).GetObjectTableById(objectField.LookUpTableId, tenantId).Name;
 
@@ -231,7 +233,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     else if (addOn.ChangeSetOp == ChangeSetOperation.Update)
                     {
                         TenantAddOn oldAddOn = new TenantAddOnRepository(entityPM.Id).GetSingleTenantAddOn(addOn.Id);
-                        PackagePM oldPackege =  new PackageQuery(entityPM.Id).GetSinglePM(oldAddOn.PackageCode);
+                        PackagePM oldPackege = new PackageQuery(entityPM.Id).GetSinglePM(oldAddOn.PackageCode);
                         notes.AppendLine($"AddOn {addOn.Id} update from package {oldAddOn.PackageCode} {oldPackege.Name} to {addOn.PackageCode} {packege.Name}");
                     }
                 });
