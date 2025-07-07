@@ -470,7 +470,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     get BillToId() { return this.EntityPM.BillToId; }
     set BillToId(newValue: string) {
         if (this.EntityPM.BillToId != newValue) {
-            debugger;
             this.EntityPM.BillToId = newValue;
             this.EntityPM.CustomerRef = null;
             this.SetUIProperties_BillToAddress();

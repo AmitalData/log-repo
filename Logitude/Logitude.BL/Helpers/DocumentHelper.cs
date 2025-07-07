@@ -573,6 +573,18 @@ namespace Logitude.BL.Helpers
         }
 
 
+        private string GetContactEmailByContactId(string loggedContactId, int tenant, ContactQuery contactQuery)
+        {
+            string contactEmail = string.Empty;
+            if (!string.IsNullOrEmpty(loggedContactId))
+            {
+                if (contactQuery == null) contactQuery = new ContactQuery(tenant);
+                contactEmail = contactQuery.GetContactEmailById(loggedContactId, tenant);
+                if (contactEmail == null && tenant != 0) contactEmail = contactQuery.GetContactEmailById(loggedContactId, 0);
+            }
+            return contactEmail;
+        }
+
         private void SendToEmailContact(string email, ARInvoice arinvoice,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant,FullAccountingSettingPM accountingSettings)
         {
             string loggedUserEmail = null;
@@ -620,20 +632,21 @@ namespace Logitude.BL.Helpers
                 string xxxDotCom = "unifreight@xxxxxxx.com";
                 string system = "SYSTEM";
 
-                string fromEmail = arinvoice?.IssuedByUser?.Contact?.Email;
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                ContactRepository contactRepository = new ContactRepository(commonDataContext);
+                ContactQuery contactQuery = new ContactQuery(contactRepository);
+                string fromEmail = GetContactEmailByContactId(arinvoice?.IssuedByUserId, tenant, contactQuery);    
                 if (String.IsNullOrWhiteSpace(fromEmail) || fromEmail.ToLowerInvariant() == tenantDotCom)
                 {
-                    fromEmail = arinvoice?.UpdatedByUser?.Contact?.Email;
+                    fromEmail = GetContactEmailByContactId(arinvoice?.UpdatedByUserId, tenant, contactQuery);
                     if (String.IsNullOrWhiteSpace(fromEmail) || fromEmail.ToLowerInvariant() == tenantDotCom)
                     {
-                        ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
-                        ContactRepository contactRepository = new ContactRepository(commonDataContext);
-                        ContactQuery contactQuery = new ContactQuery(contactRepository);
+
                         fromEmail = contactQuery.GetRealEmailByEnglishName(system, tenant, xxxDotCom);
                     }
                 }
                 string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, subject += " " + arinvoice.InvoiceNumber, null, null, userId, arinvoice.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, fromEmail, null,loggedUserEmail);
-                 if (!string.IsNullOrEmpty(documentId))
+                if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvoice.IsSigned = ARInvoiceSignedStatusValues.SignedAndSentByEmail;
                     repository.Update(arinvoice);
@@ -655,9 +668,11 @@ namespace Logitude.BL.Helpers
                 repository.Update(arinvoice);
                 repository.SubmitChanges();
                 APInvoiceHelper.AddCommunicationLog("F", arinvoice, e.Message, "ARInvoice", arinvoice.Id, "Send Invoice Failed", tenant);
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "General Exception in DocumentHelper");
             }
         }
+
+
         public string SendHtmlDocument(byte[] htmlData, string internalDocumentId, string externalDocumentId, int tenant, string toEmail, string subject, string cc, string bcc, string userId, string entityId, string objectTableId, string attachments, string entityReference, string from, string replyTo,string loggedUserEmail)
         {
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
