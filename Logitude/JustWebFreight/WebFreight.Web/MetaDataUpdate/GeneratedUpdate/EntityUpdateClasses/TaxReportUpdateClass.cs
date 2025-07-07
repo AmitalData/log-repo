@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "8648621a548fffc287c9852da1436cc9";
+		public const string HashString = "1bafc1242285b0f72d53b4dc071e2698";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -72,10 +72,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "NewTaxReportComponent",
 			      				    LocalDefaultTextBack_up =  "דוח מע\"מ",
-			      				    LocalDefaultText =  BS64:IteT15XXlyDXnteiXCLXniI=,
+			      				    LocalDefaultText =  "BS64:IteT15XXlyDXnteiXCLXniI=",
 			      				    DefaultText =  "Tax Report",
 			      				    NewButtonLocalDefaultTextBack_up =  "דוח מע\"מ חדש",
-			      				    NewButtonLocalDefaultText =  BS64:IteT15XXlyDXnteiXCLXniDXl9eT16ki,
+			      				    NewButtonLocalDefaultText =  "BS64:IteT15XXlyDXnteiXCLXniDXl9eT16ki",
 			      				    NewButtonDefaultText =  "New Tax Report",
 			      				    Code =  "97c2",
 			      				    Name =  " Query Group",
