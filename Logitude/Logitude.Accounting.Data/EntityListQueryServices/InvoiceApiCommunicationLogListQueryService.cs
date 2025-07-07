@@ -21,6 +21,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
 	    private IQueryable<InvoiceApiCommunicationLogList> GetIqueryableList(IQueryable<InvoiceApiCommunicationLog> iQueryable)
         {
+            HashSet<string> invoiceStatusCodes = new HashSet<string>();
+            invoiceStatusCodes.Add("DR");
+            invoiceStatusCodes.Add("LL");
+            invoiceStatusCodes.Add("PR");
+
             IQueryable<InvoiceApiCommunicationLogList> query = (from a in iQueryable
                                             select new InvoiceApiCommunicationLogList()
 											{
@@ -46,7 +51,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                               StepName = a.InvoiceApiStep != null ? a.InvoiceApiStep.EnglishName?? a.InvoiceApiStep.LocalName : null ,
 											  ExternalID = a.ExternalID,
 											  ARInvoiceId = a.ARInvoiceId,
-											  InvoiceNumber = a.ARInvoice != null ? a.ARInvoice.InvoiceNumber : null
+											  InvoiceNumber = a.ARInvoice != null ?( invoiceStatusCodes.Contains(a.ARInvoice.StatusCode) ? a.ARInvoice.DraftNumber : a.ARInvoice.InvoiceNumber) : null,
 
 
                                             });
