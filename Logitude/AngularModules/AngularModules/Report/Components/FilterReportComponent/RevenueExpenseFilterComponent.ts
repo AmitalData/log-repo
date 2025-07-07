@@ -48,6 +48,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     showLocal: boolean;
     ChartOfAccountsSelectedValue:string
     ChartOfAccountsTypeSelectedValue: string;
+
     constructor(private CD: ChangeDetectorRef) {
 
         super();
@@ -394,39 +395,51 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
-                case "CreateDate":
+                case "CreateDate":{
                     this.ToDate = new Date(queryFilterItem.FieldValue);
                     break;
-                case "FromDate":
+                }
+                case "FromDate":{
                     this.FromDate = new Date(queryFilterItem.FieldValue)
                     break;
+                }
                 case "ChartOfAccountsTypeCodeList":{
                     this.ChartOfAccountsTypeSelectedValue=queryFilterItem.FieldValue
                     break;
                 }
-                case"ChartOfAccountsTypeCodeList_param":
+                case"ChartOfAccountsTypeCodeList_param":{
                      this.chartOfAccountsTypeComboboxValue=queryFilterItem.FieldValue
                     break;
-                case "ChartOfAccountsIdList_param":
+                }
+                case "ChartOfAccountsIdList_param":{
                     this.chartOfAccountsComboBoxValue=queryFilterItem.FieldValue
                     break;
+                }
                 case "ChartOfAccountsIdList":{
                    this.ChartOfAccountsSelectedValue= queryFilterItem.FieldValue
                     
                     break;
                 }
-                case "Level":
+                case "Level":{
                     this.FilterSelectedValue = queryFilterItem.FieldValue;
                      break;
-                 case "CardFilter":
+                }
+                 /*case "CardFilter":
                  {  this.BuildFilterList();
-                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[0];
+                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[1];
                     this.UseBalanceFilter = queryFilterItem.FieldValue == "1" || queryFilterItem.FieldValue == "2";                            
                     break;
-                 }
+                 }*/
                     
-               
-              
+               case "BalanceOptions":{
+                    this.BuildFilterList();
+                     this.SelectedBalanceOptionFilter = queryFilterItem.FieldValue;
+                     break;
+                }
+               case"IncludeZeroBalance":{
+                     this.UseBalanceFilter = queryFilterItem.FieldValue;
+                     break;   
+               }
               
             }
     
@@ -498,17 +511,22 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         
         if (!this.Level) this.Level = "GLAccount";
         this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
+
+        this.queryFilterItems.push(new QueryFilterItem("IncludeZeroBalance", this.UseBalanceFilter));
+        this.queryFilterItems.push(new QueryFilterItem("SelectedBalance", this.SelectedBalanceOptionFilter.Code));
+
         if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
-
         }
-
         else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
         }
         else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
         }
+
+
+
         return this.queryFilterItems
     }
     ValidateSelectedFilters() {
