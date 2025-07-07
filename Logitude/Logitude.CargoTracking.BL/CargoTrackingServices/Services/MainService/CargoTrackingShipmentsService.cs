@@ -1,4 +1,6 @@
-﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
@@ -500,6 +502,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                         if (item.DeliveredDone.HasValue && item.DeliveredDone.Value)
                             CheckMilestone(current, milestone, item.DeliveredDate);
                         break;
+					case CargoTrackingMilestoneValues.DeliveryArrived:
+                        var DeliveryArrivedDate = GetDefaultEventMilstone(item.Tenant,item.EntityId,item.ForwardingShipmentHeaderId);
+						if (DeliveryArrivedDate.HasValue)
+							CheckMilestone(current, milestone, DeliveryArrivedDate);
+						break;
                     //case CargoTrackingMilestoneValues.Invoiced:
                     //if (item.CreatedDone.HasValue && item.Done.Value)
                     //    CheckMilestone(current, milestone, item); break;
@@ -511,8 +518,18 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
             item.CurrentMilestoneDate = current.CurrentMilestoneDate;
 
         }
+		public static DateTime? GetDefaultEventMilstone(int tenant, string entityId, string forwardingShipmentHeaderId)
+		{
+            var defaultEventAddMilestone = DefaultService.Instance.Get(0, "EventAddMilestone", "EventAddMilestone")?.Value1;
+			var eventTypeQuery = new EventTypeQuery(tenant);
+			var shipmentEvents = eventTypeQuery.GetEventByShipment(entityId, tenant, forwardingShipmentHeaderId, true);
 
-        private static void CheckMilestone(CurrentMilestone current, CargoTrackingMilestoneList milestone, DateTime? date)
+			return shipmentEvents
+			 .FirstOrDefault(e => e.Code == defaultEventAddMilestone)
+			 ?.EventDatetime;
+
+		}
+		private static void CheckMilestone(CurrentMilestone current, CargoTrackingMilestoneList milestone, DateTime? date)
         {
             if (milestone.Weight > current.Wheight)
             {
