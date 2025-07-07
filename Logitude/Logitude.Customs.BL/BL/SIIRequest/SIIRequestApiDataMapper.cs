@@ -219,10 +219,12 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             SIIRequestQueryService siiService)
         {
             var agentName = defService.GetDefault("ISRAEL", "GGG_COMP_NAM_L", "NON", "NON", _tenant);
-            var siiCompany = DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1
-                             ?? throw new InvalidOperationException("Please set a default value for 'SIIApplicationName'.");
-            var nextSeq = siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1;
-            var nextId = $"{siiCompany}-{nextSeq}";
+            string GetSiiCompanyName() => DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1
+                ?? throw new InvalidOperationException("Default 'SIIApplicationName' is missing.");
+
+            var formApplicationId = !string.IsNullOrWhiteSpace(sii.FromApplicationId) 
+                ? sii.FromApplicationId 
+                : $"{GetSiiCompanyName()}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
             var contactName = !string.IsNullOrWhiteSpace(contact?.LocalName)
                 ? contact.LocalName
@@ -232,7 +234,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
             return new ReleaseRequestFormDto
             {
-                formApplicationId = nextId,
+                formApplicationId = formApplicationId,
                 customsAgentRegisteredNumber = dec?.AgentId,
                 agentFileId = dec?.CustomFileNo,
                 customsAgentName = agentName,
