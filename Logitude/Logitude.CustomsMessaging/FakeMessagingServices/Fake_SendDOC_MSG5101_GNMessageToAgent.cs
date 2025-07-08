@@ -50,7 +50,11 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             msg.msgCode = msgCode;
             msg.msgString = msgString;
             msg.SenderName = senderName;
-            msg.responseToMessage = responseToMessage;
+            if(responseToMessage.HasValue)
+            {
+                msg.responseToMessageSpecified = true;
+                msg.responseToMessage = responseToMessage.Value;
+            }
             return msg;
         }
         private ConnectedEntity GetRelatedEntity(DeclarationPM dec)
