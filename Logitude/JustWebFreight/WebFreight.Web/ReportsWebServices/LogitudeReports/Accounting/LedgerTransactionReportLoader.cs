@@ -299,7 +299,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Tenant = transaction.Tenant,
                 JournalId = transaction.JournalId,
                 JournalLineNumber = transaction.JournalLineNumber,
-                CreateDate = transaction.CreateDate.GetValueOrDefault(),
+                CreateDate = transaction.CreateDate ?? DateTime.MinValue,
                 ControlAccountId = transaction.ControlAccountId,
                 AccountId = transaction.AccountId,
                 AccountingDate = transaction.AccountingDate.Date.ToString("dd/MM/yyyy"), 
