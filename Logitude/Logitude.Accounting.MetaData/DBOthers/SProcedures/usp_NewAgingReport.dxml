@@ -217,11 +217,11 @@ AND (@ChartOfAccountsId IS NULL OR GL.ChartOfAccountsId = @ChartOfAccountsId)
 AND (@CurrencyId IS NULL OR GL.CurrencyId = @CurrencyId)
 AND (
 (@CategoryName IS NULL OR
-(@CategoryName = 'Category1Id' AND GL.Category1Id = @CategoryValue) OR
-(@CategoryName = 'Category2Id' AND GL.Category2Id = @CategoryValue) OR
-(@CategoryName = 'Category3Id' AND GL.Category3Id = @CategoryValue) OR
-(@CategoryName = 'Category4Id' AND GL.Category4Id = @CategoryValue) OR
-(@CategoryName = 'Category5Id' AND GL.Category5Id = @CategoryValue))
+(@CategoryName = 'Category1' AND GL.Category1Id = @CategoryValue) OR
+(@CategoryName = 'Category2' AND GL.Category2Id = @CategoryValue) OR
+(@CategoryName = 'Category3' AND GL.Category3Id = @CategoryValue) OR
+(@CategoryName = 'Category4' AND GL.Category4Id = @CategoryValue) OR
+(@CategoryName = 'Category5' AND GL.Category5Id = @CategoryValue))
 )
 GROUP BY
 T.Tenant, T.AccountId,
