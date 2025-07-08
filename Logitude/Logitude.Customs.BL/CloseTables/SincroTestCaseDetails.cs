@@ -268,7 +268,8 @@ MainInterfaceCode ="5002"
                     Name = "הודעה לסוכן",
                     IsDCA = true,
                     Entity="Declaration",
-                    Param1= @"{""entityType"" :"""" ,  ""entityIdKey1"" :"""" , ""msgCode"" :"""" , ""msgString"" :""""}",
+                    Param1= @"{""entityType"" :"""" ,  ""entityIdKey1"" :"""" , ""msgCode"" :"""" , ""msgString"" :"""",""senderName"": """",""responseToMessage"" : """"
+}",
                     Param2= @"{}",
                     MainInterfaceCode="5101O_I",
 

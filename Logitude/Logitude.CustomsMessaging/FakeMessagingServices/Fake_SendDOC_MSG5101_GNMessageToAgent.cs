@@ -81,9 +81,9 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             {
                 msgString = data.msgString;
             }
-            if (data.SenderName != null && data.SenderName.ToString() != "")
+            if (data.senderName != null && data.senderName.ToString() != "")
             {
-                senderName = data.SenderName;
+                senderName = data.senderName;
             }
 
             if (data.responseToMessage != null && data.responseToMessage.ToString() != "")
