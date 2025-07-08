@@ -154,7 +154,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             List<Type> types = new List<Type>();
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                if (assembly.FullName.StartsWith("Microsoft")  || assembly.FullName.StartsWith("System"))
+                if (assembly.FullName.StartsWith("Microsoft") || assembly.FullName.StartsWith("System"))
                     continue;
                 try
                 {

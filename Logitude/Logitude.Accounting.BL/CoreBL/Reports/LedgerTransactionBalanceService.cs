@@ -468,7 +468,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             if (myStatstic4period != null)
             {
                 AllCurrencyId = myStatstic4period.AllCurrencyId.ToList();
-                periodMaxCreateDate = myStatstic4period.MaxCreateDate.GetValueOrDefault();
+                periodMaxCreateDate = myStatstic4period.MaxCreateDate ?? DateTime.MinValue;
                 periodSumLocalAmount = myStatstic4period.SumLocalAmount;
                 periodSumForeignAmount = myStatstic4period.SumForeignAmount;
                 periodTotalRowCount = myStatstic4period.Count;

@@ -209,6 +209,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 byte[] data = Convert.FromBase64String(input);
                 string decodedString = Encoding.UTF8.GetString(data);
                 decodedString = decodedString.Trim('\"');
+                decodedString = decodedString.Replace("\\\"", "\"").Replace("\\\\", "\\");
+
                 return decodedString;
 
             }
