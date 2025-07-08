@@ -56,10 +56,13 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 if (!string.IsNullOrWhiteSpace(response.FormApplicationId))
                     siiReq.FromApplicationId = response.FormApplicationId;
 
-                if (response.ResponseCode == 0 || response.ResponseCode == 100)
+                if (response.ResponseCode == (int)SIIResponseCode.Success ||
+                    response.ResponseCode == (int)SIIResponseCode.ValidationError)
+                {
                     siiReq.Status = response.ResponseCode.ToString();
+                }
 
-                if (response.ResponseCode == 0)          
+                if (response.ResponseCode == (int)SIIResponseCode.Success)
                     siiReq.RequestNo = response.RequestNumber;
 
                 siiReq.Status = response.ResponseCode.ToString();
@@ -83,4 +86,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         }
     }
+}
+public enum SIIResponseCode
+{
+    Success = 0,
+    ValidationError = 100
 }
