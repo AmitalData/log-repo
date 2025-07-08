@@ -27,8 +27,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 Tenant = tenant,
                 DeclarationId = declarationId,
             };
-            
-            var newPm = new SIIRequestPM();
+
+            var newPm = new SIIRequestPM
+            {
+                Tenant = tenant,
+                DeclarationId = declarationId,
+            };
             SIIRequestDataMapping mapping = new SIIRequestDataMapping();
             mapping.CustomPOCOToPM(newPm, newPo);
             return newPm;
