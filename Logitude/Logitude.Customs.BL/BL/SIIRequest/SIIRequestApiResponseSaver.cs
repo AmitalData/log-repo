@@ -56,11 +56,16 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 if (!string.IsNullOrWhiteSpace(response.FormApplicationId))
                     siiReq.FromApplicationId = response.FormApplicationId;
 
-                if (response.ResponseCode == 0)
+                if (response.ResponseCode == (int)SIIResponseCode.Success ||
+                    response.ResponseCode == (int)SIIResponseCode.ValidationError)
                 {
-                    siiReq.RequestNo = response.RequestNumber;
+                    siiReq.Status = response.ResponseCode.ToString();
                 }
 
+                if (response.ResponseCode == (int)SIIResponseCode.Success)
+                    siiReq.RequestNo = response.RequestNumber;
+
+                siiReq.Status = response.ResponseCode.ToString();
                 siiReq.ChangeSetOp = ChangeSetOperation.Update;
                 updater.Update(siiReq, true);
             }
@@ -81,4 +86,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         }
     }
+}
+public enum SIIResponseCode
+{
+    Success = 0,
+    ValidationError = 100
 }
