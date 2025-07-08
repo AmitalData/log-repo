@@ -56,11 +56,13 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 if (!string.IsNullOrWhiteSpace(response.FormApplicationId))
                     siiReq.FromApplicationId = response.FormApplicationId;
 
-                if (response.ResponseCode == 0)
-                {
-                    siiReq.RequestNo = response.RequestNumber;
-                }
+                if (response.ResponseCode == 0 || response.ResponseCode == 100)
+                    siiReq.Status = response.ResponseCode.ToString();
 
+                if (response.ResponseCode == 0)          
+                    siiReq.RequestNo = response.RequestNumber;
+
+                siiReq.Status = response.ResponseCode.ToString();
                 siiReq.ChangeSetOp = ChangeSetOperation.Update;
                 updater.Update(siiReq, true);
             }
