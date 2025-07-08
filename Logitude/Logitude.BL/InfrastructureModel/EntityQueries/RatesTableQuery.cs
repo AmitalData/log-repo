@@ -287,11 +287,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public double? GetLastRecordByValueDateAndExchangeRateId(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date, string glaccountId)
         {
-            var glAccountQueryService = new GLAccountQueryService(tenant);
-            var exchangeRateId = glAccountQueryService.GetExchangeRateIdById(glaccountId, tenant);
-            
 
-            if (exchangeRateId == null && ! SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", tenant))
+            string exchangeRateId = String.Empty;
+            if (SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", tenant))
+            {
+                var glAccountQueryService = new GLAccountQueryService(tenant);
+                exchangeRateId = glAccountQueryService.GetExchangeRateIdById(glaccountId, tenant);
+            }
+
+            if (String.IsNullOrEmpty(exchangeRateId))
                 return GetLastRateByValueDate(tenant, foreignCurrencyId, baseCurrencyId, date)?.Rate;
 
             var ratesQuery = repository.context.RatesTable
