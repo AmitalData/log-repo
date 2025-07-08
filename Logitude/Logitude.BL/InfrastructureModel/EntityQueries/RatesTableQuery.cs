@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Logitude.BL.CommonDataModel.APIDataContract;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Security;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
-using Logitude.BL.CommonDataModel.APIDataContract;
+using System.Linq;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -285,11 +286,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public double? GetLastRecordByValueDateAndExchangeRateId(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date, string glaccountId)
         {
-            var glAccountQueryService = new GLAccountQueryService(tenant);
-            var exchangeRateId = glAccountQueryService.GetExchangeRateIdById(glaccountId, tenant);
 
+            string exchangeRateId = String.Empty;
+            if (SecurityUtility.CheckFeature("AdditionalCurrencyRate", "AdditionalCurrencyRate.Features.Menu", tenant))
+            {
+                var glAccountQueryService = new GLAccountQueryService(tenant);
+                exchangeRateId = glAccountQueryService.GetExchangeRateIdById(glaccountId, tenant);
+            }
 
-            if (exchangeRateId == null)
+            if (String.IsNullOrEmpty(exchangeRateId))
                 return GetLastRateByValueDate(tenant, foreignCurrencyId, baseCurrencyId, date)?.Rate;
 
             var ratesQuery = repository.context.RatesTable
