@@ -3,9 +3,11 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Server.Tools.RestRequestExecutor;
+using Newtonsoft.Json.Linq;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Logitude.Customs.BL.BL.SIIRequest
 {
@@ -25,12 +27,16 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             if (apiResp == null)
                 throw new InvalidOperationException($"No response was received from the SII for request '{siiRequestId}'.");
 
+            int responseCode = apiResp.Result != null
+                               ? apiResp.Result.ResponseCode
+                               : TryExtractResponseCode(apiResp.ErrorMessage) ?? -1;
+
             var entity = new SIIRequestApiCallLog
             {
                 SIIRequestId = siiRequestId,
                 Tenant = _tenant,
                 Success = apiResp.Success,
-                ResponseCode = apiResp.Result?.ResponseCode ?? -1,
+                ResponseCode = responseCode,
                 RequestNumber = apiResp.Result?.RequestNumber,
                 ValidationMessages = apiResp.Result?.ValidationMessages,
                 FormApplicationId = dto.releaseRequestForm.formApplicationId
@@ -56,22 +62,44 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 if (!string.IsNullOrWhiteSpace(response.FormApplicationId))
                     siiReq.FromApplicationId = response.FormApplicationId;
 
-                if (response.ResponseCode == (int)SIIResponseCode.Success ||
-                    response.ResponseCode == (int)SIIResponseCode.ValidationError)
+                SIIResponseCode code = (SIIResponseCode)response.ResponseCode;
+
+                if (code == SIIResponseCode.Success ||
+                    code == SIIResponseCode.ValidationError)
                 {
-                    siiReq.Status = response.ResponseCode.ToString();
+                    siiReq.Status = ((int)code).ToString();
                 }
 
-                if (response.ResponseCode == (int)SIIResponseCode.Success)
+                if (code == SIIResponseCode.Success)
                     siiReq.RequestNo = response.RequestNumber;
 
-                siiReq.Status = response.ResponseCode.ToString();
                 siiReq.ChangeSetOp = ChangeSetOperation.Update;
                 updater.Update(siiReq, true);
             }
             finally
             {
                 if (ctx is IDisposable d) d.Dispose();
+            }
+        }
+        private static int? TryExtractResponseCode(string errorMessage)
+        {
+            if (string.IsNullOrWhiteSpace(errorMessage))
+                return null;
+
+            Match m = Regex.Match(errorMessage, @"Response:\s*(\{.*\})");
+            if (!m.Success) return null;
+
+            try
+            {
+                JObject json = JObject.Parse(m.Groups[1].Value);
+                JToken token = json["responseCode"];
+                return token != null && token.Type == JTokenType.Integer
+                       ? (int)token
+                       : (int?)null;
+            }
+            catch
+            {
+                return null;   // malformed JSON – ignore
             }
         }
         private class SIIRequestApiCallLog
