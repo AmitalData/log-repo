@@ -26,7 +26,7 @@ namespace Logitude.Server.Tools.RestRequestExecutor
             new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Ignore
+                DefaultValueHandling = DefaultValueHandling.Include
             };
 
         private readonly AsyncRetryPolicy<HttpResponseMessage> _retryPolicy;
