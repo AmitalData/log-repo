@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "f19ff7f5350678739167663bab5b89f5";
+		public const string HashString = "8df632bedafcae4cb41a0e9917e103a4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -602,11 +602,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Account No. / Name",
-					  						FullLocalDefaultText =  "מספר / שם כרטיס",
+					  						DefaultText =  "Account No. / Name / VAT No.",
+					  						FullLocalDefaultText =  " מספר ח.פ / מספר / שם כרטיס",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Account No. / Name",
-					  						ListLocalDefaultText =  "מספר / שם כרטיס",
+					  						ListLocalDefaultText =  " מספר ח.פ / מספר / שם כרטיס",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -14796,6 +14796,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsONoAddressToVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NoAddressToVendor", DefaultText = "To Vendor no country specified in default address",LocalDefaultText = @"לספק לא צוינה מדינה בכתובת ברירת המחדל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLaccountOIsGroupMultiAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.IsGroupMultiAccounts", DefaultText = "To consolidate split GLAccount",LocalDefaultText = @"לאחד כרטיסי פיצול", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"לא נמצא {field} בכרטיס ספק: {account}", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

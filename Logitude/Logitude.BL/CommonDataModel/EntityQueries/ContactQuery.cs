@@ -1788,8 +1788,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             xxxDotCom = xxxDotCom.ToLowerInvariant();
 
             return (from a in repository.context.Contacts
-                            where a.EnglishName.ToUpperInvariant() == englishName 
-                            && a.Tenant == tenant && a.Email.ToLowerInvariant() != xxxDotCom && a.UserType == "R"
+                            where a.EnglishName.ToUpper() == englishName 
+                            && a.Tenant == tenant && a.Email.ToLower() != xxxDotCom && a.UserType == "R"
                             && !a.InActive && a.Email != null && a.Email != string.Empty
                             select a.Email).FirstOrDefault();
         }
