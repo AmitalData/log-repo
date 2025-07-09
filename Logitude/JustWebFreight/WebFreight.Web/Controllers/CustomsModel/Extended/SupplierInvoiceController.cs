@@ -117,7 +117,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 if (items != null)
                 {
                    
-                    items = items.OrderBy(d => d.SequenceNumeric).Skip(skip).Take(take);
+                    items = items.OrderBy(d => d.SequenceNumeric);
                   
                     
                 }
