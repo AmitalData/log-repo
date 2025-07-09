@@ -480,9 +480,9 @@ namespace Logitude.CargoTracking.BL.CoreBL
 				LocalName = deliveryArrived.LocalName,
 				Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? deliveryArrived.Weight.HasValue ? deliveryArrived.Weight.Value : 0
 				: shipment.DirectionId == "E" ? deliveryArrived.ExportWeight.HasValue ? deliveryArrived.ExportWeight.Value : 0 : 0,
-				Date = eventMilestoneResult.EventDateTime,
-				Done = eventMilestoneResult.EventDateTime == null ? false : true,
-				Notes = eventMilestoneResult.Notes,
+				Date = eventMilestoneResult?.EventDateTime,
+				Done = eventMilestoneResult?.EventDateTime == null ? false : true,
+				Notes = eventMilestoneResult?.Notes,
 				IsCurrent = false,
 				InActive = deliveryArrived.Inactive
 			});
