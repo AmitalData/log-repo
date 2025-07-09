@@ -281,6 +281,7 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
+    <None Include="DBScripts\Pre\20250709_AddDateTime2.sxml" />
     <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
     <None Include="DBScripts\Post\20240610_UpdateTransportmodeLocalName.sxml" />
     <None Include="DBScripts\Pre\2025062420_AlterManifetError.sxml" />
