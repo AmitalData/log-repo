@@ -1882,20 +1882,15 @@ namespace WebFreight.Web.MetaDataUpdate
                 if (includeCustoms)
                 {
                     ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.Name.Contains("Customs.")).ToList();
+                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.HashString != null).ToList();//Where(t => !t.Name.Contains("Customs."))
                 }
                 else
                 {
-                    if (LogitudeSettings.WorkEnvironment == "customs")
-                    {
-                        ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.HashString != null).ToList();//Where(t => !t.Name.Contains("Customs."))
-                    }
-                    else
-                    {
                         ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.")).ToList();
-                    }
-
                 }
-                ObjectTableList = ObjectTableList.Where(t => t.HashString != null).ToList();
+       
+
+                //ObjectTableList = ObjectTableList.Where(t => t.HashString != null).ToList();
                 IQueryable<TextCodePM> textCodePMLists = textCodeQuery.GetTenantZeroTextCodePMs();//.ToList();
                 IQueryable<ObjectFieldPM> objectFieldLists = objectFieldsQuery.GetTenantZeroObjectFieldPMs();//.ToList();
 
