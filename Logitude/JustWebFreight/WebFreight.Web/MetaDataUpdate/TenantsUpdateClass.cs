@@ -108,7 +108,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 performanceTimerLogger = new PerformanceTimerLogger();
                                 performanceTimerLogger.Start();
                                 MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                                UpdateAllOldModules(updateClass, context,tenant);
+                                UpdateAllOldModules(updateClass, context, tenant);
 
                                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Accounting Module ...");
                                 UpdateAccountingModule(context, false);
@@ -804,7 +804,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
                 else
                 {
-                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Infrastructure Module ...");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Infrastructure Module ...");
                     inframodelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
 
@@ -814,7 +814,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
 
                     //NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables ...");
-                  //  metaDataUpdateClass.LoadUpdateTenantZero(context,false, tenant: tenant);
+                    //  metaDataUpdateClass.LoadUpdateTenantZero(context,false, tenant: tenant);
 
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Common Module ...");
@@ -907,7 +907,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
             catch (Exception ex)
             {
-                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Exiting function with Exception");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Exiting function with Exception");
                 throw ex;
             }
 
@@ -1553,7 +1553,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
         }
 
-        private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context,int tenant=0)
+        private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context, int tenant = 0)
         {
             try
             {
@@ -1881,13 +1881,17 @@ namespace WebFreight.Web.MetaDataUpdate
                 List<ObjectTable> ObjectTableList = null;
                 if (includeCustoms)
                 {
-                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).ToList();
+                    ObjectTableList = objectTabelRepository
+                         .GetObjectsByTenant(0)
+                         .Where(t => t.Name.Contains("Customs.") || t.HashString != null)
+                         .Distinct()
+                         .ToList();
                 }
                 else
                 {
-                     ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.") && t.HashString !=null).ToList();
+                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.")).ToList();
                 }
-       
+
 
                 //ObjectTableList = ObjectTableList.Where(t => t.HashString != null).ToList();
                 IQueryable<TextCodePM> textCodePMLists = textCodeQuery.GetTenantZeroTextCodePMs();//.ToList();
@@ -1934,7 +1938,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     if (objectTable.IsClosed && objectTable.CacheOnClient)
                     {
-                        var data = TableQueryReflector.GetTableListData(objectTable.Name,0,null,tenant);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
+                        var data = TableQueryReflector.GetTableListData(objectTable.Name, 0, null, tenant);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
                         if (data != null)
                         {
                             try
@@ -2030,7 +2034,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
 
                 objectTabelRepository.SubmitChanges();
-               TableLastUpdateClass.UpdateSystemMetaDataHistory();
+                TableLastUpdateClass.UpdateSystemMetaDataHistory();
 
             }
             catch (Exception ex)
