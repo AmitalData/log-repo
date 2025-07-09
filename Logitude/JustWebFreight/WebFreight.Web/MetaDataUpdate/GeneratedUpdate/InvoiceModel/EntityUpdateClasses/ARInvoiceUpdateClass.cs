@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "9f8b4580bab3c8952ca0c8ud004ce487";
+		public const string HashString = "4f8b4580bab3c8952ca0c8ud004ce489";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15385,7 +15385,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			   Feature ARInvoiceFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLINVOICES", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.AllInvoices", NameTextCodeDefaultText = "All Invoices", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ARInvoiceTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.AllGeneralInvoices", DefaultText = @"All Invoices",LocalDefaultText = "כל החשבוניות", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ARInvoiceTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.Q.AllGeneralInvoices", DefaultText = @"All Invoices",LocalDefaultText = "חשבוניות כלליות", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ARInvoiceFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGENERALINVOICES", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, NameTextCodeCode = "ARInvoice.Features.AllGeneralInvoice", NameTextCodeDefaultText = "All General Invoice", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ARInvoiceObjectTable, addedFeatures, addedTextCodes);
  
 

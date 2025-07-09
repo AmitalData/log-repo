@@ -18886,7 +18886,7 @@
   <Query
     Code="&quot;All General Invoices&quot;"
     TextCode="&quot;All Invoices&quot;"
-    LocalTextCode="&quot;כל החשבוניות&quot;"
+    LocalTextCode="&quot;חשבוניות כלליות&quot;"
     QueryGroupCode="&quot;INVC&quot;"
     IndexOrder="3"
     ObjectTableName="&quot;ARInvoice&quot;"
