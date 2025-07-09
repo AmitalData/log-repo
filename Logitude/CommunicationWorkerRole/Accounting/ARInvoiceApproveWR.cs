@@ -233,10 +233,6 @@ namespace CommunicationWorkerRole
                 {
                     aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
-                    if(aRInvoicePM.ARInvoiceTypeCode == "IT")
-                    {
-                        aRInvoicePM.HasInterestFeature = true;
-                    }
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.Update(aRInvoicePM, true);
                     _DbQueueService.Complete();
