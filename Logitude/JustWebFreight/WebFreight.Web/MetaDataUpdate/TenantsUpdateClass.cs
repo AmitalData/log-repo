@@ -1881,12 +1881,11 @@ namespace WebFreight.Web.MetaDataUpdate
                 List<ObjectTable> ObjectTableList = null;
                 if (includeCustoms)
                 {
-                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.Name.Contains("Customs.")).ToList();
-                    //ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => t.HashString != null).ToList();//Where(t => !t.Name.Contains("Customs."))
+                    ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).ToList();
                 }
                 else
                 {
-                        ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.")).ToList();
+                     ObjectTableList = objectTabelRepository.GetObjectsByTenant(0).Where(t => !t.Name.Contains("Customs.") && t.HashString !=null).ToList();
                 }
        
 
