@@ -91,6 +91,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public string Reference1 { get; set; }
         public string Notes { get; set; }
         public decimal? LocalAmount { get; set; }
+        public decimal? TotalLocalInPeriod { get; set; }
         public decimal? TotalToDate { get; set; }
         public decimal? AccumulatedForInterest { get; set; }
         public string Currency { get; set; }
