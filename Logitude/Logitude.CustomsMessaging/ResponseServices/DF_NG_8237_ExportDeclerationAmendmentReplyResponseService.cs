@@ -593,7 +593,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if(_MyDeclarationPM.ReplacingRepairRequest != null)
                             {
-                                var declarationAmendment = myDeclarationQueryService.GetSingle(_MyDeclarationPM.ReplacingRepairRequest, false, false);
+                                DeclarationPM declarationAmendment = myDeclarationQueryService.GetDeclarationAmendmentByAmendmentRequestNumber(_MyDeclarationPM.Tenant, _MyDeclarationPM.ReplacingRepairRequest);
                                 declarationAmendment.AmendmentStatus = _MyDeclarationPM.AmendmentStatus;
                                 declarationAmendment.AmendmentErrorXml = this._MyDeclarationPM.AmendmentErrorXml;
                                 myDeclarationUpdateService.Update(declarationAmendment, false);
