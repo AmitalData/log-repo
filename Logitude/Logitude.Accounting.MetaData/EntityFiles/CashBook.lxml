@@ -2474,22 +2474,6 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
-    TabName="&quot;General&quot;"
-    TabLocalName="&quot;כללי&quot;"
-    ObjectTableName="&quot;CashBook&quot;"
-    Code="&quot;CSHG&quot;"
-    ControlPath="&quot;./Accounting/Components/EditTabs/CashBook/CashBookGeneralTabComponent&quot;"
-    TextCode="&quot;CashBook.TH.General&quot;"
-    IsPackagable="true"
-    IndexOrder="1"
-    HtmlComponentURL="&quot;./Accounting/Components/EditTabs/CashBook/CashBookGeneralTabComponent&quot;"
-    HtmlComponentName="&quot;CashBookGeneralTabComponent&quot;"
-    FeatureCode="&quot;CashBook.Tab.General&quot;"
-    FeatureTextCodeCode="&quot;CashBook.Features.General&quot;"
-    FeatureDefaultText="&quot;General&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
     TabName="&quot;Manage Depo.&quot;"
     TabLocalName="&quot;ניהול הפקדות&quot;"
     ObjectTableName="&quot;CashBook&quot;"
