@@ -240,6 +240,25 @@ namespace Simplog.Server.Infrastructure
         }
         private void InitLog()
         {
+/*#if DEBUG
+            if (System.Diagnostics.Debugger.IsAttached) // Double-check that a debugger is active
+            {
+                base.Database.Log = delegate (string s)
+                {
+                    if (s == Environment.NewLine)
+                    {
+                        return;
+                    }
+                    if (s.Contains("SELECT") || s.Contains("connection"))
+                    {
+                        Debug.WriteLine(base.GetType().Name + " ***** " + base.Database.Connection.ConnectionString);
+                    }
+                    Debug.WriteLine(s);
+                };
+            }
+#endif*/
+
+            //this.Database.Log += EnqueueLog;
             if (LogitudeSettings.DatabaseManagementSystem != "oracle")
             {
                 return;
@@ -254,7 +273,7 @@ namespace Simplog.Server.Infrastructure
             {
                 DbContextBaseUtil.ToLog = false;
 
-                Debug.WriteLine(@"DbContextBase:ToLog:(Default:False due Memory Leak if not Disposed)Any time any place u can set: 
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"DbContextBase:ToLog:(Default:False due Memory Leak if not Disposed)Any time any place u can set: 
 Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 AmitalDebuggerUtil.Break();
             }
@@ -274,7 +293,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 {
                     return;
                 }
-                Debug.WriteLine(mess);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
                 _MyLogQueue.Enqueue(mess);
             }
             catch (Exception)
@@ -406,7 +425,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
                     try
                     {
-                        Debug.WriteLine(line + " ;");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(line + " ;");
                         OracleCommand myCommand = mySysConnection.CreateCommand(line);//"INSERT INTO Test.Dept(DeptNo, DName) Values(50, 'DEVELOPMENT')");
                         myCommand.ExecuteNonQuery();
 
@@ -608,7 +627,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
         where returnType : struct
         {
-            Debug.WriteLine(sqlReturn1Row);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlReturn1Row);
             ////sqlReturn1Row = sqlReturn1Row.TrimEnd(" "[0]).TrimEnd(";"[0]);
             using (var command = this.Database.Connection.CreateCommand())
             {
@@ -655,7 +674,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
 
 
-            Debug.WriteLine(sqlReturn1Row);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlReturn1Row);
 
 
 

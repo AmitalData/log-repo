@@ -38,8 +38,8 @@ namespace Logitude.Server.Tools.StorageService
 
         public static BlobContainerClient GetContainer(string connectionString, string containerName)
         {
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
-            BlobContainerClient containerClient = GetContainer(blobServiceClient, containerName);
+             Azure.Storage.Blobs.BlobServiceClient blobServiceClient = new Azure.Storage.Blobs.BlobServiceClient(connectionString);
+             BlobContainerClient containerClient = GetContainer(blobServiceClient, containerName);
 
             return containerClient;
         }
@@ -61,6 +61,7 @@ namespace Logitude.Server.Tools.StorageService
 
             return containerClient;
         }
+        
 
         private static BlobContainerClient GetContainer(Azure.Storage.Blobs.BlobServiceClient blobServiceClient, string containerName)
         {

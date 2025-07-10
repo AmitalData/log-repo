@@ -14,7 +14,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.AmitalMessaging.Infrastructure;
 
@@ -28,7 +28,7 @@ using System;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.Amital.CustomFile;
 using Logitude.Customs.BL.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.MessagingServices;
@@ -47,9 +47,9 @@ using Simplog.Data.Helpers;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.CommonDataModel.EntityQueries;
  using Simplog.Global.Data.GlobalModel.EntityPOCOs;
- using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
- 
+
 namespace Logitude.CustomsMessaging.RequestServices
 {
     public class DF_MSG10000_ImportDeclarationRequestService : RequestServiceBase<DF_MSG10000_ImportDeclaration, GenericRequestParams>

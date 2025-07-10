@@ -12,7 +12,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using WebFreight.Web.WebServices;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 

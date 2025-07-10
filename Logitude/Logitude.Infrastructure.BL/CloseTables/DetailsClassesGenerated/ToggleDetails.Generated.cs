@@ -940,7 +940,16 @@ namespace Logitude.Infrastructure.BL
                 Description = "Payment Status based on Reco", 
                 Name = " A/P Invoice Payment Status based on Reconciliation", 
 			});
-			 
+
+
+            all.Add(new ToggleDetails()
+            {
+                SearchFields = "RFR, Revaluation on Foreign Reco",
+                Code = "RFR",
+                Description = "Revaluation on Foreign Reco",
+                Name = "Revaluation Journal on Foreign Currency Reconciliation",
+            });
+
             all.Add(new ToggleDetails()
             {    
                 Code = "RE2", 
@@ -1039,13 +1048,20 @@ namespace Logitude.Infrastructure.BL
             });
 			all.Add(new ToggleDetails()
 			{
+				Code = "STQ",
+				Name = "Add Task Scheduler To Queue By Date",
+				SearchFields = "STQ,Add Task Scheduler To Queue By Date",
+				Description = "הכנסה לתור של מתזמן לפי התאריך",
+			});
+ 			all.Add(new ToggleDetails()
+			{
 				Code = "REE",
 				Name = "Report Export To Exel",
 				SearchFields = "REE,Report Export To Exel",
 				Description = "Report Export To Exel ",
 			});
 
-			return all;
+ 			return all;
        }
 
 	    public void MapPoco(Toggle newPoco)

@@ -10,10 +10,10 @@ using System.Web.Services;
 using System.Xml;
 using Microsoft.WindowsAzure.Storage;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -7492,9 +7492,25 @@ namespace WebFreight.Web.Helpers
 
         }
 
+        public static byte[] RotatePdf(byte[] pdfBase64, RotationAngle rotationAngle) => RotatePdf(new MemoryStream(pdfBase64), rotationAngle);
+        
+        public static byte[] RotatePdf(Stream pdfStream, RotationAngle rotationAngle)
+        {
+            if(pdfStream == null || rotationAngle == null || rotationAngle == RotationAngle.Rotate_0)
+            {
+                MemoryStream stream = new MemoryStream();
+                pdfStream.CopyTo(stream);
+                return stream.ToArray();
+            }
 
+            EvoPdf.Document pdfDocument = new EvoPdf.Document(pdfStream);
+            pdfDocument.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
 
+            foreach (PdfPage page in pdfDocument.Pages)
+                page.RotationAngle = RotationAngle.Rotate_180;
 
+            return pdfDocument.Save();
+        }
     }
 
     public class ResolveVariableFieldArgs

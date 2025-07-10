@@ -281,6 +281,14 @@
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Is PM Field:" />
+                        <TextBlock Grid.Row="22"
+                          Grid.Column="0"
+                          VerticalAlignment="Center"
+                          Text="Table Related PM:" />
+                        <TextBlock Grid.Row="23"
+                          Grid.Column="0"
+                          VerticalAlignment="Center"
+                          Text="Field Related PM:" />
 
                         <TextBox Grid.Row="1"
                                  Grid.Column="1"
@@ -499,8 +507,22 @@
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding IsPMField,
                                                       Mode=TwoWay}" />
+                        <TextBox Grid.Row="22"
+                                 Grid.Column="1"
+                                 Height="22"
+                                 Margin="2"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding TableRelatedPM,
+                                 Mode=TwoWay}" />
+                        <TextBox Grid.Row="23"
+                                 Grid.Column="1"
+                                 Height="22"
+                                 Margin="2"
+                                 VerticalAlignment="Center"
+                                 Text="{Binding FieldRelatedPM,
+                                 Mode=TwoWay}" />
 
-                        <Border Grid.Row="22"
+                        <Border Grid.Row="24"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -515,46 +537,46 @@
                                        Text="Display In List Settings" />
                         </Border>
 
-                        <StackPanel Grid.Row="23">
-                            <TextBlock Grid.Row="22"
+                        <StackPanel Grid.Row="25">
+                            <TextBlock Grid.Row="24"
                                        Grid.Column="0"
                                        Height="25"
                                        VerticalAlignment="Center"
                                        Text="Display In List:" />
-                            <TextBlock Grid.Row="22"
+                            <TextBlock Grid.Row="24"
                                        Grid.Column="0"
                                        Height="25"
                                        VerticalAlignment="Center"
                                        Text="Generate In List Class:" />
                         </StackPanel>
-                        <TextBlock Grid.Row="24"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   FontWeight="{Binding DisplayInListFontWeight}"
-                                   Text="List Lable Default Text:" />
-                        <TextBlock Grid.Row="25"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="List Local Default Text:" />
                         <TextBlock Grid.Row="26"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding DisplayInListFontWeight}"
-                                   Text="Valid For Query Section 1:" />
+                                   Text="List Lable Default Text:" />
                         <TextBlock Grid.Row="27"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="List Local Default Text:" />
+                        <TextBlock Grid.Row="28"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding DisplayInListFontWeight}"
+                                   Text="Valid For Query Section 1:" />
+                        <TextBlock Grid.Row="29"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Valid For Query Section 2:" />
 
-                        <StackPanel Grid.Row="23" Grid.Column="1">
-                            <CheckBox Grid.Row="23"
+                        <StackPanel Grid.Row="25" Grid.Column="1">
+                            <CheckBox Grid.Row="25"
                                       Grid.Column="1"
                                       Height="22"
                                       Margin="2"
                                       VerticalAlignment="Center"
                                       IsChecked="{Binding DisplayInList,
                                                           Mode=TwoWay}" />
-                            <CheckBox Grid.Row="23"
+                            <CheckBox Grid.Row="25"
                                       Grid.Column="1"
                                       Height="22"
                                       Margin="2"
@@ -562,28 +584,28 @@
                                       IsChecked="{Binding GenerateInList,
                                                           Mode=TwoWay}" />
                         </StackPanel>
-                        <TextBox Grid.Row="24"
+                        <TextBox Grid.Row="26"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding ListLableDefaultText,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="25"
+                        <TextBox Grid.Row="27"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding ListLocalDefaultText,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="26"
+                        <TextBox Grid.Row="28"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding ValidForQuerySection1,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="27"
+                        <TextBox Grid.Row="29"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
@@ -591,7 +613,7 @@
                                  Text="{Binding ValidForQuerySection2,
                                                 Mode=TwoWay}" />
 
-                        <Border Grid.Row="28"
+                        <Border Grid.Row="30"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -606,72 +628,72 @@
                                        Text="Multi Table Settings" />
                         </Border>
 
-                        <TextBlock Grid.Row="29"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="Is Multi:" />
-                        <TextBlock Grid.Row="30"
-                                   Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   FontWeight="{Binding IsMultiFontWeight}"
-                                   Text="Multi Table Name" />
                         <TextBlock Grid.Row="31"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   FontWeight="{Binding IsMultiFontWeight}"
-                                   Text="Association Name" />
+                                   Text="Is Multi:" />
                         <TextBlock Grid.Row="32"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding IsMultiFontWeight}"
-                                   Text="This Key" />
+                                   Text="Multi Table Name" />
                         <TextBlock Grid.Row="33"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding IsMultiFontWeight}"
+                                   Text="Association Name" />
+                        <TextBlock Grid.Row="34"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding IsMultiFontWeight}"
+                                   Text="This Key" />
+                        <TextBlock Grid.Row="35"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding IsMultiFontWeight}"
                                    Text="Other Key" />
 
-                        <TextBlock Grid.Row="34"
+                        <TextBlock Grid.Row="36"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Is Composition" />
 
-                        <CheckBox Grid.Row="29"
+                        <CheckBox Grid.Row="31"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding IsMulti,
                                                       Mode=TwoWay}" />
-                        <TextBox Grid.Row="30"
+                        <TextBox Grid.Row="32"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding MultiTableName,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="31"
+                        <TextBox Grid.Row="33"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding AssociationName,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="32"
+                        <TextBox Grid.Row="34"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding ThisKey,
                                                 Mode=TwoWay}" />
-                        <TextBox Grid.Row="33"
+                        <TextBox Grid.Row="35"
                                  Grid.Column="1"
                                  Height="22"
                                  Margin="2"
                                  VerticalAlignment="Center"
                                  Text="{Binding OtherKey,
                                                 Mode=TwoWay}" />
-                        <CheckBox Grid.Row="34"
+                        <CheckBox Grid.Row="36"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
@@ -1090,6 +1112,19 @@
                                  Text="{Binding ModelName,
                                                 Mode=TwoWay}" />
 
+                        <TextBlock Grid.Row="26"
+                                   Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding IsPMFontWeight}"
+                                   Text="Object Data Mapping:" />
+                        <TextBox  Grid.Row="26"
+                                  Grid.Column="1"
+                                  Height="22"
+                                  Margin="2"
+                                  VerticalAlignment="Center"
+                                  IsEnabled="{Binding IsPMFieldEnabled}"
+                                  Text="{Binding ObjectFieldDataMapping,
+                            Mode=TwoWay}" />
 
                     </Grid>
 

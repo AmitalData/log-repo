@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.Helpers;
@@ -268,9 +268,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
                                 if (entity == null)
                                 {
-                                    entity = (from a in context.Contacts
-                                              where a.Email == email && a.Tenant == 0
-                                              select a).FirstOrDefault();
+								    entityName = "Contact" + email + 0;
+                                    if(CacheManager.CacheWrapper.Get(entityName) == null)
+                                    {
+									   entity = (from a in context.Contacts
+									   		  where a.Email == email && a.Tenant == 0
+									   		  select a).FirstOrDefault();
+                                       if(entity != null)
+                                       {
+										 CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+
+									   }
+								    }
+                                    else
+                                    {
+									    entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+								    }
                                 }
                             }
                             //}
@@ -308,7 +321,76 @@ namespace Simplog.Data.CommonDataModel.Repositories
             else
                 return null;
         }
-     
+        public Contact GetSingleContactByEmailMultiDB(string email, int tenant, bool getFromCache = false,int contextTenant=0)
+        {
+            if (!string.IsNullOrEmpty(email))
+            {
+                email = email.ToLower();
+                string entityName = "Contact" + email + tenant;
+                Contact entity;
+                if (getFromCache)
+                {
+
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        ICommonDataContext context = CommonDataContext.GetContext(contextTenant);
+                        entity = (from a in context.Contacts
+                                  where a.Tenant == tenant && a.Email == email
+                                  select a).FirstOrDefault();
+
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
+                        {
+                            CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                        }
+
+                        else
+                        {
+
+                            if (entity == null)
+                            {
+                                entity = (from a in context.Contacts
+                                          where a.Email == email && a.Tenant == 0
+                                          select a).FirstOrDefault();
+                            }
+                        }
+                        //}
+
+                        //entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+
+
+                    }
+                    else
+                    {
+                        entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
+
+                    }
+
+
+
+
+
+                }
+                else
+                {
+                    ICommonDataContext context = CommonDataContext.GetContext(contextTenant);
+                    entity = (from record in context.Contacts where record.Email == email.ToLower() && record.Tenant == tenant select record).FirstOrDefault();
+
+                    if (entity == null)
+                    {
+                        entity = (from a in context.Contacts
+                                  where a.Email == email.ToLower() && a.Tenant == 0
+                                  select a).FirstOrDefault();
+                    }
+                }
+
+                return entity;
+            }
+            else
+                return null;
+        }
+
+
         public bool IsContactByEmailExists(string email, int tenant)
         {
             bool result = false;

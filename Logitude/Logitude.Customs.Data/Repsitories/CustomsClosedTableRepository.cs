@@ -33,7 +33,14 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.ObjectTableId == ObjectTableId
                     select a).FirstOrDefault();
         }
-   }
+
+        public string GetObjectTableIdById(string id)
+        {
+            return (from a in context.CustomsClosedTables
+                    where a.Id == id
+                    select a.ObjectTableId).FirstOrDefault();
+        }
+    }
 
 }
    

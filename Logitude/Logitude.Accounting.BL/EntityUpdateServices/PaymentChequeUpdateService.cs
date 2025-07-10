@@ -16,7 +16,7 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -224,7 +224,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
             BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, true, false);
             var serials = bankAccount.ChequeCounterSerials;
-            int bankChequeCounter = bankAccount.ChequeCounter.Value;
+            int bankChequeCounter = bankAccount.ChequeCounter.HasValue ? bankAccount.ChequeCounter.Value:0;
 
             showLocals = SetShowLocalLabels(entityPM);
             if (!bankAccount.ChequeCounter.HasValue)
@@ -233,8 +233,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
-                int bankChequeCounterSeriesID = bankAccount.ChequeCounterSeriesID.Value;
-                var currentSerial = serials.First(s => s.SeriesId == bankChequeCounterSeriesID);
+                int bankChequeCounterSeriesID = bankAccount.ChequeCounterSeriesID.HasValue ? bankAccount.ChequeCounterSeriesID.Value:0;
+                var currentSerial = serials.FirstOrDefault(s => s.SeriesId == bankChequeCounterSeriesID);
                 if (currentSerial.Inactive)
                 {
                     throw new ApplicationException(TranslateTextsClass.Translate("ChequeCounterSerial.O.CurrentSeriesInactive", entityPM.Tenant, showLocals));

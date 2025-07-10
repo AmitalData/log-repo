@@ -1,0 +1,192 @@
+using AmitalCloud.Infrastructure.Data.Context;
+using AmitalCloud.Infrastructure.Data.EntityPOCOs;
+using AmitalCloud.Infrastructure.Data.Helpers;
+using AmitalCloud.Infrastructure.Data.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+
+namespace AmitalCloud.Infrastructure.Data.Repositories
+{
+    public class TranslationRepository:IRepository<Translation,string>
+    {
+
+        IAmitalCloudContext currentContext;
+        public TranslationRepository(IAmitalCloudContext context)
+        {
+            currentContext = context;
+
+        }
+        public TranslationRepository(int tenant)
+        {
+            currentContext = AmitalCloudContext.GetContext(tenant);
+        }
+        public TranslationRepository()
+        {
+               currentContext=new AmitalCloudContext(); 
+        }
+
+        public IQueryable<Translation> GetTranslations()
+        {
+            return context.Translations.Include("TextCode");
+        }
+
+        public Translation GetSingleTranslation(int tenant, string code, string language)
+        {
+            Translation result = context.Translations.Where(d => d.Tenant == tenant && d.TextCode.Code == code && (d.TranslationHeader.Description == language || d.TranslationHeaderCode == language)).Include("TextCode").FirstOrDefault();
+          
+            return result;
+        }
+
+        public List<Translation> GetTranslationsByTenantList(int tenant)
+        {
+            List<Translation> translations = (from a in context.Translations.Include("TextCode")
+                                                   where a.Tenant == tenant                                                   
+                                                   select a).ToList();
+            return translations;
+        }
+
+        public IQueryable<Translation> GetTranslationsByTenant(int tenant)
+        {
+            return (from a in context.Translations.Include("TextCode")
+                                              where a.Tenant == tenant
+                                              select a);
+        }
+        //Islam: this is only for silverlight version to fix the timeout login issue.
+        public List<Translation> GetTranslationsWithoutESByTenant(int tenant)
+        {
+            List<Translation> translations = (from a in context.Translations.Include("TextCode")
+                                              where a.Tenant == tenant && a.TranslationHeaderCode != "ES"
+                                              select a).ToList();
+            return translations;
+        }
+
+        public List<Translation> GetTranslationsByLanguageCode(string headerCode,int tenant)
+        {
+            List<Translation> translations = (from a in context.Translations.Include("TextCode")
+                                              where a.Tenant == 0 && a.TranslationHeaderCode == headerCode
+                                              select a).ToList();
+            return translations;
+        }
+
+
+        public Dictionary<string, Translation> GetTranslationsByTenantDictionary(int tenant)
+        {
+            Dictionary<string, Translation> translations = (from a in context.Translations.Include("TextCode")
+                                              where a.Tenant == tenant
+                                              select a).ToDictionary(d=>d.TextCode.Code,a=>a);
+            return translations;
+        }
+        
+        public Dictionary<string, string> GetDigitalTranslationsByTenant(int tenant, string objectTableName, string lang = "")
+        {
+            var translationCodes = context.Translations
+                                          .Where(a => a.Tenant == tenant
+                                                      && (a.TextCodeCode.StartsWith(objectTableName))
+                                                      && a.TranslationHeaderCode.Equals(lang, StringComparison.InvariantCultureIgnoreCase)
+                                                      && !string.IsNullOrEmpty(a.TranslatedText))
+                                          .ToDictionary(a => a.TextCodeCode, x => x.TranslatedText);
+
+            return translationCodes;
+        }
+
+        public Translation GetLastTranslationsByTenant(int tenant)
+		{
+			string entityName = "LastTranslationsByTenant" + tenant;
+			Translation lastTranslation = null;
+
+			
+				if (CacheManager.CacheWrapper.Get(entityName) != null)
+				{
+					lastTranslation = (Translation)CacheManager.CacheWrapper.Get(entityName);
+
+				}
+				else
+				{
+
+					lastTranslation = (from a in context.Translations
+									   where a.Tenant == tenant && a.UpdateDateGMT != null
+									   select a).OrderByDescending(a => a.UpdateDateGMT).FirstOrDefault();
+
+					if (CacheManager.CacheWrapper.Get(entityName) == null)
+					{
+						if (lastTranslation != null)
+						{
+							CacheManager.CacheWrapper.Insert(entityName, lastTranslation, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+						}
+						else   // cache a default value
+							CacheManager.CacheWrapper.Insert(entityName, new Translation() { UpdateDateGMT = new DateTime(2015, 1, 1) }, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+					}
+				}
+			
+	
+
+			return lastTranslation;
+
+		}
+       
+
+        public void Add(Translation entity)
+		{
+			
+			context.Translations.Add(entity);
+			InvalidateLastTranslationCache(entity);
+
+		}
+
+		private static void InvalidateLastTranslationCache(Translation entity)
+		{
+			
+				string entityName = "LastTranslationsByTenant" + entity.Tenant;
+				if (CacheManager.CacheWrapper.Get(entityName) != null)
+				{
+					CacheManager.CacheWrapper.Invalidate(entityName);
+				}
+			
+		}
+
+		public void Remove(Translation entity)
+        {
+			
+			context.Translations.Attach(entity);
+            context.Translations.Remove(entity);
+			InvalidateLastTranslationCache(entity);
+		}
+
+        public void Update(Translation entity)
+        {
+			
+			context.Translations.Attach(entity);
+            context.SetAsModified(entity);
+			InvalidateLastTranslationCache(entity);
+
+		}
+
+		public List<Translation> All()
+        {
+            return context.Translations.ToList();
+        }
+
+        public IAmitalCloudContext context
+        {
+            get {return currentContext; }
+        }
+
+        public void SubmitChanges()
+        {
+            context.SaveChanges();
+        }
+
+
+        public List<Translation> GetMulti(IEntityKeyFields<Translation,string> entityKeys)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Translation GetSingle(IEntityKeyFields<Translation,string> entityKeys)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+}

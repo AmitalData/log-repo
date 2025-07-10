@@ -7,7 +7,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -150,10 +150,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(ImporterDespositionPM entityPM, ImporterDesposition entityPOCO)
         {
-            CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
-            var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
+           
                 DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(entityPM.Tenant);
 
                 string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGG_SHARE_DESPO", "NON", "NON", entityPM.Tenant);
@@ -162,7 +159,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     this.Vendor = entityPOCO.Vendor;
                     this.toSendTask = true;
                 }
-            }
+             
         }
 
 

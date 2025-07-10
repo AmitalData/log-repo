@@ -1,8 +1,9 @@
 ﻿using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -33,7 +34,7 @@ namespace Logitude.Customs.Data.Utils
         public List<string> GetConnectedCustomersIds(int tenant)
         {
             if (!IsConnectedCustomerCached()) // if the cache is empty, cache the connected customers
-                CacheConnectedCustomers();
+                CacheConnectedCustomers(tenant);
 
             var customersIds = GetFromCache();
 
@@ -66,7 +67,7 @@ namespace Logitude.Customs.Data.Utils
             return customersIds;
         }
 
-        private void CacheConnectedCustomers()
+        private void CacheConnectedCustomers(int tenant)
         {
             CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(user.Tenant);
             
@@ -93,7 +94,7 @@ namespace Logitude.Customs.Data.Utils
                     // Get users from unf service
                     try
                     {
-                        AmitalRestrictOwnerModel restOwnerModel = custSettingsRepo.GetMyAmitalRestrictOwnerModel(false, user.Tenant);
+                        AmitalRestrictOwnerModel restOwnerModel = custSettingsRepo.GetMyAmitalRestrictOwnerModel(false, tenant);
                         codesList = restOwnerModel.Cards;
                     }
                     catch (Exception ex)
@@ -113,13 +114,17 @@ namespace Logitude.Customs.Data.Utils
 
                 /// 2- maintain users from the DB
                 customersList.Clear();
-                if (codesList.Count > 0)
+                CustomerRepository custRepo = new CustomerRepository(user.Tenant);
+
+                foreach (string code in codesList)
                 {
-                    foreach (string code in codesList)
+                    Customer customer = (custSettings != null && !custSettings.IsConnectedToUniFreight)
+                        ? custRepo.GetSingleCustomer(code, tenant, false)
+                        : custRepo.GetSingleCustomerByCode(code, user.Tenant, false);
+
+                    if (customer != null)
                     {
-                        CustomerRepository custRepo = new CustomerRepository(user.Tenant);
-                        Customer customer = custRepo.GetSingleCustomerByCode(code, user.Tenant, false);
-                        if (customer != null) customersList.Add(customer);
+                        customersList.Add(customer);
                     }
                 }
 

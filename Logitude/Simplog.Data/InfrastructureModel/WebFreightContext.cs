@@ -8,9 +8,9 @@ using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
 using System.Transactions;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Mapping;
@@ -395,6 +395,8 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new DeploymentPackagesVersionMap());
             modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
             modelBuilder.Configurations.Add(new DeploymentPackageExecutionLogMap());
+            modelBuilder.Configurations.Add(new SearchIndexMap());
+            modelBuilder.Configurations.Add(new SearchIndexTenantHistoryMap());
 
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
@@ -1148,6 +1150,18 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SearchIndex> SearchIndexes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories
         {
             get;
             set;

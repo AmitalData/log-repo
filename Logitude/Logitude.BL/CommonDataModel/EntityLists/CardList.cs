@@ -130,5 +130,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ManifestInvoiceTemplateId { get; set; }
         public string EmailForSendingSingArinvoice { get; set; }
         public bool SendingInterestReport { get; set; }
+        public string ExternalSystem { get; set; }
     }
 }

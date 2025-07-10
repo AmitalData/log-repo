@@ -18,7 +18,7 @@ using NPOI.SS.Formula.Functions;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -865,7 +865,10 @@ namespace WebFreight.Web.Helpers
 				byte[] filters = GetReportFilters(reportFliter.QueryFilterItemLists);
 				byte[] reportDataProvider = BuildReportDataProvider(reportFliter, filters);
 				if (reportDataProvider == null && reportFliter.IsSchedulerReport) return report;
-				byte[] template = GetReportByteByType(reportFliter);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"reportDataProvider length: {reportDataProvider.Length}");
+
+
+                byte[] template = GetReportByteByType(reportFliter);
 				if (template == null) throw new Exception("Report Template is missing");
 				else
 				{
@@ -1402,13 +1405,19 @@ namespace WebFreight.Web.Helpers
 						dataProvider = myDataManager.GetData();
 						break;
 					}
-				case "ECCR":
+                case "SHTO":
+                    {
+                        ShipmentFormLoader myDataManager = new ShipmentFormLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
+                case "ECCR":
 					{
 						CustomsCollateralLoader myDataManager = new CustomsCollateralLoader(filters, reportFliter.tenant);
 						dataProvider = myDataManager.GetData();
 						break;
 					}
-				case "COO":
+                case "COO":
 					{
 						CertificateOfOriginLoader myDataManager = new CertificateOfOriginLoader(filters, reportFliter.tenant);
 						dataProvider = myDataManager.GetData();
@@ -1420,7 +1429,7 @@ namespace WebFreight.Web.Helpers
 						dataProvider = myDataManager.GetData();
 						break;
 					}
-					#endregion
+                    #endregion
 			}
 			return dataProvider;
 		}
@@ -2763,9 +2772,23 @@ namespace WebFreight.Web.Helpers
 						//reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
 						stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "EXDE", Name = "ExportDeclarationDataProvider", BusinessObjectValue = reportDataProvider };
 
-						break;
+                            break;
 					}
-				case "ECCR":
+
+                case "SHTO":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ShipmentFormDataProvider));
+                        ShipmentFormDataProvider reportDataProvider = (ShipmentFormDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "SHTO", Name = "ShipmentFormDataProvider", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
+
+
+                case "ECCR":
 					{
 						XmlSerializer serializer = new XmlSerializer(typeof(CustomsCollateralDataProvider));
 						CustomsCollateralDataProvider reportDataProvider = (CustomsCollateralDataProvider)serializer.Deserialize(memorystream);
@@ -2773,7 +2796,7 @@ namespace WebFreight.Web.Helpers
 						//reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
 						//reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
 						stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ECCR", Name = "CustomsCollateralDataProvider", BusinessObjectValue = reportDataProvider };
-						break;
+                            break;
 					}
 
 				case "COO":
@@ -3226,6 +3249,7 @@ namespace WebFreight.Web.Helpers
             reportsTemplateToAdd.Where(d => d.TemplateType == "E").ToList().ForEach(reportTemplate => AddExcelDocument(tenantToCopy, userId, report, reportTemplate, currentTenantReport));
         }
 
+
         private ReportsTemplateRepository reportsTemplateRepository;
 		private ReportsTemplatesVersionRepository reportsTemplatesVersionRepository;
 		private DocumentRepository documentRepository;
@@ -3301,10 +3325,16 @@ namespace WebFreight.Web.Helpers
                     }
                     else
                     {
+
+
                         isChangeReport = UpdateExcelReports(tenant, userId, report, myReports) ? true : isChangeReport;
                         ReportsTemplate systemReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultTemplateId).FirstOrDefault();
+
+
                         if(systemReportTemplate != null)
+
                             isChangeReport = CopySystemReportTemplate(new CopyReportTemplateArgs { tenant = tenant, userId = userId, myReports = myReports, isChangeReport = isChangeReport, report = report, systemReportTemplate = systemReportTemplate });
+
                     }
                     ReportsTemplate systemEmailReportTemplate = tenantZeroReportsTemplate.Where(d => d.ReportId == report.Id && d.Id == report.DefaultMessageTemplateId).FirstOrDefault();
                     if (systemEmailReportTemplate != null)
@@ -3519,7 +3549,7 @@ namespace WebFreight.Web.Helpers
 				ReportId = reportFliter.ReportId,
 				ReportTemplateId = string.IsNullOrWhiteSpace(reportFliter.DefaultTemplateId) ? null : reportFliter.DefaultTemplateId,
 				DisablePreview = reportFliter.DisablePreview,
-
+                NotDisplayInMenu = reportFliter.NotDisplayInMenu ,
 			};
 
 			reportExecutionLogRepository.Add(reportExecutionLog);

@@ -151,15 +151,23 @@ export class AddEditAddressComponent implements OnInit {
             this.EntityPM.City = (AppTool.IsNullOrEmpty(this.EntityPM.City) ? " Potential city " : this.EntityPM.City);
         }
 
-        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors);
+        Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, this.errors); 
 
         if (this.DataContext.fatherComponent.Customer.PartnerTypeId == "PO") {
             this.EntityPM.City = newPotentialAddressCity;
+        } 
+
+        if(this.EntityPM.AddressTypeId == "P" && this.EntityPM.TruckerSettings.length != null && this.EntityPM.TruckerSettings.length > 0) {
+            for (var i = 0; i < this.EntityPM.TruckerSettings.length; i++) {
+                Validator.TryValidateObject(this.EntityPM.TruckerSettings[i], "TruckerSetting", this.errors);
+            }
         }
       }
     }
 
     private LoadCompletedEvent: any = null;
+
+
     private Save() {
         var args = new PartnerServicePM();
         args.Tenant = this.EntityPM.Tenant;
@@ -233,6 +241,10 @@ export class AddEditAddressComponent implements OnInit {
         this.myCloner.AddField('FaxNumber');
         this.myCloner.AddField('ATTN');
         this.myCloner.AddField('InActive');
+        this.myCloner.AddField('CityId');
+        this.myCloner.AddField('TruckerId');
+        this.myCloner.AddField('TransportationInstructions');
+        this.myCloner.AddField('Responsibility');
         this.myCloner.AddEntity(this.EntityPM);
     }
     private RejectChanges() {

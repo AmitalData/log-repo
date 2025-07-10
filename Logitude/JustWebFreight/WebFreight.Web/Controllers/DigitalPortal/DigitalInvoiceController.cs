@@ -15,7 +15,7 @@ using Logitude.BL.InvoiceModel.EntityQueries;
 using WebFreight.Web.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Infrastructure.Data.Repsitories;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.Extensions;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Simplog.Data.Helpers;

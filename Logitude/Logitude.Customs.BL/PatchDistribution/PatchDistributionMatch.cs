@@ -78,7 +78,7 @@ namespace Logitude.Customs.BL.PatchDistribution
                 myPatchDistributionMatchModel.MajorVersionMatch = MajorVersionMatchEnum.OK_DBAndAssemblyREqual;
 
             }
-            Debug.WriteLine(myPatchDistributionMatchModel.Message);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(myPatchDistributionMatchModel.Message);
             return myPatchDistributionMatchModel;
         }
 

@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System.Linq;
 

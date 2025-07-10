@@ -1,0 +1,631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7912DCA7-82EC-44EA-86E0-0E9E9C27D298}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Infrastructure.MetaData</RootNamespace>
+    <AssemblyName>AmitalCloud.Infrastructure.MetaData</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmazedSaint.Elastic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AmazedSaint.ElasticObject.1.2.0\lib\net40\AmazedSaint.Elastic.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoGenerators\AmitalClassesGenerator.cs">
+      <DependentUpon>AmitalClassesGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="AutoGenerators\ContextGenerator.cs">
+      <DependentUpon>ContextGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="ElasticDemoModel\ElasticDemoGen.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElasticDemoGen.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AutoGenerators\AmitalClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AmitalClassesGenerator.cs</LastGenOutput>
+    </Content>
+    <None Include="DBTables\AutoCreated\ObjectTableType.dxml" />
+    <None Include="DBTables\AutoCreated\Screen.dxml" />
+    <None Include="DBTables\AutoCreated\Tip.dxml" />
+    <None Include="DBTables\ObjectTable.dxml" />
+    <None Include="EntityFiles\MenuButton.lxml" />
+    <None Include="AutoGenerators\ContextGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ContextGenerator.cs</LastGenOutput>
+    </None>
+    <Content Include="ElasticDemoModel\ElasticDemoGen.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElasticDemoGen.cs</LastGenOutput>
+    </Content>
+    <Content Include="ElasticDemoModel\ElasticDemoModel.xml" />
+    <Content Include="ElasticDemoModel\ReadMe-ElasticObject.cs.txt" />
+    <None Include="EntityFiles\Account.lxml" />
+    <None Include="EntityFiles\AccountType.lxml" />
+    <None Include="EntityFiles\GlobalModel\AnalyzeQueue.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\ApiCredintials.lxml" />
+    <None Include="EntityFiles\GlobalModel\AWBMessagesCCSType.lxml" />
+    <None Include="EntityFiles\GlobalModel\BatchServicesDefinition.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\BluesnapContract.lxml" />
+    <None Include="EntityFiles\GlobalModel\BluesnapContractType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\BluesnapTransaction.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\HelpResource.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\LogitudeLead.lxml" />
+    <None Include="EntityFiles\GlobalModel\PaymentChannel.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\PaymentCurrency.lxml" />
+    <None Include="EntityFiles\GlobalModel\PaymentMethod.lxml" />
+    <None Include="EntityFiles\GlobalModel\RecurringPeriod.lxml" />
+    <None Include="EntityFiles\GlobalModel\TenantAddOn.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantManagement.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantManagementLicense.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantManagmentPrivateLabels.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\GlobalModel\TenantType.lxml" />
+    <None Include="EntityFiles\GlobalModel\WebhookKeys.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AutoCreated\AdvancedQueryFilter.lxml" />
+    <None Include="EntityFiles\AutoCreated\AgentSharedLogisticsKey.lxml" />
+    <None Include="EntityFiles\GlobalModel\AnalyzeQueueStatus.lxml" />
+    <None Include="EntityFiles\GlobalModel\AuthenticationToken.lxml" />
+    <None Include="EntityFiles\AutoCreated\AutomationHistory.lxml" />
+    <None Include="EntityFiles\AutoCreated\AutomationLastUpdate.lxml" />
+    <None Include="EntityFiles\GlobalModel\AutoSignupEmail.lxml" />
+    <None Include="EntityFiles\GlobalModel\BatchServicesDefinitionMods.lxml" />
+    <None Include="EntityFiles\AutoCreated\BlobFile.lxml" />
+    <None Include="EntityFiles\GlobalModel\CaptchaKey.lxml" />
+    <None Include="EntityFiles\AutoCreated\CardContact.lxml" />
+    <None Include="EntityFiles\AutoCreated\CategoryType.lxml" />
+    <None Include="EntityFiles\AutoCreated\ChangePasswordLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\ColorIndex.lxml" />
+    <None Include="EntityFiles\AutoCreated\CommunicationAttachment.lxml" />
+    <None Include="EntityFiles\AutoCreated\CommunicationLogStep.lxml" />
+    <None Include="EntityFiles\AutoCreated\ContactActivityLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\ContactLastLogin.lxml" />
+    <None Include="EntityFiles\AutoCreated\ContactLoginLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\ContactMobileDevice.lxml" />
+    <None Include="EntityFiles\GlobalModel\ContactPassword.lxml" />
+    <None Include="EntityFiles\AutoCreated\ContactTenant.lxml" />
+    <None Include="EntityFiles\AutoCreated\ContactTenantRole.lxml" />
+    <None Include="EntityFiles\AutoCreated\ConvertProgramInfo.lxml" />
+    <None Include="EntityFiles\AutoCreated\Counter.lxml" />
+    <None Include="EntityFiles\AutoCreated\CounterLastNumber.lxml" />
+    <None Include="EntityFiles\AutoCreated\CounterStat.lxml" />
+    <None Include="EntityFiles\AutoCreated\CustomerCompetitor.lxml" />
+    <None Include="EntityFiles\AutoCreated\CustomerCompetitorProduct.lxml" />
+    <None Include="EntityFiles\AutoCreated\CustomerProductLocationActualData.lxml" />
+    <None Include="EntityFiles\AutoCreated\CustomMetaDataTypesAdditional.lxml" />
+    <None Include="EntityFiles\AutoCreated\CustomPickList.lxml" />
+    <None Include="EntityFiles\AutoCreated\CustomTable.lxml" />
+    <None Include="EntityFiles\AutoCreated\DataBaseProperty.lxml" />
+    <None Include="EntityFiles\AutoCreated\DataProvider.lxml" />
+    <None Include="EntityFiles\AutoCreated\DBIdCounter.lxml" />
+    <None Include="EntityFiles\AutoCreated\DigitalContactLastSetting.lxml" />
+    <None Include="EntityFiles\AutoCreated\Document.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentOut.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentOutCopy.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentsDataProvider.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentsFilingMetaDataValue.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentsFilingsView.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentsMetaDataType.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentStatus.lxml" />
+    <None Include="EntityFiles\AutoCreated\DocumentTypeMetaData.lxml" />
+    <None Include="EntityFiles\AutoCreated\DWHBuildStatus.lxml" />
+    <None Include="EntityFiles\AutoCreated\DWHEnvironmentSetting.lxml" />
+    <None Include="EntityFiles\AutoCreated\DWObjectFieldCategories.lxml" />
+    <None Include="EntityFiles\AutoCreated\DWQuery.lxml" />
+    <None Include="EntityFiles\AutoCreated\DWQueryColumn.lxml" />
+    <None Include="EntityFiles\AutoCreated\DWQueryFilter.lxml" />
+    <None Include="EntityFiles\AutoCreated\DWSubQuery.lxml" />
+    <None Include="EntityFiles\AutoCreated\EmailProvider.lxml" />
+    <None Include="EntityFiles\AutoCreated\EntityCasualData.lxml" />
+    <None Include="EntityFiles\AutoCreated\EntityChange.lxml" />
+    <None Include="EntityFiles\AutoCreated\EntityDate.lxml" />
+    <None Include="EntityFiles\AutoCreated\EntityLastActivity.lxml" />
+    <None Include="EntityFiles\AutoCreated\EntityLastActivityType.lxml" />
+    <None Include="EntityFiles\AutoCreated\EntityLastUpdate.lxml" />
+    <None Include="EntityFiles\AutoCreated\EntityPartner.lxml" />
+    <None Include="EntityFiles\LogsModel\FailedLoginLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\FailedTokenLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\Feature.lxml" />
+    <None Include="EntityFiles\AutoCreated\FeatureChange.lxml" />
+    <None Include="EntityFiles\AutoCreated\FeatureType.lxml" />
+    <None Include="EntityFiles\AutoCreated\FieldDataType.lxml" />
+    <None Include="EntityFiles\AutoCreated\FieldsTranslations.lxml" />
+    <None Include="EntityFiles\AutoCreated\FormCustomField.lxml" />
+    <None Include="EntityFiles\AutoCreated\GeneralLock.lxml" />
+    <None Include="EntityFiles\GlobalModel\GlobalContact.lxml" />
+    <None Include="EntityFiles\GlobalModel\GlobalDB.lxml" />
+    <None Include="EntityFiles\GlobalModel\GlobalTenant.lxml" />
+    <None Include="EntityFiles\GlobalModel\GlobalTenantCounter.lxml" />
+    <None Include="EntityFiles\AutoCreated\HybridPartnersPermission.lxml" />
+    <None Include="EntityFiles\AutoCreated\ImageDetail.lxml" />
+    <None Include="EntityFiles\AutoCreated\InvalidEmailResetPassword.lxml" />
+    <None Include="EntityFiles\AutoCreated\LogBoxTenantSetting.lxml" />
+    <None Include="EntityFiles\AutoCreated\MenuButton.lxml" />
+    <None Include="EntityFiles\AutoCreated\MenuButtonGroup.lxml" />
+    <None Include="EntityFiles\AutoCreated\MenusTable.lxml" />
+    <None Include="EntityFiles\AutoCreated\MenuType.lxml" />
+    <None Include="EntityFiles\AutoCreated\MobileNotificationLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\MonitorServiceLastUpdate.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectFieldModification.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectFieldValidation.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectTableHelperControl.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectTableLastUpdate.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectTableRule.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectTableRuleField.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectTableTab.lxml" />
+    <None Include="EntityFiles\AutoCreated\ObjectTableType.lxml" />
+    <None Include="EntityFiles\AutoCreated\OneTimePassword.lxml" />
+    <None Include="EntityFiles\AutoCreated\PackageFeature.lxml" />
+    <None Include="EntityFiles\AutoCreated\PasswordResetRequest.lxml" />
+    <None Include="EntityFiles\AutoCreated\PerformanceLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\PermissionType.lxml" />
+    <None Include="EntityFiles\AutoCreated\Query.lxml" />
+    <None Include="EntityFiles\AutoCreated\QueryColumn.lxml" />
+    <None Include="EntityFiles\AutoCreated\QueryGroup.lxml" />
+    <None Include="EntityFiles\AutoCreated\QueueDefinition.lxml" />
+    <None Include="EntityFiles\AutoCreated\QueueMessage.lxml" />
+    <None Include="EntityFiles\AutoCreated\ReportGroup.lxml" />
+    <None Include="EntityFiles\AutoCreated\RoleFeature.lxml" />
+    <None Include="EntityFiles\AutoCreated\RoleType.lxml" />
+    <None Include="EntityFiles\AutoCreated\RuleConditionField.lxml" />
+    <None Include="EntityFiles\AutoCreated\RuleNotificationType.lxml" />
+    <None Include="EntityFiles\AutoCreated\RuleType.lxml" />
+    <None Include="EntityFiles\AutoCreated\Screen.lxml" />
+    <None Include="EntityFiles\AutoCreated\ScreenField.lxml" />
+    <None Include="EntityFiles\AutoCreated\ScreenModification.lxml" />
+    <None Include="EntityFiles\GlobalModel\SessionPolicy.lxml" />
+    <None Include="EntityFiles\GlobalModel\Setting.lxml" />
+    <None Include="EntityFiles\AutoCreated\SharedUserQuery.lxml" />
+    <None Include="EntityFiles\AutoCreated\SmallDocument.lxml" />
+    <None Include="EntityFiles\AutoCreated\SpecialService.lxml" />
+    <None Include="EntityFiles\GlobalModel\SystemMetadataLastUpdate.lxml" />
+    <None Include="EntityFiles\AutoCreated\TenantSetting.lxml" />
+    <None Include="EntityFiles\AutoCreated\TermsofUse.lxml" />
+    <None Include="EntityFiles\AutoCreated\TextCodeType.lxml" />
+    <None Include="EntityFiles\AutoCreated\Tip.lxml" />
+    <None Include="EntityFiles\AutoCreated\TipsVisibility.lxml" />
+    <None Include="EntityFiles\AutoCreated\Translation.lxml" />
+    <None Include="EntityFiles\AutoCreated\TranslationHeader.lxml" />
+    <None Include="EntityFiles\AutoCreated\TriggerType.lxml" />
+    <None Include="EntityFiles\AutoCreated\UserLastLogin.lxml" />
+    <None Include="EntityFiles\AutoCreated\UserLoginLog.lxml" />
+    <None Include="EntityFiles\AutoCreated\UserPermittedBranch.lxml" />
+    <None Include="EntityFiles\AutoCreated\UserPermittedProduct.lxml" />
+    <None Include="EntityFiles\AutoCreated\UsersReleaseNotesDisplay.lxml" />
+    <None Include="EntityFiles\AutoCreated\ValidationType.lxml" />
+    <None Include="EntityFiles\QuoteTemplateSection.lxml" />
+    <None Include="EntityFiles\QuoteTemplateSectionType.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityFiles\AccountingPartner.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AccountingSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AccountingSystem.lxml" />
+    <None Include="EntityFiles\AdditionalService.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\Address.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AddressType.lxml" />
+    <None Include="EntityFiles\Agent.lxml" />
+    <None Include="EntityFiles\Airline.lxml" />
+    <None Include="EntityFiles\AirlineMessagingRule.lxml" />
+    <None Include="EntityFiles\Automation.lxml" />
+    <None Include="EntityFiles\AutomationResultEmailRecipient.lxml" />
+    <None Include="EntityFiles\AWBDescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\BorderType.lxml" />
+    <None Include="EntityFiles\Branch.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\BusinessUnit.lxml" />
+    <None Include="EntityFiles\Card.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CardContactAdditionalService.lxml" />
+    <None Include="EntityFiles\CardContactProduct.lxml" />
+    <None Include="EntityFiles\CardExternalAccountsByProduct.lxml" />
+    <None Include="EntityFiles\CardExternalCodeByCurrency.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CardSearch.lxml" />
+    <None Include="EntityFiles\CargoTenantMilestoneDefinition.lxml" />
+    <None Include="EntityFiles\CarrierArea.lxml" />
+    <None Include="EntityFiles\CarrierAreasPort.lxml" />
+    <None Include="EntityFiles\CarrierServiceLine.lxml" />
+    <None Include="EntityFiles\ChargesExternalAccountsByProduct.lxml" />
+    <None Include="EntityFiles\ChargesType.lxml" />
+    <None Include="EntityFiles\ChargeTypeAccounting.lxml" />
+    <None Include="EntityFiles\CheckDigitControlAlgorithm.lxml" />
+    <None Include="EntityFiles\Commodity.lxml" />
+    <None Include="EntityFiles\CommunicationLog.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CommunicationLogType.lxml" />
+    <None Include="EntityFiles\CommunicationStatusType.lxml" />
+    <None Include="EntityFiles\Competitor.lxml" />
+    <None Include="EntityFiles\ComputingPartner.lxml" />
+    <None Include="EntityFiles\ComputingPartnerCode.lxml" />
+    <None Include="EntityFiles\ComputingPartnerTable.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ComputingPartnerTranslation.lxml" />
+    <None Include="EntityFiles\Contact.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ContactDoneMethod.lxml" />
+    <None Include="EntityFiles\Country.lxml" />
+    <None Include="EntityFiles\CountryCity.lxml" />
+    <None Include="EntityFiles\CreditLimitSetting.lxml" />
+    <None Include="EntityFiles\Currency.lxml" />
+    <None Include="EntityFiles\CustomAgent.lxml" />
+    <None Include="EntityFiles\Customer.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CustomerAccountManagerByProduct.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CustomerAdditionalService.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CustomerDeposition.lxml" />
+    <None Include="EntityFiles\CustomerFieldsUpdateSetting.lxml" />
+    <None Include="EntityFiles\CustomerGroup.lxml" />
+    <None Include="EntityFiles\CustomerOpenFilesAmount.lxml" />
+    <None Include="EntityFiles\CustomerProduct.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\CustomerProductActualData.lxml" />
+    <None Include="EntityFiles\CustomerProductLocation.lxml" />
+    <None Include="EntityFiles\CustomerSalesNote.lxml" />
+    <None Include="EntityFiles\CustomerSize.lxml" />
+    <None Include="EntityFiles\CustomerStatus.lxml" />
+    <None Include="EntityFiles\CustomerTeam.lxml" />
+    <None Include="EntityFiles\CustomerTenantAccess.lxml" />
+    <None Include="EntityFiles\CustomerTenantAccessCard.lxml" />
+    <None Include="EntityFiles\CustomerTenantAccessCardsBatch.lxml" />
+    <None Include="EntityFiles\CustomerTenantAccessRequest.lxml" />
+    <None Include="EntityFiles\CustomerTenantAccessStatusType.lxml" />
+    <None Include="EntityFiles\CustomsInterface.lxml" />
+    <None Include="EntityFiles\CustomsInterfaceSetting.lxml" />
+    <None Include="EntityFiles\CustomsShipper.lxml" />
+    <None Include="EntityFiles\Department.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\DimensionsUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\Distributor.lxml" />
+    <None Include="EntityFiles\DocumentFilingBackupBatch.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\DocumentFilingBackupSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\DocumentFolder.lxml" />
+    <None Include="EntityFiles\DocumentsExecutionLog.lxml" />
+    <None Include="EntityFiles\DocumentsFiling.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\DocumentType.lxml" />
+    <None Include="EntityFiles\DocumentTypeCategory.lxml" />
+    <None Include="EntityFiles\DocumentTypeCopy.lxml" />
+    <None Include="EntityFiles\DocumentTypeCustomField.lxml" />
+    <None Include="EntityFiles\DocumentTypeTemplate.lxml" />
+    <None Include="EntityFiles\DueType.lxml" />
+    <None Include="EntityFiles\DWHSetting.lxml" />
+    <None Include="EntityFiles\FeatureAccessLevel.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\FeaturePackageType.lxml" />
+    <None Include="EntityFiles\FilingInbox.lxml" />
+    <None Include="EntityFiles\FilingInboxAttachment.lxml" />
+    <None Include="EntityFiles\FilingInboxAttachmentLog.lxml" />
+    <None Include="EntityFiles\FTPDetail.lxml" />
+    <None Include="EntityFiles\GlobalZone.lxml" />
+    <None Include="EntityFiles\Horse.lxml" />
+    <None Include="EntityFiles\HorseGender.lxml" />
+    <None Include="EntityFiles\HTSCode.lxml" />
+    <None Include="EntityFiles\HybridPartner.lxml" />
+    <None Include="EntityFiles\HybridTenantState.lxml" />
+    <None Include="EntityFiles\HybridTenantThreshold.lxml" />
+    <None Include="EntityFiles\Incoterm.lxml" />
+    <None Include="EntityFiles\Industry.lxml" />
+    <None Include="EntityFiles\INTTRABranchRegisteredCarrier.lxml" />
+    <None Include="EntityFiles\INTTRASetting.lxml" />
+    <None Include="EntityFiles\INTTRASettingMode.lxml" />
+    <None Include="EntityFiles\LeadSource.lxml" />
+    <None Include="EntityFiles\LoginPolicy.lxml" />
+    <None Include="EntityFiles\LogitudeMessagesTransmissionLog.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\MAWBStack.lxml" />
+    <None Include="EntityFiles\Measurement.lxml" />
+    <None Include="EntityFiles\Mention.lxml" />
+    <None Include="EntityFiles\MetodoPago.lxml" />
+    <None Include="EntityFiles\MoveType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\NumberFormat.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\Package.lxml" />
+    <None Include="EntityFiles\PackageConnectedPackage.lxml" />
+    <None Include="EntityFiles\PackageType.lxml" />
+    <None Include="EntityFiles\Participant.lxml" />
+    <None Include="EntityFiles\PartnerType.lxml" />
+    <None Include="EntityFiles\PasswordPolicy.lxml" />
+    <None Include="EntityFiles\PaymentGatewayPartner.lxml" />
+    <None Include="EntityFiles\PaymentTerm.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\PaymentTermDateType.lxml" />
+    <None Include="EntityFiles\Port.lxml" />
+    <None Include="EntityFiles\PortGroup.lxml" />
+    <None Include="EntityFiles\PortTimeZone.lxml" />
+    <None Include="EntityFiles\PostalCode.lxml" />
+    <None Include="EntityFiles\ProductItem.lxml" />
+    <None Include="EntityFiles\ProductPeriod.lxml" />
+    <None Include="EntityFiles\ProductType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\QuoteGroupSection.lxml" />
+    <None Include="EntityFiles\QuoteTemplate.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\QuoteTemplateSetting.lxml" />
+    <None Include="EntityFiles\QuoteTemplateTableDesign.lxml" />
+    <None Include="EntityFiles\QuoteTemplateTextDesign.lxml" />
+    <None Include="EntityFiles\QuoteType.lxml" />
+    <None Include="EntityFiles\Rank.lxml" />
+    <None Include="EntityFiles\RateClass.lxml" />
+    <None Include="EntityFiles\RegimenFiscal.lxml" />
+    <None Include="EntityFiles\Region.lxml" />
+    <None Include="EntityFiles\RegistryDateType.lxml" />
+    <None Include="EntityFiles\Report.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ReportExecutionLog.lxml" />
+    <None Include="EntityFiles\ReportsTemplate.lxml" />
+    <None Include="EntityFiles\ReportsTemplatesVersion.lxml" />
+    <None Include="EntityFiles\Restriction.lxml" />
+    <None Include="EntityFiles\Role.lxml" />
+    <None Include="EntityFiles\SharedLogisticsContactLastLogin.lxml" />
+    <None Include="EntityFiles\ShippingAgent.lxml" />
+    <None Include="EntityFiles\ShippingLine.lxml" />
+    <None Include="EntityFiles\State.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SystemData.lxml" />
+    <None Include="EntityFiles\TariffCarrierTranslation.lxml" />
+    <None Include="EntityFiles\TarrifCharge.lxml" />
+    <None Include="EntityFiles\TarrifFromTo.lxml" />
+    <None Include="EntityFiles\TarrifFromToType.lxml" />
+    <None Include="EntityFiles\TarrifHeader.lxml" />
+    <None Include="EntityFiles\TarrifStep.lxml" />
+    <None Include="EntityFiles\TarrifType.lxml" />
+    <None Include="EntityFiles\TemperatureUnit.lxml" />
+    <None Include="EntityFiles\TemplateFormat.lxml" />
+    <None Include="EntityFiles\Tenant.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\TenantAdditionalData.lxml" />
+    <None Include="EntityFiles\TenantLoginPolicy.lxml" />
+    <None Include="EntityFiles\TermsofUseSignature.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\TransportMode.lxml" />
+    <None Include="EntityFiles\Trucker.lxml" />
+    <None Include="EntityFiles\TwoFactorAuthenticationDevice.lxml" />
+    <None Include="EntityFiles\UnassignedEntity.lxml" />
+    <None Include="EntityFiles\User.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\UserLastSettings.lxml" />
+    <None Include="EntityFiles\UserLicense.lxml" />
+    <None Include="EntityFiles\UsoCFDI.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\VatFormatType.lxml" />
+    <None Include="EntityFiles\VatMandatoryType.lxml" />
+    <None Include="EntityFiles\VatType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\VatTypePercentage.lxml" />
+    <None Include="EntityFiles\VATTypesGroup.lxml" />
+    <None Include="EntityFiles\VatUniquePartnerType.lxml" />
+    <None Include="EntityFiles\VatUniqueType.lxml" />
+    <None Include="EntityFiles\Vendor.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\Vessel.lxml" />
+    <None Include="EntityFiles\Warehouse.lxml" />
+    <None Include="EntityFiles\WarehouseStoragePricing.lxml" />
+    <None Include="EntityFiles\WarehouseType.lxml" />
+    <None Include="EntityFiles\WarehouseWeightMeasurement.lxml" />
+    <None Include="EntityFiles\WarehouseWeightRounding.lxml" />
+    <None Include="EntityFiles\WeightUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\APILogs.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\APILogsData.lxml" />
+    <None Include="EntityFiles\AuditLog.lxml" />
+    <None Include="EntityFiles\BatchTaskExecution.lxml" />
+    <None Include="EntityFiles\BatchTaskExecutionStatus.lxml" />
+    <None Include="EntityFiles\BIFoldersPermission.lxml" />
+    <None Include="EntityFiles\BIReport.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\BIReportFolder.lxml" />
+    <None Include="EntityFiles\BIReportsExecutionLog.lxml" />
+    <None Include="EntityFiles\BIReportsType.lxml" />
+    <None Include="EntityFiles\BusinessHour.lxml" />
+    <None Include="EntityFiles\BusinessHoursHoliday.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\BusinessProcessQueue.lxml" />
+    <None Include="EntityFiles\BusinessRole.lxml" />
+    <None Include="EntityFiles\ChargesGroup.lxml" />
+    <None Include="EntityFiles\ChildEntitiesCustomField.lxml" />
+    <None Include="EntityFiles\ContainerSetting.lxml" />
+    <None Include="EntityFiles\CounterDefinition.lxml" />
+    <None Include="EntityFiles\CustomChildObject.lxml" />
+    <None Include="EntityFiles\CustomFieldsMainObjects.lxml" />
+    <None Include="EntityFiles\DataCustomObject.lxml" />
+    <None Include="EntityFiles\DefaultAndConfiguration.lxml" />
+    <None Include="EntityFiles\DefaultAndConfigurationKey.lxml" />
+    <None Include="EntityFiles\DeploymentPackage.lxml" />
+    <None Include="EntityFiles\DeploymentPackageExecutionLog.lxml" />
+    <None Include="EntityFiles\DeploymentPackagesVersion.lxml" />
+    <None Include="EntityFiles\DescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\DigitalFieldSecurity.lxml" />
+    <None Include="EntityFiles\DigitalPortalLanguage.lxml" />
+    <None Include="EntityFiles\DigitalPortalScreen.lxml" />
+    <None Include="EntityFiles\DigitalPreDefinedComponent.lxml" />
+    <None Include="EntityFiles\DigitalProfile.lxml" />
+    <None Include="EntityFiles\DigitalTextCode.lxml" />
+    <None Include="EntityFiles\Direction.lxml" />
+    <None Include="EntityFiles\DWCategories.lxml" />
+    <None Include="EntityFiles\DWObjectField.lxml" />
+    <None Include="EntityFiles\DWObjectTable.lxml" />
+    <None Include="EntityFiles\EmailAlertSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\EntityStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\EntityStatusType.lxml" />
+    <None Include="EntityFiles\EventRemark.lxml" />
+    <None Include="EntityFiles\EventType.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\EventTypeCategory.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\FeatureToggle.lxml" />
+    <None Include="EntityFiles\IATACode.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ImageLibrary.lxml" />
+    <None Include="EntityFiles\InboundEmail.lxml" />
+    <None Include="EntityFiles\InboundEmailLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\LastRunDetail.lxml" />
+    <None Include="EntityFiles\LBPTeamMember.lxml" />
+    <None Include="EntityFiles\MultiEntityUpdateLog.lxml" />
+    <None Include="EntityFiles\ObjectField.lxml" />
+    <None Include="EntityFiles\ObjectTable.lxml" />
+    <None Include="EntityFiles\PrepaidCollect.lxml" />
+    <None Include="EntityFiles\QueryExportExecutionLog.lxml" />
+    <None Include="EntityFiles\QueueMessageMoreDetails.lxml" />
+    <None Include="EntityFiles\QuoteChargesGroup.lxml" />
+    <None Include="EntityFiles\RatesTable.lxml" />
+    <None Include="EntityFiles\ReferenceCustomObject.lxml" />
+    <None Include="EntityFiles\RuleUpdateHistory.lxml" />
+    <None Include="EntityFiles\SatisfactionSurvey.lxml" />
+    <None Include="EntityFiles\SchedulerProcedure.lxml" />
+    <None Include="EntityFiles\ScreenSection.lxml" />
+    <None Include="EntityFiles\SharedLogisticsInvitationStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SharedLogisticsSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\TabModification.lxml" />
+    <None Include="EntityFiles\TaskSchedulerHistory.lxml" />
+    <None Include="EntityFiles\TasksScheduler.lxml" />
+    <None Include="EntityFiles\Team.lxml" />
+    <None Include="EntityFiles\TeamMemberBusinessRole.lxml" />
+    <None Include="EntityFiles\TextCode.lxml" />
+    <None Include="EntityFiles\Toggle.lxml" />
+    <None Include="EntityFiles\TraceEvent.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\VolumeUnit.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\WorkerRoleName.lxml" />
+    <None Include="EntityFiles\LogsModel\BatchServicesLog.lxml" />
+    <None Include="EntityFiles\LogsModel\ErrorLog.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DBTables\AutoCreated\" />
+    <Folder Include="DBTables\GlobalModel\" />
+    <Folder Include="DBTables\LogsModel\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

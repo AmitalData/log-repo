@@ -49,7 +49,9 @@ namespace AmitalCustomsWindowsService
         [STAThread]
         static void Main()
         {
-            
+
+
+
             bool test = false;
             if (test)
             {
@@ -100,7 +102,7 @@ namespace AmitalCustomsWindowsService
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Debugger");
 
                 ServiceBase d = GetMyService();
-                //CustomExportService.BaseAddress = System.Configuration.ConfigurationSettings.AppSettings["baseAddress"].ToString();
+                //CustomExportService.BaseAddress = ConfigurationManager.AppSettings["baseAddress"].ToString();
                 (d as IServiceStartMe).StartMe();
 
                 System.Windows.Forms.MessageBox.Show("debug mode");
@@ -111,7 +113,7 @@ namespace AmitalCustomsWindowsService
             }
             else if(string.IsNullOrEmpty(ConfigurationManager.AppSettings["WServiceName"]) || ConfigurationManager.AppSettings["WServiceName"] == "production")
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Runtime");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Runtime");
                 ServicesToRun = new ServiceBase[] { GetMyService() /*new MyWinService()*/ };
                 ServiceBase.Run(ServicesToRun);
             }
@@ -152,9 +154,9 @@ namespace AmitalCustomsWindowsService
             { 
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(prodInfo);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(prodInfo);
 
-                Action<bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
+                Action<bool, bool,int> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null, null , () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
@@ -189,13 +191,12 @@ namespace AmitalCustomsWindowsService
             catch (Exception e)
             {
 
-                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 if (Environment.UserInteractive)
                 {
                     Debug.Fail("StartStatic");
                 }
-               
-                _ThreadStartStaticLoaded = false;
+       _ThreadStartStaticLoaded = false;
             }
         }
     }

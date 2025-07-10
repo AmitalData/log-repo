@@ -72,6 +72,16 @@ namespace WebFreight.Web
     {
         static public  string DB = @"<root>
 <OCC>
+<DAT name=""CODE"">A80</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>PrepareCourierDefault</DAT>
+<DAT name=""REFERENCE"">GGGQWBLOGITUDE.Lp_PrepareCourierDefault</DAT>
+<DAT name=""PARAMETERS"">CODE=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select * from %%vTable%%%s where code = '@CODE'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select * from @CLOSE_TABLE where code = @CODE</DAT>
+<DAT name=""EXAMPLE_RESULT"">1</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">false</DAT>
+</OCC>
+<OCC>
 <DAT name=""CODE"">A68</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>select InvoiceCounterKey, InvoiceItemLineNumber from SupplierInvoiceItemVehicles</DAT>
 <DAT name=""REFERENCE"">CENFMAIN.Lp_UpdateCars</DAT>
@@ -136,6 +146,52 @@ customs.Declarations d on p.PARENTENTITYID = d.id where t.DOCUMENTSFILINGID=@DOC
 <DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID FROM Customs.Declarations WHERE Declarations.CUSTOMFILENO = @CUSTOMFILENO AND Declarations.AmendmentDontDisplayInList = 0 AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">455993853</DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A75</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS.Lp_Currency_Check2</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices where  and Tenant=@Tenant and DeclarationId=@DeclarationId</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select invoicenumber,InvoiceCurrencyTypeCode,IssueCountryCode from supplierinvoices where  and Tenant=@Tenant and DeclarationId=@DeclarationId</DAT>
+<DAT name=""EXAMPLE_RESULT"">111,3333,1</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A76</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>Select TAXRATE,TAXBASEAMOUNT from SUPPLIERINVOICEITEMSTAXES</DAT>
+<DAT name=""REFERENCE"">CFIRDEC</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select TAXRATE,TAXBASEAMOUNT from SUPPLIERINVOICEITEMSTAXES where SUPPLIERINVOICEITEMSTAXES.DECLARATIONID = @DECLARATIONID  and SUPPLIERINVOICEITEMSTAXES.INVOICECOUNTERKEY = @INVOICECOUNTERKEY and SUPPLIERINVOICEITEMSTAXES.LINENUMBER = @LINENUMBER and SUPPLIERINVOICEITEMSTAXES.TENANT = @Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select TAXRATE,TAXBASEAMOUNT from SUPPLIERINVOICEITEMSTAXES where SUPPLIERINVOICEITEMSTAXES.DECLARATIONID = @DECLARATIONID  and SUPPLIERINVOICEITEMSTAXES.INVOICECOUNTERKEY = @INVOICECOUNTERKEY and SUPPLIERINVOICEITEMSTAXES.LINENUMBER = @LINENUMBER and SUPPLIERINVOICEITEMSTAXES.TENANT = @Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"">111,3333</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A77</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats</DAT>
+<DAT name=""REFERENCE"">CFIFFORMS</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats where(1=1) and Tenant='1' and DeclarationId='45345' and CertificateExemptionTypeCode in ('60','61','62','63')</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select count(*) from SupplierInvioceItemCertificats where(1=1) and Tenant=@Tenant and DeclarationId=@DeclarationId and CertificateExemptionTypeCode in ('60','61','62','63')</DAT>
+<DAT name=""EXAMPLE_RESULT"">4</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A78</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select Documentsfilings.id from DECLARATIONS,Documentsfilings</DAT>
+<DAT name=""REFERENCE"">HYBRID SERVICE</DAT>
+<DAT name=""PARAMETERS"">DeclarationId=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>test</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select Documentsfilings.id from Customs.DECLARATIONS,dbo.Documentsfilings where
+documentsfilings.externalentityreference=declarations.customfileno and
+declarations.customfileno is not null and
+declarations.hatradate >= cast(@hatradate as date) and
+DECLARATIONS.tenant =@Tenant  and
+Documentsfilings.tenant=@Tenant and
+(externalentityname=@Entname or externalentityname is null)
+order by  hatradate
+OFFSET @OFFSETNUM ROWS FETCH NEXT @NEXTNUM ROWS ONLY
+</DAT>
+<DAT name=""EXAMPLE_RESULT"">4645</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT>
+</OCC>
 <OCC>
 <DAT name=""CODE"">A1</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT LoadingFactor</DAT>
@@ -431,7 +487,8 @@ WHERE CUSTOMSCOLLATERALID IN ('1-325','1-324') AND CUSTOMSCOLLATERALSANSWERS.TEN
 WHERE CUSTOMSCOLLATERALID IN (@CUSTOMSCOLLATERALID) AND CUSTOMSCOLLATERALSANSWERS.TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>509
 463</DAT>
-<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT>
+</OCC>
 <OCC>
 <DAT name=""CODE"">A36</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT SUM (CONSIGNMENTPACkAGES.GROSSMASSMEASURE)</DAT>
@@ -440,7 +497,7 @@ WHERE CUSTOMSCOLLATERALID IN (@CUSTOMSCOLLATERALID) AND CUSTOMSCOLLATERALSANSWER
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT SUM (CONSIGNMENTPACkAGES.GROSSMASSMEASURE) FROM CONSIGNMENTPACkAGES WHERE CONSIGNMENTPACkAGES.DECLARATIONID ='1-6261'
  AND CONSIGNMENTPACkAGES.PACkAGEMEASUREQUALIFIERCODE='2'AND CONSIGNMENTPACkAGES.TENANT='1'</DAT>
 <DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT SUM (CONSIGNMENTPACkAGES.GROSSMASSMEASURE) FROM Customs.CONSIGNMENTPACkAGES WHERE CONSIGNMENTPACkAGES.DECLARATIONID =@DECLARATIONID
- AND CONSIGNMENTPACkAGES.PACKAGEMEASUREQUALIFIERCODE=@PACKAGEMEASUREQUALIFIERCODE AND CONSIGNMENTPACkAGES.TENANT=@Tenant</DAT>
+ AND CONSIGNMENTPACkAGES.PACKAGEMEASUREQUALIFIERCODE=@PACKAGEMEASUREQUALIFIERCODE AND CONSIGNMENTPACKAGES.GROSSMASSMEASURETYPECODE=@GROSSMASSMEASURETYPECODE AND  CONSIGNMENTPACkAGES.TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"">50</DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>

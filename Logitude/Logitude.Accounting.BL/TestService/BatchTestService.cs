@@ -21,9 +21,9 @@ namespace Logitude.Accounting.BL.TestService
             int x = 0;
             int y = 900;
 
-            Debug.WriteLine(this.BatchTaskExecution.StatusCode);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(this.BatchTaskExecution.StatusCode);
             
-            Debug.WriteLine(this.BatchTaskExecution.StatusCode);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(this.BatchTaskExecution.StatusCode);
         }
     }
 }

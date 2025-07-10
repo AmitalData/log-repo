@@ -37,5 +37,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (poco==null) return null;
             return this.GetEntityPM(poco);
         }
+        public string GetObjectTableIdById(string Id)
+        {
+            return repository.GetObjectTableIdById(Id);
+        }
+
     }
 }

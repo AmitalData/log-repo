@@ -186,7 +186,15 @@ export class InterfaceManagementComponent implements OnInit {
             ServerSideSortable: true,
             SortByName: 'InterfaceTypeName'
         });
-
+        this.columns.push({
+            HtmlListComponentName: 'InterfaceManagementsListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/InterfaceManagementsListTemplate',
+            FieldName: 'EntityLockName',
+            DataTypeCode: 'String',//'Number',
+            Display: TextCodeTranslator.Translate("Customs.InterfaceManagement.F.EntityLockName"),
+            Styles: { width: '100px' },
+            IsCustomTemplate: true,
+        });
  
     }
 

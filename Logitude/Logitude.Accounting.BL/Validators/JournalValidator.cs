@@ -18,7 +18,7 @@ using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -322,7 +322,7 @@ namespace Logitude.Accounting.BL.Validators
             if (debugit)
             {
                 var serializedObject = ProxyUtil.JsonConvertSerialize(myJournalPM);
-                Debug.WriteLine(serializedObject);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(serializedObject);
             }
             var errorsList = new MyList<string>();
             
@@ -1200,35 +1200,31 @@ accountingValidationContextServiceProvider
                 // אסור להזין כרטיסים ראשיים  ב   JournalLineS הם אמוריים להיות IsControlAccount (– אבל כמובן שאצלנו ב DB  הם לא !) 
                 if (tenantFullAccountingSettingPM.AirExportJobControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, myGLAccountDataProvider, glAccId, "AirExportJobControlAccountId", tenant));
                 }
-
                 if (tenantFullAccountingSettingPM.AirImportJobControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, myGLAccountDataProvider, glAccId, "AirImportJobControlAccountId", tenant));
                 }
                 if (tenantFullAccountingSettingPM.CustomerControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, myGLAccountDataProvider, glAccId, "CustomerControlAccountId", tenant));
                 }
-
                 if (tenantFullAccountingSettingPM.FileControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, myGLAccountDataProvider, glAccId, "FileControlAccountId", tenant));
                 }
-
                 if (tenantFullAccountingSettingPM.OceanExportJobControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, myGLAccountDataProvider, glAccId, "OceanExportJobControlAccountId", tenant));
                 }
                 if (tenantFullAccountingSettingPM.OceanImportJobControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, myGLAccountDataProvider, glAccId, "OceanImportJobControlAccountId", tenant));
                 }
-
                 if (tenantFullAccountingSettingPM.VendorControlAccountId == glAccId)
                 {
-                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant));
+                    errorsList.Add(TranslateSimilarAccountId(isCreditSide, myGLAccountDataProvider, glAccId, "VendorControlAccountId", tenant));
                 }
             }
             var pmAcc = myGLAccountDataProvider.GetGLAccount(glAccId, myJournalPM.Tenant);
@@ -1299,14 +1295,11 @@ accountingValidationContextServiceProvider
                     }
                 }
             }
+
             if (pmAcc.IsControlAccount.GetValueOrDefault())
             {
-                errorsList.Add(TranslateMyTextCode(JournalValidator.M_GLAccountIsControl,tenant) + 
-                    //glAccId
-                    GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant)
-                    );
+                errorsList.Add(TranslateIsAccountControl(isCreditSide, GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant), tenant));
             }
-
 
             //ohad
             if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)
@@ -1348,6 +1341,47 @@ accountingValidationContextServiceProvider
 
 
         }
+
+        private string TranslateSimilarAccountId(bool isCreditAccount, IJournalValidatorContextDataProvider myGLAccountDataProvider, string glAccId, string fullAcountingSetting, int tenant)
+        {
+            bool useLocal = ToUseLocalText(tenant);
+            var accountFieldName = isCreditAccount ? "CreditAccountId": "DebitAccountId";
+            string accountTranslation = TranslateTextsClass.Translate($"JournalLine.F.{accountFieldName}", tenant, useLocal) ?? accountFieldName;
+            string accountName = GetAccountName(myGLAccountDataProvider, glAccId, tenant);
+            if (!string.IsNullOrEmpty(accountName))
+            {
+                accountTranslation += ": " + accountName;
+            }
+
+            string fullAcountingSettingTransalation = TranslateTextsClass.Translate($"FullAccountingSetting.F.{fullAcountingSetting}", tenant, useLocal) ?? fullAcountingSetting;
+
+            string error = TranslateTextsClass.Translate("Journal.O.AccountIdenticalToFullAccountingSetting", tenant, useLocal)
+                .Replace("{account}", accountTranslation)
+                .Replace("{setting}", fullAcountingSettingTransalation);
+
+            error += " " + _JLineNumberTExt;
+
+            return error;
+        }
+
+        private string TranslateIsAccountControl(bool isCreditAccount, string accountName, int tenant)
+        {
+            bool useLocal = ToUseLocalText(tenant);
+            var accountFieldName = isCreditAccount ? "CreditAccountId" : "DebitAccountId";
+            string accountTranslation = TranslateTextsClass.Translate($"JournalLine.F.{accountFieldName}", tenant, useLocal) ?? accountFieldName;
+            if (!string.IsNullOrEmpty(accountName))
+            {
+                accountTranslation += ": " + accountName;
+            }
+
+            string error = TranslateTextsClass.Translate("Journal.O.AccountIsAccountControl", tenant, useLocal)
+                .Replace("{account}", accountTranslation);
+
+            error += " " + _JLineNumberTExt;
+
+            return error;
+        }
+
         private void CheckGLAccountThin(
     bool isCreditSide,
     MyList<string> errorsList,

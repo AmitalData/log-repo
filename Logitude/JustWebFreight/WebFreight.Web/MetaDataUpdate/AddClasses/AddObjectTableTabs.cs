@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -11,7 +11,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddObjectTableTabs
     {
-        public static void AddObjectTableTab(ObjectTableTabDetails objectTableTabDetails,ObjectTableTabRepository objectTableTabRepository,Dictionary<string, ObjectTableTab> tenantObjectTableTab)
+        public static void AddObjectTableTab(ObjectTableTabDetails objectTableTabDetails,ObjectTableTabRepository objectTableTabRepository,Dictionary<string, ObjectTableTab> tenantObjectTableTab, int contextTenant = 0)
         {
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -36,9 +36,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTableTab.HtmlComponentName = objectTableTabDetails.HtmlComponentName;
                 objectTableTab.HtmlComponentUrl = objectTableTabDetails.HtmlComponentUrl;
                 objectTableTab.FeatureUniqeCode = objectTableTabDetails.FeatureUniqeCode;
+				objectTableTab.IsLocked = objectTableTabDetails.IsLocked;
 
 
-                objectTableTabRepository.Update(objectTableTab);
+				objectTableTabRepository.Update(objectTableTab);
             }
             else
             {
@@ -48,7 +49,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IndexOrder = objectTableTabDetails.IndexOrder,
                     ControlPath = objectTableTabDetails.ControlPath,
                     Code = objectTableTabDetails.Code,
-                    Id = IdCounter.GetNumber("ObjectTableTab", objectTableTabDetails.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("ObjectTableTab", contextTenant).ToString(),
                     TabNameTextCodeId = objectTableTabDetails.TabNameTextCodeId,
                     TabNameTextCodeCode = objectTableTabDetails.TabNameTextCodeCode,
                     Tenant = objectTableTabDetails.Tenant,
@@ -56,7 +57,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     HtmlComponentName = objectTableTabDetails.HtmlComponentName,
                     HtmlComponentUrl = objectTableTabDetails.HtmlComponentUrl,
                     FeatureUniqeCode = objectTableTabDetails.FeatureUniqeCode,
-
+                    IsLocked = objectTableTabDetails.IsLocked
 
                 };
  

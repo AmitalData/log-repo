@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 
 namespace Logitude.BL.CommonDataModel.EntityQueries

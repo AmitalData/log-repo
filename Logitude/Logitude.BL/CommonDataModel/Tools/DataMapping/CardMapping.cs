@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -78,6 +78,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.ManifestInvoiceTemplateId = entityPM.ManifestInvoiceTemplateId;
             entityPOCO.EmailForSendingSingArinvoice = entityPM.EmailForSendingSingArinvoice;
             entityPOCO.SendingInterestReport = entityPM.SendingInterestReport;
+            entityPOCO.ExternalSystem = entityPM.ExternalSystem;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

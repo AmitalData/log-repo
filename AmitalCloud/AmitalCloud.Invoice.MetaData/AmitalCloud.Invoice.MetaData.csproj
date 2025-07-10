@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{43DFC050-F871-4B67-BF11-08FE75569238}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Invoice.MetaData</RootNamespace>
+    <AssemblyName>AmitalCloud.Invoice.MetaData</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoGenerators\InvoiceClassesGenerator.cs">
+      <DependentUpon>InvoiceClassesGenerator.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="EntityFiles\AccountingPaymentMethod.lxml" />
+    <None Include="EntityFiles\AccountingSystemsSetting.lxml" />
+    <None Include="EntityFiles\AccountingSystemsSyncStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AccountingTransferHeader.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AccountingTransferLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\AccountingTransferType.lxml" />
+    <None Include="EntityFiles\APInvoice.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\APInvoiceLine.lxml" />
+    <None Include="EntityFiles\APInvoicePayment.lxml" />
+    <None Include="EntityFiles\APInvoiceStatus.lxml" />
+    <None Include="EntityFiles\APInvoiceTotalVAT.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\APInvoiceTransferStatus.lxml" />
+    <None Include="EntityFiles\APInvoiceType.lxml" />
+    <None Include="EntityFiles\APPayment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\APPaymentStatus.lxml" />
+    <None Include="EntityFiles\APPaymentTransferStatus.lxml" />
+    <None Include="EntityFiles\ARInvoice.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ARInvoiceLine.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ARInvoicePayment.lxml" />
+    <None Include="EntityFiles\ARInvoicesSignedStatus.lxml" />
+    <None Include="EntityFiles\ARInvoiceStatus.lxml" />
+    <None Include="EntityFiles\ARInvoiceStock.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ARInvoiceStockLine.lxml" />
+    <None Include="EntityFiles\ARInvoiceStocksStatus.lxml" />
+    <None Include="EntityFiles\ARInvoiceTotalVat.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ARInvoiceTransferStatus.lxml" />
+    <None Include="EntityFiles\ARInvoiceType.lxml" />
+    <None Include="EntityFiles\ARPayment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ARPaymentBankTranfer.lxml">
+      <SubType>Component</SubType>
+    </None>
+    <None Include="EntityFiles\ARPaymentChequeReplica.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ARPaymentStatus.lxml" />
+    <None Include="EntityFiles\ARPaymentTransferStatus.lxml" />
+    <None Include="EntityFiles\BankAccountLite.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ConfirmationNumberDefault.lxml" />
+    <None Include="EntityFiles\ConfirmationNumberStatus.lxml" />
+    <None Include="EntityFiles\CreditCardType.lxml" />
+    <None Include="EntityFiles\ExternalSystemsTablesCode.lxml" />
+    <None Include="EntityFiles\QBOGlobalTaxCalculation.lxml" />
+    <None Include="EntityFiles\SATInterface.lxml" />
+    <None Include="EntityFiles\SATInterfaceSetting.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SATInvoiceStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SATPaymentMethod.lxml" />
+    <None Include="EntityFiles\SATTransferStatus.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBTables\Account.dxml" />
+    <None Include="DBTables\AccountingPaymentMethod.dxml" />
+    <None Include="DBTables\AccountingSystemsSetting.dxml" />
+    <None Include="DBTables\AccountingSystemsSyncStatus.dxml" />
+    <None Include="DBTables\AccountingTransferHeader.dxml" />
+    <None Include="DBTables\AccountingTransferLine.dxml" />
+    <None Include="DBTables\AccountingTransferType.dxml" />
+    <None Include="DBTables\AccountType.dxml" />
+    <None Include="DBTables\APInvoice.dxml" />
+    <None Include="DBTables\APInvoiceEntity.dxml" />
+    <None Include="DBTables\APInvoiceLine.dxml" />
+    <None Include="DBTables\APInvoicePayment.dxml" />
+    <None Include="DBTables\APInvoiceStatus.dxml" />
+    <None Include="DBTables\APInvoiceTotalVAT.dxml" />
+    <None Include="DBTables\APInvoiceTransferStatus.dxml" />
+    <None Include="DBTables\APInvoiceType.dxml" />
+    <None Include="DBTables\APPayment.dxml" />
+    <None Include="DBTables\APPaymentStatus.dxml" />
+    <None Include="DBTables\APPaymentTransferStatus.dxml" />
+    <None Include="DBTables\ARInvoice.dxml" />
+    <None Include="DBTables\ARInvoiceChargesConstraint.dxml" />
+    <None Include="DBTables\ARInvoiceEntity.dxml" />
+    <None Include="DBTables\ARInvoiceLine.dxml" />
+    <None Include="DBTables\ARInvoiceLineAction.dxml" />
+    <None Include="DBTables\ARInvoicePayment.dxml" />
+    <None Include="DBTables\ARInvoicesSignedStatus.dxml" />
+    <None Include="DBTables\ARInvoiceStatus.dxml" />
+    <None Include="DBTables\ARInvoiceStock.dxml" />
+    <None Include="DBTables\ARInvoiceStockLine.dxml" />
+    <None Include="DBTables\ARInvoiceStocksStatus.dxml" />
+    <None Include="DBTables\ARInvoiceTotalVAT.dxml" />
+    <None Include="DBTables\ARInvoiceTransferStatus.dxml" />
+    <None Include="DBTables\ARInvoiceType.dxml" />
+    <None Include="DBTables\ARPayment.dxml" />
+    <None Include="DBTables\ARPaymentBankTranfer.dxml" />
+    <None Include="DBTables\ARPaymentStatus.dxml" />
+    <None Include="DBTables\ARPaymentTransferStatus.dxml" />
+    <None Include="DBTables\BankAccountLite.dxml" />
+    <None Include="DBTables\ConfirmationNumberDefault.dxml" />
+    <None Include="DBTables\ConfirmationNumberStatus.dxml" />
+    <None Include="DBTables\CreditCardType.dxml" />
+    <None Include="DBTables\ExternalSystemsSyncStatus.dxml" />
+    <None Include="DBTables\ExternalSystemsTablesCode.dxml" />
+    <None Include="DBTables\QuickbooksSyncRequestTicket.dxml" />
+    <None Include="DBTables\SATInterface.dxml" />
+    <None Include="DBTables\SATInterfaceSetting.dxml" />
+    <None Include="DBTables\SATInvoiceStatus.dxml" />
+    <None Include="DBTables\SATPaymentMethod.dxml" />
+    <None Include="DBTables\SATTransferStatus.dxml" />
+    <None Include="DBScripts\202006151350_DeleteOldPaymentMethodsMetadata.sxml" />
+    <None Include="DBScripts\202006291330_FillPaidDateOfInvoices.sxml" />
+    <None Include="DBScripts\202010260915_UpdateSearchFieldsOfARInvoices.sxml" />
+    <None Include="DBScripts\202010261215_UpdateSearchFieldsOfAPPayments.sxml" />
+    <None Include="DBScripts\202010261230_UpdateSearchFieldsOfARPayments.sxml" />
+    <None Include="DBScripts\202011170423APPaymentSearchFields.sxml" />
+    <None Include="DBScripts\202012060902_FillPaidDateOfAPInvoices.sxml" />
+    <None Include="DBScripts\202012110120_ARPaymentSearchField.sxml" />
+    <None Include="DBScripts\202012201448_SAT voided invoices and payments.sxml" />
+    <None Include="DBScripts\202101231210_FillPartnerIdARInvoices.sxml" />
+    <None Include="DBScripts\202101231212_FillPartnerIdARPayments.sxml" />
+    <None Include="DBScripts\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
+    <None Include="DBScripts\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
+    <None Include="DBScripts\202107111221_FillBankAccountLiteSearchFields.sxml" />
+    <None Include="DBScripts\202108081200_UpdateCancledARInvoiceLinesConnectedToReceivable.sxml" />
+    <None Include="DBScripts\202108081230_FillARInvoiceChargesConstraints.sxml" />
+    <None Include="DBScripts\202108161155_ClearReceivableIdFromAutoCreditInvoices.sxml" />
+    <None Include="DBScripts\202109051322_FillARInvoiceShipmentsDataBackward.sxml" />
+    <None Include="DBScripts\202109051324_FillAPInvoiceShipmentsDataBackward.sxml" />
+    <None Include="DBScripts\202110271103_SetConcurrencyGuidForAPInvoice.sxml" />
+    <None Include="DBScripts\202111041254_FillARPaymentBankTranferFromARPayment.sxml" />
+    <None Include="DBScripts\202111091101_AddChequeNumberToARPaymentsSearchFields.sxml" />
+    <None Include="DBScripts\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoices.sxml" />
+    <None Include="DBScripts\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceStatus.sxml" />
+    <None Include="DBScripts\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceTypes.sxml" />
+    <None Include="DBScripts\2021137249_UpdateAutomaticLastUpdateDateOnARInvoiceStatus.sxml" />
+    <None Include="DBScripts\2021137249_UpdateAutomaticLastUpdateDateOnARInvoiceTypes.sxml" />
+    <None Include="DBScripts\2021137249_UpdateAutomaticLastUpdateDateOnPaymentTerms.sxml" />
+    <None Include="DBScripts\202119801206_UpdateSATInterfaceSettings.sxml" />
+    <None Include="DBScripts\202128011350_AddNotesToAPInvoiceSearchField.sxml" />
+    <None Include="DBScripts\202128011350_AddNotesToAPPaymentSearchField.sxml" />
+    <None Include="DBScripts\202128011350_AddNotesToARInvoiceSearchField.sxml" />
+    <None Include="DBScripts\20220103148001_FillARInvoicesPaymentReferences.soxml" />
+    <None Include="DBScripts\202201152150_UpgradeSATProf32ToProf33.sxml" />
+    <None Include="DBScripts\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
+    <None Include="DBScripts\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
+    <None Include="DBScripts\202203021250_FillAPPaymentInvoicesNumbers.sxml" />
+    <None Include="DBScripts\202205300930_FillARPaymentInvoicesNumbers.sxml" />
+    <None Include="DBScripts\202209061205_FillPaidStatusOfARInvoices.sxml" />
+    <None Include="DBScripts\202212201040_FillTotalExamptFortaxReport.sxml" />
+    <None Include="DBOthers\Procedures\usp_DeleteAccountingDataByTenant_Jan2018.dxml" />
+    <None Include="DBOthers\Procedures\usp_DeleteAPinvoicesByTenant_Jan2018.dxml" />
+    <None Include="DBOthers\Procedures\usp_DeleteARinvoicesByTenant_Jan2018.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceLines.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoices.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceStatus.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceTypes.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceLines.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoices.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceStatus.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceTransferStatus.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceTypes.dxml" />
+    <None Include="DBOthers\Triggers\TriggerOnCreate_AutomaticLastUpdateDatePaymentTerms.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateAPInvoiceLines.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateAPInvoices.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateAPInvoiceStatus.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateAPInvoiceTypes.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceLines.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateARInvoices.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceStatus.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceTransferStatus.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceTypes.dxml" />
+    <None Include="DBOthers\Triggers\Trigger_AutomaticLastUpdateDatePaymentTerms.dxml" />
+    <None Include="DBOthers\Views\AgingReportInvoiceDataView.dxml" />
+    <None Include="DBOthers\Views\APInvoiceAgingReportDataView.dxml" />
+    <None Include="DBOthers\Views\ControlForInvoiceLinesDataView.dxml" />
+    <None Include="DBOthers\Views\DigitalInvoicesCounterDataView.dxml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

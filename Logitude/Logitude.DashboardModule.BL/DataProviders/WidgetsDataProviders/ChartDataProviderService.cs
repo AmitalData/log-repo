@@ -71,7 +71,7 @@ namespace Logitude.DashboardModule.BL.DataProviders.WidgetsDataProviders
             TreeFilterQueryService treeFilterQueryService = new TreeFilterQueryService();
             var resultQueryable = treeFilterQueryService.Apply(query, new TreeFilterQueryArgs() { AdditionalTreeFilter = _Widget.Filters, ObjectTableName = "", Tenant = 0 });
             string queryString = BuildQuery(measure, measureField, resultQueryable);
-            var conterxt = DashboardContext.GetContext(0);
+            var conterxt = DashboardContext.GetContext(measure.Tenant);
             var resultQueryables = conterxt.GetActiveDbContext().Database.SqlQuery<SeriesMeasureValue>(queryString, new object[0]).AsQueryable();
             List<SeriesMeasureValue> seriesMeasureVulues = resultQueryables.ToList();
             seriesMeasureVulues = FillGroupDateGaps(seriesMeasureVulues);

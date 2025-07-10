@@ -12,7 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {

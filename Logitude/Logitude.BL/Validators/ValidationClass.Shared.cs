@@ -45,6 +45,7 @@ namespace Logitude.BL.Validators
                 case "AccountingSystem":
                 case "IATACode":
                 case "AWBSpecialHandlingCode":
+                case "ICustomInputDa":
                 case "PartnerService":
                     {
                         break;

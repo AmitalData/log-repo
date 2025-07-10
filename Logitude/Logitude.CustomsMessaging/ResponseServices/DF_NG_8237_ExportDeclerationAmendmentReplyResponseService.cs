@@ -401,7 +401,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                         comments = "- תיקון הצהרה אושר" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber) + " מספר בקשה - " + _MyDeclarationPM.AmendmentRequestNumber,
                                                     }
                                                 };
-                                                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel, iscustomUser: true);
+                                                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel, iscustomUser: true, isExport: true);
 
                                                 myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
@@ -464,7 +464,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     }
                                                 };
 
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2, iscustomUser: true);
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel2, iscustomUser: true, isExport: true);
                                                 myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
                                                     CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
@@ -514,7 +514,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     }
                                                 };
 
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4, iscustomUser: true);
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel4, iscustomUser: true, isExport: true);
                                                 myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
                                                     CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
@@ -557,7 +557,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                     }
                                                 };
 
-                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel5, iscustomUser: true);
+                                                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel5, iscustomUser: true, isExport: true);
                                                 myUpdateEventContextTagModel = new EventContextTagModel()
                                                 {
                                                     CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
@@ -588,6 +588,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 mydDclarationErrorPointerService._declarationErrorPointer.Entitites.Exists(x =>
                                 (x.FieldErrors != null && x.FieldErrors.Any(y => y.ListVersionID == "1")) || (x.EntityErrors != null && x.EntityErrors.Any(y => y.ListVersionID == "1"))))
                             HasErors = true;
+
+                        if (_MyDeclarationPM.AmendmentStatus == "4")
+                        {
+                            if(_MyDeclarationPM.ReplacingRepairRequest != null)
+                            {
+                                DeclarationPM declarationAmendment = myDeclarationQueryService.GetDeclarationAmendmentByAmendmentRequestNumber(_MyDeclarationPM.Tenant, _MyDeclarationPM.ReplacingRepairRequest);
+                                declarationAmendment.AmendmentStatus = _MyDeclarationPM.AmendmentStatus;
+                                declarationAmendment.AmendmentErrorXml = this._MyDeclarationPM.AmendmentErrorXml;
+                                myDeclarationUpdateService.Update(declarationAmendment, false);
+                            }
+                        }
                     }
                     if (_MyDeclarationPM.AmendmentStatus == "4")
                     {
@@ -684,7 +695,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 comments = "-  בוצע תיקון הצהרה" + (_MyDeclarationPMOrg != null ? _MyDeclarationPMOrg.DeclarationNumber : _MyDeclarationPM.DeclarationNumber),
                             }
                         };
-                        AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, iscustomUser: true);
+                        AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, iscustomUser: true,isExport:true);
 
                         myUpdateEventContextTagModel = new EventContextTagModel()
                         {
@@ -1233,7 +1244,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, isExport: true);
 
 
         }

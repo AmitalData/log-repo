@@ -1,0 +1,576 @@
+
+<style type="text/css">
+    button:active{
+        color: red;
+        background:blue
+    }
+    .DeparturesArrivalsRow td label {
+        width: 100%;
+        font-size: 16px;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    .DeparturesArrivalsRow td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .DeparturesArrivalsRow {
+        height: 25px;
+        width: 100%;
+        background: white;
+        border-bottom: 1px solid #D1D3D4;
+    }
+
+    .DeparturesArrivalsHeader td, .DeparturesArrivalsHeader div, .DeparturesArrivalsHeader span {
+        color: #00AEEF;
+        font-size: 11px;
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+
+    .DeparturesArrivalsHeader {
+        overflow: hidden;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border: 1px solid #DADADA;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(247, 247, 247, 1) 0%,rgba(245, 245, 245, 1) 52.38%,rgba(238, 238, 238, 1) 72.96%,rgba(226, 226, 226, 1) 87.88%,rgba(209, 209, 209, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(247, 247, 247, 1) ),color-stop(0.5238,rgba(245, 245, 245, 1) ),color-stop(0.7296,rgba(238, 238, 238, 1) ),color-stop(0.8788,rgba(226, 226, 226, 1) ),color-stop(1,rgba(209, 209, 209, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+        background: linear-gradient(180deg, rgba(247, 247, 247, 1) 0%, rgba(245, 245, 245, 1) 52.38%, rgba(238, 238, 238, 1) 72.96%, rgba(226, 226, 226, 1) 87.88%, rgba(209, 209, 209, 1) 100%);
+    }
+</style>
+
+<table>
+    <tr style="height: 1px;">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 21px;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                    </td>
+
+                    <td style="width: 15px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 45px; font-size:11px; color : #6E7172;">Search:</td>
+
+                    <td style="width: 300px;">
+                        <SearchBox [ObjectTableName]="'Shipment'" [IsQuickSearch]="true" (ItemClicked)="EditShipment($event)" [AutoClearSearchText]="true"></SearchBox>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width:55px; font-size:11px; color : #6E7172;">
+                        <div>Filter by:</div>
+                    </td>
+
+                    <td style="width:117px;">
+                        <TransportsFilter [SelectedValue]="SelectedTransportFilter" (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width:1px;">
+                        <div>
+                            <DirectionsFilter [SelectedValue]="SelectedDirectionFilter" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+
+                    <!-- Shipments Queries -->
+                    <td style="width:265px;">
+                        <div class="MediaFill">
+                            <SectionBox [Scrolling]="true">
+                                <SectionHead>Shipments Queries</SectionHead>
+                                <SectionBody>
+
+                                    <!-- Operational Open -->
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_OperationalOpenGroup">
+                                        <div>Operational Open</div>
+                                        <div style="height:22px; width: 45px; position: absolute; top:0px; right:0px;">
+                                            <ToggleButton id="{{'NEWSHIP' | IdGeneratorAsyncPipe | async}}" [Title]="'New'" [DropDownWidth]="100" [DropDownHeight]="75">
+                                                <ToggleButtonItem id="{{'NEWDIRECT' | IdGeneratorAsyncPipe | async}}" [Text]="'Direct'" (click)="RunNewShipmentWizard('D')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                                <ToggleButtonItem id="{{'NEWHOUSE' | IdGeneratorAsyncPipe | async}}" [Text]="'House'" (click)="RunNewShipmentWizard('H')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                                <ToggleButtonItem id="{{'NEWMASTER' | IdGeneratorAsyncPipe | async}}" [Text]="'Master'" (click)="RunNewShipmentWizard('C')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                            </ToggleButton>
+                                        </div>
+                                        <div *ngIf="IsCloudDeployment == true">
+                                            <p class="QueryLink" id="{{'SHIPMENTS-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Shipments')">{{'Shipment.Q.Shipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'IMPORTSHIPMENTS-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('ImportShipments')" *ngIf="IsQueryVisible_ImportShipments">{{'Shipment.Q.ImportShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'Masters-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Masters')" *ngIf="IsQueryVisible_Masters">{{'Shipment.Q.Masters' | TextCodeTranslationPipe}}</p>
+                                        </div>
+                                        <div *ngIf="IsCloudDeployment == false">
+                                            <p class="QueryLink" id="{{'Shipments-O-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Shipments')">{{'Shipment.Q.Shipments' | TextCodeTranslationPipe}} ({{OperationalOpenCount_DH}})</p>
+                                            <p class="QueryLink" id="{{'Shipments-I-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('ImportShipments')" *ngIf="IsQueryVisible_ImportShipments">{{'Shipment.Q.ImportShipments' | TextCodeTranslationPipe}} ({{ImportShipmentsCount}})</p>
+                                            <p class="QueryLink" id="{{'SHIPMENTS-M-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Masters')" *ngIf="IsQueryVisible_Masters">{{'Shipment.Q.Masters' | TextCodeTranslationPipe}} ({{OperationalOpenCount_DC}})</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Accounting Open -->
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_AccountinglOpenGroup">
+                                        <div>Accounting Open</div>
+                                        <div *ngIf="IsCloudDeployment == true">
+                                            <p class="QueryLink" id="{{'OpenReceivables-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('Open Receivables Shipments')" *ngIf="IsQueryVisible_OpenReceivables">{{'Shipment.Q.OpenReceivablesShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" id="{{'OpenPayables-Q' | IdGeneratorAsyncPipe | async}}" (click)="ViewShipmentQuery('Open Payables Masters')" *ngIf="IsQueryVisible_OpenPayables">{{'Shipment.Q.OpenPayablesMasters' | TextCodeTranslationPipe}}</p>
+                                        </div>
+                                        <div *ngIf="IsCloudDeployment == false">
+                                            <p class="QueryLink" id="{{'OpenReceivables-M-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('Open Receivables Shipments')" *ngIf="IsQueryVisible_OpenReceivables">{{'Shipment.Q.OpenReceivablesShipments' | TextCodeTranslationPipe}} ({{AccountingOpenCount_DH}})</p>
+                                            <p class="QueryLink" id="{{'OpenPayables-M-Q' | IdGeneratorAsyncPipe | async}}"  (click)="ViewShipmentQuery('Open Payables Masters')" *ngIf="IsQueryVisible_OpenPayables">{{'Shipment.Q.OpenPayablesMasters' | TextCodeTranslationPipe}} ({{AccountingOpenCount_DC}})</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- e-AWB -->
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_EAWBGroup">
+                                        <div>e-AWB</div>
+                                        <div style="height: 5px;"></div>
+                                        <div style="height:22px; width: 45px; position: absolute; top:0px; right:0px;">
+                                            <div id="{{'NewAWB' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <label>New</label>
+                                                <img src="./Images/ToggleIcon.png" />
+                                                <div class="ToggleButtonMenu" style="width: 130px">
+                                                    <button id="{{'DirectAWB' | IdGeneratorAsyncPipe | async}}" (click)="RunNewAWBWizard('D')">Direct AWB Wizard</button>
+                                                    <button id="{{'HouseAWB' | IdGeneratorAsyncPipe | async}}" (click)="RunNewAWBWizard('H')">House AWB Wizard</button>
+                                                    <button   id="{{'MasterAWB' | IdGeneratorAsyncPipe | async}}" (click)="RunNewAWBWizard('C')">Master AWB Wizard</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <table style="height: 1px;" *ngIf="IsQueryVisible_ExpectedDepartures">
+                                                <tr>
+                                                    <td>
+                                                        <p *ngIf="IsCloudDeployment == true" class="QueryLink" style="width: unset;" (click)="ViewShipmentQuery('Expected Departures')">Expected Departure Shipments</p>
+                                                        <p *ngIf="IsCloudDeployment == false" class="QueryLink" style="width: unset;" (click)="ViewShipmentQuery('Expected Departures')">Expected Departure Shipments ({{OperationalOpenCount_ETD}})</p>
+                                                    </td>
+
+                                                    <td style="width: 20px;">
+                                                        <HelpIcon [Header]="'Expected Departure'" [Text]="'Air export with ETD > Today - 7 days'"></HelpIcon>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <p *ngIf="IsCloudDeployment == true && IsQueryVisible_AirlinesUpdates" class="QueryLink" (click)="ViewShipmentQuery('Airlines Updates')">{{'Shipment.Q.AirlinesUpdates' | TextCodeTranslationPipe}}</p>
+                                            <p *ngIf="IsCloudDeployment == false && IsQueryVisible_AirlinesUpdates" class="QueryLink" (click)="ViewShipmentQuery('Airlines Updates')">{{'Shipment.Q.AirlinesUpdates' | TextCodeTranslationPipe}} ({{OperationalOpenCount_LWU}})</p>
+
+                                            <p class="QueryLink" (click)="MessagingStockClicked()" *ngIf="IsMessagingStockVisible">Messaging Stock</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- INTTRA -->
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_INTTRAGroup">
+                                        <div>INTTRA</div>
+                                        <div *ngIf="IsCloudDeployment == true">
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ExpDepNotTransmitted')" *ngIf="IsQueryVisible_ExpectedDeparturesNotTransmitted">{{'Shipment.Q.ExpectedDeparturesNotTransmitted' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ShippingInstructionsLast7Days')" *ngIf="IsQueryVisible_ShippingInstructionsLast7Days">{{'Shipment.Q.ShippingInstructionsLast7Days' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ContainerStatusLast7Days')" *ngIf="IsQueryVisible_ContainerStatusLast7Days">{{'Shipment.Q.ContainerStatusLast7Days' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('EBookingInProgress')" *ngIf="IsQueryVisible_EBookingInProgress">{{'Shipment.Q.EBookingInProgress' | TextCodeTranslationPipe}}</p>
+
+                                        </div>
+                                        <div *ngIf="IsCloudDeployment == false">
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ExpDepNotTransmitted')" *ngIf="IsQueryVisible_ExpectedDeparturesNotTransmitted">{{'Shipment.Q.ExpectedDeparturesNotTransmitted' | TextCodeTranslationPipe}} ({{ExpectedDeparturesNotTransmittedCount}})</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ShippingInstructionsLast7Days')" *ngIf="IsQueryVisible_ShippingInstructionsLast7Days">{{'Shipment.Q.ShippingInstructionsLast7Days' | TextCodeTranslationPipe}} ({{ShippingInstructionsLast7DaysCount}})</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('ContainerStatusLast7Days')" *ngIf="IsQueryVisible_ContainerStatusLast7Days">{{'Shipment.Q.ContainerStatusLast7Days' | TextCodeTranslationPipe}} ({{ContainerStatusLast7DaysCount}})</p>
+                                            <p class="QueryLink" style="font-size: 11px;" (click)="ViewShipmentQuery('EBookingInProgress')" *ngIf="IsQueryVisible_EBookingInProgress">{{'Shipment.Q.EBookingInProgress' | TextCodeTranslationPipe}} ({{EBookingInProgressCount}})</p>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Others -->
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_OthersGroup">
+                                        <div>Others</div>
+                                        <div *ngIf="IsCloudDeployment == true" >
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Follow Ups')" *ngIf="IsQueryVisible_AllFollowUps">{{'Shipment.Q.AllFollowUps' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('My Follow Ups')" *ngIf="IsQueryVisible_MyFollowUps">{{'Shipment.Q.MyFollowUps' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Shipments')" *ngIf="IsQueryVisible_AllShipments">{{'Shipment.Q.AllShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('CreditLimitBlockedShipments')" *ngIf="IsQueryVisible_CreditLimitBlocked">{{'Shipment.Q.CreditLimitBlockedShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>
+                                        </div>
+                                        <div *ngIf="IsCloudDeployment == false" >
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Follow Ups')" *ngIf="IsQueryVisible_AllFollowUps">{{'Shipment.Q.AllFollowUps' | TextCodeTranslationPipe}} ({{AllFollowUpsCount}})</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('My Follow Ups')" *ngIf="IsQueryVisible_MyFollowUps">{{'Shipment.Q.MyFollowUps' | TextCodeTranslationPipe}} ({{MyFollowUpsCount}})</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Shipments')" *ngIf="IsQueryVisible_AllShipments">{{'Shipment.Q.AllShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('All Masters')" *ngIf="IsQueryVisible_AllMasters">{{'Shipment.Q.AllMasters' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('CreditLimitBlockedShipments')" *ngIf="IsQueryVisible_CreditLimitBlocked">{{'Shipment.Q.CreditLimitBlockedShipments' | TextCodeTranslationPipe}} ({{CreditLimitBlockedCount}})</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('Cancelled Shipments')" *ngIf="IsQueryVisible_CanceledShipments">{{'Shipment.Q.CancelledShipments' | TextCodeTranslationPipe}}</p>
+                                            <p class="QueryLink" (click)="ViewShipmentQuery('Pending Approval Documents')" *ngIf="IsQueryVisible_PendingApprovalDocuments">{{'Shipment.Q.PendingApprovalDocuments' | TextCodeTranslationPipe}} ({{PendingApprovalDocumentsCount}})</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- FSR -->
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_FSRGroup">
+                                        <div>FSR</div>
+                                        <button class="Button" style="width:60px;" (click)="SendShipmentFSRClicked()">Send FSR</button>
+                                        <div>
+                                            <p *ngIf="IsCloudDeployment == true" class="QueryLink" (click)="ViewShipmentQuery('SentFSR')">{{'Shipment.Q.SentFSR' | TextCodeTranslationPipe}}</p>
+                                            <p *ngIf="IsCloudDeployment == false" class="QueryLink" (click)="ViewShipmentQuery('SentFSR')">{{'Shipment.Q.SentFSR' | TextCodeTranslationPipe}} ({{LastSentFSRCount}})</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
+                                        <div>My Views</div>
+                                        <div>
+                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'Shipment'" [BackButtonTitle]="'Operations'" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
+                                        </div>
+                                    </div>
+                                    <div></div>
+                                </SectionBody>
+                            </SectionBox>
+                        </div>
+                    </td>
+
+                    <td style="width:10px;">
+                        <div></div>
+                    </td>
+
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="MediaFill">
+                                        <SectionBox [Scrolling]="true">
+                                            <SectionHead>{{RecentShipmentsList.length}} Recent Shipments</SectionHead>
+                                            <SectionBody>
+                                                <ul>
+                                                    <li class="RecentEntityItem" *ngFor="let item of RecentShipmentsList" (click)="EditShipment(item)">
+                                                        <table>
+                                                            <tr>
+                                                                <td style="width: 2px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:80px; position: relative;" rowspan="2">
+                                                                    <div style="position: absolute; left: 3px; top: 3px; width: 20px; height: 20px;" title="{{item.ActivityTypeName}}">
+                                                                        <div *ngIf="item.ActivityTypeName == 'New'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Added.png') center center no-repeat; background-size: contain;"></div>
+                                                                        <div *ngIf="item.ActivityTypeName == 'View'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Viewed.png') center center no-repeat; background-size: contain;"></div>
+                                                                        <div *ngIf="item.ActivityTypeName == 'Update'" style="width: 20px; height: 20px; background: url('Images/RecentEntity/Edited.png') center center no-repeat; background-size: contain;"></div>
+                                                                    </div>
+
+                                                                    <div style="position: absolute; left: 3px; bottom: 1px; color: #282E30;">{{item.ActivityDate | DateTimeToDatePipe}}</div>
+                                                                </td>
+
+                                                                <td style="width:100px; max-width: 100px;" class="TextTrimming">
+                                                                    <span [ngStyle]="{color: item.StatusName | StringToColorPipe}">{{item.StatusName}}</span>
+                                                                    <span [ngStyle]="{color: item.StatusName | StringToColorPipe}" style="margin-left: 5px;" *ngIf="item.StatusLocation">({{item.StatusLocation}})</span>
+                                                                </td>
+
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:115px; max-width: 115px;" class="TextTrimming">
+                                                                    <span *ngIf="item.ShipmentLevelCode == 'H'">{{item.House}}</span>
+                                                                    <span *ngIf="item.ShipmentLevelCode != 'H'">{{item.LongMaster}}</span>
+                                                                </td>
+
+                                                                <td style="width:200px; max-width: 200px;" class="TextTrimming">
+                                                                    <span *ngIf="item.CustomerName">{{item.CustomerName}}</span>
+                                                                    <span *ngIf="!item.CustomerName">{{item.MainCarriageCarrierName}}</span>
+                                                                </td>
+
+                                                                <td style="width:7px; height: 100%;" rowspan="2">
+                                                                    <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
+                                                                </td>
+
+                                                                <td style="width:20px; height: 100%;">
+                                                                    <div title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                        <img class="CenterCenter" style="top: 2px;" [attr.src]="'./Images/Directions/' + item.DirectionId + '.png'" />
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td style="width: 2px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width:100px; max-width: 100px;" class="TextTrimming">{{item.Routing | ReplacePipe:',':'>'}}</td>
+
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="color: #282E30;">
+                                                                    <div class="MediaFill">
+                                                                        <span>{{item.ShipmentType}}</span>
+                                                                        <span *ngIf="item.ShipmentLevelCode == 'H' && !item.MasterShipmentDataId"><img src="./Images/NotConnected.png" /></span>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="color: #1B90CB">{{item.ShipmentNumber}}</td>
+
+                                                                <td style="width:20px; height: 100%;">
+                                                                    <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                        <img class="CenterCenter" style="top: -2px;" [attr.src]="'./Images/Icons/' + item.TransportModeId + '.png'" />
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div></div>
+                                                                </td>
+
+                                                                <td style="width: 3px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </li>
+                                                </ul>
+
+                                                <div *ngIf="IsNoDataVisible_RecentShipments" class="NoDataText" style="top:5px;">No Recent Shipments</div>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr style="height: 10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="MediaFill" *ngIf="IsDeparturesArrivalsVisible">
+                                        <SectionBox>
+                                            <SectionHead>Departures and Arrivals</SectionHead>
+                                            <SectionBody>
+                                                <table>
+                                                    <tr style="height: 35px;">
+                                                        <td>
+                                                            <div class="MediaFill DeparturesArrivalsHeader">
+                                                                <table class="FixedTable">
+                                                                    <tr>
+                                                                        <td style="width: 60px;">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <img src="./Images/Icons/Transports.png" style="display: block; margin: auto;" />
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <img src="./Images/Icons/Directions.png" style="display: block; margin: auto;" />
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width: 1px; background: #D1D3D4"></td>
+                                                                        <td style="width: 1px; background: #FFFFFF"></td>
+
+                                                                        <td style="width: 135px;">Flight/Voyage/Trucker</td>
+                                                                        <td style="width: 1px; background: #D1D3D4"></td>
+                                                                        <td style="width: 1px; background: #FFFFFF"></td>
+
+                                                                        <td style="width: 100px;">
+                                                                            <table class="FixedTable">
+                                                                                <tr>
+                                                                                    <td colspan="2">Last 7 days</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="text-align: center; font-size: 9px; color: #45494A; text-indent: 5px;">Expected</td>
+                                                                                    <td style="text-align: center; font-size: 9px; color: #45494A; text-indent: 5px;">Actual</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width: 1px; background: #D1D3D4"></td>
+                                                                        <td style="width: 1px; background: #FFFFFF"></td>
+
+                                                                        <td style="width: 100px;">
+                                                                            <table class="FixedTable">
+                                                                                <tr>
+                                                                                    <td colspan="2">Today</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="text-align: center; font-size: 9px; color: #45494A; text-indent: 5px;">Expected</td>
+                                                                                    <td style="text-align: center; font-size: 9px; color: #45494A; text-indent: 5px;">Actual</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width: 1px; background: #D1D3D4"></td>
+                                                                        <td style="width: 1px; background: #FFFFFF"></td>
+
+                                                                        <td style="width: 70px;">
+                                                                            <table class="FixedTable">
+                                                                                <tr>
+                                                                                    <td>Tomorrow</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="text-align: center; font-size: 9px; color: #45494A">Expected</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                        <td style="width: 1px; background: #D1D3D4"></td>
+                                                                        <td style="width: 1px; background: #FFFFFF"></td>
+
+                                                                        <td style="width: 80px;">
+                                                                            <table class="FixedTable">
+                                                                                <tr>
+                                                                                    <td>Next 7 days</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="text-align: center; font-size: 9px; color: #45494A">Expected</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            <div class="MediaFill">
+                                                                <ScrollViewer>
+                                                                    <ul style="top: -2px;">
+                                                                        <li class="DeparturesArrivalsRow" *ngFor="let item of DepartureArrivalList">
+                                                                            <table class="FixedTable">
+                                                                                <tr>
+                                                                                    <td style="width: 60px;">
+                                                                                        <table class="FixedTable">
+                                                                                            <tr>
+                                                                                                <td class="CellStretch">
+                                                                                                    <div class="CellContent">
+                                                                                                        <img class="CenterCenter" *ngIf="item.TransportModeId == 'A'" title="{{item.TransportModeName}}" src="./Images/Icons/A.png" />
+                                                                                                        <img class="CenterCenter" *ngIf="item.TransportModeId == 'O'" title="{{item.TransportModeName}}" src="./Images/Icons/O.png" />
+                                                                                                        <img class="CenterCenter" *ngIf="item.TransportModeId == 'I'" title="{{item.TransportModeName}}" src="./Images/Icons/I.png" />
+                                                                                                    </div>
+                                                                                                </td>
+
+                                                                                                <td class="CellStretch">
+                                                                                                    <div class="CellContent">
+                                                                                                        <img class="CenterCenter" *ngIf="item.DirectionId == 'E'" title="{{item.DirectionName}}" src="./Images/Directions/E.png" />
+                                                                                                        <img class="CenterCenter" *ngIf="item.DirectionId == 'I'" title="{{item.DirectionName}}" src="./Images/Directions/I.png" />
+                                                                                                        <img class="CenterCenter" *ngIf="item.DirectionId == 'D'" title="{{item.DirectionName}}" src="./Images/Directions/D.png" />
+                                                                                                        <img class="CenterCenter" *ngIf="item.DirectionId == 'R'" title="{{item.DirectionName}}" src="./Images/Directions/R.png" />
+                                                                                                        <img class="CenterCenter" *ngIf="item.DirectionId == 'C'" title="{{item.DirectionName}}" src="./Images/Directions/C.png" />
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td style="width: 1px; background: #FFFFFF"></td>
+                                                                                    <td style="width: 1px; background: #D1D3D4"></td>
+
+                                                                                    <td style="width: 135px; text-align: left; text-indent: 5px;">
+                                                                                        <span>{{item.CarrierCodeCellText}}</span>
+                                                                                        <span>{{item.CarrierNumberCellText}}</span>
+                                                                                    </td>
+                                                                                    <td style="width: 1px; background: #FFFFFF"></td>
+                                                                                    <td style="width: 1px; background: #D1D3D4"></td>
+
+                                                                                    <!-- Last 7 days -->
+                                                                                    <td style="width: 100px;">
+                                                                                        <table class="FixedTable">
+                                                                                            <tr>
+                                                                                                <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                                                                                                    <label [hidden]="item.LastWeek.ExpectedCount == 0" style="color: #E53030" (click)="ViewDepartureArrivalQuery(item, 'LSW_EXP')">{{item.LastWeek.ExpectedCount}}</label>
+                                                                                                </td>
+                                                                                                <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                                                                                                    <label [hidden]="item.LastWeek.ActualCount == 0" style="color: #009161" (click)="ViewDepartureArrivalQuery(item, 'LSW_ACT')">{{item.LastWeek.ActualCount}}</label>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td style="width: 1px; background: #FFFFFF"></td>
+                                                                                    <td style="width: 1px; background: #D1D3D4"></td>
+
+                                                                                    <!-- Today -->
+                                                                                    <td style="width: 100px;">
+                                                                                        <table class="FixedTable">
+                                                                                            <tr>
+                                                                                                <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                                                                                                    <label [hidden]="item.Today.ExpectedCount == 0" style="color: #282E30" (click)="ViewDepartureArrivalQuery(item,'TOD_EXP')">{{item.Today.ExpectedCount}}</label>
+                                                                                                </td>
+                                                                                                <td style="text-align: center; vertical-align: middle; font-size: 16px;">
+                                                                                                    <label [hidden]="item.Today.ActualCount == 0" style="color: #009161" (click)="ViewDepartureArrivalQuery(item,'TOD_ACT')">{{item.Today.ActualCount}}</label>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </table>
+                                                                                    </td>
+                                                                                    <td style="width: 1px; background: #FFFFFF"></td>
+                                                                                    <td style="width: 1px; background: #D1D3D4"></td>
+
+                                                                                    <!-- Tomorrow -->
+                                                                                    <td style="width: 70px;">
+                                                                                        <label [hidden]="item.Tomorrow.ExpectedCount == 0" style="color: #282E30" (click)="ViewDepartureArrivalQuery(item,'TOM_EXP')">{{item.Tomorrow.ExpectedCount}}</label>
+                                                                                    </td>
+                                                                                    <td style="width: 1px; background: #FFFFFF"></td>
+                                                                                    <td style="width: 1px; background: #D1D3D4"></td>
+
+                                                                                    <!-- Next 7 days -->
+                                                                                    <td style="width: 80px;">
+                                                                                        <label [hidden]="item.NextWeek.ExpectedCount == 0" style="color: #282E30" (click)="ViewDepartureArrivalQuery(item,'NXW_EXP')">{{item.NextWeek.ExpectedCount}}</label>
+                                                                                    </td>
+                                                                                    <td style="width: 1px; background: #FFFFFF"></td>
+                                                                                    <td style="width: 1px; background: #FFFFFF"></td>
+
+                                                                                    <td>
+                                                                                        <div></div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </li>
+                                                                    </ul>
+
+                                                                    <div *ngIf="IsNoDataVisible_DeparturesArrivals" class="NoDataText">No Departures and Arrivals</div>
+                                                                </ScrollViewer>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </SectionBody>
+                                        </SectionBox>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

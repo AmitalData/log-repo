@@ -21,6 +21,7 @@ import { ClosedTableStatusList } from '../../../Customs/EntityLists/ClosedTableS
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestParams/SystemTableRequestParams';
 import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
 
 @Component({
     
@@ -30,11 +31,14 @@ import { SendRequestVIA } from '../../../Customs/DataContract/RequestParams/Requ
 export class CustomsClosedTablesListTemplate {
 
     _CustomsClosedTable: CustomsClosedTableList;
-    public fieldName: any;
+    public fieldName: any;      
     TableUpdateButtonIsEnabled: boolean = false;
     UpdateButtonVisibility: boolean = false;
+    isTableUpdateButtonEnabled: boolean = false;
+    private _isConnectedToUniFreight = false; 
     TableUpdateButtonOpacity: string = "1";
     private _entityResourceService: EntityResourceService = new EntityResourceService();
+    customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private CD: ChangeDetectorRef) {
         //        this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
@@ -44,7 +48,13 @@ export class CustomsClosedTablesListTemplate {
                 .subscribe((response:any) => {
                     CustomsClosedTablesListTemplate.translate_CommunicationLogBView = TextCodeTranslator.Translate("CommunicationLog.B.View");// itzik : Translate +_entityResourceService - its bad :due that i done this- 
                 });
-        }
+        } 
+        const canCustomerCare = SessionLocator?.LoggedUserPM?.IsCustomerCare ?? false;
+        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
+        .subscribe((res: ServiceResponse) => {
+            this._isConnectedToUniFreight = !!res?.Result?.IsConnectedToUniFreight;
+            this.isTableUpdateButtonEnabled = this._isConnectedToUniFreight || canCustomerCare;
+        });
     }
 
     static translate_CommunicationLogBView: string = "";

@@ -276,6 +276,7 @@ namespace CustomsBook
                             dataTable.Rows.Add(row);
                         }
 
+
                         List<string> sqlSchema = CustomsBookRepository.GetColumnNames(sqlTableName);
                         
                         // Insert data into the temp table
@@ -387,7 +388,7 @@ namespace CustomsBook
 
 
         }
-        public static void StartStatic(Action<bool, bool> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
+        public static void StartStatic(Action<bool, bool,int> BuildObjectTablesZipFilesDataAction = null, string ProductInfo = null)
         {
             InjectionUtil.Init(CreateAmitalRestrictOwnerModelService: null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
 
@@ -462,8 +463,13 @@ namespace CustomsBook
             // string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
             ContainerAccessor.InitContainer();
-
-            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache);
+            Dictionary<int, string> globalDBs = new Dictionary<int, string>();
+            //List<GlobalTenant> globalTenants = new GlobalDomainService().GetActiveTenants();
+            //foreach (var item in globalTenants)
+            //{
+            //    globalDBs.Add(item.Id, item.GlobalDBId);
+            //}
+            CacheManager.CacheWrapper = CacheManager.CacheWrapper ?? new CacheWrapper(Cache, globalDBs);
             var storageAccount = StorageAcountDetails.StorageAccount; 
             LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
             {

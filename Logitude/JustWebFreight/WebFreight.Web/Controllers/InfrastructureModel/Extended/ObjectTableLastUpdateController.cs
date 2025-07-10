@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -18,15 +18,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 {
     public class ObjectTableLastUpdateController : ApiController
     {
-        public HttpResponseMessage GetLastUpdatedTables(int tenant, DateTime sinceDate, string clientEmail)
+        public HttpResponseMessage GetLastUpdatedTables(DateTime sinceDate, string clientEmail)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
+                int tenant = authToken.Tenant;
 
                 IWebFreightContext ObjectContext = WebFreightContext.GetContext(tenant);
                 ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(ObjectContext);

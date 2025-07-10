@@ -488,6 +488,7 @@ import { InterConditionsRelationshipListService } from './Services/StandardLists
 import { EntryExitTypeListService } from './Services/StandardLists/EntryExitTypeListService';
 import { CustomsItemGroupListService } from './Services/StandardLists/CustomsItemGroupListService';
 import { DiscountTypeRegulationListService } from './Services/StandardLists/DiscountTypeRegulationListService';
+import { AzureSearchWebService } from './Services/WebServices/AzureSearchWebService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -954,6 +955,7 @@ export class ModuleProviders {
             case "CustomsRequestsSheetWebService": { myResult = new CustomsRequestsSheetWebService(); break; }
             case "GTBFUSTATUWebService": { myResult = new GTBFUSTATUWebService(); break; }
             case "VendorCurrencyService": { myResult = new VendorCurrencyService(); break; }
+            case "AzureSearchWebService": { myResult = new AzureSearchWebService(); break; }
 
 
             //#endregion

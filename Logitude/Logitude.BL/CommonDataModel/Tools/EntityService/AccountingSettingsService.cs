@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {

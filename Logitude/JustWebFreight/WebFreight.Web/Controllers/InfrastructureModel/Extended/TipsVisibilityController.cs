@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -21,14 +21,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 {
     public class TipsVisibilityController : ApiController
     {
-        public HttpResponseMessage GetTipsVisibilities(int tenant, string userId)
+        public HttpResponseMessage GetTipsVisibilities(string userId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                int tenant = authToken.Tenant;
 
                 TipsVisibilityQuery tipQuery = new TipsVisibilityQuery(tenant);
                 List<TipsVisibilityPM> tipsVisibilityLists = tipQuery.GetTipsVisibilities(tenant, userId);

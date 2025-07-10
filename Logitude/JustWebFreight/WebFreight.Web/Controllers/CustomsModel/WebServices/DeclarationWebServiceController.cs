@@ -17,7 +17,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -62,7 +62,7 @@ using Org.BouncyCastle.Bcpg.Sig;
 using Logitude.Customs.Data.EntityMapping;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Customs.Data.EntityListQueryServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Reflection;
 using System.Web.Script.Serialization;
 
@@ -1612,15 +1612,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
                 CustomsSettingPM setting = settingService.GetSettingByTenantN(tenant);
 
-                if (setting.IsConnectedToUniFreight)
-                {
+             
                     DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
                     string isNoIncotermCheck = defaultValueQueryService.GetDefault("ISRAEL", "CGG_NO_INC_CHK", "NON", "NON", tenant);
                     if (isNoIncotermCheck == "Y")
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, false);
                     }
-                }
+              
 
                 var result = queryService.CheckFreightAmountsByIncoterm(declarationId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -2203,19 +2202,19 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
                 if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    var amitalContext = AmitalContext.GetContext(tenant);
-                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                    string def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", tenant);
+                    def = def ?? "";
 
-                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    if (def.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
                     {
                         courierGWMessageECSpclRequestService = new CourierGWMessageECSpclMamanRequestService();
                     }
-                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    else if (def.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
                     {
                         courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILOVS.CourierOVSSpecialActionRequestService();
                     }
-                    else if (def.DEFDATA.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
+                    else if (def.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
                     {
                         courierGWMessageECSpclRequestService = new Logitude.Customs.BL.Messaging.ILSWS.CourierSWSSpecialActionRequestService();
                     }

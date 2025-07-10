@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.Tools.DataMapping

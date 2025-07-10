@@ -1,5 +1,6 @@
 ﻿using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools.Utils;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,7 +25,7 @@ namespace CustomsWorkerRole.BL
             }
 
 
-            var serversNameQueryService = new ServersNameQueryService(0);
+            var serversNameQueryService = new ServersNameQueryService(SettingUtil.GetTenantDBFromConfig());
             if (!serversNameQueryService.Any())
             {
                 if (DateTime.Now < THEGracePeriod)
@@ -45,7 +46,7 @@ namespace CustomsWorkerRole.BL
             serviceNameList = serviceNameList.Select(r => r.ToLower()).ToList();
             if (serviceNameList.Count == 0)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception($"SHUTDOWN!!! ServersName defined But {Environment.MachineName} not exist "));
                 ExitEnsureLogWrite();
                 return;
             }

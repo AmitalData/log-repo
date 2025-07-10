@@ -27,6 +27,7 @@ import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 import { APPaymentPM } from 'Invoice/EntityPMs/APPaymentPM';
+
 import { delay, expand, takeLast } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
@@ -911,16 +912,16 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         //     return;
         // }
 
-        //if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
-            // if (this.IsMultiWithReconcileMethodCodeEqualOne) {
-            //     errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
-            // }
-        //}
+        // if (this.SelectedLines.Length > 0 && this.TotalDifference != 0) {
+        //     if (this.IsMultiWithReconcileMethodCodeEqualOne) {
+        //         errors.push(TextCodeTranslator.Translate("Reconciliations.O.ErrorsInMultiWithRecOne"));
+        //     }
+        // }
 
         var ledgerTransactionsPMs = this.GetLedgerTransactionsPMs();
         this.CurrentSession.StartBusyIndicatorSaving();
-            this.CurrentSession.StopBusyIndicator();
-           
+        this.CurrentSession.StopBusyIndicator();
+
                 this.ValidationErrorsList = errors;
                 if (this.ValidationErrorsList.length == 0) {
         

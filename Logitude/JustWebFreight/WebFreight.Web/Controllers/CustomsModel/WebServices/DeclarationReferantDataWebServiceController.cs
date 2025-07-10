@@ -7,7 +7,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.Def.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using System;

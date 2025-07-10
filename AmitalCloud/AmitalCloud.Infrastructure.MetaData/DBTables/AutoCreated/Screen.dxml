@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="Screens"
+  Schema="dbo"
+  DBType="Main">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NumberOfRows"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="NumberOfColumns"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsReadOnly"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="400">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Querysection"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Type"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SortedByFieldCode"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SortedType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RelatedScreenCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsHeaderScreen"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="ObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <UniqueConstraint
+    Columns="Tenant,Code,ObjectTableId" />
+</Table>

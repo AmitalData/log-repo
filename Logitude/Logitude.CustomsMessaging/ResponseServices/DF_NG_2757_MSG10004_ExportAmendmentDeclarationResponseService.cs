@@ -168,7 +168,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey;
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
-                    // declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
+                    declarationPM.AutoSending = declarationOrg.AutoSending;
+                    declarationPM.ImporterAddress = declarationOrg.ImporterAddress;
+                    declarationPM.ImporterName = declarationOrg.ImporterName;
                     if (declarationOrg.IsCourierDeclaration)
                     {
                         declarationPM.IsCourierDeclaration = true;
@@ -493,9 +495,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         case "7":
                             {
                                 declarationPM.ImporterTypeCode = importer.ID.schemeID;
-                                declarationPM.ImporterAddress = importer.DMExtensions.Address;
-                                declarationPM.ImporterName = importer.DMExtensions.Name;
-                                //declarationPM.MainImporterEntitlemntTypeCode = GetValueCodeType(importer.DMExtensions.RoleCode.EntitlementTypeCode);
+                                if (string.IsNullOrEmpty(declarationPM.ImporterAddress))
+                                    declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                if (string.IsNullOrEmpty(declarationPM.ImporterName))
+                                    declarationPM.ImporterName = importer.DMExtensions.Name;
+
                                 if (importer.ID.schemeID == "2" || importer.ID.schemeID == "3") declarationPM.ImporterPassCountryCode = GetValueTextType(importer.DMExtensions.IssueLocation);
 
                                 switch (importer.ID.schemeID)
@@ -595,9 +599,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             case "7":
                                 {
-                                    declarationPM.ImporterAddress = importer.DMExtensions.Address;
-                                    declarationPM.ImporterName = importer.DMExtensions.Name;
-                                    //   declarationPM.impo = GetValueTextType(importer.DMExtensions.IssueLocation);
+                                    if (string.IsNullOrEmpty(declarationPM.ImporterAddress))
+                                        declarationPM.ImporterAddress = importer.DMExtensions.Address;
+                                    if (string.IsNullOrEmpty(declarationPM.ImporterName))
+                                        declarationPM.ImporterName = importer.DMExtensions.Name;
                                     break;
                                 }
                             case "12":

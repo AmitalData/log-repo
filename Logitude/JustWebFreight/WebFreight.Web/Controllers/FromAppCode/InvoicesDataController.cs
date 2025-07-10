@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -240,6 +240,7 @@ namespace WebFreight.Web.App_Code
                              TransferError = entity.TransferError,
                              AmountInProfitCurrency = entity.AmountInProfitCurrency,
                              AccountingExternalCode = entity.AccountingExternalCode,
+                             ReferenceDate = entity.ReferenceDate,
                          };
 
             query2 = filter.GetFilteredQuery<ARInvoiceList>(listQueryOperation, query2);

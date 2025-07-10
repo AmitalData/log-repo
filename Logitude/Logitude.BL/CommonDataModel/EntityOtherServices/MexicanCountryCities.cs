@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityOtherServices
     {
         public void AddMexicanCountryCities(int tenant, string countryId = null)
         {
-            ICommonDataContext commonContext = CommonDataContext.GetContext(0);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             Country country_MX = commonContext.Countries.Where(a => a.Code == "MX" && a.Tenant == 0).FirstOrDefault();
             var countriesCities = (from countryCity in commonContext.CountryCities.Include("State")
                            where countryCity.CountryId == country_MX.Id && countryCity.Tenant == 0

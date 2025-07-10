@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -11,10 +11,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddMenuButtonGroupAndMenuButtons
     {
-        public static MenuButtonGroup AddMenuButtonGroup(MenuButtonGroupDetails menuButtonGroupDetails, MenuButtonGroupRepository menuButtonGroupRepository, Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups)
+        public static MenuButtonGroup AddMenuButtonGroup(MenuButtonGroupDetails menuButtonGroupDetails, MenuButtonGroupRepository menuButtonGroupRepository, Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, int contextTenant = 0)
         {
 
-            ObjectTableRepository Repo = new ObjectTableRepository(0);
+            ObjectTableRepository Repo = new ObjectTableRepository(contextTenant);
             var table = Repo.GetSingleObjectTable(menuButtonGroupDetails.ObjectTableId, menuButtonGroupDetails.Tenant, false);
             string NewKey = "";
             if (ObjectTablesKeys.Keys.Keys.Contains(table.Name))
@@ -42,7 +42,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     {
                         Tenant = menuButtonGroupDetails.Tenant,
                         ObjectTableId = menuButtonGroupDetails.ObjectTableId,
-                        Id = IdCounter.GetNumber("MenuButtonGroup", menuButtonGroupDetails.Tenant).ToString(),
+                        Id = IdCounter.GetNumber("MenuButtonGroup", contextTenant).ToString(),
                         MenuButtonGroupType = menuButtonGroupDetails.MenuButtonGroupType,
                         Name = menuButtonGroupDetails.Name,
 
@@ -60,9 +60,9 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static MenuButton AddMenuButton(MenuButtonDetails menuButtonDetails, MenuButtonRepository menuButtonRepository, Dictionary<string, MenuButton> tenantMenuButtons, TextCodeRepository textCodeRepository, Dictionary<string, TextCode> textCodes)
+        public static MenuButton AddMenuButton(MenuButtonDetails menuButtonDetails, MenuButtonRepository menuButtonRepository, Dictionary<string, MenuButton> tenantMenuButtons, TextCodeRepository textCodeRepository, Dictionary<string, TextCode> textCodes,int contextTenant=0)
         {
-            ObjectTableRepository Repo = new ObjectTableRepository(0);
+            ObjectTableRepository Repo = new ObjectTableRepository(contextTenant);
             var table = Repo.GetSingleObjectTable(menuButtonDetails.ObjectTableId, menuButtonDetails.Tenant, false);
             string NewKey = "";
             if (ObjectTablesKeys.Keys.Keys.Contains(table.Name))
@@ -117,7 +117,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         var textCode = new TextCode()
                         {
                             DefaultText = menuButtonDetails.LabelTextCodeDefaultText,
-                            Id = IdCounter.GetNumber("TextCode", menuButtonDetails.Tenant).ToString(),
+                            Id = IdCounter.GetNumber("TextCode", contextTenant).ToString(),
                             TextCodeTypeCode = "B",
                             Code = menuButtonDetails.LabelTextCodeCode,
                             ObjectTableId = menuButtonDetails.ObjectTableId,
@@ -143,7 +143,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         newTextCode = new TextCode()
                         {
                             DefaultText = menuButtonDetails.LabelTextCodeDefaultText,
-                            Id = IdCounter.GetNumber("TextCode", menuButtonDetails.Tenant).ToString(),
+                            Id = IdCounter.GetNumber("TextCode", contextTenant).ToString(),
                             TextCodeTypeCode = "B",
                             Code = menuButtonDetails.LabelTextCodeCode,
                             ObjectTableId = menuButtonDetails.ObjectTableId,
@@ -168,7 +168,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                         DropDownControl = menuButtonDetails.DropDownControl,
                         ControlPath = menuButtonDetails.ControlPath,
                         HtmlComponentPath = menuButtonDetails.HtmlComponentPath,
-                        Id = IdCounter.GetNumber("MenuButton", menuButtonDetails.Tenant).ToString(),
+                        Id = IdCounter.GetNumber("MenuButton", contextTenant).ToString(),
                         LabelTextCodeId = newTextCode.Id,
                         LabelTextCodeCode = newTextCode.Code,
                         Style = menuButtonDetails.Style,

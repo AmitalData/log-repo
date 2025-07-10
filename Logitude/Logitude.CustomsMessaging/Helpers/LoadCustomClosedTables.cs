@@ -10,7 +10,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Helpers;
 using UnifreightIIG.Common.SystemTableServiceReference;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using System.Reflection;
 using System.Collections;
@@ -26,6 +26,7 @@ using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
 using Logitude.Customs.Data.EntityMapping;
 using Logitude.BL.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.CustomsMessaging.Helpers
 {
@@ -35,7 +36,7 @@ namespace Logitude.CustomsMessaging.Helpers
         {
 
             InitializeSettings();
-            ICustomContext customContext = CustomContext.GetContext(0);
+            ICustomContext customContext = CustomContext.GetContext((int)tenant);
 
             var myMehesSystemTables = new SystemTables();
 
@@ -223,13 +224,13 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
         public static void FillCustomsClosedTablesInDb(int tenant, ClientProgressBarIndicatorService clientProgressBarIndicatorService=null)
         {
             InitializeSettings();
-            ICustomContext customContext = CustomContext.GetContext(0);
+            ICustomContext customContext = CustomContext.GetContext(tenant);
             var myMehesSystemTables = new SystemTables();
             if (clientProgressBarIndicatorService != null) clientProgressBarIndicatorService.StartBroadcast("ממתין לתשובת המכס (סכמת טבלאות מכס)");
             var closedSystemTables = myMehesSystemTables.GetTableData("TableConfiguration", tenant);
             CustomsClosedTableRepository customsClosedTableRepository = new CustomsClosedTableRepository(customContext);
             Dictionary<string, CustomsClosedTable> customsClosedTables = customsClosedTableRepository.GetAll().ToDictionary(d => d.Id, t => t);
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
             List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> addedClosedTables = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>();
             if (clientProgressBarIndicatorService != null) clientProgressBarIndicatorService.StartBroadcast("בונה סכמת טבלאות מכס");
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData leadDocumentExceptionTypeTable = closedSystemTables.Where(d => d.id == "1517").FirstOrDefault();
@@ -1432,7 +1433,12 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> entitySystemTables = null;
             bool errorHandel = false;
             int rowUpdateAdded = 0;
-            ICustomContext customContext = CustomContext.GetContext(0);
+            int tenant= SettingUtil.GetCurrentTenant();
+            if(tenant == -1)
+            {
+                tenant = requestParams.Tenant;
+            }
+            ICustomContext customContext = CustomContext.GetContext(tenant);
             CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
             CustomsClosedTable table = closedTableRep.GetSingle(new CustomsClosedTableKeys() { Id = tableId });
             try
@@ -1443,8 +1449,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                    
 
                     InitializeSettings();
-
-                    ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+                    ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
 
                     table.StatusCode = "2";
                     closedTableRep.Update(table);
@@ -1636,7 +1641,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                         myTableLastUpdateM.AlternativeUserTenant = requestParams.Tenant;
 
                     }
-                    UpdateStatusCode(closedTableRep, table, DateTime.Now, (rowUpdateAdded + rowUpdateAdded > 0), myTableLastUpdateM);
+                    UpdateStatusCode(closedTableRep, table, DateTime.Now, (rowUpdateAdded + rowUpdateAdded > 0), myTableLastUpdateM, tenant);
                 }
                 else
                 {
@@ -1675,7 +1680,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
         }
         
         private static void UpdateStatusCode(CustomsClosedTableRepository closedTableRep, CustomsClosedTable table, DateTime? LastUpdateDate, bool hasChanged,
-            TableLastUpdateM myTableLastUpdateM)
+            TableLastUpdateM myTableLastUpdateM,int tenant=0)
         {
             table.StatusCode = "3";
             if (LastUpdateDate.HasValue)
@@ -1684,7 +1689,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             }
             if (hasChanged)
             {
-                TableLastUpdateClass.UpdateTableHistory(0, table.DbName, myTableLastUpdateM);
+                TableLastUpdateClass.UpdateTableHistory(tenant, table.DbName, myTableLastUpdateM);
             }
             closedTableRep.Update(table);
             closedTableRep.SubmitChanges();
@@ -1737,7 +1742,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
                     id = systemrecord.id + "," + bankCode;
                 }
 
-                Debug.WriteLine(systemrecord.id + "-" + (bankCode ?? ""));
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(systemrecord.id + "-" + (bankCode ?? ""));
                 bankCodeInfo.SetValue(existedRecord, bankCode);
                 bankIdKeyInfo.SetValue(existedRecord, id);
             }
@@ -2244,9 +2249,9 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
 
                 Stopwatch stopwatch = new Stopwatch();
                 InitializeSettings();
-                ICustomContext customContext = CustomContext.GetContext(0);
+                ICustomContext customContext = CustomContext.GetContext(tenant);
                 CustomsClosedTableRepository closedTableRep = new CustomsClosedTableRepository(customContext);
-                ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+                ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
                 Dictionary<string, ObjectTable> objectTables = objectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Id, o => o);
                 List<CustomsClosedTable> closedTables = closedTableRep.GetExistedClosedTables();
                 closedTables = closedTables.OrderBy(d => int.Parse(d.Id)).ToList();

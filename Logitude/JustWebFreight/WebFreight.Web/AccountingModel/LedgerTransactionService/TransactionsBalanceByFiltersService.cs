@@ -1,7 +1,7 @@
 ﻿using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;

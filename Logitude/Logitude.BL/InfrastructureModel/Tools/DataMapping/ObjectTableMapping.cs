@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -31,6 +31,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.IsAutoComplete = objectTablePM.IsAutoComplete;
             objectTable.SortingByObjectField = objectTablePM.SortingByObjectField;
             objectTable.DBTableName = objectTablePM.DBTableName;
+            objectTable.DBTableShortName = objectTablePM.DBTableShortName;
             objectTable.HasCustomFields = objectTablePM.HasCustomFields;
             objectTable.CustomFieldsCount = objectTablePM.CustomFieldsCount;
             objectTable.DescriptionTextCodeId = objectTablePM.DescriptionTextCodeId;
@@ -42,7 +43,6 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.IsComposition = objectTablePM.IsComposition;
             objectTable.MaxNumberOfCustomFields = objectTablePM.MaxNumberOfCustomFields;
             objectTable.AllowCustomFields = objectTablePM.AllowCustomFields;
-            objectTable.DBTableName = objectTablePM.DBTableName;
             objectTable.HasDocuments = objectTablePM.HasDocuments;
             objectTable.HasCustomValidator = objectTablePM.HasCustomValidator;
             objectTable.ClientModuleName = objectTablePM.ClientModuleName;
@@ -72,6 +72,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.FullNameTextCodeId = objectTablePM.FullNameTextCodeId;
             objectTable.FullNameTextCodeCode = objectTablePM.FullNameTextCodeCode;
             objectTable.AvailableInDocumentTypes = objectTablePM.AvailableInDocumentTypes;
+			objectTable.IsLock = objectTablePM.IsLock;
+			objectTable.RelatedEntity = objectTablePM.RelatedEntity;
+			objectTable.ThisKey = objectTablePM.ThisKey;
+			objectTable.RelatedKey = objectTablePM.RelatedKey;
+            objectTable.ShowFastSearch = objectTablePM.ShowFastSearch;
         }
-    }
+	}
 }

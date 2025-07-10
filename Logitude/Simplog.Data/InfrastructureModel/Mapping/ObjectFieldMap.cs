@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
@@ -13,6 +13,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
            
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FieldName).IsRequired().HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.ShortName).IsRequired().HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.ObjectTableId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.DataTypeCode).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.LookUpTableId).HasMaxLength(15).IsUnicode(false);
@@ -73,12 +74,14 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DefaultAdditionalFilters).IsMaxLength().IsUnicode(true);
             this.Property(t => t.ForMetaDataOnly);
             this.Property(t => t.IsListFilter);
+            this.Property(t => t.ObjectFieldDataMapping).HasMaxLength(256).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ObjectFields");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.FieldName).HasColumnName("FieldName");
+            this.Property(t => t.ShortName).HasColumnName("ShortName");
             this.Property(t => t.MaxLength).HasColumnName("MaxLength");
             this.Property(t => t.IsRequiered).HasColumnName("IsRequiered");
             this.Property(t => t.IsCustom).HasColumnName("IsCustom");
@@ -166,6 +169,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DefaultAdditionalFilters).HasColumnName("DefaultAdditionalFilters");
             this.Property(t => t.ForMetaDataOnly).HasColumnName("ForMetaDataOnly");
             this.Property(t => t.IsListFilter).HasColumnName("IsListFilter");
+            this.Property(t=> t.ObjectFieldDataMapping).HasColumnName("ObjectFieldDataMapping");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

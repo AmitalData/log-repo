@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityPMs;
@@ -27,14 +27,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         AccountingPartnerRepository repository;
 
-        public AccountingPartnerQuery()
-        {
-            repository = new AccountingPartnerRepository();
-        }
-
+        //public AccountingPartnerQuery()
+        //{
+        //    repository = new AccountingPartnerRepository();
+        //}
+        int Tenant;
         public AccountingPartnerQuery(int tenant)
         {
             repository = new AccountingPartnerRepository(tenant);
+            Tenant = tenant;
         }
 
         public AccountingPartnerQuery(AccountingPartnerRepository repository)
@@ -101,7 +102,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                                              EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                                              SendingInterestReport=a.Card.SendingInterestReport,
-                                                             GLAccountId   =a.Card.GLAccountId
+                                                             GLAccountId   =a.Card.GLAccountId,
+                                                             ExternalSystem = a.Card.ExternalSystem,
+                                                             IsAutonomy = a.Card.IsAutonomy
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
@@ -196,6 +199,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Code = a.Card.Code,
                                                              EmailForSendingSingArinvoice=a.Card.EmailForSendingSingArinvoice,
                                                              SendingInterestReport=a.Card.SendingInterestReport,
+                                                             ExternalSystem = a.Card.ExternalSystem,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
@@ -289,7 +293,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              SendingInterestReport = a.Card.SendingInterestReport,
                                                              PartnerTypeId = a.Card.PartnerTypeId,
                                                              Code = a.Card.Code,
-                                                            
+                                                             ExternalSystem = a.Card.ExternalSystem,
+
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CreditLimit = a.CreditLimit,
@@ -462,7 +467,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<AccountingPartnerList> GetIQueryableEntityList(IQueryable<AccountingPartner> iQueryable)
         {
-            string objcetTableId = new ObjectTableQuery(0).GetObjectTableIdByName("Card");
+            string objcetTableId = new ObjectTableQuery(Tenant).GetObjectTableIdByName("Card");
             IQueryable<AccountingPartnerList> result = (from a in iQueryable.Include("Card").Include("Card")
                                                         join customFieldsMainObject in repository.context.CustomFieldsMainObjects.Where(d => d.ObjectTableId == objcetTableId) on a.Id equals customFieldsMainObject.EntityId into customFieldsMainObjectJoin
                                                         from customFieldsMainObject in customFieldsMainObjectJoin.DefaultIfEmpty()
@@ -617,6 +622,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                                              EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                                              SendingInterestReport = a.Card.SendingInterestReport,
+                                                             ExternalSystem = a.Card.ExternalSystem,
                                                          },
                                                          BillToId = a.Card.BillToId,
                                                          CollectorId = a.Card.CollectorId,

@@ -20,12 +20,12 @@ using Logitude.Social.BL.Helpers;
 using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -804,6 +804,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
             entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
+            entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
+            entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
+
         }
 
         private void ComputeContactFields()

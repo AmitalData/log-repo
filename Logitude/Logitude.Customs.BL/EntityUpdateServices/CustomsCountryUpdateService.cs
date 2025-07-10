@@ -11,13 +11,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.DataContracts;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CustomsCountryUpdateService : ICanUpdateClosedTable<CustomsCountryPM>
     {
 		public string userId;
-		protected override void OnUpdating(CustomsCountryPM entityPM, CustomsCountry entityPOCO)
+        protected override void OnCreating(CustomsCountryPM entityPM, EntityPM entityParentPM)
+        {
+			
+            base.OnCreating(entityPM, entityParentPM);
+        }
+        protected override void OnUpdating(CustomsCountryPM entityPM, CustomsCountry entityPOCO)
 		{
 			if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
 			{
@@ -36,8 +43,20 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 					tenant_def.Id = IdCounter.GetNumber("Customs.CustomsCountryTenant", Tenant);
 					tenant_def.Code = entityPM.Code;
 					tenant_def.UpdateDate = DateTime.Now;
-					tenant_def.UpdatedByUserId = userId;
-					tenant_def.Tenant = Tenant;
+					if(userId != null)
+                    {
+                        tenant_def.UpdatedByUserId = userId;
+                    }
+                    else
+					{
+                        ContactRepository contactRepository = new ContactRepository(Tenant);
+                        var systemUser = contactRepository.GetSingleContactByEmail("system@tenant" + Tenant + ".com", Tenant, true);
+						if(systemUser != null)
+						{
+                            tenant_def.UpdatedByUserId = systemUser.Id;
+                        } 
+                    }
+                    tenant_def.Tenant = Tenant;
 					definitionRep.Add(tenant_def);
 				}
 

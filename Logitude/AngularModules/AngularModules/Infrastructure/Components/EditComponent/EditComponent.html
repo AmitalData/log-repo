@@ -141,6 +141,10 @@
         color: gray;
         font-family: sans-serif;
     }
+    .disabled {
+      pointer-events: none; 
+      opacity: 0.5;
+    }
 </style>
  
 <LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"
@@ -265,7 +269,16 @@
                                                     <div #ShortTitle *ngIf="HasShortTitle"></div>
                                                 </div>
                                             </td>
-
+                                            <td>
+                                                <div *ngIf="IsLocked" style="width: 100%;text-align:center;position: absolute; top:0;z-index: 1;">
+                                                    <div class="DisbleBox">
+                                                       {{ DisplayLockMessage}}
+                                                        <span style="padding: 0px 16px;">-</span>
+                                                        <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+                                                
+                                                    </div>
+                                                </div>  
+                                            </td>
                                             <td style="width: 10px; min-width: 10px;">
                                                 <div></div>
                                             </td>
@@ -435,7 +448,7 @@
                                                     </td>
 
                                                     <td>
-                                                        <div class="MediaFill">
+                                                        <div class="MediaFill" [ngClass]="{'disabled': IsLocked}">
                                                             <div #TabControlBody></div>
                                                         </div>
                                                     </td>

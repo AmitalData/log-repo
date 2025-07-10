@@ -4,7 +4,7 @@ using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.MessagingServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -25,7 +25,7 @@ using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Customs.Data.EntityListQueryServices;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Reflection;
 using Logitude.Customs.Data.EntityLists;
@@ -896,9 +896,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
                 if (declaration != null && declaration.Consignments != null && declaration.Consignments.Count() > 0)
                 {
-                    var amitalContext = AmitalContext.GetContext(tenant);
-                    var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                    var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
                     FeatureQuery featureQuery = new FeatureQuery();
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
@@ -915,18 +912,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         }
                        
                     }
-
-                    if (def.DEFDATA.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                    string def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", tenant);
+                    def = def ?? "";
+                    if (def.Contains("ILMMN") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILMMN") // Maman
                     {
                         var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                         response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
                     }
-                    else if (def.DEFDATA.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
+                    else if (def.Contains("ILOVL") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL") // OVS
                     {
                         var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
                         response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(declarationId, tenant);
                     }
-                    else if (def.DEFDATA.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
+                    else if (def.Contains("ILSWS") && declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILSWS") // OVS
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                         response = courierECSWSTHRMessageRequestService.BuildQueueSendWebAPI(declarationId, tenant);

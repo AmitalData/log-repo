@@ -137,6 +137,7 @@
     Id="&quot;a003dbc8-d910-40c9-b89f-7f276f95006b&quot;"
     FieldName="&quot;ActivateCustomsManagementInShipments&quot;"
     ShortName="ActivateCustManagInShipments"
+
     OldNames="ActivateCustomsManagementInShipments,ActivateCustManagInShipments"
     IsNew="false"
     IsChecked="false"

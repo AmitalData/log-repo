@@ -1,6 +1,6 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,9 +17,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
     public class EntityResourceController : ApiController
     {
 
-        public HttpResponseMessage GetEntityResourceByTableName(string objectTableName, int tenant)
+        public HttpResponseMessage GetEntityResourceByTableName(string objectTableName)
         {
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            int tenant = authToken.Tenant;
+
             byte[] zipfilebyte = null;
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, tenant, false);

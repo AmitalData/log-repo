@@ -1872,6 +1872,46 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private int? _TOTALINVOICELINESNO;
 
+        /// <summary>
+        /// There are no comments for RESHIMONTYPEN in the schema.
+        /// </summary>
+        [System.Runtime.Serialization.DataMember]
+        public virtual string RIGHTOWNIDN
+        {
+            get
+            {
+                return _RIGHTOWNIDN;
+            }
+            set
+            {
+                if (_RIGHTOWNIDN != value)
+                {
+                    _RIGHTOWNIDN = value;
+                    OnPropertyChanged("RIGHTOWNIDN");
+                }
+            }
+        }
+        private string _RIGHTOWNIDN;
+
+       
+        [System.Runtime.Serialization.DataMember]
+        public virtual string SELLCONDITIONIDN
+        {
+            get
+            {
+                return _SELLCONDITIONIDN;
+            }
+            set
+            {
+                if (_SELLCONDITIONIDN != value)
+                {
+                    _SELLCONDITIONIDN = value;
+                    OnPropertyChanged("SELLCONDITIONIDN");
+                }
+            }
+        }
+        private string _SELLCONDITIONIDN;
+
         #endregion
 
         #region INotifyPropertyChanged Members

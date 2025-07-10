@@ -10,10 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+
 using Logitude.Accounting.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -383,7 +385,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-            entityPM.Inactive = entityPM.Inactive ?? false;
+
+
+
+
+
+            entityPM.Inactive = entityPM.Inactive ?? false;//Why there isn't init
 
 
 
@@ -461,7 +468,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
             cardPM.GLAccountId = glaccountId;
             cardPM.GLAccountDisplayNumber = displayNumber;
-            cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
+            //cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
             CardService cardService = new CardService(context, tenant);
             cardService.Update(cardPM);
         }
@@ -1707,6 +1714,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void AfterUpdating(GLAccountPM entityPM, EntityPM entityParentPM)
         {
             base.AfterUpdating(entityPM, entityParentPM);
+            // Update Card GLAccountId 
 
             UpdateCardGLAccountId(entityPM.Tenant, entityPM.NewGLAccountCardId, entityPM.Id);
             SendHybridTask(entityPM);
@@ -2276,7 +2284,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CardPM card = query.GetSinglePM(cardId, tenant);
                 card.GLAccountId = glAccountId;
                 card.GLAccountDisplayNumber = GetDisplayNumberFromGLAccount(glAccountId, tenant);
-                card.IsFromGlaAccountUpdate = true;
+                //card.IsFromGlaAccountUpdate = true;
                 service.Update(card);
             }
         }

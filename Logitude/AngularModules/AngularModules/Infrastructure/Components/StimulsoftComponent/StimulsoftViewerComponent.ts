@@ -27,6 +27,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ReportsTemplatePM } from '../../../Common/EntityPMs/ReportsTemplatePM';
 import { SchedulerReportMessageTemplateService } from './Services/SchedulerReportMessageTemplateService';
 import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
+import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 
 @Component({
 
@@ -104,8 +105,10 @@ export class StimulsoftViewerComponent implements OnInit {
     public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     private CurrentSession = SessionLocator.SelectedSession;
     private schedulerReportMessageTemplateService: SchedulerReportMessageTemplateService;
+    LayoutDirection: string = 'ltr';
 
     constructor() {
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
 
         this.FillFontSizeLists();
@@ -977,7 +980,6 @@ ResetEditableField(field: EditableFieldPosition){
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: reportId, ObjectTableName: "Report" });
-
                     cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
                         if (isSaveSuccess) {
                             var defultTemplateId: any = cmpRef.instance.EntityPM ? this.GetDefaultTemplate(cmpRef.instance.EntityPM) : "";

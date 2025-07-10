@@ -1,5 +1,5 @@
 ﻿
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -12,6 +12,7 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.Def.EntityPMs;
+using CWXSD;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -261,6 +262,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PaidDate = entityPM.PaidDate;
             entity.PaidStatus= entityPM.PaidStatus;
             entity.DocumentTemplateId = entityPM.DocumentTemplateId;
+            entity.ReferenceDate = entityPM.ReferenceDate;
 
             MapConcurrencyFields(entityPM, entity, isNewState);
         }

@@ -1,8 +1,8 @@
-﻿<View DBType="Main" Name="AllARPaymentChequesViews" Schema="dbo" Module="Accounting">
+﻿	<View DBType="Main" Name="AllARPaymentChequesViews" Schema="dbo" Module="Accounting">
 	<SqlScript>
 		<![CDATA[
-CREATE    view [dbo].[AllARPaymentChequesViews] as
-with trns as (select
+ CREATE OR ALTER  view [dbo].[AllARPaymentChequesViews] as
+ with trns as (select
 l.AccountId
 ,l.Id
 ,l.JournalLineNumber
@@ -14,7 +14,7 @@ l.AccountId
 ,l.Notes
 ,l.DueDate
 ,l.OppositeAccountId
-
+ 
 ,j.ExternalSystem
 ,j.AccountingEntityId
 ,j.tenant
@@ -38,9 +38,9 @@ trns.AccountingEntityReference,trns.LocalAmountCredit,trns.LocalAmountDebit,trns
 trns.journalnumber,trns.journalId as journalId,trns.AccountingEntityCode,trns.AccountingEntityId,chk.Code,chk.localname,chk.EnglishName,trns.Notes,chk.Id as ChequeId
 from trns
 inner join chk on trns.AccountingEntityId = chk.PaymentId and trns.JournalLineNumber= chk.LineNumber  and chk.Tenant = trns.Tenant
-
+ 
 union all
-
+ 
 select distinct  l.AccountId,l.id, l.tenant, l.DueDate,
 'J' as [type],
 j.AccountingEntityReference,l.LocalAmountCredit,l.LocalAmountDebit,l.ForeignAmountCredit,l.ForeignAmountDebit,l.reference1,l.reference2,l.reference3,
@@ -53,8 +53,8 @@ LedgerTransactions l inner join
 journals j
 on l.journalid= j.id  and l.Tenant = j.Tenant
 inner join GLAccounts g
-on  l.Tenant = g.Tenant and l.OppositeAccountId = g.Id
-where
+ on  l.Tenant = g.Tenant and l.OppositeAccountId = g.Id
+ where
 j.ExternalSystem is not null and l.DueDate > getdate()
 and l.LocalAmountCredit != 0 AND g.ChartOfAccountsTypeCode = '5';
     ]]>

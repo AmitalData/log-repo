@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -157,14 +157,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             string LogitudeCode = (from a in repository.Context.ComputingPartnerTranslations
                                   where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == tenant
-                                  && a.PartnerCode == PartnerCode
-                                  select a.OurCode).FirstOrDefault();
+                                  && a.PartnerCode.ToUpper() == PartnerCode.ToUpper()
+								   select a.OurCode).FirstOrDefault();
             if (LogitudeCode == null)
             {
                 LogitudeCode = (from a in repository.Context.ComputingPartnerTranslations
                                where a.ComputingPartnerId == computingPartnerId && a.ObjectTableId == objectTableId && a.Tenant == 0
-                               && a.PartnerCode == PartnerCode
-                               select a.OurCode).FirstOrDefault();
+                               && a.PartnerCode.ToUpper() == PartnerCode.ToUpper()
+								select a.OurCode).FirstOrDefault();
             }
 
             return LogitudeCode;

@@ -20,7 +20,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using Devart.Data.Linq;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -218,7 +217,7 @@ namespace WebFreight.Web.AccountingWebServices.Testers
                 var ac = new AccountBalanceByDateCodeService(null, param.Tenant, param.GLAccountId, null);
                 ac.ReSetAccountList(param.IncludeChildAccounts, param.IncludeRelatedCurrenciesAccount);
                 
-                ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.Accountingdate, param.accoutingDate,
+                ac.CalculateBalance(param.OpenBalancePlease_ReCalcYearTransfer,  GLAccountTotalDateTypeValues.AccountingDate, param.accoutingDate,
                     false,
                     param.includeAccoutingDateLTransaction,
                     

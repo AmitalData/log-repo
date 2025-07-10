@@ -84,7 +84,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                         if (DateTime.Now.Subtract(rabbitQueue.CreateAt) > TimeSpan.FromMilliseconds(2 * _TimeoutInMS))
                         {
                             _TimeoutX2++;
-                            Debug.WriteLine("Dequeue timeout - enqueue without work");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Dequeue timeout - enqueue without work");
                             continue;
                         }
                         if (channel?.IsClosed== true)
@@ -146,8 +146,8 @@ InterfaceTypeCode: rabbitQueue.InterfaceTypeCode,
                 {
                     _LastError = e.Message;
                     errCount++;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
-                    if (errCount > 20)
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"RabbitPublishWorker");
+                   if (errCount > 20)
                     {
                         errCount = 20;
                     }
@@ -164,9 +164,9 @@ InterfaceTypeCode: rabbitQueue.InterfaceTypeCode,
             {
                 _LastReportAt = DateTime.Now;
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
                     $"_TotalBasicPublish:{_TotalBasicPublish},_TimeoutHalfSEC:{_TimeoutHalfSEC},_TimeoutMoreHalfSEC{_TimeoutMoreHalfSEC},_TimeoutMore1SEC:{_TimeoutMore1SEC},_TimeoutMore5SEC:{_TimeoutMore5SEC},_TimeoutFail:{_TimeoutFail},_TimeoutX2:{_TimeoutX2}"
-                    );
+                   +":"+ "RabbitPublishWorker");
 
                 _TotalBasicPublish = _TimeoutHalfSEC =
                     _TimeoutMoreHalfSEC = _TimeoutMore1SEC = 

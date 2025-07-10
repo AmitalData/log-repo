@@ -5,6 +5,7 @@ import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTransla
 
 export class ConfirmWindow {
     public Top = '50%';
+    public ZIndex: number = 2;
     public Left = '50%';
     public Width: number = 320;
     public Height: number = 170;
@@ -89,7 +90,11 @@ export class ConfirmWindow {
 
         this.InstanceComponent = null;
     }
-
+   
+    public set message(newValue) {
+       if(this.InstanceComponent != null)
+          this.InstanceComponent.MultipleMessages = newValue.split('<br>');
+    }
 
 }
 
@@ -121,7 +126,9 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
     public ShowErorImage: boolean = false;
     public MultipleMessages: string[] = null;
     public IsMultipleMessages: boolean = false;
+    public ZIndex: number = 2;
     public MultipleMessagesHeight: string = "80px";
+
     LayoutDirection: string = 'ltr';
     public ShowCheckBox: boolean = false;
     public IsYesEnabled: boolean = true;
@@ -157,7 +164,7 @@ export class ConfirmWindowTemplateComponent implements AfterViewInit {
         this.IsOverAll = myWindow.IsOverAll;
         this.ShowWarningImage = myWindow.ShowWarningImage;
         this.ShowInfoImage = myWindow.ShowInfoImage;
-
+        this.ZIndex = myWindow.ZIndex;
         this.ShowErorImage = myWindow.ShowErorImage;
         this.MultipleMessages = myWindow.MultipleMessages;
         this.IsMultipleMessages = myWindow.IsMultipleMessages;

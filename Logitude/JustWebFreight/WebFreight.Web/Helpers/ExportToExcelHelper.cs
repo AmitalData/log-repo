@@ -269,17 +269,6 @@ namespace WebFreight.Web.Helpers
 						stop = true;
 					}
 				}
-				if (stop == false)
-				{
-					MethodsInfo = getMethodsInfo("WebFreight.Web.CustomModel.DomainServices.ClaimDomainService", query);
-					if (MethodsInfo != null)
-					{
-						getListMethodInfo = MethodsInfo.ListMethodInfo;
-						getCountMethodInfo = MethodsInfo.CountMethodInfo;
-						context = MethodsInfo.context;
-						stop = true;
-					}
-				}
 
 				if (stop == false)
 				{
@@ -950,6 +939,7 @@ namespace WebFreight.Web.Helpers
 			TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
 			TenantRepository tenantRepoitory = new TenantRepository(tenant);
 			var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
+
 			string queryName = !string.IsNullOrEmpty(query.DisplayText) && !string.IsNullOrEmpty( ExportToExcelHelper.GetValidFileName(query.DisplayText)) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
 
 			queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
@@ -1376,10 +1366,12 @@ namespace WebFreight.Web.Helpers
 
 							if (column.ObjectFieldDataTypeCode == "DateTime" && value != null)
 							{
-								// value = value.ToString("dd/MM/yyyy");
+
+
+
 
 								value = ((DateTime)value).ToString("dd/MM/yyyy");
-
+ 
 							}
 
 							cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
@@ -1415,7 +1407,6 @@ namespace WebFreight.Web.Helpers
 
 
 									cell.SetCellValue(bool.Parse(value));
-
 								}
 								else
 									SetCellValueWithMaxLength(cell, value.ToString());

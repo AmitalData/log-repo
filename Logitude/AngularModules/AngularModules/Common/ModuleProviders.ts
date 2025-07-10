@@ -229,6 +229,11 @@ import { MentionListService } from './Services/StandardLists/MentionListService'
 import { MentionPMService } from './Services/StandardPMs/MentionPMService';
 import { CarrierServiceLineListService } from './Services/StandardLists/CarrierServiceLineListService';
 import { WarehouseMenuButtonsHandler } from './Components/MenuButtons/WarehouseMenuButtonsHandler';
+import {ResponsibilityListService } from './Services/StandardLists/ResponsibilityListService';
+import { ExternalLinkListService } from './Services/StandardLists/ExternalLinkListService';
+import { ExternalLinkPMService } from './Services/StandardPMs/ExternalLinkPMService';
+import { DocumentsMetaDataTypeListService } from './Services/StandardLists/DocumentsMetaDataTypeListService';
+import { DocumentsMetaDataTypePMService } from './Services/StandardPMs/DocumentsMetaDataTypePMService';
  
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -462,6 +467,11 @@ export class ModuleProviders {
             case "HorseGenderListService": { myResult = new HorseGenderListService(); break; }
             case "PortGroupListService": { myResult = new PortGroupListService(); break; }
             case "PortGroupPMService": { myResult = new PortGroupPMService(); break; }
+            case "ResponsibilityListService": { myResult = new ResponsibilityListService(); break; }
+            case "DocumentsMetaDataTypeListService": { myResult = new DocumentsMetaDataTypeListService(); break; }
+            case "DocumentsMetaDataTypePMService": { myResult = new DocumentsMetaDataTypePMService(); break; }
+            case "ExternalLinkListService": { myResult = new ExternalLinkListService(); break; }
+            case "ExternalLinkPMService": { myResult = new ExternalLinkPMService(); break; }
          }
 
         return myResult;

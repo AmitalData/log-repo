@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -14,9 +14,9 @@ namespace WebFreight.Web.MetaDataUpdate
 {
     public partial class MetaDataUpdateClass
     {
-        public void LoadEntityStatus()
+        public void LoadEntityStatus(int tenant=0)
         {
-            ObjectContext = WebFreightContext.GetContext(0);
+            ObjectContext = WebFreightContext.GetContext(tenant);
             EntityStatusRepository = new EntityStatusRepository(ObjectContext);
 
             ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode("Shipment", 0);

@@ -2,20 +2,10 @@ import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTrans
 import { AppTool, DateTool, ArrayTool } from '../../Infrastructure/Tools';
 import { Validator } from '../../Infrastructure/Validators/Validator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import { InvoiceTool } from "../Tools";
-import { CurrencyList } from '../../Common/EntityLists/CurrencyList';
 import { VatTypeList } from '../../Common/EntityLists/VatTypeList';
-import { AccountingSystemList } from '../../Common/EntityLists/AccountingSystemList';
-import { ARInvoiceLinePM } from '../EntityPMs/ARInvoiceLinePM';
-import { InvoiceTotalsClass } from '../Args';
-import { AccountingSystemListService } from '../../Common/Services/StandardLists/AccountingSystemListService';
-import { CurrencyListService } from '../../Common/Services/StandardLists/CurrencyListService';
-import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceResponse';
-import { GroupByPipe } from '../../Infrastructure/Pipes/GroupByPipe';
 import { APInvoicePM } from '../EntityPMs/APInvoicePM';
-import { VATTypesGroupPM } from '../../Common/EntityPMs/VATTypesGroupPM';
 import { VatTypesValidator } from '../../Infrastructure/Validators/VatTypesValidator';
-import { FeatureLocator } from '../../Infrastructure/Utilities/FeatureLocator';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 export class APInvoiceValidator {
     private Errors: string[] = [];

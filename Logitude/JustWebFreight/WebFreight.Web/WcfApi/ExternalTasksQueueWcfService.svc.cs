@@ -10,7 +10,7 @@ using Logitude.SystemLogs;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -34,6 +34,10 @@ using WebFreight.Web.WebServices;
 using System.Data.Entity.Infrastructure;
 using Logitude.Customs.Data.EntityPOCOs;
 using System.Windows.Media.Effects;
+using System.Diagnostics;
+using Simplog.Global.Data.GlobalModel.Helpers;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -49,6 +53,8 @@ namespace WebFreight.Web.WcfApi
 #if !tzuri_req
         public Response GetDataCFIRDEC( Dictionary<string, string> queryParams, int tenant)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             var response = new Response();
             try
             {
@@ -218,8 +224,10 @@ namespace WebFreight.Web.WcfApi
                         }
                     }
                     response.HasError = false;
-                    //results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
-                    //results.Add("sql_query", sqlQuery);
+
+                    stopwatch.Stop();
+                    double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+                    if (log_level == "DEBUG") all_results.Add("ALL_SQL", elapsedSeconds.ToString());
                     response.Result = JsonConvert.SerializeObject(all_results);
                 }
                 return (response);
@@ -242,6 +250,8 @@ namespace WebFreight.Web.WcfApi
 
         void get_table_lines(string id,string sqlQuery,ref Dictionary<string, string> results, SqlConnection connection,string log_level)
         {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             List<List<string>> all_lines = new List<List<string>>();
             using (var cmd = new SqlCommand(sqlQuery, connection))
             {
@@ -265,7 +275,12 @@ namespace WebFreight.Web.WcfApi
 
                 }
             }
-            if (log_level == "DEBUG") results.Add($"{id}_SQL", sqlQuery);
+            if (log_level == "DEBUG")
+            {
+                stopwatch.Stop();
+                double elapsedSeconds = stopwatch.Elapsed.TotalSeconds;
+                results.Add($"{id}_SQL", $"{elapsedSeconds.ToString()}:{sqlQuery}");
+            }
             results.Add(id, JsonConvert.SerializeObject(all_lines));
             
             return;
@@ -304,17 +319,19 @@ namespace WebFreight.Web.WcfApi
             var response = new Response();
             try
             {
-                //tenant = 6;//temppppp
+                bool from_global = false;
+                if(queryParams.ContainsKey("from_global"))
+                {
+                    bool.TryParse(queryParams["from_global"], out from_global);
+                    queryParams.Remove("from_global");
+                }
 
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
-                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant1 = 0;
-                    if(authToken != null) tenant1 = authToken.Tenant; 
+                    if (authToken != null) tenant1 = authToken.Tenant;
                 }
 
                 if (tenant == 0)
@@ -326,14 +343,20 @@ namespace WebFreight.Web.WcfApi
 
                 if (queryId == "CFIRDEC")
                 {
-                    response = GetDataCFIRDEC(queryParams,  tenant);
+                    response = GetDataCFIRDEC(queryParams, tenant);
                     return (response);
                 }
-
-                List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();  // to do call once !!!!!!!!!!!!!!!!!!!!!!!!!
+                CFILOGIAPI sql_logi = new CFILOGIAPI();
+                List<CFILOGIAPI> logi_list = new List<CFILOGIAPI>();
                 logi_list = CFILOGIAPITask.GetLogiOcc();
-                CFILOGIAPI sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
-
+                if (queryId == "EXTERNAL_LOGIAPI")
+                {
+                    sql_logi = JsonConvert.DeserializeObject<CFILOGIAPI>(queryParams["CFILOGIAPI"]);
+                }
+                else
+                {
+                    sql_logi = logi_list.Where(x => x.CODE == queryId).FirstOrDefault();
+                }
                 if (sql_logi == null)
                 {
                     response.HasError = true;
@@ -355,24 +378,47 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
+                String remark ="";
 
-
-
-
-                //tenant = 6;
-                //string id = "1-110456";
                 Dictionary<string, string> results = new Dictionary<string, string>();
                 List<List<string>> all_lines = new List<List<string>>();
                 int rows_effected = 0;
                 var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
+                var GlobalContext = new Simplog.Global.Data.GlobalModel.GlobalContext();
+                if (sqlQuery.IndexOf("@NEXTNUM") > -1)
+                {
+                    sqlQuery = sqlQuery.Replace("@NEXTNUM", queryParams["NEXTNUM"]);
+                    sqlQuery = sqlQuery.Replace("@OFFSETNUM", queryParams["OFFSETNUM"]);
+                }
+                if (sqlQuery.IndexOf("@CLOSE_TABLE") > -1)
+                {
+                    sqlQuery = sqlQuery.Replace("@CLOSE_TABLE", queryParams["CLOSE_TABLE"]);
+                }
                 using (SqlConnection connection = new SqlConnection())
                 {
-                    connection.ConnectionString = shipmentsContext.Database.Connection.ConnectionString;
+                    if (from_global)
+                    {
+                        connection.ConnectionString = GlobalContext.Database.Connection.ConnectionString;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("global db : " + connection.ConnectionString);
+
+                        remark = "GlobalContext" + connection.ConnectionString;
+                    }
+                    else
+                    {
+                        GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+                        string DBConnection = currentDb.DBConnection;
+                        string[] sourceConnectionArray = DBConnection.Split(',');
+                        ConnectionStringArguments sourceConnectionStringArguments = GetConnectionStringArguments(sourceConnectionArray);
+                        string ConnectionString = BuildConnectionString(sourceConnectionStringArguments);
+                        
+                        connection.ConnectionString = ConnectionString;
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GlobalDB : " + connection.ConnectionString);
+                        remark = "GlobalDB tenant=" + tenant.ToString()+ " " + connection.ConnectionString;
+                    }
+                    
                     connection.Open();
-                    //sqlQuery = "SELECT IMPORTERID,ID from Customs.DECLARATIONS where (ID = @LOGITUDE_FILE ) AND TENANT = @Tenant";
                     using (var cmd = new SqlCommand(sqlQuery, connection))
                     {
-                        //cmd.Parameters.Add(new SqlParameter("@LOGITUDE_FILE", id));
                         foreach (var field in queryParams)
                         {
                             cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
@@ -386,7 +432,7 @@ namespace WebFreight.Web.WcfApi
                         {
                             using (SqlDataReader reader = cmd.ExecuteReader())
                             {
-                                
+
 
                                 if (reader.HasRows)
                                 {
@@ -410,6 +456,7 @@ namespace WebFreight.Web.WcfApi
                         results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
                         results.Add("sql_query", sqlQuery);
                         results.Add("rows_effected", rows_effected.ToString());
+                        results.Add("remark", remark);
                         response.Result = JsonConvert.SerializeObject(results);
                     }
                 }
@@ -430,14 +477,31 @@ namespace WebFreight.Web.WcfApi
             }
 
         }
+        public string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
+        {
+            string result = "Data Source=" + connectionStringArguments.Server +
+                            ";Initial Catalog=" + connectionStringArguments.Catalog +
+                            ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName +
+                            ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
+            return result;
+        }
+        private ConnectionStringArguments GetConnectionStringArguments(string[] connectionArray)
+        {
+            ConnectionStringArguments connectionStringArguments = new ConnectionStringArguments()
+            {
+                Catalog = connectionArray[0],
+                UserName = connectionArray[1],
+                Password = connectionArray[2],
+                Server = connectionArray[3],
+            };
+
+            return connectionStringArguments;
+        }
         public Response LGTQueryExample(string queryId, Dictionary<string, string> queryParams, int tenant)
         {
             var response = new Response();
             try
             {
-                //SecurityUtility.AuthenticationOnTenant(tenant);
-                //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ
-                //var context = Simplog.Data.ShipmentsModel.ShipmentsContext.GetContext(tenant);
 
                 tenant = 6;
                 string id = "1-110456";
@@ -494,7 +558,6 @@ namespace WebFreight.Web.WcfApi
             CommunicationLog commLog = null;
             QueueResponse queueResponse = null;
 			string result = null;
-			//BrokeredMessage message = null;
 			try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
@@ -505,7 +568,6 @@ namespace WebFreight.Web.WcfApi
                 }
 
 
-                //HttpContext.Current.Items.Add("workerrolename", "production");
 
                 string enableQueueWaitOnExternalWCFService = System.Configuration.ConfigurationManager.AppSettings.Get("EnableQueueWaitOnExternalWCFService");
                 TimeSpan queueWaitTime = new TimeSpan(0, 0, 0);
@@ -521,9 +583,7 @@ namespace WebFreight.Web.WcfApi
                 DbQueueService queueservice = new DbQueueService(queueName, tenant);//QueueServiceManager.GetQueueService(queueName, 0);
                 queueResponse = queueservice.Receive(queueWaitTime);
 
-                // QueueClient client = Communications.GetQueueClient("externaltasksqueue" + tenant + priority);
-
-                //message = client.Receive(new TimeSpan(0, 0, 20));
+ 
                 if (queueResponse.MessageId != null)
                 {
                     string communicationLogId = queueResponse.MessageValues["CommunicationLogId"].ToString();
@@ -568,7 +628,6 @@ namespace WebFreight.Web.WcfApi
                             queueservice.CompleteAsFailed();
 
                         }
-                        //envelope.Result = message.LockToken.ToString() + "," + communicationLogId;
 
 
                         result = LogitudeXmlSerializer.SerializeObjectToXmlString(envelope);

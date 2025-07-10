@@ -9,7 +9,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using System;
@@ -228,7 +228,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     invoice.StatusCode = ARInvoiceStatusValues.Paid;
                 }
                 else if (transaction.OpenAmount < transactionAmount)
-                {
+                 {
                     invoice.IsClosed = false;
                     invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
                 }
@@ -258,7 +258,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
             }
-
+ 
+ 
 
         }
 

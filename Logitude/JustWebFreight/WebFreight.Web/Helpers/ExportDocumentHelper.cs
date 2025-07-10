@@ -7,7 +7,7 @@ using System.Transactions;
 using System.Web.Services;
 using System.Xml.Serialization;
 using Microsoft.WindowsAzure.Storage;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
@@ -527,7 +527,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                         InterestPrintService service = new InterestPrintService();
                         InterestDataProvider InterestReportDP = service.LoadDataProvider(entityId, tenant);
                         BaseDataProviderService.FillBaseVariableFields(InterestReportDP, tenant);
-                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = service.InteerstReportPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = InterestReportDP }).Create(true);
+                        DocumentDataProvider documentDataProvider = new DocumentDataProviderGreator(new DocumentDataProviderArgs() { EntityPM = service.InterestReportPM, DocumentTypeTemplatePM = defaulttemplate, EntityId = entityId, DataProvider = InterestReportDP }).Create(true);
 
                         theT2 = System.DateTime.Now.Ticks;
                         StiBusinessObject currentBusinessObject = new StiBusinessObject() { Category = "ITDT", Name = "InterestDataProvider", BusinessObjectValue = documentDataProvider.BusinessObjectValue };

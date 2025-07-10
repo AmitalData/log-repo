@@ -6451,7 +6451,7 @@
     QuerySection="&quot;LedgerTransaction&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
@@ -7088,6 +7088,13 @@
       DefaultText="&quot;VAT Reporting&quot;"
       LocalDefaultTextBack_up="&quot;דווח המע&quot;מ&quot;"
       LocalDefaultText="&quot;BS64:IteT15XXldeXINeU157XoiLXniI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.ReconciledInDraft&quot;"
+      DefaultText="&quot;There are lines that have been reconciled, the references must be disconnected from the draft: &quot;"
+      LocalDefaultTextBack_up="&quot;ישנם שורות שהותאמו ,יש לנתק את האסמכתאות מהטיוטה: &quot;"
+      LocalDefaultText="&quot;BS64:IteZ16nXoNedINep15XXqNeV16og16nXlNeV16rXkNee15UgLNeZ16kg15zXoNeq16cg15DXqiDXlNeQ16HXnteb16rXkNeV16og157XlNeY15nXldeY15Q6ICI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

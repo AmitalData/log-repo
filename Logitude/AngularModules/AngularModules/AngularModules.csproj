@@ -12,8 +12,8 @@
     <ProjectGuid>{8C4068E8-9720-4679-8830-5717A446795D}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <OutputPath>bin</OutputPath>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
@@ -296,6 +296,7 @@
     <Content Include="CustomsModules\CustomsClaim\Components\SendClaim\SendClaimComponent.html" />
     <Content Include="CustomsModules\CustomsClient\Components\EditTabs\ClientPoa\ClientPoaTabComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.html" />
+    <Content Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationListComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.html" />
     <Content Include="CustomsModules\CustomsContainerization\Components\SendContainerization\SendContainerization.html" />
@@ -644,6 +645,7 @@
     <TypeScriptCompile Include="Common\Tools.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsClient\Components\EditTabs\ClientPoa\ClientPoaTabComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationGeneralComponent.ts" />
+    <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\EditTabs\ContainerizationListComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\NewEntity\NewContainerizationComponent.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\Other\AgentStatementContainerization.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsContainerization\Components\SendContainerization\SendContainerization.ts" />

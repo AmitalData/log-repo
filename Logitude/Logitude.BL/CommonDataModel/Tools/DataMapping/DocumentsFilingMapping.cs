@@ -2,7 +2,7 @@
 using System.Web;
 using System.Linq;
 using System.Collections.Generic;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -22,8 +22,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
 
             ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
-            //var resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
-            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant); //contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(entityPM.Tenant); 
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(entityPM.Tenant);
 
             DocumentType docType = documentTypeRepository.GetSingleDocumentTypes(entityPM.DocumentTypeId, entityPM.Tenant);
@@ -33,8 +32,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 poco.Tenant = entityPM.Tenant;
                 poco.CreateDate = entityPM.CreateDate;
                 poco.SecurityId = entityPM.SecurityId;
-            }
-            if (string.IsNullOrEmpty(entityPM.ForwarderDocumentId))
+				poco.IsFromCloud = entityPM.IsFromCloud;
+
+			}
+			if (string.IsNullOrEmpty(entityPM.ForwarderDocumentId))
             {
                 poco.ComputedForwarderDocumentId = entityPM.Id;
             }
@@ -148,9 +149,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.EntityNumber = entityPM.EntityNumber;
             poco.IsTransferdToQBO = entityPM.IsTransferdToQBO;
             poco.ReceivedByPartner = entityPM.ReceivedByPartner;
-        }
+			poco.IsFromCloud = entityPM.IsFromCloud;
 
-        private static void MapUpdatedByUserId(DocumentsFilingPM entityPM, DocumentsFiling poco, ContactPM loggedContact)
+		}
+
+		private static void MapUpdatedByUserId(DocumentsFilingPM entityPM, DocumentsFiling poco, ContactPM loggedContact)
         {
             if (string.IsNullOrEmpty(entityPM.UpdatedByUserId))
             {

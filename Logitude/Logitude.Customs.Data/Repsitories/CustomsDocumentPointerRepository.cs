@@ -12,7 +12,7 @@ using Simplog.Server.Infrastructure;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Runtime.Remoting.Contexts;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {

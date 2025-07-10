@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B5A12650-6521-4EC5-B7F2-DBBE9F88E89B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Shipment.MetaData</RootNamespace>
+    <AssemblyName>AmitalCloud.Shipment.MetaData</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoGenerators\ShipmentClassesGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShipmentClassesGenerator.tt</DependentUpon>
+    </Compile>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
+    <None Include="DBScripts\ShipmentModel\202302070144_UpdateVisionEventNames.sxml" />
+    <None Include="DBScripts\ShipmentModel\202211010300_AddNewSpecialHandlingCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202207210955_FillTransshipmentsRouting.soxml" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="EntityFiles\Master\Master.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\SpecialServicesType.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AutoGenerators\ShipmentClassesGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ShipmentClassesGenerator.cs</LastGenOutput>
+      <LastOutputs>.\ShipmentClassesGeneraor.cs</LastOutputs>
+    </Content>
+    <None Include="DBOthers\ShipmentsModel\Functions\BuildFullAddressTextFunction.sxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentPackages.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentPackages.dxml" />
+    <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202205191150_FillShipmentPackagesTypeAndQuantity.soxml" />
+    <None Include="DBScripts\ShipmentModel\202207192359_FillContainersTransshipmentsFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202207200042_FillShipmentNumberOfTransshipments.soxml" />
+    <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.soxml" />
+    <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
+    <None Include="DBScripts\ShipmentModel\202210101334_AddContainerStrippedEventAndStatus.sxml" />
+    <None Include="DBScripts\ShipmentModel\202220090925_FillShipmentDigitalFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
+    <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
+    <None Include="DBScripts\ShipmentModel\202223031230_UpdateAutomaticLastUpdateDateOnShipmentPackage.sxml" />
+    <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
+    <None Include="DBScripts\ShipmentModel\202211041202_SetConcurrencyGuidForOceanInsightsShipmentField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202227030327_SetConcurrencyGuidForContainer.sxml" />
+    <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
+    <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202302151452_AddHouseMasterNumberToShipmentsSearchFields.sxml.ignore" />
+    <None Include="DBScripts\ShipmentModel\202303120234_AddTrailerNumberFieldToShipmentSearchFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202303230231_FillContainerShipmentFinalLegDates.sxml" />
+    <None Include="DBScripts\ShipmentModel\202304051240_MarkDuplicatedShipmentsAsCancelled - logbox.sxml" />
+    <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
+    <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerDiscrepancy.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingProvider.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
+    <None Include="DBTables\ShipmentsModel\OceanInsightsStatusLog.dxml" />
+    <None Include="DBTables\ShipmentsModel\ReferenceType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentReferance.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDatePayableProratedAmounts.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateContainerStatuses.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateContainerStatuses.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDatePayableProratedAmounts.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateContainers.dxml" />
+    <None Include="DBScripts\InsertDBMigrationSettingsData.sxml" />
+    <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.ssxxml" />
+    <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBScripts\ShipmentModel\202103201130_CreateCalculatePayableVatOpenAmountFunction.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivables.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivablesOpenLines.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211610_FillVatAmountLocalVatAmountProfitInShipmentPayables.sxml" />
+    <None Include="DBScripts\ScreenField Unique index removal.sxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeForeignPartnerCountryCode.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeHouseShipmentStatusFunction.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeShipmentFirstApprovalDate.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_ComputeShipmentStatus.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_DeleteShipmentsDataByTenant.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_DeleteShipmentsDataByTenant_Jan2018.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateConstituentShipment.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateCustomConnectToShipment.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateInsidePackagesVolumetric.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePackagesVolumetric.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateReceivablesData.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentARInvoices.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentFinalArrivalDate.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentOperationalDate.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentProfit.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentProfitFunction.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentRegistryDate.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentsSearchFields.dxml" />
+    <None Include="DBOthers\ShipmentsModel\SearchFields\FillShipmentSearchFields.sxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentComputedFields.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentLevels.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentMasterData.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentMasterDatas.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentPayables.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentReceivables.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipments.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateSpecialServicesTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentComputedFields.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentReceivableStatus.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentPayableStatus.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentLevels.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentMasterDatas.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentPayables.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentReceivables.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipments.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateSpecialServicesTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentsCustomersDashboardView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentDirectionTransmodeView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentCountryDashboardView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\MessagingStockDataView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentDataView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\ShipmentFollowUpDataView.dxml" />
+    <None Include="DBScripts\ShipmentModel\202006111511_AddAirShipmentType.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006111515_AddShipmentSubTypesToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006140958_FillAirShipmentShipmentTypeField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202006141227_FillShipmentSubTypeBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202009031302_FillDataFromShipmentPackagesToShipmentComputedFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202008110940_SetIsBondedWarehouseField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202007051320_UpdateAirShipmentSubType.sxml" />
+    <None Include="DBScripts\ShipmentModel\202007051322_UpdateNotAirShipmentsSubType.sxml" />
+    <None Include="DBScripts\ShipmentModel\202009230840_AddNewSpecialHandlingCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202009281700_MapValuesFromIsBondedToIsCFS.sxml" />
+    <None Include="DBScripts\ShipmentModel\202012100302_ComputeMasterHousesAmounts.sxml" />
+    <None Include="DBScripts\ShipmentModel\202101100944_FillQuoteNumberOnShipmentBackward.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103141040_AddPreOnCarriageEventTypesAndStatus.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103181700_AddShipmentNumberToSearchFieldInCustomsTransferHeaders.sxml" />
+    <None Include="DBScripts\ShipmentModel\202101271225_AddNewSpecialHandlingCodes.sxml" />
+    <None Include="DBScripts\ShipmentModel\202102241906_UpdateCustomerContactAndAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202103211413_UpdateOnForwardingDepartedEventStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202104051350_UpdatePreForwardingArrivedStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106231043_FillShipmentPackagesContainerStatusSourceCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106171550_FillShipmentContainerStatuseSource.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106171540_FillContainerStatusSources.sxml" />
+    <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
+    <None Include="DBScripts\ShipmentModel\202106231025_AddOceatInsightUpdateEventToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107251340_TransferCargoDataFromCustomFieldsToGenericFields.ssxxml" />
+    <None Include="DBScripts\ShipmentModel\202107071258_UpdateHorseShipmentSubTypeCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
+    <None Include="DBScripts\ShipmentModel\202108260927_UpdateContainersFieldsFromShipmentField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202109021032_FillDomesticFromToAdPartner.sxml" />
+    <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnShipment.soxml" />
+    <None Include="DBScripts\ShipmentModel\202202141010_UpdateAutomaticLastUpdateDateOnPayableProratedAmounts.sxml" />
+    <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
+    <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
+    <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
+    <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\UpdateAutomaticLastUpdateDateOnContainer.sxml" />
+    <Content Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.txt" />
+    <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.soxml" />
+    <None Include="DBScripts\202005311656_DeleteDuplicatedQueuesWR Batch Definition.sxml" />
+    <None Include="DBTables\ShipmentsModel\AccountingInformationIdentifier.dxml" />
+    <None Include="DBTables\ShipmentsModel\AWBAdditionalHandlingInfo.dxml" />
+    <None Include="DBTables\ShipmentsModel\AWBChargesCode.dxml" />
+    <None Include="DBTables\ShipmentsModel\AWBCustomsInformation.dxml" />
+    <None Include="DBTables\ShipmentsModel\AWBInformation.dxml" />
+    <None Include="DBTables\ShipmentsModel\AWBOCI.dxml" />
+    <None Include="DBTables\ShipmentsModel\AWBSpecialHandlingCode.dxml" />
+    <None Include="DBTables\ShipmentsModel\AWBStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\Container.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\CustomsTransferHeader.dxml" />
+    <None Include="DBTables\ShipmentsModel\CustomsTransferLine.dxml" />
+    <None Include="DBTables\ShipmentsModel\CustomsTransferType.dxml" />
+    <None Include="DBTables\ShipmentsModel\CustomsTransmissionsStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\FBLStock.dxml" />
+    <None Include="DBTables\ShipmentsModel\FHLStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\FWBStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\HarmonizeCode.dxml" />
+    <None Include="DBTables\ShipmentsModel\InsideShipmentPackage.dxml" />
+    <None Include="DBTables\ShipmentsModel\INTTRABookingStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\INTTRABookingTransStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\INTTRASIStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\INTTRAStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsRequest.dxml" />
+    <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsResponse.dxml" />
+    <None Include="DBTables\ShipmentsModel\ManifestStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\MessagingStock.dxml" />
+    <None Include="DBTables\ShipmentsModel\MessagingStockUsageHistory.dxml" />
+    <None Include="DBTables\ShipmentsModel\NextLeg.dxml" />
+    <None Include="DBTables\ShipmentsModel\OBLType.dxml" />
+    <None Include="DBTables\ShipmentsModel\OceanInsightsRequest.dxml" />
+    <None Include="DBTables\ShipmentsModel\OceanInsightsRequestsCount.dxml" />
+    <None Include="DBTables\ShipmentsModel\OceanInsightsStatuses.dxml" />
+    <None Include="DBTables\ShipmentsModel\OtherParticipantId.dxml" />
+    <None Include="DBTables\ShipmentsModel\PayableProratedAmount.dxml" />
+    <None Include="DBTables\ShipmentsModel\PickUpDeliveryFromToType.dxml" />
+    <None Include="DBTables\ShipmentsModel\PickUpDeliveryPackageHarmonize.dxml" />
+    <None Include="DBTables\ShipmentsModel\PickUpDeliveryTransportMode.dxml" />
+    <None Include="DBTables\ShipmentsModel\PickUpDeliveryType.dxml" />
+    <None Include="DBTables\ShipmentsModel\Shipment.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentAdditionalCloudData.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentAssembly.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentAWBPrintOnly.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentCarrierStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentCommodity.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentComputedFields.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentContainerStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentCustomerType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentCustomsMessageType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentCustomsTransmission.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentLevel.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentMasterData.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentOrderPackage.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPackage.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPackageHarmonize.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPackageItem.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPayable.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPayableAmountType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPayableLineStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPayableStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPickUpDelivery.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentPickUpDeliveryPackage.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentReceivable.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentReceivableLineStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentReceivableStatus.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentStoragePricing.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentSubType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentType.dxml" />
+    <None Include="DBTables\ShipmentsModel\SpecialServicesType.dxml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="EntityFiles\AccountingInformationIdentifier.lxml" />
+    <None Include="EntityFiles\AWBAdditionalHandlingInfo.lxml" />
+    <None Include="EntityFiles\AWBChargesCode.lxml" />
+    <None Include="EntityFiles\AWBCustomsInformation.lxml" />
+    <None Include="EntityFiles\AWBInformation.lxml" />
+    <None Include="EntityFiles\AWBOCI.lxml" />
+    <None Include="EntityFiles\AWBSpecialHandlingCode.lxml" />
+    <None Include="EntityFiles\CommodityPackage.lxml" />
+    <None Include="EntityFiles\Container.lxml" />
+    <None Include="EntityFiles\ContainerDiscrepancy.lxml" />
+    <None Include="EntityFiles\ContainerFollowUp.lxml" />
+    <None Include="EntityFiles\ContainersExternalData.lxml" />
+    <None Include="EntityFiles\ContainerStatus.lxml" />
+    <None Include="EntityFiles\ContainerStatusSource.lxml" />
+    <None Include="EntityFiles\ContainerTrackingProvider.lxml" />
+    <None Include="EntityFiles\ContainerTrackingRequest.lxml" />
+    <None Include="EntityFiles\ContainerTrackingResponse.lxml" />
+    <None Include="EntityFiles\CustomsTransferHeader.lxml" />
+    <None Include="EntityFiles\CustomsTransferLine.lxml" />
+    <None Include="EntityFiles\CustomsTransferType.lxml" />
+    <None Include="EntityFiles\CustomsTransmissionsStatus.lxml" />
+    <None Include="EntityFiles\FBLStock.lxml" />
+    <None Include="EntityFiles\HarmonizeCode.lxml" />
+    <None Include="EntityFiles\InsideShipmentPackage.lxml" />
+    <None Include="EntityFiles\INTTRABookingStatus.lxml" />
+    <None Include="EntityFiles\INTTRABookingTransStatus.lxml" />
+    <None Include="EntityFiles\INTTRADocumentType.lxml" />
+    <None Include="EntityFiles\ManifestStatus.lxml" />
+    <None Include="EntityFiles\MessagingStock.lxml" />
+    <None Include="EntityFiles\MessagingStockUsageHistory.lxml" />
+    <None Include="EntityFiles\OBLType.lxml" />
+    <None Include="EntityFiles\OtherParticipantId.lxml" />
+    <None Include="EntityFiles\PayableProratedAmount.lxml" />
+    <None Include="EntityFiles\PickUpDeliveryFromToType.lxml" />
+    <None Include="EntityFiles\PickUpDeliveryPackageHarmonize.lxml" />
+    <None Include="EntityFiles\PickUpDeliveryTransportMode.lxml" />
+    <None Include="EntityFiles\ReferenceType.lxml" />
+    <None Include="EntityFiles\Shipment.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentAssembly.lxml" />
+    <None Include="EntityFiles\ShipmentAWBPrintOnly.lxml" />
+    <None Include="EntityFiles\ShipmentCommodity.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentComputedFields.lxml" />
+    <None Include="EntityFiles\ShipmentCustomerType.lxml" />
+    <None Include="EntityFiles\ShipmentCustomsMessageType.lxml" />
+    <None Include="EntityFiles\ShipmentCustomsTransmission.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentDigitalField.lxml" />
+    <None Include="EntityFiles\ShipmentLevel.lxml" />
+    <None Include="EntityFiles\ShipmentOrderPackage.lxml" />
+    <None Include="EntityFiles\ShipmentPackage.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentPackageHarmonize.lxml" />
+    <None Include="EntityFiles\ShipmentPackageItem.lxml" />
+    <None Include="EntityFiles\ShipmentPayable.lxml" />
+    <None Include="EntityFiles\ShipmentPayableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentPickUpDelivery.lxml" />
+    <None Include="EntityFiles\ShipmentPickUpDeliveryPackage.lxml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="EntityFiles\ShipmentProductItem.lxml" />
+    <None Include="EntityFiles\ShipmentReceivable.lxml" />
+    <None Include="EntityFiles\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentReferance.lxml" />
+    <None Include="EntityFiles\ShipmentStoragePricing.lxml" />
+    <None Include="EntityFiles\ShipmentSubType.lxml" />
+    <None Include="EntityFiles\ShipmentType.lxml" />
+    <None Include="EntityFiles\ShipmentUnassignedField.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

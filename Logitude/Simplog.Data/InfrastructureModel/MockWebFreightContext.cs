@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Linq;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
 
-//using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 
 namespace Simplog.Data.InfrastructureModel
@@ -21,17 +20,10 @@ namespace Simplog.Data.InfrastructureModel
         public MockObjectSet<Country> CountriesList;
         public MockObjectSet<GlobalZone> GlobalZonesList;
         private MockObjectSet<User> usersList;
-        //private MockObjectSet<Contact> contactsList;
-        //private MockObjectSet<ContactTenant> contactTenantsList;
-        //private MockObjectSet<Tenant> tenantList;
-        //private MockObjectSet<ContactTenantRole> contactTenantRolesList;
-        //private MockObjectSet<Role> rolesList;
         private MockObjectSet<TransportMode> transportModeList;
         private MockObjectSet<EntityStatus> entityStatusList;
         private MockObjectSet<FollowUp> followUpList;
         private MockObjectSet<Counter> counterList;
-        //private MockObjectSet<EventType> eventTypeList;
-        //private MockObjectSet<ObjectTable> objectTableList;
 
         #region IWebFreightContext Members
 
@@ -2134,6 +2126,9 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations => throw new NotImplementedException();
 
         public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey => throw new NotImplementedException();
+        public IDbSet<SearchIndex> SearchIndexes => throw new NotImplementedException();
+        public IDbSet<SearchIndexTenantHistory> SearchIndexTenantHistories => throw new NotImplementedException();
+
 
     }
 }

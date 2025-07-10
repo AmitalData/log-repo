@@ -113,7 +113,7 @@ namespace RabbitMQSRV.Testers
                 catch (Exception eee)
                 {
 
-                    Debug.WriteLine($"{Thread.CurrentThread.Name}:{x}:success=false,{eee.Message}");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{Thread.CurrentThread.Name}:{x}:success=false,{eee.Message}");
                 }
              
                 

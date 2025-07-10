@@ -22,7 +22,8 @@ using Logitude.Customs.BL.Messaging.Maman;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Unifreight.BL.EntityPMs.UGenerated;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.Server.Tools.Contracts;
 using Logitude.Server.Tools;
@@ -169,6 +170,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             this.CloseCustomsCollateral(declarationPM);
 
                            
+
 
                             if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
                             {
@@ -507,7 +509,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true,isExport: true);
 
 
 

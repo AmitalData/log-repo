@@ -1,5 +1,5 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
@@ -32,7 +32,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             tab.Type = tabPM.Type;
             tab.OriginalTabCode = tabPM.OriginalTabCode;
             tab.IndexOrder = tabPM.IndexOrder;
-
+            tab.IsLocked = tabPM.IsLocked;
             return tab;
         }
     }

@@ -6,7 +6,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -31,7 +31,7 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityQueries;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public partial class CopyFromTenant0ExtendedController : ApiController
     {

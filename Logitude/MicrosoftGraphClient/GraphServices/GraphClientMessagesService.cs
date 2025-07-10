@@ -19,12 +19,12 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Message Get(string messageId)
         {
-            return GraphAPICaller.Call<Message>(new GraphAPICallerParameters { Url = Url + "/" + messageId, AccessToken = AccessToken, Method = Method.GET });
+            return GraphAPICaller.Call<Message>(new GraphAPICallerParameters { Url = Url + "/" + messageId, AccessToken = AccessToken, Method = Method.Get });
         }
 
         public string GetEml(string messageId)
         {
-            return GraphAPICaller.Call(new GraphAPICallerParameters { Url = Url + "/" + messageId + "/$value", AccessToken = AccessToken, Method = Method.GET });
+            return GraphAPICaller.Call(new GraphAPICallerParameters { Url = Url + "/" + messageId + "/$value", AccessToken = AccessToken, Method = Method.Get });
         }
     }
 }

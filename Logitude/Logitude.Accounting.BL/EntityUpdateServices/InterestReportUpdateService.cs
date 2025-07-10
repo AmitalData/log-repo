@@ -12,7 +12,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -352,6 +352,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             autoCreditInvoice.Tenant = aRInvoice.Tenant;
             autoCreditInvoice.HasInterestFeature = true;
             autoCreditInvoice = CreateautoCreditInvoiceLines(autoCreditInvoice, aRInvoice);
+            autoCreditInvoice.ReferenceDate = aRInvoice.ReferenceDate;
             return autoCreditInvoice;
 
         }

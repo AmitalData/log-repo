@@ -298,9 +298,9 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;SchedulerProcedure&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;nText&quot;"
     MinLength="0"
-    MaxLength="1000"
+    MaxLength="2000"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="true"
@@ -309,7 +309,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="1000"
+    SystemMaxLength="2000"
     DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
@@ -631,6 +631,12 @@
       SearchFields="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
       Description="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
       IsInternallyDefined="false" />
+    <Record
+      Code="&quot;InvoiceApiQueryTask&quot;"
+      Name="&quot;InvoiceApiQueryTask&quot;"
+      SearchFields="&quot;InvoiceApiQueryTask&quot;"
+      IsInternallyDefined="false"
+      Description="&quot;InvoiceApiQueryTask&quot;" />
     <Record
       Code="&quot;ReconcileInProgressCleanupTask&quot;"
       Name="&quot;ReconcileInProgressCleanupTask&quot;"

@@ -1,6 +1,6 @@
 ﻿using System;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Collections.Generic;
 using System.Linq;

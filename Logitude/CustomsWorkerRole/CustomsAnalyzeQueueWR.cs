@@ -9,7 +9,7 @@ using Microsoft.ServiceBus.Messaging;
 //using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using System;
@@ -234,8 +234,8 @@ update  BATCHSERVICESDEFINITIONMODS  set  NUMBEROFTHREADS =3 where CODE='SendWEB
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 
-                    _IQueueService = new DbQueueService();
-                    _IQueueService.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), 0);
+					_IQueueService = new DbQueueService();
+                    _IQueueService.InitializeQueue(SBQueueNames.AnalyzeQueueMQ.ToString(), SettingUtil.GetTenantDBFromConfig());
 
 
                     using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())

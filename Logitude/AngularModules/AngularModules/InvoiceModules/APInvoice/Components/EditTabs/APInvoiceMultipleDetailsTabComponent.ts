@@ -44,7 +44,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     public ItemsSource: MultipleShipmentLine[] = [];
     public LocalCurrencyId: string;
     public LocalCurrencyCode: string;
-    public IsEditExchangeRateVisible: boolean = false;
+    public IsEditExchangeRateVisible: boolean = true;
     public isRTL: boolean = false;
     public apiQueryFilters: ApiQueryFilters = null;
     private CurrentSession = SessionLocator.SelectedSession;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -234,6 +234,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             item.VendorName = vendorCard.EnglishName;
                         }
                     }
+                    
 
                    
                     if (!string.IsNullOrEmpty(item.VatTypeId))
@@ -268,6 +269,16 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         item.PayableDebitGLAcountName = PayableDebitGLAcount.LocalName;
 
 
+                    }
+                    else
+                    {
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(tenant);
+                        CurrencyRepository currencyRepository = new CurrencyRepository(myCommonContext);
+                        Currency foreignCurrency = currencyRepository.GetSingleCurrency(item.ForiegnCurrencyId, tenant);
+                        if (foreignCurrency != null)
+                        {
+                            item.ForiegnCurrencyCode = foreignCurrency.Code;
+                        }
                     }
                 }
             }

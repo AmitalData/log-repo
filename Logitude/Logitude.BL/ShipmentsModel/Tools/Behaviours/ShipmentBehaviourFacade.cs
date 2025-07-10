@@ -32,7 +32,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         public void Handle(List<FieldChange> fieldChanges = null)
         {
             updateShipmentComputedFields.Handle(fieldChanges);
-            updateCrossDocks.Handle();
+            if (shipmentPM.DirectionId != "C")
+            {
+                updateCrossDocks.Handle();
+            }
             ReceivablePricingUpdated_CrossDoc = updateCrossDocks.ReceivablePricingUpdated;
             DatesUpdated_CrossDoc = updateCrossDocks.DatesFromCrossDocsUpdated;
         }

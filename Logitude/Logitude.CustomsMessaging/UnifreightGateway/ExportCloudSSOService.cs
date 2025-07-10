@@ -39,7 +39,8 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Simplog.Data.CommonDataModel;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.UnifreightGateway
 {
@@ -99,11 +100,15 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
             Simplog.Data.CommonDataModel.EntityPOCOs.Contact contact =null;
             if (!string.IsNullOrWhiteSpace(unifreightUser))
             {
-                var userRepository = new UserRepository();
+                var userRepository = new UserRepository(itenant);
                 var user =userRepository.GetSingleUserByCode(unifreightUser, itenant, true);
-                if (!string.IsNullOrWhiteSpace(user?.Id))    
+                if (!string.IsNullOrWhiteSpace(user?.Id))
                 {
-                    contact = contactRep.GetSingleContactByIdAndTenant(user?.Id, itenant, true);
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
+                    {
+                        contact = contactRep.GetSingleContactByIdAndTenant(user?.Id, itenant, true);
+                        scope.Complete();
+                    }
                 }
                 
             }

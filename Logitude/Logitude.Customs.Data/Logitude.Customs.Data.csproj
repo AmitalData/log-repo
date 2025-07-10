@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Customs.Data</RootNamespace>
     <AssemblyName>Logitude.Customs.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -18,12 +19,14 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE;DEBUG;ORACLE_DB</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,14 +34,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\All Projects\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,7 +49,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>bin\None\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -82,111 +85,106 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Azure.Core, Version=1.33.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Core.1.33.0\lib\net461\Azure.Core.dll</HintPath>
+    <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Azure.Search.Documents, Version=11.4.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Azure.Search.Documents.11.4.0\lib\netstandard2.0\Azure.Search.Documents.dll</HintPath>
+    <Reference Include="Azure.Search.Documents, Version=11.5.1.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Search.Documents.11.5.1\lib\netstandard2.0\Azure.Search.Documents.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=9.9.872.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Entity, Version=8.2.103.6, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Oracle.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle.Web, Version=9.6.621.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle.Web, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Web.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.1\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.6.0.1\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
-    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
+    <Reference Include="System.Diagnostics.PerformanceCounter, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.8.0.0\lib\net462\System.Diagnostics.PerformanceCounter.dll</HintPath>
     </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory.Data, Version=1.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.Data.1.0.2\lib\net461\System.Memory.Data.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.TypeExtensions.4.7.0\lib\net461\System.Reflection.TypeExtensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.7.1\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
     </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Text.Encodings.Web, Version=4.0.5.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.4.7.2\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.4.7.2\lib\net461\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
@@ -337,6 +335,7 @@
     <Compile Include="EntityKeys\CustomsItemGroupKeys.cs" />
     <Compile Include="EntityKeys\CustomsItemHierarchicLocationKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
+    <Compile Include="EntityKeys\CustomsPaymentTermKeys.cs" />
     <Compile Include="EntityKeys\CustomsShipKeys.cs" />
     <Compile Include="EntityKeys\DBMigrationKeys.cs" />
     <Compile Include="EntityKeys\DBMigrationLineKeys.cs" />
@@ -360,6 +359,7 @@
     <Compile Include="EntityKeys\DefaultTypeKeys.cs" />
     <Compile Include="EntityKeys\DefaultValueKeys.cs" />
     <Compile Include="EntityKeys\DeficitDecisionKeys.cs" />
+    <Compile Include="EntityKeys\DeficitKeys.cs" />
     <Compile Include="EntityKeys\DeliveryTypeKeys.cs" />
     <Compile Include="EntityKeys\DiscountTypeRegulationKeys.cs" />
     <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
@@ -372,6 +372,7 @@
     <Compile Include="EntityKeys\ExportLogisticPermitActionKeys.cs" />
     <Compile Include="EntityKeys\ExportReferenceKeys.cs" />
     <Compile Include="EntityKeys\ExportStorageKeys.cs" />
+    <Compile Include="EntityKeys\ExportStorgeKeys.cs" />
     <Compile Include="EntityKeys\ExternalFieldMappingKeys.cs" />
     <Compile Include="EntityKeys\FclLclCodeKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
@@ -400,6 +401,7 @@
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
     <Compile Include="EntityKeys\NbcDeclarationTypeKeys.cs" />
     <Compile Include="EntityKeys\NDMessageActionCodeKeys.cs" />
+    <Compile Include="EntityKeys\NUnicloudKeys.cs" />
     <Compile Include="EntityKeys\OcrDocumentKeys.cs" />
     <Compile Include="EntityKeys\OcrStatusKeys.cs" />
     <Compile Include="EntityKeys\OriginCriterionKeys.cs" />
@@ -412,6 +414,7 @@
     <Compile Include="EntityKeys\PhysicalCheckSearchResultTypeKeys.cs" />
     <Compile Include="EntityKeys\PoaStatusTypeLookUpKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
+    <Compile Include="EntityKeys\ProceduralFaultKeys.cs" />
     <Compile Include="EntityKeys\QuotaComputationBasisKeys.cs" />
     <Compile Include="EntityKeys\QuotaIncrementKeys.cs" />
     <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
@@ -425,6 +428,7 @@
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
     <Compile Include="EntityKeys\RemarksClassificationKeys.cs" />
     <Compile Include="EntityKeys\RenewalMethodKeys.cs" />
+    <Compile Include="EntityKeys\RequestHandlingAuthorityKeys.cs" />
     <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
     <Compile Include="EntityKeys\RequestReasonCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
@@ -437,6 +441,8 @@
     <Compile Include="EntityKeys\SeizureMethodTypeKeys.cs" />
     <Compile Include="EntityKeys\SignStationKeys.cs" />
     <Compile Include="EntityKeys\ServersNameKeys.cs" />
+    <Compile Include="EntityKeys\SIIRequestKeys.cs" />
+    <Compile Include="EntityKeys\SIIRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\SplitOrMergeReasonKeys.cs" />
     <Compile Include="EntityKeys\StatusCodeKeys.cs" />
     <Compile Include="EntityKeys\StatusFieldTypeKeys.cs" />
@@ -446,6 +452,7 @@
     <Compile Include="EntityKeys\SupplierInvioceExportDefaultKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvioceItemCertificatDefaultKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceItemsPriceKeys.cs" />
+    <Compile Include="EntityKeys\SupplierInvoiceItemsReqListKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
     <Compile Include="EntityKeys\SupplierPartyTypeKeys.cs" />
@@ -573,6 +580,7 @@
     <Compile Include="EntityListQueryServices\CustomsItemGroupListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsItemHierarchicLocationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsPaymentTermListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsShipListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DBMigrationLineListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DBMigrationListQueryService.cs" />
@@ -596,6 +604,7 @@
     <Compile Include="EntityListQueryServices\DefaultTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DefaultValueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitDecisionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DeficitListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeliveryTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DiscountTypeRegulationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
@@ -725,6 +734,7 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsItemGroupListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsItemHierarchicLocationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsPaymentTermListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsShipListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DBMigrationLineListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DBMigrationListQueryService.Generated.cs" />
@@ -748,6 +758,7 @@
     <Compile Include="EntityListQueryServices\Generated\DefaultTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DefaultValueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitDecisionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DeficitListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeliveryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DiscountTypeRegulationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
@@ -787,6 +798,7 @@
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\NbcDeclarationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\NDMessageActionCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\NUnicloudListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrDocumentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OriginCriterionListQueryService.Generated.cs" />
@@ -799,6 +811,7 @@
     <Compile Include="EntityListQueryServices\Generated\PhysicalCheckSearchResultTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PoaStatusTypeLookUpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ProceduralFaultListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuotaComputationBasisListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\QuotaIncrementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
@@ -812,6 +825,7 @@
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RemarksClassificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RenewalMethodListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RequestHandlingAuthorityListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestReasonCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
@@ -823,6 +837,9 @@
     <Compile Include="EntityListQueryServices\Generated\SeizureFactorTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SeizureMethodTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ServersNameListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SignStationListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SIIRequestListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SIIRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SplitOrMergeReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\StatusFieldTypeListQueryService.Generated.cs" />
@@ -832,6 +849,7 @@
     <Compile Include="EntityListQueryServices\Generated\SupplierInvioceExportDefaultListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvioceItemCertificatDefaultListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsPriceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceItemsReqListListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierPartyTypeListQueryService.Generated.cs" />
@@ -870,6 +888,7 @@
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\NbcDeclarationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\NDMessageActionCodeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\NUnicloudListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrDocumentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OriginCriterionListQueryService.cs" />
@@ -895,6 +914,7 @@
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RemarksClassificationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RenewalMethodListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RequestHandlingAuthorityListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestReasonCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
@@ -906,6 +926,9 @@
     <Compile Include="EntityListQueryServices\SeizureFactorTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SeizureMethodTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ServersNameListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SignStationListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SIIRequestListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SIIRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SplitOrMergeReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\StatusFieldTypeListQueryService.cs" />
@@ -915,6 +938,7 @@
     <Compile Include="EntityListQueryServices\SupplierInvioceExportDefaultListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvioceItemCertificatDefaultListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceItemsPriceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SupplierInvoiceItemsReqListListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierPartyTypeListQueryService.cs" />
@@ -987,16 +1011,20 @@
     <Compile Include="EntityLists\Generated\CustomsItemCategoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemGroupList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemHierarchicLocationList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsPaymentTermList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DeficitList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DiscountTypeRegulationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntryExitTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterConditionsRelationshipList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\NUnicloudList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PerYearFrequencyList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ProceduralFaultInSourceTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaIncrementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RegularityPublicationList.Generated.cs" />
@@ -1005,10 +1033,14 @@
     <Compile Include="EntityLists\Generated\RemarksClassificationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RenewalMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LevyTrustList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RequestHandlingAuthorityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SIIRequestList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SIIRequestStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestReasonCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceItemCertificatDefaultList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SupplierInvoiceItemsReqListList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TarifRelatedToQuotaList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TradeLevyStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
@@ -1282,6 +1314,7 @@
     <Compile Include="EntityMapping\CustomsItemGroupMap.cs" />
     <Compile Include="EntityMapping\CustomsItemHierarchicLocationMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
+    <Compile Include="EntityMapping\CustomsPaymentTermMap.cs" />
     <Compile Include="EntityMapping\CustomsShipMap.cs" />
     <Compile Include="EntityMapping\DBMigrationLineMap.cs" />
     <Compile Include="EntityMapping\DBMigrationMap.cs" />
@@ -1305,6 +1338,7 @@
     <Compile Include="EntityMapping\DefaultTypeMap.cs" />
     <Compile Include="EntityMapping\DefaultValueMap.cs" />
     <Compile Include="EntityMapping\DeficitDecisionMap.cs" />
+    <Compile Include="EntityMapping\DeficitMap.cs" />
     <Compile Include="EntityMapping\DeliveryTypeMap.cs" />
     <Compile Include="EntityMapping\DiscountTypeRegulationMap.cs" />
     <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
@@ -1345,6 +1379,7 @@
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
     <Compile Include="EntityMapping\NbcDeclarationTypeMap.cs" />
     <Compile Include="EntityMapping\NDMessageActionCodeMap.cs" />
+    <Compile Include="EntityMapping\NUnicloudMap.cs" />
     <Compile Include="EntityMapping\OcrDocumentMap.cs" />
     <Compile Include="EntityMapping\OcrStatusMap.cs" />
     <Compile Include="EntityMapping\OriginCriterionMap.cs" />
@@ -1357,6 +1392,7 @@
     <Compile Include="EntityMapping\PhysicalCheckSearchResultTypeMap.cs" />
     <Compile Include="EntityMapping\PoaStatusTypeLookUpMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
+    <Compile Include="EntityMapping\ProceduralFaultMap.cs" />
     <Compile Include="EntityMapping\QuotaComputationBasisMap.cs" />
     <Compile Include="EntityMapping\QuotaIncrementMap.cs" />
     <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
@@ -1370,6 +1406,7 @@
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
     <Compile Include="EntityMapping\RemarksClassificationMap.cs" />
     <Compile Include="EntityMapping\RenewalMethodMap.cs" />
+    <Compile Include="EntityMapping\RequestHandlingAuthorityMap.cs" />
     <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
     <Compile Include="EntityMapping\RequestReasonCodeEnumMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
@@ -1382,6 +1419,8 @@
     <Compile Include="EntityMapping\SeizureMethodTypeMap.cs" />
     <Compile Include="EntityMapping\SignStationMap.cs" />
     <Compile Include="EntityMapping\ServersNameMap.cs" />
+    <Compile Include="EntityMapping\SIIRequestMap.cs" />
+    <Compile Include="EntityMapping\SIIRequestStatusMap.cs" />
     <Compile Include="EntityMapping\SplitOrMergeReasonMap.cs" />
     <Compile Include="EntityMapping\StatusCodeMap.cs" />
     <Compile Include="EntityMapping\StatusFieldTypeMap.cs" />
@@ -1391,6 +1430,7 @@
     <Compile Include="EntityMapping\SupplierInvioceExportDefaultMap.cs" />
     <Compile Include="EntityMapping\SupplierInvioceItemCertificatDefaultMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceItemsPriceMap.cs" />
+    <Compile Include="EntityMapping\SupplierInvoiceItemsReqListMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
     <Compile Include="EntityMapping\SupplierPartyTypeMap.cs" />
@@ -1518,6 +1558,7 @@
     <Compile Include="EntityPOCOs\CustomsItemGroup.cs" />
     <Compile Include="EntityPOCOs\CustomsItemHierarchicLocation.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
+    <Compile Include="EntityPOCOs\CustomsPaymentTerm.cs" />
     <Compile Include="EntityPOCOs\CustomsShip.cs" />
     <Compile Include="EntityPOCOs\DBMigration.cs" />
     <Compile Include="EntityPOCOs\DBMigrationLine.cs" />
@@ -1540,6 +1581,7 @@
     <Compile Include="EntityPOCOs\DeclarationStatus.cs" />
     <Compile Include="EntityPOCOs\DefaultType.cs" />
     <Compile Include="EntityPOCOs\DefaultValue.cs" />
+    <Compile Include="EntityPOCOs\Deficit.cs" />
     <Compile Include="EntityPOCOs\DeficitDecision.cs" />
     <Compile Include="EntityPOCOs\DeliveryType.cs" />
     <Compile Include="EntityPOCOs\DiscountTypeRegulation.cs" />
@@ -1581,6 +1623,7 @@
     <Compile Include="EntityPOCOs\MAWBType.cs" />
     <Compile Include="EntityPOCOs\NbcDeclarationType.cs" />
     <Compile Include="EntityPOCOs\NDMessageActionCode.cs" />
+    <Compile Include="EntityPOCOs\NUnicloud.cs" />
     <Compile Include="EntityPOCOs\OcrDocument.cs" />
     <Compile Include="EntityPOCOs\OcrStatus.cs" />
     <Compile Include="EntityPOCOs\OriginCriterion.cs" />
@@ -1607,6 +1650,7 @@
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
     <Compile Include="EntityPOCOs\RemarksClassification.cs" />
     <Compile Include="EntityPOCOs\RenewalMethod.cs" />
+    <Compile Include="EntityPOCOs\RequestHandlingAuthority.cs" />
     <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
     <Compile Include="EntityPOCOs\RequestReasonCodeEnum.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
@@ -1619,6 +1663,8 @@
     <Compile Include="EntityPOCOs\SeizureMethodType.cs" />
     <Compile Include="EntityPOCOs\SignStation.cs" />
     <Compile Include="EntityPOCOs\ServersName.cs" />
+    <Compile Include="EntityPOCOs\SIIRequest.cs" />
+    <Compile Include="EntityPOCOs\SIIRequestStatus.cs" />
     <Compile Include="EntityPOCOs\SplitOrMergeReason.cs" />
     <Compile Include="EntityPOCOs\StatusCode.cs" />
     <Compile Include="EntityPOCOs\StatusFieldType.cs" />
@@ -1628,6 +1674,7 @@
     <Compile Include="EntityPOCOs\SupplierInvioceExportDefault.cs" />
     <Compile Include="EntityPOCOs\SupplierInvioceItemCertificatDefault.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceItemsPrice.cs" />
+    <Compile Include="EntityPOCOs\SupplierInvoiceItemsReqList.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
     <Compile Include="EntityPOCOs\SupplierPartyType.cs" />
@@ -1756,6 +1803,7 @@
     <Compile Include="Repsitories\CustomsItemGroupRepository.cs" />
     <Compile Include="Repsitories\CustomsItemHierarchicLocationRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
+    <Compile Include="Repsitories\CustomsPaymentTermRepository.cs" />
     <Compile Include="Repsitories\CustomsShipRepository.cs" />
     <Compile Include="Repsitories\DBMigrationLineRepository.cs" />
     <Compile Include="Repsitories\DBMigrationRepository.cs" />
@@ -1908,6 +1956,7 @@
     <Compile Include="Repsitories\Generated\CustomsItemGroupRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsItemHierarchicLocationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsPaymentTermRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsShipRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DBMigrationLineRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DBMigrationRepository.Generated.cs" />
@@ -1931,6 +1980,7 @@
     <Compile Include="Repsitories\Generated\DefaultTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DefaultValueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitDecisionRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DeficitRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeliveryTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DiscountTypeRegulationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
@@ -1970,6 +2020,7 @@
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\NbcDeclarationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\NDMessageActionCodeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\NUnicloudRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrDocumentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OriginCriterionRepository.Generated.cs" />
@@ -1982,6 +2033,7 @@
     <Compile Include="Repsitories\Generated\PhysicalCheckSearchResultTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PoaStatusTypeLookUpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ProceduralFaultRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuotaComputationBasisRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\QuotaIncrementRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
@@ -1995,6 +2047,7 @@
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RemarksClassificationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RenewalMethodRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RequestHandlingAuthorityRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestReasonCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
@@ -2007,6 +2060,8 @@
     <Compile Include="Repsitories\Generated\SeizureMethodTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SignStationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ServersNameRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SIIRequestRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SIIRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SplitOrMergeReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\StatusFieldTypeRepository.Generated.cs" />
@@ -2016,6 +2071,7 @@
     <Compile Include="Repsitories\Generated\SupplierInvioceExportDefaultRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvioceItemCertificatDefaultRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceItemsPriceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SupplierInvoiceItemsReqListRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierPartyTypeRepository.Generated.cs" />
@@ -2053,6 +2109,7 @@
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
     <Compile Include="Repsitories\NbcDeclarationTypeRepository.cs" />
     <Compile Include="Repsitories\NDMessageActionCodeRepository.cs" />
+    <Compile Include="Repsitories\NUnicloudRepository.cs" />
     <Compile Include="Repsitories\OcrDocumentRepository.cs" />
     <Compile Include="Repsitories\OcrStatusRepository.cs" />
     <Compile Include="Repsitories\OriginCriterionRepository.cs" />
@@ -2078,6 +2135,7 @@
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
     <Compile Include="Repsitories\RemarksClassificationRepository.cs" />
     <Compile Include="Repsitories\RenewalMethodRepository.cs" />
+    <Compile Include="Repsitories\RequestHandlingAuthorityRepository.cs" />
     <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />
     <Compile Include="Repsitories\RequestReasonCodeEnumRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
@@ -2090,6 +2148,8 @@
     <Compile Include="Repsitories\SeizureMethodTypeRepository.cs" />
     <Compile Include="Repsitories\SignStationRepository.cs" />
     <Compile Include="Repsitories\ServersNameRepository.cs" />
+    <Compile Include="Repsitories\SIIRequestRepository.cs" />
+    <Compile Include="Repsitories\SIIRequestStatusRepository.cs" />
     <Compile Include="Repsitories\SplitOrMergeReasonRepository.cs" />
     <Compile Include="Repsitories\StatusCodeRepository.cs" />
     <Compile Include="Repsitories\StatusFieldTypeRepository.cs" />
@@ -2099,6 +2159,7 @@
     <Compile Include="Repsitories\SupplierInvioceExportDefaultRepository.cs" />
     <Compile Include="Repsitories\SupplierInvioceItemCertificatDefaultRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceItemsPriceRepository.cs" />
+    <Compile Include="Repsitories\SupplierInvoiceItemsReqListRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />
     <Compile Include="Repsitories\SupplierPartyTypeRepository.cs" />
@@ -2117,6 +2178,10 @@
     <Compile Include="Repsitories\VendorCurrencyRepository.cs" />
     <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="CustomContext.Views.cs" />
     <Compile Include="CustomFilters\DeclarationCustomFilters.cs" />
     <Compile Include="CustomFilters\NotificationCustomFilters.cs" />
@@ -2214,7 +2279,6 @@
     <Compile Include="EntityKeys\CustomsItemDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CustomsItemKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnersItemKeys.cs" />
-    <Compile Include="EntityKeys\CustomsPaymentTermsKeys.cs" />
     <Compile Include="EntityKeys\CustomsRequestsSheetKeys.cs" />
     <Compile Include="EntityKeys\CustomsRequestsSheetStatusKeys.cs" />
     <Compile Include="EntityKeys\CustomsRequiredFieldKeys.cs" />
@@ -2234,7 +2298,6 @@
     <Compile Include="EntityKeys\DeclarationStatusTypeKeys.cs" />
     <Compile Include="EntityKeys\DeclarationTaxKeys.cs" />
     <Compile Include="EntityKeys\DeficitConnFileParagraphTypeKeys.cs" />
-    <Compile Include="EntityKeys\DeficitsKeys.cs" />
     <Compile Include="EntityKeys\DeliverySiteTypeKeys.cs" />
     <Compile Include="EntityKeys\DemanderTypeKeys.cs" />
     <Compile Include="EntityKeys\DepositConditionKeys.cs" />
@@ -2301,7 +2364,6 @@
     <Compile Include="EntityKeys\ProceduralFaultInProcessTypeKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultInSourceTypeKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultsConnEntityKeys.cs" />
-    <Compile Include="EntityKeys\ProceduralFaultsKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultStatusKeys.cs" />
     <Compile Include="EntityKeys\ProceduralFaultTypeKeys.cs" />
     <Compile Include="EntityKeys\ProcessingReasonKeys.cs" />
@@ -2454,7 +2516,6 @@
     <Compile Include="EntityListQueryServices\CustomsItemDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnersItemListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\CustomsPaymentTermsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsRequestsSheetListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsRequestsSheetStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsRequiredFieldListQueryService.cs" />
@@ -2474,7 +2535,6 @@
     <Compile Include="EntityListQueryServices\DeclarationStatusTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeclarationTaxListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitConnFileParagraphTypeListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\DeficitsListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeliverySiteTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DemanderTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DepositConditionListQueryService.cs" />
@@ -2578,7 +2638,6 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsItemDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnersItemListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\CustomsPaymentTermsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsRequestsSheetListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsRequestsSheetStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsRequiredFieldListQueryService.Generated.cs" />
@@ -2598,7 +2657,6 @@
     <Compile Include="EntityListQueryServices\Generated\DeclarationStatusTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeclarationTaxListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitConnFileParagraphTypeListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\DeficitsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeliverySiteTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DemanderTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DepositConditionListQueryService.Generated.cs" />
@@ -2665,7 +2723,6 @@
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultInProcessTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultInSourceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultsConnEntityListQueryService.Generated.cs" />
-    <Compile Include="EntityListQueryServices\Generated\ProceduralFaultsListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProceduralFaultTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ProcessingReasonListQueryService.Generated.cs" />
@@ -2785,7 +2842,7 @@
     <Compile Include="EntityListQueryServices\ProceduralFaultInProcessTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultInSourceTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultsConnEntityListQueryService.cs" />
-    <Compile Include="EntityListQueryServices\ProceduralFaultsListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ProceduralFaultListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProceduralFaultTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ProcessingReasonListQueryService.cs" />
@@ -2943,7 +3000,6 @@
     <Compile Include="EntityLists\Generated\CustomsItemDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsPartnersItemList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\CustomsPaymentTermsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsRequestsSheetList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsRequestsSheetStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsRequiredFieldList.Generated.cs" />
@@ -2963,7 +3019,6 @@
     <Compile Include="EntityLists\Generated\DeclarationStatusTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationTaxList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeficitConnFileParagraphTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\DeficitsList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeliverySiteTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DemanderTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DepositConditionList.Generated.cs" />
@@ -3028,7 +3083,6 @@
     <Compile Include="EntityLists\Generated\PhysicalCheckOperationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PhysicalCheckStatusMessageList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultInProcessTypeList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\ProceduralFaultInSourceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultsConnEntityList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ProceduralFaultTypeList.Generated.cs" />
@@ -3182,7 +3236,6 @@
     <Compile Include="EntityMapping\CustomsItemDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CustomsItemMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnersItemMap.cs" />
-    <Compile Include="EntityMapping\CustomsPaymentTermsMap.cs" />
     <Compile Include="EntityMapping\CustomsRequestsSheetMap.cs" />
     <Compile Include="EntityMapping\CustomsRequestsSheetStatusMap.cs" />
     <Compile Include="EntityMapping\CustomsRequiredFieldMap.cs" />
@@ -3202,7 +3255,6 @@
     <Compile Include="EntityMapping\DeclarationStatusTypeMap.cs" />
     <Compile Include="EntityMapping\DeclarationTaxMap.cs" />
     <Compile Include="EntityMapping\DeficitConnFileParagraphTypeMap.cs" />
-    <Compile Include="EntityMapping\DeficitsMap.cs" />
     <Compile Include="EntityMapping\DeliverySiteTypeMap.cs" />
     <Compile Include="EntityMapping\DemanderTypeMap.cs" />
     <Compile Include="EntityMapping\DepositConditionMap.cs" />
@@ -3269,7 +3321,6 @@
     <Compile Include="EntityMapping\ProceduralFaultInProcessTypeMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultInSourceTypeMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultsConnEntityMap.cs" />
-    <Compile Include="EntityMapping\ProceduralFaultsMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultStatusMap.cs" />
     <Compile Include="EntityMapping\ProceduralFaultTypeMap.cs" />
     <Compile Include="EntityMapping\ProcessingReasonMap.cs" />
@@ -3422,7 +3473,6 @@
     <Compile Include="EntityPOCOs\CustomsItem.cs" />
     <Compile Include="EntityPOCOs\CustomsItemDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnersItem.cs" />
-    <Compile Include="EntityPOCOs\CustomsPaymentTerms.cs" />
     <Compile Include="EntityPOCOs\CustomsRequestsSheet.cs" />
     <Compile Include="EntityPOCOs\CustomsRequestsSheetStatus.cs" />
     <Compile Include="EntityPOCOs\CustomsRequiredField.cs" />
@@ -3442,7 +3492,6 @@
     <Compile Include="EntityPOCOs\DeclarationStatusType.cs" />
     <Compile Include="EntityPOCOs\DeclarationTax.cs" />
     <Compile Include="EntityPOCOs\DeficitConnFileParagraphType.cs" />
-    <Compile Include="EntityPOCOs\Deficits.cs" />
     <Compile Include="EntityPOCOs\DeliverySiteType.cs" />
     <Compile Include="EntityPOCOs\DemanderType.cs" />
     <Compile Include="EntityPOCOs\Deposit.cs" />
@@ -3668,7 +3717,6 @@
     <Compile Include="Repsitories\CustomsItemDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CustomsItemRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnersItemRepository.cs" />
-    <Compile Include="Repsitories\CustomsPaymentTermsRepository.cs" />
     <Compile Include="Repsitories\CustomsRequestsSheetRepository.cs" />
     <Compile Include="Repsitories\CustomsRequestsSheetStatusRepository.cs" />
     <Compile Include="Repsitories\CustomsRequiredFieldRepository.cs" />
@@ -3688,7 +3736,7 @@
     <Compile Include="Repsitories\DeclarationStatusTypeRepository.cs" />
     <Compile Include="Repsitories\DeclarationTaxRepository.cs" />
     <Compile Include="Repsitories\DeficitConnFileParagraphTypeRepository.cs" />
-    <Compile Include="Repsitories\DeficitsRepository.cs" />
+    <Compile Include="Repsitories\DeficitRepository.cs" />
     <Compile Include="Repsitories\DeliverySiteTypeRepository.cs" />
     <Compile Include="Repsitories\DemanderTypeRepository.cs" />
     <Compile Include="Repsitories\DepositConditionRepository.cs" />
@@ -3793,7 +3841,6 @@
     <Compile Include="Repsitories\Generated\CustomsItemDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnersItemRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\CustomsPaymentTermsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsRequestsSheetRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsRequestsSheetStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsRequiredFieldRepository.Generated.cs" />
@@ -3813,7 +3860,6 @@
     <Compile Include="Repsitories\Generated\DeclarationStatusTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeclarationTaxRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitConnFileParagraphTypeRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\DeficitsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeliverySiteTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DemanderTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DepositConditionRepository.Generated.cs" />
@@ -3880,7 +3926,6 @@
     <Compile Include="Repsitories\Generated\ProceduralFaultInProcessTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultInSourceTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultsConnEntityRepository.Generated.cs" />
-    <Compile Include="Repsitories\Generated\ProceduralFaultsRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProceduralFaultTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ProcessingReasonRepository.Generated.cs" />
@@ -4000,7 +4045,7 @@
     <Compile Include="Repsitories\ProceduralFaultInProcessTypeRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultInSourceTypeRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultsConnEntityRepository.cs" />
-    <Compile Include="Repsitories\ProceduralFaultsRepository.cs" />
+    <Compile Include="Repsitories\ProceduralFaultRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultStatusRepository.cs" />
     <Compile Include="Repsitories\ProceduralFaultTypeRepository.cs" />
     <Compile Include="Repsitories\ProcessingReasonRepository.cs" />
@@ -4070,6 +4115,8 @@
     <Compile Include="Repsitories\VendorStatusRepository.cs" />
     <Compile Include="Repsitories\VendorTransactionTypeRepository.cs" />
     <Compile Include="Repsitories\VendorTypeRepository.cs" />
+    <None Include="Nlog.config" />
+    <Compile Include="DataContracts\SupplieInvoiceItemsForSIIRequest.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -4097,9 +4144,9 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Global.Data</Name>
+      <Name>Simplog.Data.Global</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
@@ -4112,8 +4159,19 @@
   <ItemGroup>
     <Folder Include="CloseTables\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

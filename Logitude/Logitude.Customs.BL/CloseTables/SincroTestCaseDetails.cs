@@ -65,7 +65,7 @@ namespace Logitude.Customs.BL.CloseTables
                     Code = "2892",
                     Name = "(2892)תיקון הצהרה",
                     Entity="Declaration",
-                    Param1= @"{ ""Error"":""false""}",
+                    Param1= @"{ ""Error"":""false"" , ""RequestNo"" : ""1000"" }",
 MainInterfaceCode ="2892"
                 },
                                new SincroTestCaseDetail()
@@ -200,6 +200,16 @@ MainInterfaceCode ="5002"
                     Param2= @"{}",
                     MainInterfaceCode="3050",
                 },
+                new SincroTestCaseDetail()
+                {
+                    Code = "3050",
+                    Name = "הוראת תשלום לבדלרות",
+                    IsDCA = true,
+                    Entity="Declaration",
+                    Param1= @"{""paymentStatus"":""3"",  ""paymentProcess"" :""1""}",
+                    Param2= @"{}",
+                    MainInterfaceCode="3053",
+                },
 
                    new SincroTestCaseDetail()
                 {
@@ -305,6 +315,22 @@ MainInterfaceCode ="5002"
                     Name = "ביטול המכלה",
                     Entity="Containerization",
                      Param1= @"{}",
+
+                },
+                          new SincroTestCaseDetail()
+                {
+                    Code = "8235Valid",
+                    Name = "תיקון הצהרה (אושר) יצוא",
+                    Entity="Declaration",
+                     Param1= @"{ ""withSignature"":""false""}",
+
+                },
+                          new SincroTestCaseDetail()
+                {
+                    Code = "8235Rejected",
+                    Name = "תיקון הצהרה (דחיה) יצוא",
+                    Entity="Declaration",
+                     Param1= @"{ ""withSignature"":""false""}",
 
                 },
 

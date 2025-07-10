@@ -850,10 +850,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             return shipments;
         }
 
+
         private static IQueryable<CargoTrackingShipmentList> FilterByCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentSearchInput.CustomersIds.Count > 0)
             {
+
+
+
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
                 var customersSet = new HashSet<string>(shipmentSearchInput.CustomersIds);
                 shipments = shipments.Where(d => customersSet.Contains(d.CustomerId));
@@ -919,7 +923,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.OpenDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateGreaterThan))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan));
 
                 shipments = shipments.Where(d => d.CreateDate >= openDateGreaterThan);
             }

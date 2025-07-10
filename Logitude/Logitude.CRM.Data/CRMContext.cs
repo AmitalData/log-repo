@@ -20,6 +20,7 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data; 
 using Logitude.CRM.Data.EntityMapping;
+using Devart.Data.Oracle.Entity.Configuration;
 
 namespace Logitude.CRM.Data
 {
@@ -69,7 +70,7 @@ namespace Logitude.CRM.Data
         {
 		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+                var config = OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 
                 

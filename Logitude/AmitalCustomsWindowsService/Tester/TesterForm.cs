@@ -43,8 +43,8 @@ namespace AmitalCustomsWindowsService.Tester
         public TesterForm()
         {
             InitializeComponent();
-            TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
-            Debug.Listeners.Add(debugListener);
+            //TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
+            //Debug.Listeners.Add(debugListener);
             _CBWorkerRole.Items.Add("CustomsCommandGetCustomRequestWR");
             _CBWorkerRole.Items.Add("CustomsCommandSignRequestWR");
             _CBWorkerRole.Items.Add("CustomsCommandSendDCAWR");
@@ -59,9 +59,10 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
             _CBWorkerRole.Items.Add("CustomsHSMSignWR");
             _CBWorkerRole.Items.Add("ReportExecutionLogWR");
+			_CBWorkerRole.Items.Add("DocumentAzureQueueWR");
 
-            Debug.WriteLine("Env:");
-            Debug.WriteLine(LogitudeSettings.LogitudeURL);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Env:");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(LogitudeSettings.LogitudeURL);
 
             var t = new Thread(GetENV);
             t.Start();
@@ -72,9 +73,9 @@ namespace AmitalCustomsWindowsService.Tester
         private static void GetENV()
         {
 
-            var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(1);
+            var pmCustomsSetting = Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(SettingUtil.GetCurrentTenant());
             var jsonSetting = ProxyUtil.JsonConvertSerialize(pmCustomsSetting);
-            Debug.WriteLine(jsonSetting);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(jsonSetting);
         }
 
         private void BlobToolStripMenuItem_Click(object sender, EventArgs e)
@@ -88,7 +89,7 @@ namespace AmitalCustomsWindowsService.Tester
             var stopwatch = System.Diagnostics.Stopwatch.StartNew();
             Logitude.Server.Tools.Communications.SetBolb(1, filename, "Amital", GetByte());
             stopwatch.Stop();
-            Debug.WriteLine("SetBlob:" + filename + ":Took:" + stopwatch.Elapsed.ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SetBlob:" + filename + ":Took:" + stopwatch.Elapsed.ToString());
         }
 
         private byte[] GetByte()
@@ -188,12 +189,12 @@ namespace AmitalCustomsWindowsService.Tester
             try
             {
                 var AllQ = CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll();
-                Debug.WriteLine(AllQ);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(AllQ);
             }
             catch (Exception eee)
             {
 
-                Debug.WriteLine("CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee,"CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" );
             }
 
         }
@@ -290,7 +291,14 @@ namespace AmitalCustomsWindowsService.Tester
                         { ServiceStarted = true, };
                     }
                     break;
-                default:
+				case "DocumentAzureQueueWR":
+					{
+						d = new AmitalCustomsWindowsService.BL.WorkerOnce<DocumentAzureQueueWR>(
+				10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+						{ ServiceStarted = true, };
+					}
+					break;
+				default:
                     return;
             }
 
@@ -332,7 +340,8 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception ex)
             {
 
-                Debug.WriteLine(ex.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex); 
+
             }
 
         }
@@ -407,9 +416,9 @@ namespace AmitalCustomsWindowsService.Tester
             var sw = Stopwatch.StartNew();
             int tenant = GetTenant();
             _MultiThreard = !_MultiThreard;
-            var res = clsTester.CheckWSCourierStatistic(tenant, _MultiThreard);
-            Debug.WriteLine(res);
-            Debug.WriteLine(sw.ElapsedMilliseconds);
+            var res=clsTester.CheckWSCourierStatistic(tenant, _MultiThreard);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{0} in {1}ms",res,sw.ElapsedMilliseconds));
+
 
             return;
             return;
@@ -528,12 +537,14 @@ namespace AmitalCustomsWindowsService.Tester
             if (dardcODED)
             {
                 var password = signUpWorkerRole.CreatTenant(email, Company);
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreatTenant:email=" + email + ":Pass=" + password);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreatTenant:email=" + email + ":Pass=" + password);
+                   
             }
             else
             {
                 signUpWorkerRole.WorkOnceSuppressClearQ();
             }
+
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug("signUpWorkerRole.WorkOnce END !!");
             //}
             //catch (Exception ee)
@@ -554,7 +565,7 @@ namespace AmitalCustomsWindowsService.Tester
             };
 
             parameters.Tenant = 92;
-            Debug.WriteLine(parameters.To);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
             CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
         }
 
@@ -572,7 +583,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception e1)
             {
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);  
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);  
             }
         }
 
@@ -580,7 +591,7 @@ namespace AmitalCustomsWindowsService.Tester
         {
             var wr = new CommunicationWorkerRole.CommunicationLogWorkerRoleWinService();
             wr.WorkOnce();
-            Debug.WriteLine("CommunicationWorkerRole.WorkOnce END !!");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CommunicationWorkerRole.WorkOnce END !!");
         }
 
         private void repushQToolStripMenuItem_Click(object sender, EventArgs e)
@@ -760,8 +771,14 @@ namespace AmitalCustomsWindowsService.Tester
 
                     }
                     break;
+				case "DocumentAzureQueueWR":
+					{
+						var documentAzureQueueWR = new DocumentAzureQueueWR();
+						documentAzureQueueWR.DebugStep();
 
-                default:
+					}
+					break;
+				default:
                     CustomsWorkerRole.Test.clsTester.DebugRQStep(
                 _CBInterfaceID.Text, GetTenant(), _TBID.Text,
                 _CBWorkerRole.Text);
@@ -792,8 +809,8 @@ namespace AmitalCustomsWindowsService.Tester
                     };
                     //parameters.To += ";itzik@amital.co.il;YaronC@AMITAL.CO.IL";
                     //parameters.Tenant = 92;
-                    Debug.WriteLine(parameters.To);
-                    Debug.WriteLine(emailbody);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(parameters.To);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(emailbody);
 
                     CommunicationWorkerRole.EmailingHelper.SendEmail(parameters);
                 }, true);
@@ -815,7 +832,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception ee)
             {
 
-                Debug.WriteLine(ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
                 MessageBox.Show("maybe tenant not exist !!!");
             }
 
@@ -835,7 +852,7 @@ namespace AmitalCustomsWindowsService.Tester
             var xml = CustomsWorkerRole.Test.clsTester.GetDeclarationXml(tenant, DecId);
             var file = Path.Combine(@"c:\", DecId + ".xml");
             File.WriteAllText(file, xml);
-            Debug.WriteLine(file);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(file); 
 
             var checkXml = @"C:\Program Files (x86)\Microsoft Visual Studio 11.0\DeclarationPM.FromXsd.xml";
             var xmlCheck = File.ReadAllText(checkXml);
@@ -905,7 +922,7 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void clearCacheToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory();
+            Logitude.BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory(0);
             Logitude.BL.Helpers.TableLastUpdateClass.UpdateSystemMetaDataHistory();
         }
 
@@ -953,14 +970,14 @@ namespace AmitalCustomsWindowsService.Tester
                 ;
                 notUniqeNames.ForEach(r =>
                 {
-                    Debug.WriteLine(r);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(r);
                 }
                 );
 
             }
             else
             {
-                Debug.WriteLine("folder Not Exist ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("folder Not Exist ");
             }
         }
 

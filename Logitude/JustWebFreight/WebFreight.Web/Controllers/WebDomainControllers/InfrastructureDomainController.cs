@@ -17,7 +17,7 @@ using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -57,7 +57,7 @@ using System.Data.Common;
 using Simplog.Data.InfrastructureModel;
 using System.Data.SqlClient;
 using System.Data;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Global.Data.GlobalModel;
 using Logitude.BL.InfrastructureModel.EntityLists;
@@ -279,7 +279,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 List<string> allowedPackages = new List<string>();
                 string email = HttpContext.Current.User.Identity.Name;
-                ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
+                Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(email, tenant);
                 if (inf != null)
                 {
                     allowedPackages = inf.PackagesCodes;
@@ -383,7 +383,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 List<string> allowedPackages = new List<string>();
-                ContactInfo inf = SecurityUtility.GetContactInfo(authToken.Email, tenant);
+                Logitude.BL.Security.ContactInfo inf = SecurityUtility.GetContactInfo(authToken.Email, tenant);
                 if (inf != null)
                 {
                     allowedPackages = inf.PackagesCodes;

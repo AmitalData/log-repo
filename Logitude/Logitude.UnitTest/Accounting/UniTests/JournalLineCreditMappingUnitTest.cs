@@ -567,7 +567,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                    Debug.WriteLine(state2Check.Item3);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(state2Check.Item3);
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2
@@ -698,7 +698,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                    Debug.WriteLine("state Test: " + state2Check.Item3);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
                     var journalLineCreditMapping = new JournalLineCreditMapping(
                          journalLine: state2Check.Item1,
                           journalPM: state2Check.Item2,
@@ -842,7 +842,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                    Debug.WriteLine("state Test: " + state2Check.Item3);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
                     
                     var fakeJournalLineCreditMapping = CreateFake(state2Check);
 
@@ -978,7 +978,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 int i = 0;
                 foreach (var state2Check in listOfState2Check)
                 {
-                    Debug.WriteLine("state Test: " + state2Check.Item3);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("state Test: " + state2Check.Item3);
 
                     var fakeJournalLineCreditMapping = CreateFake(state2Check);
 

@@ -1,5 +1,5 @@
 ﻿using Logitude.SystemLogs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -36,7 +36,7 @@ namespace WebFreight.Web.Helpers
             }
         }
 
-        public static object GetTableListData(string tableName, int tenant = 0,string modelName = null)
+        public static object GetTableListData(string tableName, int tenant = 0,string modelName = null,int contextTenant=0)
         {
 
             if (tableName == "DescriptionOfGoods")
@@ -44,8 +44,8 @@ namespace WebFreight.Web.Helpers
                 tableName = "DescriptionOfGood";
             }
 
-            ObjectTableRepository obRepository = new ObjectTableRepository(0);
-            ObjectTable table = obRepository.GetObjectTableByName(tableName, 0, true);
+            ObjectTableRepository obRepository = new ObjectTableRepository(contextTenant);
+            ObjectTable table = obRepository.GetObjectTableByName(tableName, tenant, true);
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             FilterSerializer filterSerializer = new FilterSerializer();

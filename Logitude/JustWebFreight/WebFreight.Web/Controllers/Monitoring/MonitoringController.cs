@@ -61,11 +61,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             }
         }
 
-        private static bool CheckIfAnyCommunicationLogsFailed()
+        private static bool CheckIfAnyCommunicationLogsFailed(int tenant)
         {
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(0);
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
 
             return (from a in commonDataContext.CommunicationLogs
                     where a.CreateDateUTC > twoDaysBefore
@@ -75,11 +75,12 @@ namespace WebFreight.Web.Controllers.Monitoring
 
         }
 
-        private static bool CheckIfAnyQueueMessagesFailed()
+        private static bool CheckIfAnyQueueMessagesFailed(int tenant)
         {
+
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "AgentsSharedDocumentAnalyzeQueue" && ((a.Status == 0
@@ -88,11 +89,12 @@ namespace WebFreight.Web.Controllers.Monitoring
 
         }
 
-        private static bool CheckIfAnyCustomerTenantCommunicationLogsFailed()
+        private static bool CheckIfAnyCustomerTenantCommunicationLogsFailed(int tenant)
         {
+ 
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "CustomerTenantAccessQueue" && ((a.Status == 0
@@ -104,10 +106,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region AdvancedGenericInterfaceMonitoringStatus
         [HttpGet]
 
-        public HttpResponseMessage AdvancedGenericInterfaceMonitoringStatus()
+        public HttpResponseMessage AdvancedGenericInterfaceMonitoringStatus(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckAdvancedGenericInterfaceMonitoringStatus();
+            bool isOK = !CheckAdvancedGenericInterfaceMonitoringStatus(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -118,14 +120,14 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckAdvancedGenericInterfaceMonitoringStatus()
+        private bool CheckAdvancedGenericInterfaceMonitoringStatus(int tenant)
         {
             bool isFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 try
                 {
-                    isFailed = CheckIfAnyCommunicationLogsFailed();
+                    isFailed = CheckIfAnyCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -144,10 +146,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region AgentSharedDocumentAnalyzeMonitoring
         [HttpGet]
 
-        public HttpResponseMessage AgentSharedDocumentAnalyzeMonitoring()
+        public HttpResponseMessage AgentSharedDocumentAnalyzeMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckAgentSharedDocumentAnalyzeMonitoring();
+            bool isOK = !CheckAgentSharedDocumentAnalyzeMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -158,14 +160,14 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckAgentSharedDocumentAnalyzeMonitoring()
+        private bool CheckAgentSharedDocumentAnalyzeMonitoring(int tenant)
         {
             bool isFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 try
                 {
-                    isFailed = CheckIfAnyQueueMessagesFailed();
+                    isFailed = CheckIfAnyQueueMessagesFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -186,10 +188,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region AgentSharedDocumentMonitoring
         [HttpGet]
 
-        public HttpResponseMessage AgentSharedDocumentMonitoring()
+        public HttpResponseMessage AgentSharedDocumentMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckAgentSharedDocumentMonitoring();
+            bool isOK = !CheckAgentSharedDocumentMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -200,7 +202,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckAgentSharedDocumentMonitoring()
+        private bool CheckAgentSharedDocumentMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -208,7 +210,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyQueueMessagesFailed();
+                    isFailed = CheckIfAnyQueueMessagesFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -452,10 +454,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region BIReportsExecutionLogMonitoring
         [HttpGet]
 
-        public HttpResponseMessage BIReportsExecutionLogMonitoring()
+        public HttpResponseMessage BIReportsExecutionLogMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckBIReportsExecutionLogMonitoring();
+            bool isOK = !CheckBIReportsExecutionLogMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -466,9 +468,8 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckBIReportsExecutionLogMonitoring()
+        private bool CheckBIReportsExecutionLogMonitoring(int tenant)
         {
-
             bool isFailed = false;
             bool isWaitingStatus = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -477,7 +478,7 @@ namespace WebFreight.Web.Controllers.Monitoring
                 {
                     DateTime twoDaysBefore = DateTime.Now.AddDays(-2);
                     DateTime todayDateTime = DateTime.Now;
-                    IInfrastructureContext commonDataContext = InfrastructureContext.GetContext(0);
+                    IInfrastructureContext commonDataContext = InfrastructureContext.GetContext(tenant);
                     return (from a in commonDataContext.BIReportsExecutionLogs
                             where a.CreateDate > twoDaysBefore
                             && ((a.StatusCode == "W"
@@ -504,10 +505,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region CustomerTenantAccessMonitoring
         [HttpGet]
 
-        public HttpResponseMessage CustomerTenantAccessMonitoring()
+        public HttpResponseMessage CustomerTenantAccessMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckCustomerTenantAccessMonitoring();
+            bool isOK = !CheckCustomerTenantAccessMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -518,7 +519,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckCustomerTenantAccessMonitoring()
+        private bool CheckCustomerTenantAccessMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -526,7 +527,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyCustomerTenantCommunicationLogsFailed();
+                    isFailed = CheckIfAnyCustomerTenantCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -547,10 +548,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region DeclarationApprovalRequestMonitoring
         [HttpGet]
 
-        public HttpResponseMessage DeclarationApprovalRequestMonitoring()
+        public HttpResponseMessage DeclarationApprovalRequestMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckDeclarationApprovalRequestMonitoring();
+            bool isOK = !CheckDeclarationApprovalRequestMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -561,14 +562,14 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckDeclarationApprovalRequestMonitoring()
+        private bool CheckDeclarationApprovalRequestMonitoring(int tenant)
         {
             bool isFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 try
                 {
-                    isFailed = CheckIfAnyDeclarationApprovalCommunicationLogsFailed();
+                    isFailed = CheckIfAnyDeclarationApprovalCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -579,11 +580,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyDeclarationApprovalCommunicationLogsFailed()
+        private static bool CheckIfAnyDeclarationApprovalCommunicationLogsFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "DeclarationApprovalRequestQueue" && ((a.Status == 0
@@ -603,10 +604,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region DocumentApprovalQueueMonitoring
         [HttpGet]
 
-        public HttpResponseMessage DocumentApprovalQueueMonitoring()
+        public HttpResponseMessage DocumentApprovalQueueMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckDocumentApprovalQueueMonitoring();
+            bool isOK = !CheckDocumentApprovalQueueMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -617,7 +618,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckDocumentApprovalQueueMonitoring()
+        private bool CheckDocumentApprovalQueueMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -625,7 +626,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyDocumentApprovalCommunicationLogsFailed();
+                    isFailed = CheckIfAnyDocumentApprovalCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -636,11 +637,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyDocumentApprovalCommunicationLogsFailed()
+        private static bool CheckIfAnyDocumentApprovalCommunicationLogsFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "DocumentApprovalQueue" && ((a.Status == 0
@@ -658,10 +659,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region DocumentFilingBackupBatchMonitoring
         [HttpGet]
 
-        public HttpResponseMessage DocumentFilingBackupBatchMonitoring()
+        public HttpResponseMessage DocumentFilingBackupBatchMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckDocumentFilingBackupBatchMonitoring();
+            bool isOK = !CheckDocumentFilingBackupBatchMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -672,7 +673,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckDocumentFilingBackupBatchMonitoring()
+        private bool CheckDocumentFilingBackupBatchMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -680,7 +681,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyDocumentFilingBackupCommunicationLogsFailed();
+                    isFailed = CheckIfAnyDocumentFilingBackupCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -691,11 +692,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyDocumentFilingBackupCommunicationLogsFailed()
+        private static bool CheckIfAnyDocumentFilingBackupCommunicationLogsFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "DocumentFilingBackupBatchQueue" && ((a.Status == 0
@@ -713,10 +714,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region FTPCommunicationMonitoring
         [HttpGet]
 
-        public HttpResponseMessage FTPCommunicationMonitoring()
+        public HttpResponseMessage FTPCommunicationMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckFTPCommunicationMonitoring();
+            bool isOK = !CheckFTPCommunicationMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -727,7 +728,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckFTPCommunicationMonitoring()
+        private bool CheckFTPCommunicationMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -735,7 +736,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyFTPCommunicationLogsFailed();
+                    isFailed = CheckIfAnyFTPCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -746,11 +747,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyFTPCommunicationLogsFailed()
+        private static bool CheckIfAnyFTPCommunicationLogsFailed(int tenant)
         {
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(0);
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
 
             return (from a in commonDataContext.CommunicationLogs
                     where a.CreateDateUTC > twoDaysBefore
@@ -855,10 +856,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region MobileSMSMonitoring
         [HttpGet]
 
-        public HttpResponseMessage MobileSMSMonitoring()
+        public HttpResponseMessage MobileSMSMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckMobileSMSMonitoring();
+            bool isOK = !CheckMobileSMSMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -869,7 +870,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckMobileSMSMonitoring()
+        private bool CheckMobileSMSMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -877,7 +878,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyMobileSMSQueueMessagesFailed();
+                    isFailed = CheckIfAnyMobileSMSQueueMessagesFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -888,11 +889,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyMobileSMSQueueMessagesFailed()
+        private static bool CheckIfAnyMobileSMSQueueMessagesFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "MobileSMS" && ((a.Status == 0
@@ -910,10 +911,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region PODImageConverterMonitoring
         [HttpGet]
 
-        public HttpResponseMessage PODImageConverterMonitoring()
+        public HttpResponseMessage PODImageConverterMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckPODImageConverterMonitoring();
+            bool isOK = !CheckPODImageConverterMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -924,14 +925,14 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckPODImageConverterMonitoring()
+        private bool CheckPODImageConverterMonitoring(int tenant)
         {
             bool isFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 try
                 {
-                    isFailed = CheckIfAnyPODQueueMessagesFailed();
+                    isFailed = CheckIfAnyPODQueueMessagesFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -942,11 +943,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyPODQueueMessagesFailed()
+        private static bool CheckIfAnyPODQueueMessagesFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "PODImageConverterQueue" && ((a.Status == 0
@@ -965,10 +966,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region PrivateLabelDenialMonitoring
         [HttpGet]
 
-        public HttpResponseMessage PrivateLabelDenialMonitoring()
+        public HttpResponseMessage PrivateLabelDenialMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckPrivateLabelDenialMonitoring();
+            bool isOK = !CheckPrivateLabelDenialMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -979,7 +980,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckPrivateLabelDenialMonitoring()
+        private bool CheckPrivateLabelDenialMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -987,7 +988,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyPrivateLabelDenialQueueMessagesFailed();
+                    isFailed = CheckIfAnyPrivateLabelDenialQueueMessagesFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -998,11 +999,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyPrivateLabelDenialQueueMessagesFailed()
+        private static bool CheckIfAnyPrivateLabelDenialQueueMessagesFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "PrivateLabelDenialQueue" && ((a.Status == 0
@@ -1102,10 +1103,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region ReportExecutionRunTimeMonitoring
         [HttpGet]
 
-        public HttpResponseMessage ReportExecutionRunTimeMonitoring()
+        public HttpResponseMessage ReportExecutionRunTimeMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckReportExecutionRunTimeMonitoring();
+            bool isOK = !CheckReportExecutionRunTimeMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -1116,7 +1117,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckReportExecutionRunTimeMonitoring()
+        private bool CheckReportExecutionRunTimeMonitoring(int tenant)
         {
 
             bool isWaitingStatus = false;
@@ -1125,7 +1126,7 @@ namespace WebFreight.Web.Controllers.Monitoring
                 try
                 {
                     DateTime oneDaysBefore = DateTime.Now.AddDays(-1);
-                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                    ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     isWaitingStatus = (from d in commonDataContext.ReportExecutionLogs where d.StatusCode == "P" && d.CreateDate > oneDaysBefore && (EntityFunctions.DiffMinutes(d.CreateDate, DateTime.Now) > 60) select d).Any();
                 }
                 catch (Exception errorInfo)
@@ -1146,10 +1147,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region SchedularMonitoring
         [HttpGet]
 
-        public HttpResponseMessage SchedularMonitoring()
+        public HttpResponseMessage SchedularMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckSchedularMonitoring();
+            bool isOK = !CheckSchedularMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -1160,7 +1161,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckSchedularMonitoring()
+        private bool CheckSchedularMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -1168,7 +1169,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnySchedularMonitoringCommunicationLogsFailed();
+                    isFailed = CheckIfAnySchedularMonitoringCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -1179,11 +1180,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnySchedularMonitoringCommunicationLogsFailed()
+        private static bool CheckIfAnySchedularMonitoringCommunicationLogsFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
 
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
@@ -1203,10 +1204,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region ShipmentInterfaceMonitoringStatus
         [HttpGet]
 
-        public HttpResponseMessage ShipmentInterfaceMonitoringStatus()
+        public HttpResponseMessage ShipmentInterfaceMonitoringStatus(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckShipmentInterfaceMonitoringStatus();
+            bool isOK = !CheckShipmentInterfaceMonitoringStatus(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -1217,7 +1218,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckShipmentInterfaceMonitoringStatus()
+        private bool CheckShipmentInterfaceMonitoringStatus(int tenant)
         {
 
             bool isFailed = false;
@@ -1225,7 +1226,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyShipmentInterfaceCommunicationLogsFailed();
+                    isFailed = CheckIfAnyShipmentInterfaceCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -1236,11 +1237,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyShipmentInterfaceCommunicationLogsFailed()
+        private static bool CheckIfAnyShipmentInterfaceCommunicationLogsFailed(int tenant)
         {
-            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(0);
+            DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
 
             return (from a in commonDataContext.CommunicationLogs
                     where a.CreateDateUTC > twoDaysBefore
@@ -1259,10 +1260,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region SignupLeadMonitoringPage
         [HttpGet]
 
-        public HttpResponseMessage SignupLeadMonitoringPage()
+        public HttpResponseMessage SignupLeadMonitoringPage(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckSignupLeadMonitoringPage();
+            bool isOK = !CheckSignupLeadMonitoringPage(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -1273,7 +1274,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckSignupLeadMonitoringPage()
+        private bool CheckSignupLeadMonitoringPage(int tenant)
         {
 
             bool isSignupLeadProcessFailed = false;
@@ -1281,7 +1282,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isSignupLeadProcessFailed = CheckIfSignupLeadProcessFailed();
+                    isSignupLeadProcessFailed = CheckIfSignupLeadProcessFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -1292,15 +1293,15 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isSignupLeadProcessFailed;
         }
 
-        private static bool CheckIfSignupLeadProcessFailed()
+        private static bool CheckIfSignupLeadProcessFailed(int tenant)
         {
             bool isSignupLeadProcessFailed = false;
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
 
-                DateTime twoDaysBefore = TenantServerConfigration.GetCurrentDateTime(0).AddDays(-2);
-                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                DateTime twoDaysBefore = TenantServerConfigration.GetCurrentDateTime(tenant).AddDays(-2);
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                 isSignupLeadProcessFailed = (from d in commonDataContext.CommunicationLogs
                                              where d.CommunicationStatusTypeCode == "f" && d.CommunicationLogTypeCode == "Lead" && (d.CreateDate > twoDaysBefore)
                                              select d).Any();
@@ -1447,10 +1448,10 @@ namespace WebFreight.Web.Controllers.Monitoring
         #region WebHookCommunicationMonitoring
         [HttpGet]
 
-        public HttpResponseMessage WebHookCommunicationMonitoring()
+        public HttpResponseMessage WebHookCommunicationMonitoring(int tenant)
         {
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = !CheckWebHookCommunicationMonitoring();
+            bool isOK = !CheckWebHookCommunicationMonitoring(tenant);
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
@@ -1461,7 +1462,7 @@ namespace WebFreight.Web.Controllers.Monitoring
         }
 
 
-        private bool CheckWebHookCommunicationMonitoring()
+        private bool CheckWebHookCommunicationMonitoring(int tenant)
         {
 
             bool isFailed = false;
@@ -1469,7 +1470,7 @@ namespace WebFreight.Web.Controllers.Monitoring
             {
                 try
                 {
-                    isFailed = CheckIfAnyWebHookCommunicationLogsFailed();
+                    isFailed = CheckIfAnyWebHookCommunicationLogsFailed(tenant);
                 }
                 catch (Exception errorInfo)
                 {
@@ -1480,11 +1481,11 @@ namespace WebFreight.Web.Controllers.Monitoring
             return isFailed;
         }
 
-        private static bool CheckIfAnyWebHookCommunicationLogsFailed()
+        private static bool CheckIfAnyWebHookCommunicationLogsFailed(int tenant)
         {
             DateTime todayDateTime = DateTime.Now;
             DateTime twoDaysBefore = todayDateTime.AddDays(-2);
-            IWebFreightContext context = WebFreightContext.GetContext(0);
+            IWebFreightContext context = WebFreightContext.GetContext(tenant);
             return (from a in context.QueueMessages
                     where a.CreateDateTime > twoDaysBefore
                     && a.QueueDefinitionCode == "WebHookCommunicationLogQueue" && ((a.Status == 0

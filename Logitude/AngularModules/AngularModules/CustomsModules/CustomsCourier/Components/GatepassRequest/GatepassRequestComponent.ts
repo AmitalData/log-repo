@@ -12,6 +12,8 @@ import { CustomSendOptionsArgs } from '../../../../Customs/DataContract/RequestP
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
@@ -316,6 +318,17 @@ export class GatepassRequestComponent extends BaseComponent {
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindow();
+    }
+
+    static showWindow(windowArgs: any): LogitudeWindow {
+        const logitudeWindow = new LogitudeWindow();        
+        logitudeWindow.Width = 620;
+        logitudeWindow.Height = 400;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = TextCodeTranslator.Translate("Customs.CourierMaster.O.GatepassRequest");
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/GatepassRequest/GatepassRequestComponent');
+        return logitudeWindow;        
     }
 }
 

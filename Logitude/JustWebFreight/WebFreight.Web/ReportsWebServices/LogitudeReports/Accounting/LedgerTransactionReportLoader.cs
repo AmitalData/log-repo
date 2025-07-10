@@ -17,7 +17,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using WebFreight.Web.Security;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Accounting.Data.Repositories;
@@ -299,7 +299,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Tenant = transaction.Tenant,
                 JournalId = transaction.JournalId,
                 JournalLineNumber = transaction.JournalLineNumber,
-                CreateDate = transaction.CreateDate.GetValueOrDefault(),
+                CreateDate = transaction.CreateDate ?? DateTime.MinValue,
                 ControlAccountId = transaction.ControlAccountId,
                 AccountId = transaction.AccountId,
                 AccountingDate = transaction.AccountingDate.Date.ToString("dd/MM/yyyy"), 

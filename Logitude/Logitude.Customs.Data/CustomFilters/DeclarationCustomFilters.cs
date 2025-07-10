@@ -2,7 +2,7 @@
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.Utils;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -47,9 +47,10 @@ namespace Logitude.Customs.Data.CustomFilters
                 if (item.FieldName == "CourierPendingReasonList")
                 {
                     queryableData = queryableData.Join(context.DeclarationCourierStatuses, x => x.Id, x => x.DeclarationId, (dec, sta) => new { dec = dec, sta = sta })
-                        .Where(x => x.sta.Tenant == tenant && ("," + x.sta.CourierPendingReasonList + ",").Contains("," + item.FieldValue.ToString() + ","))
+                        .Where(x => x.sta.Tenant == tenant && x.sta.CourierPendingReasonList != null 
+                            && (x.sta.CourierPendingReasonList != null? ("," + x.sta.CourierPendingReasonList + ",").Contains("," + item.FieldValue.ToString() + ","): false) == true)
                         .Select(x => x.dec);
-                }
+                    }
             }
 
             return queryableData;
@@ -89,10 +90,7 @@ namespace Logitude.Customs.Data.CustomFilters
             if (frlUtil.user.IsFreelancer)
             {
                 List<string> customersIds = frlUtil.GetConnectedCustomersIds(tenant);
-                if (customersIds.Count > 0)
-                {
-                    queryableData = queryableData.Where(d => customersIds.Contains(d.CustomerId));
-                }
+               queryableData = queryableData.Where(d => customersIds.Contains(d.CustomerId));
             }
 
             return queryableData;

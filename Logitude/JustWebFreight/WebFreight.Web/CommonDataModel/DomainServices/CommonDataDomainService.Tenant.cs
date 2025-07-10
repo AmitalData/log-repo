@@ -10,12 +10,12 @@ using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -349,7 +349,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 globalTenantRep.SubmitChanges();
 
                 TenantManagementRepository tenantMngmentRep = new TenantManagementRepository();
-                TenantManagement tenantMngment = tenantMngmentRep.GetSingleTenantManagement(currentTenant.Id);
+                TenantManagement tenantMngment = tenantMngmentRep.GetSingleTenantManagement(currentTenant.Id,false);
                 tenantMngment.Name = currentTenant.Company;
                 tenantMngment.DPArchiveShipmentArrivalFilter = currentTenant.DPArchiveShipmentArrivalFilter;
                 tenantMngment.DPArchiveShipmentDepartFilter = currentTenant.DPArchiveShipmentDepartFilter;

@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
@@ -52,6 +52,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                InActive = a.InActive,
                                                LocalName = a.LocalName,
                                                Notes = a.Notes,
+                                               DirectionId = a.DirectionId,
                                                Tenant = a.Tenant,
                                                SearchFields = a.SearchFields,
                                                ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -87,6 +88,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   InActive = a.InActive,
                                   LocalName = a.LocalName,
                                   Notes = a.Notes,
+                                  DirectionId = a.DirectionId,
                                   Tenant = a.Tenant,
                                   SearchFields = a.SearchFields,
                                   ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -112,6 +114,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        InActive = a.InActive,
                                                        LocalName = a.LocalName,
                                                        Notes = a.Notes,
+                                                       DirectionId = a.DirectionId,
                                                        Tenant = a.Tenant,
                                                        SearchFields = a.SearchFields,
                                                        ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -134,6 +137,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              InActive = a.InActive,
                              LocalName = a.LocalName,
                              Notes = a.Notes,
+                             DirectionId = a.DirectionId,
                              Tenant = a.Tenant,
                              SearchFields = a.SearchFields,
                              ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -151,6 +155,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     EnglishName = department.EnglishName,
                                                     LocalName = department.LocalName,
                                                     Notes = department.Notes,
+                                                    DirectionId = department.DirectionId,
                                                     InActive = department.InActive,
                                                     Id = department.Id,
                                                     Tenant = department.Tenant,
@@ -188,6 +193,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 InActive = a.InActive,
                                                 LocalName = a.LocalName,
                                                 Notes = a.Notes,
+                                                DirectionId = a.DirectionId,
                                                 Tenant = a.Tenant,
                                                 SearchFields = a.SearchFields,
                                                 ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -222,6 +228,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       InActive = a.InActive,
                                       LocalName = a.LocalName,
                                       Notes = a.Notes,
+                                      DirectionId = a.DirectionId,
                                       Tenant = a.Tenant,
                                       SearchFields = a.SearchFields,
                                       ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
@@ -239,6 +246,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   Id = a.Id,
                                   InActive = a.InActive,
                                   LocalName = a.LocalName,
+                                  DirectionId = a.DirectionId,
                                   Notes = a.Notes,
                                   Tenant = a.Tenant,
                                   SearchFields = a.SearchFields,

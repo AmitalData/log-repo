@@ -220,6 +220,9 @@ export class AddEditInterfaceManagementComponent
     get TenantSendOptionsCode() { return this.entityPM != null ? this.entityPM.TenantSendOptionsCode : null; }
     set TenantSendOptionsCode(value) { this.entityPM.TenantSendOptionsCode = value; }
 
+    get EntityLockId() { return this.entityPM != null ? this.entityPM.EntityLockId : null; }
+    set EntityLockId(value) { this.entityPM.EntityLockId = value; }
+    
     get SendTime() 
     { 
         if(this.entityPM.SendTime != null)

@@ -56,8 +56,8 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                         }
                         catch (Exception ex)
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,String.Format("Failed to execute the procedure {0}, error: {1}", procName, ex.ToString()));
-                            throw;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, string.Format("Failed to execute the procedure {0}", procName));
+                           throw;
                         }
                     }
                 }
@@ -75,7 +75,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                         }
                         catch (Exception ex)
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,String.Format("Failed to execute the procedure {0}, error: {1}", procName, ex.ToString()));
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,string.Format("Failed to execute the procedure {0}", procName));
                             throw;
                         }
                     }

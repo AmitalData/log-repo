@@ -5,7 +5,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -18,9 +18,9 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.CommonDataModel;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using Logitude.BL.InvoiceModel.CustomFilters;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System.Data.SqlClient;
 
@@ -1533,7 +1533,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PaymentReferences = a.PaymentReferences,
                             SATCancelReasonCode = a.SATCancelReasonCode,
                             TotalAmountNotForTaxReport = (a.SubTotalInLocalCurrency ?? 0)
-                                                         - (double)(a.TotalAmountForTaxReport ?? 0)
+                                                         - (double)(a.TotalAmountForTaxReport ?? 0),
+                            ReferenceDate = a.ReferenceDate,
                         };
 
             return query;
@@ -1706,7 +1707,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                  - (double)(entity.TotalAmountForTaxReport ?? 0),
                              IsSigned= entity.IsSigned,
                              IsSignedName= entity.ARInvoicesSignedStatus == null ? null: entity.ARInvoicesSignedStatus.LocalName,
-                        
+                             ReferenceDate = entity.ReferenceDate,
 
                          };
 
@@ -1886,7 +1887,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          SATCancelReasonCode = entity.SATCancelReasonCode,
                                          TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
                                          DocumentTemplateId = entity.DocumentTemplateId,
-                                         ConcurrencyGUID = entity.ConcurrencyGUID
+                                         ConcurrencyGUID = entity.ConcurrencyGUID,
+                                         ReferenceDate = entity.ReferenceDate,
                                     });
             return result;
         }
@@ -2021,6 +2023,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               TotalEquation = a.TotalEquation,
                                               DocumentTemplateId = a.DocumentTemplateId,
                                               IsSigned=a.IsSigned,
+                                              ReferenceDate = a.ReferenceDate,
                                           }).ToList();
             return invoices;
         }
@@ -2170,7 +2173,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsSigned=entityPOCO.IsSigned,
                     ConfirmationNumber=entityPOCO.ConfirmationNumber,
                     ConfirmationNumberStatusName = entityPOCO.Confirmation != null ? entityPOCO.Confirmation.LocalName : null,
-                 
+                    ReferenceDate = entityPOCO.ReferenceDate,
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
@@ -2587,7 +2590,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              SATCancelReasonCode = entity.SATCancelReasonCode,
                              DocumentTemplateId = entity.DocumentTemplateId,
                              TotalAmountNotForTaxReport = (entity.SubTotalInLocalCurrency ?? 0)
-                                                          - (double)(entity.TotalAmountForTaxReport ?? 0)
+                                                          - (double)(entity.TotalAmountForTaxReport ?? 0),
+                             ReferenceDate = entity.ReferenceDate,
                          };
 
             return result;

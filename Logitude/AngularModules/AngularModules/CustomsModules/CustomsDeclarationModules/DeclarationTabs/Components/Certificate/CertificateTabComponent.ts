@@ -440,6 +440,7 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
     SelectedInvoiceReqConfirmation: string;
     InvoicesSelectionChanged(selectedItem) {
         if (selectedItem != null) {
+            debugger
             this.SelectedInvoiceNumber = selectedItem.InvoiceNumber;
             this.SelectedCounterKey = selectedItem.InvoiceCounterKey;
             this.SelectedInvoiceReqConfirmation = selectedItem.ReqConfirmationTypeCode;
@@ -807,19 +808,19 @@ export class CertificateTabComponent extends BaseComponent implements OnInit {
                             logWindow.Width = 1030;
                             logWindow.Height = 600;
 
-                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.DeclarationPM.DeclarationNumber)) {
-                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber + "-" + this.DeclarationPM.DeclarationNumber;
+                            if (!AppTool.IsNullOrEmpty(supplierInvoicePM?.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.DeclarationPM?.DeclarationNumber)) {
+                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM?.InvoiceNumber + "-" + this.DeclarationPM?.DeclarationNumber;
 
                             }
-                            else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.DeclarationPM.DeclarationNumber)) {
-                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM.DeclarationNumber;
+                            else if (AppTool.IsNullOrEmpty(supplierInvoicePM?.InvoiceNumber) && !AppTool.IsNullOrEmpty(this.DeclarationPM?.DeclarationNumber)) {
+                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + this.EntityPM?.DeclarationNumber;
 
                             }
-                            else if (!AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.DeclarationPM.DeclarationNumber)) {
-                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM.InvoiceNumber;
+                            else if (!AppTool.IsNullOrEmpty(supplierInvoicePM?.InvoiceNumber) && AppTool.IsNullOrEmpty(this.DeclarationPM?.DeclarationNumber)) {
+                                logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice") + " " + supplierInvoicePM?.InvoiceNumber;
 
                             }
-                            else if (AppTool.IsNullOrEmpty(supplierInvoicePM.InvoiceNumber) && AppTool.IsNullOrEmpty(this.DeclarationPM.DeclarationNumber)) {
+                            else if (AppTool.IsNullOrEmpty(supplierInvoicePM?.InvoiceNumber) && AppTool.IsNullOrEmpty(this.DeclarationPM?.DeclarationNumber)) {
                                 logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.O.EditInvoice");
 
                             }

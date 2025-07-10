@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using RestSharp;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.ShipmentsModel;
@@ -224,7 +224,7 @@ namespace CommunicationWorkerRole.Services.ContainerTraking
         {
             var source = GetSource();
             VisionContainerStatus vizionContainerStatus = JsonConvert.DeserializeObject<VisionContainerStatus>(containerTrackingArgs.Data);
-            var result = APICaller.CallApi<object>(source.CallbackURL, vizionContainerStatus, Method.POST);
+            var result = APICaller.CallApi<object>(source.CallbackURL, vizionContainerStatus, Method.Post);
         }
 
         private void AddContainerTrackingRequest(string requestId)

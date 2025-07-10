@@ -69,7 +69,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, DateTime.DaysInMonth(_SeedDate.Date.Year, _SeedDate.Date.Month));
 
                 var listOfDateTypeValues = new List<string>() {
-                    GLAccountTotalDateTypeValues.Accountingdate,
+                    GLAccountTotalDateTypeValues.AccountingDate,
                     GLAccountTotalDateTypeValues.DueDate,
                     GLAccountTotalDateTypeValues.DocumentDate,
                 };
@@ -239,7 +239,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             finally
             {
-                Debug.WriteLine(debugIt);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
             }
 
 
@@ -405,7 +405,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //    }
         //    finally
         //    {
-        //        Debug.WriteLine(debugIt);
+        //       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
         //    }
 
 
@@ -419,7 +419,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var qs = new LedgerTransactionQueryService(_AccountingContext);
 
             var listOfDateTypeValues = new List<string>() {
-                    GLAccountTotalDateTypeValues.Accountingdate,
+                    GLAccountTotalDateTypeValues.AccountingDate,
                     GLAccountTotalDateTypeValues.DueDate,
                     GLAccountTotalDateTypeValues.DocumentDate,
                 };
@@ -529,7 +529,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     new DateTime(seedDate.Date.Year, seedDate.Date.Month, DateTime.DaysInMonth(seedDate.Date.Year, seedDate.Date.Month));
 
                 var listOfDateTypeValues = new List<string>() {
-                    GLAccountTotalDateTypeValues.Accountingdate,
+                    GLAccountTotalDateTypeValues.AccountingDate,
                     GLAccountTotalDateTypeValues.DueDate,
                     GLAccountTotalDateTypeValues.DocumentDate,
                 };
@@ -702,7 +702,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             finally
             {
-                Debug.WriteLine(debugIt);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
             }
 
 

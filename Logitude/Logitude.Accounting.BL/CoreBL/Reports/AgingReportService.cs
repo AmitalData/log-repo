@@ -29,6 +29,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.Server.Tools.Helpers;
 using System.Reflection;
 using System.Data.Entity;
+using Newtonsoft.Json;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -73,10 +74,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=false , Total=10},
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=true, Total=-35},
             };
-            Debug.WriteLine(b4);
-            Debug.WriteLine("------");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(b4));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("------");
             var after = ManipulateFifoPerAccCurr(b4);
-            Debug.WriteLine(after);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(after));
 
         }
 
@@ -121,6 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             int year = DateTime.Now.Year;
 
             if (_Param.AgingForDate != null)
+
             {
                 month = _Param.AgingForDate.Month;
                 year = _Param.AgingForDate.Year;
@@ -316,7 +318,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
             }
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("AccountListRelatedCurrencies Query [{0}] ", q_accountsList.ToTraceQuery()));
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("AccountListRelatedCurrencies Query \r\n {0} ", q_accountsList.ToTraceQuery()));
 
             var myaccountsList = q_accountsList.ToList();
 
@@ -431,7 +433,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             List<PeriodMExtended> namedPeriods = MapExtended(reportList, periodMExtendeds, currencies);
             //
 
-            var allAccountingDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.Accountingdate);
+            var allAccountingDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.AccountingDate);
             var allDueDateBalance = GetBalance(myaccountsList.Select(r => r.Id).AsQueryable(), GLAccountTotalDateTypeValues.DueDate);
 
 
@@ -626,7 +628,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
                 /// Fetch Data Of Main GLAccount
-                var myDateTypeCode = _Param.GroupByDate == AgingReportParam.DateEnum.AccountingDate ? GLAccountTotalDateTypeValues.Accountingdate : GLAccountTotalDateTypeValues.DueDate;
+                var myDateTypeCode = _Param.GroupByDate == AgingReportParam.DateEnum.AccountingDate ? GLAccountTotalDateTypeValues.AccountingDate : GLAccountTotalDateTypeValues.DueDate;
 
                 qTotalByMonthAcc = repoGLAccountTotalByMonth.GetAll(_Param.Tenant).Where(tot => tot.DateTypeCode == myDateTypeCode)
                  .Where(rec => _MainAccountIdList_ToFetchThenAggragrate.Contains(rec.AccountId))
@@ -1233,7 +1235,7 @@ _Param.AgingForDate.Date, false, true, true,false, false);
                     );
 
             //
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GLAccountReconcileDefintionChanged Query [{0}] ", qCheck.ToTraceQuery()));
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GLAccountReconcileDefintionChanged Query \r\n {0} ", qCheck.ToTraceQuery()));
             DateTime start = DateTime.Now;
 
             var listEx = qCheck.ToList();
@@ -1793,7 +1795,7 @@ Period	Acc	Currency	Total
                     _Param.GroupByDate == AgingReportParam.DateEnum.DueDate))
 
                     {
-                        Debug.WriteLine("no no NO only if ReconcileOpenBalanceMethod + DueDate !!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if ReconcileOpenBalanceMethod + DueDate !!!");
                         _Param.SuppressFromGLAccountAgingData = true;
                     }
                     if (
@@ -1801,14 +1803,14 @@ Period	Acc	Currency	Total
                         _Param.AgingForDate.Date.Month != DateTime.Now.Date.Month
                         )
                     {
-                        Debug.WriteLine("no no NO only if 4 current month  !!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if 4 current month  !!!");
                         _Param.SuppressFromGLAccountAgingData = true;
 
                     }
 
                     if (_Param.NumberOfmonthsbackwards > 6)
                     {
-                        Debug.WriteLine("no no NO only if NumberOfmonthsbackwards<6!!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no no NO only if NumberOfmonthsbackwards<6!!!");
                         _Param.SuppressFromGLAccountAgingData = true;
 
                     }

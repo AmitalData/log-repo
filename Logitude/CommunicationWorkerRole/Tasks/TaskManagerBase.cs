@@ -30,7 +30,7 @@ namespace CommunicationWorkerRole.Tasks
         public string MessageId { get; set; }
         string TaskId;
         string TaskHistoryId;
-        int Tenant;
+        protected int Tenant;
         TaskSchedulerHistoryPM TaskSchedulerHistory;
         ConcurrentQueueService<LogQueueMessage> queueService = new ConcurrentQueueService<LogQueueMessage>("LogMessagesQueue");
          public TaskManagerBase(string Id, int tenant)
@@ -88,8 +88,8 @@ namespace CommunicationWorkerRole.Tasks
                     Task.LastRunResult = LastExecutionHistory.LogType;
                     SchedulerHelper SchedulerHelper = new SchedulerHelper();
                     SchedulerHelper.AddSchedulerQueue(Task);
-
-                    scope.Complete();
+                  
+					scope.Complete();
                 }
             }
             catch (ThreadAbortException e)

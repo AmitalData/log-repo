@@ -13,7 +13,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.TraceEvents;
 using Logitude.AmitalMessaging.Infrastructure;
 
@@ -27,7 +27,7 @@ using System;
 using Logitude.AmitalMessaging.Customs.CustomFile;
 using Logitude.Customs.BL.Messaging.Amital.CustomFile;
 using Logitude.Customs.BL.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
 using Logitude.CustomsMessaging.MessagingServices;
@@ -390,43 +390,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!isExportClose) _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
 
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-
-
-            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-            {
-                Tenant = _DeclarationPM.Tenant,
-                objectTableName = "Customs.Declaration",
-                EventCode = "DCH",
-                notes = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
-                CommunicationLoggingEntityReference = _DeclarationPM.DeclarationNumber,
-                EntityId = _DeclarationPMOrg.Id,
-                UserId = _userId,
-
-                CommunicationSubject = "FU Status DCH from logitude ",
-                MyFUStatus = new AmitalEventTracerModel.FUStatus()
-                {
-                    entname = "CFIFILEM",
-                    primary_number = _DeclarationPMOrg.CustomFileNo,
-                    status = "new",
-                    xml_status = "new",
-                    status_id = "DCH",
-                    status_DateTime = DateTime.Now,
-                    comments = "בוצע תיקון הצהרה - " + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
-                }
-            };
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
-
-
-
-            var myUpdateEventContextTagModel = new EventContextTagModel()
-            {
-                CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
-                EventCode = "DCH",
-                EventRemarks = "Declaration Changed By Customs",
-                FUStatusRemarks = "בוצע תיקון הצהרה" + (_DeclarationPMOrg != null ? _DeclarationPMOrg.DeclarationNumber : _DeclarationPM.DeclarationNumber) + " מספר בקשה  - " + _DeclarationPM.AmendmentRequestNumber,
-            };
-            _DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
-
 
 
             declarationUpdateService.Update(_DeclarationPM, true);

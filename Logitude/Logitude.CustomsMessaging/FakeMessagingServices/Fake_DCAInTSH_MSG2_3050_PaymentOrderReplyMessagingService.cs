@@ -2,6 +2,7 @@
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Newtonsoft.Json.Linq;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,19 +55,24 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
 
             ConsignmentPM _con = consignmentQueryService.GetSingle(_dec.Id, 1, false, false);
             _paymentOrderReply.PaymentDetails = new PaymentDetails();
-            //_paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(_dec.DeclarationNumber.Substring(_dec.DeclarationNumber.Length-4)); // Or Use counter?\
             _paymentOrderReply.PaymentDetails.paymentID = Convert.ToInt32(DateTime.Now.Ticks.ToString().Substring(10, 7));
+
+            _paymentOrderReply.PaymentDetails.CustomerActivityTypeSpecified = true;
+            _paymentOrderReply.PaymentDetails.CustomerActivityType = (int)CustomerActivityTypeEnum.CustomsAgent;
+
+
             _paymentOrderReply.customsHouse = 2;
             _paymentOrderReply.paymentProcess = 1;
             _paymentOrderReply.paymentOrderType = 1;
             _paymentOrderReply.paymentStatus = ( paymentStatus != 0 ) ? paymentStatus : 3;
             _paymentOrderReply.paymentProcess = (paymentProcess != 0) ? paymentProcess : 1;
+            _paymentOrderReply.paymentOrderPayDate = DateTime.Now;
             _paymentOrderReply.ConnectedEntity = new ConnectedEntity
             {
                 entityType = 1055,
                 entityIdKey1 = _dec.DeclarationNumber
             };
-            _paymentOrderReply.taxParagraph = new TaxParagraph[1];
+           _paymentOrderReply.taxParagraph = new TaxParagraph[1];
             _paymentOrderReply.taxParagraph[0] = new TaxParagraph
             {
                 paragraphType = 15,
@@ -77,5 +83,10 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
         }
 
 
+    }
+
+    public enum CustomerActivityTypeEnum
+    {
+        CustomsAgent = 3 ,
     }
 }

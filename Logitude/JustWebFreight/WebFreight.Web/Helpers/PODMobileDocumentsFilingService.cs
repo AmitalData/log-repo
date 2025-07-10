@@ -13,7 +13,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Document = Simplog.Data.CommonDataModel.EntityPOCOs.Document;
 
 namespace WebFreight.Web.Helpers

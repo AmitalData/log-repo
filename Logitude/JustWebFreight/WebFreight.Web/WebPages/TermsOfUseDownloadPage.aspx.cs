@@ -2,7 +2,7 @@
 using System.Web;  
 using Simplog.Data.CommonDataModel.Repositories; 
 using WebFreight.Web.WebServices;  
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;

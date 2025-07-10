@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System.Reflection;
 using Simplog.Server.Infrastructure.Helpers;
@@ -50,7 +50,7 @@ namespace Logitude.Server.Tools.Helpers
                         {
                             if (HttpContext.Current != null && HttpContext.Current.User != null)
                             {
-                                string email = HttpContext.Current.User.Identity.Name;
+                                string email = !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) ? HttpContext.Current.User.Identity.Name: args.Email;
                                 if (!string.IsNullOrEmpty(email))
                                 {
                                     UserRepository userRepository = new UserRepository(0);
@@ -340,9 +340,37 @@ namespace Logitude.Server.Tools.Helpers
 
             return id;
         }
+		public static void DeleteTraceEvent(string eventTypeCode, int tenant, string objectTableName,string entityId)
+		{
+			IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
+			ObjectTableRepository objectTabelRepository = new ObjectTableRepository(objectContext);
+			TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+			EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
+			ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
+			string objectTableId = objectTable.Id;
+			List<EventType> allEventTypes = eventTypeRepository.GetEventTypesByTenantAndObjectTableId(tenant, objectTableId).ToList();
+			if (!string.IsNullOrEmpty(eventTypeCode))
+			{
+				EventType eventType = allEventTypes.Where(d => d.Code == eventTypeCode).FirstOrDefault();
 
+				if (eventType != null)
+				{
+					List<TraceEvent> AllEventTraces = traceEventRepository.GetAllTraceEventsByEventType(entityId, eventType.Id, tenant).ToList();
+					if (AllEventTraces.Count > 0)
+					{
+						foreach (TraceEvent iTraceEvent in AllEventTraces)
+						{
+							iTraceEvent.Deleted = true;
+							traceEventRepository.Update(iTraceEvent);
+						}
 
-    }
+						traceEventRepository.SubmitChanges();
+					}
+				}
+			}
+		}
+
+	}
 
     public class TraceEventParams
     {
@@ -379,9 +407,11 @@ namespace Logitude.Server.Tools.Helpers
         public object Entity { get; set; }
         public string ChildEntityId { get; set; }
         public string ChildObjectTableName { get; set; }
-    }
+		public string Email { get; set; }
 
-    public class UpdateEventCustomFieldArgs
+	}
+
+	public class UpdateEventCustomFieldArgs
     {
         public int Tenant { get; set; }
         public string EntityId { get; set; }

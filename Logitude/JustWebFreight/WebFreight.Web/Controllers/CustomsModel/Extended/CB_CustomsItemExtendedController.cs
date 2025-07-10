@@ -5,7 +5,7 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
@@ -18,8 +18,8 @@ using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using System.Transactions;
-using Logitude.Customs.BL.AzureSearch;
 using System.Threading.Tasks;
+using Logitude.Customs.BL.AzureSearch;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Common.RequestParams;
@@ -45,9 +45,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(Tenant);
 
-                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
+                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(Tenant);
+
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainView(filters.CustomsBookType, filters.Tenant, filters.IsDiscountCodes);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -92,9 +93,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
+                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(authToken.Tenant);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByClassification(filters.CustomsBookType,
                     filters.SearchFields, filters.Tenant, filters.IsDiscountCodes);
 
@@ -105,7 +106,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         [HttpPost]
         public HttpResponseMessage GetCustomsBookMainViewSearchByText([FromBody] Filters filters)
         {
@@ -117,9 +118,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(0);
+                CB_CustomsItemComputedDataQueryService customsItemComputedDataQueryService = new CB_CustomsItemComputedDataQueryService(authToken.Tenant);
                 List<CB_CustomsItemComputedDataList> result = customsItemComputedDataQueryService.GetCustomsBookMainViewSearchByText(filters.SearchFields,
                     filters.CustomsBookType, filters.CustomsItemHierarchic, filters.Reamarks, filters.Rules, filters.Tenant, filters.IsDiscountCodes);
 
@@ -205,7 +206,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         [HttpPost]
         public HttpResponseMessage DeleteRemarksClassification(RemarksClassificationPM entityPM)
-    {
+        {
             if (ModelState.IsValid)
             {
                 try
@@ -254,7 +255,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
                 remarksClassificationQuery.InitializeSettings();
 
-                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId,tenant);
+                List<RemarksClassificationList> remarksClassificationPMList = remarksClassificationQuery.GetAllCommentsByCustomsItemId(customsItemId, tenant);
 
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

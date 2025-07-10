@@ -29,15 +29,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
         public void UpsertEventLE2U(int tenant, string UserId, UnifreightEventParam myUnifreightEventParam)
         {
-            //TransactionScope scope = null;
-            //if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
-            //{
-            //    scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
-            //}
-
-
-
-            //long customFile;
+  
 
             if (!myUnifreightEventParam.IsValid())
             {

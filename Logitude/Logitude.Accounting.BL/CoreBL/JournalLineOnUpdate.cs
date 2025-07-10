@@ -137,7 +137,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
                 if (haveChange)
                 {
-                    Debug.WriteLine("FixCredit!! due haveChange ");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("FixCredit!! due haveChange ");
                 }
                 journalLinePM.CreditAccountId = creditIVerifyGLAccountManager.AccountId;
             }
@@ -182,7 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             journalLinePM.DebitControlAccountId != debitIVerifyGLAccountManager.ControlAccountId);
                         if (haveChange)
                         {
-                            Debug.WriteLine("FixDebit!! due haveChange ");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("FixDebit!! due haveChange ");
                         }
                     }
 

@@ -173,7 +173,7 @@ namespace CustomsWorkerRole
             throw new NotImplementedException();
         }
 
-        public static void StartStatic(Action<bool, bool> BuildObjectTablesZipFilesDataAction=null,string ProductInfo=null)
+        public static void StartStatic(Action<bool, bool,int> BuildObjectTablesZipFilesDataAction=null,string ProductInfo=null)
         {
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
@@ -254,13 +254,10 @@ namespace CustomsWorkerRole
             {
                 if (DateTime.Now > stopLogAt) return;
                 if (err)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + suffix);
-                }
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess + ":" + suffix);
                 else
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess + suffix);
-                }
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess + ":" + suffix);
+                
             });
 
 

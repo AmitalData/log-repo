@@ -1,4 +1,4 @@
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.Data;
@@ -39,7 +39,7 @@ namespace Logitude.Workflow.Data.EntityMapping
 
             this.Property(t => t.VersionNumber).HasColumnName("VersionNumber").IsRequired();
 
-            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.Description).HasColumnName("Description").HasMaxLength(2000).IsUnicode(true);
 
             this.Property(t => t.StatusCode).HasColumnName("StatusCode").IsRequired().HasMaxLength(4).IsUnicode(false);
 

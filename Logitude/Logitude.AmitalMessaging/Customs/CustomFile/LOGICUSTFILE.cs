@@ -212,8 +212,17 @@ public partial class LogitudeCustomsFile
     private string receiverNameField;
     private string receiverAddressField;
     private string receiverCountryCodeField;
-    private string vesselField;
-
+ 	private string systemConnectionField;
+	private string mawbDateField;
+	private string estimatedArrivalDateField;
+	private string email;
+	private string arrivalDateField;
+	private string vesselField;
+	private string flightVoyageNumberField;
+	private string carrierCodeField;
+	private string originCountryCodeRefField;
+    private string shipmentId;
+ 
     /// <remarks/>
     public string CustomFileNo
     {
@@ -1235,8 +1244,108 @@ public partial class LogitudeCustomsFile
         }
     }
 
-
-    [System.Xml.Serialization.XmlElementAttribute("Invoices")]
+	/// <remarks/>
+	public string SystemConnection
+	{
+		get
+		{
+			return this.systemConnectionField;
+		}
+		set
+		{
+			this.systemConnectionField = value;
+		}
+	}
+	public string MawbDate
+	{
+		get
+		{
+			return this.mawbDateField;
+		}
+		set
+		{
+			this.mawbDateField = value;
+		}
+	}
+	public string EstimatedArrivalDate
+	{
+		get
+		{
+			return this.estimatedArrivalDateField;
+		}
+		set
+		{
+			this.estimatedArrivalDateField = value;
+		}
+	}
+	public string Email
+	{
+		get
+		{
+			return this.email;
+		}
+		set
+		{
+			this.email = value;
+		}
+	}
+	public string ArrivalDate
+	{
+		get
+		{
+			return this.arrivalDateField;
+		}
+		set
+		{
+			this.arrivalDateField = value;
+		}
+	}
+	
+	public string FlightVoyageNumber
+	{
+		get
+		{
+			return this.flightVoyageNumberField;
+		}
+		set
+		{
+			this.flightVoyageNumberField = value;
+		}
+	}
+	public string CarrierCode
+	{
+		get
+		{
+			return this.carrierCodeField;
+		}
+		set
+		{
+			this.carrierCodeField = value;
+		}
+	}
+	public string OriginCountryCodeRef
+	{
+		get
+		{
+			return this.originCountryCodeRefField;
+		}
+		set
+		{
+			this.originCountryCodeRefField = value;
+		}
+	}
+	public string ShipmentId
+    {
+		get
+		{
+			return this.shipmentId;
+		}
+		set
+		{
+			this.shipmentId = value;
+		}
+	}
+	[System.Xml.Serialization.XmlElementAttribute("Invoices")]
 
     public ExportInvoices Invoices
     {

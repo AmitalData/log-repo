@@ -12,9 +12,10 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {

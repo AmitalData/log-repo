@@ -39,4 +39,17 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="PackageTypeId"
+    OldNames="PackageTypeCode"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="PackageTypeId"
+    ReferencedTable="PackageTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

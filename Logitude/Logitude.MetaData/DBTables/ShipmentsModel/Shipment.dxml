@@ -665,15 +665,15 @@
   </Column>
   <Column
     Name="ShipperName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="ConsigneeName"
-    Type="varchar"
-    Size="70">
+    Type="nvarchar"
+    Size="140">
     <Constraints
       Nullable="true" />
   </Column>
@@ -867,8 +867,8 @@
   </Column>
   <Column
     Name="DangerousMaterialDescription"
-    Type="varchar"
-    Size="100">
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3747,6 +3747,26 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ReferantUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IskaNumber"
+    Type="varchar"
+    Size="16">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="UniCloudShipment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="LockerAddress"
     Type="varchar"
     Size="1000">
@@ -4524,6 +4544,11 @@
     ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReferantUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CustomFileNumber" />
   <Index
@@ -4555,6 +4580,8 @@
     Columns="QuoteId" />
   <Index
     Columns="Tenant,ShipmentNumber" />
+  <Index
+    Columns="ShipmentNumber" />
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index

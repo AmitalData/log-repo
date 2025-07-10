@@ -300,7 +300,7 @@
                                             <td style="width: 20px;">
                                                 <div tabindex="0" class="ToggleButton IconToggleButton" title="Settings" style="width:20px; height:20px; border:none; background:none;">
                                                     <IconButton [Name]="'Settings'" [IsIconOnly]="true"></IconButton>
-                                                    <div class="ToggleButtonMenu" style="right:-50px" attr.data-cy="{{'SettingsMenuButton'}}">
+                                                    <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl'? {'right': '-80px'} : {'left': '-80px'}" attr.data-cy="{{'SettingsMenuButton'}}">
                                                         <!-- Please If you want to add a new button but this condition in that button *ngIf="IsLogBox == false"-->
                                                         <button *ngIf="IsCustomizationVisible" (click)="LanguageSettingsClicked()">Language Settings</button>
                                                         <button *ngIf="IsSignatureVisible" (click)="SignatureClicked()">Signature</button>
@@ -579,5 +579,5 @@
     </tr>
 </table>
 <div *ngIf="IsProcessMenuVisible"  (mouseleave)="CloseMenu()" >
-    <ProcessMenuComponent (PinnedChanged)="TogglePinMenu($event)" (mouseenter)="KeepMenuOpen()" (mouseleave)="CloseMenu()"  [IsProcessMenuVisible]="IsProcessMenuVisible" [IsPinned]="isPinned" [CurrentProcessId]="CurrentProcessId" [CurrentSelectedTab]="SelectedTab"></ProcessMenuComponent>
+    <ProcessMenuComponent (PinnedChanged)="TogglePinMenu($event)" (mouseenter)="KeepMenuOpen()" (mouseleave)="CloseMenu()"  [IsProcessMenuVisible]="IsProcessMenuVisible" [IsPinned]="isPinned" [CurrentProcessId]="CurrentProcessId" [CurrentSelectedTab]="SelectedTab" (CloseMenu)="CloseMenu()"></ProcessMenuComponent>
 </div>

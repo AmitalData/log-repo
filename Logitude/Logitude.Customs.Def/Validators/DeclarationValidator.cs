@@ -106,7 +106,7 @@ namespace Logitude.Customs.Def.Validators
                 if (additional != null)
                 {
                     houseType.TransportModeId = additional.TransportModeId;
-                    houseType.TransportModeName = additional.CustomsTransportMode != null ? additional.CustomsTransportMode.LocalName : null;
+                    houseType.TransportModeName = additional.TransportMode != null ? additional.TransportMode.LocalName : null;
                     houseType.UnloadPortCode = additional.UnloadPortCode;
                     houseType.UnloadPortName = additional.UnloadingSiteType != null ? additional.UnloadingSiteType.LocalName : null;
                 }

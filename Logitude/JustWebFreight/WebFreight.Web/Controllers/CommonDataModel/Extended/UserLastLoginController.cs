@@ -10,7 +10,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -32,14 +32,14 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 {
     public class UserLastLoginsController : ApiController
     {
-        public HttpResponseMessage GetUserLastLogin(string userId, int tenant)
+        public HttpResponseMessage GetUserLastLogin(string userId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                int tenant = authToken.Tenant;
 
                 UserLastLoginQuery userLastLoginQuery = new UserLastLoginQuery(tenant);
                 var myResult = userLastLoginQuery.GetSinglePM(userId, tenant);

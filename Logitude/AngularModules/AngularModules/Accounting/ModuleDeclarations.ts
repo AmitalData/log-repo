@@ -165,6 +165,8 @@ import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/Cashbo
 import { JournalShortTitleComponent } from './Components/ShortTitles/JournalShortTitleComponent';
 import { GLAccountInterestTransactionsComponent } from './Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent';
 import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsListTemplate';
+import { NewNLogComponent } from './Components/Maintenance/NewNLogComponent';
+import { InvoiceApiCommunicationLogDetailsTabComponent } from './Components/EditTabs/InvoiceApi/InvoiceApiCommunicationLogDetailsTabComponent';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -218,6 +220,7 @@ export const Components =
         AccountingPeriodEventComponent,
         NewTaxWithholdingAssessingOfficeComponent,
         YearTransferComponent,
+        NewNLogComponent,
         AccountingLoadTestComponent,
         AccountingMainTesterComponent,
         Generate1000Component,
@@ -260,6 +263,7 @@ export const Components =
         InterestInvoiceAutoCreditComponent,
         UserDefinedReportGeneralTabComponent,
         GLAccountChequeListComponent,
+        InvoiceApiCommunicationLogDetailsTabComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
         GlAccountInterestTransactionsListTemplate,
@@ -394,6 +398,8 @@ export class ModuleDeclarations {
             case "ChartOfAccountsTypesOrderComponent": { myResult = ChartOfAccountsTypesOrderComponent; break; }
             case "FullAccountingAddControlComponent": { myResult = FullAccountingAddControlComponent; break; }
             case "YearTransferComponent": { myResult = YearTransferComponent; break; }
+            case "NewNLogComponent": { myResult = NewNLogComponent; break; }
+
             case "AccountingPeriodsComponent": { myResult = AccountingPeriodsComponent; break; }
             case "EditAccountingPeriodComponent": { myResult = EditAccountingPeriodComponent; break; }
             case "AccountingPeriodEventComponent": { myResult = AccountingPeriodEventComponent; break; }
@@ -439,6 +445,7 @@ export class ModuleDeclarations {
             case "GLAccountInterestComponent": { myResult = GLAccountInterestComponent; break; }
             case "InterestReportGeneralTabComponent": { myResult = InterestReportGeneralTabComponent; break; }
             case "UserDefinedReportGeneralTabComponent": { myResult = UserDefinedReportGeneralTabComponent; break; }
+            case "InvoiceApiCommunicationLogDetailsTabComponent": { myResult = InvoiceApiCommunicationLogDetailsTabComponent; break; }
 
              //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }

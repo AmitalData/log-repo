@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -42,7 +45,7 @@
   Code="&quot;COMT&quot;"
   Name="&quot;Customs.CommunicationType&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;LocalName&quot;"
+  CloseTableName="&quot;EnglishName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
   ServerModuleName="&quot;Customs&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;10e0&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -135,6 +139,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -212,6 +217,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -289,6 +295,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -367,6 +374,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -443,6 +451,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -536,32 +545,37 @@
       SearchFields="&quot;1&quot;"
       Inactive="false"
       LocalName="&quot;111&quot;"
-      EnglishName="&quot;11&quot;" />
+      EnglishName="&quot;One&quot;" />
     <Record
       Code="&quot;AH&quot;"
       SearchFields="&quot;AH,אתר אינטרנט&quot;"
       Inactive="false"
-      LocalName="&quot;אתר אינטרנט&quot;" />
+      LocalName="&quot;אתר אינטרנט&quot;"
+      EnglishName="&quot;website&quot;" />
     <Record
       Code="&quot;AL&quot;"
       SearchFields="&quot;AL,נייד&quot;"
       Inactive="false"
-      LocalName="&quot;נייד&quot;" />
+      LocalName="&quot;נייד&quot;"
+      EnglishName="&quot;Mobile&quot;" />
     <Record
       Code="&quot;EM&quot;"
       SearchFields="&quot;EM,דואר אלקטרוני&quot;"
       Inactive="false"
-      LocalName="&quot;דואר אלקטרוני&quot;" />
+      LocalName="&quot;דואר אלקטרוני&quot;"
+      EnglishName="&quot;Email&quot;" />
     <Record
       Code="&quot;FX&quot;"
       SearchFields="&quot;FX,פקס&quot;"
       Inactive="false"
-      LocalName="&quot;פקס&quot;" />
+      LocalName="&quot;פקס&quot;"
+      EnglishName="&quot;fax&quot;" />
     <Record
       Code="&quot;TE&quot;"
       SearchFields="&quot;TE,נייח&quot;"
       Inactive="false"
-      LocalName="&quot;נייח&quot;" />
+      LocalName="&quot;נייח&quot;"
+      EnglishName="&quot;landline&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

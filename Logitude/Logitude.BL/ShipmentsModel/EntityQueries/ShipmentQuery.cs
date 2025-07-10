@@ -11,11 +11,11 @@ using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.Data.Repositories;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
@@ -38,6 +38,7 @@ using System.Web;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.BL.ShipmentsModel.Tools.ExternalService;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -1576,7 +1577,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 str = shipment.ShipmentType.Name;
             }
 
-            str = string.IsNullOrEmpty(str) ? shipmentLevel.Name : str + " " + shipmentLevel.Name;
+            str = string.IsNullOrEmpty(str) ? shipmentLevel?.Name : str + " " + shipmentLevel?.Name;
             shipmentPM.ShipmentType = str;
             shipmentPM.Tenant = shipment.Tenant;
             shipmentPM.ShipmentPMId = shipment.Id;
@@ -1811,6 +1812,21 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     shipmentPM.OnForwardingCarrierName = cardObject.EnglishName;
                     shipmentPM.OnForwardingCarrierWebSite = cardObject.Website;
                 }
+            }
+            #endregion
+
+            #region UniCloudShipment
+
+            shipmentPM.UniCloudShipment = shipment.UniCloudShipment;
+            shipmentPM.IsCustomShipment = shipment.UniCloudShipment && shipment.DirectionId == "C";
+
+            if (shipmentPM.IsCustomShipment)
+            {
+                shipmentPM.ReferantUserId = shipment.ReferantUserId;
+                shipmentPM.ReferantUserName = shipment.UserId?.Contact?.LocalName;
+                shipmentPM.IskaNumber = shipment.IskaNumber;
+                shipmentPM.Status = ""; // todo: mapping
+                shipmentPM.DepartmentName = shipment.Department?.LocalName;
             }
             #endregion
 
@@ -2175,8 +2191,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 shipmentPM.ShipmentAssemblies = shipmentAssemblyQuery.GetShipmentAssemblies(shipment.Id, shipment.Tenant);
                 #endregion
 
-                #region Packages | Commodities
-                ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
+                #region Shipment references
+                if (shipmentPM.IsCustomShipment)
+                {
+                    ShipmentReferanceRepository shipmentReferanceRepository = new ShipmentReferanceRepository(tenant);
+                    ShipmentReferanceQuery shipmentReferanceQuery = new ShipmentReferanceQuery(shipmentReferanceRepository);
+                    shipmentPM.ShipmentReferances = shipmentReferanceQuery.GetShipmentReferances(shipment.Id, shipment.Tenant);
+                }
+				#endregion
+				#region FreightForwarder references
+				if (shipment.DirectionId == "C")
+				{
+					FreightForwarderReferenceRepository freightForwarderReferenceRepository = new FreightForwarderReferenceRepository(tenant);
+					FreightForwarderReferenceQuery freightForwarderReferenceQuery = new FreightForwarderReferenceQuery(freightForwarderReferenceRepository);
+					shipmentPM.FreightForwarderReferences = freightForwarderReferenceQuery.GetFreightForwarderReferences(shipment.Id, shipment.Tenant);
+				}
+				#endregion
+
+				#region Packages | Commodities
+				ShipmentPackageRepository shipmentPackageRepository = new ShipmentPackageRepository(tenant);
                 ShipmentPackageQuery shipmentPackageQuery = new ShipmentPackageQuery(shipmentPackageRepository);
 
                 ShipmentCommodityRepository shipmentCommodityRepository = new ShipmentCommodityRepository(tenant);
@@ -2254,7 +2287,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Shipment ARInvoices
-                if (shipmentPM.ShipmentARInvoices != null)
+                if (shipmentPM.ShipmentARInvoices != null && shipmentPM.ShipmentARInvoices.Count > 0)
                 {
                     ARInvoiceStatusRepository statusRepository = new ARInvoiceStatusRepository(tenant);
                     List<ARInvoiceStatus> allStatuses = statusRepository.GetARInvoiceStatus().ToList();
@@ -2325,7 +2358,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 #endregion
 
                 #region Shipment APInvoices
-                if (shipmentPM.ShipmentAPInvoices != null)
+                if (shipmentPM.ShipmentAPInvoices != null && shipmentPM.ShipmentAPInvoices.Count > 0)
                 {
                     APInvoiceStatusRepository statusRepository = new APInvoiceStatusRepository(tenant);
                     List<APInvoiceStatus> allStatuses = statusRepository.GetAPInvoiceStatus().ToList();
@@ -4539,6 +4572,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                               .Include("ShipmentMasterData")
                                               .Include("SpecialServicesType")
                                               .Include("MoveType")
+                                              .Include("UserId").Include("UserId.Contact") // for ReferentUserId
+                                              .Include("Department")
                                               .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
                 if (shipment != null)
                 {
@@ -4549,7 +4584,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                     ShipmentPM shipmentPM = new ShipmentPM();
                     shipmentPM.Tenant = shipment.Tenant;
-                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, false, cardId);
+                    shipmentPM = MapShipmentToShipmentPM(shipmentPM, shipment, null, masterData, true, shipment.UniCloudShipment, cardId);
                     ShipmentPM securedPM = new ShipmentPM();
 
                     securedPM = SecuredMapping.GetMappedPM(shipmentPM, securedPM, "Shipment", tenant);
@@ -15123,8 +15158,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentPM GetSingleShipmentPMBySecurityKeyTenantTest()
         {
             var shipment = (from a in repository.context.Shipments
-                        join b in repository.context.ShipmentAdditionalCloudDatas on a.Id equals b.Id
-                        where b.IsUserIDNumberRequired == true && !a.IsCancelled && b.UserIdNumberUpdateDate == null && b.UserIdNumberXMLData != null && b.UserIdNumberXMLData.Contains("<UserIdNumberRequestPM")
+                            join b in repository.context.ShipmentAdditionalCloudDatas on a.Id equals b.Id
+                            where b.IsUserIDNumberRequired == true && !a.IsCancelled && b.UserIdNumberUpdateDate == null && b.UserIdNumberXMLData != null && b.UserIdNumberXMLData.Contains("<UserIdNumberRequestPM")
                             select a).FirstOrDefault();
 
             ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
@@ -15267,12 +15302,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-        public ShipmentAdditionalCloudCustomData GetSingleShipmentAdditionalCloudCustomDataTest()
+        public ShipmentAdditionalCloudCustomData GetSingleShipmentAdditionalCloudCustomDataTest(List<int> tenants)
         {
             ShipmentAdditionalCloudCustomData data = null;
             data = (from a in repository.context.Shipments
                     join b in repository.context.ShipmentAdditionalCloudDatas on a.Id equals b.Id
-                    where b.IsPaymentRequired == true && !a.IsCancelled && b.PaymentDateTime == null && b.PaymentRequestXML != null && b.PaymentRequestXML.Contains("<RequestPayment")
+                    where tenants.Contains(a.Tenant) && b.IsPaymentRequired == true && !a.IsCancelled && b.PaymentDateTime == null && b.PaymentRequestXML != null && b.PaymentRequestXML.Contains("<RequestPayment")
                     select new ShipmentAdditionalCloudCustomData
                     {
                         ShipmentNumber = a.ShipmentNumber,
@@ -15289,7 +15324,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Tenant = a.Tenant
                     }).FirstOrDefault();
 
-            return data;
+           return data;
         }
 
         public ShipmentAdditionalCloudCustomData GetSingleShipmentAdditionalCloudCustomData(string key, int tenant)
@@ -15828,6 +15863,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return shipmentCustomsData;
 
         }
+
+        public CustomShipmentLinkedFreightForwarder GetCustomShipmentsWithFreightForwarderByShipmentNumber(int tenant, string shipmentNumber)
+        {
+            IQueryable<CustomShipmentLinkedFreightForwarder> query = (from record in repository.context.Shipments
+                                                                      
+                                                                      join ffr in repository.context.FreightForwarderReferences
+                                                                      on record.Id equals ffr.ShipmentId into ffrJoin
+                                                                      from freightForwarderReferences in ffrJoin.DefaultIfEmpty()
+
+                                                                      where record.Tenant == tenant && record.ShipmentNumber == shipmentNumber
+                                                                      select new CustomShipmentLinkedFreightForwarder
+                                                                      {
+                                                                          ShipmentId = record.Id,
+                                                                          CustomShipmentNumber = record.ShipmentNumber,
+                                                                          ForwarderShipmentNumber = freightForwarderReferences != null ? freightForwarderReferences.ForwarderShipmentNumber : null
+                                                                      });
+            return query.FirstOrDefault();
+        }
+
 
         public ShipmentAdditionalCloudData GetShipmentAdditionalCloudData(string shipmentId, int tenant)
         {
@@ -16666,6 +16720,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public decimal TaxAmount { get; set; }
     }
 
+    public class CustomShipmentLinkedFreightForwarder
+    {
+        public string ShipmentId { get; set; }
+        public string CustomShipmentNumber { get; set; }
+        public string ForwarderShipmentNumber { get; set; }
+    }
 
     public class DeparturesArrivalsDataItem
     {

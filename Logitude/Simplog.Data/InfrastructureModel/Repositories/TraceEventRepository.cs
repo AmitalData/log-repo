@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
 using System.Data.Entity;
 
 namespace Simplog.Data.InfrastructureModel.Repositories

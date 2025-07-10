@@ -74,10 +74,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     if (q.StartAt.HasValue)
                     {
-                        Debug.Write("In the middle of sign ?? ");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("In the middle of sign ?? ");
                         if (DateTime.Now.Subtract(q.StartAt.Value) < TimeSpan.FromMinutes(_SignQueueTimeOutInMints))
                         {
-                            Debug.Write("less 4 min , Waiting ...");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("less 4 min , Waiting ...");
                             return;
                         }
                     }

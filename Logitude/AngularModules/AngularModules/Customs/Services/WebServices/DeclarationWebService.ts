@@ -39,8 +39,8 @@ import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
  import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
- import { DataResult } from '../Others/CourierMasterService';
- declare var window: any;
+import { DataResult } from '../Others/CourierMasterService';
+declare var window: any;
 
 @Injectable()
 

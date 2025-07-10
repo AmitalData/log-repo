@@ -105,7 +105,7 @@ namespace Logitude.Server.Tools.QueueService
 
                 var queueService = new CustomDbQueueService//();
                 //queueService.InitializeQueue
-                    (this._SBQueueName, 0);
+                    (this._SBQueueName, _QueueSendModel.Tenant);
                 Dictionary<string, string> messageProperties = new Dictionary<string, string>();
                 //messageProperites.Add(QueueExt.QueuePropertyNames.InterfaceTypeCode.ToString(), "Logitude.CustomsMessaging.MessagingServices.DF_MSG10000_ImportDeclarationMessagingService");
                 messageProperties.Add("InterfaceTypeCode", _QueueSendModel.InterfaceTypeCode);

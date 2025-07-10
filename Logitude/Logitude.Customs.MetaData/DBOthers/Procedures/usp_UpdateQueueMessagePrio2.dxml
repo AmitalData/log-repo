@@ -2,34 +2,30 @@
   <SqlScript>
 	  <![CDATA[
 
-   create procedure usp_UpdateQueueMessagePrio2
-   @Tenant int,
-   @CourierMasterId varchar,
-   @InterfaceTypeCode varchar,
-   @TenantPriority int
-   as 
-   begin 
-          update  dbo.QueueMessages
-   		  set TenantPriority=@TenantPriority
-   		  where Tenant = @Tenant and InterfaceTypeCode = @InterfaceTypeCode and NextRunDateTime <= dateadd(minute, 20, getdate()) and EntityId in (
-   							select 	Id from Customs.CustomsRequestsSheets	where Tenant = @Tenant and InterfaceTypeCode = @InterfaceTypeCode	and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
-                                                         RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= getdate() -7 and ((ObjectTableId1 = '1-343' and EntityId1 in (
-   													  select DeclarationId from Customs.CourierDeclarations
-   													   where Tenant = @Tenant and  CourierMasterId = @CourierMasterId
-   													 ) ) or (ObjectTableId1 = '1-655' and  EntityId1 = @CourierMasterId) )
-   
-                                                        );
-   													 
-          update  Customs.CustomsRequestsSheets
-   		  set TenantPriority=@TenantPriority
-   		  where Tenant = @Tenant and InterfaceTypeCode = @InterfaceTypeCode  and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
-                                                         RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= getdate()-7 and (( ObjectTableId1 = '1-343' and EntityId1 in (
-   													  select DeclarationId from Customs.CourierDeclarations
-   													   where Tenant = @Tenant and  CourierMasterId = @CourierMasterId) or (ObjectTableId1 = '1-655' and  EntityId1 = @CourierMasterId) )
-   													 
-   
-                                                        );
-   end
+  Create procedure usp_UpdateQueueMessagePrio2
+@Tenant int,
+@CourierMasterId varchar(40),
+@InterfaceTypeCode varchar(32),
+@TenantPriority int
+as
+begin
+update  dbo.QueueMessages
+set TenantPriority=@TenantPriority
+where Tenant = @Tenant and InterfaceTypeCode = @InterfaceTypeCode and NextRunDateTime <= dateadd(minute, 20, getdate()) and EntityId in (
+select 	Id from Customs.CustomsRequestsSheets	where Tenant = @Tenant and InterfaceTypeCode = @InterfaceTypeCode	and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
+RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= getdate() -7 and ((ObjectTableId1 = '1-343' and EntityId1 in (
+select DeclarationId from Customs.CourierDeclarations
+where Tenant = @Tenant and  CourierMasterId = @CourierMasterId
+) ) or (ObjectTableId1 = '1-655' and  EntityId1 = @CourierMasterId) )
+);
+update  Customs.CustomsRequestsSheets
+set TenantPriority=@TenantPriority
+where Tenant = @Tenant and InterfaceTypeCode = @InterfaceTypeCode  and	(RequestStatusCode = '5' or RequestStatusCode = '1' or
+RequestStatusCode = '2' or RequestStatusCode = '21') and RequestCreateDate >= getdate()-7 and (( ObjectTableId1 = '1-343' and EntityId1 in (
+select DeclarationId from Customs.CourierDeclarations
+where Tenant = @Tenant and  CourierMasterId = @CourierMasterId) or (ObjectTableId1 = '1-655' and  EntityId1 = @CourierMasterId) )
+);
+end
 
     ]]>
   </SqlScript>

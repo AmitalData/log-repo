@@ -16,7 +16,7 @@ using System.Transactions;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.Helpers;
 using System.Text;
 using Logitude.Customs.BL.Messaging.Customs;
@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.Utils
                     {
                         ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
                         ARPaymentChequeList aRPaymentCheque = aRPaymentChequeListQueryService.GetSingle(id);
-                        AccountingLogger.LogMe("ARPaymentCheque - run one cheque: " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo("ARPaymentCheque - run one cheque: " + aRPaymentCheque.ChequeNumber+":"+ "CHQ");
 
 
                         BankDepositLineListQueryService bankDepositLineListQueryService = new BankDepositLineListQueryService(context);
@@ -165,7 +165,7 @@ namespace Logitude.Accounting.BL.Utils
                                 Reference3 = aRPaymentCheque.PaymentNumber,
                                 Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
                             };
-                            AccountingLogger.LogMe("Credit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Credit Cheque = " + aRPaymentCheque.ChequeNumber + ":" + "CHQ");
                             lineList.Add(journalLine_credit);
 
                             JournalLineList journalLine_debit = new JournalLineList
@@ -187,7 +187,7 @@ namespace Logitude.Accounting.BL.Utils
                                 Reference3 = aRPaymentCheque.PaymentNumber,
                                 Notes = TranslateTextsClassTranslate("Accounting.General.O.PostdatedChequeRedemption", 0, useLocal),
                             };
-                            AccountingLogger.LogMe("Debit Cheque = " + aRPaymentCheque.ChequeNumber, false, "CHQ");
+                            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Debit Cheque = " + aRPaymentCheque.ChequeNumber + ":" + "CHQ");
                             lineList.Add(journalLine_debit);
 
                             if (aRPaymentCheque != null && aRPaymentCheque.ValueDate != null)

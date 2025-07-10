@@ -6,7 +6,7 @@ using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Server.Tools;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -27,7 +27,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Validation;
 using System.Configuration;
@@ -818,7 +818,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.DirectionCode = "I";
             documentsFilingPM.Description = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber;
-            documentsFilingPM.ExternalEntityName = "CFIFILEM";
+            documentsFilingPM.ExternalEntityName = _DeclarationPM?.Direction=="E" ? "EFIFILEM": "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
             documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);

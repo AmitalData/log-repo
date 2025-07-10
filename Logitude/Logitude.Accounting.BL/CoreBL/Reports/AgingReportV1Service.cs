@@ -69,10 +69,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=false , Total=10},
                 new PeriodM(){AccountId="1", CurrencyId="1", OrderDate = new DateTime(2016 ,5,1) , OrderDateB4=true, Total=-35},
             };
-            Debug.WriteLine(b4);
-            Debug.WriteLine("------");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(b4);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("------");
             var after = ManipulateFifoPerAccCurr(b4);
-            Debug.WriteLine(after);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(after);
 
         }
 

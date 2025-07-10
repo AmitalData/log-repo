@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InvoiceModel.APIDataContract;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,9 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Security;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Linq;
 
 namespace WebFreight.Web.ExternalAPIs.V1
 {
@@ -34,10 +37,18 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                ARPayment aRPayment = new ARPayment();
+                ARPaymentLite aRPayment = new ARPaymentLite();
                 if (!string.IsNullOrEmpty(number))
                 {
-                    aRPayment = Service.GetARPaymentByNumber(number, tenant);
+                    aRPayment = Service.GetARPaymentLiteByNumber(number, tenant);
+                }
+                if (aRPayment != null && !String.IsNullOrEmpty(aRPayment.BranchId))
+                {
+                    string errorText = ContactQuery.UserBranchRestriction(aRPayment.BranchId, tenant, "cancel receipts");
+                    if (!String.IsNullOrEmpty(errorText))
+                    {
+                        throw new ApplicationException(errorText);
+                    }
                 }
 
                 ARPaymentChqSts aRPaymentChqStsResult_onlyPay = new ARPaymentChqSts()
@@ -102,6 +113,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, exceptionMessage);
             }
         }
+
 
     }
 }

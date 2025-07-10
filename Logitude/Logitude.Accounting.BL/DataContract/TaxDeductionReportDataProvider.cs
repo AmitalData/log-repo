@@ -12,7 +12,7 @@ using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System;
@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using System.Web.Util;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using Logitude.Accounting.Data.Enums;
+using Logitude.BL.InvoiceModel.CloseTables;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.CloseTables;
 
@@ -190,15 +191,18 @@ namespace Logitude.Accounting.BL.DataContract
                     + BuildVendorErrorMessage(vendorsWithoutVatNumber, paymentOrderText, TextCodesTranslator.TranslateText("TaxDeductionReport.O.CardWithoutVatNumber", Tenant));
                 VendorsWithoutVatNumberCache.UnionWith(vendorsWithoutVatNumber.Select(d => d.VendorCard.Code).Distinct());
             }
-
-
             foreach (APPayment payment in payments) {
 
                 if (id == payment.Id) continue;
                 id = payment.Id;
                 TaxDeductionReportLine taxDeductionReportline = new TaxDeductionReportLine();
                 taxDeductionReportline.VendorId = payment.VendorCard!= null? payment.VendorCard.GLAccountId: null;
+                if (taxDeductionReportline.VendorId == null)
+                {
+                    if(taxDeductionReport != null) 
+                        taxDeductionReport.ErrorMessage = taxDeductionReport.ErrorMessage + Environment.NewLine + "הוראת תשלום :" + payment.PaymentNo + "\n" + "הכרטיס התפעולי לא מחובר לכרטיס ההנח\"ש";
 
+                }
                 taxDeductionReportline.MonthOfRegisterDate = cancelled? payment.AccountingCancelationDate.Value.Month : payment.RegisterDate.Value.Month;
                 taxDeductionReportline.AmountInLocalCurrency = cancelled ?  payment.AmountInLocalCurrency*-1 : payment.AmountInLocalCurrency;
                 taxDeductionReportline.AmountInLocalCurrency = Math.Round((double)taxDeductionReportline.AmountInLocalCurrency, 0);
@@ -804,6 +808,7 @@ namespace Logitude.Accounting.BL.DataContract
                 byVendorList.Add(emptyVendor);
             }
 
+ 
             var byVendorsGroups = byVendorList
                 .GroupBy(x => new { x.DeductionFileNumber, x.VATNumber, x.TaxDeductionPercentage });
 
@@ -840,7 +845,7 @@ namespace Logitude.Accounting.BL.DataContract
                 }
             }
             return combined;
-        }
+         }
 
         private List<CardList> GetMainAccountsCards()
         {

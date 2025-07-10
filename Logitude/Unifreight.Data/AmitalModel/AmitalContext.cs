@@ -113,20 +113,20 @@ namespace Unifreight.Data.AmitalModel
         //    Devart.Data.Oracle.OracleMonitor monitor = new Devart.Data.Oracle.OracleMonitor() { IsActive = true };
         //}
         public static AmitalContext GetContext(int tenantSeed)
-        {
-            
+        {            
             string dbConnectionInfo = null;
             //if (DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn )
-            {
-                GlobalDB currentDb;
-                currentDb = GlobalDbHelper.GetGlobalDB(tenantSeed);
-                dbConnectionInfo = currentDb.DBConnection;
-                DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            //{
 
+            GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenantSeed);
+            LogitudeCustomsSettingsM settings = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenantSeed);
+            dbConnectionInfo = settings == null || settings.IsConnectedToUniFreight ? currentDb.DBConnection : settings.UnfConnectionString;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo);
+            AmitalContext context = Create(tenantSeed, connection);//new AmitalContext(connection, tenantSeed);
 
-                var context = Create(tenantSeed, connection);//new AmitalContext(connection, tenantSeed);
-                return context;
-            }
+            return context;
+
+            //}
             //else
             //{
             //    if (LogitudeSettings.GetLogitudeCustomsSettingsMInject == null)
@@ -137,10 +137,6 @@ namespace Unifreight.Data.AmitalModel
             //    dbConnectionInfo = myFuncGetConn(tenantSeed).UnfConnectionString;
             //    return GetContextByDBInfo(dbConnectionInfo, tenantSeed);
             //}
-
-
-
-
         }
         public static AmitalContext GetContextByDBInfo(string dbConnectionInfo, int tenantSeed)
         {
@@ -193,14 +189,14 @@ namespace Unifreight.Data.AmitalModel
             }
         }
 
-        public System.Data.Common.DbConnection GetConnection()
+        public DbConnection GetConnection()
         {
-            throw new NotImplementedException();
+            return this.Database.Connection;
         }
 
-        public System.Data.Entity.DbContext GetActiveDbContext()
+        public DbContext GetActiveDbContext()
         {
-            throw new NotImplementedException();
+            return this;
         }
 
         public void SetAsModified(object entity)

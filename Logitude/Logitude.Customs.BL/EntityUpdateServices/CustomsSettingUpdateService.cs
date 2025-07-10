@@ -8,7 +8,7 @@ using Simplog.Server.Infrastructure;
 using System.Xml;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.Resolvers;
 using Logitude.Customs.Data.EntityPOCOs;
 using static Logitude.Customs.BL.Messaging.FtpOutParams;

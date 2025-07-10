@@ -5,7 +5,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;

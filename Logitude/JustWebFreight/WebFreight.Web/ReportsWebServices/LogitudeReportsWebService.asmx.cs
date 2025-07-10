@@ -12,7 +12,7 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.DataProviders;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityQueries;
@@ -35,7 +35,7 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.InfrastructureModel.DomainServices;
 using WebFreight.Web.Security;
@@ -11083,10 +11083,10 @@ namespace WebFreight.Web.ReportsWebServices
                     string fvalue = (string)filterItem_ChartOfAccountsIdList.FieldValue;
                     if (!String.IsNullOrEmpty(fvalue)) chartOfAccountsIdList = fvalue.Split(',').ToList();
                 }
+               
             }
            
 
-    
             #endregion
 
 
@@ -11119,10 +11119,10 @@ namespace WebFreight.Web.ReportsWebServices
                 Category5 = category5,
                 DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
-                Suppress_ControlAccount = true,
+                //Suppress_ControlAccount = true,
                 //  Skip = true
                 Suppress_DoNotShowCardWithoutActivity = false,
-
+                IsTrialBalanceReport = true,
 
             };
 
@@ -11261,7 +11261,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlJob = true;
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
-                trailReportParam.Suppress_ControlAccount = true;
+               // trailReportParam.Suppress_ControlAccount = true;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                  trailReportParam.Category1 = category1;
@@ -11804,8 +11804,8 @@ namespace WebFreight.Web.ReportsWebServices
                 if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
                 if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
-                trailReportParam.Suppress_ControlAccount = true;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; 
+                //trailReportParam.Suppress_ControlAccount = true;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
 
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
 

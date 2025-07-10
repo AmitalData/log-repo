@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -35,7 +35,7 @@ using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 using Logitude.Server.Tools.TreeFilterQuery;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
@@ -101,7 +101,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
 			    IQueryable<AirlineList> entityLists = airlineQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.Code);
 				List<AirlineList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
                 CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
@@ -305,7 +305,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Code);
                                 break;
                             }
                     }
@@ -314,7 +314,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Code);
             } 
 
 			ServiceResponse response = new ServiceResponse();

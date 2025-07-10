@@ -3,7 +3,7 @@
   Name="SATInterfaces"
   Schema="dbo"
   DBType="Main"
-  Module="Invoice">
+  Module="Common">
   <Column
     Name="Code"
     Type="varchar"

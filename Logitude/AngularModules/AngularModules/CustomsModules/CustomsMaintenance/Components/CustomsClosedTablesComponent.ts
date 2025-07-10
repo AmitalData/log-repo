@@ -15,6 +15,8 @@ import { CustomsClosedTableList } from '../../../Customs/EntityLists/CustomsClos
 import { SystemTableRequestParams } from '../../../Customs/DataContract/RequestParams/SystemTableRequestParams';
 import { IIGGeneralMessagesService } from '../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomMessageProgressComponent, CustomMessageProgressHelper } from '../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
     
@@ -40,6 +42,10 @@ export class CustomsClosedTablesComponent implements OnInit {
     onQueryChangeEvent = new EventEmitter();
 
     private _entityListService: EntityListService;
+    isTableUpdateButtonEnabled: boolean = false;
+    customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
+    private _isConnectedToUniFreight = false; 
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this._entityListService = new EntityListService();
@@ -53,6 +59,14 @@ export class CustomsClosedTablesComponent implements OnInit {
             //    console.warn(err);
             //}
         });
+        const canCustomerCare = SessionLocator?.LoggedUserPM?.IsCustomerCare ?? false;
+        this.customsSettingListService.getSingleFromCache(SessionLocator.Tenant.toString())
+        .subscribe((res: ServiceResponse) => {
+            this._isConnectedToUniFreight = !!res?.Result?.IsConnectedToUniFreight;
+             this.isTableUpdateButtonEnabled = this._isConnectedToUniFreight || canCustomerCare;
+                });
+
+
     }
     _IsLoaded: boolean = false;
     ngOnInit() {

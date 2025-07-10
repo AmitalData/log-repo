@@ -14,7 +14,7 @@ using System.Linq;
 using System.Threading;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
@@ -22,7 +22,7 @@ using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.DataContracts;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace CommunicationWorkerRole
 {

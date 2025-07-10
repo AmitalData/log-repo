@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -169,5 +169,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual DocumentTypeTemplate ManifestInvoiceTemplate { get; set; }
         public string EmailForSendingSingArinvoice { get; set; }
         public bool SendingInterestReport { get; set; }
+        public string ExternalSystem { get; set; }
     }
 }

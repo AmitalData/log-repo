@@ -137,7 +137,7 @@ namespace CustomsWorkerRole.DCA
                     if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
                     {
 
-                        Debug.WriteLine("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log"); 
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log"); 
                         continue;
                         //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                         throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
@@ -194,7 +194,7 @@ namespace CustomsWorkerRole.DCA
 
                     if (_MyLastAccessFileInDCADirM.LastAccessFileInDCADir == ServerDirLastChangeAt)
                     {
-                        Debug.WriteLine("_MyLastAccessFileInDCADirM.LastAccessFileInDCADir == ServerDirLastChangeAt ==> Nothing to do FolderNotChange !! for this tenant ;");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_MyLastAccessFileInDCADirM.LastAccessFileInDCADir == ServerDirLastChangeAt ==> Nothing to do FolderNotChange !! for this tenant ;");
                         Thread.Sleep(TimeSpan.FromSeconds(2));
                         return true;
                     }
@@ -245,7 +245,7 @@ namespace CustomsWorkerRole.DCA
 
 
             var searchPattren = dcaPrefixName + "*" + CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
-            Debug.WriteLine(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
             //searchPattren = "";
             var myDcaManager = new DcaManager(_CustomsSettingPM.DCAServiceAddress, _CustomsSettingPM.DCAPartnerVault, _CustomsSettingPM.Tenant);
             myMoreParams = "";// _DownloadMoreParams;
@@ -381,7 +381,7 @@ namespace CustomsWorkerRole.DCA
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
             {
 
-                Debug.WriteLine("Due infinite errors i cancel writing log"); return;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log"); return;
                 //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 //return;

@@ -161,10 +161,15 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             try
             {
-
+                string logtext = "";
 
                 if (_JournalPM.StatusCode == "6" )
                 {
+                    logtext = "JournalApproveParser.ParseIt(), Point 1, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                        + ", Status=" + _JournalPM.StatusCode
+                        + ", QueueId=" + _JournalPM.QueueId;
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
                     OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
                 }
 
@@ -187,9 +192,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     throw new ApplicationException("JournalApproveParser(" + this._JournalPM.Id + "): No Journal line ");
                 }
 
+                logtext = "JournalApproveParser.ParseIt(), Point 2, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
                 CreateLedger_MapByJournalActionType();
 
                 CheckLedgerTransactions();
+
+                logtext = "JournalApproveParser.ParseIt(), Point 5, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
 
                 CreateGLAccountTotalByMonthFromLedger();
                 CheckGLAccountTotalByMonth();
@@ -200,7 +215,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     CheckControlGLAccountTotalByMonths();
                 }
 
+                logtext = "JournalApproveParser.ParseIt(), Point 8, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
                 CheckTotalByMonthDateType();
+
+
+                logtext = "JournalApproveParser.ParseIt(), Point 9, Journal " + _JournalPM.JournalNumber + ", T=" + _JournalPM.Tenant.ToString()
+                    + ", Status=" + _JournalPM.StatusCode
+                    + ", QueueId=" + _JournalPM.QueueId;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
             }
             catch (Exception)
             {
@@ -336,7 +363,7 @@ namespace Logitude.Accounting.BL.CoreBL
              {
                  Tenant = groupByAccountCurrency.Key.Tenant,
                  AccountId = groupByAccountCurrency.Key.AccountId,
-                 DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
+                 DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
                  CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
                  Year = groupByAccountCurrency.Key.Year,
@@ -458,7 +485,7 @@ namespace Logitude.Accounting.BL.CoreBL
              {
                  Tenant = groupByAccountCurrency.Key.Tenant,
                  AccountId = groupByAccountCurrency.Key.AccountId,
-                 DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate,
+                 DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate,
                  CurrencyId = groupByAccountCurrency.Key.CurrencyId,
 
                  Year = groupByAccountCurrency.Key.Year,
@@ -564,7 +591,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             //eyal : While Insert GLAccount there is connect to Control account;
-            var myConnectedControlGLAccountTotalByMonthsAccountingdate = ControlGLAccountTotalByMonths.Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate);
+            var myConnectedControlGLAccountTotalByMonthsAccountingdate = ControlGLAccountTotalByMonths.Where(r => r.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate);
 
 
             CheckNoSameAccIdJoinTotalAndControlTotal();
@@ -751,31 +778,14 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private void CheckJournal()
         {
-
             var validationResult = JournalValidator.IsJournalValid(_JournalPM, _JournalValidatorContext);
             if (validationResult != null)
             {
-
-                string errorString = String.Empty;
-                foreach (string error in validationResult.MemberNames)
-                {
-                    errorString = errorString + error + ",";
-                }
-
-                errorString = errorString.Remove(errorString.Length - 1);
+                string errorString = string.Join("; ", validationResult.MemberNames) + ".";
                 throw new ApplicationException(errorString);
-
-
-                //                string errorText = validationResult.ErrorMessage + ", Number=" + _JournalPM.ExternalNo + @"/" + _JournalPM.Id + ", " + validationResult.MemberNames.FirstOrDefault();
-                //                    //+validationResult.MemberNames.Aggregate((a, b) => string.Concat(a, ",", b));
-
-
-                ////ThrowException(errorText);
-                //                throw new ApplicationException(errorText);
             }
-            //_JournalPM.JournalLines.ToLookup(rec => rec.ActionTypeCodeEnum);
-
         }
+
         private void AddTaxDebit(JournalLinePM item)
         {
             var journalLineDebitMapping = new JournalLineDebitTaxMapping(item, _JournalPM, GetIJournalValidatorContextDataProvider(), GetIIAccountingSettingResolver());

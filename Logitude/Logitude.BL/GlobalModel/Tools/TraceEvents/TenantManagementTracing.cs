@@ -4,9 +4,9 @@ using System.Linq;
 using System.Transactions;
 using System.Web;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -33,7 +33,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                 {
 
 
-                    IGlobalContext MyGlContext = GlobalContext.GetContext(0);
+                    IGlobalContext MyGlContext = GlobalContext.GetContext(entityPM.Id);
                     TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository(MyGlContext);
                     var tenantManagementLicenseQuery = tenantManagementLicenseRepository.GetTenantManagementLicenses(entityPM.Id);
                     if (tenantManagementLicenseQuery != null)

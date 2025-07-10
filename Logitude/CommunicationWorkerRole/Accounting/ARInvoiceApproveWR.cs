@@ -231,11 +231,29 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
+                    bool isInvoiceApi = response.MessageValues.ContainsKey("IsInvoiceApi")
+                        ? response.MessageValues["IsInvoiceApi"].ToString() == "true" 
+                        : false;
+
                     aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.Update(aRInvoicePM, true);
+                   
                     _DbQueueService.Complete();
+                    if (isInvoiceApi)
+                    {
+                        try
+                        {
+                            invoiceService.PrintOrSendInvoice(null, tenant);
+
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+
 
                     ARInvoice invoice = invoiceRepository.GetSingle(arinvoiceId, tenant);
                     invoice.ApprovalInProgress = true;
@@ -432,6 +450,9 @@ namespace CommunicationWorkerRole
                 Notes = exception
             });
         }
+
+
+     
 
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.ServiceBus.Messaging;
 //using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using System;
@@ -84,7 +84,7 @@ namespace CustomsWorkerRole
 
 
                 myClass = this.GetType().Name;
-                _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), 0);
+				_CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
 
 
                 var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
@@ -165,7 +165,7 @@ namespace CustomsWorkerRole
                 else
                 {
                     var myClass = this.GetType().Name;
-                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), 0);
+                    _CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
                 }
             }
             catch (Exception ex)
@@ -338,7 +338,7 @@ namespace CustomsWorkerRole
             {
                 throw new Exception("UServer did not return response : " + P_MESSAGE);
             }
-            Debug.WriteLine(myUServerUtil.UnifreightTester); 
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(myUServerUtil.UnifreightTester); 
             // var UNIQUE_ENVIRONMENT_ID = UnifaceAssociativeListUtil.GetValue(P_XML_DATA, "UNIQUE_ENVIRONMENT_ID");
             
 

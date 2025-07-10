@@ -23,6 +23,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {DocumentsFilingPM} from '../../EntityPMs/DocumentsFilingPM';
 
 import {DocumentsFilingMetaDataValuePM} from '../../EntityPMs/DocumentsFilingMetaDataValuePM';
+import { DocumentsFilingValidator } from 'Common/Validators/DocumentsFilingValidator';
 
 @Injectable()
 
@@ -115,6 +116,12 @@ export class DocumentsFilingPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("DocumentsFiling", entityPM);
 
+            var customValidator :DocumentsFilingValidator = new DocumentsFilingValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+            {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
 
 			if (errorsArray.length == 0) {
 

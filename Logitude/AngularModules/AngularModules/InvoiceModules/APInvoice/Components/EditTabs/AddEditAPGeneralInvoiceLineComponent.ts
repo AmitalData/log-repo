@@ -47,7 +47,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
        this.PayableDebitGLAcountFilterItems.addAdditionalFilter("PayableDebitFilter", "2", null, null, "Equals", true, false, false, "string", false, true);
 
     }
-  
+   
 
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {
@@ -57,6 +57,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
   
+ 
 
    FillChargesTypesCustomLOVColumnsWidths()
     {

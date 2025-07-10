@@ -885,6 +885,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ReferenceDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ApprovalInProgress"
     Type="bit"
     DefaultValue="0">

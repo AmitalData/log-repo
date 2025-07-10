@@ -14,6 +14,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string Name { get; set; }
         public string SearchFields { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
+        public string LocalName { get; set; }
 
         //public List<Shipment> Shipments { get; set; }
 

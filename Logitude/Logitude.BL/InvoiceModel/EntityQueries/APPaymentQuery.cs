@@ -5,7 +5,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;

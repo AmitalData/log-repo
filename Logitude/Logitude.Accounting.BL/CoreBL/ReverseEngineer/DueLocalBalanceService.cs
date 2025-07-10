@@ -15,6 +15,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.SystemLogs;
 using System.Data.Entity.Core.Objects;
+using Logitude.Server.Tools.Utils;
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class DueLocalBalanceService
@@ -192,6 +193,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void ReBuild(int tenant, string AccountId, bool fastRun = false)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ReBuild  START");
             int clientAndVendorTypeGLAccountIdsCount = -1;
             List<DueLocalBalanceM> myDueLocalBalanceListToUpdate;
             List<string> myClientAndVendorTypeGLAccountIds;
@@ -204,6 +206,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     var accountingContext = AccountingContext.GetContext(tenant);
                     if (fastRun)
                     {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug("fastRun START " + fastRun.ToString());
+
                         InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, true, true);
                     }
                     else
@@ -211,7 +215,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
 
                     }
-
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("fastRun FINISH " + fastRun.ToString());
                     myDueLocalBalanceListToUpdate = _QDueLocalBalanceListToUpdate.ToList();
 
                     myClientAndVendorTypeGLAccountIds = _QClientAndVendorTypeGLAccountIds.ToList();
@@ -220,8 +224,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 clientAndVendorTypeGLAccountIdsCount = myClientAndVendorTypeGLAccountIds.Count;
 
-                foreach (List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(100))
+                int count = 0;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("time  of List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500)  " + DateTime.UtcNow.ToString()));
+                foreach (List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500))
                 {
+                    count++;
+
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("count:  " + count + "time: " + DateTime.UtcNow.ToString()));
                     var myDefaultListToUpdate =
                         (
                         from myAccountId in listBatch
@@ -248,9 +257,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             //= new GLAccountUpdateServiceBalancePriv(accountingContext, new Dictionary<string, IContext>(), tenant);
                             = new GLAccountMoreDataUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
                         var pmList = myGLAccountMoreDataQueryService.GetByGLAccountsIdList(listBatch, tenant);
-
+                        int count2 = 0;
                         foreach (var defaultItem in myDefaultListToUpdate)
                         {
+                            count2++;
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("count2:  " + count + "time: " + DateTime.UtcNow.ToString()));
                             var item2update = //_QDueLocalBalanceListToUpdate
                                 myDueLocalBalanceListToUpdate
                                 .FirstOrDefault(r => r.AccountId == defaultItem.AccountId);
@@ -297,7 +308,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     //Thread.Sleep(200000);//let Journal approval work 
                 }
-
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(String.Format("time  end  List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500)  " + DateTime.UtcNow.ToString()));
             }
             catch (Exception e)
             {
@@ -564,7 +575,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return DateTime.UtcNow.Date;
         }
 
-        internal void RunAllTenants()
+        public void RunAllTenants()
         {
             var qs = new GLAccountQueryService(0);
             DateTime today = GetToday().Date;
@@ -589,19 +600,21 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        internal void RunOneTenantFast(int tenant)
+        public void RunOneTenantFast(int tenant)
         {
 
-                try
-                {
-                    this.ReBuild(tenant, "", true);
-                }
-                catch (Exception e)
-                {
+            try
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RunOneTenantFast ReBuild ");
+                this.ReBuild(tenant, "", true);
+                  this.ReBuild(tenant, "", true);
+            }
+            catch (Exception e)
+            {
 
-                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "DueLocalBalanceService" + this.GetType().Name, " : RunOneTenantFast({tenant}) Method", null);
-                    Thread.Sleep(TimeSpan.FromSeconds(5));
-                }
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "DueLocalBalanceService" + this.GetType().Name, " : RunOneTenantFast({tenant}) Method", null);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            }
 
         }
     }

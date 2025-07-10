@@ -22,11 +22,11 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Global.Data.GlobalModel;
@@ -98,7 +98,8 @@ namespace CustomsWorkerRole
 
         private void ExecuteQueue()
         {
-            queueService = new DbQueueService("ReportExecutionLogQueue", 0);
+		
+			queueService = new DbQueueService("ReportExecutionLogQueue", SettingUtil.GetTenantDBFromConfig());
             var queueResponse = queueService.Receive(new TimeSpan(0, 0, 1));
             if (queueResponse != null && queueResponse.MessageId != null)
             {
@@ -117,8 +118,8 @@ namespace CustomsWorkerRole
         {
             try
             {
-                queueService = new DbQueueService();
-                queueService.InitializeQueue("ReportExecutionLogQueue", 0);
+				queueService = new DbQueueService();
+                queueService.InitializeQueue("ReportExecutionLogQueue", SettingUtil.GetTenantDBFromConfig());
 
             }
             catch (Exception ex)

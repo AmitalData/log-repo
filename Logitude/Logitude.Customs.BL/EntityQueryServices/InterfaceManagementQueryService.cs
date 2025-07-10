@@ -54,8 +54,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                              SignatureTypeCode = a.SignatureTypeCode,
                                                              SignatureTypeName = a.SignatureType != null? a.SignatureType.LocalName : null,
                                                              SendTime = s.SendTime, 
+                                                             EntityLockId = a.EntityLockId,
+                                                             EntityLockName = a.EntityLock != null ? a.EntityLock.Name : null,
 
-                                                         }).ToList();
+														 }).ToList();
 
             //foreach (InterfaceManagementList item in managements)
             //{
@@ -108,8 +110,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                                          SearchFields = management.SearchFields,
                                                          InterfaceType = management.InterfaceType,
                                                          Tenant = tenant,
-                                                         UseRabbitMQ= management.UseRabbitMQ
-                                                     };
+                                                         UseRabbitMQ= management.UseRabbitMQ,
+						                                 EntityLockId = management.EntityLockId,
+                                                         EntityLockName = management.EntityLock != null ? management.EntityLock.Name : null
+					};
                     if (definition != null)
                     {
                         interfaceManagement.Active = definition.Active;

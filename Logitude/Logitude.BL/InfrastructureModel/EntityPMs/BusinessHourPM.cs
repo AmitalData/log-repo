@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simplog.Server.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -131,5 +132,6 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public DateTime?  SaturdayToHourDate { get; set; }
         [DataMember]
         public DateTime?  SundayToHourDate { get; set; }
+        public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

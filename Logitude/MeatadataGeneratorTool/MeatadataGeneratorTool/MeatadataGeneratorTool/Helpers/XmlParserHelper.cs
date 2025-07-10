@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool.Helpers
 {
@@ -234,7 +235,9 @@ namespace MeatadataGeneratorTool.Helpers
 
             field.IsMulti = GetAttributeBoolValue(fieldNode.Attributes["IsMulti"]);
             field.IsPMField = GetAttributeBoolValue(fieldNode.Attributes["HasPMField"]);
-            field.IsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["IsPrimaryKey"]);
+			field.TableRelatedPM = GetAttributeStringValue(fieldNode.Attributes["TableRelatedPM"]);
+			field.FieldRelatedPM = GetAttributeStringValue(fieldNode.Attributes["FieldRelatedPM"]);
+			field.IsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["IsPrimaryKey"]);
             if (fieldNode.Attributes["OldIsPrimaryKey"] != null)
             {
                 field.OldIsPrimaryKey = GetAttributeBoolValue(fieldNode.Attributes["OldIsPrimaryKey"]);
@@ -452,6 +455,10 @@ namespace MeatadataGeneratorTool.Helpers
             if (fieldNode.Attributes["ModelName"] != null)
             {
                 field.ModelName = GetAttributeStringValue(fieldNode.Attributes["ModelName"]);
+            }
+            if (fieldNode.Attributes["ObjectFieldDataMapping"] != null)
+            {
+                field.ObjectFieldDataMapping = GetAttributeStringValue(fieldNode.Attributes["ObjectFieldDataMapping"]);
             }
 
             return field;
@@ -689,8 +696,9 @@ namespace MeatadataGeneratorTool.Helpers
             tab.IndexOrder = GetAttributeIntegerValue(fieldNode.Attributes["IndexOrder"]);
             tab.HtmlComponentName = GetAttributeStringValue(fieldNode.Attributes["HtmlComponentName"]);
             tab.HtmlComponentURL = GetAttributeStringValue(fieldNode.Attributes["HtmlComponentURL"]);
+			tab.IsLocked = GetAttributeBoolValue(fieldNode.Attributes["IsLocked"]);
 
-            if (fieldNode.Attributes["FeatureCode"] != null)
+			if (fieldNode.Attributes["FeatureCode"] != null)
             {
                 tab.FeatureCode = GetAttributeStringValue(fieldNode.Attributes["FeatureCode"]);
             }
@@ -1058,8 +1066,21 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.LovDisplayMemberPath = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPath"]);
                 objectTable.LovDisplayMemberPathLocal = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPathLocal"]);
                 objectTable.TenantZeroData = GetAttributeBoolValue(entity.Attributes["TenantZeroData"]);
+				objectTable.RelatedEntity = GetAttributeStringValue(entity.Attributes["RelatedEntity"]);
+				objectTable.ThisKey = GetAttributeStringValue(entity.Attributes["ThisKey"]);
+				objectTable.RelatedKey = GetAttributeStringValue(entity.Attributes["RelatedKey"]);
 
-                if (entity.Attributes["NoViewController"] != null)
+				if (entity.Attributes["IsLock"] != null)
+				{
+					objectTable.IsLock = GetAttributeBoolValue(entity.Attributes["IsLock"]);
+				}
+				else
+				{
+					objectTable.IsLock = false;
+				}
+                objectTable.ShowFastSearch = GetAttributeBoolValue(entity.Attributes["ShowFastSearch"]);
+
+				if (entity.Attributes["NoViewController"] != null)
                 {
                     objectTable.NoViewController = GetAttributeBoolValue(entity.Attributes["NoViewController"]);
                 }
@@ -1263,12 +1284,57 @@ namespace MeatadataGeneratorTool.Helpers
                 {
                     if (att.Value != null)
                     {
+                        if (att.Value.StartsWith("BS64:") || att.Value.StartsWith("\"BS64:"))
+                            att.Value = TryConvertFromBase64(att.Value);
+
                         result = att.Value.Trim('"');
                     }
                 }
             }
             return result;
         }
+        private string TryConvertFromBase64(string input)
+        {
+            try
+            {
+                return ConvertFromBase64(input);
+            }
+            catch (FormatException)
+            {
+                return input;
+            }
+        }
+      
+        private string ConvertFromBase64(string input)
+        {
+            string substringToRemove = "\"";
+            string backUp = input;
+            try
+            {
+                input = input.Trim('\"');
+                input = input.Substring(5);//REMOVE BS64:
+                byte[] data = Convert.FromBase64String(input);
+                string decodedString = Encoding.UTF8.GetString(data);
+                if (backUp.StartsWith(substringToRemove))
+                {
+                    decodedString = substringToRemove + decodedString;
+                }
+
+                if (backUp.EndsWith(substringToRemove))
+                {
+                    decodedString = decodedString + substringToRemove;
+                }
+                return decodedString;
+
+            }
+            catch (FormatException)
+            {
+                return backUp;
+            }
+        }
+
+      
+
 
     }
 }

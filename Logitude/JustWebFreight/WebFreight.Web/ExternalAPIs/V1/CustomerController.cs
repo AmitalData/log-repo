@@ -11,7 +11,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -153,7 +153,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
                     SecurityUtility.AuthenticateAccessibleAPI("Customer", authToken.Tenant);
 
-                    ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
+                    Logitude.BL.Security.ContactInfo loggedContactInfo = SecurityUtility.GetContactInfo(authToken.Email, authToken.Tenant);
                     ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
                     CardRepository cardRepository = new CardRepository(MyContext);
 

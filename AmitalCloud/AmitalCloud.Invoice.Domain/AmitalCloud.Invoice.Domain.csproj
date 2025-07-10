@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{44569E01-72A9-4546-99A9-96C8D56D5404}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Invoice.Domain</RootNamespace>
+    <AssemblyName>AmitalCloud.Invoice.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AmitalCloud.Infrastructure.Domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Domain.dll</HintPath>
+    </Reference>
+    <Reference Include="AmitalCloud.Infrastructure.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\AmitalCloud.Infrastructure.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Accounting.Data">
+      <HintPath>..\..\Logitude\Library\Bin\Logitude.Accounting.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Accounting.Def">
+      <HintPath>..\..\Logitude\Library\Bin\Logitude.Accounting.Def.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Server">
+      <HintPath>..\Library\Bin\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EntityKeys\AccountingPaymentMethodKeys.cs" />
+    <Compile Include="EntityKeys\AccountingSystemsSettingKeys.cs" />
+    <Compile Include="EntityKeys\AccountingSystemsSyncStatusKeys.cs" />
+    <Compile Include="EntityKeys\AccountingTransferHeaderKeys.cs" />
+    <Compile Include="EntityKeys\AccountingTransferLineKeys.cs" />
+    <Compile Include="EntityKeys\AccountingTransferTypeKeys.cs" />
+    <Compile Include="EntityKeys\APInvoiceKeys.cs" />
+    <Compile Include="EntityKeys\APInvoiceLineKeys.cs" />
+    <Compile Include="EntityKeys\APInvoicePaymentKeys.cs" />
+    <Compile Include="EntityKeys\APInvoiceStatusKeys.cs" />
+    <Compile Include="EntityKeys\APInvoiceTotalVATKeys.cs" />
+    <Compile Include="EntityKeys\APInvoiceTransferStatusKeys.cs" />
+    <Compile Include="EntityKeys\APInvoiceTypeKeys.cs" />
+    <Compile Include="EntityKeys\APPaymentKeys.cs" />
+    <Compile Include="EntityKeys\APPaymentStatusKeys.cs" />
+    <Compile Include="EntityKeys\APPaymentTransferStatusKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceLineKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoicePaymentKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoicesSignedStatusKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceStatusKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceStockKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceStockLineKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceStocksStatusKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceTotalVatKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceTransferStatusKeys.cs" />
+    <Compile Include="EntityKeys\ARInvoiceTypeKeys.cs" />
+    <Compile Include="EntityKeys\ARPaymentBankTranferKeys.cs" />
+    <Compile Include="EntityKeys\ARPaymentChequeReplicaKeys.cs" />
+    <Compile Include="EntityKeys\ARPaymentKeys.cs" />
+    <Compile Include="EntityKeys\ARPaymentStatusKeys.cs" />
+    <Compile Include="EntityKeys\ARPaymentTransferStatusKeys.cs" />
+    <Compile Include="EntityKeys\BankAccountLiteKeys.cs" />
+    <Compile Include="EntityKeys\ConfirmationNumberDefaultKeys.cs" />
+    <Compile Include="EntityKeys\ConfirmationNumberStatusKeys.cs" />
+    <Compile Include="EntityKeys\CreditCardTypeKeys.cs" />
+    <Compile Include="EntityKeys\ExternalSystemsTablesCodeKeys.cs" />
+    <Compile Include="EntityKeys\QBOGlobalTaxCalculationKeys.cs" />
+    <Compile Include="EntityKeys\SATInterfaceKeys.cs" />
+    <Compile Include="EntityKeys\SATInterfaceSettingKeys.cs" />
+    <Compile Include="EntityKeys\SATInvoiceStatusKeys.cs" />
+    <Compile Include="EntityKeys\SATPaymentMethodKeys.cs" />
+    <Compile Include="EntityKeys\SATTransferStatusKeys.cs" />
+    <Compile Include="EntityLists\Generated\AccountingPaymentMethodList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AccountingSystemsSettingList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AccountingSystemsSyncStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AccountingTransferHeaderList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AccountingTransferLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\AccountingTransferTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APInvoiceLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APInvoiceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APInvoicePaymentList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APInvoiceStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APInvoiceTotalVATList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APInvoiceTransferStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APInvoiceTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APPaymentList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APPaymentStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\APPaymentTransferStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoicePaymentList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoicesSignedStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceStockLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceStockList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceStocksStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceTotalVatList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceTransferStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARInvoiceTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARPaymentBankTranferList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARPaymentChequeReplicaList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARPaymentList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARPaymentStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ARPaymentTransferStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\BankAccountLiteList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ConfirmationNumberDefaultList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ConfirmationNumberStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CreditCardTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ExternalSystemsTablesCodeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\QBOGlobalTaxCalculationList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SATInterfaceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SATInterfaceSettingList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SATInvoiceStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SATPaymentMethodList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SATTransferStatusList.Generated.cs" />
+    <Compile Include="EntityPMs\Manual\APInvoiceEntityPM.cs" />
+    <Compile Include="EntityPMs\Manual\APInvoiceMultipleShipmentPM.cs" />
+    <Compile Include="EntityPMs\Manual\APInvoiceMultipleShortPM.cs" />
+    <Compile Include="EntityPMs\Manual\APInvoiceTransferHistoryPM.cs" />
+    <Compile Include="EntityPMs\Manual\APPaymentInvoicePM.cs" />
+    <Compile Include="EntityPMs\Manual\APTransferLinePM.cs" />
+    <Compile Include="EntityPMs\Manual\ARInvoiceChargePM.cs" />
+    <Compile Include="EntityPMs\Manual\ARInvoiceEntityPM.cs" />
+    <Compile Include="EntityPMs\Manual\ARInvoiceLineActionPM.cs" />
+    <Compile Include="EntityPMs\Manual\ARInvoiceTransferHistoryPM.cs" />
+    <Compile Include="EntityPMs\Manual\ARPaymentChequeStatusPM.cs" />
+    <Compile Include="EntityPMs\Manual\ARPaymentChequeStatusReplicaPM.cs" />
+    <Compile Include="EntityPMs\Manual\ARPaymentInvoicePM.cs" />
+    <Compile Include="EntityPMs\Manual\ARPaymentLinePM.cs" />
+    <Compile Include="EntityPMs\Manual\BankAccountPM.cs" />
+    <Compile Include="EntityPMs\Manual\BankCodePM.cs" />
+    <Compile Include="EntityPMs\Manual\ConstituentPM.cs" />
+    <Compile Include="EntityPMs\Manual\ExternalSystemsMissingTranslationPM.cs" />
+    <Compile Include="EntityPMs\Manual\ExternalSystemsSyncStatusPM.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingPaymentMethodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingSystemsSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingSystemsSyncStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingTransferHeaderPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingTransferLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingTransferTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APInvoiceLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APInvoicePaymentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APInvoicePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APInvoiceStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APInvoiceTotalVATPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APInvoiceTransferStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APInvoiceTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APPaymentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APPaymentStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\APPaymentTransferStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoicePaymentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoicePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoicesSignedStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceStockLinePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceStockPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceStocksStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceTotalVatPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceTransferStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARInvoiceTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARPaymentBankTranferPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARPaymentChequeReplicaPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARPaymentPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARPaymentStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARPaymentTransferStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\BankAccountLitePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConfirmationNumberDefaultPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConfirmationNumberStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CreditCardTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ExternalSystemsTablesCodePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\QBOGlobalTaxCalculationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SATInterfacePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SATInterfaceSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SATInvoiceStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SATPaymentMethodPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SATTransferStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Manual\LedgerTransactionPM.cs" />
+    <Compile Include="EntityPMs\Manual\QuickbooksSyncRequestTicketPM.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\IInvoiceClassLevelValidator.cs" />
+    <Compile Include="Interfaces\IInvoiceValidationClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
+</Project>

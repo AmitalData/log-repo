@@ -601,6 +601,42 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
         private string _INVOICENO;
 
+        [System.Runtime.Serialization.DataMember]
+        public virtual string SELLERID
+        {
+            get
+            {
+                return _SELLERID;
+            }
+            set
+            {
+                if (_SELLERID != value)
+                {
+                    _SELLERID = value;
+                    OnPropertyChanged("SELLERID");
+                }
+            }
+        }
+        private string _SELLERID;
+
+        [System.Runtime.Serialization.DataMember]
+        public virtual string SELLERNAME
+        {
+            get
+            {
+                return _SELLERNAME;
+            }
+            set
+            {
+                if (_SELLERNAME != value)
+                {
+                    _SELLERNAME = value;
+                    OnPropertyChanged("SELLERNAME");
+                }
+            }
+        }
+        private string _SELLERNAME;
+
 
         #endregion
 

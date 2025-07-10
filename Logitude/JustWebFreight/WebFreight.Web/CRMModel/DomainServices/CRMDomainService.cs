@@ -31,8 +31,8 @@ namespace WebFreight.Web.CRMModel.DomainServices
     using Logitude.CRM.BL.EntityUpdateServices;
     using Simplog.Data.InfrastructureModel.Repositories;
     using System.Web;
-    using Simplog.Data.CommonDataModel.EntityPOCOs;
-    using Simplog.Data.InfrastructureModel.EntityPOCOs;
+    using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+    using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
     
     using System.Data.Entity.Core;
     using Logitude.BL.Helpers;

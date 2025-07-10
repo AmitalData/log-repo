@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -16,7 +16,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
     {
         //private static Dictionary<string, Feature> AddedFeatures = new Dictionary<string, Feature>();
         //private static Dictionary<string, TextCode> AddedTextCodes = new Dictionary<string, TextCode>();
-        public static Role AddRole(RoleDetails roleDetails, RoleRepository roleRepository, Dictionary<string, Role> tenantRoles)
+        public static Role AddRole(RoleDetails roleDetails, RoleRepository roleRepository, Dictionary<string, Role> tenantRoles,int contextTenant=0)
         {
             if (tenantRoles.Keys.Contains(roleDetails.Code))
             {
@@ -39,7 +39,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     RoleTypeCode = roleDetails.RoleTypeCode,
                     Description = roleDetails.Description,
 
-                    Id = IdCounter.GetNumber("Role", roleDetails.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("Role", contextTenant).ToString(),
                 };
 
                 roleRepository.Add(newRole);
@@ -47,10 +47,10 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static Feature AddFeature(FeatureDetails featureDetails, FeatureRepository featuresRepository, TextCodeRepository textCodeReposit, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes)
+        public static Feature AddFeature(FeatureDetails featureDetails, FeatureRepository featuresRepository, TextCodeRepository textCodeReposit, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes, int contextTenant = 0)
         {
 
-            ObjectTableRepository Repo = new ObjectTableRepository(0);
+            ObjectTableRepository Repo = new ObjectTableRepository(contextTenant);
             var table = Repo.GetSingleObjectTable(featureDetails.ObjectTableId, featureDetails.Tenant, false);
             string NewKey = "";
             if (ObjectTablesKeys.Keys.ContainsKey(table.Name))
@@ -93,7 +93,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     updatedTextCode = new TextCode()
                     {
-                        Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                        Id = IdCounter.GetNumber("TextCode", contextTenant).ToString(),
                         Tenant = featureDetails.Tenant,
                         ObjectTableId = featureDetails.ObjectTableId,
                         DefaultText = featureDetails.NameTextCodeDefaultText,
@@ -139,7 +139,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     newTextCode = new TextCode()
                     {
-                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, featureDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, contextTenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
                         Tenant = featureDetails.Tenant,
                         ObjectTableId = featureDetails.ObjectTableId,
                         DefaultText = featureDetails.NameTextCodeDefaultText,
@@ -159,7 +159,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                 Feature newFeature = new Feature()
                 {
-                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, featureDetails.Tenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
+                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, contextTenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
                     Tenant = featureDetails.Tenant,
                     ObjectTableId = featureDetails.ObjectTableId,
                     Code = featureDetails.Code.Trim(),
@@ -210,7 +210,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         //}
 
 
-        public static Feature AddFeature(FeatureDetails featureDetails, FeatureRepository featuresRepository, TextCodeRepository textCodeReposit, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes,ObjectTable table)
+        public static Feature AddFeature(FeatureDetails featureDetails, FeatureRepository featuresRepository, TextCodeRepository textCodeReposit, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes,ObjectTable table,int contextTenant=0)
         {
 
             
@@ -249,7 +249,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     updatedTextCode = new TextCode()
                     {
-                        Id = IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                        Id = IdCounter.GetNumber("TextCode", contextTenant).ToString(),
                         Tenant = featureDetails.Tenant,
                         ObjectTableId = featureDetails.ObjectTableId,
                         DefaultText = featureDetails.NameTextCodeDefaultText,
@@ -293,7 +293,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     newTextCode = new TextCode()
                     {
-                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, featureDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, contextTenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
                         Tenant = featureDetails.Tenant,
                         ObjectTableId = featureDetails.ObjectTableId,
                         DefaultText = featureDetails.NameTextCodeDefaultText,
@@ -307,7 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                 Feature newFeature = new Feature()
                 {
-                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, featureDetails.Tenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
+                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, contextTenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
                     Tenant = featureDetails.Tenant,
                     ObjectTableId = featureDetails.ObjectTableId,
                     Code = featureDetails.Code.Trim(),
@@ -340,7 +340,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
         }
 
         public static Feature AddFeature(FeatureDetails featureDetails, Dictionary<string, Feature> tenantFearures, Dictionary<string, TextCode> textCodes, ObjectTable table,
-            List<Feature> addedFeatures,List<TextCode> addedTextCodes)
+            List<Feature> addedFeatures,List<TextCode> addedTextCodes,int contextTenant=0)
         {
 
             
@@ -378,7 +378,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     newTextCode = new TextCode()
                     {
-                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, featureDetails.Tenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
+                        Id = IdCounter.GetIdWithIdsRange("TextCode", 100, contextTenant).ToString(),//IdCounter.GetNumber("TextCode", featureDetails.Tenant).ToString(),
                         Tenant = featureDetails.Tenant,
                         ObjectTableId = featureDetails.ObjectTableId,
                         DefaultText = featureDetails.NameTextCodeDefaultText,
@@ -392,7 +392,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
                 Feature newFeature = new Feature()
                 {
-                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, featureDetails.Tenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
+                    Id = IdCounter.GetIdWithIdsRange("Feature", 100, contextTenant).ToString(),//IdCounter.GetNumber("Feature", featureDetails.Tenant).ToString(),
                     Tenant = featureDetails.Tenant,
                     ObjectTableId = featureDetails.ObjectTableId,
                     Code = featureDetails.Code.Trim(),

@@ -8,7 +8,7 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
@@ -42,21 +42,31 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Create(EntityStatusPM theEntityPm)
         {
-            this.isNewEntity = true;
-            this.entityPM = theEntityPm;
-            this.entityPM.Id = IdCounter.GetNumber("EntityStatus", tenant).ToString();
-            this.Poco = new EntityStatus();
-            this.Poco.Id = this.entityPM.Id;
-
-            EntityStatusValidating.Validate(theEntityPm);
-            if (!entityPM.IsHybrid)
+            EntityStatus entity = entityRepository.GetSingleEntityStatusByCodeTableId(entityPM.Code, entityPM.ObjectTableId, entityPM.Tenant);
+            if (entity != null)
             {
-                EntityStatusTracing.Trace(theEntityPm, Poco, isNewEntity);
+                theEntityPm.Id = entity.Id;
+                Update(theEntityPm);
             }
-            EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            entityRepository.Add(Poco);
-            entityRepository.SubmitChanges();
-            AddQueueMessages();
+                
+            else
+            {
+                this.isNewEntity = true;
+                this.entityPM = theEntityPm;
+                this.entityPM.Id = IdCounter.GetNumber("EntityStatus", tenant).ToString();
+                this.Poco = new EntityStatus();
+                this.Poco.Id = this.entityPM.Id;
+
+                EntityStatusValidating.Validate(theEntityPm);
+                if (!entityPM.IsHybrid)
+                {
+                    EntityStatusTracing.Trace(theEntityPm, Poco, isNewEntity);
+                }
+                EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
+                entityRepository.Add(Poco);
+                entityRepository.SubmitChanges();
+                AddQueueMessages();
+            }
         }
 
         public void Update(EntityStatusPM theEntityPm)

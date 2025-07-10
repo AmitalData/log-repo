@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -31,7 +31,7 @@ using Logitude.Social.BL.EntityQueryServices;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Social.BL.EntityPMs;
 using Logitude.Social.BL.EntityUpdateServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Transactions;
 using Logitude.Social.Data.EntityListQueryServices;
 using Logitude.Social.Data.EntityPOCOs;

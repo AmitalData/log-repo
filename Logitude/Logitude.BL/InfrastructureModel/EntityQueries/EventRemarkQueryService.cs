@@ -6,7 +6,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Web;
 using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Counters;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 

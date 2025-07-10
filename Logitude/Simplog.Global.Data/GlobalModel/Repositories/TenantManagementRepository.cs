@@ -44,25 +44,25 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         }
 
         public TenantManagement GetSingleTenantManagement(int id, bool getFromCache = true)
-        {
-            string cacheKey = $"TenantManagement{id}";
+		{
+			string cacheKey = $"TenantManagement{id}";
 
-            if (getFromCache)
-            {
-                var cachedValue = CacheManager.CacheWrapper.Get(cacheKey);
-                if (cachedValue != null)
-                {
-                    return (TenantManagement)cachedValue;
-                }
-            }
-            TenantManagement result = context.TenantManagements.Include("GlobalTenant").Where(x => x.Id == id).FirstOrDefault();
-            if (getFromCache && result != null)
-            {
-                CacheManager.CacheWrapper.Insert(cacheKey, result, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-            }
-            return result;
-
-        }
+			if (getFromCache)
+			{
+				var cachedValue = CacheManager.CacheWrapper.Get(cacheKey);
+				if (cachedValue != null)
+				{
+					return (TenantManagement)cachedValue;
+				}
+			}
+			TenantManagement result = context.TenantManagements.Include("GlobalTenant").Where(x => x.Id == id).FirstOrDefault();
+			if (getFromCache && result!=null)
+			{
+				CacheManager.CacheWrapper.Insert(cacheKey, result, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+			}
+			return result;
+		}
+		
 
         public TenantManagement GetSingleTenantManagementByBluesnapAccountId(string bluesnapaccountId)
         {
@@ -310,7 +310,29 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             return (from a in context.TenantManagements where a.Id == id select a.ScheduledTasksLimitPerReport).FirstOrDefault();
         }
-          
+		public TenantManagement GetTenantManagementByExportTenant(int exportTenant)
+		{
+			string entityName = "TenantManagementExportTenant" + exportTenant;
+            TenantManagement entity = null;
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    entity = (from a in context.TenantManagements where a.ExportTenant == exportTenant select a).FirstOrDefault();
+                    CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    entity = (TenantManagement)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            else
+            {
+				entity = (from a in context.TenantManagements where a.ExportTenant == exportTenant select a).FirstOrDefault();
+			}
 
-    }
+			return entity;
+		}		
+
+	}
 }

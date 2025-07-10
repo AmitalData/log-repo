@@ -5,7 +5,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -26,7 +26,7 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -84,7 +84,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                 try
                 {
                     string logKey = PerformanceLogger.LogCurrentTime();
-                   
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -105,10 +106,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
+                        scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                  
+                    }
                 }
 
                 catch (Exception ex)
@@ -130,7 +132,8 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                 try
                 {
                     string logKey = PerformanceLogger.LogCurrentTime();
-                    
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -163,11 +166,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         //}
 
 
-                       
+                        scope.Complete();
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                   
+                    }
                 }
 
                 catch (Exception ex)

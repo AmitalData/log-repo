@@ -1,5 +1,5 @@
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
@@ -11,7 +11,7 @@ using WebFreight.Web.Helpers;
 using Logitude.Server.Tools.Helpers;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -30,7 +30,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.Services;
 using System.Linq.Expressions;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using Newtonsoft.Json;
 using Microsoft.TeamFoundation.Common;
 

@@ -9,7 +9,7 @@ using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Newtonsoft.Json;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System;

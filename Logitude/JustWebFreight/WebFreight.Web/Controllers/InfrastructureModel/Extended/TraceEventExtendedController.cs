@@ -3,13 +3,11 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -126,10 +124,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 if(args == null || string.IsNullOrEmpty(args.tableName) || string.IsNullOrEmpty(args.entityId) || args.tenant == null)
                     throw new Exception("Dismmis argument data");
 
-                if (string.IsNullOrEmpty(args.loggedUserEmail))
+                if(string.IsNullOrEmpty(args.loggedUserEmail))
                     args.loggedUserEmail = authToken.Email;
-
-                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.notes, args.eventTypeCode, args.loggedUserEmail);
+                
+                TraceHelper.Create(args.tenant, args.entityId, args.tableName, args.notes, args.eventTypeCode, args.loggedUserEmail);                
                 return Request.CreateResponse(HttpStatusCode.OK, true);
             }
 

@@ -7,6 +7,15 @@
                     <td style="width: 200px;">
                         <SearchBox [UseTimer]="true" (TextChanged)="SearchText = $event"></SearchBox>
                     </td>
+                    <td> <div></div> </td>
+                    <td style="height: 20px;padding: 5px;padding-bottom: 0px;">
+                        <div>
+                            <IconButton [IsSmall]="true"
+                                [Name]="'Add'"
+                                (click)="AddNewCity()"
+                            style="float:left;"></IconButton>
+                        </div>
+                    </td>
 
                     <td>
                         <div></div>

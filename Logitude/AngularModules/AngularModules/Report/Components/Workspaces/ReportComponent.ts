@@ -45,13 +45,13 @@ export class ReportComponent {
         var groupService = new ReportGroupService();
         var reportService = new ReportService();
 
-        groupService.getReportGroupLists(0).subscribe((myResponse: ServiceResponse) => {
+        groupService.getReportGroupLists().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.groupList = myResponse.Result;
                 this.groupList = this.groupList.sort((a, b) => { return a.OrderNumber - b.OrderNumber });
 
                 this.groupList.forEach(item => {
-                    reportService.GetReportListsByGroupId(item.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
+                    reportService.GetReportListsByGroupId(item.Id).subscribe((myResponse: ServiceResponse) => {
                         if (!myResponse.HasError) {
                             var myResult: ReportList[] = myResponse.Result;
                             

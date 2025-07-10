@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 
 namespace Simplog.Data.CommonDataModel.Mocks
@@ -2866,6 +2866,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<PortGroup> PortGroups { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<ExternalLink> ExternalLinks { get; set; }
 
         public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews
         {
@@ -2878,10 +2879,54 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public IDbSet<FreelancerGroupType> FreelancerGroupTypes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-        //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<UserFreelancerGroup> UserFreelancerGroups
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
-        //public IDbSet<UsersReleaseNotesDisplay>  { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<TruckerSetting> TruckerSettings
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<Responsibility> Responsibilities
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
     }
 }

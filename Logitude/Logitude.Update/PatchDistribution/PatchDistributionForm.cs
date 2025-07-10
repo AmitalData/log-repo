@@ -38,8 +38,6 @@ namespace Logitude.Update.PatchDistribution
         {
             InitializeComponent();
             //DbContextBaseUtil.ToLog = checkBox1.Checked = true;
-            TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
-            Debug.Listeners.Add(debugListener);
             ApproveEnabled =UpdateDBEnabled = false;
         }
 
@@ -77,6 +75,7 @@ namespace Logitude.Update.PatchDistribution
 
             var patchDistributionMatch = new PatchDistributionMatch();
             _PatchDistributionMatchModel =patchDistributionMatch.GetPatchDistributionMatchModel(assemblyVersion);
+
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(_PatchDistributionMatchModel.Message);
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MajorVersion={_PatchDistributionMatchModel.LastClosed_DBMigration.MajorVersion}");
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DB MinorVersion Last Closed !!!={_PatchDistributionMatchModel.LastClosed_DBMigration.MinorVersion}");
@@ -119,7 +118,7 @@ namespace Logitude.Update.PatchDistribution
                             );
                         return;
                     }
-                    Debug.WriteLine("Menu >> Start >  Doit !!!");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Menu >> Start >  Doit !!!");
                     _PatchDistributionList = patchDistributionList;
 
                     UpdateDBEnabled = true;
@@ -186,7 +185,7 @@ namespace Logitude.Update.PatchDistribution
             catch (Exception ee)
             {
                 ApproveEnabled = false;
-                Debug.WriteLine(ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
                 MessageBox.Show(ee.ToString());
                 return;
             }
@@ -197,11 +196,11 @@ namespace Logitude.Update.PatchDistribution
         }
     }
 
-    public class MyTraceListener : TraceListener
+    public class TODELETE_MyTraceListener : TraceListener
     {
         private TextBoxBase output;
 
-        public MyTraceListener(TextBoxBase output)
+        public TODELETE_MyTraceListener(TextBoxBase output)
         {
             this.Name = "Trace";
             this.output = output;

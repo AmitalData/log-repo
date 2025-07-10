@@ -192,7 +192,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string EcommerceSupportEmail { get; set; }
         public bool EcommerceTenant { get; set; }
 		public bool SearchAbsoluteValuePublic { get; set; }
-
+		public int? MinutsTimeOutSession { get; set; }
 
 	}
 }

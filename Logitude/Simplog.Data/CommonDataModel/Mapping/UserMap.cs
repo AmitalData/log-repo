@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Mapping
 {
@@ -114,15 +114,22 @@ namespace Simplog.Data.CommonDataModel.Mapping
             if (dbms == "oracle")
             {
                 this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInMobile");
-                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticateEnabled");
             }
             //#else
             else
             {
                 this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInTheMobileApp");
+            }
+             if (dbms == "oracle")
+            {
+                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticateEnabled");
+            }
+            //#else
+            else
+            {
                 this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticationEnabled");
             }
-//#endif
+            //#endif
 
             this.Property(t => t.PersonalId).HasColumnName("PersonalId");
      // Relationships

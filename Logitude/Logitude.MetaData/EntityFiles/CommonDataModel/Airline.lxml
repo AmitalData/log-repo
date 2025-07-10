@@ -20,6 +20,8 @@
   HasCustomValidator="false"
   IsEditable="true"
   IsNewWizard="true"
+  LookUp1="&quot;Code&quot;"
+  LookUp2="&quot;LocalName&quot;"
   KeyPropertyPath="&quot;Id&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="false"

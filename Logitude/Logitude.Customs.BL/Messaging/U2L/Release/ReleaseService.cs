@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
         {
 
         }
-
+        CustomsSettingPM setting = new CustomsSettingPM();
         public override void ProccessGenericRequest(
               string xmlLOGIBONDREL,
               ref string MoreParams,
@@ -75,6 +75,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
 
             DeserilazeObject(xmlLOGIBONDREL);
             AppendLogLine("DeserilazeObject:Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
+
+            CustomsSettingQueryService settingService = new CustomsSettingQueryService(ResolvedTenant());
+            setting = settingService.GetSettingByTenantN(ResolvedTenant());
 
             if (!String.IsNullOrWhiteSpace(MoreParams))
             {
@@ -228,7 +231,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     string countryCode = "";
                     if (_LogitudeReleaseFile.OriginCountryCode.Length > 2)
                     {
-                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeReleaseFile.OriginCountryCode);
+                        if (setting != null && setting.IsConnectedToUniFreight) { 
+                            countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeReleaseFile.OriginCountryCode);
+                        }
                     }
                     else
                     {
@@ -260,7 +265,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     string countryCode = "";
                     if (_LogitudeReleaseFile.OriginCountryId.Length > 2)
                     {
-                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeReleaseFile.OriginCountryId);
+                        if (setting != null && setting.IsConnectedToUniFreight)
+                        { countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", _LogitudeReleaseFile.OriginCountryId); }
                     }
                     else
                     {
@@ -568,8 +574,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
             var packingType = new PackingTypeRepository(ResolvedTenant());
             var myPackingType = packingType.GetSingle(amitalPackingTypeCode);
             string PackageTypeCode = "";
-            if (myPackingType == null)
-            {
+          
+            if (myPackingType == null )
+            { 
+                if( setting != null && setting.IsConnectedToUniFreight)
                 PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", amitalPackingTypeCode);
             }
             else
@@ -838,9 +846,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 if (myfreightCurrency == null)
                 {
                     string freightCurrencyCode = "";
-                    freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
 
-                    if (!string.IsNullOrWhiteSpace(freightCurrencyCode)) this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = freightCurrencyCode;
+                    if (setting != null && setting.IsConnectedToUniFreight)
+                    {
+                        freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.CURRENCYCODE);
+
+                        if (!string.IsNullOrWhiteSpace(freightCurrencyCode)) this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = freightCurrencyCode;
+                    }
                 }
                 else
                 {
@@ -869,7 +881,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 string countryCode = "";
                 if (this._INVOICE.ISSUECOUNTRYCODE.Length > 2)
                 {
-                    countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
+                    if (setting != null && setting.IsConnectedToUniFreight)
+                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", this._INVOICE.ISSUECOUNTRYCODE);
                 }
                 else
                 {
@@ -901,10 +914,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     var myfreightCurrency = freightCurrency.GetSingle(this._INVOICE.TRANSP_VALUE_CURR);
                     if (myfreightCurrency == null)
                     {
-                        string freightCurrencyCode = "";
+                        if (setting != null && setting.IsConnectedToUniFreight) {
+                            string freightCurrencyCode = "";
+
                         freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
 
                         if (!string.IsNullOrWhiteSpace(freightCurrencyCode)) this._MySupplierInvoicePM.FreightCurrencyTypeCode = freightCurrencyCode;
+                  } 
                     }
                     else
                     {
@@ -948,11 +964,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     var myinsuranceCurrency = insuranceCurrency.GetSingle(this._INVOICE.INSURANCE_CURR);
                     if (myinsuranceCurrency == null)
                     {
-                        string insuranceCurrencyCode = "";
+                        if (setting != null && setting.IsConnectedToUniFreight) { 
+                            string insuranceCurrencyCode = "";
                         insuranceCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.INSURANCE_CURR);
 
                         if (!string.IsNullOrWhiteSpace(insuranceCurrencyCode)) this._MySupplierInvoicePM.InsruanceCurrencyTypeCode = insuranceCurrencyCode;
-                    }
+                  }  }
                     else
                     {
                         this._MySupplierInvoicePM.InsruanceCurrencyTypeCode = myinsuranceCurrency.Code.ToString();
@@ -968,10 +985,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                 var myTradeAgreement = tradeAgreement.GetSingle(this._INVOICE.TRADE_AGREEMENT);
                 if (myTradeAgreement == null)
                 {
-                    string TradeAgreementCode = "";
+                    if (setting != null && setting.IsConnectedToUniFreight) { 
+                        string TradeAgreementCode = "";
                     TradeAgreementCode = GetTranslationL2P("IIGC", "CTBTARIFF", this._INVOICE.TRADE_AGREEMENT);
 
                     if (!string.IsNullOrWhiteSpace(TradeAgreementCode)) this._MySupplierInvoicePM.PreferenceDocumentTypeCode = TradeAgreementCode;
+                    }
                 }
                 else
                 {
@@ -1040,10 +1059,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                         var myfreightCurrency = freightCurrency.GetSingle(transpValItem.TRANSP_VALUE_CURR_L);
                         if (myfreightCurrency == null)
                         {
-                            string freightCurrencyCode = "";
+                            if (setting != null && setting.IsConnectedToUniFreight) {
+                                string freightCurrencyCode = "";
                             freightCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", transpValItem.TRANSP_VALUE_CURR_L);
 
                             if (!string.IsNullOrWhiteSpace(freightCurrencyCode)) SupplierInvoiceFreightAmountPM.CurrencyTypeCode = freightCurrencyCode;
+                            }
                         }
                         else
                         {
@@ -1127,10 +1148,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                             var myexpenseCurrency = expenseCurrency.GetSingle(expense.CurrencyTypeCode);
                             if (myexpenseCurrency == null)
                             {
-                                string expenseCurrencyCode = "";
-                                expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
+                                if (setting != null && setting.IsConnectedToUniFreight)
+                                {
+                                    string expenseCurrencyCode = "";
+                                    expenseCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
 
-                                if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = expenseCurrencyCode;
+                                    if (!string.IsNullOrWhiteSpace(expenseCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = expenseCurrencyCode;
+                                }
                             }
                             else
                             {
@@ -1173,9 +1197,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                             var myagentFeeCurrency = agentFeeCurrency.GetSingle(_LogitudeReleaseFile.agent_fee_currency);
                             if (myagentFeeCurrency == null)
                             {
-                                string agentFeeCurrencyCode = "";
-                                agentFeeCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
-                                if (!string.IsNullOrWhiteSpace(agentFeeCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = agentFeeCurrencyCode;
+                                if (setting != null && setting.IsConnectedToUniFreight)
+                                {
+                                    string agentFeeCurrencyCode = "";
+                                    agentFeeCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", this._INVOICE.TRANSP_VALUE_CURR);
+                                    if (!string.IsNullOrWhiteSpace(agentFeeCurrencyCode)) SupplierInvoiceModificationPM.CurrencyTypeCode = agentFeeCurrencyCode;
+                                }
                             }
                             else
                             {
@@ -1256,11 +1283,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     var myTradeAgreement = tradeAgreement.GetSingle(invoiceItem.TRADEAGREEMENTCODE);
                     if (myTradeAgreement == null)
                     {
-                        string TradeAgreementCode = "";
-                        TradeAgreementCode = GetTranslationL2P("IIGC", "CTBTARIFF", invoiceItem.TRADEAGREEMENTCODE);
+                        if (setting != null && setting.IsConnectedToUniFreight)
+                        {
+                            string TradeAgreementCode = "";
+                            TradeAgreementCode = GetTranslationL2P("IIGC", "CTBTARIFF", invoiceItem.TRADEAGREEMENTCODE);
 
-                        if (!string.IsNullOrWhiteSpace(TradeAgreementCode)) SupplierInvoiceItemPM.TradeAgreementCode = TradeAgreementCode;
-                    }
+                            if (!string.IsNullOrWhiteSpace(TradeAgreementCode)) SupplierInvoiceItemPM.TradeAgreementCode = TradeAgreementCode;
+                        }   }
                     else
                     {
                         SupplierInvoiceItemPM.TradeAgreementCode = myTradeAgreement.Code.ToString();
@@ -1315,7 +1344,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                     string countryCode = "";
                     if (invoiceItem.ITEMORIGINCOUNTRY.Length > 2)
                     {
-                        countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", invoiceItem.ITEMORIGINCOUNTRY);
+                        if (setting != null && setting.IsConnectedToUniFreight)
+                        {
+                            countryCode = GetTranslationL2P("IIGC", "CTBCOUNTRY", invoiceItem.ITEMORIGINCOUNTRY);
+                        }
                     }
                     else
                     {
@@ -1343,11 +1375,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.Release
                         var mywholesaleCurrency = wholesaleCurrency.GetSingle(invoiceItem.COMMERCE_PRICE_CURRENCY);
                         if (mywholesaleCurrency == null)
                         {
-                            string wholesaleCurrencyCode = "";
-                            wholesaleCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", invoiceItem.COMMERCE_PRICE_CURRENCY);
+                            if (setting != null && setting.IsConnectedToUniFreight)
+                            {
+                                string wholesaleCurrencyCode = "";
+                                wholesaleCurrencyCode = GetTranslationL2P("IIGC", "CTBCURRENCY", invoiceItem.COMMERCE_PRICE_CURRENCY);
 
-                            if (!string.IsNullOrWhiteSpace(wholesaleCurrencyCode)) SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = wholesaleCurrencyCode;
-                        }
+                                if (!string.IsNullOrWhiteSpace(wholesaleCurrencyCode)) SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = wholesaleCurrencyCode;
+                            } }
                         else
                         {
                             SupplierInvoiceItemPM.WholeSaleItemPriceCurrencyCode = mywholesaleCurrency.Code.ToString();

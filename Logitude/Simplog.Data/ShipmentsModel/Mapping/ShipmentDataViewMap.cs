@@ -29,7 +29,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Transshipment1VesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainCarriageVesselId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.BookingConfirmedBy).HasMaxLength(40).IsUnicode(false);
-            this.Property(t => t.BookingConfirmationNotes).HasMaxLength(250).IsUnicode(false);
+            this.Property(t => t.BookingConfirmationNotes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.BookingConfirmationNumber).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.Transshipment3CarrierNumber).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Transshipment3ToPortId).HasMaxLength(15).IsUnicode(false);
@@ -76,7 +76,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.ShipmentPayableStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.ShipmentReceivableStatusCode).HasMaxLength(4).IsUnicode(false);
             this.Property(t => t.QuoteId).HasMaxLength(15).IsUnicode(false);            
-            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.DangerousMaterialDescription).HasMaxLength(60).IsUnicode(true);
             this.Property(t => t.DangerousPackagingGroup).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.DangerousClassNumber).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.DangerousUnNumber).HasMaxLength(4).IsUnicode(false);
@@ -176,7 +176,7 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Notify2AddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.Notify1AddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AgentId).HasMaxLength(15).IsUnicode(false);            
-            this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(false);
+            this.Property(t => t.DescriptionOfGoods).HasMaxLength(1024).IsUnicode(true);
             this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.NotesSharedWithCustomer).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.DirectionId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);

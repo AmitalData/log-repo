@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.ServiceModel.DomainServices.Server;
 using System.Xml.Serialization;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
@@ -24,7 +24,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 {
     public partial class CommonDataDomainService
     {
-        public void UpdateDistributorList(DistributorList currentEntity)
+        public void UpdateDistributorList(DistributorList currentEntity, int tenant)
         {
         }
 
@@ -190,23 +190,23 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         }
 
 
-        public void InsertDistributor(DistributorPM entity)
+        public void InsertDistributor(DistributorPM entity, int tenant)
         {
             if (this.objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(0);
+                objectContext = CommonDataContext.GetContext(tenant);
             }
-            DistributorService service = new DistributorService(objectContext, 0);
+            DistributorService service = new DistributorService(objectContext, tenant);
             service.Create(entity);
         }
 
-        public void UpdateDistributor(DistributorPM currentEntity)
+        public void UpdateDistributor(DistributorPM currentEntity, int tenant)
         {
             if (this.objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(0);
+                objectContext = CommonDataContext.GetContext(tenant);
             }
-            DistributorService service = new DistributorService(objectContext, 0);
+            DistributorService service = new DistributorService(objectContext, tenant);
             service.Update(currentEntity);
         }
 

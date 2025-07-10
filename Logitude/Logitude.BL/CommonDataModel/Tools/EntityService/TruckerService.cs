@@ -9,7 +9,7 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -277,6 +277,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 entityCard.EmailForSendingSingArinvoice = entityPM.Card != null ? entityPM.Card?.EmailForSendingSingArinvoice : null ;
                 entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport;
+                entityCard.ExternalSystem = entityPM.Card != null ? entityPM.Card.ExternalSystem : entityCard.ExternalSystem;
+                entityCard.IsAutonomy = entityPM.Card != null ? entityPM.Card.IsAutonomy : entityCard.IsAutonomy;
+
             }
         }
 

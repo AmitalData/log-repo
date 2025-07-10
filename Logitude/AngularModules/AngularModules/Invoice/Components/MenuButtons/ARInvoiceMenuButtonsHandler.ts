@@ -1434,6 +1434,7 @@ export class ARInvoiceMenuButtonsHandler {
         AutoCreditInvoice.PrintByUserId = this.EntityPM.PrintByUserId;
         AutoCreditInvoice.InvoiceDate = this.AutoCreditDate != null ? this.AutoCreditDate : DateTool.GetCurrentDateAsUtc();
         AutoCreditInvoice.DueDate = this.EntityPM.DueDate;
+        AutoCreditInvoice.ReferenceDate = this.EntityPM.ReferenceDate;
         AutoCreditInvoice.PrintDate = this.EntityPM.PrintDate;
         AutoCreditInvoice.Sent = this.EntityPM.Sent;
         AutoCreditInvoice.ExchangeRateDate = this.EntityPM.ExchangeRateDate;

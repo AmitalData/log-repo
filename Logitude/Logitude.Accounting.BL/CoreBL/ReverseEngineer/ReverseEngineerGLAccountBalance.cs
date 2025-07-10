@@ -62,7 +62,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var caclMonthTotals =
                  (
                 from tot in
-                    myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                    myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
                 where tot.Tenant == _Tenant
                 join acc in myGLAccountRepo.GetAll(_Tenant) on tot.AccountId equals acc.Id
                 group tot by new { tot.AccountId, acc.IsMultiCurrency } into g
@@ -138,7 +138,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 var quaryablMonthTotalsForeignAmount =
                  (
                 from tot in
-                    myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.Accountingdate)
+                    myGLAccountTotalByMonthRepo.GetAll(_Tenant).Where(tot => tot.DateTypeCode == GLAccountTotalDateTypeValues.AccountingDate)
                 where tot.Tenant == _Tenant
                 group tot by tot.AccountId into g
                 select new GLAccountBalanceDTO

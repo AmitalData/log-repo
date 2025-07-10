@@ -21,16 +21,16 @@
   <Column
     Name="Code"
     Type="varchar"
-    Size="5">
+    Size="7">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="EnglishName"
     Type="varchar"
     Size="60">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="LocalName"
@@ -40,23 +40,23 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="InActive"
+    Name="Inactive"
     Type="bit">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="CustomsMetaDataCode"
-    Type="nvarchar"
-    Size="6">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="Format"
     Type="varchar"
     Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsMetadataCode"
+    Type="nvarchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

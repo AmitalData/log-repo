@@ -38,6 +38,7 @@ namespace WebFreight.Web.Helpers
         public string InvoiceType { get; set; }
         public string Level { get; set; }
 
+        public bool NotDisplayInMenu { get; set; }
     }
     public class ReportTemplateEditorHtmlDataParams
     {

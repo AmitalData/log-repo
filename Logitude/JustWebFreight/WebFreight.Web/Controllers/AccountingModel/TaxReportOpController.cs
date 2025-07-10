@@ -3,7 +3,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.Helpers;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using Logitude.Accounting.Def.EntityPMs;
@@ -14,7 +14,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
@@ -42,7 +42,7 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
 
     public class GetTaxReportLinesResponse

@@ -1,10 +1,10 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -33,7 +33,6 @@ using System.ServiceModel.Description;
 using System.Web;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
-using Logitude.Server.Tools.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -622,12 +621,12 @@ namespace WebFreight.Web.WcfApi
             if(string.IsNullOrEmpty(blobname))
                 return UpdateResponseException(response, new ArgumentException("blobname or DocumentId is null or empty"));
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage start"+ "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage start ,tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId);
 
             SecurityUtility.AuthenticationOnTenant(tenant);
             response = DocumentFileUploadHelper.AddDocumentAndSendToInternalStorage(tenant, blobname, DocumentId);
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage finish"+ "tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UploadDocumentFileDataFromStorage finish, tenant: " + tenant + " blobname: " + blobname + " DocumentId: " + DocumentId + " response: " + response.HasError + ", error message: " + response.ErrorMessage);
 
             return response;
         }

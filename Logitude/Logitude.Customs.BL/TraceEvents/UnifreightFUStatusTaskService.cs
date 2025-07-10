@@ -35,10 +35,7 @@ namespace Logitude.Customs.BL.TraceEvents
         public void DeleteINAFUStatus(int Tenant, string CustomFileNo)
         {
             //
-            if (!CustomsSettingQueryService.GetSettingByTenant(Tenant).IsConnectedToUniFreight)
-            {
-                return;
-            }
+          
                 
            
             
@@ -117,8 +114,7 @@ namespace Logitude.Customs.BL.TraceEvents
 
                     EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightFUStatusParam);
                     
-                        //string requestData = GetEventRequestDATA(myUnifreightFUStatusParam, unifreightUserId, true);
-                    InsertGGGQ4Entity(myUnifreightFUStatusParam.Entname, myUnifreightFUStatusParam.PrimaryNum, myGGGQUpdateService, isConnectedToUniFreight, tenant);
+                     InsertGGGQ4Entity(myUnifreightFUStatusParam.Entname, myUnifreightFUStatusParam.PrimaryNum, myGGGQUpdateService, isConnectedToUniFreight, tenant);
                     
                     InsertEventTask4Entity(myUnifreightFUStatusParam, _UnifreightUserId, tenant, requestData);
                 }

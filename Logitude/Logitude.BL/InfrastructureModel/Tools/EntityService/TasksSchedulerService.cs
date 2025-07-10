@@ -8,14 +8,14 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.Repositories;
 
@@ -111,10 +111,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ConnectDocumentTypeTemplateToScheduler();
             ConnectMessageReportTemplateToScheduler();
 
-            IQueueService queueservice = new DbQueueService();
-            queueservice.InitializeQueue("SchedularQueue", 0);
-            queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, tenant, null, null, null, Poco.NextRunTimeUTC);
-        }
+            if (!FeatureToggleHelper.HasFeatureToggle("STQ", entityPM.Tenant)) 
+            { 
+			    IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("SchedularQueue", 0);
+                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", Poco.Version.ToString() } }, tenant, null, null, null, Poco.NextRunTimeUTC);
+			}
+		}
 
         private void ConnectDocumentTypeTemplateToScheduler()
         {
@@ -181,10 +184,13 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 theEntityPm.Version = theEntityPm.Version + 1;
                 theEntityPm.NextRunTime = theEntityPm.StartDateTime;
                 theEntityPm.NextRunTimeUTC = theEntityPm.StartDateTimeUTC;
-                IQueueService queueservice = new DbQueueService();
-                queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, tenant, null, null, null, theEntityPm.NextRunTimeUTC);
+                if (!FeatureToggleHelper.HasFeatureToggle("STQ", entityPM.Tenant)) 
+                {
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("SchedularQueue", 0);
+                    queueservice.Send(new Dictionary<string, string>() { { "TaskId", Poco.Id }, { "Tenant", Poco.Tenant.ToString() }, { "Version", theEntityPm.Version.ToString() } }, tenant, null, null, null, theEntityPm.NextRunTimeUTC);
 
+                }
             }
             TasksSchedulerMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);

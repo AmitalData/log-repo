@@ -497,8 +497,13 @@ __pycache__/
 /Logitude/AngularModules/AngularModules/Infrastructure/Services/StandardLists/CustomFieldsMainObjectsListService.ts
 /LogitudeTools/WorkerRoleSimulation/WindowsFormsApplication1/App.config
 /Logitude/Logitude.BL/packages.config
-/Logitude/JustWebFreight/WebFreight.Web/Nlog.config
- /Logitude/CustomsBook/JustAmitalCustomsWindowsServiceConnectionStrings.config
+ /Logitude/JustWebFreight/WebFreight.Web/Nlog.config
+ 
+/Logitude/Library/netstandard2.0/licenses.licx
+/Logitude/Library/Justconfig
+/Logitude/AmitalTestConsoleApp/JustConfig
+ /Logitude/JustWebFreight/WebFreight.Web/readme.txt
+  /Logitude/CustomsBook/JustAmitalCustomsWindowsServiceConnectionStrings.config
 /Logitude/CustomsBook/JustAmitalCustomsWindowsServiceappSettings.config
 
  /Logitude/CommunicationWorkerRole/Nlog.config
@@ -510,4 +515,6 @@ __pycache__/
 /Logitude/Logitude.SystemLogs/Nlog.config
 /Logitude/Logitude.Update/Nlog.config
 /Logitude/RabbitMQSRV/Nlog.config
-/LogitudeTools/ShipmentsReport/ShipmentsReport/appsettings.json
+ /LogitudeTools/ShipmentsReport/ShipmentsReport/appsettings.json
+
+ 

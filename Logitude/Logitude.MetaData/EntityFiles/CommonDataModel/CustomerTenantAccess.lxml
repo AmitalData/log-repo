@@ -12,7 +12,6 @@
   AvailableInCustomization="true"
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
-  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="true"

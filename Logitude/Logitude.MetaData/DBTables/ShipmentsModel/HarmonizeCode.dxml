@@ -13,9 +13,16 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Description"
-    Type="varchar"
-    Size="1000">
+    Type="nvarchar"
+    Size="2000">
     <Constraints
       Nullable="false" />
   </Column>
@@ -28,8 +35,8 @@
   </Column>
   <Column
     Name="ChapterDescription"
-    Type="varchar"
-    Size="1000">
+    Type="nvarchar"
+    Size="2000">
     <Constraints
       Nullable="false" />
   </Column>
@@ -42,15 +49,8 @@
   </Column>
   <Column
     Name="SubChapterDescription"
-    Type="varchar"
-    Size="1000">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="SearchFields"
     Type="nvarchar"
-    Size="4000">
+    Size="2000">
     <Constraints
       Nullable="false" />
   </Column>

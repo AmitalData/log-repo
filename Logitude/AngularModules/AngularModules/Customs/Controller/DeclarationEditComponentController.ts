@@ -57,8 +57,11 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 allTabs.splice(indexOfTab, 1);
             }
         }
-
+       
         if (currentEntity.Direction == "E") {
+            let indexOfTabSIIR = allTabs.findIndex(t => t.Code == "SIIR");
+            if (indexOfTabSIIR > -1) allTabs.splice(indexOfTabSIIR, 1);
+            
             var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
             if (indexOfTab > -1) {
                 allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.ExporterInvoices";
@@ -378,6 +381,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
     public ResetMustRefresh() {
         this.MustRefresh = null;
         this.MustRefreshMessage = null;
+        this.CurrentSession.CurrentEditComponent.RefreshEntity();   
     }
     public CustomsAnswersShowManifest: boolean = false;
     public ShowDeclarationClassificationComponentTAB: boolean = false;

@@ -19,11 +19,11 @@ using Simplog.Data.CommonDataModel;
 using System.IO;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Server.Tools.Models;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Diagnostics;
 using Logitude.Customs.Data.Repsitories;
 using System.Configuration;
@@ -149,7 +149,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
             var myDocumentsFilingService = new DocumentsFilingService(commonContext, entityPM.Tenant);
 
-            Debug.WriteLine("AutoSetMetaDataValue");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AutoSetMetaDataValue");
             string logData = "";
 
             foreach (CustomsDocumentMetaDataValuePM val in entityPM.CustomsDocumentMetaDataValues)
@@ -269,14 +269,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         var pm = documentsFilingQuery.GetSinglePM(documentsFilingId, entityPM.Tenant);
                         if (pm.ExternalEntityName == "CFIFILEM" && !string.IsNullOrWhiteSpace(pm.ExternalEntityReference))
                         {
-                            CustomsSettingQueryService settingService = new CustomsSettingQueryService(entityPM.Tenant);
-                            CustomsSettingPM setting = settingService.GetSettingByTenantN(entityPM.Tenant);
-
-                            if (setting.IsConnectedToUniFreight)
-                            {
                                 var unifreightFUStatusTaskService = new UnifreightFUStatusTaskService();
                                 unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
-                            }
+                            
                         }
                         AddHybridTaskDocumentFilingChange(pm); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
                     }
@@ -455,7 +450,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 entityPM.ExternalAttachmentId = documentIn.Code + "-" + entityPM.DocumentVersion;//entityPM.DocumentsFilingCode + "-" + entityPM.DocumentVersion;
             }
-            ObjectTableRepository objecttableRep = new ObjectTableRepository(0);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objecttableRep.GetObjectTableById(documentIn.ObjectTableId, 0);
 #if true//cloudExc 11:22 ‎24/‎08/‎2016
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
@@ -815,31 +810,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     requestParams.ForcePersonalSign = true;
                 }
                 var my9mb = 9000000;
-                //var my3mb = 3000000;
 
-
-                //if (entityPM.FileSize.HasValue && entityPM.FileSize.GetValueOrDefault() > my3mb)
-                //{
-                //    SendDCA(requestParams);
-                //}
-                //else
                 {
                     DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
                     var fileSize = rep.GetDocumentFileSizeByDocumentFilingId(requestParams.DocumentsFilingId, requestParams.Tenant);
                     var hugeFile = false;
-                    /*CustomsSettingQueryService settingService = new CustomsSettingQueryService(entityPM.Tenant);
-                    CustomsSettingPM setting = settingService.GetSettingByTenantN(entityPM.Tenant);
-
-                    if (setting.IsConnectedToUniFreight)
-                    {
-                        var repo1 = new GDMFILEVERRepository(requestParams.Tenant);
-                        var list = repo1.GetList(requestParams.DocumentsFilingId);
-                        if (list.Count > 0)
-                        {
-                            var lastVer = list.Max(r => r.VERSION);
-                            var lastGDMFILEVER = list.First(r => r.VERSION == lastVer);
-                            //9558452
-                            //7000000*/
+ 
                     if (fileSize > HugeFileSizeSendToDCA)
                     {
                         if (fileSize > MaxFileSizeDONOTSendToDCA)

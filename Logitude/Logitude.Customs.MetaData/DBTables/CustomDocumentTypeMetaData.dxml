@@ -13,14 +13,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="DocumentTypeCode"
-    Type="varchar"
-    Size="7">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Mandatory"
     Type="bit">
     <Constraints
@@ -32,6 +24,14 @@
     Size="20">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentTypeCode"
+    Type="varchar"
+    Size="7">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Column
     Name="ValuesTable"

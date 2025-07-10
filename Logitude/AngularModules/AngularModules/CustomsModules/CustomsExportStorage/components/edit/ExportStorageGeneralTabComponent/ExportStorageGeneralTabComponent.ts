@@ -99,6 +99,9 @@ export class ExportStorageGeneralTabComponent extends BaseComponent {
     }
 
     public get MarksNumbers() {
+        if (this.EntityPM.MarksNumbers.includes('SEAL')) {
+            return this.EntityPM.MarksNumbers.replace('SEAL', '\nSEAL');
+        }
         return this.EntityPM.MarksNumbers;
     }
 

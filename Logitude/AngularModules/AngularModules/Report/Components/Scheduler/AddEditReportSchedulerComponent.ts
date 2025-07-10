@@ -595,7 +595,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
         var confirmMsg = "Are you sure you want to leave this page without saving the report?";
 
         var confirmWindow = new ConfirmWindow();
-
+        confirmWindow.ZIndex = 1000;
         confirmWindow.Show(confirmMsg);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (!confirmWindow.Yes) return;

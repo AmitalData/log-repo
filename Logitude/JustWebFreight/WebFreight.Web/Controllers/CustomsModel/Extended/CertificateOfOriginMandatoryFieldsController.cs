@@ -3,7 +3,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -19,7 +19,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace JustWebFreight.WebFreight.Web.Controllers.CustomsModel.Generated.PMControllers
 
 {
     public partial class CertificateOfOriginMandatoryFieldssController : ApiController

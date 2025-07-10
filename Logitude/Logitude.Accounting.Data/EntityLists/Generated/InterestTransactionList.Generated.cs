@@ -78,8 +78,9 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Notes { get; set; }
        [DataMember]
        public string UpdatedByUserName  { get; set; }
-
+        [DataMember]
+       public string Reference1 { get; set; }
     }
-
+ 
 }
 	 

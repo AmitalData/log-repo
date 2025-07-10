@@ -111,6 +111,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
                     else item.IsDefault = false;
                 }
                 else {
+
                     if (item.Id == this.DocumentType.DocumentTypeDefaultReportTemplateId) item.IsDefault = true;
                     else item.IsDefault = false;
 
@@ -161,6 +162,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
         if (this.CurrentDocumentTypeTemplatePM && this.DocumentType){
             if (this.TypeTab == "Document") {
+
                 this.DocumentType.DocumentTypeDefaultReportTemplateId = this.CurrentDocumentTypeTemplatePM.Id;
                 this.CurrentDocumentTypeTemplatePM.IsDefault = true;
                 this.DocumentTypeTemplateLists.forEach((item) => {

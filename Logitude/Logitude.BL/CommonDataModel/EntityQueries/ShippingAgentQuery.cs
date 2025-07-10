@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
@@ -103,6 +103,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                              SendingInterestReport = a.Card.SendingInterestReport,
                                              GLAccountId = a.Card.GLAccountId,
+                                             ExternalSystem = a.Card.ExternalSystem,
+                                             IsAutonomy = a.Card.IsAutonomy
                                          },
                                          BillToId = a.Card.BillToId,
                                          ImageDetailId = a.Card.ImageDetailId,
@@ -206,6 +208,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              Code = a.Card.Code,
                                              EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                              SendingInterestReport = a.Card.SendingInterestReport,
+                                             ExternalSystem = a.Card.ExternalSystem,
+                                             IsAutonomy = a.Card.IsAutonomy
+
                                          },
                                          BillToId = a.Card.BillToId,
                                          ImageDetailId = a.Card.ImageDetailId,

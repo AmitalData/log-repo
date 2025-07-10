@@ -5,6 +5,8 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MeatadataGeneratorTool
 {
@@ -980,6 +982,32 @@ namespace MeatadataGeneratorTool
             }
             set { }
         }
+        public string IsPMFontWeight
+        {
+            get
+            {
+                string result = "Normal";
+                if (isPMField)
+                {
+                    result = "Bold";
+                }
+                return result;
+            }
+            set { }
+        }
+        public bool IsPMFieldEnabled
+        {
+            get
+            {
+                bool result = false;
+                if (IsPMField)
+                {
+                    result = true;
+                }
+                return result;
+            }
+            set { }
+        }
 
         bool isDBField;
         public bool IsDBField
@@ -992,10 +1020,21 @@ namespace MeatadataGeneratorTool
         public bool IsPMField
         {
             get { return isPMField; }
-            set { isPMField = value; FirePropertyChanged("IsPMField"); }
+            set { isPMField = value; FirePropertyChanged("IsPMField"); FirePropertyChanged("IsPMFieldEnabled"); FirePropertyChanged("IsPMFontWeight"); }
         }
-
-        private bool enableAutoFill;
+		string tableRelatedPM;
+		public string TableRelatedPM
+		{
+			get { return tableRelatedPM; }
+			set { tableRelatedPM = value; FirePropertyChanged("TableRelatedPM"); }
+		}
+		string fieldRelatedPM;
+		public string FieldRelatedPM
+		{
+			get { return fieldRelatedPM; }
+			set { fieldRelatedPM = value; FirePropertyChanged("FieldRelatedPM"); }
+		}
+		private bool enableAutoFill;
         public bool EnableAutoFill
         {
             get 
@@ -1394,6 +1433,10 @@ namespace MeatadataGeneratorTool
             {
                 str.AppendLine("Default Text is Required");
             }
+            else if (ContainsHebrewCharacters(this.DefaultText))
+            {
+                str.AppendLine("Default Text cannot contain Hebrew characters");
+            }
             if (string.IsNullOrEmpty(FieldName))
             {
                 str.AppendLine("Field Name is Required");
@@ -1527,7 +1570,10 @@ namespace MeatadataGeneratorTool
                     str.AppendLine("Operator is Required");
                 }
             }
-
+            if(!string.IsNullOrEmpty(ListLableDefaultText) && ContainsHebrewCharacters(ListLableDefaultText))
+            {
+                str.AppendLine("'List Lable Default Text' cannot contain Hebrew characters");
+            }
             ErrorMessages = str.ToString();
             if (ErrorMessages != "")
             {
@@ -1540,7 +1586,10 @@ namespace MeatadataGeneratorTool
 
             FirePropertyChanged("ErrorMessages");
         }
-
+        private bool ContainsHebrewCharacters(string text)
+        {
+            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
+        }
         public RelayCommand AdvanceSettingsBtnCommand
         {
             get { return new RelayCommand(() => this.AdvanceSettingsMethod()); }
@@ -1552,12 +1601,22 @@ namespace MeatadataGeneratorTool
         public bool IsSpellCheckedHelpLocalDefaultText { get;  set; }
         public bool IsSpellCheckedShortLocalDefaultText { get;  set; }
         public bool IsSpellCheckedListLocalDefaultText { get; internal set; }
- 
+
+        string objectFieldDataMapping;
+       
         string modelName;
         public string ModelName
         {
             get { return modelName; }
             set { modelName = value; FirePropertyChanged("ModelName"); }
+        }
+        public string ObjectFieldDataMapping
+        {
+            get { return objectFieldDataMapping; }
+            set
+            {
+                objectFieldDataMapping = value; FirePropertyChanged("ObjectFieldDataMapping");
+            }
         }
 
         //public Window AdvanceSettingsWindow = new Window();

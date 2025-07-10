@@ -10,6 +10,7 @@ import {LogitudeErrorHandler} from '../Utilities/LogitudeErrorHandler';
 import { LoginService } from '../Services/LoginService';
 import { of } from 'rxjs';
 import { isNullOrUndefined } from 'util';
+import { GeneralLockService } from 'Infrastructure/Services/ExtendedLists/GeneralLockService';
 declare var window: any;
 
 export class ServiceHelper {
@@ -98,6 +99,8 @@ export class ServiceHelper {
                     ServiceHelper.LogServiceError("There seems to be an Internet Connection Problem" + additionalDetails, "net::ERR_CONNECTION_REFUSED", false);//("net::ERR_CONNECTION_REFUSED", "net::ERR_CONNECTION_REFUSED");
                 }
                 else if (error.status == 500) {
+                    console.log(error);
+                    response.ErrorsArray.push(error?.statusText);
                     try {
                         var errorObject = JSON.parse(error["_body"]);
                         ServiceHelper.LogServiceError(errorObject.Message + " " + errorObject.ExceptionMessage, errorObject.StackTrace);
@@ -502,13 +505,34 @@ export class ServiceHelper {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Token': ServiceHelper.GetLoggedUserToken()
+                //'Accept': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken(),
+                //'workerrolename': "development"
             })
         };
 
         if (!AppTool.IsNullOrEmpty(SessionLocator.WorkerRoleName))
             httpOptions.headers = httpOptions.headers.append('workerrolename', SessionLocator.WorkerRoleName);
+          //  httpOptions.headers = httpOptions.headers.set('workerrolename', SessionLocator.WorkerRoleName);
 
+            //console.log(SessionLocator.WorkerRoleName);
+
+        return httpOptions;
+    }
+    public static GetHttpHeadersGeneralLock() {
+
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Token': ServiceHelper.GetLoggedUserToken()
+                
+            })
+        };
+
+        if (!AppTool.IsNullOrEmpty(sessionStorage.getItem('SessionId'))) {      
+            var Index = SessionLocator.HomeComponent.Tabs.find(x => x.IsSelected).Index;
+            httpOptions.headers = httpOptions.headers.append('SessionId', sessionStorage.getItem('SessionId') + '_' + Index);
+        }
         return httpOptions;
     }
 
@@ -584,6 +608,40 @@ export class ServiceHelper {
         document.body.appendChild(mapForm);
         mapForm.submit();
         document.body.removeChild(mapForm);
+    }
+
+    public static CheckIsLock(entityId: string, objectTableName: string, isFromCahnge: boolean = false) {
+
+        var generalLockService = new GeneralLockService();
+
+        generalLockService.PostCheckLock(entityId, objectTableName,isFromCahnge).subscribe(myResult => {
+           if(myResult.Result != null) 
+           {
+              var generalLock = myResult.Result;
+              this.CurrentSession.CurrentEditComponent.IsLock.emit([true, objectTableName, entityId, generalLock.UserName]);
+           }
+           else 
+           {
+              this.CurrentSession.CurrentEditComponent.IsLock.emit([false, objectTableName, entityId,null]);
+           }
+           
+        });
+    }
+    public static  DeleteGeneralLock(entityId: string, objectTableName: string) {
+
+        var generalLockService = new GeneralLockService();
+
+        generalLockService.DeleteGeneralLock(entityId, objectTableName).subscribe(myResult => {
+
+        });
+    }
+    public static  DeleteGeneralLockBySessionId() {
+
+        var generalLockService = new GeneralLockService();
+
+        generalLockService.DeleteGeneralLockBySessionId().subscribe(myResult => {
+
+        });
     }
 }
 

@@ -45,21 +45,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            var amitalContext = AmitalContext.GetContext(requestParams.Tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", false, true);
-            def.DEFDATA = def.DEFDATA ?? "";
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(requestParams.Tenant);
+            string def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_MAMAN", "NON", "NON", requestParams.Tenant);
+
+            def = def ?? "";
 
             var port2SendList = new List<string>();//&& declaration.Consignments.FirstOrDefault().StorageSiteCode == "ILOVL"
-            if (def.DEFDATA.Contains("ILMMN")) // Maman
+            if (def.Contains("ILMMN")) // Maman
             {
                 port2SendList.Add("ILMMN");
             }
-            if (def.DEFDATA.Contains("ILOVL")) // OVS
+            if (def.Contains("ILOVL")) // OVS
             {
                 port2SendList.Add("ILOVL");
             }
-            if (def.DEFDATA.Contains("ILSWS")) // OVS
+            if (def.Contains("ILSWS")) // OVS
             {
                 port2SendList.Add("ILSWS");
             }
@@ -110,7 +110,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 if (listKeyValuePair.Count == 0)
                 {
-                    mess.AppendLine($"There ARE  NOT any Declarations GetByMasterIDStorageSiteCode {requestParams.AppicationId } where storage {def.DEFDATA}");
+                    mess.AppendLine($"There ARE  NOT any Declarations GetByMasterIDStorageSiteCode {requestParams.AppicationId } where storage {def}");
                 }
                 var list2split = new List<KeyValuePair<string, string>>();
 
@@ -158,7 +158,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             throw new NotImplementedException();
         }
 
-        private static void BuildQueueSendWebAPIMethod(GenericRequestParams requestParams, StringBuilder mess, Unifreight.BL.EntityPMs.UGenerated.GDFDATAPM def, KeyValuePair<string, string> itemDeclarationIdStorageSiteCode)
+        private static void BuildQueueSendWebAPIMethod(GenericRequestParams requestParams, StringBuilder mess, string def, KeyValuePair<string, string> itemDeclarationIdStorageSiteCode)
         {
             try
             {
@@ -180,17 +180,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         }
                     }
-                    if (def.DEFDATA.Contains("ILMMN") && itemDeclarationIdStorageSiteCode.Value == "ILMMN") // Maman
+                    if (def.Contains("ILMMN") && itemDeclarationIdStorageSiteCode.Value == "ILMMN") // Maman
                     {
                         var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                         response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(itemDeclarationIdStorageSiteCode.Key, requestParams.Tenant);
                     }
-                    else if (def.DEFDATA.Contains("ILOVL") && itemDeclarationIdStorageSiteCode.Value == "ILOVL") // OVS
+                    else if (def.Contains("ILOVL") && itemDeclarationIdStorageSiteCode.Value == "ILOVL") // OVS
                     {
                         var courierGWMessageECTHRDataMamanService = new CourierOVSECTHMessageRequestService();
                         response = courierGWMessageECTHRDataMamanService.BuildQueueSendWebAPI(itemDeclarationIdStorageSiteCode.Key, requestParams.Tenant);
                     }
-                    else if (def.DEFDATA.Contains("ILSWS") && itemDeclarationIdStorageSiteCode.Value == "ILSWS") // OVS
+                    else if (def.Contains("ILSWS") && itemDeclarationIdStorageSiteCode.Value == "ILSWS") // OVS
                     {
                         var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                         response = courierECSWSTHRMessageRequestService.BuildQueueSendWebAPI(itemDeclarationIdStorageSiteCode.Key, requestParams.Tenant);

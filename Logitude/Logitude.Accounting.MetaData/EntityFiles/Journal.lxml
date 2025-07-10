@@ -4120,7 +4120,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4186,7 +4186,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4244,7 +4244,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4310,7 +4310,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -4376,7 +4376,7 @@
     QuerySection="&quot;Journal&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;CreateDate&quot;"
     DefaultSortDirection="&quot;Descending&quot;"
     IsSpellChecked="false">
@@ -5528,6 +5528,20 @@
       Code="&quot;Journal.O.SuperPermissionRequired&quot;"
       DefaultText="&quot;Correction requires super permission. Please contact Amital.&quot;"
       LocalDefaultText="&quot;תיקון דורש הרשאת על. נא לפנות לעמיטל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.AccountIdenticalToFullAccountingSetting&quot;"
+      DefaultText="&quot;{account} is identical to {setting} in the full accounting settings&quot;"
+      LocalDefaultTextBack_up="&quot;{account} זהה ל{setting} שבהגדרות הנהלת חשבונות&quot;"
+      LocalDefaultText="&quot;BS64:InthY2NvdW50fSDXlteU15Qg15x7c2V0dGluZ30g16nXkdeU15LXk9eo15XXqiDXlNeg15TXnNeqINeX16nXkdeV16DXldeqIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.AccountIsAccountControl&quot;"
+      DefaultText="&quot;{account} is a control account&quot;"
+      LocalDefaultTextBack_up="&quot;{account} הוא חשבון מרכז&quot;"
+      LocalDefaultText="&quot;BS64:InthY2NvdW50fSDXlNeV15Ag15fXqdeR15XXnyDXnteo15vXliI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

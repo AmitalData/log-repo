@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using WebFreight.Web.Helpers;
 using System.Collections;
 using System.IO;
@@ -1314,9 +1314,10 @@ namespace MetaDataGenerator
                 SetAttribute("TabLocalName", GetStringValue(tTextCode.LocalDefaultText), tabXElement);
                 SetAttribute("TabName", GetStringValue(tTextCode.DefaultText), tabXElement);
                 SetAttribute("IsSpellChecked", tTextCode.IsSpellChecked.ToString().ToLower(), tabXElement);
-                //SetAttribute("SpellCheckDate", GetStringValue(tTextCode.SpellCheckDate), tabXElement);
+				//SetAttribute("SpellCheckDate", GetStringValue(tTextCode.SpellCheckDate), tabXElement);
+				SetAttribute("IsLocked", tab.IsLocked.ToString().ToLower(), tabXElement, null);
 
-                if (tFeature != null)
+				if (tFeature != null)
                 {
                     SetAttribute("IsPackagable", tFeature.Packagable.ToString(), tabXElement);
                     SetAttribute("FeatureCode", GetStringValue(tFeature.Code), tabXElement);

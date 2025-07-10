@@ -1,9 +1,9 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Azure;
 using WebFreight.Web.DataContracts;
@@ -3777,6 +3777,7 @@ namespace WebFreight.Web.InfrastructureModel
             foreach (ObjectTable objectTable in objectTables)
             {
                 TextCode textCode = textCodesList.Where(d => d.ObjectTableId == objectTable.Id && d.Id != objectTable.DescriptionTextCodeId).FirstOrDefault();
+                if (textCode != null)
                 textCodes.Add(textCode);
             }
 
@@ -5480,7 +5481,14 @@ namespace WebFreight.Web.InfrastructureModel
                 //if (connection.Contains("Main"))
                 //{ }
 
-                isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+                //isBlocking = (from a in globalcontext.GlobalDBs select a).FirstOrDefault().IsBlocking;
+
+                isBlocking = (from a in globalcontext.GlobalDBs
+                                   where a.IsBlocking == true
+                                   select a.IsBlocking).Count() > 0;
+
+
+
                 GlobalContactRepository repository = new GlobalContactRepository(globalcontext);
                 GlobalContact contact = repository.GetGlobalContactByEmailAndTenant(authEmail,tenant);
                 if (contact != null && contact.InActive)

@@ -1,9 +1,9 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -48,11 +48,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             string enviroment = ConfigurationManager.AppSettings.Get(1);
 
-            if (enviroment == "azure app service")
-                LoadBaseTablesForConnection(ConfigurationManager.ConnectionStrings["SystemMainStr"].ConnectionString);
-
-            else
-            {
+         
                 List<GlobalDB> dbList = null;
                 using (TransactionScope scop = TransactionFactory.GetNewTransaction(new TimeSpan(0, 5, 0)))//new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(0, 5, 0)))
                 {
@@ -72,7 +68,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         LoadBaseTablesForConnection(db.DBConnection);
                     }
                 }
-            }
+          
         }
 
         private void LoadBaseTablesForConnection(string connectionStr)
@@ -241,9 +237,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //-------------Transport Mode---------------
             TransportModeRepository transModeRep = new TransportModeRepository(tempContext);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air", LocalName = "אויר" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" , LocalName = "ים" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" , LocalName = "יבשה" }, transModeRep);
 
             //============= Just For Testing ============= 
             if (Testing.General.IsTesting)
@@ -1475,9 +1471,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //-------------Transport Mode---------------
             TransportModeRepository transModeRep = new TransportModeRepository(tempContext);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean" }, transModeRep);
-            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "A", Name = "Air", LocalName = "אויר" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "O", Name = "Ocean", LocalName = "יבשה" }, transModeRep);
+            AddClosedTables.AddTransportModes(new TransportModeDetails() { Id = "I", Name = "Inland", LocalName = "ים" }, transModeRep);
 
             //============= Just For Testing ============= 
             if (Testing.General.IsTesting)

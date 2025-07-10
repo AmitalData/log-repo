@@ -1,4 +1,4 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -144,5 +144,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReceivedByByContactId { get; set; }
         public string ReceivedByPartner { get; set; }
         public string BillToId { get; set; }
+        public bool IsFromCloud { get; set; }
     }
 }

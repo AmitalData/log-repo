@@ -16,9 +16,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Code).IsRequired().HasMaxLength(6).IsUnicode(false);
             this.Property(t => t.ChapterCode).IsRequired().HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.SubChapterCode).IsRequired().HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.Description).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.ChapterDescription).IsRequired().HasMaxLength(1000).IsUnicode(false);
-            this.Property(t => t.SubChapterDescription).IsRequired().HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.Description).IsRequired().HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.ChapterDescription).IsRequired().HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.SubChapterDescription).IsRequired().HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.SearchFields).IsRequired().HasMaxLength(4000).IsUnicode(true);
 
             this.ToTable("HarmonizeCodes");

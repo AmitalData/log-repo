@@ -464,7 +464,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             FieldName: 'Line',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("TaxReportLine.F.Line"),
-            Styles: { width: '50px' },
+            Styles: { width: '50px'},
+            HtmlListComponentName: 'TaxReportListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
@@ -474,7 +476,9 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             FieldName: 'LineTypeCode',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("TaxReportLine.F.LineTypeCode"),
-            Styles: { width: '50px' },
+            Styles: { width: '50px'},
+            HtmlListComponentName: 'TaxReportListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
@@ -772,7 +776,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 450;
-            logWindow.Height = 400;
+            logWindow.Height = 450;
             logWindow.Title = windowTitle;
             logWindow.WindowArgs = windowArgs;
             logWindow.WindowClosed.subscribe((event: any) => {

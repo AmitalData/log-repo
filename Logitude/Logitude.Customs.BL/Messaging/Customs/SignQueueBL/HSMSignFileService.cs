@@ -76,7 +76,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         //task.Result.EnsureSuccessStatusCode();
                         //if (task.Result.IsSuccessStatusCode)//Result.StatusCode == System.Net.HttpStatusCode.OK)
                         responseString = task.Result.Content.ReadAsStringAsync().Result;
-                        Debug.WriteLine(responseString);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(responseString);
                         switch (task.Result.StatusCode)
                         {
 

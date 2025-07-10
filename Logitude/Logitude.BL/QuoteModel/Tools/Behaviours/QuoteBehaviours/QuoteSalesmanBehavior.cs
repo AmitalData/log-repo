@@ -2,7 +2,7 @@
 using Logitude.BL.QuoteModel.Tools.Initializers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Interfaces;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

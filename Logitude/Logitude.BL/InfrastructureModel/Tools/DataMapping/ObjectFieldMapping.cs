@@ -1,7 +1,7 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Text.Json;
@@ -41,6 +41,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DisplayOnly = objectFieldPM.DisplayOnly;
             objectField.FullNameTextCodeId = objectFieldPM.FullNameTextCodeId;
             objectField.FieldName = objectFieldPM.FieldName;
+            objectField.ShortName = objectFieldPM.ShortName;
             objectField.ShortNameTextCodeId = objectFieldPM.ShortNameTextCodeId;
             objectField.HelpTextCodeId = objectFieldPM.HelpTextCodeId;
             objectField.AgentPermissionTypeCode = objectFieldPM.AgentPermissionTypeCode;
@@ -100,6 +101,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.ListTextCodeCode = objectFieldPM.ListTextCodeCode;
             objectField.AdditionalQuerySections = objectFieldPM.AdditionalQuerySections;
             objectField.DisplayInRequiredFields = objectFieldPM.DisplayInRequiredFields;
+            objectField.ObjectFieldDataMapping = objectFieldPM.ObjectFieldDataMapping;
 
             objectField.LeftKey = objectFieldPM.LeftKey;
             objectField.RightKey = objectFieldPM.RightKey;

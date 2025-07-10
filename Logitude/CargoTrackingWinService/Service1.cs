@@ -35,19 +35,19 @@ namespace CargoTrackingWinService
 
                 CargoTrackingServiceHelper cargoTrackingServiceHelper = new CargoTrackingServiceHelper();
 
-                //string sourceConnection = cargoTrackingServiceHelper.BuildConnectionString(ConfigurationSettings.AppSettings["SourceConnection"]);
+                //string sourceConnection = cargoTrackingServiceHelper.BuildConnectionString(ConfigurationManager.AppSettings["SourceConnection"]);
                 //ApplicationInfo.SourceConnection = cargoTrackingServiceHelper.GetMainDBConnectionString(sourceConnection);
                 ApplicationInfo.UpdateCounter = 0;
                 if (ApplicationInfo.Mode!= "Debug")
                 {
-                    ApplicationInfo.SourceConnection = ConfigurationSettings.AppSettings["SourceConnection"];
-                    ApplicationInfo.DestinationConnection = ConfigurationSettings.AppSettings["DestinationConnection"];
-                    string updateWarehouseSleepTime = ConfigurationSettings.AppSettings["UpdateCargoTrackingSleepTime"];
+                    ApplicationInfo.SourceConnection = ConfigurationManager.AppSettings["SourceConnection"];
+                    ApplicationInfo.DestinationConnection = ConfigurationManager.AppSettings["DestinationConnection"];
+                    string updateWarehouseSleepTime = ConfigurationManager.AppSettings["UpdateCargoTrackingSleepTime"];
                     ApplicationInfo.UpdateCargoTrackingSleepTime = (!string.IsNullOrEmpty(updateWarehouseSleepTime) ? Int32.Parse(updateWarehouseSleepTime) : 1) * 60000;
                 }
                
                 
-                string retryBuildWithinHours = ConfigurationSettings.AppSettings["RetryBuildWithinHours"];
+                string retryBuildWithinHours = ConfigurationManager.AppSettings["RetryBuildWithinHours"];
                 ApplicationInfo.RunCargoTrackingImmediately = GetIsBuildCargoTrackingFromConfigurationSettings();
 
 
@@ -67,7 +67,7 @@ namespace CargoTrackingWinService
         private bool GetIsBuildCargoTrackingFromConfigurationSettings()
         {
             bool result = false;
-            var isBuildDWHNow = ConfigurationSettings.AppSettings["RunCargoTrackingImmediately"] != null ? ConfigurationSettings.AppSettings["RunCargoTrackingImmediately"].ToString() : null;
+            var isBuildDWHNow = ConfigurationManager.AppSettings["RunCargoTrackingImmediately"] != null ? ConfigurationManager.AppSettings["RunCargoTrackingImmediately"].ToString() : null;
             if (!string.IsNullOrEmpty(isBuildDWHNow))
             {
                 result = Boolean.Parse(isBuildDWHNow);

@@ -10,7 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.EntityLists;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity;
@@ -373,14 +373,7 @@ namespace Logitude.Customs.Data.Repsitories
                  a.Tenant == tenant &&
                  a.CreateDateTime >= monthAgo
                  select a);
-
-            //var qOpenFrom =
-            //    (
-            //    from a in qOpenLastMonth
-            //    group a by a.IsConnectedToUnifreight into g
-            //    select new { g.Key, tot = g.Count() }
-            //    );
-
+ 
 
             var qLastMonthTotDecStandAlone =
                 (
@@ -1576,7 +1569,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             IQueryable<ExportDeclarationForReport> declarations = (from a in context.Declarations
-                                                                   .Include(a=> a.CustomsTransportMode)
+                                                                   .Include(a=> a.TransportMode)
                                                                    .Include(a=> a.DeclarationType)
                                                                    .Include(a=> a.GovernmentProcedureCurrent)
                                                                    .Include(a=> a.CustomsCountry)
@@ -1605,7 +1598,7 @@ namespace Logitude.Customs.Data.Repsitories
                                                                        CreateDateTime = a.CreateDateTime,
                                                                        TaxationDateTime = a.TaxationDateTime,
                                                                        ExportFile = a.ExportFile,
-                                                                       TransportModeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
+                                                                       TransportModeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
                                                                        CustomFileNo = a.CustomFileNo,
                                                                        DeclarationNumber = a.DeclarationNumber,
                                                                        DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,
@@ -1672,6 +1665,19 @@ namespace Logitude.Customs.Data.Repsitories
 
             return declaration;
         }
+
+		public Declaration GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+			Declaration declaration = (from d in context.Declarations
+                                       join cd in context.CourierDeclarations on d.Id equals cd.DeclarationId
+									   join cm in context.CourierMasters on cd.CourierMasterId equals cm.Id
+									   where d.Tenant == tenant && d.CourierHAWB == hawb && cm.IntegratorCode == IntegratorCode
+									   select d).FirstOrDefault();
+
+			return declaration;
+		}
         public Declaration GetDeclarationAmendmentByAmendmentRequestNumber(int tenant,string requestNumber)
         {
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
@@ -1681,7 +1687,8 @@ namespace Logitude.Customs.Data.Repsitories
                                        select a).FirstOrDefault();
             return declaration;
         }
-    }
+
+	}
 
 
     public class ExportReport1

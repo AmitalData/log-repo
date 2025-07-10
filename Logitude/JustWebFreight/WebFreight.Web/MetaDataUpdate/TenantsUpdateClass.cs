@@ -5,11 +5,13 @@ using System.Linq;
 using System.Transactions;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
@@ -55,6 +57,7 @@ using Microsoft.VisualStudio.Services.Common;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using WebFreight.Web.Helpers.QuoteTemplate;
 using Logitude.BL.CommonDataModel.ExternalService;
+using MetadataUpdateUtility = WebFreight.Web.Helpers.MetadataUpdateUtility;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -81,13 +84,13 @@ namespace WebFreight.Web.MetaDataUpdate
         public static Dictionary<string, WithholdingTaxDeductionType> TenantZeroWithholdingTaxDeductionTypes;
         public static Dictionary<string, ChargesGroup> TenantZeroChargesGroups;
 
-        public static void UpdateDataForTenant(int tenant, string message, bool runOldCode = false)
+        public static void UpdateDataForTenant(int tenant, string message, bool runOldCode = false, bool multiDB = false)
         {
             try
             {
                 runOldUpdateCode = runOldCode;
 
-                if (tenant == 0)
+                if (tenant == 0 || multiDB)
                 {
                     IWebFreightContext context = WebFreightContext.GetContext(tenant);
                     #region
@@ -105,7 +108,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 performanceTimerLogger = new PerformanceTimerLogger();
                                 performanceTimerLogger.Start();
                                 MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
-                                UpdateAllOldModules(updateClass, context);
+                                UpdateAllOldModules(updateClass, context,tenant);
 
                                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Accounting Module ...");
                                 UpdateAccountingModule(context, false);
@@ -247,7 +250,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         case "customs":
                             {
 
-                                UpdateCustomsRelatedModels(context);
+                                UpdateCustomsRelatedModels(context, tenant);
 
                                 break;
                             }
@@ -325,7 +328,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 UpdateQuoteModule(context, true);
                                 break;
                             }
-            
+
                         case "invoice":
                             {
                                 UpdateInvoiceModule(context, true);
@@ -524,7 +527,6 @@ namespace WebFreight.Web.MetaDataUpdate
                                 accountingUpdate.LoadObjectTableHelperControls();
                                 accountingUpdate.LoadMenustables();
                                 accountingUpdate.LoadEventTypes();
-                                accountingUpdate.CreateCounters(tenant);
                                 //Booking
                                 BookingLibUpdateClass bookingLibUpdateClass = new BookingLibUpdateClass();
                                 bookingLibUpdateClass.LoadObjectTablesMetadata(context, false);
@@ -574,6 +576,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
                                 break;
                             }
+                        case "unicloud":
+                            {
+                                UpdateCustomsRelatedModels(context, tenant);
+                                UpdateShipmentAndMasterModules(context, true);
+                                break;
+                            }
                     }
 
 
@@ -585,7 +593,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
                         {
                             GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
-                            GlobalTenant globaltenant = globalTenantRepository.GetGlobalTenantsByTenant(0);
+                            GlobalTenant globaltenant = globalTenantRepository.GetGlobalTenantsByTenant(tenant);
                             globaltenant.Version = globaltenant.Version + 1;
                             globaltenant.LastUpdateDate = DateTime.Now;
                             globalTenantRepository.Update(globaltenant);
@@ -602,7 +610,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     AzureLog.SaveLogsInStorage("(" + message + ")" + " Update Tenant 0 Elapsed Time : " + ts.ToString(), "P", DateTime.Now, "", "", 0, null, null, null);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating All closed tables history ...");
-                    TableLastUpdateClass.UpdateAllClosedTablesHistory();
+                    TableLastUpdateClass.UpdateAllClosedTablesHistory(tenant);
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updateing System metadata history ...");
                     TableLastUpdateClass.UpdateSystemMetaDataHistory();
@@ -666,7 +674,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                         TenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                         TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
-                        TenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).GroupBy(d => d.Code+d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+                        TenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).GroupBy(d => d.Code + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                         TenantZeroRanks = rankRepository.GetRanks(0).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                         TenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).GroupBy(d => d.Code + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                         TenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
@@ -728,7 +736,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 {
                     return reader.ReadToEnd();
                 }
-           }
+            }
         }
         static string GetCurrentGitBranch()
         {
@@ -740,7 +748,7 @@ namespace WebFreight.Web.MetaDataUpdate
             string output = RunGitCommand("config user.name");
             return output.Trim();
         }//
-       private static void UpdateCustomsRelatedModels(IWebFreightContext context)
+        private static void UpdateCustomsRelatedModels(IWebFreightContext context, int tenant = 0)
         {
             string message = "";
             try
@@ -755,8 +763,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
             }
 
-         //   WriteLogMessage(message);
+
+
+
+
             AzureLog.SaveLogsInStorage(message, "L", DateTime.Now, "", "", 0, null, null, null);
+            CustomUpdate updateClass = new CustomUpdate();
 
             try
             {
@@ -792,110 +804,109 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
                 else
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Infrastructure Module ...");
-                    inframodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Infrastructure Module ...");
+                    inframodelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",InfrastructureModelUpdateClass");
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating System Logs Module ...");
-                    systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, false);
+                    systemLogsModelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",MasterModelUpdateClass");
 
+
+                    //NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables ...");
+                  //  metaDataUpdateClass.LoadUpdateTenantZero(context,false, tenant: tenant);
+
+
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Common Module ...");
-                    commonmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                    commonmodelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",CommonDataModelUpdateClass");
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Global Module ...");
-                    globalmodelUpdateClass.LoadObjectTablesMetadata(context, false);
+                    globalmodelUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",GlobalModelUpdateClass");
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Updating Business Infrastructure Module ...");
-                    businessInfraUpdateClass.LoadObjectTablesMetadata(context, false);
+                    businessInfraUpdateClass.LoadObjectTablesMetadata(context, false, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",InfrastructureUpdateClass");
 
-                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables for other modules ...");
-                    metaDataUpdateClass.LoadUpdateTenantZero(context, false);
+                    //for tips? 
+                    /*NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables for other modules ...");
+                    metaDataUpdateClass.LoadUpdateTenantZero(context, false,tenant);*/
 
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables for customs modules ...");
-                    customUpdate.LoadObjectTablesMetadata(context, true);
+                    customUpdate.LoadObjectTablesMetadata(context, true, tenant);
                     performanceTimerLogger.LogMessage("Generated" + ",CustomsUpdateClass");
 
                 }
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading cuorier tables ...");
-                ForCourier();
+                ForCourier(tenant);
 
 
-                CustomUpdate updateClass = new CustomUpdate();
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading closed tables ...");
                 updateClass.UpgradeClosedTablesForTenantZero();
-
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object tables ...");
-                updateClass.LoadUpdateTenantZero(context);
-                //updateClass.LoadOtherFields(context);
-                //updateClass.loadQueries();
-                //updateClass.loadScreens();
-                //updateClass.LoadObjectTableTabs();
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading object table helper controls ...");
-                updateClass.LoadObjectTableHelperControls();
+
+
+                updateClass.LoadUpdateTenantZero(context, tenant);
 
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading menus tables ...");
-                updateClass.LoadMenustables();
+                updateClass.LoadMenustables(tenant);
                 // updateClass.LoadEventTypes();
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Loading transport mode & remaining closed tables ...");
-                updateClass.FillTransportModeTable();
-                updateClass.FillTapagTypeTable();
+                updateClass.FillTransportModeTable(tenant);
+                updateClass.FillTapagTypeTable(tenant);
 
 
-                updateClass.FillCustomsRequestsSheetStatusTable();
-                updateClass.FillCustomsNotificationDefinitions();
+                updateClass.FillCustomsRequestsSheetStatusTable(tenant);
+                updateClass.FillCustomsNotificationDefinitions(tenant);
 
-                updateClass.FillCustomsInterfaceSendOptions();
-                updateClass.FillSchedulerProcedure();
-                updateClass.FillCustomsInterfaceManagements();
+                updateClass.FillCustomsInterfaceSendOptions(tenant);
+                updateClass.FillSchedulerProcedure(tenant);
+                updateClass.FillCustomsInterfaceManagements(tenant);
 
 
-                updateClass.FillAssigneeNotificationTypeTable();
-                updateClass.FillLastReleaseFromWarehouseTable();
-                updateClass.FillVehicleStatusTable();
-                updateClass.FillVehicleSafetyAccessoryInstallationTypeTable();
-                updateClass.FillCustomerIdentifyType();
-                updateClass.FillCustomsVerificationStatusTypes();
-                updateClass.FillSignatureTypeTable();
-                updateClass.FillCertificateStatus();
-                updateClass.FillAccumalationStateTable();
-                updateClass.FillStorageStatus();
-                updateClass.FillMAWBTypeTable();
-                updateClass.FillCourierCustomStatus();
-                updateClass.FillManifestCargoStatusTable();
-                updateClass.FillAcceptanceStatus();
-                updateClass.FillMamanStatus();
-                updateClass.FillPendingErrorPlaceTable();
-                //updateClass.FillCourierDeclarationStatus();
-                //updateClass.FillCourierManifestStatus();
-                //updateClass.FillCourierPaymentStatus();
-                updateClass.FillMamanSpecialActionTable();
-                updateClass.FillMamanSpecialActionStatusTable();
-                updateClass.FillCourierPendingReasonTable();
-            updateClass.FillContainerizationStatusCodeTable();
-            updateClass.FillAmedmentTypeTable();
-            updateClass.FillCustomsDocumentUploadTable();
-           
-            updateClass.FillPointerLevel();
+                updateClass.FillAssigneeNotificationTypeTable(tenant);
+                updateClass.FillLastReleaseFromWarehouseTable(tenant);
+                updateClass.FillVehicleStatusTable(tenant);
+                updateClass.FillVehicleSafetyAccessoryInstallationTypeTable(tenant);
+                updateClass.FillCustomerIdentifyType(tenant);
+                updateClass.FillCustomsVerificationStatusTypes(tenant);
+                updateClass.FillSignatureTypeTable(tenant);
+                updateClass.FillCertificateStatus(tenant);
+                updateClass.FillAccumalationStateTable(tenant);
+                updateClass.FillStorageStatus(tenant);
+                updateClass.FillMAWBTypeTable(tenant);
+                updateClass.FillCourierCustomStatus(tenant);
+                updateClass.FillManifestCargoStatusTable(tenant);
+                updateClass.FillAcceptanceStatus(tenant);
+                updateClass.FillMamanStatus(tenant);
+                updateClass.FillPendingErrorPlaceTable(tenant);
+                updateClass.FillMamanSpecialActionTable(tenant);
+                updateClass.FillMamanSpecialActionStatusTable(tenant);
+                updateClass.FillCourierPendingReasonTable(tenant);
+                updateClass.FillContainerizationStatusCodeTable(tenant);
+                updateClass.FillAmedmentTypeTable(tenant);
+                updateClass.FillCustomsDocumentUploadTable(tenant);
 
-           
-            updateClass.FillStorageStatusTable();
+                updateClass.FillPointerLevel(tenant);
 
-            updateClass.FillPhysicalCheckCode();
-            updateClass.FillToggle();
-            updateClass.FillFacilitationType();
-            updateClass.FillContainerizationHataraStatus();
-            updateClass.FillOcrStatusTable();
+
+                updateClass.FillStorageStatusTable(tenant);
+
+                updateClass.FillPhysicalCheckCode(tenant);
+                updateClass.FillToggle(tenant);
+                updateClass.FillFacilitationType(tenant);
+                updateClass.FillContainerizationHataraStatus(tenant);
+                updateClass.FillOcrStatusTable(tenant);
+                updateClass.FillSIIRequestStatusTable(tenant);
+
 
 
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Exiting function with Exception");
+                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Exiting function with Exception");
                 throw ex;
             }
 
@@ -946,7 +957,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                 Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
 
-                Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
+                Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).GroupBy(d => d.Code + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
 
                 Dictionary<string, EventType> tenantZeroEventTypes;
 
@@ -1209,7 +1220,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
         }
-         private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
+        private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             try
             {
@@ -1541,7 +1552,7 @@ namespace WebFreight.Web.MetaDataUpdate
             }
         }
 
-        private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context)
+        private static void UpdateAllOldModules(MetaDataUpdateClass updateClass, IWebFreightContext context,int tenant=0)
         {
             try
             {
@@ -1742,12 +1753,14 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
         }
-        private static void ForCourier()
-        {            
+        private static void ForCourier(int tenant = 0)
+        {
             try
             {
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+
                 GlobalDBRepository globalDbRep = new GlobalDBRepository();
-                var db = globalDbRep.GetGlobalDBs().First();
+                var db = globalDbRep.GetGlobalDBById(tenant.ToString());
                 var commonDataContext = new CommonDataContext(DatabaseInitializer.GetConnection(db.DBConnection));
 
                 MetaDataUpdateClass.CustomsInterfaces(commonDataContext);//courier
@@ -1856,14 +1869,14 @@ namespace WebFreight.Web.MetaDataUpdate
             }
 
         }
-        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false)
+        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false, int tenant = 0)
         {
             try
             {
-                ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);
-                ObjectTableQuery objectTabelQuery = new ObjectTableQuery(0);
-                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(0);
-                TextCodeQuery textCodeQuery = new TextCodeQuery(0);
+                ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(tenant);
+                ObjectTableQuery objectTabelQuery = new ObjectTableQuery(tenant);
+                ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
+                TextCodeQuery textCodeQuery = new TextCodeQuery(tenant);
                 List<ObjectTable> ObjectTableList = null;
                 if (includeCustoms)
                 {
@@ -1892,7 +1905,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 foreach (ObjectTable objectTable in ObjectTableList)
                 {
-                    if(objectTable.DBTableName == "CustomerTenantAccessStatusTypes")
+                    if (objectTable.DBTableName == "CustomerTenantAccessStatusTypes")
                     {
                     }
                     if (objectTable.DBTableName == "ShipmentStoragePricings")
@@ -1926,7 +1939,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                     if (objectTable.IsClosed && objectTable.CacheOnClient)
                     {
-                        var data = TableQueryReflector.GetTableListData(objectTable.Name);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
+                        var data = TableQueryReflector.GetTableListData(objectTable.Name,0,null,tenant);//TenantsUpdateClass.GetDataFromCloseTable(objectTable.Name);
                         if (data != null)
                         {
                             try
@@ -2022,7 +2035,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 }
 
                 objectTabelRepository.SubmitChanges();
-                TableLastUpdateClass.UpdateSystemMetaDataHistory();
+               TableLastUpdateClass.UpdateSystemMetaDataHistory();
 
             }
             catch (Exception ex)
@@ -2085,8 +2098,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public static byte[] CompressionFileData(string fileName, byte[] fileData)
         {
-            if (ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage == 1)
-                ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            if (ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage == 1)
+                ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage = 437;
             MemoryStream outputMemStream = new MemoryStream();
             ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
@@ -2095,7 +2108,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             var newEntry = new ZipEntry(fileName + ".json");
             newEntry.DateTime = DateTime.Now;
-            ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            ICSharpCode.SharpZipLib.Zip.ZipStrings.CodePage = 437;
 
             zipStream.PutNextEntry(newEntry);
 
@@ -2973,7 +2986,9 @@ namespace WebFreight.Web.MetaDataUpdate
                     }
 
 
-                if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.ObjectTableId))
+
+                    if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.ObjectTableId))
+
                     {
                         //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
                         //updatedEntityStatus.Name = entityStatus.Name;
@@ -3000,7 +3015,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             Id = IdCounter.GetNumber("EntityStatus", tenant).ToString(),
                         };
                         entityStatusRepository.Add(newEntityStatus);
-                    currentTenantEntityStatus.Add(newEntityStatus.Code + newEntityStatus.ObjectTableId, newEntityStatus);
+                        currentTenantEntityStatus.Add(newEntityStatus.Code, newEntityStatus);
                     }
 
                 }
@@ -3034,8 +3049,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     if (tenantZeroEntityStatu != null)
                     {
 
-					if (currentTenantEntityStatus.Keys.Contains(tenantZeroEntityStatu.Code + tenantZeroEntityStatu.ObjectTableId))
-						currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code+ tenantZeroEntityStatu.ObjectTableId];
+                        currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code];
                     }
 
 

@@ -213,6 +213,12 @@ import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Cus
 import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 import { TreeComponent } from './Components/LogitudeComponents/tree';
+import { NLogSettingsComponent } from './Components/Maintenance/NLogSettingsComponent';
+import { CloseSaveButtonsComponent } from './Components/LogitudeComponents/CloseSaveButtonsComponent';
+import { GeneralLockComponent } from './Components/Maintenance/GeneralLockComponent';
+import { GeneralLockListTemplate } from './Components/Templates/GeneralLockListTemplate';
+import { SearchListDDLDirective } from './Directives/SearchListDDL/SearchListDDLDirective';
+import { SearchListDDLComponent } from './Directives/SearchListDDL/SearchListDDLComponent';
 
  //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives = [
@@ -225,6 +231,7 @@ export const Directives = [
     FloatEndDirective,
     TextAlignStart,
     TextAlignEnd,
+    SearchListDDLDirective,
 ];
 export const Pipes = [
     NumbersPipe,
@@ -298,6 +305,7 @@ export const ControlsComponents = [
     LogFooterComponent,
     TipsComponent,
     CacheLogComponent,
+    NLogSettingsComponent,
     ImageComponent,
     LogTabsComponent,
     LogBooleanComponent,
@@ -338,7 +346,8 @@ export const ControlsComponents = [
     OnUpdateDocumentResultComponent,
     MonthpickerComponent,
     DataProviderFieldsNestedList,
-    SatisfactionSurveyComponent
+   CloseSaveButtonsComponent,
+   GeneralLockListTemplate
 ];
 export const Components = [
     RootComponent,
@@ -435,6 +444,9 @@ export const Components = [
     GridScreenSectionComponent,
     AddEditChildEntityComponent,
     NewCustomObjectComponent,
+    GeneralLockComponent,
+    SearchListDDLComponent,
+
  ];
  
 export class ModuleDeclarations {
@@ -495,6 +507,8 @@ export class ModuleDeclarations {
             case 'StimulsoftViewerComponent': { myResult = StimulsoftViewerComponent; break; }
             case 'TipsComponent': { myResult = TipsComponent; break; }
             case 'CacheLogComponent': { myResult = CacheLogComponent; break; }
+            case 'NLogSettingsComponent': { myResult = NLogSettingsComponent; break; }
+
             case 'ChooseUserComponent': { myResult = ChooseUserComponent; break; }
 
             case 'ChooseDatesComponent': { myResult = ChooseDatesComponent; break; }
@@ -566,11 +580,16 @@ export class ModuleDeclarations {
             case 'GridScreenSectionComponent': { myResult = GridScreenSectionComponent; break; }
             case 'AddEditChildEntityComponent': { myResult = AddEditChildEntityComponent; break; }
             case "NewCustomObjectComponent": { myResult = NewCustomObjectComponent; break; }
+            case "SearchListDDLComponent": { myResult = SearchListDDLComponent; break; }
             
              case 'SatisfactionSurveyComponent': {
                 myResult = SatisfactionSurveyComponent;
                 break;
             }
+            case 'DataProviderFieldsNestedList': { myResult = DataProviderFieldsNestedList; break; }
+            case "GeneralLockComponent": { myResult = GeneralLockComponent; break; }
+            case "GeneralLockListTemplate": { myResult = GeneralLockListTemplate; break; }
+
         }
  
         return myResult;

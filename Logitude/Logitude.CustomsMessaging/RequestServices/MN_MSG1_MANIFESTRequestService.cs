@@ -1,7 +1,7 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.RequestServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
@@ -458,8 +458,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!string.IsNullOrEmpty(declarationConsignmentConsigneeAddress?.Line?.Value) && declarationConsignmentConsigneeAddress.Line.Value.Length > 70)
             {
                 declarationConsignmentConsigneeAddress.Line.Value = declarationConsignmentConsigneeAddress.Line.Value.Substring(0, 70);
+                declarationConsignmentConsigneeAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsigneeAddress.Line.Value, _forbiddenSigns);
             }
-            declarationConsignmentConsigneeAddress.Line.Value = _ForbiddenSignsUtil.ReplaceForbiddenChars(declarationConsignmentConsigneeAddress.Line.Value, _forbiddenSigns);
 
             declarationConsignmentConsigneeAddressList.Add(declarationConsignmentConsigneeAddress);
             declarationConsignmentConsignee.Address = declarationConsignmentConsigneeAddressList.ToArray();

@@ -31,9 +31,9 @@ using Unifreight.BL.EntityPMs.UGenerated;
 using Logitude.Customs.BL.Validators;
 using System.Data.Entity.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.LogitudeClient.DeclarationErrorPointer;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.CustomsMessaging.Common.ResponseData;
@@ -1927,29 +1927,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID, int tenant) // moran 3.1.17 - AMI-58876
-        {
-            var setting = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
-                var cntxt = AmitalContext.GetContext(tenant);
-                var myGDFDATAQueryService = new GDFDATAQueryService(cntxt);
-
-                if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-                {
-                    return ("");
-                }
-
-                GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-                if (myGDFDATAPM == null)
-                {
-                    return ("");
-                }
-                return (myGDFDATAPM.DEFDATA);
-            }
-            return ("");
-        }
-
+ 
         public override void InitializeSettings() // mohammad 1-3-2017 to initialize properties and other settings from a generated controller.
         {
             this.LoadSupplierInvoicesWithItems = false;
@@ -2079,10 +2057,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 // get all declaration Customs Document
                 var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
- 
+
                 var customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
 
- 
+
                 //// determine how many supplier invoices documents had been successfully sent to the mekhes
                 //int sentSupplierInvoices = customsDocumentPMList.Where(document => (document.DocumentTypeCode == "380" || document.DocumentTypeCode == "325") && document.DocumentStatusCode == "1").Count();
 
@@ -2096,8 +2074,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 //declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
                 declarationReadyForSending = myCustomsDocumentQueryService.checkIfExistTicketsForAllSupplierInvoice(declarationPM);
 
-                if (declarationReadyForSending && declarationPM.ProcedureCurrentCode == "1000041")
-                 {
+                if (declarationReadyForSending)
+                {
                     if (declarationPM.ProcedureCurrentCode == "1000041")
                     {
                         bool containsAllCodes = new List<string> { "IL_1003", "IL_506", "IL_1050" }
@@ -2119,16 +2097,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
                                 declarationReadyForSending = false;
                             }
                         }
-                    }
+                    }                   
+                    //else
+                    //{
+                    //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
+                    //}
+                    /* if need to check for every invoice, the relation between document and invoice is
+                     * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
                 }
-                else
-                {
-                    //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine($"sentSupplierInvoices: {sentSupplierInvoices} less than declarationSupplierInvoiceCount: {declarationSupplierInvoiceCount}");
-                }
-                /* if need to check for every invoice, the relation between document and invoice is
-                 * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
-            }
-
+            } 
             return declarationReadyForSending;
         }
 
@@ -2403,7 +2380,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                           AmendmentissueDate = rec.AmendmentissueDate,
                           IsAmendment = rec.IsAmendment,
                           AmedmentType = rec.AmedmentType,
-                          AmendmentStatusName = j == null ? "" : j.Name
+                          AmendmentStatusName = j.Name
                       }
                   ).ToList();
             }
@@ -2429,7 +2406,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                         AmendmentissueDate = rec.AmendmentissueDate,
                         IsAmendment = rec.IsAmendment,
                         AmedmentType = rec.AmedmentType,
-                        AmendmentStatusName = j == null ? "" : j.LocalName
+                        AmendmentStatusName = j == null ? null : j.LocalName
                     }
                 ).ToList();
             }
@@ -2592,6 +2569,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
 				declarationPMs.Add(declarationPM);
 			}
 			return declarationPMs;
+		}
+		public DeclarationPM GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
+		{
+			Declaration declaration = this.repository.GetDeclarationsByHawbAndIntegratore(tenant, hawb, IntegratorCode);
+			DeclarationDataMapping mappings = new DeclarationDataMapping();
+			DeclarationPM declarationPM = new DeclarationPM();
+			if (declaration != null)
+			{
+				mappings.CustomPOCOToPM(declarationPM, declaration);
+				mappings.POCOToPM(declarationPM, declaration);
+			}
+			return declarationPM;
 		}
 	}
 

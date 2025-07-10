@@ -8,10 +8,10 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -768,7 +768,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
                         CustomerURL = entityPM.CustomerURL,
                         IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid,
-                    };
+						MinutsTimeOutSession = entityPM.MinutsTimeOutSession,
+
+					};
 
                     if (entityPM.PaymentFailure)
                     {
@@ -1020,9 +1022,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool MainAdditionalPackageApplied { get; set; }
         public bool IsContainerTrackingPrepaid { get; set; }
         public string CustomerURL { get; set; }
+		public int? MinutsTimeOutSession { get; set; }
 
 
-        private List<string> packagesCodes_PK;
+		private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK
         {
             get

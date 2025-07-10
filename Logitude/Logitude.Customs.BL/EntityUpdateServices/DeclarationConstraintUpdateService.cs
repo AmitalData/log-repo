@@ -45,8 +45,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void OnUpdating(DeclarationConstraintPM entityPM)
         {
-            //var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            //if (setting.IsConnectedToUniFreight)
+ 
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
             DeclarationPM declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationID, false, false);
             if(declarationPM!=null && declarationPM.IsConnectedToUnifreight)

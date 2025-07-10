@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ServiceModel.DomainServices.Server;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
@@ -40,6 +40,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsAutoComplete { get; set; }
         public string SortingByObjectField { get; set; }
         public string DBTableName { get; set; }
+        public string DBTableShortName { get; set; }
         public int CustomFieldsCount { get; set; }
         public bool HasCustomFields { get; set; }
         public bool InActive { get; set; }
@@ -111,5 +112,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         [ForeignKey("FullNameTextCodeId")]
         public virtual TextCode FullNameTextCode { get; set; }
         public bool AvailableInDocumentTypes { get; set; }
+		public bool IsLock { get; set; }
+		public string RelatedEntity { get; set; }
+		public string ThisKey { get; set; }
+		public string RelatedKey { get; set; }
+
+        public bool? ShowFastSearch { get; set; }
     }
 }

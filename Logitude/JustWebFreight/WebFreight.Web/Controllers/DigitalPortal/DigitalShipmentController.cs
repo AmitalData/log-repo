@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -16,7 +16,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using System.Data.Entity;
 using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.SystemLogs;

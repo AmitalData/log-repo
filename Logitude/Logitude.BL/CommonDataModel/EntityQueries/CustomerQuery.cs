@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.DataContracts;
@@ -17,7 +17,7 @@ using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using System.Data.Entity.Core.Objects;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityDws;
 using Logitude.Server.Tools;
 using System.Transactions;
@@ -215,6 +215,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                       EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                       SendingInterestReport = a.Card.SendingInterestReport,
+                                      ExternalSystem = a.Card.ExternalSystem,
+                                      IsAutonomy = a.Card.IsAutonomy
+
                                   },
 
                               }).FirstOrDefault();
@@ -389,6 +392,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                   EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                   SendingInterestReport = a.Card.SendingInterestReport,
+                                  ExternalSystem = a.Card.ExternalSystem,
+                                  IsAutonomy = a.Card.IsAutonomy
+
                               },
 
                           }).FirstOrDefault();
@@ -4498,6 +4504,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
                                          EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                          SendingInterestReport = a.Card.SendingInterestReport,
+                                         ExternalSystem = a.Card.ExternalSystem,
                                      },
 
                                  }).FirstOrDefault();

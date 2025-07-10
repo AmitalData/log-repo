@@ -140,16 +140,24 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.ExportFile = containerizationExportFiles[0];
                 }
                 var containerizationImporters = containerizationRepository.GetContainerizationImporters(entityPM.Tenant, entityPM.ConnectedDeclarations);
-                if (containerizationImporters.Count > 1)
+
+                var distinctImporters = containerizationImporters
+                .Select((c, i) => new { Card = c, Key = c?.Id ?? $"__null_{i}" })
+                .GroupBy(x => x.Key)
+                .ToList();
+
+                if (distinctImporters.Count == 1)
+                {
+                    var localName = distinctImporters.FirstOrDefault()?.FirstOrDefault()?.Card?.LocalName;
+                    if (!string.IsNullOrWhiteSpace(localName))
+                    {
+                        entityPM.IsMultiCustomers = localName;
+                    }
+                }
+                else if (distinctImporters.Count > 1)
                 {
                     entityPM.IsMultiCustomers = "List";
                 }
-                else
-                {
-                    entityPM.IsMultiCustomers = containerizationImporters[0].LocalName;
-                }
-                 //entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
- 
             }
             
             base.OnUpdating(entityPM, entityPOCO);

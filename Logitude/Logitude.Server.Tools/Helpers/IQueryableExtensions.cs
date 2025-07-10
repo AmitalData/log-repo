@@ -104,7 +104,7 @@ namespace Logitude.Server.Tools.Helpers
 
             resultList = query.ToList();
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("{0} SUM duration {1} seconds ",funcOrQueryName, (DateTime.Now - start).TotalSeconds));
+       NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("{0} SUM duration {1} seconds ",funcOrQueryName, (DateTime.Now - start).TotalSeconds));
 
             return resultList;
 

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Logitude.Accounting.BL</RootNamespace>
     <AssemblyName>Logitude.Accounting.BL</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -18,12 +19,14 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,7 +34,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,35 +58,111 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CsvHelper, Version=30.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
-      <HintPath>..\packages\CsvHelper.30.1.0\lib\net47\CsvHelper.dll</HintPath>
+    <Reference Include="Azure.Core, Version=1.39.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Core.1.39.0\lib\net472\Azure.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Azure.Identity, Version=1.11.3.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\Azure.Identity.1.11.3\lib\netstandard2.0\Azure.Identity.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper, Version=32.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.32.0.3\lib\net48\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Accounting.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Accounting.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Accounting.Def, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Accounting.Def.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.CRM.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.CRM.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Customs.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Customs.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.CustomsMessaging.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.CustomsMessaging.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Infrastructure.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Infrastructure.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Infrastructure.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Infrastructure.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.Server.Tools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.Server.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.SystemLogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Logitude.SystemLogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplog.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Simplog.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplog.Data.Global, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Simplog.Data.Global.dll</HintPath>
+    </Reference>
+    <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Bin\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.0.0\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Identity.Client, Version=4.61.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.4.61.1\lib\net462\Microsoft.Identity.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Identity.Client.Extensions.Msal, Version=4.61.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.Extensions.Msal.4.61.1\lib\netstandard2.0\Microsoft.Identity.Client.Extensions.Msal.dll</HintPath>
     </Reference>
     <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
+      <HintPath>..\packages\NetCommonHelper.1.0.9\lib\net472\NetCommonHelper.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.7.6.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.7.6.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.7.6.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.7.6.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.24\lib\net461\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\WindowsAzure.ServiceBus.3.4.5\lib\net45-full\Microsoft.ServiceBus.dll</HintPath>
+      <HintPath>..\packages\WindowsAzure.ServiceBus.7.0.1\lib\net462\Microsoft.ServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
@@ -99,11 +178,21 @@
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
     </Reference>
     <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\Bin\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="Stimulsoft.Report, Version=2015.1.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -113,39 +202,69 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ClientModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ClientModel.1.0.0\lib\netstandard2.0\System.ClientModel.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.7.6.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Linq.Async, Version=4.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.Async.4.0.0\lib\net461\System.Linq.Async.dll</HintPath>
+    <Reference Include="System.IO.FileSystem.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.AccessControl.5.0.0\lib\net461\System.IO.FileSystem.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Async, Version=6.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Async.6.0.1\lib\net48\System.Linq.Async.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Memory.Data, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.Data.8.0.0\lib\net462\System.Memory.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.ProtectedData, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.ProtectedData.8.0.0\lib\net462\System.Security.Cryptography.ProtectedData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Text.Encoding.CodePages, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.6.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    <Reference Include="System.Text.Encoding.CodePages, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.8.0.0\lib\net462\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.8.0.0\lib\net462\System.Text.Json.dll</HintPath>
+    <Reference Include="System.Text.Json, Version=8.0.0.3, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.3\lib\net462\System.Text.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -237,6 +356,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\IntegrityCheckStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\InterestEntityTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\InterestReportStatuseDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InvoiceApiStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InvoiceApiStepDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalStatusTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\JournalTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OpenFormatReportStatusDetails.Generated.cs" />
@@ -255,24 +376,35 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\WithholdingTaxDeductionTypeDetails.cs" />
     <Compile Include="CloseTables\EnumGenerated\AccountingEntityStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ARPaymentChequeStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\AutomaticExternalReconcileMethodStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\AutomaticReconcileStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\BankPageEntryTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\CalculatedChartsLineTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ChartOfAccountsTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GLAccountTotalDateTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\GLAccountTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\IntegrityCheckStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InterestEntityTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\InterestReportStatuseStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InvoiceApiStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\InvoiceApiStepStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalStatusTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\JournalTypeStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\OpenFormatReportStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\PaymentChequeStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\PeriodTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileExternalPageStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\ReconcileMethodStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\RevaluationStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\RevenueExpenseTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxDeductionReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxReportLineStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxReportLineTransmitStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\EnumGenerated\TaxReportLineTypeStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\TaxReportStatusStruct.Generated.cs" />
     <Compile Include="CloseTables\EnumGenerated\VatReportStatusStruct.Generated.cs" />
+    <Compile Include="CloseTables\InvoiceApiStatusEnum.cs" />
+    <Compile Include="CloseTables\InvoiceApiStepEnum.cs" />
     <Compile Include="CloseTables\GLAccountTotalDateTypeEnum.cs" />
     <Compile Include="CoreBL\AccountBalanceByDateCodeService.cs" />
     <Compile Include="CoreBL\AccountBalanceService.cs" />
@@ -485,6 +617,10 @@
     <Compile Include="EntityDataMappings\ARPaymentChequeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentChequeStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\ARPaymentsJournalDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_ItemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_PaymentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_PaymentItemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Aur_TimesheetDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticExternalReconcileMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticReconcileDataMapping.cs" />
     <Compile Include="EntityDataMappings\AutomaticReconcileMethodDataMapping.cs" />
@@ -509,6 +645,7 @@
     <Compile Include="EntityDataMappings\ChartOfAccountsTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ChequeCounterSerialDataMapping.cs" />
     <Compile Include="EntityDataMappings\CopyFromTenant0DataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerDebtNotificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalPageAdditionalDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalReconciliationDataMapping.cs" />
     <Compile Include="EntityDataMappings\ExternalReconciliationLineDataMapping.cs" />
@@ -522,6 +659,10 @@
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentChequeStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ARPaymentsJournalDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_ItemDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_PaymentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_PaymentItemDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\Aur_TimesheetDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticExternalReconcileMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticReconcileDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\AutomaticReconcileMethodDataMapping.Generated.cs" />
@@ -545,6 +686,7 @@
     <Compile Include="EntityDataMappings\Generated\ChartOfAccountsTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ChequeCounterSerialDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CopyFromTenant0DataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerDebtNotificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalPageAdditionalDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ExternalReconciliationLineDataMapping.Generated.cs" />
@@ -573,6 +715,9 @@
     <Compile Include="EntityDataMappings\Generated\InterestReportsConnectInvoiceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestReportStatuseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterestTransactionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InvoiceApiCommunicationLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InvoiceApiStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InvoiceApiStepDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalActionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalAdditionalDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\JournalDataMapping.Generated.cs" />
@@ -606,7 +751,8 @@
     <Compile Include="EntityDataMappings\Generated\TaxReportLineTransmitStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaxReportLineTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TaxReportStatusDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\TaxWithholdingAssessingOfficeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaxWithholdingAssessOfficeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantIdleStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TestEntityDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\UserDefinedReportDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\VatReportStatusDataMapping.Generated.cs" />
@@ -635,6 +781,9 @@
     <Compile Include="EntityDataMappings\InterestReportsConnectInvoiceDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestReportStatuseDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterestTransactionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InvoiceApiCommunicationLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InvoiceApiStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InvoiceApiStepDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalActionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalAdditionalDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\JournalDataMapping.cs" />
@@ -670,6 +819,7 @@
     <Compile Include="EntityDataMappings\TaxReportLineTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaxReportStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\TaxWithholdingAssessOfficeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantIdleStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\TestEntityDataMapping.cs" />
     <Compile Include="CoreBL\AccountingValidationContextServiceProvider.cs" />
     <Compile Include="EntityDataMappings\UserDefinedReportDataMapping.cs" />
@@ -689,6 +839,7 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingIntegrityCheckQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingCompanyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingEntityQueryService.cs" />
@@ -713,6 +864,10 @@
     <Compile Include="EntityQueryServices\Generated\AccountingNoteQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentChequeStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ARPaymentsJournalQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_ItemQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_PaymentItemQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_PaymentQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\Aur_TimesheetQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\AutomaticExternalReconcileMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\BankPageEntryTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CalculatedChartsLineTypeQueryService.Generated.cs" />
@@ -720,6 +875,7 @@
     <Compile Include="EntityQueryServices\Generated\CalculatedChartsOfAccountsLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ChequeCounterSerialQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CopyFromTenant0QueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomerDebtNotificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalPageAdditionalDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationLineQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ExternalReconciliationQueryService.Generated.cs" />
@@ -743,6 +899,9 @@
     <Compile Include="EntityQueryServices\Generated\InterestReportsConnectInvoiceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestReportStatuseQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InterestTransactionQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InvoiceApiCommunicationLogQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InvoiceApiStatusQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InvoiceApiStepQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalAdditionalDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalExternalReconcileQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\JournalMoreDataQueryService.Generated.cs" />
@@ -765,6 +924,7 @@
     <Compile Include="EntityQueryServices\Generated\TaxReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaxReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TaxWithholdingAssessOfficeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TenantIdleStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\UserDefinedReportQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\VatReportStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\WithholdingTaxDeductionTypeQueryService.Generated.cs" />
@@ -816,9 +976,22 @@
     <Compile Include="EntityUpdateServiceExt\GLAccountUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\JournalVoidUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServiceExt\PaymentChequeUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InvoiceApiCommunicationLogUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InvoiceApiStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InvoiceApiStepUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\AccountingEntityJournalUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingIntegrityCheckUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_ItemUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_PaymentItemUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_PaymentUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Aur_TimesheetUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_ItemUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_PaymentItemUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_PaymentUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\Aur_TimesheetUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ChequeCounterSerialUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TenantIdleStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomerDebtNotificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\GLAccountMoreDataUpdateService.cs" />
     <Compile Include="EntityUpdateServices\AccountingNoteUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ARPaymentChequeUpdateService.cs" />
@@ -929,13 +1102,15 @@
     <Compile Include="InterestEntityQueryServices\InterestQueryServises\InterestJournalQueryService.cs" />
     <Compile Include="InterestService\HelperClasses\InterestReportArguments.cs" />
     <Compile Include="InterestService\InterestReportService.CS" />
+    <Compile Include="Interfaces\InvoiceApi\InvoiceApiService.cs" />
     <Compile Include="TestService\BatchTestService.cs" />
     <Compile Include="Utils\AccountingLogger.cs" />
     <Compile Include="Utils\APInvoiceStatusUpdateBatch.cs" />
     <Compile Include="Utils\BanksCCExternalRecoBatch.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
+    <Compile Include="Utils\InvoiceApiQueryBatch.cs" />
     <Compile Include="Utils\ReconcileInProgressCleanupBatch.cs" />
-    <Compile Include="Utils\FutureOpenChequesBatch.cs" />
+     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\GLAccountInterestActivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountInterestDeactivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountMultiToCurrencyBatch.cs" />
@@ -946,6 +1121,7 @@
     <Compile Include="Utils\ReconciliationAfterConversionBatch.cs" />
     <Compile Include="Utils\ReconciliationStageBBatch.cs" />
     <Compile Include="Utils\ReconciliationStageCBatch.cs" />
+    <Compile Include="Utils\Redempt_a_ChequeBatch.cs" />
     <Compile Include="Validators\UserDefinedReportValidator.cs" />
     <Compile Include="Validators\InterestReportValidator.cs" />
     <Compile Include="Validators\AccountingPeriodValidator.cs" />
@@ -1126,11 +1302,15 @@
       <Project>{9ffc5b97-f09a-4eed-a66e-d4160374ae6e}</Project>
       <Name>Logitude.SystemLogs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.XSD\Logitude.XSD.csproj">
+      <Project>{3E75C83F-67C7-4B62-9759-7EA92E16F272}</Project>
+      <Name>Logitude.XSD</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
       <Project>{6D7FFAD2-35B6-4133-8700-CF73E58D0C85}</Project>
       <Name>Simplog.Global.Data</Name>
     </ProjectReference>
@@ -1142,7 +1322,12 @@
   <ItemGroup>
     <Folder Include="TraceEvents\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="app.config" />
     <None Include="CoreBL\Reports\TRailReport Ver2 %28YearTRansfer - CardWithoutActivity%29.xlsx" />
     <None Include="CoreBL\Reports\TrailReportBase - Spreadsheet4.xlsx" />
@@ -1155,6 +1340,7 @@
   <ItemGroup>
     <Content Include="CoreBL\BuildTenant\LedgerTransactionsType.txt" />
     <Content Include="CoreBL\BuildTenant\usp_AccountingStreaming.txt" />
+    <Content Include="readme.txt" />
     <Content Include="StimulsoftDll\Stimulsoft.Report.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -1164,7 +1350,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

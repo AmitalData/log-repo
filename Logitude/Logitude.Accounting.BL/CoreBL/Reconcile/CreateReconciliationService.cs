@@ -57,6 +57,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 myReconciliationLinePM.TransactionId = currLedgerTrans.Id;
                 myReconciliationLinePM.ReconciliationAmount = 
                             currLedgerTrans.AmountToReconcile;
+                myReconciliationLinePM.CurrencyRate = currLedgerTrans.ExchangeRate;
 
                 myReconciliationLinePM.GroupNumber = currLedgerTrans.GroupMatch;
 
@@ -91,7 +92,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccounts.O.LedgerTransactionInProgress", 0, LoggedContactResolver.GetLoggedContactShowLocal(reconciliationPM.Tenant)));
 
                     }
-                    var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
+                     var ledgerTransactionReconciled = CheckAnyLedgerTransactionReconciledByIdList(reconciliationPM);
                     if (ledgerTransactionReconciled)
                     {
                     throw new ApplicationException("GLAccounts.O.MarkedByAnother");

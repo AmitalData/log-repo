@@ -50,7 +50,8 @@ namespace CustomsWorkerRole.Test
 
                          )
                     {
-                        
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Starting Send Email");
+                       
                         _LastSendReqSheetStatistic = DateTime.Now;
                         //LastClacReqSheetStatistic = DateTime.Now;
                         var reqSheetStatisticClass = new ReqSheetStatisticClass();
@@ -75,6 +76,7 @@ namespace CustomsWorkerRole.Test
 
         private static void SendIt(Action<string, string> sendEmail)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Start SendIt");
            
             //_LastSendReqSheetStatistic = DateTime.Now;
             var doNotSendEmail = true;
@@ -268,7 +270,7 @@ pordInfo,//24
 TotWithHATARA,//25
 logBoxDocuments//26
             );
-            Debug.WriteLine(val);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(val);
             return val;
         }
 

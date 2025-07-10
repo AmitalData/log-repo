@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
@@ -33,7 +33,7 @@ using Logitude.SystemLogs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.SystemLogs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Configuration;
 using System.Xml.Serialization;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
@@ -56,6 +56,7 @@ using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using System.Runtime.Remoting.Contexts;
+using Logitude.Customs.BL.Messaging.Amital;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -181,10 +182,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             this.entityPM.Id = this.entityPM.Id.PadRight(30, '0');
 
-            //Added by Maheera
-            //this.entityPM.SecurityId = entityPM.Id + System.Web.Security.Membership.GeneratePassword(10, 0);
+   
             Random rnd = new Random();
-            //this.entityPM.SecurityId = entityPM.Id + RandomString(10);
             string com_id = entityPM.Id;        // Length = 30
             string com_md5 = CreateMD5(com_id); // Length = 32 
             string com_short = entityPM.Id.Substring(0,8);
@@ -198,7 +197,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             DocumentsFilingValidating.Validate(theEntityPm);
             DocumentsFilingTracing.Trace(theEntityPm, Poco, isNewEntity);
-            _OnCreateUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant, theEntityPm.Folder);
+            _OnCreateUnifreightFillingMode = BlobFileInfoExt.IsUnifreightFillingModeBase(theEntityPm.Tenant, theEntityPm.Folder, theEntityPm.IsFromCloud);
 
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
@@ -1043,6 +1042,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
              new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
 
+
              if (entityPM.IsUpdateSharedDocument)
             {
                 IQueueService queueservice = new DbQueueService();
@@ -1424,7 +1424,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     FileSize = fileData.Length,
 
                 };
-                if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew))
+                if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew) || (entityPM.IsFromCloud && LogitudeSettings.StorageServiceMode != "db"))
                 {
                     var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
                     if (isnew)
@@ -1512,6 +1512,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 (
                 (!extDocPM.IsHybrid   && LogitudeSettings.IsCostomsDeploy) ||
                 (LogitudeSettings.EnableHybridQueue && (CurrentHybridPartner != null && !CurrentHybridPartner.IsExternalPartner) && (!extDocPM.IsHybrid || (extDocPM.IsAttachment))
+
                  && !extDocPM.NoAddToTasksQueue)  
                  )
             {
@@ -1621,6 +1622,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
                                 //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('HCD', '1', TO_TIMESTAMP('2022-03-06 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-06 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'HCD', '1', '0', 'HCD')
                                 var IsCourierTenant = false;
+                                var isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant).IsConnectedToUniFreight;
                                 try
                                 {
                                     IDICustomsSettingQueryService customsSettingQueryService = ContainerAccessor.Container.Resolve(typeof(IDICustomsSettingQueryService), "DICustomsSettingQueryService", new ParameterOverride("", tenant)) as IDICustomsSettingQueryService;
@@ -1631,18 +1633,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                                 }
                                 bool sendHybridM = true;
-                                if (IsCourierTenant)
+
+                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
                                 {
-                                    if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("HCD", tenant))
-                                    {
-                                        sendHybridM = false;
-                                        if (extDocPM.ExternalEntityName == "CFIFILEM")
-                                        {
-                                            SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
-                                        }
-                                    }
+                                    sendHybridM = false;
+                                    SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);
                                 }
-                                if (sendHybridM)
+
+                                if (sendHybridM && !extDocPM.IsFromCloud)
                                 {
                                     List<QueueTask> queue1Tasks = new List<QueueTask>();
 
@@ -1772,7 +1770,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 <Logitude.Customs.BL.Messaging.Amital.AmitalCommunicationModelBase, Envelope>(
                 amitalCustomFileCommunicationModel, /*myDocumentsFilingPM*/ myEnvelope);
             bool pImmediately = true;
-            var info = myUServerCommunicationService.Send(pImmediately);
+            UServerCommunicationServiceInfoM info = myUServerCommunicationService.Send(pImmediately);
             if (info.GenericResponseObj?.Status !="0" )//&&  !string.IsNullOrWhiteSpace(info.GenericResponseObj?.ErrorDescription))
             {
                 throw new Exception($"Send 2 Urouter ErrorDescription{info.GenericResponseObj?.ErrorDescription}");
@@ -1793,6 +1791,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (documentsFilingMetaDataValueChangeSet != null)
             {
              
+
                 foreach (DocumentsFilingMetaDataValuePM itemPM in documentsFilingMetaDataValueChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)

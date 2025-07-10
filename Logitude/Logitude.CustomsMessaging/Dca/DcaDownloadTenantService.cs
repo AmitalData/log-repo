@@ -179,7 +179,7 @@ namespace Logitude.CustomsMessaging.Dca
                 }
                 else
                 {
-                    Debug.WriteLine("Due Not register in Container: Removing " + rec.Code);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due Not register in Container: Removing " + rec.Code);
                 }
 
                 if(rec.InterfaceManagement.Environment == "Export")
@@ -199,7 +199,7 @@ namespace Logitude.CustomsMessaging.Dca
             //this.IsDcaActive = !(FeatureLocator.HasFeaturePermession("Customs.Declaration", "DCA"));
             string email = AuthenticationUtil.ResolveUserIdentityName(this._CustomsSettingPM.Tenant);
             bool suppressUnifreightDCAServer = SecurityUtility.CheckFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant);
-            Debug.WriteLine($"suppressUnifreightDCAServer={suppressUnifreightDCAServer} ");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"suppressUnifreightDCAServer={suppressUnifreightDCAServer} ");
             return suppressUnifreightDCAServer;
             //return SecurityUtility.CheckContactFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant, email);
         }
@@ -268,7 +268,7 @@ namespace Logitude.CustomsMessaging.Dca
 
                 if (IsAppSettingOn("SuppressDownloadDCA.UntilDateyyyyMMdd"))
                 {
-                    Debug.WriteLine("SuppressDownloadDCA.UntilDateyyyyMMdd");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SuppressDownloadDCA.UntilDateyyyyMMdd");
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace Logitude.CustomsMessaging.Dca
                 restoreWaitingImportService.RestoreWaitingImportSaveInDB();
 
                 sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sb.ToString());
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString()+":"+ "DCAStopwatch");
                 return;
             }
 
@@ -371,12 +371,12 @@ namespace Logitude.CustomsMessaging.Dca
                                         {
 
 
-                                            Debug.WriteLine("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
+                                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
                                             //_totalDownload--;
                                             if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                                             {
                                                 _LastErrordateTime = DateTime.Now;
-                                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("NO MAIN Code (response 2754 of 2750 !!!)  currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
+                                                NetCommonHelper.Logger.DevLog.Instance.WriteError("NO MAIN Code (response 2754 of 2750 !!!)  currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log" + ":" + "DCANotIsRegistered");
                                             }
                                             string myMoreParams = "";
                                             bool myErrorOccurred;
@@ -399,7 +399,7 @@ namespace Logitude.CustomsMessaging.Dca
 
 
                                     bool dcaMessageFileSuccess = DoDcaMessageFile(messageDCA, dcaFile);//exc handler !!
-                                    Debug.WriteLine("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
+                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
                                     LogMessagingUtil.Instance.Clear();
                                 }
                                 catch (Exception e)
@@ -419,8 +419,8 @@ namespace Logitude.CustomsMessaging.Dca
                 //catch (OperationCanceledException e)
                 catch (Exception eee)
                 {
-
-                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, "DCAMulti");
+                  
                 }
                 finally
                 {
@@ -429,7 +429,8 @@ namespace Logitude.CustomsMessaging.Dca
                     {
                         exceptionQueue.ToList().ForEach(e1 =>
                         {
-                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1, "DCAMulti");
+                            
                         });
                     }
                     catch
@@ -469,7 +470,7 @@ namespace Logitude.CustomsMessaging.Dca
                 {
 
 
-                    Debug.WriteLine("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
                     _totalDownload--;
                     continue;
                     //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
@@ -481,7 +482,7 @@ namespace Logitude.CustomsMessaging.Dca
 
                 DoDcaMessageFile(messageDCA, dcaFile);
 
-                Debug.WriteLine("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
                 LogMessagingUtil.Instance.Clear();
 
 
@@ -502,7 +503,7 @@ namespace Logitude.CustomsMessaging.Dca
 
             string searchPattren = "*.*";
             string ourSufix = CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
-            Debug.WriteLine(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
             //searchPattren = "";
             _DcaManager = GetDcaManagr();
             myMoreParams = "";// _DownloadMoreParams;
@@ -525,20 +526,20 @@ out myMessageOut);
             {
                 if (!fileName.ToLower().EndsWith(ourSufix))
                 {
-                    Debug.WriteLine($"{fileName} NOT  our Sufix  !!!!!!!! ");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{fileName} NOT  our Sufix  !!!!!!!! ");
                     MoveUnUseDCAFileToDir(fileName);
                 }
                 else
                 {
                     if (!DCAPrefixIsMapped(fileName))
                     {
-                        Debug.WriteLine($"{fileName} NOT  Mapped in Prefix !!!!!!!! ");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{fileName} NOT  Mapped in Prefix !!!!!!!! ");
                         MoveUnUseDCAFileToDir(fileName);
 
                     }
                     else
                     {
-                        Debug.WriteLine($"{fileName} is Mapped in Prefix ");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"{fileName} is Mapped in Prefix ");
                     }
                 }
             }
@@ -554,7 +555,7 @@ out myMessageOut);
 
         private bool MoveUnUseDCAFileToDir(string fileName)
         {
-            Debug.WriteLine("MoveUnUseDCAFileToDIr " + fileName);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("MoveUnUseDCAFileToDIr " + fileName);
 
             string MoveUnUseDCAFilesToDIr = ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr");
 
@@ -576,15 +577,15 @@ out myMessageOut);
 
             if (ListOfDCAFile.Count() < 1)
             {
-                Debug.WriteLine("After Filter nothing to Download ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("After Filter nothing to Download ");
                 return null;
             }
-            Debug.WriteLine("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
             _totalDownload++;
 
             if (_totalDownload > 50)
             {
-                Debug.WriteLine("Download 50 DCA Files Try Next Tenant ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Download 50 DCA Files Try Next Tenant ");
                 return null;
             }
 
@@ -619,15 +620,15 @@ out myMessageOut);
 
             if (ListOfDCAFile.Count() < 1)
             {
-                Debug.WriteLine("After Filter nothing to Download ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("After Filter nothing to Download ");
                 return null;
             }
-            Debug.WriteLine("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Start List :" + ListOfDCAFile.Count() + " Elapsed:" + _swDownAll.Elapsed);
             _totalDownload++;
 
             if (_totalDownload > 50)
             {
-                Debug.WriteLine("Dowload 50 DCA Files Try Next Tenant ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Dowload 50 DCA Files Try Next Tenant ");
                 return null;
             }
             var my1st = ListOfDCAFile.First();
@@ -711,35 +712,35 @@ out myMessageOut);
                 if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch))
                 //unchanged
                 {
-                    Debug.WriteLine("DCADir unchanged");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir unchanged");
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
                     if (_MyDCAIncomeDirStateM.Dir1stChangedAt.HasValue)
                     {
                         _MyDCAIncomeDirStateM.Dir1stChangedAt = null;
-                        Debug.WriteLine("Last time Dca Dir Changed ,But Now is Equal, Start Work");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Last time Dca Dir Changed ,But Now is Equal, Start Work");
                         return true;
 
                     }
                     if (_MyDCAIncomeDirStateM.NothingChangeCount > 4)
                     {
-                        Debug.WriteLine("Nothing Change But 4 Round Pass Let try Again");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Nothing Change But 4 Round Pass Let try Again");
                         _MyDCAIncomeDirStateM.NothingChangeCount = 0;
                         return true;
                     }
                     _MyDCAIncomeDirStateM.NothingChangeCount++;
-                    Debug.WriteLine("_MyLastAccessFileInDCADirM.LastAllXmlFileInMyBranch == CurrentAllXmlFileInMyBranch ==> Nothing to do FolderNotChange !! for this tenant ;");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("_MyLastAccessFileInDCADirM.LastAllXmlFileInMyBranch == CurrentAllXmlFileInMyBranch ==> Nothing to do FolderNotChange !! for this tenant ;");
                     return false;
                 }
                 else
                 {//
-                    Debug.WriteLine("DCADir Changed ");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir Changed ");
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
                     if (_MyDCAIncomeDirStateM.Dir1stChangedAt.HasValue)
                     {
-                        Debug.WriteLine("DCADir Changed Again !!!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir Changed Again !!!");
                         if (DateTime.Now.Subtract(_MyDCAIncomeDirStateM.Dir1stChangedAt.GetValueOrDefault()) > TimeSpan.FromSeconds(30))
                         {
-                            Debug.WriteLine("but Past 30 sec From 1stChange , Start Work");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("but Past 30 sec From 1stChange , Start Work");
                             _MyDCAIncomeDirStateM.Dir1stChangedAt = null;
                             return true;
                         }
@@ -791,7 +792,7 @@ out myMessageOut);
 
 
             var searchPattren = dcaPrefixName + "*" + CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
-            Debug.WriteLine(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
             //searchPattren = "";
             _DcaManager = GetDcaManagr();
             myMoreParams = "";// _DownloadMoreParams;
@@ -977,8 +978,8 @@ out myMessageOut);
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(currMessagingService))
             {
 
-                Debug.WriteLine("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
-                Debug.WriteLine("Due infinite errors i cancel writing log"); return;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log"); return;
                 //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 //return;
@@ -1090,7 +1091,7 @@ out myMessageOut);
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(crs.InterfaceTypeCode))
             {
 
-                Debug.WriteLine("Due infinite errors i cancel writing log"); return;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log"); return;
                 //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + crs.InterfaceTypeCode);
                 //return;

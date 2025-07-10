@@ -19,6 +19,7 @@ using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.TraceEvents;
 using UnifreightIIG.Common.SubmitTransshipmenDeclarationRequestServiceReference;
 using Logitude.Customs.BL.Utils;
+using Logitude.CustomsMessaging.MessagingServices;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -91,6 +92,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         MyUnifreightEventParam);
 
                 }
+
             }
             base.OnRequestFail(customResponse, requestParams);
         }
@@ -146,6 +148,5 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
         }
-
     }
 }

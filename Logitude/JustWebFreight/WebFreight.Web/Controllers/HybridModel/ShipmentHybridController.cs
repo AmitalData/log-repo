@@ -8,7 +8,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,13 +94,11 @@ namespace WebFreight.Web.Controllers.HybridModel
 
         [System.Web.Http.HttpPost]
         public Response BuildEventsList([FromBody] object[] t)//(int tenant, string shipmentNumber, List<TraceEventPM> eventsList)
-        {
+		{
+			var jsonSerializerSettings = new JsonSerializerSettings();
+			jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
 
-            var jsonSerializerSettings = new JsonSerializerSettings();
-            jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
-
-
-            int tenant = JsonConvert.DeserializeObject<int>(JsonConvert.SerializeObject(t[0]), jsonSerializerSettings);
+			int tenant = JsonConvert.DeserializeObject<int>(JsonConvert.SerializeObject(t[0]), jsonSerializerSettings);
             string shipmentNumber = JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(t[1]), jsonSerializerSettings);
             List<TraceEventPM> eventsList = JsonConvert.DeserializeObject<List<TraceEventPM>>(JsonConvert.SerializeObject(t[2]), jsonSerializerSettings);
 

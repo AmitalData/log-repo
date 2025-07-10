@@ -217,7 +217,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
 
-            Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Response.TookMS:" + Response.TookMS.ToString());
         }
 
 
@@ -316,7 +316,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         {
 
             mess = mess + ":Took:" + _sw.Elapsed.ToString();
-            Debug.WriteLine(mess);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
 
             _sw.Restart();
             //_StringBuilder.AppendLine(mess);
@@ -412,7 +412,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 case GLAccountTotalDateTypeValues.DueDate:
                 case GLAccountTotalDateTypeValues.DocumentDate:
-                case GLAccountTotalDateTypeValues.Accountingdate:
+                case GLAccountTotalDateTypeValues.AccountingDate:
                 case GLAccountTotalDateTypeValues.Tax:
                     {
                         _Param.SearchFields = _SearchByFilter;
@@ -459,7 +459,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var myStatstic4period = qGperiod
                     //.First()  = fail : Sequence contains no elements
                     .FirstOrDefault();
-            Debug.WriteLine("BuildCallBack:" + sw.ElapsedMilliseconds);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("BuildCallBack:" + sw.ElapsedMilliseconds);
             DateTime periodMaxCreateDate = DateTime.Now;
             decimal periodSumLocalAmount = 0;
             decimal periodSumForeignAmount = 0;
@@ -468,7 +468,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             if (myStatstic4period != null)
             {
                 AllCurrencyId = myStatstic4period.AllCurrencyId.ToList();
-                periodMaxCreateDate = myStatstic4period.MaxCreateDate.GetValueOrDefault();
+                periodMaxCreateDate = myStatstic4period.MaxCreateDate ?? DateTime.MinValue;
                 periodSumLocalAmount = myStatstic4period.SumLocalAmount;
                 periodSumForeignAmount = myStatstic4period.SumForeignAmount;
                 periodTotalRowCount = myStatstic4period.Count;
@@ -807,10 +807,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             if (string.IsNullOrWhiteSpace(_Param.DateTypeCode))
             {
-                _Param.DateTypeCode = GLAccountTotalDateTypeValues.Accountingdate;
+                _Param.DateTypeCode = GLAccountTotalDateTypeValues.AccountingDate;
             }
             var myDateTypeCodeList = new List<string>() {
-            GLAccountTotalDateTypeValues.Accountingdate,
+            GLAccountTotalDateTypeValues.AccountingDate,
             GLAccountTotalDateTypeValues.DueDate,
             GLAccountTotalDateTypeValues.DocumentDate
             };

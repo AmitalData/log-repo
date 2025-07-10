@@ -1,6 +1,6 @@
 ﻿using Logitude.Accounting.Data;
 using WebFreight.Web.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile.Utils;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public class ExternalReconciliationExtendedController : ApiController
     {

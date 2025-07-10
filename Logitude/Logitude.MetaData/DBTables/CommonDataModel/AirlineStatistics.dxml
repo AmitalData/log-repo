@@ -19,6 +19,60 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ShipmentId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BookingId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCancelled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AirlinePrefix"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProductName"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Sender"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Direct"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MessagingStatus"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="SourceTenant"
     Type="int">
     <Constraints
@@ -32,23 +86,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ShipmentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="ShipmentLevelCode"
     Type="varchar"
     Size="1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="BookingId"
-    Type="varchar"
-    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -198,8 +238,8 @@
   </Column>
   <Column
     Name="DescriptionOfGoods"
-    Type="varchar"
-    Size="512">
+    Type="nvarchar"
+    Size="1024">
     <Constraints
       Nullable="true" />
   </Column>
@@ -293,46 +333,6 @@
     Name="SearchFields"
     Type="nvarchar"
     Size="1000">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="IsCancelled"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="AirlinePrefix"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ProductName"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Sender"
-    Type="varchar"
-    Size="60">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="Direct"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="MessagingStatus"
-    Type="varchar"
-    Size="60">
     <Constraints
       Nullable="true" />
   </Column>

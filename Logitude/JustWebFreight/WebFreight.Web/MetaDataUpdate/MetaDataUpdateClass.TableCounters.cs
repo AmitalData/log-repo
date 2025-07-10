@@ -1,6 +1,6 @@
 ﻿ using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -127,8 +128,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 //    Parameter2 = "I",
                 //};
 
-
-
                 CounterDefinitionRepository.Add(shipment_Export_Air_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Ocean_Counter);
                 CounterDefinitionRepository.Add(shipment_Export_Inland_Counter);
@@ -139,6 +138,33 @@ namespace WebFreight.Web.MetaDataUpdate
                 //CounterDefinitionRepository.Add(shipment_Domestic_Air_Counter);
                 //CounterDefinitionRepository.Add(shipment_Domestic_Ocean_Counter);
                 //CounterDefinitionRepository.Add(shipment_Domestic_Inland_Counter);
+
+            }
+            #endregion
+
+            #region ShipmentPickUpDelivery Counters
+            if (!zeroCounters.Where(c => c.Code == "SHDV" && c.Tenant == 0).Any())
+            {
+                Counter shipmentDeliveryCounter = new Counter()
+                {
+                    Id = IdCounter.GetNumber("Counter", 0).ToString(),
+                    ObjectTableId = tenantObjectTables.Where(o => o.Name == "ShipmentPickUpDelivery").FirstOrDefault().Id,
+                    Code = "SHDV",
+                    Tenant = 0,
+                    Name = "Shipment Delivery Number",
+                };
+
+                CounterDefinition shipmentDelivery_CounterDef = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = shipmentDeliveryCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "DLV",
+                };
+
+                CounterRepository.Add(shipmentDeliveryCounter);
+                CounterDefinitionRepository.Add(shipmentDelivery_CounterDef);
             }
             #endregion
 
@@ -1315,6 +1341,47 @@ namespace WebFreight.Web.MetaDataUpdate
 
             return 0;
             #endregion
+        }
+
+        public void CreateShipmentDeliveryCounters()
+        {
+            ObjectContext = WebFreightContext.GetContext(0);
+            CounterRepository = new CounterRepository(ObjectContext);
+            CounterDefinitionRepository = new CounterDefinitionRepository(ObjectContext);
+            List<Counter> counters = CounterRepository.All().ToList();
+
+            List<ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToList();
+            ObjectTable shipmentPickUpDeliveryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ShipmentPickUpDelivery" && d.Tenant == 0).FirstOrDefault();
+
+            List<GlobalTenant> globalTenants = GlobalTenantRepository.GetGlobalTenants();
+
+            foreach (GlobalTenant tenant in globalTenants)
+            {
+                if (!counters.Where(c => c.Code == "SHDV" && c.Tenant == tenant.Id).Any())
+                {
+                    Counter shipmentDeliveryCounter = new Counter()
+                    {
+                        Id = IdCounter.GetNumber("Counter", tenant.Id).ToString(),
+                        ObjectTableId = shipmentPickUpDeliveryObjectTable.Id,
+                        Code = "SHDV",
+                        Tenant = tenant.Id,
+                        Name = "Shipment Delivery Number",
+                    };
+
+                    CounterDefinition shipmentDelivery_CounterDef = new CounterDefinition()
+                    {
+                        Id = IdCounter.GetNumber("CounterDefinition", tenant.Id).ToString(),
+                        CounterId = shipmentDeliveryCounter.Id,
+                        Tenant = tenant.Id,
+                        StartNumber = 1000,
+                        Parameter1 = "DLV",
+                    };
+
+                    CounterRepository.Add(shipmentDeliveryCounter);
+                    CounterDefinitionRepository.Add(shipmentDelivery_CounterDef);
+                }
+            }
+            this.ObjectContext.SaveChanges();
         }
     }
 }

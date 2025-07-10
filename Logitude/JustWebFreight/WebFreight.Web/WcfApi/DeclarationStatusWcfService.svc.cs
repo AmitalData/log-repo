@@ -7,7 +7,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Server.Tools;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("DeclarationStatus", "UPDATE", tenant);//UPDATE//READ
+                SecurityUtility.CheckContactFeature("Customs.DeclarationStatus", "UPDATE", tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 

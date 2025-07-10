@@ -1,4 +1,4 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -253,8 +253,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.LastBackupDate).HasColumnName("LastBackupDate");
             this.Property(t => t.IsTransferdToQBO).HasColumnName("IsTransferdToQBO");
             this.Property(t => t.ReceivedByPartner).HasColumnName("ReceivedByPartner");
+			this.Property(t => t.IsFromCloud).HasColumnName("IsFromCloud");
 
-            this.HasOptional(t => t.Document)
+			this.HasOptional(t => t.Document)
                 .WithMany()
                 .HasForeignKey(d => d.DocumentId);
 

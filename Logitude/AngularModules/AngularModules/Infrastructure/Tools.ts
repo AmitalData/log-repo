@@ -1,6 +1,7 @@
 import {EventEmitter, Output} from '@angular/core';
 import {TextCodeTranslator} from './Utilities/TextCodeTranslator';
 import { SessionLocator } from './Utilities/SessionLocator';
+import { environment } from 'environments/environment';
 
 export class AppTool {
 
@@ -255,22 +256,19 @@ export class AppTool {
             return v.toString(16);
         });
     }
-    public static GetLogitudeURL() {
+    public static GetLogitudeURL(url: string = null) {
 
-        var logitude_url = location.href.replace('index.html', '');
+        let current_URL = !AppTool.IsNullOrEmpty(url) ? url : !AppTool.IsNullOrEmpty(environment.url) ? environment.url : location.href;
 
-        if (location.href.indexOf('localhost') > -1) {
+        if (current_URL.indexOf('localhost') > -1) {
             return 'http://localhost:9996/';
         }
-
         else {
-            var urlArr = location.href.split("/index.html");
-            var url = urlArr[0];
+            let url = current_URL.split("/index.html")[0];
             url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
-            logitude_url = url + "/";
+            return url + "/";
         }
 
-        return logitude_url;
     }
 
 

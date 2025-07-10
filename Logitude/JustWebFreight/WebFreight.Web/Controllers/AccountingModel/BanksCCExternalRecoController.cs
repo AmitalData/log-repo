@@ -10,14 +10,14 @@ using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.CoreBL.Batch;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using WebFreight.Web.Security;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Globalization;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Def.EntityPMs;
 
-namespace WebFreight.Web.Controllers.AccountingModel
+namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     //[RoutePrefix("api/BanksCCExternalReco")]
     public class BanksCCExternalRecoController : ApiController

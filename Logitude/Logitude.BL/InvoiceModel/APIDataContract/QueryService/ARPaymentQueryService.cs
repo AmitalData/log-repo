@@ -9,7 +9,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
@@ -206,10 +206,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         {
             try
             {
-                string aRPaymentId = query.GetSinglePaymentIdByPaymentNumber(number, Tenant);
-
-                return new ARPaymentLite() { Id = aRPaymentId };
-
+                return query.GetSinglePaymentIdBranchByPaymentNumber(number, Tenant);
             }
             catch (Exception ex)
             {
@@ -223,9 +220,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
         {
             try
             {
-                string aRPaymentId = query.GetCheckPaymentId(paymentId, tenant);
-
-                return new ARPaymentLite() { Id = aRPaymentId };
+                return query.GetCheckPaymentIdBranch(paymentId, tenant);
             }
 
             catch (Exception ex)

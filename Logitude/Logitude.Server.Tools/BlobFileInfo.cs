@@ -1,5 +1,5 @@
 ﻿using Logitude.Server.Tools.ExternalServices;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
@@ -63,7 +63,7 @@ namespace Logitude.Server.Tools
             {
                 return false;
             }
-            Debug.Write("UnifreightFillingDelete:Done (meanwhile nothing to do the filling will remain on Unifreight )");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UnifreightFillingDelete:Done (meanwhile nothing to do the filling will remain on Unifreight )");
             return true;
         }
         public static bool UnifreightFillingUpload(this BlobFileInfo fileInfo, byte[] data)
@@ -79,41 +79,14 @@ namespace Logitude.Server.Tools
             unifreightFillingService.UploadByTenantComId(fileInfo, fileInfo.UDocumentsFilingId, fileInfo.UCreateDate, data);
             return true;
         }
-        public static bool IsUnifreightFillingModeBase(int tenant,string FolderName)
+        public static bool IsUnifreightFillingModeBase(int tenant,string FolderName,bool isFromCloud = false)
         {
-            if (!isFeatureOn)
-            {
-                return isFeatureOn;
-            }
-            if (LogitudeSettings.StorageServiceMode != "db")
-            {
-                return false;
-            }
-            if (!LogitudeSettings.IsCostomsDeploy)
-            {
-                return false;
-            }
-            if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
-            {
-                return false;
-            }
-            if (FolderName != "docsin")
-            {
-                return false;
-            }
-
-
-            if (tenant == 0)
-            {
-                return false;
-            }
-
-            
-            if (String.IsNullOrWhiteSpace(LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService))
-            {
-                return false;
-            }
-            return true;
+			if (!isFeatureOn || LogitudeSettings.StorageServiceMode != "db" || !LogitudeSettings.IsCostomsDeploy || !LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight ||
+	            FolderName != "docsin" || tenant == 0 || String.IsNullOrWhiteSpace(LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).OnPremiseFillingService) || isFromCloud)
+			{
+				return false;
+			}
+			return true;
         }
         public static bool IsUnifreightFillingMode(this BlobFileInfo fileInfo, bool isnew=false)
         {
@@ -173,7 +146,7 @@ namespace Logitude.Server.Tools
             }
             if (fileInfo.USuppressWriteDueSameMD5Hash)
             {
-                Debug.WriteLine("fileInfo.USuppressWriteDueSameMD5Hash"); 
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("fileInfo.USuppressWriteDueSameMD5Hash"); 
                 return true;
             }
 

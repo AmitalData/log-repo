@@ -45,8 +45,10 @@ namespace Unifreight.BL.EntityUpdateServices
             }
 
             entityPM.CREATEDATE = DateTime.Now;
-            entityPM.QUEID = CommCounterUtil.GetUnique30(entityPM.CREATEDATE);
-            
+            if (string.IsNullOrWhiteSpace(entityPM.QUEID))
+            {
+                entityPM.QUEID = CommCounterUtil.GetUnique30(entityPM.CREATEDATE);
+            }
             ///entityPM.COMPUTERID = Environment.MachineName;            
         }
 

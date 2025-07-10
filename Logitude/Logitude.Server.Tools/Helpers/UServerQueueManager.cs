@@ -115,7 +115,7 @@ namespace Logitude.Server.Tools.Helpers
         private static TopicDescription GetTopicDec(int tenant)
         {
 
-            Debug.WriteLine("\nCreating Topic '{0}'...", UServerResponseArriveQ(tenant));
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("\nCreating Topic '{0}'...", UServerResponseArriveQ(tenant)));
             // Configure Topic Settings
             TopicDescription td = new TopicDescription(UServerResponseArriveQ(tenant));
             td.MaxSizeInMegabytes = 5120;
@@ -128,7 +128,7 @@ namespace Logitude.Server.Tools.Helpers
             queueName = WebFreightEntryPoint.GetQueueByEnviroment(queueName); //GetEnvironmentQueueName(curQ);
             if (!_NamespaceManager.QueueExists(queueName))
             {
-                Debug.WriteLine("\nCreating Queue '{0}'...", queueName);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("\nCreating Queue '{0}'...", queueName));
                 _NamespaceManager.CreateQueue(queueName);
             }
         }
@@ -216,7 +216,7 @@ namespace Logitude.Server.Tools.Helpers
                 try
                 {
                     //receive messages from Queue
-                    Debug.WriteLine("<<<<Receiving message from SyncUrouterQueue...");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("<<<<Receiving message from SyncUrouterQueue...");
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         message = queueClient.Receive(TimeSpan.FromMilliseconds(10));
@@ -225,13 +225,13 @@ namespace Logitude.Server.Tools.Helpers
                         {
                             queueClient.Close();
                             queueClient = null;
-                            Debug.WriteLine("<<<<Receiving message from AsyncUrouterQueue...");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("<<<<Receiving message from AsyncUrouterQueue...");
                             queueClient = QueueClient.CreateFromConnectionString(_ConnectionString, QueueType.AsyncUrouterQueue.ToString());
                             message = queueClient.Receive(TimeSpan.FromMilliseconds(10));
                         }
                         if (message != null)
                         {
-                            Debug.WriteLine(string.Format("Message received: Id = {0}, Body = {1}", message.MessageId, message.GetBody<string>()));
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Message received: Id = {0}, Body = {1}", message.MessageId, message.GetBody<string>()));
 
 
                             //tomer bl
@@ -262,13 +262,13 @@ namespace Logitude.Server.Tools.Helpers
                 {
                     if (!e.IsTransient)
                     {
-                        Debug.WriteLine(e.Message);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.Message);
                         throw;
                     }
                     else
                     {
-                        Debug.WriteLine(e.Message);
-                        Debug.WriteLine("Will retry sending the message in 2 seconds");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.Message);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Will retry sending the message in 2 seconds");
                         throw;
                     }
                 }
@@ -276,7 +276,7 @@ namespace Logitude.Server.Tools.Helpers
             }
             finally
             {
-                Debug.WriteLine(">>>>>>queueClient.Close()");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(">>>>>>queueClient.Close()");
                 queueClient.Close();
             }
             
@@ -299,7 +299,7 @@ namespace Logitude.Server.Tools.Helpers
                 mess.MessageId = communicationLogId;
                 mess.Properties[Tenant] = tenant;
                 mess.Properties[RequestCommunicationLogId] = communicationLogId;
-                Debug.WriteLine(string.Format("Sending Message SyncUrouterQueue sent: Id = {0}, Body = {1}", mess.MessageId, mess.GetBody<string>()));
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Sending Message SyncUrouterQueue sent: Id = {0}, Body = {1}", mess.MessageId, mess.GetBody<string>()));
 
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -310,7 +310,7 @@ namespace Logitude.Server.Tools.Helpers
 
                 var sw = Stopwatch.StartNew();
 
-                Debug.WriteLine("<<<<Receiving message from UServerResponseArriveQ...");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("<<<<Receiving message from UServerResponseArriveQ...");
 
                 topicSubscriptionClient = SubscriptionClient.CreateFromConnectionString(_ConnectionString, UServerResponseArriveQ(tenant), GetSubscriptionName());
                 bool done = false;
@@ -327,14 +327,14 @@ namespace Logitude.Server.Tools.Helpers
 
                     if (tMessage != null)
                     {
-                        Debug.WriteLine("Topic Recived:" + tMessage.MessageId);
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Topic Recived:" + tMessage.MessageId);
 
                         int currTenant = (int)tMessage.Properties[Tenant];
                         if (tMessage.Properties[RequestCommunicationLogId] == communicationLogId && currTenant == tenant)
                         {
                             
                             
-                            Debug.WriteLine("My !!");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("My !!");
                             responseCommunicationLogId = tMessage.Properties[ResponseCommunicationLogId] as string;
 
                             //var responseComm = Communications.GetCommunicationLog(tenant, responseCommunicationLogId);
@@ -343,7 +343,7 @@ namespace Logitude.Server.Tools.Helpers
                             break;
 
                         }
-                        Debug.WriteLine("Other !!");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Other !!");
                         tMessage = null;
                     }
                 }
@@ -353,15 +353,15 @@ namespace Logitude.Server.Tools.Helpers
             {
                 if (!e.IsTransient)
                 {
-                    Debug.WriteLine(e.Message);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.Message);
                     throw;
                 }
                 else
                 {
                     //HandleTransientErrors(e);
                     //If transient error/exception, let's back-off for 2 seconds and retry
-                    Debug.WriteLine(e.Message);
-                    Debug.WriteLine("Will retry sending the message in 2 seconds");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.Message);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Will retry sending the message in 2 seconds");
                     //Thread.Sleep(2000);
                     throw;
                 }

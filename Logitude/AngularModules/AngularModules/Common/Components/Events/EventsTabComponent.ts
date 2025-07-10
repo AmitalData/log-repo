@@ -51,9 +51,9 @@ export class EventsTabComponent implements OnDestroy {
     InitTab() {
         if (this.entityArgs.ObjectTableName == "HelpResource") {
             this.EntityId = this.entityArgs.EntityPM.Code;
-        }
-
-        else {
+        } else if (this.entityArgs.ObjectTableName == "DocumentsFiling") {
+            this.EntityId = this.entityArgs.EntityPM.DocumentId;
+        } else {
             this.EntityId = this.entityArgs.EntityPM.Id;
         }
 

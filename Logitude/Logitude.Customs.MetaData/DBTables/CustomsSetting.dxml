@@ -230,6 +230,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CourierDocToken"
+    Type="varchar"
+    Size="1024">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ForbiddenSigns"
     Type="nvarchar"
     Size="128">

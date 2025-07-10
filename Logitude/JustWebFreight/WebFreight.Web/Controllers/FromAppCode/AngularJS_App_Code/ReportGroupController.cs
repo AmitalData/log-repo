@@ -1,8 +1,8 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -18,10 +18,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
     public class ReportGroupController : ApiController
     {
-        public HttpResponseMessage GetReportGroupLists(int tenant)
+        public HttpResponseMessage GetReportGroupLists()
         {
             try
             {
+                int tenant = 0;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 ReportGroupRepository reportGroupRepository = new ReportGroupRepository(tenant);
                 ReportGroupQuery reportGroupQuery = new ReportGroupQuery(reportGroupRepository);

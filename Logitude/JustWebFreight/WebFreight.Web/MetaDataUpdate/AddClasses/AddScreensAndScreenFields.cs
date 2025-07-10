@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 
 using WebFreight.Web.Helpers;
@@ -11,7 +11,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddScreensAndScreenFields
     {
-        public static Screen AddScreen(ScreenDetails screenDetails, ScreensRepository screenRepository,Dictionary<string,Screen>tenantZeroScreens)
+        public static Screen AddScreen(ScreenDetails screenDetails, ScreensRepository screenRepository,Dictionary<string,Screen>tenantZeroScreens,int contextTenant=0)
         {
             if (tenantZeroScreens.Keys.Contains(screenDetails.Code + screenDetails.ObjectTableId))
             {
@@ -34,7 +34,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     IsReadOnly = screenDetails.IsReadOnly,
                     Code = screenDetails.Code,
                     Name=screenDetails.Name,
-                    Id = IdCounter.GetNumber("Screen",screenDetails.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("Screen", contextTenant).ToString(),
                     ObjectTableId = screenDetails.ObjectTableId,
                     Tenant = 0,
 
@@ -45,7 +45,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
-        public static ScreenField AddScreenField(ScreenFieldDetails screenFieldDetails, ScreenFieldsRepository screenFieldsRepository, Dictionary<string, ScreenField> tenantScreenFields)
+        public static ScreenField AddScreenField(ScreenFieldDetails screenFieldDetails, ScreenFieldsRepository screenFieldsRepository, Dictionary<string, ScreenField> tenantScreenFields,int contextTenant=0)
         {
             if (tenantScreenFields.Keys.Contains(screenFieldDetails.ScreenCode + screenFieldDetails.ObjectFieldCode))
             {
@@ -62,7 +62,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 {
                     Row = screenFieldDetails.Row,
                     Column = screenFieldDetails.Column,
-                    Id = IdCounter.GetNumber("ScreenField", screenFieldDetails.Tenant).ToString(),
+                    Id = IdCounter.GetNumber("ScreenField", contextTenant).ToString(),
                     ObjectFieldId = screenFieldDetails.ObjectFieldId,
                     ScreenId = screenFieldDetails.ScreenId,
                     ScreenCode = screenFieldDetails.ScreenCode,

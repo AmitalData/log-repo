@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
@@ -190,6 +190,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ExportTenant = entityPM.ExportTenant;
             entityPOCO.ExportLoginCredintial = entityPM.ExportLoginCredintial;
 			entityPOCO.SearchAbsoluteValuePublic = entityPM.SearchAbsoluteValuePublic;
+			entityPOCO.MinutsTimeOutSession = entityPM.MinutsTimeOutSession;
 
 			string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

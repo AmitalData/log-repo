@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mocks;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -298,8 +298,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
             ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
-            
-                if (entityPM.IsConsolidationInvoice)
+
+            if (entityPM.IsConsolidationInvoice)
             {
                 this.UpdateConsolidationLines();
                 this.InitializeTransferComponents();
@@ -325,6 +325,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
             helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
+            SetReferenceDate();
             SetSatStatus();
             if (entityPM.SetApproved)
             {
@@ -380,10 +381,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
 
-               if (CheckIfReportConnectedToInvoice(entityPM))
+                if (CheckIfReportConnectedToInvoice(entityPM))
                 {
                     string status = "2";
-                   UpdateInterestReportStatus(entityPM, status);
+                    UpdateInterestReportStatus(entityPM, status);
 
                     invoiceRepository.Remove(invoice);
                     invoiceRepository.SubmitChanges();
@@ -392,6 +393,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
                 this.UpdateInterestReportFields(entityPM);
+
                 this.UpdateInterestReportsConnectedInvoice(entityPM);
             }
 
@@ -475,6 +477,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        private void SetReferenceDate()
+        {
+            FeatureQuery featureQuery = new FeatureQuery(tenant);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+            var featureClosingAutoExpDec = features.Features.FirstOrDefault(x => x.Code == "InvoiceReferenceDate");
+
+            if (entityPM.ARInvoiceTypeCode != "IT" && (entityPM.ReferenceDate == null || featureClosingAutoExpDec == null))
+            {
+                entityPM.ReferenceDate = entityPM.InvoiceDate;
+            }
+        }
+
         private void SetSatStatus()
         {
             if (string.IsNullOrEmpty(entityPM.SATTransferStatusCode)) entityPM.SATTransferStatusCode = "NT";
@@ -482,7 +496,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
         }
-        private void SetConfirmationNumberStatus()
+        public void SetConfirmationNumberStatus()
         {
             var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
                                              where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate && a.InActive == false
@@ -500,6 +514,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             }
         }
+
 
         private static string[] GetStack(int removeLines)
         {
@@ -541,7 +556,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug( string.Format("apiResponse.Msg :{0}", apiResponse.Msg));
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("apiResponse.Msg :{0}", apiResponse.Msg));
 
                         entityPM.ConfirmationNumberStatus = "5";
                         entityPM.APIResponseToConfirmation = apiResponse.Msg?.Length > 500 ? apiResponse.Msg?.Substring(0, 500) : apiResponse.Msg;
@@ -549,7 +564,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
 
                     }
-                    //entityPM.ConfirmationNumber=
                 }
 
                 else
@@ -564,7 +578,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             catch (Exception ex)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "apiResponse ");
 
                 entityPM.ConfirmationNumberStatus = "5";
                 entityPM.APIResponseToConfirmation = ex.Message.Length > 500 ? ex.Message.Substring(0, 500) : ex.Message;
@@ -1524,9 +1538,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (docOut != null)
             {
-                    docOut.NeedsRebuild = true;
-                    documentOutRepository.Update(docOut);
-                    documentOutRepository.SubmitChanges();
+                docOut.NeedsRebuild = true;
+                documentOutRepository.Update(docOut);
+                documentOutRepository.SubmitChanges();
             }
         }
 
@@ -4168,7 +4182,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.JournalNumber = "1";
                     journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.AccountingDate = theEntityPm.InvoiceDate.Value;
-                    //journal.DocumentDate = theEntityPm.InvoiceDate.Value;
+                    if (theEntityPm.ReferenceDate.HasValue)
+                    {
+                        journal.DocumentDate = theEntityPm.ReferenceDate.Value;
+                    }
                     //journal.DueDate = theEntityPm.InvoiceDate.Value;
                     journal.TypeCode = "0";
                     journal.StatusCode = "6";
@@ -4198,7 +4215,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.Line = 1;
                         journalLine.ActionCode = "2";
                         journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Debit;
-                        journalLine.DocumentDate = theEntityPm.InvoiceDate.Value;
+                        journalLine.DocumentDate = theEntityPm.ReferenceDate.HasValue ? theEntityPm.ReferenceDate.Value : theEntityPm.InvoiceDate.Value;
                         journalLine.AccountingDate = theEntityPm.InvoiceDate.Value;
                         journalLine.DueDate = theEntityPm.DueDate.Value;
                         journalLine.LocalAmount = (decimal)theEntityPm.AmountInLocalCurrency;
@@ -4227,7 +4244,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             JournalId = journal.Id,
                                                             CreditAccountId = d.GLAccountId,
                                                             Line = ++counter,
-                                                            DocumentDate = theEntityPm.InvoiceDate.Value,
+                                                            DocumentDate = theEntityPm.ReferenceDate.HasValue ? theEntityPm.ReferenceDate.Value : theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.InvoiceDate.Value,
                                                             DueDate = d.ValueDate == null ? theEntityPm.DueDate.Value : (DateTime)d.ValueDate,
                                                             LocalAmount = (decimal)d.LocalCurrencyAmount,
@@ -4262,7 +4279,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             JournalId = journal.Id,
                             CreditAccountId = accountingSettings != null ? accountingSettings.VATOutputGLAccountId : "",
                             Line = ++counter,
-                            DocumentDate = theEntityPm.InvoiceDate.Value,
+                            DocumentDate = theEntityPm.ReferenceDate.HasValue ? theEntityPm.ReferenceDate.Value : theEntityPm.InvoiceDate.Value,
                             AccountingDate = theEntityPm.InvoiceDate.Value,
                             DueDate = theEntityPm.DueDate.Value,
                             LocalAmount = (decimal)vat.LocalVATAmount,
@@ -4444,7 +4461,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                     Line = 1,
                                                     ActionCode = "2",
                                                     ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
-                                                    DocumentDate = invoice.InvoiceDate.Value,
+                                                    DocumentDate = invoice.ReferenceDate.HasValue ? invoice.ReferenceDate.Value : invoice.InvoiceDate.Value,
                                                     AccountingDate = invoice.InvoiceDate.Value,
                                                     DueDate = invoice.DueDate.Value,
                                                     LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
@@ -4499,7 +4516,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                 JournalId = journal.Id,
                 Line = ++counter,
-                DocumentDate = invoice.InvoiceDate.Value,
+                DocumentDate = invoice.ReferenceDate.HasValue ? invoice.ReferenceDate.Value : invoice.InvoiceDate.Value,
                 AccountingDate = invoice.InvoiceDate.Value,
                 DueDate = invoice.DueDate.Value,
                 LocalAmount = (decimal)vat.LocalVATAmount,
@@ -4744,7 +4761,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.OnVoidingInvoise();
                 this.OnResendToSAT();
             }
-           
+
         }
 
         private void SendInvoiceToSAT()
@@ -5308,6 +5325,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         }
 
+        public void PrintOrSendInvoice(string id, int tenant) {
+        }
 
         public class ConfirmationNumberAPI
         {

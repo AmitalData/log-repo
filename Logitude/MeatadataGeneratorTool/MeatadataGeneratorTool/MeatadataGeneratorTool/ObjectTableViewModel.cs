@@ -23,6 +23,7 @@ using MeatadataGeneratorTool.TextCodes;
 using MeatadataGeneratorTool.Features;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace MeatadataGeneratorTool
 {
@@ -1344,6 +1345,13 @@ namespace MeatadataGeneratorTool
             set { tenantZeroData = value; FirePropertyChanged("TenantZeroData"); }
         }
 
+        bool showFastSearch = false;
+        public bool ShowFastSearch
+        {
+            get { return showFastSearch; }
+            set { showFastSearch = value; FirePropertyChanged("ShowFastSearch"); }
+        }
+
 
         bool hasApiHelper;
         public bool HasApiHelper
@@ -1888,12 +1896,46 @@ namespace MeatadataGeneratorTool
                 FirePropertyChanged("SelectedObjectField");
             }
         }
+		bool isLock;
+		public bool IsLock
+		{
+			get { return isLock; }
+			set { isLock = value; FirePropertyChanged("IsLock"); FirePropertyChanged("IsLockFontWeight"); }
+		}
+		string relatedEntity;
+		public string RelatedEntity
+		{
+			get { return relatedEntity; }
+			set { relatedEntity = value; FirePropertyChanged("RelatedEntity"); FirePropertyChanged("IsLockFontWeight"); }
+		}
+		string thisKey;
+		public string ThisKey
+		{
+			get { return thisKey; }
+			set { thisKey = value; FirePropertyChanged("ThisKey"); }
+		}
+		string relatedKey;
+		public string RelatedKey
+		{
+			get { return relatedKey; }
+			set { relatedKey = value; FirePropertyChanged("RelatedKey"); }
+		}
 
-
-
-
-        // commands
-        public RelayCommand<ObjectFieldsViewModel> RemoveFieldCommand
+		public string IsLockFontWeight
+		{
+			get
+			{
+				string result = "Normal";
+				if (IsLock && !string.IsNullOrEmpty(RelatedEntity))
+				{
+					result = "Bold";
+				}
+				return result;
+			}
+			set { }
+		}
+		// commands
+		public RelayCommand<ObjectFieldsViewModel> RemoveFieldCommand
         {
             get { return new RelayCommand<ObjectFieldsViewModel>(m => this.RemoveFieldMethod(m)); }
         }
@@ -2719,6 +2761,66 @@ namespace MeatadataGeneratorTool
                 ErrorsVisibility = Visibility.Visible;
                 return false;
             }
+            if (IsLock && !string.IsNullOrEmpty(RelatedEntity) && (string.IsNullOrEmpty(ThisKey) || string.IsNullOrEmpty(RelatedKey)))
+            {
+                ErrorMessages = "Is RelatedEntity, fields is required ..";
+                ErrorsVisibility = Visibility.Visible;
+                return false;
+            }
+            if(IsLock && !string.IsNullOrEmpty(RelatedEntity) && !string.IsNullOrEmpty(ThisKey) && !string.IsNullOrEmpty(RelatedKey)) { 
+                string[] thisKeys = ThisKey.Split(',');
+                string[] relatedKeys = RelatedKey.Split(',');
+                if(thisKeys.Length != 2 || relatedKeys.Length != 2) { 
+					ErrorMessages = "This Key and Related Key should be in the format of 'Key1,Key2'";
+					ErrorsVisibility = Visibility.Visible;
+					return false;
+				}
+
+			}
+            if (IsLock && string.IsNullOrEmpty(RelatedEntity) && string.IsNullOrEmpty(ThisKey)) 
+            {
+				ErrorMessages = "IsLock must parameter1";
+				ErrorsVisibility = Visibility.Visible;
+				return false;
+
+			}
+
+
+
+            if (IsClosed)
+            {
+                var errorMessagesBuilder = new StringBuilder();
+
+                var closeTableCodeField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableCode);
+                if (closeTableCodeField == null)
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' is required.");
+                }
+                else if (closeTableCodeField.FieldDataType != "Text")
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableCode' must be of type Text.");
+                }
+
+                var closeTableNameField = ObsList.FirstOrDefault(f => f.FieldName == CloseTableName);
+                if (closeTableNameField == null)
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' is required.");
+                }
+                else if (closeTableNameField.FieldDataType != "Text")
+                {
+                    errorMessagesBuilder.AppendLine("The field 'CloseTableName' must be of type Text.");
+                }
+
+                if (errorMessagesBuilder.Length > 0)
+                {
+                    ErrorMessages = errorMessagesBuilder.ToString().Trim();
+                    ErrorsVisibility = Visibility.Visible;
+                    return false;
+                }
+            }
+
+
+
 
             try
             {
@@ -2832,15 +2934,15 @@ namespace MeatadataGeneratorTool
                 }
                 if (DataContractsObsList != null)
                 {
-                    if(!(ErrorMessages.Contains("Cannot Find Foreign Entity") || ErrorMessages.Contains("Database Type is Required") || ErrorMessages.Contains("Database Schema is Required")))
-                    {
-                        ErrorMessages = "";
-                    }
-                    else
-                    {
-                        ErrorMessages = string.Join("\n\n", ErrorMessages.Split(new string[] { "\n\n" }, StringSplitOptions.None).Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required")).ToArray());
-                        ErrorMessages = string.Join("\n", ErrorMessages.Split('\n').Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required") || l.Contains("Field Errors:") || string.IsNullOrEmpty(l)).ToArray());
-                    }
+                    //if (!(ErrorMessages.Contains("Cannot Find Foreign Entity") || ErrorMessages.Contains("Database Type is Required") || ErrorMessages.Contains("Database Schema is Required")))
+                    //{
+                    //    ErrorMessages = "";
+                    //}
+                    //else
+                    //{
+                    //    ErrorMessages = string.Join("\n\n", ErrorMessages.Split(new string[] { "\n\n" }, StringSplitOptions.None).Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required")).ToArray());
+                    //    ErrorMessages = string.Join("\n", ErrorMessages.Split('\n').Where(l => l.Contains("Cannot Find Foreign Entity") || l.Contains("Database Type is Required") || l.Contains("Database Schema is Required") || l.Contains("Field Errors:") || string.IsNullOrEmpty(l)).ToArray());
+                    //}
 
                     foreach (var item in DataContractsObsList)
                     {
@@ -2852,6 +2954,21 @@ namespace MeatadataGeneratorTool
                         //{
                         //    ErrorMessages += item.DCName + " must have a Computing Partner For Translation. ";
                         //}
+                    }
+                }
+
+                if(AdditionalTextCodesList != null)
+                {
+                    foreach (var item in AdditionalTextCodesList)
+                    {
+                        this.ValidateTextCodes(item);
+                    }
+                }
+                if (AdditionalFeaturesList != null)
+                {
+                    foreach (var item in AdditionalFeaturesList)
+                    {
+                        this.ValidateFeatures(item);
                     }
                 }
 
@@ -2908,7 +3025,22 @@ namespace MeatadataGeneratorTool
             {
                 str.AppendLine("Default Text is Required");
             }
-
+            else if (ContainsHebrewCharacters(item.DefaultText))
+            {
+                str.AppendLine("Default Text cannot contain Hebrew characters");
+            }
+            if (!string.IsNullOrEmpty(item.ListLableDefaultText) && ContainsHebrewCharacters(item.ListLableDefaultText))
+            {
+                str.AppendLine("'List Lable Default Text' cannot contain Hebrew characters");
+            }
+            if (!string.IsNullOrEmpty(item.HelpTextDefaultText) && ContainsHebrewCharacters(item.HelpTextDefaultText))
+            {
+                str.AppendLine("'HelpText Default Text' cannot contain Hebrew characters");
+            }
+            if (!string.IsNullOrEmpty(item.ShortFieldLableDefaultText) && ContainsHebrewCharacters(item.ShortFieldLableDefaultText))
+            {
+                str.AppendLine("'Short Field Lable Default Text' cannot contain Hebrew characters");
+            }
             if (string.IsNullOrEmpty(item.FieldName))
             {
                 str.AppendLine("Field Name is Required");
@@ -3073,6 +3205,10 @@ namespace MeatadataGeneratorTool
             {
                 str.AppendLine("Default Text is Required");
             }
+            else if (ContainsHebrewCharacters(item.TextCode))
+            {
+                str.AppendLine($"Queries, {item?.Code} - Text cannot contain Hebrew characters");
+            }
             if (string.IsNullOrEmpty(item.QueryGroupCode))
             {
                 str.AppendLine("Query Group Code is Required");
@@ -3167,6 +3303,10 @@ namespace MeatadataGeneratorTool
             {
                 str.AppendLine("Tab Name is Required");
             }
+            else if (ContainsHebrewCharacters(item.Name))
+            {
+                str.AppendLine($"Tabs, {item?.Code} - Tab Name cannot contain Hebrew characters");
+            }
             if (!string.IsNullOrEmpty(ErrorMessages))
             {
                 ErrorsVisibility = Visibility.Visible;
@@ -3185,12 +3325,16 @@ namespace MeatadataGeneratorTool
 
             if (string.IsNullOrEmpty(item.EventCode))
             {
-                str.AppendLine("Event Code is Required");
+                str.AppendLine("Event Code is Required");   
             }
 
             if (string.IsNullOrEmpty(item.DefaultText))
             {
                 str.AppendLine("Default Text is Required");
+            }
+            else if (ContainsHebrewCharacters(item.DefaultText))
+            {
+                str.AppendLine($"MenuButton, {item?.EventCode} - Default Text cannot contain Hebrew characters");
             }
 
             if (string.IsNullOrEmpty(item.SelectedMenuButtonType))
@@ -3217,6 +3361,10 @@ namespace MeatadataGeneratorTool
             if (string.IsNullOrEmpty(DefaultText))
             {
                 str.AppendLine("Default Text is Required");
+            }
+            else if (ContainsHebrewCharacters(DefaultText))
+            {
+                str.AppendLine("Default Text cannot contain Hebrew characters");
             }
 
             if (string.IsNullOrEmpty(KeyPropertyPath))
@@ -3274,6 +3422,53 @@ namespace MeatadataGeneratorTool
             }
 
             FirePropertyChanged("ErrorMessages");
+        }
+
+
+
+        private void ValidateTextCodes(TextCodesViewModel item)
+        {
+            StringBuilder str = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(item.DefaultText) && ContainsHebrewCharacters(item.DefaultText))
+            {
+                str.AppendLine($"TextCodes, {item?.Code} - Default Text cannot contain Hebrew characters");
+            }
+            if (!string.IsNullOrEmpty(ErrorMessages))
+            {
+                ErrorsVisibility = Visibility.Visible;
+            }
+
+            if (!string.IsNullOrEmpty(str.ToString()))
+            {
+                ErrorMessages = ErrorMessages + "\n" + str.ToString();
+            }
+            FirePropertyChanged("ErrorMessages");
+        }
+
+        private void ValidateFeatures(FeaturesViewModel item)
+        {
+            StringBuilder str = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(item.FeatureDefaultText) && ContainsHebrewCharacters(item.FeatureDefaultText))
+            {
+                str.AppendLine($"Features, {item?.Code} - Default Text cannot contain Hebrew characters");
+            }
+            if (!string.IsNullOrEmpty(ErrorMessages))
+            {
+                ErrorsVisibility = Visibility.Visible;
+            }
+
+            if (!string.IsNullOrEmpty(str.ToString()))
+            {
+                ErrorMessages = ErrorMessages + "\n" + str.ToString();
+            }
+            FirePropertyChanged("ErrorMessages");
+        }
+
+        private bool ContainsHebrewCharacters(string text)
+        {
+            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
         }
 
         private string queryGroupCode;

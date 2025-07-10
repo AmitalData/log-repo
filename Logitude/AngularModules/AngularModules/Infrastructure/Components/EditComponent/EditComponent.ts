@@ -42,10 +42,23 @@ import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlow
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
+
+import { WarehousePM } from 'Common/EntityPMs/WarehousePM';
 import { take } from 'rxjs/operators';
 import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
 import { resolve } from 'cypress/types/bluebird';
 import { AdditionalCurrencyRateValidator } from 'Infrastructure/Validators/AdditionalCurrencyRateValidator';
+import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
+import { AccountingPartnerPM } from 'Common/EntityPMs/AccountingPartnerPM';
+import { AgentPM } from 'Common/EntityPMs/AgentPM';
+import { AirlinePM } from 'Common/EntityPMs/AirlinePM';
+import { CustomAgentPM } from 'Common/EntityPMs/CustomAgentPM';
+import { CustomerPM } from 'Common/EntityPMs/CustomerPM';
+import { ShippingAgentPM } from 'Common/EntityPMs/ShippingAgentPM';
+import { ShippingLinePM } from 'Common/EntityPMs/ShippingLinePM';
+import { TruckerPM } from 'Common/EntityPMs/TruckerPM';
+import { VendorPM } from 'Common/EntityPMs/VendorPM';
+import { PartnersDomainService, PartnerServicePM } from 'Common/Services/PartnersDomainService';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -71,6 +84,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @Output() SaveARInvoiceCompleted: EventEmitter<string> = new EventEmitter<string>();
 
     @Output() OnFirstTimeAfterSingleDataLoaded: EventEmitter<string> = new EventEmitter<string>();
+    @Output() IsLock: EventEmitter<[boolean, string, string, string]> = new EventEmitter<[boolean, string, string, string]>();
+    @Output() DisplayModeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     public ComponentRef: ComponentRef<EditComponent>;
     public EntityPM: any = null;
     public ClonedEntityPM: any = null;
@@ -121,6 +137,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     private static _CustomsSettingList: CustomsSettingList = null;
     tabsService = new TableTabService();
     public IsDigitalAddsOn: boolean = false;
+    public IsLockEntity: boolean = false;
 
 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
@@ -134,6 +151,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (this.WorkEnvironment == "Customs") {
             this.FetchCustomsSetting();
         }
+        this.Listen();
 
     }
 
@@ -330,7 +348,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                 }
                 resolve();
-
+               
 
             });
 
@@ -383,7 +401,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     var pmResponse: ServiceResponse = res;
 
                     if (!pmResponse.HasError) {
-                        this.SetEntityPMAfterLoadIt(pmResponse.Result);
+                        this.SetEntityPMAfterLoadIt(pmResponse.Result);                        
+                        this.RefreshEntity();
                     }
 
                     else {
@@ -671,7 +690,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     const masterObjectTable = window.ObjectTables.filter(x => x.Name === "Master")[0];
                     const shipmentObjectTable = window.ObjectTables.filter(x => x.Name === "Shipment")[0];
 
-                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1 && d.QuerySection == this.QuerySection)[0];
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === masterObjectTable.Id && d.Code.indexOf("HeaderScreen") != -1)[0];
 
                     const masterFields = window.ObjectFields.filter(d => d.ObjectTableId === masterObjectTable.Id);
                     const shipmentFields = window.ObjectFields.filter(d => d.ObjectTableId === shipmentObjectTable.Id);
@@ -681,6 +700,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                     this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
                 });
+            }
+            else if (this.EntityPM.IsCustomShipment) {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("CustomsHeaderScreen") != -1 )[0];
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
 
             else {
@@ -995,8 +1018,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         for (var i = 0; i < allTabs.length; i++) {
-
-            var tab: ObjectTableTabPM = allTabs[i];
+            
+            var tab: ObjectTableTabPM = allTabs[i]; 
             if (tab.ControlPath != null) {
                 if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
                     if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
@@ -1187,6 +1210,31 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     // SHFF: Freight Files
                     if (this.EntityPM.ShipmentLevelCode != "A") {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHFF");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
+                    if (this.EntityPM.TransportModeId == 'A') {
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    } else {
+                        if (!this.EntityPM.IsCustomShipment) {
+                            var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                            if (indexOfTab > -1) {
+                                allTabs.splice(indexOfTab, 1);
+                            }
+                        }
+                    }
+                    
+                    if(!this.EntityPM.IsCustomShipment){
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHDA");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "INTR");
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);
                         }
@@ -1632,6 +1680,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
         this.DestroyEditControl();
         this.BackCompleted.emit(true);
+        this.DeleteGeneralLock()
     }
 
     private ShowConfirmationMessage(ConfirmationMessageArgs: ConfirmationMessageArgs) {
@@ -1823,6 +1872,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                     this.LoadNextPreviousEntity();
                                 }
                                 this.SetNextPreviousButtonsEnablityAysnc();
+                                this.DeleteGeneralLock();
                                 //if (this.nextPreviousTimerToken) {
                                 //    clearTimeout(this.nextPreviousTimerToken);
                                 //}
@@ -1876,86 +1926,94 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
             else {
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "Edit " + this.ObjectTableName);
-
-                this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
-                    res.subscribe((myResponse: ServiceResponse) => {
+                this.CheckDuplicateEntity().then(isDuplicate => {
+                    
+                    if (!isDuplicate) {
+                        this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
+                            res.subscribe((myResponse: ServiceResponse) => {
 
 
                         if (myResponse.HasError) {
-                            this.StopBusyIndicator();
+                                this.StopBusyIndicator();
+        
 
-                            this.OnSavingFailed();
-                            this.ValidationErrorsList = myResponse.ErrorsArray;
-                            this.FireSaveCompleted(false);
+                                    this.OnSavingFailed();
+                                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                                    this.FireSaveCompleted(false);
                         }
                         else if(this.ObjectTableName === "ARInvoice" && this.EntityPM.StatusCode === 'PR') 
                             {
                                 this.SaveARInvoiceCompleted.emit(myResponse.Result.Id);
                                 return;
                             }
-                        else {
+        
+                                else {
                             this.StopBusyIndicator();
 
                             if (this.SelectedTab.Code == "DCCF") {
                                 DeclarationEventManager.SavePendingAfterDeclarationSaved.emit(null);;
                             }
                             this.EntityPM = myResponse.Result;
-                            this.entityArgs.EntityPM = this.EntityPM;
+                                    this.entityArgs.EntityPM = this.EntityPM;
                             this.isEntityChange = true;
 
-                            if (this.ObjectTable.CacheOnClient) {
-                                CachedDataManager.RefreshTableData(this.ObjectTableName, true);
-                            }
-
-                            if (isClosing) {
-                                this.SaveAndCloseCompleted.emit(true);
-                                this.Close();
-                            }
-
-                            else {
-                                this.UpdateComponentMembers();
-                                this.FireSaveCompleted(true);
-                                // this is for navigation
-                                if (loadNextEntity) {
-                                    this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
-                                    this.LoadNextPreviousEntity();
-                                    this.SetNextPreviousButtonsEnablityAysnc();
+                                    if (this.ObjectTable.CacheOnClient) {
+                                        CachedDataManager.RefreshTableData(this.ObjectTableName, true);
+                                    }
+        
+                                    if (isClosing) {
+                                        this.SaveAndCloseCompleted.emit(true);
+                                        this.Close();
+                                    }
+        
+                                    else {
+                                        this.UpdateComponentMembers();
+                                        this.FireSaveCompleted(true);
+                                        // this is for navigation
+                                        if (loadNextEntity) {
+                                            this.CurrentNavigatedIndex = this.CurrentNavigatedIndex + 1;
+                                            this.LoadNextPreviousEntity();
+                                     this.SetNextPreviousButtonsEnablityAysnc();
                                     //if (this.nextPreviousTimerToken) {
                                     //    clearTimeout(this.nextPreviousTimerToken);
                                     //}
                                     //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
-                                }
-                                if (loadPreviousEntity) {
-                                    this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
-                                    this.LoadNextPreviousEntity();
-                                    this.SetNextPreviousButtonsEnablityAysnc();
+                                        }
+                                        if (loadPreviousEntity) {
+                                            this.CurrentNavigatedIndex = this.CurrentNavigatedIndex - 1;
+                                            this.LoadNextPreviousEntity();
+                                    this.SetNextPreviousButtonsEnablityAysnc();                                  
                                     //if (this.nextPreviousTimerToken) {
                                     //    clearTimeout(this.nextPreviousTimerToken);
                                     //}
                                     //this.nextPreviousTimerToken = setTimeout(() => this.SetNextPreviousButtonsEnablity(), 500);
-                                }
+                                        }
+                                        this.DeleteGeneralLock();
+                                    }   
+                           }  
 
-                            }
-                        }
-
+                            
                         this.ClonedEntityPM = CloneDeep(this.EntityPM);
-                    });
+
+                    
 
                 }, error => {
-                    this.OnSavingFailed();
-                    this.StopBusyIndicator();
+                                this.OnSavingFailed();
+
+                                this.StopBusyIndicator();
                     var myErrors: string[] = [];
                     myErrors.push(error.message);
                     this.ValidationErrorsList = myErrors;
                     this.FireSaveCompleted(false);
                 });
-
+              });
+                 
+            }
+            });
+           
 
             }
-
-
         }
-
         else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
             this.SaveDraftVersion(isClosing);
         }
@@ -1964,6 +2022,45 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             this.Close();
         }
 
+    }
+    async CheckDuplicateEntity(): Promise<boolean> {
+
+        const typeToPropertyMap = new Map<Function, string>([
+            [VendorPM, 'Vendor'],
+            [AgentPM, 'Agent'],
+            [ShippingAgentPM, 'ShippingAgent'],
+            [CustomAgentPM, 'CustomAgent'],
+            [CustomerPM, 'Customer'],
+            [AccountingPartnerPM, 'AccountingPartner'],
+            [TruckerPM, 'Trucker'],
+            [ShippingLinePM, 'ShippingLine'],
+            [AirlinePM, 'Airline'],
+            [WarehousePM, 'Warehouse'],
+        ]);
+        var partnersDomainService = new PartnersDomainService();
+        var args = new PartnerServicePM();
+        args.Tenant = this.EntityPM.Tenant;
+        args.PartnerTypeId = this.EntityPM.PartnerTypeId;
+        const propertyName = typeToPropertyMap.get(this.EntityPM.constructor);
+
+        if(AppTool.IsNullOrUndefined(propertyName)) return false;
+        if (propertyName) {
+           args[propertyName] = this.EntityPM;
+        }
+        //args.Vendor = this.EntityPM;
+        return new Promise((resolve, reject) => {
+            partnersDomainService.CheckDuplicate(args).subscribe((response) => {
+                if (response) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
+  }, (err) => {
+                console.error(err);
+                reject(new Error("Error checking for duplicate entity"));
+            });
+        });
+        
     }
     arPaymentChequeOperationsService: ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService()
 
@@ -1994,9 +2091,11 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 } else {
                     resolve(true);
                 }
+          
             });
         });
     }
+    
     public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
     SaveDraftVersion(isClosing: boolean) {
         var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
@@ -2137,6 +2236,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                             this.StopBusyIndicator();
                             this.ValidationErrorsList = myResponse.ErrorsArray;
                             this.LoadCompleted.emit(false);
+                            this.RefreshEntity()
                         }
 
                         else {
@@ -2158,7 +2258,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 });
             }
         }
-
+ 
     }
 
     private UpdateComponentMembers() {
@@ -2544,6 +2644,55 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.MissingClaimEntityNumber"));
             }
         });
+    }
+    public get IsLocked() { return this.IsLockEntity && this.SelectedTab.EntityPM.IsLocked}
+    public DisplayLockMessage: string = "";
+    public PreIsLock: boolean = false;
+    Listen() {   
+           this.IsLock.subscribe((GeneralLock: any ) => {
+                   {
+                  
+                       var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
+    
+                       if(currentEditComponent.SelectedTab.EntityPM.IsLocked) {
+                           currentEditComponent.IsLockEntity = GeneralLock[0];
+                           if(GeneralLock[0]) {
+                              currentEditComponent.IsSaveBtnDisable = true;
+                              currentEditComponent.EntityPM.IsDirty = false;
+                              currentEditComponent.DisplayLockMessage =  `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
+                           }
+                       }
+                       else
+                       {
+                           if(GeneralLock[0] || currentEditComponent.PreIsLock)
+                              currentEditComponent.EditComponentController.InDisplayMode = GeneralLock[0];
+                           if(GeneralLock[0])
+                              currentEditComponent.EditComponentController.InDisplayModeMessage = `The entity ${GeneralLock[2]} object  ${GeneralLock[1]} is locked by  ${GeneralLock[3]}`
+                        
+                       }
+                       if(GeneralLock[0] || currentEditComponent.PreIsLock)
+                          currentEditComponent.ReloadEntityPM();
+   
+                          currentEditComponent.PreIsLock = GeneralLock[0]
+                    }
+                    
+                });      
+    } 
+    RefreshEntity() {
+        var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
+        if(currentEditComponent != null)
+        ServiceHelper.CheckIsLock(currentEditComponent.EntityId ,currentEditComponent.ObjectTableName)
+        else if(!AppTool.IsNullOrEmpty(this.EntityId) && !AppTool.IsNullOrEmpty(this.ObjectTableName))
+        ServiceHelper.CheckIsLock(this.EntityId , this.ObjectTableName);
+
+    }
+    DeleteGeneralLock() {
+        var currentEditComponent = SessionLocator.SelectedSession.CurrentEditComponent;
+        if(currentEditComponent != null)
+        ServiceHelper.DeleteGeneralLock(currentEditComponent.EntityId ,currentEditComponent.ObjectTableName)
+        else if(!AppTool.IsNullOrEmpty(this.EntityId) && !AppTool.IsNullOrEmpty(this.ObjectTableName))
+         ServiceHelper.DeleteGeneralLock(this.EntityId , this.ObjectTableName);
+
     }
 }
 

@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+	using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -10,10 +10,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
-using Devart.Data.Linq;
+
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 

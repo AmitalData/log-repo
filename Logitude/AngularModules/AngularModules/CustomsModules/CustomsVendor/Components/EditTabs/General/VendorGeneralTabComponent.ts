@@ -78,6 +78,9 @@ export class VendorGeneralTabComponent extends BaseComponent {
     }
 
     SetFieldsEditability() {
+
+
+
         this.UIProperties.SetEnabled("VendorTypeCode", this.ObjectTableName, this.IsNewEntity);
         this.UIProperties.SetEnabled("SubCountryCode", this.ObjectTableName, !AppTool.IsNullOrEmpty(this.EntityPM.CountryCode));
     }

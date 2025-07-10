@@ -2804,7 +2804,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;CurrencyCode&quot;"
-    DefaultText="&quot;מטבע&quot;"
+    DefaultText="&quot;Currency Code&quot;"
     FullLocalDefaultText="&quot;מטבע&quot;"
     ListFieldLable="&quot;CurrencyCodeListLable&quot;"
     ListLableDefaultText="&quot;Currency Code&quot;"
@@ -3596,7 +3596,7 @@
     QuerySection="&quot;BankAccount&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
-    IsPackagable="true"
+    IsPackagable="false"
     DefaultSortName="&quot;EnglishName&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     QueryGroupName="&quot;BankAccount Query Group&quot;"
@@ -3988,14 +3988,14 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;BankAccounts.O.AutoRedeemed&quot;"
-      DefaultText="&quot;When the check's due date arrives, it will automatically be marked with the status &quot;Repaid.&quot;&quot;"
-      LocalDefaultText="&quot;בהגיע תאריך ההמחאה היא תסומן אוטומטית בסטטוס &quot;נפרע&quot;&quot;"
+      DefaultText="&quot;When the check's due date arrives, it will automatically be marked with the status &quot;Repaid.&quot;"
+      LocalDefaultText="&quot;בהגיע תאריך ההמחאה היא תסומן אוטומטית בסטטוס &quot;נפרע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;BankAccounts.O.NotAutoRedeemed&quot;"
       DefaultText="&quot;These checks will not automatically be transferred to a &quot;paid&quot; status.&quot;"
-      LocalDefaultText="&quot;המחאות אלו לא יועברו אוטומטית לסטטוס &quot;נפרע&quot;&quot;"
+      LocalDefaultText="&quot;המחאות אלו לא יועברו אוטומטית לסטטוס &quot;נפרע&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -27,6 +27,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Logitude.Customs.Data.EntityMapping;
+using Logitude.BL.CommonDataModel.EntityPMs;
 /*using Unifreight.BL.EntityPMs;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.BL.EntityUpdateServices;*/
@@ -165,7 +166,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
 
-            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription)))
+            bool OCRisOn = false;
+            try
+            {
+                OCRisOn = SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant);
+            }
+            catch (Exception ex)
+            {
+                LogMessagingUtil.Instance.AppendLine("EntityException occurred, possible database connection issue: " + ex.Message);
+            }
+            if (OCRisOn && (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription))) 
             {
                 if(string.IsNullOrEmpty(entityPM.ClassificationCode))
                 {
@@ -271,8 +281,17 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 ICommonDataContext myContext = CommonDataContext.GetContext(entityPM.Tenant);
                 FeatureRepository myFeatureRepository = new FeatureRepository(myContext);
                 FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
-                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
-                var feature = features.Features.FirstOrDefault(x => x.Code == "REFERANTWORKSPACE");
+                FeaturePM feature = null; 
+                try
+                {
+                    var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
+                    feature = features.Features.FirstOrDefault(x => x.Code == "REFERANTWORKSPACE");
+                }
+                catch (Exception ex)
+                {
+                    LogMessagingUtil.Instance.AppendLine("EntityException occurred, possible database connection issue: " + ex.Message);
+                }
+
 
                 if (!string.IsNullOrWhiteSpace(entityPM.ClasifiedRemarks)  && feature!=null)
                 {

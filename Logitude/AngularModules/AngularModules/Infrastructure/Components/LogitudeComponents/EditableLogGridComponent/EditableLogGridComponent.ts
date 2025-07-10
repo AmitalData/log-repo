@@ -22,7 +22,7 @@ declare var styleDisplay, EditgriditemStyling;
     templateUrl: './EditableLogGridComponent.html',
     //directives: [CORE_DIRECTIVES, EditableListTemplateComponent],
      inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll', 'LastDefaultSpace','ColumnName','Condition', 'ShowNoDataFoundText'],
- 
+
 })
 
 export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterContentInit {
@@ -52,7 +52,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             this.CurrentSession.LogitudeGridHelper.ResetNextRowIndex(this.LogGridId);
             var OldCount = this.group.length;
             this.sortingCol = null;
-            
+
             this.resetHeaderCellBackGround();
             if (this.groupby) {
                 this.group = new GroupByPipe().ShapeGrouping(this.ItemSource.Collection, this.groupby);
@@ -286,8 +286,8 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         //        d.style.display = "none"; 
         //    }
         //};
-       
-        
+
+
     }
 
     isResizing: boolean = false;
@@ -760,7 +760,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     FinishLoadingSub: any;
     FinishLoadingGroupsSub: any;
     ngOnInit() {
-        
+
         if (this.ReloadDetails) {
             this.ReloadDetailsSub = this.ReloadDetails.subscribe((res) => {
                 this.cd.detectChanges();
@@ -769,7 +769,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                 var Bodytop = this.HeaderHeight;
                 if (this.groupby) {
                     this.rows.forEach((value, key) => {
-                       
+
                         if (value.IsGroupOpened) {
                             value.styles = {
                                 'top': top + "px",
@@ -1110,7 +1110,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
             };
             this.BodyTop = this.HeaderHeight;
         });
-       
+
     }
     SelectedIndex: number = -1;
     FinishLoading: EventEmitter<any> = new EventEmitter<any>();
@@ -1282,7 +1282,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         //        this.HeaderHeight = cHeight;
         //    }
         //});
-      
+
     };
 
     //renderRows(res: any[]) {
@@ -1609,7 +1609,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         });
         //console.log(this.DisableRowByFieldValue);
         //console.log(this.DisableRowByFieldName);
-       
+
     }
 
     ngAfterViewInit() {
@@ -1626,7 +1626,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.rowCount = this.ItemSource.Length;
         //if (this.dataSource) {
         this.init();
-       
+
         //}
     }
     handleonclick(evt, rownum) {
@@ -1874,9 +1874,9 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         for (var j = 0; j < ColumnsElements.length; j++) {
             if (ColumnsElements[j].attributes['LogGridId']?.value == this.LogGridId) {
                 //if ((<HTMLElement>ColumnsElements[j]).style.background == '#cfcbcb') { 
-                    (<HTMLElement>ColumnsElements[j]).style.background = 'transparent';
+                (<HTMLElement>ColumnsElements[j]).style.background = 'transparent';
                 //}
-            } 
+            }
         }
     }
 
@@ -1966,7 +1966,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                         }
                     }
                     else {
-                        
+
                         var row: IRow = { rowIndex: this.group[i].Index, rowData: this.group[i].Data, DetailsIcon: (this.group[i].Type == "Head" ? "./Images/CellIcons/Arrowup.png" : "./Images/CustomTreeIcon.png"), IsDetailesOpened: (this.group[i].Type == "Head" ? true : false), Type: this.group[i].Type, IsGroupOpened: true, ChildrenFirstIndex: this.group[i].ChildrenFirstIndex, IsExpandable: false, SetExpandaple(isExpandable: boolean) { this.IsExpandable = isExpandable; }, ChildrensCount: this.group[i].Count, IsSelected: false };
                         row.rowData.rowIndex = (row.rowIndex);
                         row.styles = {
@@ -2443,7 +2443,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
         this.FinishLoadingGroupsSub = null;
         // Removes the event listener
         //  this.func();
-       
+
     }
     private countIsHere = true;
     private oldSearchFields: string;

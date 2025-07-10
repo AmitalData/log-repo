@@ -6,7 +6,7 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -35,14 +35,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class ReportController : ApiController
     {
-        public HttpResponseMessage GetReportListsByGroupId(string groupId, int tenant)
+        public HttpResponseMessage GetReportListsByGroupId(string groupId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                int tenant = authToken.Tenant;
 
                 List<ReportList> result = new List<ReportList>();
                 ReportRepository reportRepository = new ReportRepository(tenant);
@@ -57,7 +57,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-			public HttpResponseMessage PutBuildStimulReport(ReportFliter reportFliter)
+        public HttpResponseMessage GetReportByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                List<ReportList> result = new List<ReportList>();
+                ReportRepository reportRepository = new ReportRepository(authToken.Tenant);
+                ReportQuery reportQuery = new ReportQuery(reportRepository);
+                ReportList reportLists = reportQuery.GetReportByCode(code, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, reportLists);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PutBuildStimulReport(ReportFliter reportFliter)
         {
             try
             {

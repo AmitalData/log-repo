@@ -10,6 +10,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string FullNameTextCodeId { get; set; }
         public string ObjectTableId { get; set; }
         public string FieldName { get; set; }
+        public string ShortName { get; set; }
         public string DataTypeCode { get; set; }
         public int MaxLength { get; set; }
         public bool IsRequiered { get; set; }

@@ -10,7 +10,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.InfrastructureModel.EntityLists;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -81,6 +81,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          AllowCustomFields = a.AllowCustomFields,
                                          MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                          DBTableName = a.DBTableName,
+                                         DBTableShortName = a.DBTableShortName,
                                          HasDynamicHeader = a.HasDynamicHeader,
                                          IsLookUp = a.IsLookUp,
                                          HasDocuments = a.HasDocuments,
@@ -114,11 +115,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                          FullNameTextCodeCode = a.FullNameTextCodeCode,
                                          FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                          AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                     }).ToList();
+										 IsLock = a.IsLock,
+										 RelatedEntity = a.RelatedEntity,
+										 ThisKey = a.ThisKey,
+										 RelatedKey = a.RelatedKey,
+									 }).ToList();
             }
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+             WebFreightContext   webFreightContext = (WebFreightContext)WebFreightContext.GetContext(tenant);
 
              zeroLastUpdates = (from a in repository.context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                 where a.Tenant == 0 && a.LastUpdateDate > sinceDate
@@ -163,6 +168,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     AllowCustomFields = a.AllowCustomFields,
                                     MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                     DBTableName = a.DBTableName,
+                                    DBTableShortName = a.DBTableShortName,
                                     HasDynamicHeader = a.HasDynamicHeader,
                                     IsLookUp = a.IsLookUp,
                                     HasDocuments = a.HasDocuments,
@@ -195,7 +201,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                     FullNameTextCodeCode = a.FullNameTextCodeCode,
                                     FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                     AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                }).ToList();
+									IsLock = a.IsLock,
+									RelatedEntity = a.RelatedEntity,
+									ThisKey = a.ThisKey,
+									RelatedKey = a.RelatedKey,
+								}).ToList();
             }
 
             return currentLastUpdates.Concat(zeroLastUpdates).AsQueryable<ObjectTablePM>();
@@ -252,6 +262,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            AllowCustomFields = a.AllowCustomFields,
                                            MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                            DBTableName = a.DBTableName,
+                                           DBTableShortName = a.DBTableShortName,
                                            HasDynamicHeader = a.HasDynamicHeader,
                                            IsLookUp = a.IsLookUp,
                                            HasDocuments = a.HasDocuments,
@@ -284,7 +295,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                            FullNameTextCodeCode = a.FullNameTextCodeCode,
                                            FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                            AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                       }).ToList();
+										   IsLock = a.IsLock,
+										   RelatedEntity = a.RelatedEntity,
+										   ThisKey = a.ThisKey,
+										   RelatedKey = a.RelatedKey,
+                                           ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
+									   }).ToList();
             }
             if (tenant != 0)
             {
@@ -351,6 +367,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AllowCustomFields = a.AllowCustomFields,
                                             MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                             DBTableName = a.DBTableName,
+                                            DBTableShortName = a.DBTableShortName,
                                             HasDynamicHeader = a.HasDynamicHeader,
                                             IsLookUp = a.IsLookUp,
                                             HasDocuments = a.HasDocuments,
@@ -383,6 +400,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                             AvailableInDocumentTypes = a.AvailableInDocumentTypes,
+											IsLock = a.IsLock,
+											RelatedEntity = a.RelatedEntity,
+											ThisKey = a.ThisKey,
+											RelatedKey = a.RelatedKey,
+                                            ShowFastSearch = a.ShowFastSearch.HasValue && a.ShowFastSearch.Value,
                                         }).ToList();
 
             CacheManager.CacheWrapper.Insert(tenantZeroObjectTablesCacheKeyName, zeroObjectTables, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
@@ -410,7 +432,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             List<ObjectTablePM> result = new List<ObjectTablePM>();
             List<ObjectTablePM> currentTenantTables = new List<ObjectTablePM>();
             List<ObjectTablePM> zeroTenantTables = new List<ObjectTablePM>();
-             
+            var contextTenant = SettingUtil.GetCurrentTenant();
             if (tenant != 0)
             {
                 if (HttpContext.Current != null)
@@ -419,7 +441,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                         {
-                            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                             currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                                    where (a.Tenant == tenant && a.InActive == false)
                                                    select new ObjectTablePM()
@@ -463,6 +485,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        AllowCustomFields = a.AllowCustomFields,
                                                        MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                        DBTableName = a.DBTableName,
+                                                       DBTableShortName = a.DBTableShortName,
                                                        HasDynamicHeader = a.HasDynamicHeader,
                                                        IsLookUp = a.IsLookUp,
                                                        HasDocuments = a.HasDocuments,
@@ -493,7 +516,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                        FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                        AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                                   }).ToList();
+													   IsLock = a.IsLock,
+													   RelatedEntity = a.RelatedEntity,
+													   ThisKey = a.ThisKey,
+													   RelatedKey = a.RelatedKey,
+												   }).ToList();
                             scope.Complete();
                         }
 
@@ -508,7 +535,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                         currentTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                                where (a.Tenant == tenant && a.InActive == false)
                                                select new ObjectTablePM()
@@ -552,6 +579,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowCustomFields = a.AllowCustomFields,
                                                    MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                    DBTableName = a.DBTableName,
+                                                   DBTableShortName = a.DBTableShortName,
                                                    HasDynamicHeader = a.HasDynamicHeader,
                                                    IsLookUp = a.IsLookUp,
                                                    HasDocuments = a.HasDocuments,
@@ -582,7 +610,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                               }).ToList();
+												   IsLock = a.IsLock,
+												   RelatedEntity = a.RelatedEntity,
+												   ThisKey = a.ThisKey,
+												   RelatedKey = a.RelatedKey,
+											   }).ToList();
                         scope.Complete();
                     }
                 }
@@ -594,7 +626,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                         zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                             where (a.Tenant == 0 && a.InActive == false)
                                                select new ObjectTablePM()
@@ -638,6 +670,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowCustomFields = a.AllowCustomFields,
                                                    MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                    DBTableName = a.DBTableName,
+                                                   DBTableShortName = a.DBTableShortName,
                                                    HasDynamicHeader = a.HasDynamicHeader,
                                                    IsLookUp = a.IsLookUp,
                                                    HasDocuments = a.HasDocuments,
@@ -670,7 +703,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                               }).ToList();
+												   IsLock = a.IsLock,
+												   RelatedEntity = a.RelatedEntity,
+												   ThisKey = a.ThisKey,
+												   RelatedKey = a.RelatedKey,
+											   }).ToList();
 
                         scope.Complete();
                     }
@@ -687,7 +724,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    IWebFreightContext context = WebFreightContext.GetContext(0);
+                    IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
                     zeroTenantTables = (from a in context.ObjectTables.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode").Include("FullNameTextCode")
                                         where (a.Tenant == 0 && a.InActive == false)
                                         select new ObjectTablePM()
@@ -731,6 +768,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             AllowCustomFields = a.AllowCustomFields,
                                             MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                             DBTableName = a.DBTableName,
+                                            DBTableShortName = a.DBTableShortName,
                                             HasDynamicHeader = a.HasDynamicHeader,
                                             IsLookUp = a.IsLookUp,
                                             HasDocuments = a.HasDocuments,
@@ -763,7 +801,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                             FullNameTextCodeCode = a.FullNameTextCodeCode,
                                             FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                             AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                        }).ToList();
+											IsLock = a.IsLock,
+											RelatedEntity = a.RelatedEntity,
+											ThisKey = a.ThisKey,
+											RelatedKey = a.RelatedKey,
+										}).ToList();
 
 
                     scope.Complete();
@@ -816,8 +858,28 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             }
 
             return table;
-        }        
-        public ObjectTablePM GetObjectTablePMById(string id, int tenant)
+        }
+		public ObjectTablePM GetObjectTableByNameOrId(string name, int tenant)
+		{
+			ObjectTablePM table = null;
+			if (!string.IsNullOrEmpty(name))
+			{
+				table = GetObjectTablesWithTenantZero(tenant).Where(t => t.Name.ToLower() == name.ToLower() || t.Id == name).FirstOrDefault();
+			}
+
+			return table;
+		}
+		public ObjectTablePM GetObjectTableByDBName(string name, int tenant)
+		{
+			ObjectTablePM table = null;
+			if (!string.IsNullOrEmpty(name))
+			{
+				table = GetObjectTablesWithTenantZero(tenant).Where(t => t.DBTableName?.ToLower() == name.ToLower()).FirstOrDefault();
+			}
+
+			return table;
+		}
+		public ObjectTablePM GetObjectTablePMById(string id, int tenant)
         {
             ObjectTablePM table = null;
             if (!string.IsNullOrEmpty(id))
@@ -911,6 +973,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      AllowCustomFields = a.AllowCustomFields,
                                                      MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                      DBTableName = a.DBTableName,
+                                                     DBTableShortName = a.DBTableShortName,
                                                      IsLookUp = a.IsLookUp,
                                                      HasDocuments = a.HasDocuments,
                                                      HasCustomValidator = a.HasCustomValidator,
@@ -942,7 +1005,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                      FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                      FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                      AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                                 };
+													 IsLock = a.IsLock,
+													 RelatedEntity = a.RelatedEntity,
+													 ThisKey = a.ThisKey,
+													 RelatedKey = a.RelatedKey,
+												 };
             return result;
         }  
         public ObjectTableList GetObjectTableList(string id, int tenant)
@@ -982,6 +1049,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    AllowCustomFields = a.AllowCustomFields,
                                                    MaxNumberOfCustomFields = a.MaxNumberOfCustomFields,
                                                    DBTableName = a.DBTableName,
+                                                   DBTableShortName = a.DBTableShortName,
                                                    AllowedForComputingPartners = a.AllowedForComputingPartners,
                                                    CodeField = a.CodeField,
                                                    NameField = a.NameField,
@@ -1011,7 +1079,11 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    FullNameTextCodeCode = a.FullNameTextCodeCode,
                                                    FullNameTextCodeDefaultText = a.FullNameTextCode != null ? a.FullNameTextCode.DefaultText : a.Name,
                                                    AvailableInDocumentTypes = a.AvailableInDocumentTypes,
-                                               }).FirstOrDefault();
+												   IsLock = a.IsLock,
+												   RelatedEntity = a.RelatedEntity,
+												   ThisKey = a.ThisKey,
+												   RelatedKey = a.RelatedKey,
+											   }).FirstOrDefault();
 
 
 
@@ -1021,6 +1093,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public string GetObjectTableIdByName(string tableName)
         {
             return repository.GetObjectTableIdByName(tableName);
+        }
+
+        public string GetObjectTableNamesById(string id,int tenant)
+        {
+            var item = repository.GetSingleObjectTable(id, tenant, true);
+            if (item != null)
+            {
+                return item.Name;
+            }
+            return null;
         }
     }
 }

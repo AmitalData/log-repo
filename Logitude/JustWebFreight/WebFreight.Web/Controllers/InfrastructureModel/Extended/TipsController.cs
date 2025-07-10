@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,14 +17,14 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
 {
     public class TipsController : ApiController
     {
-        public HttpResponseMessage GetTipsPMs( int tenant)
+        public HttpResponseMessage GetTipsPMs()
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                int tenant = authToken.Tenant;
 
                 TipQuery tipQuery = new TipQuery(tenant);
                 List<TipPM> tibs = tipQuery.GetTipsPMs();

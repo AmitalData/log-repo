@@ -131,24 +131,24 @@ namespace Logitude.Customs.BL.PatchDistribution
                 try
                 {
 
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Start ExecDBMigrationLine({myPatchDistribution.MajorVersionYYPRR}.{myPatchDistribution.PatchCounter_Minor}.{script.ScriptCounter})");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"Start ExecDBMigrationLine({myPatchDistribution.MajorVersionYYPRR}.{myPatchDistribution.PatchCounter_Minor}.{script.ScriptCounter})");
 
                     var sqlDDL_NoNeedCommit = script.SqlScript;
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlDDL_NoNeedCommit);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sqlDDL_NoNeedCommit);
                     if (string.IsNullOrWhiteSpace(approveRemark))
                     {
                         (customContext as DbContextBase).ExecuteReaderSingleResult<int>(sqlDDL_NoNeedCommit,
         (dr) =>
         {
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ExecuteReaderSingleResult: {dr.GetString(0)}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"ExecuteReaderSingleResult: {dr.GetString(0)}");
             return 0;
         });
 
                     }
                     else
                     {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"approve patch !!");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"approve patch !!");
                     }
 
 
@@ -197,7 +197,7 @@ namespace Logitude.Customs.BL.PatchDistribution
                     ///xxx
                     customContext.SaveChanges();
                     scope.Complete();
-                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DBMigrationLine:{myDBMigration.MajorVersion}.{myDBMigration.MinorVersion}.{dBMigrationLine.CounterKey }");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DBMigrationLine:{myDBMigration.MajorVersion}.{myDBMigration.MinorVersion}.{dBMigrationLine.CounterKey}");
                 }
                 catch (Exception eee)
                 {

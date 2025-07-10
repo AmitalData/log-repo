@@ -253,6 +253,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="SentDeclarationStatus"
+    Type="bit"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="CourierMasterPaymentStatusCd"
     Type="varchar"
     Size="1">

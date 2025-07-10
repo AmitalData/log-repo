@@ -1,23 +1,23 @@
 declare var window: any;
-import {Component, ViewChildren, QueryList, ViewChild, ViewContainerRef, Output, EventEmitter} from '@angular/core'
-import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
-import {LocationDirective} from '../../Utilities/LocationDirective';
-import {SessionLocator} from '../../Utilities/SessionLocator';
-import {FeatureLocator} from '../../Utilities/FeatureLocator';
-import {LastFilterClass} from '../../Utilities/LastFilterClass';
-import {AppTool} from '../../Tools';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ListComponentArgs} from '../../../Infrastructure/Args';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
-import {ObjectTablePM} from '../../../Infrastructure/EntityPMs/ObjectTablePM';
-import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
-import {ObjectsLocator} from '../../Locators/ObjectsLocator';
-import {ServiceLocator} from '../../Locators/ServiceLocator';
+import { Component, ViewChildren, QueryList, ViewChild, ViewContainerRef, Output, EventEmitter } from '@angular/core'
+import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
+import { LocationDirective } from '../../Utilities/LocationDirective';
+import { SessionLocator } from '../../Utilities/SessionLocator';
+import { FeatureLocator } from '../../Utilities/FeatureLocator';
+import { LastFilterClass } from '../../Utilities/LastFilterClass';
+import { AppTool } from '../../Tools';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
+import { ObjectTablePM } from '../../../Infrastructure/EntityPMs/ObjectTablePM';
+import { QueryPM } from '../../../Infrastructure/EntityPMs/QueryPM';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
+import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { retry } from 'rxjs/operators';
 import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
-    
+
     templateUrl: './MainMenuComponent.html',
 })
 
@@ -35,16 +35,16 @@ export class MainMenuComponent {
     @Output() SelectionChanging: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
 
-    public hasMainTabHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.MainTabHighlightColor == null ? false : true) : false; 
+    public hasMainTabHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.MainTabHighlightColor == null ? false : true) : false;
     public privateLabelClass = {
-        background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.MainTabHighlightColor : "", 
+        background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.MainTabHighlightColor : "",
     }
 
     constructor() {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
         var hasCToolToggleFeature = SessionLocator.FeatureToggles.filter(f => f.ToggleCode === "CTL")[0];
-        if(hasCToolToggleFeature === undefined || (hasCToolToggleFeature !== undefined && hasCToolToggleFeature.Inactive)){
+        if (hasCToolToggleFeature === undefined || (hasCToolToggleFeature !== undefined && hasCToolToggleFeature.Inactive)) {
             this.MainMenuItems = this.MainMenuItems.filter(m => m.TextCode !== "General.MH.TasksApp");
         }
 
@@ -64,8 +64,8 @@ export class MainMenuComponent {
         var myResult: MainMenuItem[] = [];
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
-         
-            
+
+
             var isAddingItem = false;
 
             if (item.FeatureId == null) {
@@ -74,18 +74,18 @@ export class MainMenuComponent {
             else {
                 if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
                     isAddingItem = true;
-                } 
+                }
             }
 
 
-            if (isAddingItem) { 
+            if (isAddingItem) {
                 var menuItem: MainMenuItem = new MainMenuItem(item.TextCode, AppTool.GetMainMenuIconCode(item.TextCode));
                 menuItem.IndexOfOrder = item.IndexOfOrder;
                 menuItem.ObjectTableId = item.ObjectTableId;
                 menuItem.HtmlView = item.HtmlView;
                 menuItem.ObjectTableName = item.ObjectTableName;
                 menuItem.QuerySection = item.QuerySection;
-                
+
                 myResult.push(menuItem);
             }
         });
@@ -103,7 +103,7 @@ export class MainMenuComponent {
             }
 
             else {
-             
+
 
                 this.isLoaderReady = true;
 
@@ -136,8 +136,8 @@ export class MainMenuComponent {
 
     InitSelectedMenu() {
 
-      
-        
+
+
         var mySelectedMenu = this.MainMenuItems[0];
 
         var selectedMenuTextCode: string = null;
@@ -235,11 +235,11 @@ export class MainMenuComponent {
         }
     }
 
-    ChangeMenu(mySelectedItem:MainMenuItem=null) {
-        
+    ChangeMenu(mySelectedItem: MainMenuItem = null) {
 
-        if (mySelectedItem!=null)this.ClickedMenuItem=mySelectedItem;
-         if (!this.isChangingSelected) {
+
+        if (mySelectedItem != null) this.ClickedMenuItem = mySelectedItem;
+        if (!this.isChangingSelected) {
 
             this.isChangingSelected = true;
 
@@ -267,10 +267,10 @@ export class MainMenuComponent {
             var isListComponent: boolean = false;
 
             //if (this.count % 2 == 0) {
-                this.CurrentSession.DestroyMenuReferences();
-                this.CurrentSession.DestroyListComponentReferences();
-               // this.count++;
-           // }
+            this.CurrentSession.DestroyMenuReferences();
+            this.CurrentSession.DestroyListComponentReferences();
+            // this.count++;
+            // }
 
             if (!SessionLocator.IsExternalParams) {
                 var defaultFilterCode: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "MainMenu");
@@ -280,7 +280,7 @@ export class MainMenuComponent {
             }
 
             if (this.SelectedMenu != null) {
-                
+
                 switch (this.SelectedMenu.TextCode) {
                     case "General.MH.Operations": {
                         ServiceLocator.SendTotangoUserActivity("Operations", "Main View");
@@ -309,7 +309,7 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.TimeManagement": {
-                        myComponentPath = "./TimeManagement/Components/Workspaces/TimeManagementWorkspaceComponent"; 
+                        myComponentPath = "./TimeManagement/Components/Workspaces/TimeManagementWorkspaceComponent";
                         break;
                     }
 
@@ -319,7 +319,7 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.FilingInbox": {
-                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Filing Inbox" });
+                        MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "Filing Inbox" });
                         myComponentPath = "./CommonModules/CommonFilingInbox/Components/FilingInboxWorkspaceComponent";
                         break;
                     }
@@ -338,10 +338,10 @@ export class MainMenuComponent {
 
                         break;
                     }
-                 
-                  
-                     case "General.MH.ClassicDashboard": {
-                         ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
+
+
+                    case "General.MH.ClassicDashboard": {
+                        ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
                         myComponentPath = "./Dashboard/Components/Workspace/DashboardComponent";
                         break;
                     }
@@ -369,7 +369,7 @@ export class MainMenuComponent {
                     }
                     case "General.MH.Importers": {
                         ServiceLocator.SendTotangoUserActivity("Importers", "Main View");
-                    myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
+                        myComponentPath = "./ShipmentModules/ShipmentLogBox/Components/Logbox/LogBoxMainComponent";
                         break;
                     }
                     case "General.MH.Accounting": {
@@ -420,7 +420,7 @@ export class MainMenuComponent {
                         ServiceLocator.SendTotangoUserActivity("ActivationWizard", "Main View");
                         myComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/ActivationWizard/ActivationWizardComponent";
                         break;
-                    }                    
+                    }
                     case "General.MH.Customers": {
                         ServiceLocator.SendTotangoUserActivity("Customers", "List View");
                         var listArgs = this.GetNewListComponentArgs();
@@ -430,7 +430,7 @@ export class MainMenuComponent {
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.NewButtonLabel = "New Customer";
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response:any) => {
+                        this._entityResourceService.getEntityResourceByTableName("Customer", 0).subscribe((response: any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -452,7 +452,7 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "Contact";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe((response:any) => {
+                        this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe((response: any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -460,7 +460,7 @@ export class MainMenuComponent {
                                     this.CurrentSession.AddMenuReference(cmpRef);
                                     this.ChangeSessionHeader(this.SelectedMenu);
                                     this.isChangingSelected = false;
-                                   // this.pointerEvents = 'all';
+                                    // this.pointerEvents = 'all';
                                 });
                         });
                         break;
@@ -470,9 +470,9 @@ export class MainMenuComponent {
                         var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "OpenCollaterals";
                         listArgs.ObjectTableName = "Customs.CustomsCollateral";
-                      //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
-                       listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral", 0).subscribe((response:any) => {
+                        //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
+                        listArgs.HideBackButton = true;
+                        this._entityResourceService.getEntityResourceByTableName("Customs.CustomsCollateral", 0).subscribe((response: any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -485,7 +485,7 @@ export class MainMenuComponent {
                         });
                         break;
                     }
-                        
+
 
                     case "General.MH.Social": { // Abed Code
                         ServiceLocator.SendTotangoUserActivity("Social", "Main View");
@@ -504,29 +504,29 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.PaymentOrders": {
-                        
+
                         var listArgs = this.GetNewListComponentArgs();
                         listArgs.ObjectTableName = "Customs.PaymentOrder";
                         listArgs.NewButtonLabel = TextCodeTranslator.Translate("Customs.General.O.NewPaymentOrder");
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe((response:any) => {
-                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run(listArgs);
-                                    this.CurrentSession.AddMenuReference(cmpRef);
-                                    this.ChangeSessionHeader(this.SelectedMenu);
-                                    this.isChangingSelected = false;
-                                    //this.pointerEvents = 'all';
-                                });
+                        this._entityResourceService.getEntityResourceByTableName("Customs.PaymentOrder", 0).subscribe((response: any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        cmpRef.instance.ComponentRef = cmpRef;
+                                        cmpRef.instance.Run(listArgs);
+                                        this.CurrentSession.AddMenuReference(cmpRef);
+                                        this.ChangeSessionHeader(this.SelectedMenu);
+                                        this.isChangingSelected = false;
+                                        //this.pointerEvents = 'all';
+                                    });
                             });
                         });
                         break;
                     }
 
                     // case "General.MH.Declarations": {
-                        
+
                     //     var listArgs = = this.GetNewListComponentArgs();
                     //     listArgs.ObjectTableName = "Customs.Declaration";
                     //     listArgs.HideBackButton = true;
@@ -550,43 +550,43 @@ export class MainMenuComponent {
                     // }
 
                     case "General.MH.PhysicalChecks": {
-                        
+
                         var listArgs = this.GetNewListComponentArgs();
                         listArgs.ObjectTableName = "Customs.PhysicalCheck";
                         listArgs.HideBackButton = true;
-                        
-                        this._entityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck", 0).subscribe((response:any) => {
-                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run(listArgs);
-                                    this.CurrentSession.AddMenuReference(cmpRef);
-                                    this.ChangeSessionHeader(this.SelectedMenu);
-                                    this.isChangingSelected = false;
-                                    //this.pointerEvents = 'all';
-                                });
+
+                        this._entityResourceService.getEntityResourceByTableName("Customs.PhysicalCheck", 0).subscribe((response: any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        cmpRef.instance.ComponentRef = cmpRef;
+                                        cmpRef.instance.Run(listArgs);
+                                        this.CurrentSession.AddMenuReference(cmpRef);
+                                        this.ChangeSessionHeader(this.SelectedMenu);
+                                        this.isChangingSelected = false;
+                                        //this.pointerEvents = 'all';
+                                    });
                             });
                         });
                         break;
                     }
                     case "General.MH.Claims": {
-                        
-                        var listArgs =  this.GetNewListComponentArgs();
+
+                        var listArgs = this.GetNewListComponentArgs();
                         listArgs.ObjectTableName = "Customs.Claim";
                         listArgs.HideBackButton = true;
-                        
-                        this._entityResourceService.getEntityResourceByTableName("Customs.Claim", 0).subscribe((response:any) => {
-                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response:any) => {
-                            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    cmpRef.instance.ComponentRef = cmpRef;
-                                    cmpRef.instance.Run(listArgs);
-                                    this.CurrentSession.AddMenuReference(cmpRef);
-                                    this.ChangeSessionHeader(this.SelectedMenu);
-                                    this.isChangingSelected = false;
-                                    //this.pointerEvents = 'all';
-                                });
+
+                        this._entityResourceService.getEntityResourceByTableName("Customs.Claim", 0).subscribe((response: any) => {
+                            this._entityResourceService.getEntityResourceByTableName("Customs.Declaration", 0).subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        cmpRef.instance.ComponentRef = cmpRef;
+                                        cmpRef.instance.Run(listArgs);
+                                        this.CurrentSession.AddMenuReference(cmpRef);
+                                        this.ChangeSessionHeader(this.SelectedMenu);
+                                        this.isChangingSelected = false;
+                                        //this.pointerEvents = 'all';
+                                    });
                             });
                         });
                         break;
@@ -623,7 +623,7 @@ export class MainMenuComponent {
                         listArgs.ObjectTableName = "Customs.DeclarationCargoSplit";
                         //  listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit", 0).subscribe((response:any) => {
+                        this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationCargoSplit", 0).subscribe((response: any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -636,16 +636,16 @@ export class MainMenuComponent {
                         });
                         break;
                     }
-                        
+
                     case "General.MH.Depositions": {
                         ServiceLocator.SendTotangoUserActivity("Customs Shipper", "List View");
-                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Deposition Query" });
+                        MixPanelLocator.Action({ ProjectName: "LogBox", ActionName: "Deposition Query" });
                         var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "AllDepositionsQuery";
                         listArgs.ObjectTableName = "CustomsShipper";
                         listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                         listArgs.HideBackButton = true;
-                        this._entityResourceService.getEntityResourceByTableName("CustomsShipper", 0).subscribe((response:any) => {
+                        this._entityResourceService.getEntityResourceByTableName("CustomsShipper", 0).subscribe((response: any) => {
                             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     cmpRef.instance.ComponentRef = cmpRef;
@@ -689,31 +689,32 @@ export class MainMenuComponent {
 
                             if (this.SelectedMenu.ObjectTableId != null && this.SelectedMenu.ObjectTableId != undefined) {
                                 isListComponent = true;
-
                                 var listArgs = this.GetNewListComponentArgs();
                                 listArgs.QuerySection = this.SelectedMenu.QuerySection;
+                                console.log(this.SelectedMenu)
+                                console.log(this.SelectedMenu.QuerySection)
                                 var objectTable: ObjectTablePM = window.ObjectTables.filter(x => x.Id === this.SelectedMenu.ObjectTableId)[0];
 
                                 if (objectTable != null && objectTable != undefined) {
                                     listArgs.ObjectTableName = objectTable.Name;
                                     //listArgs.DisplayTitle = TextCodeTranslator.Translate(this.SelectedMenu.TextCode);
                                     listArgs.HideBackButton = true;
-                                    if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel))
-                                    {
+                                    if (AppTool.IsNullOrEmpty(listArgs.NewButtonLabel)) {
                                         var tempText = TextCodeTranslator.Translate(listArgs.ObjectTableName + ".NewButton");
                                         if (!AppTool.IsNullOrEmpty(tempText)) {
                                             listArgs.NewButtonLabel = tempText;
                                         }
                                     }
 
-                                    this._entityResourceService.getEntityResourceByTableName(objectTable.Name, 0).subscribe((response:any) => {
+                                    this._entityResourceService.getEntityResourceByTableName(objectTable.Name, 0).subscribe((response: any) => {
                                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                             .then(cmpRef => {
+                                                console.log(listArgs)
                                                 cmpRef.instance.ComponentRef = cmpRef;
-                                                cmpRef.instance.Run(listArgs);                                                           
+                                                cmpRef.instance.Run(listArgs);
                                                 this.CurrentSession.AddMenuReference(cmpRef);
                                                 this.ChangeSessionHeader(this.SelectedMenu);
-                                                this.isChangingSelected = false;                                
+                                                this.isChangingSelected = false;
                                                 //this.pointerEvents = 'all';
                                             });
                                     });
@@ -752,14 +753,14 @@ export class MainMenuComponent {
             else if (!isListComponent) {
                 this.isChangingSelected = false;
                 //this.pointerEvents = 'all';
-            }        
+            }
         }
 
         else {
             this.isChangingSelected = false;
-           // this.pointerEvents = 'all';
+            // this.pointerEvents = 'all';
 
-        }   
+        }
     }
     ChangeSessionHeader(menu: MainMenuItem) {
         this.CurrentSession.ChangeSessionHeader({ MenuTextCode: menu.TextCode });
@@ -771,12 +772,12 @@ export class MainMenuComponent {
         if (this.isMainSidebarCollapsed != value) {
             this.isMainSidebarCollapsed = value;
             SessionLocator.IsMainSidebarCollapsed = value;
-            LastFilterClass.UpdateFilter("Simplog.Infrastructure.Views.MenuView", "Sidebar", value+"");
+            LastFilterClass.UpdateFilter("Simplog.Infrastructure.Views.MenuView", "Sidebar", value + "");
             this.MainMenuWidth = value == true ? this.MainMenuWidthCollapsed : this.MainMenuWidthOpened;
         }
     }
 
-    
+
     private GetNewListComponentArgs() {
         var listArgs = new ListComponentArgs();
         listArgs.QuerySection = this.SelectedMenu.QuerySection;

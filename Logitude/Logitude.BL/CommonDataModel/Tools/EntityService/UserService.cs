@@ -6,11 +6,13 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.GlobalModel.Tools.Validating;
 using Logitude.BL.Helpers;
 using Logitude.BL.Security;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel;
@@ -39,6 +41,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ContactTenantRepository contactTenantRepository;
         private UserPermittedBranchRepository userPermittedBranchRepository;
         private UserPermittedProductRepository userPermittedProductRepository;
+        private UserFreelancerGroupRepository userFreelancerGroupRepository;
+
         private ContactQuery contactQuery;
         public UserService(ICommonDataContext objectContext, int tenant)
         {
@@ -46,11 +50,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.objectContext = objectContext;
             this.entityRepository = new UserRepository(objectContext);
             this.userPermittedBranchRepository = new UserPermittedBranchRepository(objectContext);
-            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext);            
+            this.userPermittedProductRepository = new UserPermittedProductRepository(objectContext); 
+            this.userFreelancerGroupRepository = new UserFreelancerGroupRepository(objectContext);
         }
 
         private List<UserPermittedBranchPM> userPermittedBranchPMChangeSet;
         private List<UserPermittedProductPM> userPermittedProductPMChangeSet;
+        private List<UserFreelancerGroupPM> userFreelancerGroupPMChangeSet;
+
         private string _DisableOldContactId;
 
         public void SetChangeSet(List<UserPermittedBranchPM> userPermittedBranchPMChangeSet)
@@ -60,6 +67,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void SetProductChangeSet(List<UserPermittedProductPM> userPermittedProductPMChangeSet)
         {
             this.userPermittedProductPMChangeSet = userPermittedProductPMChangeSet;
+        }
+        public void SetFreeLancerGroupChangeSet(List<UserFreelancerGroupPM> userFreelancerGroupPMChangeSet)
+        {
+            this.userFreelancerGroupPMChangeSet = userFreelancerGroupPMChangeSet;
         }
         public bool SuppressMustChangePasswordDueSSO { get; set; }
         
@@ -115,6 +126,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.CreateUserPermittedProduct(itemPM);
             }
 
+            foreach (UserFreelancerGroupPM itemPM in entityPM.FreelancerGroups)
+            {
+                if (itemPM != null)
+                {
+                    this.CreateUserFreelancerGroup(itemPM, entityPM);
+                }
+            }
+
             ContactQuery contactQuery = new ContactQuery(contactRepository);
             if (!entityPM.IsHybrid)
             {
@@ -148,6 +167,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.userPermittedBranchPMChangeSet = entityPM.UserPermittedBranches;
                 this.userPermittedProductPMChangeSet = entityPM.UserPermittedProducts;
             }
+            this.userFreelancerGroupPMChangeSet = entityPM.FreelancerGroups;
+
 
             contactRepository = new ContactRepository(objectContext);
             roleRepository = new RoleRepository(objectContext);
@@ -223,6 +244,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             this.UpdateUserPermittedPermitions();
+            this.UpdateUserFreelancerGroups(entityPM);
 
             if (entityPM.IsBranchRestricted)
             {
@@ -767,6 +789,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+        private void UpdateUserFreelancerGroups(UserPM entityPM)
+        {
+            if (userFreelancerGroupPMChangeSet != null)
+            {
+                DeleteUserFreelancerGroups(entityPM);
+                foreach (UserFreelancerGroupPM itemPM in userFreelancerGroupPMChangeSet)
+                {
+                    itemPM.UserId = entityPM.Id;
+                    this.CreateUserFreelancerGroup(itemPM, entityPM);
+                }
+            }
+        }
         
         private void CreateUserPermittedBranch(UserPermittedBranchPM entityPM)
         {
@@ -803,6 +837,17 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             UserPermittedProductMapping.MapEntity(entityPM, Poco, true);
             userPermittedProductRepository.Add(Poco);
         }
+
+        private void CreateUserFreelancerGroup(UserFreelancerGroupPM entityPM, UserPM userPM)
+        {
+            entityPM.Id = IdCounter.GetNumber("UserFreelancerGroup", tenant).ToString();
+            UserFreelancerGroup Poco = new UserFreelancerGroup();
+            Poco.UserId = userPM.Id;
+            Poco.Id = entityPM.Id;
+
+            UserFreelancerGroupMapping.MapEntity(entityPM, Poco, true);
+            userFreelancerGroupRepository.Add(Poco);
+        }
         private void UpdateUserPermittedProduct(UserPermittedProductPM entityPM)
         {
             UserPermittedProduct Poco = userPermittedProductRepository.GetSingleUserPermittedProduct(entityPM.Id, entityPM.Tenant);
@@ -810,11 +855,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             UserPermittedProductMapping.MapEntity(entityPM, Poco, false);
             userPermittedProductRepository.Update(Poco);
         }
+
         private void DeleteUserPermittedProduct(UserPermittedProductPM entityPM)
         {
             UserPermittedProduct Poco = userPermittedProductRepository.GetSingleUserPermittedProduct(entityPM.Id, entityPM.Tenant);
             UserPermittedProductValidating.Validate(entityPM);
             userPermittedProductRepository.Remove(Poco);
+        }
+        private void DeleteUserFreelancerGroups(UserPM userPM)
+        {
+            var listOfGroupsToDelete = userFreelancerGroupRepository.GetUserFreelancerGroupByUserId(userPM.Id,userPM.Tenant);
+            foreach(var item in listOfGroupsToDelete)
+            {
+                userFreelancerGroupRepository.Remove(item);
+            }
         }
 
         private void UpdateRolePM(UserPM entityPM)
@@ -1029,10 +1083,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             return hasRoles;
         }
 
-        public bool CheckIsUserCustomerCareById(string id)
+        public bool CheckIsUserCustomerCareById(string id, int tenant)
         {
             bool isCustomerCare = false;
-            isCustomerCare = entityRepository.IsContactIdExist(id,0);
+            isCustomerCare = entityRepository.IsContactIdExist(id, tenant);
             return isCustomerCare;
         }
     }

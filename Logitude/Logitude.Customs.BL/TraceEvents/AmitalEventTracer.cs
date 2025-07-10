@@ -6,9 +6,9 @@ using Logitude.Customs.Def.Messaging.Customs;
 ///using Logitude.Customs.BL.Messaging.Amital.FuStatus;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace Logitude.Customs.BL.TraceEvents
     {
         public const bool UseHybrid_When_NotIsConnectedToUniFreight = true;
 
-        public static void CreateTraceEvent(AmitalEventTracerModel myAmitalEventTracer, bool suppressSendToUniFreight = false, bool suppress_RAISE_EVENT = false, bool iscustomUser = false)
+        public static void CreateTraceEvent(AmitalEventTracerModel myAmitalEventTracer, bool suppressSendToUniFreight = false, bool suppress_RAISE_EVENT = false, bool iscustomUser = false,bool isExport = false)
         {
             try
             {
@@ -62,14 +62,8 @@ namespace Logitude.Customs.BL.TraceEvents
                 if (mySetting.StandAlone)
                     return;
 
-                if (!mySetting.IsConnectedToUniFreight && mySetting.UnfConnectionString == null)
-                {
-                    if (!UseHybrid_When_NotIsConnectedToUniFreight)
-                    {
-                        return;
-                    }
-                }
-                if (myAmitalEventTracer.NotConnectedToUniface)
+  
+                if (myAmitalEventTracer.NotConnectedToUniface)//לא מחובר ברמת ההצהרה
                 {
 
                     return;
@@ -82,12 +76,10 @@ namespace Logitude.Customs.BL.TraceEvents
                 }
 
                 var myFUStatus = GetFUStatus(myAmitalEventTracer, iscustomUser: iscustomUser);
-                if (UseHybrid_When_NotIsConnectedToUniFreight && !mySetting.IsConnectedToUniFreight)
+                if (isExport && !mySetting.IsConnectedToUniFreight)
                 {
 
-
-                        ///var unifreightHybridQueueTaskService = new UnifreightHybridQueueTaskService<AmitalEventTracerModel, GFUSTS>(myAmitalEventTracer, myFUStatus);
-
+ 
                         string queueName = GetQueueNameByUnifreightEntity(myAmitalEventTracer.MyFUStatus.entname);
                         if (!string.IsNullOrWhiteSpace(queueName))
                         {
@@ -107,7 +99,7 @@ namespace Logitude.Customs.BL.TraceEvents
                         else
                         {
                             LogMessagingUtil.Instance.AppendLine($"suppress UnifreightHybridQueueTaskService({myAmitalEventTracer.MyFUStatus.status_id}):expected only MSCSTORAGE/BFIFILE");
-                        }
+                       }
                 }
                 else
                 {
@@ -131,7 +123,6 @@ namespace Logitude.Customs.BL.TraceEvents
             {
 
                 if (
-                    Logitude.Customs.BL.EntityQueryServices.CustomsSettingQueryService.GetSettingByTenant(myAmitalEventTracer.Tenant).IsConnectedToUniFreight && 
                     myAmitalEventTracer.MyUnifreightEventParam != null && myAmitalEventTracer.MyUnifreightEventParam.IsValid())
                 {
 

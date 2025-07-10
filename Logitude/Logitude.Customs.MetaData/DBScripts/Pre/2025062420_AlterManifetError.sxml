@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+  </Sql>
+
+  <Oracle Version="2">
+    <![CDATA[
+    
+ EXECUTE IMMEDIATE 'alter table DECLARATIONS add   MANIFESTERRORXML_TEMP CLOB';
+
+EXECUTE IMMEDIATE 'update DECLARATIONS set  MANIFESTERRORXML_TEMP=MANIFESTERRORXML';
+
+EXECUTE IMMEDIATE 'alter table DECLARATIONS drop column   MANIFESTERRORXML';
+
+EXECUTE IMMEDIATE 'ALTER TABLE "DECLARATIONS" add  "MANIFESTERRORXML" NCLOB';
+
+EXECUTE IMMEDIATE 'update DECLARATIONS set   MANIFESTERRORXML= MANIFESTERRORXML_TEMP';
+
+      EXECUTE IMMEDIATE 'alter table DECLARATIONS drop column   MANIFESTERRORXML_TEMP';  
+
+  ]]>
+  </Oracle>
+</Script>

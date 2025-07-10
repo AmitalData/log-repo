@@ -18,6 +18,7 @@ using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.Data;
 using System.Data.Entity;
 using NPOI.Util;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -76,7 +77,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             }
 
             var declarations = (from a in context.Declarations
-                                                   .Include(a => a.CustomsTransportMode)
+                                                   .Include(a => a.TransportMode)
                                                    .Include(a => a.DeclarationType)
                                                    .Include(a => a.GovernmentProcedureCurrent)
                                                    .Include(a => a.CustomsCountry)
@@ -114,7 +115,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     a.TaxationDateTime,
                                     a.ExportFile,
                                     a.TransportModeId,
-                                    TransportModeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
+                                    TransportModeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
                                     a.CustomFileNo,
                                     a.DeclarationNumber,
                                     DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,
@@ -141,6 +142,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     si.InvoiceAmount,
                                     InvoiceCurrencyTypeName = si != null  && si.CurrencyType != null ? si.CurrencyType.LocalName: si.InvoiceCurrencyTypeCode,
                                     InvoiceCounterKey = si != null ? si.InvoiceCounterKey : 0,
+
                                     //supplierInvoiceItem
                                     sItem.ItemCode,
                                     sItem.ClassificationCode,
@@ -211,6 +213,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             #region map to data provider
 
             var query = declarations
+
             .Select(g => new ExportDeclaration()
             {
                 DeclarationId = g.Id,
@@ -227,6 +230,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                 ExporterImporterName = g.ExporterImporterName,
                 RecipientName = g.RecipientName,
                 DestinationCountryName = g.DestinationCountryName,
+
                 //g.Key.DestinationCountryCode,
                 // g.Key.DeclarationStatusTypeCode,
                 // g.Key.DeclarationTypeCode,
@@ -304,6 +308,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                         int lastDeclarationIndex = exportDeclarations.IndexOf(lastDeclaration);
 
                         for (var i = 1; i < rowCountToAdd + 1; i++)
+
                         {
                             exportDeclarations.Insert(lastDeclarationIndex + i, lastDeclaration.Copy());
                         }
@@ -311,6 +316,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
                     // add the consignment data to the declaration rows
                     for (var i = 0; i < consignmentRowsCount; i++)
+
                     {
                         var consignment = consignmentRows.ElementAtOrDefault(i);
 

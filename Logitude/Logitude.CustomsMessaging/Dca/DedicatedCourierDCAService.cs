@@ -18,27 +18,27 @@ namespace Logitude.CustomsMessaging.Dca
             {
 
 
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DedicatedCourierDCA:Tenant");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("DedicatedCourierDCA:Tenant");
                 int t = -99;
                 int.TryParse(ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:Tenant"), out t);
                 if (t == -99)
                 {
                     throw new Exception(@"DedicatedCourierDCA:Tenant please insert tenant!!!!!  <add key=""DedicatedCourierDCA:Tenant"" value=""1"" /> ");
                 }
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DedicatedCourierDCA:Tenant={t}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DedicatedCourierDCA:Tenant={t}");
 
                 string backupPath = ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:BackupPath");
                 if (string.IsNullOrWhiteSpace(backupPath))
                 {
                     throw new Exception(@"DedicatedCourierDCA:BackupPath please insert  BackupPath <add key=""DedicatedCourierDCA:BackupPath"" value=""C:\CyberArk_DCA\GLO-il550221105\Download\GLO\UDCABackupOrphaned"" /> ");
                 }
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DedicatedCourierDCA:BackupPath={backupPath}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DedicatedCourierDCA:BackupPath={backupPath}");
                 if (!Directory.Exists(backupPath))
                 {
                     throw new Exception($"DedicatedCourierDCA:BackupPath please create backupPath !!!  {backupPath} ");
                 }
                 bool UseTPL = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("DedicatedCourierDCA:UseTPL"));
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DedicatedCourierDCA:UseTPL={UseTPL}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"DedicatedCourierDCA:UseTPL={UseTPL}");
 
                 return new DedicatedCourierDCAModel()
                 {

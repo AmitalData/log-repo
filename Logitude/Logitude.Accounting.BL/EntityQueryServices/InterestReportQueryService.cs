@@ -34,6 +34,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
 
 
+
         public override void GetComposition(EntityKeyFields entityKeys, InterestReportPM entityPM)
         {
             IAccountingContext context = MainContext as IAccountingContext;

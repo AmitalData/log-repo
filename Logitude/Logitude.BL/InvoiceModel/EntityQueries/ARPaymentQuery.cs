@@ -6,7 +6,7 @@ using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
@@ -22,6 +22,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Server.Tools.Helpers;
+ 
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -516,7 +517,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
 
 
-        public string GetSinglePaymentIdByPaymentNumber(string paymentNo, int tenant)
+
+
+
+        public Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite GetSinglePaymentIdBranchByPaymentNumber(string paymentNo, int tenant)
         {
             ARPayment entityPOCO =
                 (from a in repository.context.ARPayments
@@ -528,13 +532,17 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
             else
             {
-                return entityPOCO.Id;
+                return new Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite()
+                {
+                    Id = entityPOCO.Id,
+                    BranchId = entityPOCO.BranchId
+                };
             }
         }
 
 
 
-        public string GetCheckPaymentId(string paymentId, int tenant)
+        public Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite GetCheckPaymentIdBranch(string paymentId, int tenant)
         {
             ARPayment entityPOCO =
                 (from a in repository.context.ARPayments
@@ -546,10 +554,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
             else
             {
-                return entityPOCO.Id;
+                return new Logitude.BL.InvoiceModel.APIDataContract.ApiV1.ARPaymentLite()
+                {
+                    Id = entityPOCO.Id,
+                    BranchId = entityPOCO.BranchId
+                };
             }
         }
-
 
 
         private string GetBankAccountNumberById(string id, int tenant)

@@ -103,13 +103,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
             CourierMasterUpdateService service = new CourierMasterUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
 
 
-            if (!requestParamsData.IsWorkSheetFromExcel)
-            {
-                var master = courierMasterQueryService.GetSingle(requestParamsData.CourierMasterId, false, false);
-                master.IsAutomaticManifestSent = true;
-                master.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                service.Update(master, true);
-            }
+            //if (!requestParamsData.IsWorkSheetFromExcel)
+            //{
+            //    var master = courierMasterQueryService.GetSingle(requestParamsData.CourierMasterId, false, false);
+            //    master.IsAutomaticManifestSent = true;
+            //    master.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+            //    service.Update(master, true);
+            //}
 
            
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");

@@ -22,7 +22,7 @@ using UnifreightIIG.Common.MessageLib.Storage;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using UnifreightIIG.Common.MessageLib.Docs;
 using Logitude.Server.Tools.Models;
 using Logitude.Customs.BL.Models;
@@ -42,6 +42,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
     {
 
         DeclarationPM _MyDeclarationPM;
+        bool IsExportDeclaration;
 
         public override INF_MSG_GenericResponseData GetResponse(DOC_NG_5101_GNMessageToAgent customResponse, GenericRequestParams requestParams)
         {
@@ -76,7 +77,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             var dec = myQueryService.GetDeclarationByDeclarationNum(customResponse.MessageToAgent.RelatedEntity.entityIdKey1, requestParams.Tenant);
-            bool IsExportDeclaration = dec?.Direction == "E";
+            IsExportDeclaration = dec?.Direction == "E";
 
             LogMessagingUtil.Instance.AppendLine("Analyze Message To Agent response" + requestParams.AppicationId);
 
@@ -126,13 +127,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             customsVendorCode = message[0];
                             customsVendorId = CheckIfCustomsVendorCodeExist(customsVendorCode, requestParams.Tenant);
                         }
-                        var setting = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(requestParams.Tenant);
-                        if (string.IsNullOrWhiteSpace(customsVendorId)  && setting.IsConnectedToUniFreight)
+                         if (string.IsNullOrWhiteSpace(customsVendorId))
                         {
                             LogMessagingUtil.Instance.AppendLine("בדיקת דיפולט - שליפת ספק בהודעה על תצהיר");
-                            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_RET_VEND", "NON", "NON", false, true);
-                            bool isRetrieveVendorActive = def.DEFDATA == "Y";
+                            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(requestParams.Tenant);
+
+                            var def = defaultValueQueryService.GetDefault("ISRAEL", "CGG_RET_VEND", "NON", "NON", requestParams.Tenant);
+                             bool isRetrieveVendorActive = def == "Y";
                             if (isRetrieveVendorActive)
                             {
                                 SendVendorSearchByCustomsAgentRequest(requestParams, importerVAT, customsVendorCode);
@@ -651,6 +652,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void RaiseEvent(DeclarationPM dirtyDeclarationPM, string code, string remarks)
         {
+            if (IsExportDeclaration)
+            {
+                return;
+            }
             try
             {
                 string loggingUserId = "";

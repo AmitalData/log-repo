@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using WebFreight.Web.DataContracts;
@@ -11,7 +11,7 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.InfrastructureModel;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
@@ -704,10 +704,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         {
             //0         1          2       3      4       5         6
             //Code,EnglishName,LocalName,IsAir,IsOcean,IsInland,CountryCode
-
+            int tenant = 0;
             if (objectContext == null)
             {
-                objectContext = CommonDataContext.GetContext(0);
+                objectContext = CommonDataContext.GetContext(tenant);
             }
             countryRepository = new CountryRepository(objectContext);
             portRepository = new PortRepository(objectContext);

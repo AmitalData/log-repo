@@ -93,9 +93,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public BillToFilter:ApiQueryFilters;
- 
+  
+
    get TextStore()
-    {
+     {
         return TextStore;
     }
 

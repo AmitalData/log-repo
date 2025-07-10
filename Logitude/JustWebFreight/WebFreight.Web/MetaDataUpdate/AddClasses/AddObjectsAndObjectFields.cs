@@ -1,24 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
 using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace WebFreight.Web.MetaDataUpdate.AddClasses
 {
     public class AddObjectsAndObjectFields
     {
         static ObjectTableRepository objecttablesRepository;
-        public static ObjectTable AddObjectTable(ObjectTableDetails objectTablesDetails, ObjectTableRepository objectTableRepository, TextCodeRepository textCodeRepository, Dictionary<string, ObjectTable> tenantZeroObjectTables, Dictionary<string, TextCode> tenantZeroTextCodes)
+        public static ObjectTable AddObjectTable(ObjectTableDetails objectTablesDetails, ObjectTableRepository objectTableRepository, TextCodeRepository textCodeRepository, Dictionary<string, ObjectTable> tenantZeroObjectTables, Dictionary<string, TextCode> tenantZeroTextCodes,int contextTenant=0)
         {
             if (!tenantZeroObjectTables.Keys.Contains(objectTablesDetails.ObjectTableName))
             {
                 #region Create
                 ObjectTable objectTable = new ObjectTable();
-                objectTable.Id = IdCounter.GetNumber("ObjectTable", 0).ToString();
+                objectTable.Id = IdCounter.GetNumber("ObjectTable", contextTenant).ToString();
 
                 objectTable.HasCustomFilter = objectTablesDetails.HasCustomFilter;                
                 objectTable.Name = objectTablesDetails.ObjectTableName;
@@ -45,6 +46,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.IsAutoComplete = objectTablesDetails.IsAutoComplete;
                 objectTable.SortingByObjectField = objectTablesDetails.SortingByObjectField;
                 objectTable.DBTableName = objectTablesDetails.DBTableName;
+                objectTable.DBTableShortName = objectTablesDetails.DBTableShortName;
                 objectTable.InActive = objectTablesDetails.InActive;
                 objectTable.IsSaveButtonVisible = objectTablesDetails.IsSaveButtonVisible;
                 objectTable.MainTipCode = objectTablesDetails.MainTipCode;
@@ -82,7 +84,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 if (!tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName))
                 {
                     objectSingular = new TextCode();
-                    objectSingular.Id = IdCounter.GetNumber("TextCode", 0).ToString();
+                    objectSingular.Id = IdCounter.GetNumber("TextCode", contextTenant).ToString();
                     objectSingular.ObjectTableId = objectTable.Id;
                     objectSingular.Code = objectTablesDetails.ObjectTableName;
                     objectSingular.DefaultText = objectTablesDetails.DefaultText;
@@ -109,7 +111,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     if (!tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + "Description"))
                     {
                         descriptionTextCode = new TextCode();
-                        descriptionTextCode.Id = IdCounter.GetNumber("TextCode", 0).ToString();
+                        descriptionTextCode.Id = IdCounter.GetNumber("TextCode", contextTenant).ToString();
                         descriptionTextCode.ObjectTableId = objectTable.Id;
                         descriptionTextCode.Code = objectTablesDetails.ObjectTableName + "Description";
                         descriptionTextCode.DefaultText = objectTablesDetails.DescriptionDefaultText;
@@ -139,7 +141,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     if (!tenantZeroTextCodes.Keys.Contains(objectTablesDetails.ObjectTableName + ".NewButton"))
                     {
                         newButtonTextCode = new TextCode();
-                        newButtonTextCode.Id = IdCounter.GetNumber("TextCode", 0).ToString();
+                        newButtonTextCode.Id = IdCounter.GetNumber("TextCode", contextTenant).ToString();
                         newButtonTextCode.ObjectTableId = objectTable.Id;
                         newButtonTextCode.Code = objectTablesDetails.ObjectTableName + ".NewButton";
                         newButtonTextCode.DefaultText = objectTablesDetails.NewButtonDefaultText;
@@ -167,8 +169,13 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 objectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 objectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
                 objectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
+				objectTable.IsLock = objectTablesDetails.IsLock;
+				objectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
+				objectTable.ThisKey = objectTablesDetails.ThisKey;
+				objectTable.RelatedKey = objectTablesDetails.RelatedKey;
+                objectTable.ShowFastSearch = objectTablesDetails.ShowFastSearch;
 
-                return objectTable;
+				return objectTable;
                 #endregion
             }
 
@@ -203,6 +210,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.IsAutoComplete = objectTablesDetails.IsAutoComplete;
                 updatedObjectTable.SortingByObjectField = objectTablesDetails.SortingByObjectField;
                 updatedObjectTable.DBTableName = objectTablesDetails.DBTableName;
+                updatedObjectTable.DBTableShortName = objectTablesDetails.DBTableShortName;
                 updatedObjectTable.InActive = objectTablesDetails.InActive;
                 updatedObjectTable.IsSaveButtonVisible = objectTablesDetails.IsSaveButtonVisible;
                 updatedObjectTable.IsComposition = objectTablesDetails.IsComposition;
@@ -246,7 +254,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 else
                 {
                     TextCode textCode = new TextCode();
-                    textCode.Id = IdCounter.GetNumber("TextCode", 0).ToString();
+                    textCode.Id = IdCounter.GetNumber("TextCode", contextTenant).ToString();
                     textCode.ObjectTableId = updatedObjectTable.Id;
                     textCode.Code = objectTablesDetails.ObjectTableName;
                     textCode.DefaultText = objectTablesDetails.DefaultText;
@@ -275,7 +283,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     else
                     {
                         descriptionTextCode = new TextCode();
-                        descriptionTextCode.Id = IdCounter.GetNumber("TextCode", updatedObjectTable.Tenant).ToString();
+                        descriptionTextCode.Id = IdCounter.GetNumber("TextCode", contextTenant).ToString();
                         descriptionTextCode.ObjectTableId = updatedObjectTable.Id;
                         descriptionTextCode.Code = objectTablesDetails.ObjectTableName + "Description";
                         descriptionTextCode.DefaultText = objectTablesDetails.DescriptionDefaultText;
@@ -307,7 +315,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                     else
                     {
                         newButtonTextCode = new TextCode();
-                        newButtonTextCode.Id = IdCounter.GetNumber("TextCode", 0).ToString();
+                        newButtonTextCode.Id = IdCounter.GetNumber("TextCode", contextTenant).ToString();
                         newButtonTextCode.ObjectTableId = updatedObjectTable.Id;
                         newButtonTextCode.Code = objectTablesDetails.ObjectTableName + ".NewButton";
                         newButtonTextCode.DefaultText = objectTablesDetails.NewButtonDefaultText;
@@ -326,27 +334,32 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectTable.SupportSubEntity = objectTablesDetails.SupportSubEntity;
                 updatedObjectTable.ApplyGenericCustomFields = objectTablesDetails.ApplyGenericCustomFields;
                 updatedObjectTable.AvailableInDocumentTypes = objectTablesDetails.AvailableInDocumentTypes;
+				updatedObjectTable.IsLock = objectTablesDetails.IsLock;
+				updatedObjectTable.RelatedEntity = objectTablesDetails.RelatedEntity;
+				updatedObjectTable.ThisKey = objectTablesDetails.ThisKey;
+				updatedObjectTable.RelatedKey = objectTablesDetails.RelatedKey;
+                updatedObjectTable.ShowFastSearch = objectTablesDetails.ShowFastSearch;
 
-                objectTableRepository.Update(updatedObjectTable);
+				objectTableRepository.Update(updatedObjectTable);
                 return updatedObjectTable;
                 #endregion
             }
         }
 
-        public static void AddObjectField(ObjectFieldsDetails objectFieldDetails, TextCodeRepository textCodeRepository, ObjectFieldRepository objectFieldsRepository, Dictionary<string, ObjectField> tenantZeroObjectFields, Dictionary<string, TextCode> tenantZeroTextCodes, Dictionary<string, ObjectTable> tenantZeroObjectTables)
+        public static void AddObjectField(ObjectFieldsDetails objectFieldDetails, TextCodeRepository textCodeRepository, ObjectFieldRepository objectFieldsRepository, Dictionary<string, ObjectField> tenantZeroObjectFields, Dictionary<string, TextCode> tenantZeroTextCodes, Dictionary<string, ObjectTable> tenantZeroObjectTables,int contextTenant = 0)
         {
            
 
             if (!String.IsNullOrEmpty(objectFieldDetails.ObjectTableName) && String.IsNullOrEmpty(objectFieldDetails.ObjectTableId))
             {
-                ObjectTable table = GetObjectTable(objectFieldDetails.ObjectTableName, tenantZeroObjectTables);
+                ObjectTable table = GetObjectTable(objectFieldDetails.ObjectTableName, tenantZeroObjectTables, contextTenant);
               
                 objectFieldDetails.ObjectTableId = table.Id;
 
             }
             if (!String.IsNullOrEmpty(objectFieldDetails.LookUpTableName) && String.IsNullOrEmpty(objectFieldDetails.LookUpTableId))
             {
-                ObjectTable table = GetObjectTable(objectFieldDetails.LookUpTableName, tenantZeroObjectTables);
+                ObjectTable table = GetObjectTable(objectFieldDetails.LookUpTableName, tenantZeroObjectTables, contextTenant);
                 if (table != null)
                 {
                     objectFieldDetails.LookUpTableId = table.Id;
@@ -356,7 +369,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             if (!String.IsNullOrEmpty(objectFieldDetails.MultiTableName) && String.IsNullOrEmpty(objectFieldDetails.MultiTableId))
             {
-                ObjectTable table = GetObjectTable(objectFieldDetails.MultiTableName, tenantZeroObjectTables);
+                ObjectTable table = GetObjectTable(objectFieldDetails.MultiTableName, tenantZeroObjectTables, contextTenant);
                 if (table != null)
                 {
                     objectFieldDetails.MultiTableId = table.Id;
@@ -501,6 +514,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
+                newObjectField.ShortName = objectFieldDetails.ShortName;
                 newObjectField.Code = objectFieldDetails.Code;
                 if (string.IsNullOrEmpty(newObjectField.FieldCode))
                 {
@@ -627,6 +641,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 newObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                newObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -731,6 +746,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 updatedObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                updatedObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -976,11 +992,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         }
      
-        public static ObjectTable GetObjectTable(string objectTableName, Dictionary<string, ObjectTable> tenantZeroObjectTables)
+        public static ObjectTable GetObjectTable(string objectTableName, Dictionary<string, ObjectTable> tenantZeroObjectTables,int contextTenant)
         {
             if (objecttablesRepository == null)
             {
-                objecttablesRepository = new ObjectTableRepository(0);
+                objecttablesRepository = new ObjectTableRepository(contextTenant);
             }
 
             ObjectTable table = tenantZeroObjectTables.ContainsKey(objectTableName) ? tenantZeroObjectTables[objectTableName] : null;
@@ -991,11 +1007,11 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             return table;
         }
-        public static void AddObjectField(ObjectFieldsDetails objectFieldDetails, TextCodeRepository textCodeRepository, ObjectFieldRepository objectFieldsRepository, Dictionary<string, ObjectField> tenantZeroObjectFields, Dictionary<string, TextCode> tenantZeroTextCodes)
+        public static void AddObjectField(ObjectFieldsDetails objectFieldDetails, TextCodeRepository textCodeRepository, ObjectFieldRepository objectFieldsRepository, Dictionary<string, ObjectField> tenantZeroObjectFields, Dictionary<string, TextCode> tenantZeroTextCodes,int contextTenant=0)
         {
             if (objecttablesRepository == null)
             {
-                objecttablesRepository = new ObjectTableRepository(0);
+                objecttablesRepository = new ObjectTableRepository(contextTenant);
             }
 
             if (!String.IsNullOrEmpty(objectFieldDetails.ObjectTableName) && String.IsNullOrEmpty(objectFieldDetails.ObjectTableId))
@@ -1158,6 +1174,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
                 newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
                 newObjectField.FieldName = objectFieldDetails.FieldName;
+                newObjectField.ShortName = objectFieldDetails.ShortName;
                 newObjectField.Code = objectFieldDetails.Code;
                 if (string.IsNullOrEmpty(newObjectField.FieldCode))
                 {
@@ -1284,6 +1301,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.RecordType = objectFieldDetails.RecordType;
                 newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 newObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                newObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 newObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -1387,6 +1405,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 updatedObjectField.RecordType = objectFieldDetails.RecordType;
                 updatedObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
                 updatedObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+                updatedObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
                 updatedObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
                 updatedObjectField.LeftKey = objectFieldDetails.ThisKey;
@@ -1636,20 +1655,20 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
 
         //---------------------------------------------------------
-        public static void AddObjectField(ObjectFieldsDetails objectFieldDetails, TextCodeRepository textCodeRepository, ObjectFieldRepository objectFieldsRepository, Dictionary<string, ObjectField> tenantZeroObjectFields, Dictionary<string, TextCode> tenantZeroTextCodes, Dictionary<string, ObjectTable> tenantZeroObjectTables, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+        public static void AddObjectField(ObjectFieldsDetails objectFieldDetails, TextCodeRepository textCodeRepository, ObjectFieldRepository objectFieldsRepository, Dictionary<string, ObjectField> tenantZeroObjectFields, Dictionary<string, TextCode> tenantZeroTextCodes, Dictionary<string, ObjectTable> tenantZeroObjectTables, List<ObjectField> addedFields, List<TextCode> addedTextCodes,int contextTenant = 0)
         {
 
 
             if (!String.IsNullOrEmpty(objectFieldDetails.ObjectTableName) && String.IsNullOrEmpty(objectFieldDetails.ObjectTableId))
             {
-                ObjectTable table = GetObjectTable(objectFieldDetails.ObjectTableName, tenantZeroObjectTables);
+                ObjectTable table = GetObjectTable(objectFieldDetails.ObjectTableName, tenantZeroObjectTables,contextTenant);
 
                 objectFieldDetails.ObjectTableId = table.Id;
 
             }
             if (!String.IsNullOrEmpty(objectFieldDetails.LookUpTableName) && String.IsNullOrEmpty(objectFieldDetails.LookUpTableId))
             {
-                ObjectTable table = GetObjectTable(objectFieldDetails.LookUpTableName, tenantZeroObjectTables);
+                ObjectTable table = GetObjectTable(objectFieldDetails.LookUpTableName, tenantZeroObjectTables, contextTenant);
                 if (table != null)
                 {
                     objectFieldDetails.LookUpTableId = table.Id;
@@ -1659,7 +1678,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
             if (!String.IsNullOrEmpty(objectFieldDetails.MultiTableName) && String.IsNullOrEmpty(objectFieldDetails.MultiTableId))
             {
-                ObjectTable table = GetObjectTable(objectFieldDetails.MultiTableName, tenantZeroObjectTables);
+                ObjectTable table = GetObjectTable(objectFieldDetails.MultiTableName, tenantZeroObjectTables, contextTenant);
                 if (table != null)
                 {
                     objectFieldDetails.MultiTableId = table.Id;
@@ -1673,7 +1692,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             objectFieldTextCode = new TextCode();
             objectFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.FullFieldLable;
             objectFieldTextCode.DefaultText = objectFieldDetails.DefaultText;
-            objectFieldTextCode.Id =IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
+            objectFieldTextCode.Id =IdCounter.GetIdWithIdsRange("TextCode",100, contextTenant).ToString();
             objectFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
             objectFieldTextCode.Tenant = 0;
             objectFieldTextCode.TextCodeTypeCode = "F";
@@ -1692,7 +1711,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 helpTextTextCode = new TextCode();
                 helpTextTextCode.Code = objectFieldDetails.ObjectTableName + "." + objectFieldDetails.HelpTextCode + "HelpText";
                 helpTextTextCode.DefaultText = objectFieldDetails.HelpTextDefaultText;
-                helpTextTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
+                helpTextTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, contextTenant).ToString();
                 helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
                 helpTextTextCode.Tenant = 0;
                 helpTextTextCode.TextCodeTypeCode = "H";
@@ -1709,7 +1728,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 helpTextTextCode = new TextCode();
                 helpTextTextCode.Code = (!string.IsNullOrEmpty(objectFieldDetails.ObjectTableName) ? objectFieldDetails.ObjectTableName : objectFieldDetails.ValidForQuerySection1) + "." + objectFieldDetails.FullFieldLable + "HelpText";
                 helpTextTextCode.DefaultText = null;
-                helpTextTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
+                helpTextTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, contextTenant).ToString();
                 helpTextTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
                 helpTextTextCode.Tenant = 0;
                 helpTextTextCode.TextCodeTypeCode = "H";
@@ -1726,7 +1745,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 fullFieldTextCode = new TextCode();
                 fullFieldTextCode.Code = objectFieldDetails.ObjectTableName + ".F." + objectFieldDetails.ShortFieldLable + ".Short";
                 fullFieldTextCode.DefaultText = objectFieldDetails.ShortFieldLableDefaultText;
-                fullFieldTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, objectFieldDetails.Tenant).ToString();
+                fullFieldTextCode.Id = IdCounter.GetIdWithIdsRange("TextCode",100, contextTenant).ToString();
                 fullFieldTextCode.ObjectTableId = objectFieldDetails.ObjectTableId;
                 fullFieldTextCode.Tenant = 0;
                 fullFieldTextCode.TextCodeTypeCode = "F";
@@ -1764,6 +1783,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.FullNameTextCodeId = objectFieldTextCode.Id;
             newObjectField.FullNameTextCodeCode = objectFieldTextCode.Code;
             newObjectField.FieldName = objectFieldDetails.FieldName;
+            newObjectField.ShortName = objectFieldDetails.ShortName;
             newObjectField.Code = objectFieldDetails.Code;
             if (string.IsNullOrEmpty(newObjectField.FieldCode))
             {
@@ -1783,7 +1803,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 newObjectField.ListTextCodeId = listFieldLableTextCode.Id;
                 newObjectField.ListTextCodeCode = listFieldLableTextCode.Code;
             }
-            newObjectField.Id = IdCounter.GetIdWithIdsRange("ObjectField",100, objectFieldDetails.Tenant).ToString();
+            newObjectField.Id = IdCounter.GetIdWithIdsRange("ObjectField",100, contextTenant).ToString();
             newObjectField.IsCustom = objectFieldDetails.IsCustom;
             // newObjectField.IsOverridden = objectFieldDetails.Isoveridden;
 
@@ -1890,6 +1910,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             newObjectField.RecordType = objectFieldDetails.RecordType;
             newObjectField.AdditionalQuerySections = objectFieldDetails.AdditionalQuerySections;
             newObjectField.DisplayInRequiredFields = objectFieldDetails.DisplayInRequiredFields;
+            newObjectField.ObjectFieldDataMapping = objectFieldDetails.ObjectFieldDataMapping;
             newObjectField.IsListFilter = objectFieldDetails.IsListFilter;
 
             newObjectField.LeftKey = objectFieldDetails.ThisKey;

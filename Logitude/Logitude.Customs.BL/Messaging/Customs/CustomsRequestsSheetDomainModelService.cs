@@ -23,7 +23,7 @@ using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -434,7 +434,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 {
                     return true;//in courier CompanyType -AvoidSign
                 }
-                if (CustomsSettingQueryService.GetLogitudeCustomsSettingsM(requestParams.Tenant).IsConnectedToUniFreight &&   !String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
+                if (!String.IsNullOrWhiteSpace(requestParams.LoggingEntityId) & !string.IsNullOrWhiteSpace(requestParams.LoggingObjectTableId))
                 {
                     DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_Tenant);
 
@@ -444,9 +444,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                     if (requestParams.LoggingObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration"))
                     {
 
-                        //var customsSettingQueryService = new CustomsSettingQueryService(_Tenant);
-                        //var customsSettingPM = customsSettingQueryService.GetSingle(_Tenant.ToString(), false, true);
-                        //if (customsSettingPM.TotalInvoiceAmountInUSD.HasValue)
+                   
                         {
                             var declarationQueryService = new DeclarationQueryService(_Tenant);
                             var declaration = declarationQueryService.GetSingle(RequestParams.LoggingEntityId, false, false);
@@ -457,12 +455,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
                                 DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declaration.Id, true, false);
                                 if (myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD > defaultAmount)
                                 {
-                                    //myDeclarationCourierStatusPM.HighLowValue = "H";
-                                }
+                                 }
                                 else
                                 {
-                                    //myDeclarationCourierStatusPM.HighLowValue = "L";
-                                    LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
+                                     LogMessagingUtil.Instance.AppendLine($"{defaultAmount} בלדרות ביטול חתימה במסרים - סך חשבון בהצהרה בדולרים   {myDeclarationCourierStatusPM.TotalInvoiceAmountInUSD.GetValueOrDefault()} קטן מהגדרת המינימום");
                                     return true;
                                 }
                             }
@@ -585,15 +581,14 @@ namespace Logitude.Customs.BL.Messaging.Customs
             //}
 
             //im+eitan : in worker role no need to check 
-            if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower()) 
-                && RequestParams.InterfaceTypeCode!="8235" && RequestParams.InterfaceTypeCode != "2751" && RequestParams.InterfaceTypeCode != "2755"
-                && RequestParams.InterfaceTypeCode != "2755E")
-            {
-                //2715 build from  UCBUD2LT --if (RequestParams.InterfaceTypeCode == "UCBUD2LT")
-                {
-                    return;
-                }
-            }
+             //if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower())  && RequestParams.InterfaceTypeCode!="8235" && RequestParams.InterfaceTypeCode != "2751" && RequestParams.InterfaceTypeCode != "2755E")
+            //{
+            //    //2715 build from  UCBUD2LT --if (RequestParams.InterfaceTypeCode == "UCBUD2LT")
+            //    {
+            //        return;
+            //    }
+            //}
+ 
 
             if (!SignQueue.Instance.IsPasiveSignMode())
             {
@@ -1529,7 +1524,7 @@ After that Remove file  from DCA  .. ");
             }
             else
             {
-                Debug.WriteLine("this._InterfaceTenantDefinitionManagement  not init ???");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("this._InterfaceTenantDefinitionManagement  not init ???");
             }
 
             var currRequestDescriptionIsNullOrDef = false;
@@ -1860,12 +1855,7 @@ After that Remove file  from DCA  .. ");
                         {
                         
                             case SignMethodByQueueEnum.HybridDbSignQueue:
-#if false
-                                    if (!pmCustomsSetting.IsConnectedToUniFreight)
-                                    {
-                                        AddExportDBSignQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);
-                                    }
-#endif
+ 
                                 {
                                     var signQueueHybridExportDBService = new CreateSignQueueHybridExportDBService();
                                     signQueueHybridExportDBService.CreateQueue(RequestParams, personId, CalcSignByFromStep(null), pmCustomsSetting.CustomsAgentId);

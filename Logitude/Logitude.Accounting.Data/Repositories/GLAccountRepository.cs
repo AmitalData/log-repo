@@ -14,7 +14,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools;
 using Logitude.Accounting.Data.DataContract;
 using System.Data.Entity.Infrastructure;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using System.Runtime.Remoting.Contexts;
 using System.Data.Entity;

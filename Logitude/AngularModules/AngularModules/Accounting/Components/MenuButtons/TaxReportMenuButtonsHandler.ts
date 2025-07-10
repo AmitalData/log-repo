@@ -14,6 +14,8 @@ import { BatchTaskExecutionListService } from 'Infrastructure/Services/StandardL
 import { BatchTaskExecutionList } from 'Infrastructure/EntityLists/BatchTaskExecutionList';
 import { TaxReportPMService } from 'Accounting/Services/StandardPMs/TaxReportPMService';
 import { EntityPMService } from 'Infrastructure/Services/EntityPMService';
+import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
+import { AppTool } from 'Infrastructure/Tools';
 import { MenuTypes } from 'Report/Components/ProcessMenuComponent';
 
 
@@ -303,7 +305,22 @@ export class TaxReportMenuButtonsHandler {
             messageWindow.Show(message);
             return;
         }
+        var fullAccountingSettingListService = new FullAccountingSettingListService();
         this.CurrentSession.StartBusyIndicatorCreating();
+
+        fullAccountingSettingListService.getSingle(this.EntityPM.Tenant.toString()).subscribe((myResult: any) => {
+            var myResponse: ServiceResponse = myResult;
+
+            if (myResponse != null  && myResponse.Result != null && AppTool.IsNullOrEmpty(myResponse.Result.DefaultDifferencesGLAccountId) ) {
+                this.StopBusyIndicator();
+                var messageWindow = new MessageWindow();
+                messageWindow.Width = 500;
+                let message: string = TextCodeTranslator.Translate(TextCode.DefaultDifferencesGLAccountIdIsNull);
+                messageWindow.Show(message);
+                return;
+
+            }
+        
 
         this.taxReportExtendedPMService.GetTaxReportReconciledLines(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) => {
@@ -331,10 +348,10 @@ export class TaxReportMenuButtonsHandler {
                     messageWindow.Show(message);
                 }
             });
+        });
     }
     CreateClosingJournal() {
         this.CurrentSession.StartBusyIndicatorCreating();
-
         this.taxReportExtendedPMService.CloseTaxReport(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) => {
                 this.StopBusyIndicator();
@@ -450,6 +467,9 @@ enum TextCode {
     TaxReportCloseJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
     TaxReportCancelClosingJournalRunInBackground = "TaxReport.O.CloseJournalRunInBackground",
      TaxReportOCancelLaterReports = "TaxReport.O.CancelLaterReports",
+     DefaultDifferencesGLAccountIdIsNull = "TaxReport.O.DefaultDifferencesGLAccountIdIsNull",
+
+
      ErrorInTaxReportLine = "TaxReportLine.F.Line",
      ErrorInTaxReportLineReconciliation = "Reconciliation",
 

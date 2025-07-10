@@ -1,6 +1,6 @@
 ﻿using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.DataContracts;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Server.Tools.EntityChanges;
 using WebFreight.Web.Helpers.CallBack;
 using Simplog.Data.Helpers;
@@ -96,7 +96,16 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     else
                     {
                         ExceptionHandler.HandleException(new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DateTime.Now, 0, null, "WorkerRole Monitor", null,  System.Environment.MachineName);
-                        UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {Exception= new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });                      
+                        string error = "";
+                        if (documentsExecutionLog == null)
+                        {
+                            error += "documentsExecutionLog is null";
+                        }
+                        else
+                        {
+                            error += "documentsExecutionLog.RetryNumber = " + documentsExecutionLog.RetryNumber + ", documentsExecutionLog.CreateDate = " + documentsExecutionLog.CreateDate + ", documentsExecutionLog.StatusCode = " + documentsExecutionLog.StatusCode;
+                        }
+                        UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {Exception= new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support" + error), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });                      
                         queueService.Complete();
                     }
                 }

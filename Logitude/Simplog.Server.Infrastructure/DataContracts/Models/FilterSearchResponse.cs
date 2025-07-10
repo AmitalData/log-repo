@@ -1,4 +1,4 @@
-﻿namespace WebFreight.Web.Controllers.DigitalPortal.Models
+﻿namespace Simplog.Server.Infrastructure.DataContracts.Models
 {
     public class FilterSearchResponse
     {

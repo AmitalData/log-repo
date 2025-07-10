@@ -6,7 +6,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
@@ -318,7 +318,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 var sw = Stopwatch.StartNew();
                 loggedUserFeatures = GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
-                Debug.WriteLine($"GetAllowedFeaturesForLoggedUserBL({sw.Elapsed})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetAllowedFeaturesForLoggedUserBL({sw.Elapsed})");
             }
 
 
@@ -338,8 +338,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             List<FeaturePM> allFeatures = new List<FeaturePM>();
             List<string> allowedPackages = new List<string>();
 
-            ContactTenantRepository contactTenantsRepository = new ContactTenantRepository(this.repository.context);
-            ContactTenantRoleRepository contactTenantRolesRepository = new ContactTenantRoleRepository(this.repository.context);
+            ContactTenantRepository contactTenantsRepository = new ContactTenantRepository(tenant);
+            ContactTenantRoleRepository contactTenantRolesRepository = new ContactTenantRoleRepository(tenant);
             ContactTenantQuery contactTenantQuery = new ContactTenantQuery(contactTenantsRepository);
             ContactTenantRoleQuery contactTenantRoleQuery = new ContactTenantRoleQuery(contactTenantRolesRepository);
             ContactTenantPM contactTenant = contactTenantQuery.GetContactTenantForUser(loggedUserId, tenant);
@@ -348,8 +348,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    contactTenantsRepository = new ContactTenantRepository(this.repository.context);
-                    contactTenantRolesRepository = new ContactTenantRoleRepository(this.repository.context);
+                    contactTenantsRepository = new ContactTenantRepository(0);
+                    contactTenantRolesRepository = new ContactTenantRoleRepository(0);
 
                     contactTenantQuery = new ContactTenantQuery(contactTenantsRepository);
                     contactTenantRoleQuery = new ContactTenantRoleQuery(contactTenantRolesRepository);

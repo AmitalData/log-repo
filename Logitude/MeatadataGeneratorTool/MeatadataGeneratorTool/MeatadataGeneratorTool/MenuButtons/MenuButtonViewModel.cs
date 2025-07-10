@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -277,6 +278,10 @@ namespace MeatadataGeneratorTool.MenuButtons
             {
                 str.AppendLine("Default Text is Required");
             }
+            else if (ContainsHebrewCharacters(this.DefaultText))
+            {
+                str.AppendLine("Default Text cannot contain Hebrew characters");
+            }
 
             if (string.IsNullOrEmpty(this.SelectedMenuButtonType))
             {
@@ -289,8 +294,12 @@ namespace MeatadataGeneratorTool.MenuButtons
             {
                 ErrorsVisibility = Visibility.Visible;
             }
+            else
+            {
+                ErrorsVisibility = Visibility.Collapsed;
+            }
 
-            FirePropertyChanged("ErrorMessages");
+                FirePropertyChanged("ErrorMessages");
         }
 
         Visibility errorsVisibility = Visibility.Collapsed;
@@ -305,6 +314,12 @@ namespace MeatadataGeneratorTool.MenuButtons
         {
             get { return menuButtonsDetailsVisibility; }
             set { menuButtonsDetailsVisibility = value; FirePropertyChanged("MenuButtonsDetailsVisibility"); }
+        }
+
+
+        private bool ContainsHebrewCharacters(string text)
+        {
+            return Regex.IsMatch(text, @"[\u0590-\u05FF]");
         }
 
         public string TextCodeCode { get; internal set; }

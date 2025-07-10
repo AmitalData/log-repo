@@ -4,7 +4,7 @@ using Logitude.TariffModule.BL.EntityPMs;
 using Logitude.TariffModule.Data;
 using Logitude.TariffModule.Data.EntityPOCOs;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;

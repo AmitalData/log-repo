@@ -6,10 +6,10 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -141,6 +141,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Code = a.Card.Code,
                                    EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                    SendingInterestReport = a.Card.SendingInterestReport,
+                                   ExternalSystem = a.Card.ExternalSystem,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
@@ -262,6 +263,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Code = a.Card.Code,
                                    EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                    SendingInterestReport = a.Card.SendingInterestReport,
+                                   ExternalSystem = a.Card.ExternalSystem,
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();
@@ -386,6 +388,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    Prefix = a.Prefix,
                                    EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
                                    SendingInterestReport = a.Card.SendingInterestReport,
+                                   ExternalSystem = a.Card.ExternalSystem,
+                                   IsAutonomy = a.Card.IsAutonomy
+
                                },
                                BillToId = a.Card.BillToId,
                            }).FirstOrDefault();

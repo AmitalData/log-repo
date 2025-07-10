@@ -1,26 +1,19 @@
-using System.Data.Entity.Core.EntityClient;
-using System.Data.Entity.Core.Objects;
-using System.Data.SqlClient;
-using System.Transactions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using System.Data.Common;
-using System.Data.Entity;
 using Simplog.Data.CommonDataModel.Mapping;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Mapping;
+using Simplog.Data.InvoiceModel.Mapping;
+using Simplog.Data.QuoteModel.Mapping;
+using Simplog.Data.ShipmentsModel.Mapping;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
-using Simplog.Server.Infrastructure;
-using Simplog.Data.InvoiceModel.Mapping;
-using Simplog.Data.ShipmentsModel.Mapping;
-using Simplog.Data.InfrastructureModel.Mapping;
-using Simplog.Data.QuoteModel.Mapping;
-using System;
-using System.Data;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Configuration;
 using Simplog.Global.Data.GlobalModel.Mapping;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
+using System.Configuration;
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SqlClient;
 
 namespace Simplog.Data.CommonDataModel
 {
@@ -38,12 +31,8 @@ namespace Simplog.Data.CommonDataModel
         {
             if (LogitudeSettings.WorkEnvironment == "customs" && LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                GlobalDB currentDb;
-
-                //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                //{                
-                currentDb = GlobalDbHelper.GetSingleGlobalDB();
-                //}
+                GlobalDB currentDb;                
+                currentDb = GlobalDbHelper.GetSingleGlobalDBOracle();                
                 string dbConnectionInfo = currentDb.DBConnection;
                 string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
@@ -74,20 +63,25 @@ namespace Simplog.Data.CommonDataModel
 
         }
 
+        public CommonDataContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            Database.SetInitializer<CommonDataContext>(null);
+            this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.AutoDetectChangesEnabled = false;
+            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
+        }
+
         public static ICommonDataContext GetContext(int tenant)
         {
-            GlobalDB currentDb;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            //}
-            string dbConnectionInfo = currentDb.DBConnection;
-            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
-
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
-            CommonDataContext context = new CommonDataContext(connection);
-
-            return context;
+            GlobalDB currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+            {
+                return new CommonDataContext(DatabaseInitializer.GetConnection(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
+            }
+            else
+            {
+                return new CommonDataContext(DatabaseInitializer.GetConnectionString(currentDb.DBConnection, currentDb.SecondaryAzureDBConnection));
+            }
         }
         public static CommonDataContext GetFullContext(int tenant)
         {
@@ -501,6 +495,10 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new CarrierServiceLineMap());
             modelBuilder.Configurations.Add(new HorseGenderMap());
             modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
+            modelBuilder.Configurations.Add(new FreelancerGroupTypeMap());
+            modelBuilder.Configurations.Add( new UserFreelancerGroupMap());
+            modelBuilder.Configurations.Add(new TruckerSettingMap());
+
 
 
             base.OnModelCreating(modelBuilder);
@@ -509,7 +507,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; set; }
         public IDbSet<VatFormatType> VatFormatTypes { get; set; }
         public IDbSet<EmailProvider> EmailProviders { get; set; }
-        public IDbSet<AuthenticationToken> AuthenticationTokens { get; set; }
         public IDbSet<VatUniqueType> VatUniqueTypes { get; set; }
         public IDbSet<VatMandatoryType> VatMandatoryTypes { get; set; }
         public IDbSet<CustomerSalesNote> CustomerSalesNotes { get; set; }
@@ -1089,6 +1086,14 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
 
         public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
+        public IDbSet<ExternalLink> ExternalLinks { get; set; }
+
+        public IDbSet<FreelancerGroupType> FreelancerGroupTypes { get; set; }
+        public IDbSet<UserFreelancerGroup> UserFreelancerGroups { get; set; }
+
+        public IDbSet<TruckerSetting> TruckerSettings { get; set; }
+        public IDbSet<Responsibility> Responsibilities { get; set; }
+        public IDbSet<SearchIndexEditHistory> SearchIndexEditHistories { get; set; }
 
 
 

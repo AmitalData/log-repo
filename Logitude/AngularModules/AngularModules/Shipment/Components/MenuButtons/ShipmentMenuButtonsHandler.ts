@@ -28,11 +28,27 @@ import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureTo
 import { ShipmentContainersWebService } from 'Shipment/Services/ShipmentContainersWebService';
 import { $ } from 'protractor';
 import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
+import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
+import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
+import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
+import { ReportGroupList } from 'Report/EntityLists/ReportGroupList';
+import { ReportsTemplateListExtendedService } from 'Common/Services/ExtendedLists/ReportsTemplateListExtendedService';
+import { ReportList } from 'Report/EntityLists/ReportList';
+import { QueryFilterItem } from 'Report/Components/Filters/QueryFilterItem';
 
 export class ShipmentMenuButtonsHandler implements OnDestroy {
     public EntityPM: ShipmentPM;
     public entityArgs: EntityArgs
     private CurrentSession = SessionLocator.SelectedSession;
+    public ReportsPreview: ReportsPreviewComponent;
+    private reportsTemplateListExtendedService: ReportsTemplateListExtendedService;
+    private reportService: ReportService;
+
+    constructor() {
+        this.reportsTemplateListExtendedService = new ReportsTemplateListExtendedService();
+        this.reportService = new ReportService();
+    }
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
@@ -57,6 +73,12 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
 
                     if (button.EventCode == "ShowAWB") {
                         button.IsDisabled = buttonEnabled ? (this.EntityPM.TransportModeId != "A") : true;
+                    }
+
+                    if (button.EventCode == "ShipmentForm" || button.EventCode == "Forms") {
+                        button.IsHidden = !this.EntityPM.IsCustomShipment;
+                        // button.IsHidden = (this.entityArgs.EditComponent["SelectedQueryCode"] != "CustomsShipments");
+                        // button.IsDisabled = true;
                     }
 
                     if (button.EventCode == "CopyShipment") {
@@ -521,6 +543,11 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
                             break;
                         }
 
+                    case "ShipmentForm": {
+                        this.ShipmentFormClicked();
+                        break;
+                    }
+    
                     default: {
                         this.isButtonClicked = false;
                         break;
@@ -529,6 +556,76 @@ export class ShipmentMenuButtonsHandler implements OnDestroy {
             }
         }
     }
+
+    ShipmentFormClicked() {
+        this.ResetButtonClicked();
+
+        this.reportService.GetReportByCode("SHTO").subscribe((myResponse: ServiceResponse) => {
+            this.LoadReportTemplate(myResponse.Result);
+        });
+    }
+
+    ReportTemplates: any[] = [];
+    LoadReportTemplate(reportList: ReportList) {
+     
+        this.reportsTemplateListExtendedService.getReportsTemplateListsByReportId(reportList.Id,"R").subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.ReportTemplates = myResponse.Result;
+            }
+
+            SessionLocator.DynamicLoader.Load("./Report/Components/ReportsPreviewComponent", this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                this.ReportsPreview = cmpRef.instance;
+                this.ReportsPreview.Report = reportList;
+
+                this.BuildReport();
+
+                this.ReportsPreview.OnDone.subscribe(response => {
+                    
+                    // close report page
+                    cmpRef.instance.ComponentRef.destroy();
+
+                    if (!response.HasError) {
+                        // download report
+                        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadReportPage.aspx?fileName=" + response.Result.ReportKey + "@&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&type=PrintToPDF";
+                        window.open(url);
+                    }
+                });
+            });
+        });
+    }
+
+    GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {
+        var queryFilterItem = new QueryFilterItem();
+        queryFilterItem.DisplayInList = false;
+        queryFilterItem.FieldName = FieldName;
+        queryFilterItem.FieldValue = FieldValue;
+        queryFilterItem.FieldValue2 = FieldValue2;
+        queryFilterItem.Operator = Operator;
+        queryFilterItem.FieldDataType = FieldDataType;
+
+        return queryFilterItem;
+    }
+
+    BuildReport() {
+
+        let queryFilterItems = new Array<QueryFilterItem>();
+        queryFilterItems.push(this.GetNewQueryFilterItem("Id", this.EntityPM.Id, null, "string"));
+
+        let reportFliter = new ReportFliter();
+        reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        reportFliter.QueryFilterItemLists = queryFilterItems;
+        reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        reportFliter.NumberOfPage = 1;
+        reportFliter.DisablePreview = true;
+        reportFliter.ProcessType = "GenerateReport";
+
+        this.ReportsPreview.GenerateReport(reportFliter, true);
+    }
+
     ViziionUnsubscribe() {
         var shipmentContainersWebService = new ShipmentContainersWebService();
         this.CurrentSession.StartBusyIndicator("Unsubscribe...");

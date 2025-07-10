@@ -191,7 +191,7 @@ namespace CommunicationWorkerRole
          
             string gcmMessage = "{\"data\":{\"msg\":\"" + mobileNotificationLog.NotificationMessageAndroid + "\",  \"EntitiyId\":\"" + mobileNotificationLog.EntityId + "\"  , \"NotifiyId\":\"" + mobileNotificationLog.Id + "\"  , \"Tenant\":\"" + mobileNotificationLog.Tenant.ToString() + "\" , \"badge\":\"" + badgeNumber.ToString() + "\"  , \"title\":\"" + tenantName + "\" }}";
             NotificationHubClient hub = NotificationHubClient.CreateClientFromConnectionString(LogitudeSettings.NotificationHubConnectionString, LogitudeSettings.NotificationHubName);
-            Task<NotificationOutcome> result = hub.SendGcmNativeNotificationAsync(gcmMessage, tagsList);
+            Task<NotificationOutcome> result = hub.SendFcmNativeNotificationAsync(gcmMessage, tagsList);
 
             return result;
 

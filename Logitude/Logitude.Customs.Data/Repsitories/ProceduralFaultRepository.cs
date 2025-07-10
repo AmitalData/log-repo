@@ -21,6 +21,17 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
+        public string GetFaultIdByFaultNumber(string proceduralFaultNumber, int tenant)
+        {
+            if (string.IsNullOrEmpty(proceduralFaultNumber)) return "";
+            return
+                  (
+                  from rec in context.ProceduralFaults
+                  where rec.ProceduralFaultNumber == proceduralFaultNumber && rec.Tenant == tenant
+                  select rec.Id
+                  ).FirstOrDefault();
+        }
+
    }
 
 }

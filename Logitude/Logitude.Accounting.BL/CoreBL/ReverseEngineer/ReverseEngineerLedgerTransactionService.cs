@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             finally
             {
-               // Debug.WriteLine(debugIt);
+               //NetCommonHelper.Logger.DevLog.Instance.WriteDebug(debugIt);
             }
             //return xml;
 

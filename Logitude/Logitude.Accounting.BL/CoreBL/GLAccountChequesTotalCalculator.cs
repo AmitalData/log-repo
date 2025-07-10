@@ -6,7 +6,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;

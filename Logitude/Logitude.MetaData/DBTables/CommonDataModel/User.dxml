@@ -146,7 +146,8 @@
   </Column>
   <Column
     Name="IsTwoFactorAuthenticationEnabled"
-    ShortName="IsTwoFactorAuthenticateEnabled"
+    ShortName="IsTwoFactorAuthEnabled"
+    OldNames="IsTwoFactorAuthenticateEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -266,8 +267,8 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
-	<Index
-   Columns="Tenant,Code" />
+  <Index
+    Columns="Tenant,Code" />
   <Index
     Columns="AutomaticLastUpdateDate" />
 </Table>

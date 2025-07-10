@@ -10,7 +10,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -85,7 +85,7 @@ namespace Logitude.Customs.Data.Repsitories
             DateTime nowDate = DateTime.Now;
             DateTime dayAgoDate = DateTime.Now.AddDays(-1);
             return (from a in context.CourierMasters
-                    where a.Tenant == tenant && a.IsOpen == true && a.LandingDate < nowDate && a.LandingDate > dayAgoDate
+                    where a.Tenant == tenant && a.IsOpen == true && a.LandingDate < nowDate && a.LandingDate > dayAgoDate && a.SentDeclarationStatus != true
                     select a).ToList();
         }
 

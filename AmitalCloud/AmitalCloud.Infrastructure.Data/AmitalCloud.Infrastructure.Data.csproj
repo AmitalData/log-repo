@@ -1,0 +1,1278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9E950E38-E9C2-4BD7-A272-C52729CA05C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AmitalCloud.Infrastructure.Data</RootNamespace>
+    <AssemblyName>AmitalCloud.Infrastructure.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Library\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Amital.UpDown.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Amital.1.0.0\lib\Net40\Amital.UpDown.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity.EF6, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\EF6\Devart.Data.Oracle.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=3.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.3.0.5\lib\net461\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.2.3.24\lib\net461\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Rest.ClientRuntime.Azure.3.3.19\lib\net461\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceModel.DomainServices.WindowsAzure, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.1.0.0\lib\Net40\Microsoft.ServiceModel.DomainServices.WindowsAzure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Diagnostics, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\Microsoft.WindowsAzure.ServiceRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="NetCommonHelper, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetCommonHelper.1.0.7\lib\net472\NetCommonHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Loki, Version=0.0.0.0, Culture=neutral, PublicKeyToken=8dab11a1448ce9d0, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Targets.Loki.2.2.0\lib\netstandard2.0\NLog.Loki.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.PerformanceCounter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.PerformanceCounter.4.5.0\lib\net461\System.Diagnostics.PerformanceCounter.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.Json.8.0.0\lib\net462\System.Net.Http.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.6.0.1\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encoding.CodePages, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encoding.CodePages.4.5.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.4\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsAzureTelemetryEvents, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureTelemetryEvents.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Azure\BlobExtensions.cs" />
+    <Compile Include="Azure\CommunicationLogsAzure.cs" />
+    <Compile Include="Azure\CommunicationLogsAzureContext.cs" />
+    <Compile Include="Azure\EmailSendingService.cs" />
+    <Compile Include="Azure\StorageAcountDetails.cs" />
+    <Compile Include="BaseClasses\BaseRepository.cs" />
+    <Compile Include="BaseClasses\BaseSpecification.cs" />
+    <Compile Include="BaseClasses\DbContextBase.cs" />
+    <Compile Include="Context\AmitalCloudContext.AutoCreated.cs" />
+    <Compile Include="Context\AmitalCloudContext.cs" />
+    <Compile Include="Context\AmitalCloudContext.Invoice.cs" />
+    <Compile Include="Context\AmitalCloudContext.Shipment.cs" />
+    <Compile Include="Context\GlobalContext.cs" />
+    <None Include="Context\GlobalContext.Views.cs" />
+    <Compile Include="Context\SystemLogContext.cs" />
+    <None Include="Context\SystemLogContext.Views.cs" />
+    <Compile Include="DataMapping\CustomChildObjectMapping.cs" />
+    <Compile Include="DataMapping\DocumentsFilingMetaDataValueMapping.cs" />
+    <Compile Include="DBHelpers\AmitalCloudDebuggerUtil.cs" />
+    <Compile Include="DBHelpers\AmitalCloudExceptionExt.cs" />
+    <Compile Include="Helpers\ApplicationAppInfo.cs" />
+    <Compile Include="DBHelpers\DatabaseInitializer.cs" />
+    <Compile Include="DBHelpers\DbContextBaseUtil.cs" />
+    <Compile Include="DBHelpers\ExtensionObjectContext.cs" />
+    <Compile Include="Helpers\FixedSizedQueue.cs" />
+    <Compile Include="DBHelpers\GlobalDbHelper.cs" />
+    <Compile Include="DBHelpers\MigrationConfiguration.cs" />
+    <Compile Include="EntityDataMappings\AccountDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AccountingPartnerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AccountingSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AccountingSystemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AccountTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AdditionalServiceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AddressDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AddressTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AdvancedQueryFilterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AgentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AgentSharedLogisticsKeyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AirlineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AirlineMessagingRuleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AnalyzeQueueDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AnalyzeQueueStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ApiCredintialsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\APILogsDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\APILogsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AuditLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AuthenticationTokenDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutomationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutomationHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutomationLastUpdateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutomationResultEmailRecipientDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AutoSignupEmailDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AWBDescriptionOfGoodsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AWBMessagesCCSTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BatchServicesDefinitionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BatchServicesDefinitionModsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BatchTaskExecutionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BatchTaskExecutionStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BIFoldersPermissionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BIReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BIReportFolderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BIReportsExecutionLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BIReportsTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BlobFileDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BluesnapContractDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BluesnapContractTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BluesnapTransactionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BorderTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BranchDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BusinessHourDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BusinessHoursHolidayDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BusinessProcessQueueDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BusinessRoleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\BusinessUnitDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CaptchaKeyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CardContactAdditionalServiceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CardContactDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CardContactProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CardDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CardExternalAccountsByProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CardExternalCodeByCurrencyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CardSearchDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CargoTenantMilestoneDefinitionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CarrierAreaDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CarrierAreasPortDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CarrierServiceLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CategoryTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChangePasswordLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChargesExternalAccountsByProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChargesGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChargesTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChargeTypeAccountingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CheckDigitControlAlgorithmDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ChildEntitiesCustomFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ColorIndexDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CommodityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CommunicationAttachmentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CommunicationLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CommunicationLogStepDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CommunicationLogTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CommunicationStatusTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CompetitorDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ComputingPartnerCodeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ComputingPartnerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ComputingPartnerTableDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ComputingPartnerTranslationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactActivityLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactDoneMethodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactLastLoginDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactLoginLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactMobileDeviceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactPasswordDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactTenantDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContactTenantRoleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ContainerSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ConvertProgramInfoDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CounterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CounterDefinitionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CounterLastNumberDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CounterStatDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CountryCityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CountryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CreditLimitSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CurrencyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomAgentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomChildObjectDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerAccountManagerByProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerAdditionalServiceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerCompetitorDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerCompetitorProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerDepositionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerFieldsUpdateSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerOpenFilesAmountDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerProductActualDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerProductLocationActualDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerProductLocationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerSalesNoteDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerSizeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerTeamDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerTenantAccessCardDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerTenantAccessCardsBatchDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerTenantAccessDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerTenantAccessRequestDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomerTenantAccessStatusTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomFieldsMainObjectsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomPickListDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsInterfaceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsInterfaceSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsShipperDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomTableDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DataBasePropertyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DataCustomObjectDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DataProviderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DBIdCounterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DefaultAndConfigurationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DefaultAndConfigurationKeyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DepartmentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeploymentPackageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeploymentPackageExecutionLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DeploymentPackagesVersionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DescriptionOfGoodsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalContactLastSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalFieldSecurityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalPortalLanguageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalPortalScreenDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalPreDefinedComponentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalProfileDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DigitalTextCodeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DimensionsUnitDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DirectionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DistributorDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentFilingBackupBatchDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentFilingBackupSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentFolderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentOutCopyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentOutDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentsDataProviderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentsExecutionLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentsFilingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentsFilingMetaDataValueDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentsMetaDataTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentTypeCategoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentTypeCopyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentTypeCustomFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentTypeMetaDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DocumentTypeTemplateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DueTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWCategoriesDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWHBuildStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWHEnvironmentSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWHSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWObjectFieldCategoriesDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWObjectFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWObjectTableDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWQueryColumnDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWQueryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWQueryFilterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DWSubQueryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EmailAlertSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EmailProviderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityCasualDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityChangeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityDateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityLastActivityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityLastActivityTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityLastUpdateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EntityStatusTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EventRemarkDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EventTypeCategoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\EventTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FailedLoginLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FailedTokenLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FeatureAccessLevelDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FeatureChangeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FeatureDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FeaturePackageTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FeatureToggleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FeatureTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FieldDataTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FilingInboxAttachmentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FilingInboxAttachmentLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FilingInboxDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FollowUpDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FormCustomFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\FTPDetailDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GeneralLockDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountingPartnerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountingSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountingSystemDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AccountTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AdditionalServiceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AddressDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AddressTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AdvancedQueryFilterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AgentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AgentSharedLogisticsKeyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AirlineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AirlineMessagingRuleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AnalyzeQueueDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AnalyzeQueueStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ApiCredintialsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\APILogsDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\APILogsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AuditLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AuthenticationTokenDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutomationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutomationHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutomationLastUpdateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutomationResultEmailRecipientDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AutoSignupEmailDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AWBDescriptionOfGoodsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AWBMessagesCCSTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BatchServicesDefinitionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BatchServicesDefinitionModsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BatchTaskExecutionStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BIFoldersPermissionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BIReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BIReportFolderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BIReportsExecutionLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BIReportsTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BlobFileDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BluesnapContractDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BluesnapContractTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BluesnapTransactionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BorderTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BranchDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BusinessHourDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BusinessHoursHolidayDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BusinessProcessQueueDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BusinessRoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\BusinessUnitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CaptchaKeyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CardContactAdditionalServiceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CardContactDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CardContactProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CardDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CardExternalAccountsByProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CardExternalCodeByCurrencyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CardSearchDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CargoTenantMilestoneDefinitionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CarrierAreaDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CarrierAreasPortDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CarrierServiceLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CategoryTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChangePasswordLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChargesExternalAccountsByProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChargesGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChargesTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChargeTypeAccountingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CheckDigitControlAlgorithmDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ChildEntitiesCustomFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ColorIndexDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CommodityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CommunicationAttachmentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CommunicationLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CommunicationLogStepDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CommunicationLogTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CommunicationStatusTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CompetitorDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ComputingPartnerCodeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ComputingPartnerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ComputingPartnerTableDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ComputingPartnerTranslationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactActivityLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactDoneMethodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactLastLoginDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactLoginLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactMobileDeviceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactPasswordDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactTenantDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContactTenantRoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ContainerSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ConvertProgramInfoDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CounterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CounterDefinitionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CounterLastNumberDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CounterStatDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CountryCityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CountryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CreditLimitSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CurrencyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomAgentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomChildObjectDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerAccountManagerByProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerAdditionalServiceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerCompetitorDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerCompetitorProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerDepositionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerFieldsUpdateSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerOpenFilesAmountDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerProductActualDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerProductLocationActualDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerProductLocationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerSalesNoteDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerSizeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerTeamDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerTenantAccessCardDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerTenantAccessCardsBatchDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerTenantAccessDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerTenantAccessRequestDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomerTenantAccessStatusTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomFieldsMainObjectsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomPickListDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsInterfaceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsInterfaceSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsShipperDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomTableDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DataBasePropertyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DataCustomObjectDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DataProviderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DBIdCounterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DefaultAndConfigurationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DefaultAndConfigurationKeyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DepartmentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeploymentPackageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeploymentPackageExecutionLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DeploymentPackagesVersionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DescriptionOfGoodsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalContactLastSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalFieldSecurityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalPortalLanguageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalPortalScreenDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalPreDefinedComponentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalProfileDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DigitalTextCodeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DimensionsUnitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DirectionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DistributorDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentFilingBackupBatchDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentFilingBackupSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentFolderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentOutCopyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentOutDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentsDataProviderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentsExecutionLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentsFilingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentsFilingMetaDataValueDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentsMetaDataTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentTypeCategoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentTypeCopyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentTypeCustomFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentTypeMetaDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DocumentTypeTemplateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DueTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWCategoriesDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWHBuildStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWHEnvironmentSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWHSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWObjectFieldCategoriesDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWObjectFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWObjectTableDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWQueryColumnDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWQueryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWQueryFilterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DWSubQueryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EmailAlertSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EmailProviderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityCasualDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityChangeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityDateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityLastActivityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityLastActivityTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityLastUpdateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EntityStatusTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EventRemarkDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EventTypeCategoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\EventTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FailedLoginLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FailedTokenLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FeatureAccessLevelDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FeatureChangeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FeatureDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FeaturePackageTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FeatureToggleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FeatureTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FieldDataTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FilingInboxAttachmentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FilingInboxAttachmentLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FilingInboxDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FollowUpDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FormCustomFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\FTPDetailDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GeneralLockDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GlobalContactDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GlobalDBDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GlobalTenantCounterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GlobalTenantDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\GlobalZoneDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HelpResourceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HorseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HorseGenderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HTSCodeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HybridPartnerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HybridPartnersPermissionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HybridTenantStateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\HybridTenantThresholdDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\IATACodeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ImageDetailDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ImageLibraryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InboundEmailDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InboundEmailLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\IncotermDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\IndustryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\INTTRABranchRegisteredCarrierDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\INTTRASettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\INTTRASettingModeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InvalidEmailResetPasswordDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LastRunDetailDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LBPTeamMemberDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LeadSourceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LogBoxTenantSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LoginPolicyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LogitudeLeadDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LogitudeMessagesTransmissionLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MAWBStackDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MeasurementDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MentionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MenuButtonDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MenuButtonGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MenusTableDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MenuTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MetodoPagoDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MobileNotificationLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MonitorServiceLastUpdateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MoveTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MultiEntityUpdateLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\NumberFormatDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectFieldModificationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectFieldValidationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectTableDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectTableHelperControlDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectTableLastUpdateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectTableRuleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectTableRuleFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectTableTabDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ObjectTableTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OneTimePasswordDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PackageConnectedPackageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PackageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PackageFeatureDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PackageTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ParticipantDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PartnerTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PasswordPolicyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PasswordResetRequestDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentChannelDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentCurrencyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentGatewayPartnerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentMethodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentTermDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PaymentTermDateTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PerformanceLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PermissionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PortDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PortGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PortTimeZoneDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PostalCodeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PrepaidCollectDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ProductItemDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ProductPeriodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ProductTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QueryColumnDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QueryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QueryExportExecutionLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QueryGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QueueDefinitionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QueueMessageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QueueMessageMoreDetailsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteChargesGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteGroupSectionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteTemplateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteTemplateSectionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteTemplateSectionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteTemplateSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteTemplateTableDesignDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteTemplateTextDesignDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuoteTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RankDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RateClassDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RatesTableDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RecurringPeriodDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReferenceCustomObjectDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RegimenFiscalDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RegionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RegistryDateTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReportDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReportExecutionLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReportGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReportsTemplateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ReportsTemplatesVersionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ResponsibilityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RestrictionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RoleFeatureDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RoleTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RuleConditionFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RuleNotificationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RuleTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RuleUpdateHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SatisfactionSurveyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SchedulerProcedureDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ScreenDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ScreenFieldDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ScreenModificationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ScreenSectionDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SessionPolicyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedLogisticsContactLastLoginDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedLogisticsInvitationStatusDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedLogisticsSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SharedUserQueryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ShippingAgentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ShippingLineDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SmallDocumentDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SpecialServiceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\StateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SystemDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SystemMetadataLastUpdateDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TabModificationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TariffCarrierTranslationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TarrifChargeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TarrifFromToDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TarrifFromToTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TarrifHeaderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TarrifStepDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TarrifTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TaskSchedulerHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TasksSchedulerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TeamDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TeamMemberBusinessRoleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TemperatureUnitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TemplateFormatDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantAdditionalDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantAddOnDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantLoginPolicyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantManagementDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantManagementLicenseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantManagmentPrivateLabelsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TenantTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TermsofUseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TermsofUseSignatureDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TextCodeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TextCodeTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TipDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TipsVisibilityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ToggleDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TraceEventDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TranslationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TranslationHeaderDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TransportModeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TriggerTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TruckerDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TwoFactorAuthenticationDeviceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UnassignedEntityDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserLastLoginDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserLastSettingsDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserLicenseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserLoginLogDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserPermittedBranchDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UserPermittedProductDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UsersReleaseNotesDisplayDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\UsoCFDIDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\ValidationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VatFormatTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VatMandatoryTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VatTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VatTypePercentageDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VATTypesGroupDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VatUniquePartnerTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VatUniqueTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VendorDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VesselDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\VolumeUnitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseStoragePricingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseWeightMeasurementDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WarehouseWeightRoundingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WebhookKeysDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WeightUnitDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WorkerRoleNameDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\GlobalContactDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GlobalDBDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GlobalTenantCounterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GlobalTenantDataMapping.cs" />
+    <Compile Include="EntityDataMappings\GlobalZoneDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HelpResourceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HorseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HorseGenderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HTSCodeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HybridPartnerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HybridPartnersPermissionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HybridTenantStateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\HybridTenantThresholdDataMapping.cs" />
+    <Compile Include="EntityDataMappings\IATACodeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ImageDetailDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ImageLibraryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InboundEmailDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InboundEmailLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\IncotermDataMapping.cs" />
+    <Compile Include="EntityDataMappings\IndustryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\INTTRABranchRegisteredCarrierDataMapping.cs" />
+    <Compile Include="EntityDataMappings\INTTRASettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\INTTRASettingModeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InvalidEmailResetPasswordDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LastRunDetailDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LBPTeamMemberDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LeadSourceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LogBoxTenantSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LoginPolicyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LogitudeLeadDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LogitudeMessagesTransmissionLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MAWBStackDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MeasurementDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MentionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MenuButtonDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MenuButtonGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MenusTableDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MenuTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MetodoPagoDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MobileNotificationLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MonitorServiceLastUpdateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MoveTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\MultiEntityUpdateLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\NumberFormatDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectFieldModificationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectFieldValidationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectTableDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectTableHelperControlDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectTableLastUpdateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectTableRuleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectTableRuleFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectTableTabDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ObjectTableTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OneTimePasswordDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PackageConnectedPackageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PackageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PackageFeatureDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PackageTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ParticipantDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PartnerTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PasswordPolicyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PasswordResetRequestDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentChannelDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentCurrencyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentGatewayPartnerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentMethodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentTermDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PaymentTermDateTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PerformanceLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PermissionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PortDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PortGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PortTimeZoneDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PostalCodeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PrepaidCollectDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ProductItemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ProductPeriodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ProductTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QueryColumnDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QueryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QueryExportExecutionLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QueryGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QueueDefinitionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QueueMessageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QueueMessageMoreDetailsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteChargesGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteGroupSectionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteTemplateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteTemplateSectionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteTemplateSectionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteTemplateSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteTemplateTableDesignDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteTemplateTextDesignDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuoteTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RankDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RateClassDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RatesTableDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RecurringPeriodDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReferenceCustomObjectDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RegimenFiscalDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RegionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RegistryDateTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReportDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReportExecutionLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReportGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReportsTemplateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ReportsTemplatesVersionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ResponsibilityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RestrictionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RoleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RoleFeatureDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RoleTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RuleConditionFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RuleNotificationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RuleTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RuleUpdateHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SatisfactionSurveyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SchedulerProcedureDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ScreenDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ScreenFieldDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ScreenModificationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ScreenSectionDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SessionPolicyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedLogisticsContactLastLoginDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedLogisticsInvitationStatusDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedLogisticsSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SharedUserQueryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ShippingAgentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ShippingLineDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SmallDocumentDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SpecialServiceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\StateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SystemDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SystemMetadataLastUpdateDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TabModificationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TariffCarrierTranslationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TarrifChargeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TarrifFromToDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TarrifFromToTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TarrifHeaderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TarrifStepDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TarrifTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TaskSchedulerHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TasksSchedulerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TeamDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TeamMemberBusinessRoleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TemperatureUnitDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TemplateFormatDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantAdditionalDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantAddOnDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantLoginPolicyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantManagementDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantManagementLicenseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantManagmentPrivateLabelsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TenantTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TermsofUseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TermsofUseSignatureDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TextCodeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TextCodeTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TipDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TipsVisibilityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ToggleDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TraceEventDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TranslationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TranslationHeaderDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TransportModeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TriggerTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TruckerDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TwoFactorAuthenticationDeviceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UnassignedEntityDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserLastLoginDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserLastSettingsDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserLicenseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserLoginLogDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserPermittedBranchDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UserPermittedProductDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UsersReleaseNotesDisplayDataMapping.cs" />
+    <Compile Include="EntityDataMappings\UsoCFDIDataMapping.cs" />
+    <Compile Include="EntityDataMappings\ValidationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VatFormatTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VatMandatoryTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VatTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VatTypePercentageDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VATTypesGroupDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VatUniquePartnerTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VatUniqueTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VendorDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VesselDataMapping.cs" />
+    <Compile Include="EntityDataMappings\VolumeUnitDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseStoragePricingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseWeightMeasurementDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WarehouseWeightRoundingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WebhookKeysDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WeightUnitDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WorkerRoleNameDataMapping.cs" />
+    <Compile Include="Helpers\BaseClasses\BaseInstance.cs" />
+    <Compile Include="Helpers\CacheManager.cs" />
+    <Compile Include="Helpers\ChangesLoggerService.cs" />
+    <Compile Include="Helpers\DWObjectFieldAdditionalFactService.cs" />
+    <Compile Include="Helpers\DefaultAndConfiguration_Ext.cs" />
+    <Compile Include="Helpers\DefaultKeyService.cs" />
+    <Compile Include="Helpers\DefaultService.cs" />
+    <Compile Include="Helpers\LockHelper.cs" />
+    <Compile Include="Helpers\MultiProcessLockTableUtil.cs" />
+    <Compile Include="Helpers\ObjectQueryExtension.cs" />
+    <Compile Include="Helpers\ProcessLockTableUtil.cs" />
+    <Compile Include="Helpers\SettingUtil.cs" />
+    <Compile Include="Helpers\TableCounter.cs" />
+    <Compile Include="Helpers\BlobFileInfoExt.cs" />
+    <Compile Include="Helpers\ContactsUnseenEntitiesHelper.cs" />
+    <Compile Include="Helpers\EventTracer.cs" />
+    <Compile Include="Helpers\TermsofUseArgs.cs" />
+    <Compile Include="Queries\CardQuery.cs" />
+    <Compile Include="Queries\CommunicationLogStepQuery.cs" />
+    <Compile Include="Queries\DocumentsFilingMetaDataValueQuery.cs" />
+    <Compile Include="Queries\DocumentTypeQuery.cs" />
+    <Compile Include="Queries\DWObjectFieldQuery.cs" />
+    <Compile Include="Queries\ObjectTableRuleQuery.cs" />
+    <Compile Include="Queries\ScreenQuery.cs" />
+    <Compile Include="Queries\ScreenFieldQuery.cs" />
+    <Compile Include="Queries\SettingQuery.cs" />
+    <Compile Include="Queries\SystemMetadataLastUpdateQuery.cs" />
+    <Compile Include="Queries\ErrorLogQuery.cs" />
+    <Compile Include="Queries\TermsofUseQuery.cs" />
+    <Compile Include="Queries\RatesTableQuery.cs" />
+    <Compile Include="Queries\TipsVisibilityQuery.cs" />
+    <Compile Include="Queries\TipQuery.cs" />
+    <Compile Include="Queries\TranslationQuery.cs" />
+    <Compile Include="Queries\ObjectTableTabQuery.cs" />
+    <Compile Include="Repositories\Manual\SessionPolicyRepository.cs" />
+    <Compile Include="Repositories\Manual\CardRepository.cs" />
+    <Compile Include="Repositories\Manual\CommunicationLogRepository.cs" />
+    <Compile Include="Repositories\Manual\CommunicationLogStepRepository.cs" />
+    <Compile Include="Repositories\Manual\ContactRepository.cs" />
+    <Compile Include="Repositories\Manual\CustomerRepository.cs" />
+    <Compile Include="Repositories\Manual\DocumentRepository.cs" />
+    <Compile Include="Repositories\Manual\DocumentsFilingMetaDataValueRepository.cs" />
+    <Compile Include="Repositories\Manual\DocumentsFilingRepository.cs" />
+    <Compile Include="Repositories\Manual\DocumentsMetaDataTypeRepository.cs" />
+    <Compile Include="Repositories\Manual\EntityStatusRepository.cs" />
+    <Compile Include="Repositories\Manual\EventTypeRepository.cs" />
+    <Compile Include="Repositories\Manual\FeatureToggleRepository.cs" />
+    <Compile Include="Repositories\Manual\GeneralLockRepository.cs" />
+    <Compile Include="Repositories\Manual\TraceEventRepository.cs" />
+    <Compile Include="Repositories\Manual\UserRepository.cs" />
+    <Compile Include="Validators\BIReportClassLevelValidator.cs" />
+    <Compile Include="Validators\ClassLevelValidator.cs" />
+    <Compile Include="Validators\ExpressionValidation.cs" />
+    <Compile Include="Validators\FeatureToggleClassLevelValidator.cs" />
+    <Compile Include="Validators\FieldValidator.cs" />
+    <Compile Include="Validators\FieldValueValidator.cs" />
+    <Compile Include="Validators\InfrastructureClassLevelValidator.cs" />
+    <Compile Include="Validators\InfrastructureValidationClass.cs" />
+    <Compile Include="Validators\ValidationClass.cs" />
+    <Compile Include="Validators\ValidationClass.Shared.cs" />
+    <Compile Include="DBHelpers\DbContextBaseSqlServerExt.cs" />
+    <Compile Include="DBHelpers\DbContextLogger.cs" />
+    <Compile Include="DBHelpers\DbModelBuilderExt.cs" />
+    <Compile Include="DBHelpers\ExceptionFormatDbEntityUtil.cs" />
+    <Compile Include="DBHelpers\ExecuteStoredProcedures.cs" />
+    <Compile Include="DBHelpers\StoredProcedureParam.cs" />
+    <Compile Include="Helpers\AesFunction.cs" />
+    <Compile Include="Helpers\AmitalCloudDomainScope.cs" />
+    <Compile Include="Helpers\AmitalCloudEntryPoint.cs" />
+    <Compile Include="Helpers\AuthenticationUtil.cs" />
+    <Compile Include="Helpers\AzureLog.cs" />
+    <Compile Include="Helpers\ByteCompressor.cs" />
+    <Compile Include="Helpers\CacheLogger.cs" />
+    <Compile Include="Helpers\CacheMessageSender.cs" />
+    <Compile Include="Helpers\CacheWrapper.cs" />
+    <Compile Include="Helpers\Communications.cs" />
+    <Compile Include="Helpers\ContainerAccessor.cs" />
+    <Compile Include="Helpers\CustomFieldResolver.cs" />
+    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldGetter.cs" />
+    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldMultiSetter.cs" />
+    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldSingleSetter.cs" />
+    <Compile Include="Helpers\DictionaryJsonConverter.cs" />
+    <Compile Include="Helpers\EmailTypeClass.cs" />
+    <Compile Include="Helpers\ExceptionHandler.cs" />
+    <Compile Include="Helpers\FeatureToggleHelper.cs" />
+    <Compile Include="Helpers\FieldValueResolver.cs" />
+    <Compile Include="Helpers\GenericFilter.cs" />
+    <Compile Include="Helpers\GenericSort.cs" />
+    <Compile Include="Helpers\InjectionContainer.cs" />
+    <Compile Include="Helpers\LoggedContactResolver.cs" />
+    <Compile Include="Helpers\LogMessagingUtil.cs" />
+    <Compile Include="Helpers\MD5HashUtil.cs" />
+    <Compile Include="Helpers\MethodHelper.cs" />
+    <Compile Include="Helpers\NullCache.cs" />
+    <Compile Include="Helpers\PasswordGenerator.cs" />
+    <Compile Include="Helpers\PerformanceLogger.cs" />
+    <Compile Include="Helpers\Root.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\TableLastUpdateClass.cs" />
+    <Compile Include="Helpers\TenantServerConfigration.cs" />
+    <Compile Include="Helpers\TextCodesTranslator.cs" />
+    <Compile Include="Helpers\TextCodesTranslator.Shared.cs" />
+    <Compile Include="Helpers\TransactionFactory.cs" />
+    <Compile Include="Helpers\TranslateTextsClass.cs" />
+    <Compile Include="Helpers\UnifreightListsUtil.cs" />
+    <Compile Include="Mocks\MockLoggedContactUtil.cs" />
+    <Compile Include="Queries\AddressQuery.cs" />
+    <Compile Include="Queries\CardContactAdditionalServiceQuery.cs" />
+    <Compile Include="Queries\CardContactProductQuery.cs" />
+    <Compile Include="Queries\ContactQuery.cs" />
+    <Compile Include="Exceptions\BusinessErrorException.cs" />
+    <Compile Include="Queries\ContactTenantQuery.cs" />
+    <Compile Include="Queries\ContactTenantRoleQuery.cs" />
+    <Compile Include="Queries\CustomChildObjectQuery.cs" />
+    <Compile Include="Queries\FeatureQuery.cs" />
+    <Compile Include="Queries\ObjectTableQuery.cs" />
+    <Compile Include="Queries\PackageFeatureQuery.cs" />
+    <Compile Include="Queries\RoleFeatureQuery.cs" />
+    <Compile Include="Queries\RoleQuery.cs" />
+    <Compile Include="Queries\TenantManagmentPrivateLabelsQuery.cs" />
+    <Compile Include="Queries\UserLastLoginQuery.cs" />
+    <Compile Include="Queries\UserLastSettingsQuery.cs" />
+    <Compile Include="Queries\UserLicenseQuery.cs" />
+    <Compile Include="Queries\UserLoginLogQuery.cs" />
+    <Compile Include="Queries\UserPermittedBranchQuery.cs" />
+    <Compile Include="Queries\UserPermittedProductQuery.cs" />
+    <Compile Include="Queries\UserQuery.cs" />
+    <Compile Include="Repositories\Infra\IUnitOfWork.cs" />
+    <Compile Include="Repositories\Infra\ObjectTabelRepository.cs" />
+    <Compile Include="Repositories\Infra\Repository.cs" />
+    <Compile Include="Repositories\Infra\Specification.cs" />
+    <Compile Include="Repositories\Infra\UnitOfWork.cs" />
+    <Compile Include="Repositories\Manual\AuthenticationTokenRepository.cs" />
+    <Compile Include="Repositories\Manual\CardContactRepository.cs" />
+    <Compile Include="Repositories\Manual\GlobalDBRepository.cs" />
+    <Compile Include="Repositories\Manual\ObjectFieldRepository.cs" />
+    <Compile Include="Repositories\Manual\ObjectTableRuleFieldRepository.cs" />
+    <Compile Include="Repositories\Manual\ObjectTableRuleRepository.cs" />
+    <Compile Include="Repositories\Manual\PackageFeatureRepository.cs" />
+    <Compile Include="Repositories\Manual\RoleFeatureRepository.cs" />
+    <Compile Include="Repositories\Manual\RuleConditionFieldRepository.cs" />
+    <Compile Include="Repositories\Manual\ScreensRepository.cs" />
+    <Compile Include="Repositories\Manual\TranslationRepository.cs" />
+    <Compile Include="Repositories\Manual\UserLastLoginRepository.cs" />
+    <Compile Include="Repositories\Manual\UserLoginLogRepository.cs" />
+    <Compile Include="Repositories\Manual\UserPermittedBranchRepository.cs" />
+    <Compile Include="Repositories\Manual\UserPermittedProductRepository.cs" />
+    <Compile Include="Security\AutenticationException.cs" />
+    <Compile Include="Security\ContactInfo.cs" />
+    <Compile Include="Security\ContactInformation.cs" />
+    <Compile Include="Security\EntityNotFoundException.cs" />
+    <Compile Include="Security\HSMException.cs" />
+    <Compile Include="Security\LoggedContactUtil.cs" />
+    <Compile Include="Services\CustomChildEntityService.cs" />
+    <Compile Include="Services\CustomChildObjectService.cs" />
+    <Compile Include="Services\CustomFields\ChildEntitiesCustomFieldArgs.cs" />
+    <Compile Include="Services\CustomFields\ChildEntitiesCustomFieldService.cs" />
+    <Compile Include="Services\CustomFields\EntityCustomFieldService.cs" />
+    <Compile Include="Counters\CodeCounter.cs" />
+    <Compile Include="Counters\IdCounter.cs" />
+    <Compile Include="Counters\TenantCounter.cs" />
+    <Compile Include="Queries\ObjectFieldValidationQuery.cs" />
+    <Compile Include="Service References\BlobServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AzureBlobService.cs" />
+    <Compile Include="Services\CustomFields\EntityCustomFieldServiceArgs.cs" />
+    <Compile Include="Services\InfrastructureTranslateTextsClass.cs" />
+    <Compile Include="Services\QueueService\AzureQueueService.cs" />
+    <Compile Include="Services\DatabaseBlobService.cs" />
+    <Compile Include="Services\QueueService\CustomDBQueueMessage.cs" />
+    <Compile Include="Services\QueueService\DbQueueService.cs" />
+    <Compile Include="Services\FileSystemBlobService.cs" />
+    <Compile Include="Services\QueueService\ConcurrentQueueService.cs" />
+    <Compile Include="Services\QueueService\CustomDbQueueService.cs" />
+    <Compile Include="Services\QueueService\DbQueueService.Customs.CS" />
+    <Compile Include="Services\QueueService\LogQueueMessage.cs" />
+    <Compile Include="Services\QueueService\QueueExt.cs" />
+    <Compile Include="Services\QueueService\QueueSendService.cs" />
+    <Compile Include="Services\QueueService\QueueServiceManager.cs" />
+    <Compile Include="Services\QueueService\QueueThreadStateService.cs" />
+    <Compile Include="Services\QueueService\StateMachineProcess.cs" />
+    <Compile Include="Services\QueueService\WorkerNameService.cs" />
+    <Compile Include="Services\UnifreightFillingService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Nlog.config" />
+    <None Include="packages.config" />
+    <None Include="Service References\BlobServiceReference\BlobService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BlobServiceReference\BlobService1.wsdl" />
+    <None Include="Service References\BlobServiceReference\BlobService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BlobServiceReference\BlobService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BlobServiceReference\AmitalCloud.Infrastructure.Data.BlobServiceReference.Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityDataMappings\Manual\" />
+    <Folder Include="Mapping\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BlobServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BlobServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BlobServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BlobServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\BlobServiceReference\BlobService1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Domain\AmitalCloud.Infrastructure.Domain.csproj">
+      <Project>{1cb82e4e-88ff-4772-bfd6-5ec33b23f1cf}</Project>
+      <Name>AmitalCloud.Infrastructure.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AmitalCloud.Infrastructure.Model\AmitalCloud.Infrastructure.Model.csproj">
+      <Project>{B03864C5-0C52-465B-9206-3FFF150413B9}</Project>
+      <Name>AmitalCloud.Infrastructure.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+</Project>

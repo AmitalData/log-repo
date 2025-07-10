@@ -16,7 +16,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Reflection;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;

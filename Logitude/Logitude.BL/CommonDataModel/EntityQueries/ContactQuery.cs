@@ -7,7 +7,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Global.Data.GlobalModel;
@@ -2089,6 +2089,45 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              };
 
             return contacts;
+        }
+        public static string UserBranchRestriction(string paymentBranchId, int tenant, string action = "perform this action")
+        {
+            {
+                string rv = "";
+                bool isError = false;
+                if (!String.IsNullOrEmpty(paymentBranchId))
+                {
+                    ContactQuery contactRep = new ContactQuery(tenant);
+                    UserQuery userQuery = new UserQuery(tenant);
+
+                    ContactPM contact = contactRep.GetContactByNameAndTenant(Logitude.BL.Security.SecurityUtility.GetAuthenticatedWorkWebUser(), tenant, false);
+                    UserPM user = userQuery.GetSinglePM(contact.Id, tenant);
+
+                    if (user != null && user.IsBranchRestricted)
+                    {
+                        if (user.UserPermittedBranches == null || user.UserPermittedBranches.Count == 0)
+                            isError = true;
+                        else
+                        {
+                            List<string> userPermittedBranchIds = user.UserPermittedBranches.Select(item => item.Id).ToList<string>();
+                            if (userPermittedBranchIds == null || userPermittedBranchIds.Count == 0
+                                || !userPermittedBranchIds.Contains(paymentBranchId))
+                                isError = true;
+                        }
+                        if (isError)
+                        {
+                            BranchQuery branchQuery = new BranchQuery(tenant);
+                            BranchPM branch = branchQuery.GetSinglePM(paymentBranchId, tenant);
+                            string base_text = "User " + user.Code + " is not permitted to " + action + " in Branch ";
+                            if (branch != null)
+                                rv = base_text + branch.Code;
+                            else
+                                rv = base_text + paymentBranchId;
+                        }
+                    }
+                }
+                return rv;
+            }
         }
 
         public Contact GetContactByEmail(string email, int tenant)

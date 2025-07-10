@@ -67,6 +67,10 @@ export class ObjectTableTabPM {
     public get HideTabNameInScreen() { return this.hideTabNameInScreen; }
     public set HideTabNameInScreen(newValue: boolean) { this.hideTabNameInScreen = newValue; this.MarkAsDirty(); }
 
+    private isLocked: boolean;
+    public get IsLocked() { return this.isLocked; }
+    public set IsLocked(newValue: boolean) { this.isLocked = newValue; this.MarkAsDirty(); }
+
 
     public IsDirty: boolean;
     MarkAsDirty() {

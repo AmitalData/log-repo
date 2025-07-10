@@ -6,6 +6,7 @@ import {ModuleProviders} from './ModuleProviders';
 @NgModule({
     imports: [InfrastructureModule],
     declarations: [...Components],
+    exports: [...Components],
     entryComponents: [...Components],
 })
 

@@ -54,7 +54,7 @@
   </Column>
   <Column
     Name="Notes"
-    Type="varchar"
+    Type="nvarchar"
     Size="-1">
     <Constraints
       Nullable="true" />

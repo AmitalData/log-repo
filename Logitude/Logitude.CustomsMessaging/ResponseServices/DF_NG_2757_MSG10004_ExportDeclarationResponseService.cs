@@ -325,6 +325,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SendDeclarationPrint(requestParams);
                     }
+                    var isExport = _MyDeclarationPM.Direction == "E";
 
                     // if the declaration has been canceled, pass the status to unifreight
                     if (customResponse?.Response?.Status[0]?.NameCode?.Value == "1" && _MyDeclarationPM?.DeclarationStatusTypeCode != "1")
@@ -350,7 +351,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 comments = ""
                             }
                         };
-                        AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+                        AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel,isExport: isExport);
                     }
                 }
             }
@@ -2393,7 +2394,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 };
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent: eventCode = " + eventCode + " CustomFileNo= " + _MyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, true, isExport: true);
 
             }
             catch (System.Exception)
@@ -2409,6 +2410,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             try
             {
                 if (string.IsNullOrWhiteSpace(loggingUserId)) loggingUserId = AuthenticationUtil.ResolveUserId(dirtyDeclarationPM.Tenant);
+                var isExport = dirtyDeclarationPM.Direction == "E";
                 var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
                 {
                     Tenant = dirtyDeclarationPM.Tenant,
@@ -2436,7 +2438,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (!dirtyDeclarationPM.IsConnectedToUnifreight) myAmitalEventTracerModel.NotConnectedToUniface = true;
 
                 LogMessagingUtil.Instance.AppendLine("AmitalEventTracer.CreateTraceEvent Status " + statusId + "  CustomFileNo = " + dirtyDeclarationPM.CustomFileNo + "   ");
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, isExport: isExport);
 
             }
             catch (System.Exception)
@@ -2525,7 +2527,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             };
 
-            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+            AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true, isExport: true);
 
 
         }

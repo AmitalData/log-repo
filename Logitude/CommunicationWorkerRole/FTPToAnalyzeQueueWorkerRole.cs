@@ -3,7 +3,7 @@ using Logitude.Server.Tools.FTP;
 using Logitude.SystemLogs;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
                             ReadFTPFiles(ftpDetail, "Artemus");
                         }
 
-                        ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+                        ICommonDataContext myCommonContext = CommonDataContext.GetContext((int)Tenant);
                         List<INTTRASetting> allINTTRASetting = myCommonContext.INTTRASettings.Where(d => d.InSettingsId != null).ToList();
                         foreach (INTTRASetting item in allINTTRASetting)
                         {

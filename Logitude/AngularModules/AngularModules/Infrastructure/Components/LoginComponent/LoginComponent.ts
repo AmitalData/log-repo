@@ -30,7 +30,7 @@ import { InfrastructureDomainService } from '../../Services/InfrastructureDomain
 import { CommonDomainService } from '../../../Common/Services/CommonDomainService';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { SATInterfaceSettingPMService } from '../../../Invoice/Services/StandardPMs/SATInterfaceSettingPMService';
-import { DateTool, FileLoader } from '../../Tools';
+import { DateTool } from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 declare var changeFavicon: any;
@@ -43,7 +43,8 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
- 
+import { v4 as uuidv4 } from 'uuid';
+
 import {
     AuthenticateService,
     LogitudeTokensService,
@@ -157,6 +158,8 @@ export class LoginComponent implements OnInit {
         this.UserExtendedPMService = new UserExtendedPMService();
         this.generalDomainService = new GeneralDomainService();
         //FileLoader.LoadFroalaResources();
+        sessionStorage.setItem('SessionId', uuidv4());
+
     }
 
     idxdb: IDBOpenDBRequest;
@@ -188,7 +191,7 @@ export class LoginComponent implements OnInit {
                     if (!userData.HasError) {
                         userData.AmitalBrowserInUse = true;
                         var data = JSON.stringify(userData);
-                        window.sessionStorage.setItem('userdata', data);
+                        window.sessionStorage.setItem('userdata', data);                        
                         SessionLocator.IsExternalParams = false;
                         this.StartLoginProcess();
                     }
@@ -197,30 +200,23 @@ export class LoginComponent implements OnInit {
             this.StartLoginProcess();
          }     
         
-        //  if (isDevMode())
-        //     this.developerLogin();         
-
-
-  
-
-    }
-
+    // if (isDevMode())
+        //     this.developerLogin();       
+     }
+   
     async developerLogin() {
         this.Email = ''
         this.Password = '';
-        this.LoginClicked();
+       this.LoginClicked();
 
-        while(!this.TenantList?.length)
-            await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
+       while(!this.TenantList?.length)
+          await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
 
         this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
 
         this.ContinueClicked()
-    }
- 
-     
-
-
+    }   
+   
     IsShowLoginForm: boolean = false;
 
     StartLoginProcess() {
@@ -257,8 +253,15 @@ export class LoginComponent implements OnInit {
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
-                    var menuName =
-                        SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
+                    var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
+                    const token: string = new URLSearchParams(window.location.search).get('Token');
+                    
+                    if (menuName === 'redi' && token) {
+                        const origin: string = window.location.origin.replace('localhost:4200', 'localhost:9996');
+                        location.href = origin + '/api/ExternalLink/GetForward?Token=' + token;
+                        return;
+                    }
+                    
                     if (
                         menuName == 'logbox' ||
                         menuName == 'dapp' ||
@@ -266,6 +269,7 @@ export class LoginComponent implements OnInit {
                         menuName == 'preq' ||
                         menuName == 'uid'
                     ) {
+
                         if (menuName == 'preq' || menuName == 'uid') {
                             this.LoginCompleted.emit('IgnoreTerms');
                             return;
@@ -555,7 +559,7 @@ export class LoginComponent implements OnInit {
                     this.LoginFailed = true;
                     this.HidePendingLoading = true;
 
-                    if (userData) alert(userData.ExceptionMessage);
+                    alert(userData?.ErrorsArray?.length > 0? userData.ErrorsArray.join("\r"): "Authentication failed. Please check your credentials and try again.");
                 } else {
                     this.TenantList = userData.CompanyLogins;
                     this.HideLoginForm = true;
@@ -629,23 +633,28 @@ export class LoginComponent implements OnInit {
         this.loginService
             .PostLoginData(this.LoginParams)
             .subscribe((userData: any) => {
-                if (userData.TwoFactorkey) {
-                    window.localStorage.setItem(
-                        'TwoFactorkey',
-                        userData.TwoFactorkey
-                    );
+                if (userData?.HasError) {
+                    if (userData?.ErrorsArray?.length > 0) alert(userData.ErrorsArray.join("\r"));
                 }
-                if (
-                    !userData.IsTwoFactorAuthenticationRequired ||
-                    userData.IsTwoFactorAuthenticationRequired == false
-                ) {
-                    this.StartLoading(userData);
-                } else {
-                    this.LoggedUserData = userData;
-                    this.UserMobileNumber = userData.UserMobileNumber;
-                    this.ShowTwoFactorAuthenScreen = true;
+                else {
+                    if (userData.TwoFactorkey) {
+                        window.localStorage.setItem(
+                            'TwoFactorkey',
+                            userData.TwoFactorkey
+                        );
+                    }
+                    if (
+                        !userData.IsTwoFactorAuthenticationRequired ||
+                        userData.IsTwoFactorAuthenticationRequired == false
+                    ) {
+                        this.StartLoading(userData);
+                    } else {
+                        this.LoggedUserData = userData;
+                        this.UserMobileNumber = userData.UserMobileNumber;
+                        this.ShowTwoFactorAuthenScreen = true;
 
-                    //alert('Two factor authentication');
+                        //alert('Two factor authentication');
+                    }
                 }
             });
     }
@@ -1136,7 +1145,7 @@ export class LoginComponent implements OnInit {
             });
 
         this._userLastLoginPMService
-            .GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant)
+            .GetUserLastLogin(SessionInfo.LoggedUserId)
             .subscribe((response: any) => {
                 if (!response.HasError && response.Result) {
                     var lastloginPM: UserLastLoginPM = response.Result;

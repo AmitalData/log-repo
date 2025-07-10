@@ -1,6 +1,6 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools.Counters;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
@@ -30,6 +30,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTableTab.Type = objectTableTabPM.Type;
             objectTableTab.OriginalTabCode = objectTableTabPM.OriginalTabCode;
             objectTableTab.HideTabNameInScreen = objectTableTabPM.HideTabNameInScreen;
+            objectTableTab.IsLocked = objectTableTabPM.IsLocked;
             if (objectTableTabPM.HasTabModification) return;   
 
             objectTableTab.IndexOrder = objectTableTabPM.IndexOrder;

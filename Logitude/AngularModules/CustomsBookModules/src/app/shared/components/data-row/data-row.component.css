@@ -65,14 +65,14 @@ i[role='img'][aria-hidden='true'] {
 }
 
 .mainTable_itemName {
-  padding-right: 15px;
-  /* width: 100%; */
-  width: 100%;
-  height: 100%;
-  line-height: 100%;
-  display: flex;
-  text-align: right;
-  user-select: text;
+	padding-right: 15px;
+	/* width: 100%; */
+	width: 100%;
+	height: 100%;
+	line-height: 100%;
+	display: flex;
+	text-align: right;
+	user-select: text;
 }
 
 .mainTable_itemName a {
@@ -111,7 +111,7 @@ i[role='img'][aria-hidden='true'] {
 	left: 150px;
 	/* width: 82vh; */
 	max-width: 543px;
-    min-width: 543px;
+	min-width: 543px;
 	height: 22px;
 }
 
@@ -205,8 +205,20 @@ i[role='img'][aria-hidden='true'] {
 	.item_details {
 		display: flex;
 	}
-	/* .mainTable_itemName a {
-		width: 17% !important;
-	} */
+
+	.item_details {
+		max-width: 543px;
+		min-width: 385px;
+	}
 }
-/* add  fit contnent for width witoud get out from the boundries of the comoent */
+
+@media (min-width: 1366px) {
+	.item_details {
+		min-width: 415px;
+	}
+}
+@media (min-width: 1500px) {
+	.item_details {
+		min-width: 543px;
+	}
+}
