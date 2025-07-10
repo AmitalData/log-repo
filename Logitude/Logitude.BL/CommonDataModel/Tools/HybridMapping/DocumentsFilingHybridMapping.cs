@@ -277,6 +277,10 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                 if (!string.IsNullOrEmpty(documentsFilingPM.ReceivedByUserId))
                 {
                     User user = userRepository.GetSingleUserByCodeOrEmailForTenant(documentsFilingPM.ReceivedByUserId, documentsFilingPM.OwnerId, documentsFilingPM.Tenant, true);
+                    if (user == null)
+                    {
+                        user = userRepository.GetSingleUser(documentsFilingPM.ReceivedByUserId, documentsFilingPM.Tenant);
+                    }
                     if (user != null)
                     {
                         documentsFilingPM.ReceivedByUserId = user.Id;
