@@ -228,7 +228,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				{
 					CertificateOfOriginInvoiceDetail.InvoiceNum = item.InvoiceNumber;
 					CertificateOfOriginInvoiceDetail.InvoiceDate = Convert.ToDateTime(item.InvoiceDate);
-					CertificateOfOriginInvoiceDetail.InvoiceSum = Convert.ToInt32(item.InvoiceSum);
+					CertificateOfOriginInvoiceDetail.InvoiceSum = Convert.ToDecimal(item.InvoiceSum);
 					CertificateOfOriginInvoiceDetail.InvoiceSumSpecified = true;
 					CertificateOfOriginInvoiceDetail.CurrencyType = item.CurrencyTypeCode;
 					CertificateOfOriginInvoiceDetail.DescriptionOfInvoice = item.DescriptionOfInvoice;
@@ -238,7 +238,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				else
 				{
 					CertificateOfOriginInvoiceDetail.InvoiceNum += ("," + item.InvoiceNumber);
-					CertificateOfOriginInvoiceDetail.InvoiceSum += Convert.ToInt32(item.InvoiceSum);
+					CertificateOfOriginInvoiceDetail.InvoiceSum += Convert.ToDecimal(item.InvoiceSum);
 
 				}
 
