@@ -84,7 +84,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             }
             catch (Exception e)
             {
-                throw new Exception("\n" + e.Message);
+                throw;
             }
         }
 
