@@ -503,10 +503,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - UpdateTaxationDateTime");
                 return;
             }
+            if (pm.IsNewEntity && AutoMsgScope.FirstTime($"{pm.DeclarationId}:I"))
+            {
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - IsNewEntity FirstTime");
+                return;
+            }
             bool run =
                 (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) ||
                 (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) ||
-                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P")) || (pm.IsNewEntity);
+                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P"));
 
             if (!run) return;
 

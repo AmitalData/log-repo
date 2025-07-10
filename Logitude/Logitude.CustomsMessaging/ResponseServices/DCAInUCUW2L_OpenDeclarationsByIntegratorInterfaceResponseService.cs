@@ -31,11 +31,13 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 ///using Logitude.Customs.BL.Messaging.U2L.CommDec;
 using Logitude.Server.Tools.Contracts;
 using System.Diagnostics;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
