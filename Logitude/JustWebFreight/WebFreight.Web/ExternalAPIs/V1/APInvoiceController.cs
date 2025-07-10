@@ -80,140 +80,24 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
             }
         }
-        
+
         public HttpResponseMessage Post(APInvoice apinvoice)
         {
             APInvoice oldEntity = apinvoice;
-
-            if (ModelState.IsValid)
+            int maxRetries = 5;
+            int attempt = 0;
+            if (!ModelState.IsValid)
             {
+                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
+                APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+            }
+            while (attempt < maxRetries) {
                 try
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        string token = HttpContext.Current.Request.Headers["Token"];
-                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.AuthenticateAccessibleAPI("APInvoice", authToken.Tenant);
-                        int tenant = authToken.Tenant;
-
-                        //SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-
-                        bool isFullAccounting = false;
-                        Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
-                        if(myTenant != null)
-                        {
-                            isFullAccounting = myTenant.AccountingActivated;
-                            if (isFullAccounting == true)
-                                apinvoice.IsGeneralInvoice = true;
-                        }
-
-                        string computingPartnerCode = "";
-                        if (apinvoice != null)
-                        {
-                            if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
-                            {
-                                computingPartnerCode = apinvoice.ComputingPartnerCode;
-                            }
-
-                            oldEntity = LogitudeXmlSerializer.DeserializeObject<APInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(apinvoice));
-                        }
-
-                        IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
-                        APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
-                        APInvoicePM apinvoicePM = null;
-
-                        if (apinvoice.Status != null && !string.IsNullOrEmpty(apinvoice.Status.Code))
-                        {
-                            if (apinvoice.Status.Code != "AD")
-                            {
-                                throw new ApplicationException("Invoice Status should be Approved");
-                            }
-                        }
-
-                        if (apinvoice.IsGeneralInvoice)
-                        {
-                            //if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
-                            //{
-                            //    throw new ApplicationException("A General invoice can't be connected to Entity");
-                            //}
-                        }
-
-                        else
-                        {
-                            if (string.IsNullOrEmpty(apinvoice.EntityType))
-                            {
-                                throw new ApplicationException("Entity Type is missing");
-                            }
-                            else
-                            {
-                                if(apinvoice.EntityType.ToLower() != "shipment")
-                                {
-                                    throw new ApplicationException("Invalid Entity Type");
-                                }
-                            }
-
-                            if (string.IsNullOrEmpty(apinvoice.EntityReference))
-                            {
-                                throw new ApplicationException("Entity Reference is missing");
-                            }
-                        }
-
-                        if (isFullAccounting)
-                        {
-                            apinvoice.Tenant = tenant;
-                            apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
-                            apinvoice = apinvoiceQuery.SetAPInvoiceSystemUser(apinvoice);
-
-                            apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
-                            apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
-                            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
-                            GLAccountPM glaccountPM = gLAccountQuery.GetSinglePMByInternalNumber(apinvoicePM.VendorGLAccountId, tenant);
-
-                            apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant, glaccountPM?.PaymentTermId);
-                            CalculateTotalsIfEmpty(apinvoicePM);
-                            // SET approved
-                            apinvoicePM.SetVoided = false;
-                            apinvoicePM.SetApproved = true;
-                            apinvoicePM.SetReTransfer = false;
-                            apinvoicePM.SetCancelApproval = false;
-                            apinvoicePM.CreatedFromAPI = true;
-                            if (apinvoicePM.TransferStatusCode == null)
-                                apinvoicePM.TransferStatusCode = "NR";
-
-                            this.MapLines(apinvoice, tenant, apinvoicePM, isFullAccounting);
-
-                            apinvoicePM.InvoiceCurrencyExchangeRate = apinvoice.InvoiceCurrencyExchangeRate > 0
-                                ? apinvoice.InvoiceCurrencyExchangeRate
-                                : (apinvoicePM.AmountInInvoiceCurrency != 0 
-                                    ? apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency
-                                    : 1.0);
-                        }
-
-
-                        apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode,apinvoicePM);
-                            apinvoicePM.CreatedFromAPI = true;
-                       
-
-                      
-                            
-                        // VendorGLAccountId
-                        apinvoicePM.VendorGLAccountId =isFullAccounting? GetVendorGLAccountId(tenant, apinvoicePM): null;
-
-
-                        if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
-                        {
-                            ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
-                            var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(apinvoice.ComputingPartnerCode, tenant);
-                            apinvoicePM.CreatedByPartner = (partner != null ? partner.Name : null);
-
-                        }
-
-                        APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
-                        apinvoicePM.IsExternalEntity = true;
-                        apinvoiceService.Create(apinvoicePM);
-
-                        APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
+                        ProcessAndCreateAPInvoice(apinvoice, oldEntity);
                         scope.Complete();
 
                         return Request.CreateResponse(HttpStatusCode.OK, apinvoice);
@@ -222,20 +106,145 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
                 catch (Exception ex)
                 {
-                    var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                    APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
-                    return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                    attempt++;
+                    if (attempt >= maxRetries)
+                    {
+                        var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
+                        APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
+                        return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                    }
+
                 }
+            }
+
+            return Request.CreateResponse(HttpStatusCode.InternalServerError, "Unknown error");
+
+        }
+        private void ProcessAndCreateAPInvoice(APInvoice apinvoice, APInvoice oldEntity)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticateAccessibleAPI("APInvoice", authToken.Tenant);
+            int tenant = authToken.Tenant;
+
+
+            bool isFullAccounting = false;
+            Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
+            if (myTenant != null)
+            {
+                isFullAccounting = myTenant.AccountingActivated;
+                if (isFullAccounting == true)
+                    apinvoice.IsGeneralInvoice = true;
+            }
+
+            string computingPartnerCode = "";
+            if (apinvoice != null)
+            {
+                if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
+                {
+                    computingPartnerCode = apinvoice.ComputingPartnerCode;
+                }
+
+                oldEntity = LogitudeXmlSerializer.DeserializeObject<APInvoice>(LogitudeXmlSerializer.SerializeObjectToXmlString(apinvoice));
+            }
+
+            IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
+            APInvoiceQueryService apinvoiceQuery = new APInvoiceQueryService(tenant);
+            APInvoicePM apinvoicePM = null;
+
+            if (apinvoice.Status != null && !string.IsNullOrEmpty(apinvoice.Status.Code))
+            {
+                if (apinvoice.Status.Code != "AD")
+                {
+                    throw new ApplicationException("Invoice Status should be Approved");
+                }
+            }
+
+            if (apinvoice.IsGeneralInvoice)
+            {
+                //if(!string.IsNullOrEmpty(apinvoice.EntityType) || !string.IsNullOrEmpty(apinvoice.EntityReference))
+                //{
+                //    throw new ApplicationException("A General invoice can't be connected to Entity");
+                //}
             }
 
             else
             {
-                var apiExceptionResult = ApiExceptionHandler.HandleModelException(ModelState);
-                APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "APInvoice", null, "APInvoice API");
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
-            }
-        }
+                if (string.IsNullOrEmpty(apinvoice.EntityType))
+                {
+                    throw new ApplicationException("Entity Type is missing");
+                }
+                else
+                {
+                    if (apinvoice.EntityType.ToLower() != "shipment")
+                    {
+                        throw new ApplicationException("Invalid Entity Type");
+                    }
+                }
 
+                if (string.IsNullOrEmpty(apinvoice.EntityReference))
+                {
+                    throw new ApplicationException("Entity Reference is missing");
+                }
+            }
+
+            if (isFullAccounting)
+            {
+                apinvoice.Tenant = tenant;
+                apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+                apinvoice = apinvoiceQuery.SetAPInvoiceSystemUser(apinvoice);
+
+                apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
+                apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
+                GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+                GLAccountPM glaccountPM = gLAccountQuery.GetSinglePMByInternalNumber(apinvoicePM.VendorGLAccountId, tenant);
+
+                apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant, glaccountPM?.PaymentTermId);
+                CalculateTotalsIfEmpty(apinvoicePM);
+                // SET approved
+                apinvoicePM.SetVoided = false;
+                apinvoicePM.SetApproved = true;
+                apinvoicePM.SetReTransfer = false;
+                apinvoicePM.SetCancelApproval = false;
+                apinvoicePM.CreatedFromAPI = true;
+                if (apinvoicePM.TransferStatusCode == null)
+                    apinvoicePM.TransferStatusCode = "NR";
+
+                this.MapLines(apinvoice, tenant, apinvoicePM, isFullAccounting);
+
+                apinvoicePM.InvoiceCurrencyExchangeRate = apinvoice.InvoiceCurrencyExchangeRate > 0
+                    ? apinvoice.InvoiceCurrencyExchangeRate
+                    : (apinvoicePM.AmountInInvoiceCurrency != 0
+                        ? apinvoicePM.AmountInLocalCurrency / apinvoicePM.AmountInInvoiceCurrency
+                        : 1.0);
+            }
+
+
+            apinvoicePM = apinvoiceQuery.APInvoiceCustomDataMappingAndValidating(apinvoice, tenant, computingPartnerCode, apinvoicePM);
+            apinvoicePM.CreatedFromAPI = true;
+
+
+
+
+            // VendorGLAccountId
+            apinvoicePM.VendorGLAccountId = isFullAccounting ? GetVendorGLAccountId(tenant, apinvoicePM) : null;
+
+
+            if (!string.IsNullOrEmpty(apinvoice.ComputingPartnerCode))
+            {
+                ComputingPartnerQuery computingPartnerQuery = new ComputingPartnerQuery(tenant);
+                var partner = computingPartnerQuery.GetSinglePMByCodeAndCheckTenantZero(apinvoice.ComputingPartnerCode, tenant);
+                apinvoicePM.CreatedByPartner = (partner != null ? partner.Name : null);
+
+            }
+
+            APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
+            apinvoicePM.IsExternalEntity = true;
+            apinvoiceService.Create(apinvoicePM);
+
+            APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
+        }
         private static void UpdateInvoiceCurrencyRateFromLines(APInvoicePM apinvoicePM)
         {
             double? averageLinesExchangeRate = apinvoicePM.InvoiceLines.Average(d => d.ForiegnExchangeRate);
