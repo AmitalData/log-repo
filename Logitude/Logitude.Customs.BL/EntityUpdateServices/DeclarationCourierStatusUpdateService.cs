@@ -491,6 +491,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 poco.DocumentStatusCode != "V");
 
             pm.EdgePayment = poco.CourierDeclarationStatusCode != "V" && pm.CourierDeclarationStatusCode == "V";
+            pm.IsNewEntity = poco.CourierManifestStatusCode == null &&
+                             poco.CourierDeclarationStatusCode == null &&
+                             poco.DocumentStatusCode == null;
 
         }
         private void HandleAutomatedMessaging(DeclarationCourierStatusPM pm)
@@ -503,7 +506,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool run =
                 (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) ||
                 (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) ||
-                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P"));
+                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P")) || (pm.IsNewEntity);
 
             if (!run) return;
 

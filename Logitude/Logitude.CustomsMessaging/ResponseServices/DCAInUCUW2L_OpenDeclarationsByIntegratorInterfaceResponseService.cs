@@ -105,6 +105,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.EntityId1 = decId;
                 this.MyRequestSheetParam.RequestDescription = CommDecService.MyGenericResponseObj.EnglishDescription;
 
+                var svc = new AutomatedCustomsMessagingService(requestParams.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(decId, true, false);
+                if(currentDeclarationCourierStatusPM != null)
+                {
+                    svc.CheckAndSendMessageis(currentDeclarationCourierStatusPM);
+                }
+
                 //   this.MyRequestSheetParam.RequestDescription = "הצהרה נפתחה בהצלחה :" + customFileNo + "_" + decId;
 
 

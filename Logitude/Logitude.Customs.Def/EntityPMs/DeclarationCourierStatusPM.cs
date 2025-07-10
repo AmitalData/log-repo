@@ -17,6 +17,7 @@ namespace Logitude.Customs.Def.EntityPMs
         public bool EdgeManifest { get; set; }
         public bool EdgeDeclaration { get; set; }
         public bool EdgePayment { get; set; }
+        public bool IsNewEntity { get; set; }
     }
    
 }
