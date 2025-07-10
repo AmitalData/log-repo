@@ -1,6 +1,7 @@
 ﻿using Logitude.AmitalMessaging.Customs.CustomFile.CourierStatus;
 using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
@@ -126,7 +127,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                         {
                             declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
                             declarationPendingPM.Status = "S";
-                            featureSendPayment = features.Features.Any(x => x.Code == "SendPaymentOn900Close");
+                            FeatureQuery featureQuery = new FeatureQuery();
+                            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(ResolvedTenant()), ResolvedTenant());
+                            var featureSendPayment = features.Features.Any(x => x.Code == "SendPaymentOn900Close");
                             if (featureSendPayment)
                             {
                                 _MyDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
