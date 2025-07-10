@@ -491,6 +491,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 poco.DocumentStatusCode != "V");
 
             pm.EdgePayment = poco.CourierDeclarationStatusCode != "V" && pm.CourierDeclarationStatusCode == "V";
+            pm.IsNewEntity = poco.CourierManifestStatusCode == null &&
+                             poco.CourierDeclarationStatusCode == null &&
+                             poco.DocumentStatusCode == null;
 
         }
         private void HandleAutomatedMessaging(DeclarationCourierStatusPM pm)
@@ -498,6 +501,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (UpdateTaxationDateTime) // manual send declaration will not trigger automessaging
             {
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - UpdateTaxationDateTime");
+                return;
+            }
+            if (pm.IsNewEntity && AutoMsgScope.FirstTime($"{pm.DeclarationId}:I"))
+            {
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - IsNewEntity FirstTime");
                 return;
             }
             bool run =
