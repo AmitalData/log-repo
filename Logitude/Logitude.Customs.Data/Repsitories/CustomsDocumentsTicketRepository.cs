@@ -262,6 +262,11 @@ namespace Logitude.Customs.Data.Repsitories
                 from p in context.CustomsDocumentPointers
                 join t in context.CustomsDocumentsTickets
                       on p.CustomsDocumentsTicketId equals t.Id
+
+                join d in context.SIIDocumentTypes
+                on t.DocumentTypeCode equals d.Code into dgrp
+                from d in dgrp.DefaultIfEmpty()
+
                 where p.Tenant == tenant
                       && p.ParentEntityCode == PARENT_DECL
                       && t.DocumentsFilingId != null
@@ -288,6 +293,7 @@ namespace Logitude.Customs.Data.Repsitories
                     CustomsDocumentsTicketId = p.CustomsDocumentsTicketId,
                     DocumentsFilingId = t.DocumentsFilingId,
                     DocumentTypeCode = t.DocumentTypeCode,
+                    DocumentTypeCodeName = d == null ? null : d.LocalName,   
 
                     ParentEntityId = p.ParentEntityId,
                     Child1EntityId = p.Child1EntityId,
@@ -317,6 +323,8 @@ namespace Logitude.Customs.Data.Repsitories
         public string CustomsDocumentsTicketId { get; set; }
         public string DocumentsFilingId { get; set; }
         public string DocumentTypeCode { get; set; }
+        public string DocumentTypeCodeName { get; set; }
+
 
         public string ParentEntityId { get; set; }
         public string Child1EntityId { get; set; }

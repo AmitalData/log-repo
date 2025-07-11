@@ -103,6 +103,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     {
                         formAttachmentIndex = idx,
                         attachmentType = new IdDto { id = ptr.DocumentTypeCode },
+                        attachmentDescription = ptr.DocumentTypeCode == "101"
+                                ? ptr.DocumentTypeCodeName   
+                                : null,
                         formAttachment = url,
                         fileExtension = GetSafeExtension(url)
                     });
