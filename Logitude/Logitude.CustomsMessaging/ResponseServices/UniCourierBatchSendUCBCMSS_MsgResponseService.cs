@@ -274,24 +274,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (itemPM.CourierManifestStatusCode == "V")
                             {
-                                var requestParams1170 = new MANIFESTRequestRequestParams()
+                                var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(itemPM.Tenant);
+                                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(itemPM.Tenant, "1170", objectTableId, itemPM.DeclarationId, null, null, null, true, null);
+                                if (requestInProgressList == null || !requestInProgressList.Any())
                                 {
-                                    Tenant = requestParams.Tenant,
-                                    LoggingEnabled = true,
-                                    LoggingObjectTableId = objectTableId,
-                                    LoggingEntityId = itemPM.DeclarationId,
-                                    LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
-                                    LoggingEntityId2 = objectTableIdCourierMaster,
-                                    InterfaceTypeCode = "1170",
-                                    LoggingUserId = requestParams.LoggingUserId,
-                                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                                    DeclarationId = itemPM.DeclarationId,
-                                    LoggingEntityReference = itemPM.DeclarationId,
+                                    var requestParams1170 = new MANIFESTRequestRequestParams()
+                                    {
+                                        Tenant = requestParams.Tenant,
+                                        LoggingEnabled = true,
+                                        LoggingObjectTableId = objectTableId,
+                                        LoggingEntityId = itemPM.DeclarationId,
+                                        LoggingObjectTableId2 = requestParams.LoggingObjectTableId,
+                                        LoggingEntityId2 = objectTableIdCourierMaster,
+                                        InterfaceTypeCode = "1170",
+                                        LoggingUserId = requestParams.LoggingUserId,
+                                        RequestVIA = SendRequestVIA.WebServiceBatch,
+                                        DeclarationId = itemPM.DeclarationId,
+                                        LoggingEntityReference = itemPM.DeclarationId,
 
-                                };
-                                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
-                                LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
-                                mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                                    };
+                                    SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
+                                    LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                                    mess.AppendLine($" CreateSheetSBQMessage({itemPM.DeclarationId})");
+                                }
                             }
                         }
                     }
