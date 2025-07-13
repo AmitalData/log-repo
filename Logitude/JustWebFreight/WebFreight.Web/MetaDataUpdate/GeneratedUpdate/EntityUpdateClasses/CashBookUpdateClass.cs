@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CashBookUpdateClass
    {  		
-		public const string HashString = "02ca6bbe672357df292ef80057a52953";
+		public const string HashString = "8f5ebc26e4503dd9ae04c4c337d14c75";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -270,10 +270,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך פתיחה",
+					  						FullLocalDefaultText =  "תםריך פתיחה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך פתיחה",
+					  						ListLocalDefaultText =  "תםריך פתיחה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -405,10 +405,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון",
+					  						FullLocalDefaultText =  "תםריך עדכון",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון",
+					  						ListLocalDefaultText =  "תםריך עדכון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -737,10 +737,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם באנגלית",
+					  						FullLocalDefaultText =  "שם בםנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם באנגלית",
+					  						ListLocalDefaultText =  "שם בםנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1976,7 +1976,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature CashBookFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashbookCash", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookCash", NameTextCodeDefaultText = "CashbookCash", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,CashBookObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode CashBookTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashbookCheque", DefaultText = @"Cheque Cashbooks",LocalDefaultText = "המחאה הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode CashBookTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.Q.CashbookCheque", DefaultText = @"Cheque Cashbooks",LocalDefaultText = "המחםה הקופות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature CashBookFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Q.CashbookCheque", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.CashbookCheque", NameTextCodeDefaultText = "CashbookCheque", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,CashBookObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -2092,32 +2092,28 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable CashBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBook" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode CashBookDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature CashBookDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable,contextTenant);
+                 
+			   TextCode CashBookDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CashBookDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DETAILS", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Details", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
  
                  
-			   TextCode CashBookGeneralTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature CashBookGeneralFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.General", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable,contextTenant);
+			   TextCode CashBookManageDepoTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.ManageDepo", DefaultText = "Manage Depo.",LocalDefaultText = "ניהול הפקדות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CashBookManageDepoFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MNGDEPO", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.MNGDEPO", NameTextCodeDefaultText = "Manage Depo.", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
  
                  
-			   TextCode CashBookManageDepoTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.ManageDepo", DefaultText = "Manage Depo.",LocalDefaultText = "ניהול הפקדות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature CashBookManageDepoFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MNGDEPO", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.MNGDEPO", NameTextCodeDefaultText = "Manage Depo.", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable,contextTenant);
- 
-                 
-			   TextCode CashBookEventsTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature CashBookEventsFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.Events", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable,contextTenant);
+			   TextCode CashBookEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CashBookEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CashBook.Tab.Events", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CashBook.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CashBookObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
 			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
 			    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBDT",HtmlComponentName = "CashBookDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookDetailsTabComponent", FeatureId = CashBookDetailsFeature_TH0.Id,FeatureUniqeCode = CashBookDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookDetailsTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookDetailsTextCode_TH0.Id, TabNameTextCodeCode = CashBookDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBDT",HtmlComponentName = "CashBookDetailsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookDetailsTabComponent", FeatureId = CashBookDetailsFeature_TH0.Id,FeatureUniqeCode = CashBookDetailsFeature_TH0.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookDetailsTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookDetailsTextCode_TH0.Id, TabNameTextCodeCode = CashBookDetailsTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSHG",HtmlComponentName = "CashBookGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookGeneralTabComponent", FeatureId = CashBookGeneralFeature_TH1.Id,FeatureUniqeCode = CashBookGeneralFeature_TH1.FeatureUniqeCode, ControlPath = "./Accounting/Components/EditTabs/CashBook/CashBookGeneralTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookGeneralTextCode_TH1.Id, TabNameTextCodeCode = CashBookGeneralTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBMD",HtmlComponentName = "CashBookManageDepoTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookManageDepoTabComponent", FeatureId = CashBookManageDepoFeature_TH1.Id,FeatureUniqeCode = CashBookManageDepoFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookManageDepoTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookManageDepoTextCode_TH1.Id, TabNameTextCodeCode = CashBookManageDepoTextCode_TH1.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CBMD",HtmlComponentName = "CashBookManageDepoTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/CashBook/CashBookManageDepoTabComponent", FeatureId = CashBookManageDepoFeature_TH2.Id,FeatureUniqeCode = CashBookManageDepoFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.CSHB.CashBookManageDepoTabComponent", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookManageDepoTextCode_TH2.Id, TabNameTextCodeCode = CashBookManageDepoTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
-   
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSHE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CashBookEventsFeature_TH3.Id,FeatureUniqeCode = CashBookEventsFeature_TH3.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookEventsTextCode_TH3.Id, TabNameTextCodeCode = CashBookEventsTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CSHE",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CashBookEventsFeature_TH2.Id,FeatureUniqeCode = CashBookEventsFeature_TH2.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = CashBookObjectTable.Id, TabNameTextCodeId = CashBookEventsTextCode_TH2.Id, TabNameTextCodeCode = CashBookEventsTextCode_TH2.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -2393,15 +2389,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CashBookTextCode_CashBookBAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.B.All", DefaultText = "All",LocalDefaultText = @"הכל", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CashBookTextCode_CashBookBCashCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.B.CashCheques", DefaultText = "Cash Cheques",LocalDefaultText = @"המחאות מזומן", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode CashBookTextCode_CashBookBCashCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.B.CashCheques", DefaultText = "Cash Cheques",LocalDefaultText = @"המחםות מזומן", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CashBookTextCode_CashBookBPostdatedCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.B.PostdatedCheques", DefaultText = "Postdated Cheques",LocalDefaultText = @"המחאות דחויות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode CashBookTextCode_CashBookBPostdatedCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.B.PostdatedCheques", DefaultText = "Postdated Cheques",LocalDefaultText = @"המחםות דחויות", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CashBookTextCode_CashbookOConfirmUncheckelines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cashbook.O.ConfirmUncheckelines", DefaultText = "The selected lines will be unchecked, continue ?",LocalDefaultText = @"סימון השורות שנבחרו יבוטל , האם להמשיך ?", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode CashBookTextCode_CashbookOConfirmUncheckelines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cashbook.O.ConfirmUncheckelines", DefaultText = "The selected lines will be unchecked, continue ?",LocalDefaultText = @"סימון השורות שנבחרו יבוטל , הםם להמשיך ?", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CashBookTextCode_CashbookOInDepositingProgressMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cashbook.O.InDepositingProgressMessage", DefaultText = "Another Deposit on the same Cahsboook is being created meanwhile. Please try again later",LocalDefaultText = @"ישנה הפקדה נוספת לקופה זאת שטרם הסתיימה , אנא נסה מאוחר יותר", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode CashBookTextCode_CashbookOInDepositingProgressMessage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cashbook.O.InDepositingProgressMessage", DefaultText = "Another Deposit on the same Cahsboook is being created meanwhile. Please try again later",LocalDefaultText = @"ישנה הפקדה נוספת לקופה זםת שטרם הסתיימה , םנם נסה מםוחר יותר", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CashBookTextCode_CashBookOUpdateTotalsButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.O.UpdateTotalsButton", DefaultText = "Update Cashbook Balance",LocalDefaultText = @"עדכן את יתרת הקופה", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode CashBookTextCode_CashBookOUpdateTotalsButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashBook.O.UpdateTotalsButton", DefaultText = "Update Cashbook Balance",LocalDefaultText = @"עדכן םת יתרת הקופה", ObjectTableId = CashBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
