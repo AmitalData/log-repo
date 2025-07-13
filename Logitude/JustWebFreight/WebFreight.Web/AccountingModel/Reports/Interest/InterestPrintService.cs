@@ -55,7 +55,7 @@ using WebFreight.Web.Helpers;
             InterestReportPM = interestReportQuery.GetSingle(entityId, true, false);
 
             interestReportDP.InterestReportFlatLineList.Add(FirstFlatLine(InterestReportPM));
-
+            interestReportDP.OpenBalance = InterestReportPM.OpenBalance;
             return interestReportDP;
         }
 
@@ -132,7 +132,7 @@ using WebFreight.Web.Helpers;
 
             if (interestReportPeriods.Any())
             {
-                decimal totalLocalAmountSum = 0m;
+                decimal totalLocalAmountSum = interestReportDP.OpenBalance ?? 0m; ;
                 foreach (var period in interestReportPeriods)
                 {
                     decimal totalLocalInPeriod = 0m;
@@ -201,7 +201,7 @@ using WebFreight.Web.Helpers;
         {
             GetGLAccountDisplayNumber(tenant, interestReportDP, InterestReportPM);
 
-            interestReportDP.OpenBalance = InterestReportPM.OpenBalance;
+
             interestReportDP.CustomerName = InterestReportPM.CustomerName;
             interestReportDP.InterestCalculationDate = InterestReportPM.InterestCalculationDate;
             interestReportDP.InvoiceNumber = InterestReportPM.ARInvoiceNumber;
@@ -248,7 +248,7 @@ using WebFreight.Web.Helpers;
             {
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.ReportTotalInterest", interestReportPM.Tenant);
                 rv.AccumulatedForInterest = InterestReportPM.TotalAmount ?? 0m;
-                rv.TotalLocalInPeriod = lastTotal ?? 0m;
+                rv.TotalToDate = lastTotal ?? 0m;
             }
             return rv;
         }
