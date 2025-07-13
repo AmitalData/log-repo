@@ -95,6 +95,9 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
 
   loadRequests(): void {
     this.filterAgrs = this.initFilterArgs();
+    this.filterAgrs.SortBy = "RequestDate";
+    this.filterAgrs.SortDirection = "descending";
+
     this.filterAgrs.addAdditionalFilter("DeclarationId", this.currentDeclaration?.Id, null, null, "Equals", false, false, false, "string", false);
     this.filterAgrs.addAdditionalFilter("Tenant", this.currentDeclaration?.Tenant, null, null, "Equals", true, false, false, "string");
     if (SiiRequestIsClosed.IsClosed === this.isCloseRequests)
@@ -107,10 +110,6 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
         this.siiRequestList = response.Result;
         this.ItemsSource.Clear();
         let counter = 0;
-        this.siiRequestList?.sort((a, b) => {
-          return a.Id.localeCompare(b.Id);
-        });
-
         this.siiRequestList?.forEach(item => {
           item.ListCounter = ++counter;
           this.ItemsSource.Insert(item, true);
@@ -165,7 +164,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
             args.supplierInvoiceItemsForSIIRequest = myResponse.Result;
             args.errorMassage = [];
-            this.openLogWindow(siiRequestMode, args);
+            this.openLogWindow(siiRequestMode, args);1
           }
           else {
             this.supplierInvoiceItemsForSIIRequest = [];
