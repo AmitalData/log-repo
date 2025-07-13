@@ -60,17 +60,13 @@ internal static class SIIRequestValidator
                 Check(line.quantityToRelease, $"{p}.quantityToRelease", errors);
                 Check(line.siiUnitCode, $"{p}.siiUnitCode", errors);
             }
-            else
+            else   
             {
                 Check(line.productCode, $"{p}.productCode", errors);
+                Check(line.quantityByDeclaredUnit, $"{p}.quantityByDeclaredUnit", errors);
+                Check(line.declaredUnitCode, $"{p}.declaredUnitCode", errors);
             }
 
-            bool declaredMismatch =
-                (line.quantityByDeclaredUnit == null && !string.IsNullOrWhiteSpace(line.declaredUnitCode)) ||
-                (line.quantityByDeclaredUnit != null && string.IsNullOrWhiteSpace(line.declaredUnitCode));
-
-            if (declaredMismatch)
-                errors.Add($"{p}.quantityByDeclaredUnit");
         }
 
 

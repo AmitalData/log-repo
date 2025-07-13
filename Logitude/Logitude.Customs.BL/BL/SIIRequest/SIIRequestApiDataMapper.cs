@@ -103,6 +103,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     {
                         formAttachmentIndex = idx,
                         attachmentType = new IdDto { id = ptr.DocumentTypeCode },
+                        attachmentDescription = ptr.DocumentTypeCode == "101"
+                                ? ptr.DocumentTypeCodeName   
+                                : null,
                         formAttachment = url,
                         fileExtension = GetSafeExtension(url)
                     });
@@ -319,8 +322,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 line.productCode = NoProduct;
                 line.quantityToRelease = null;
                 line.siiUnitCode = null;
-                line.quantityByDeclaredUnit = null;
-                line.declaredUnitCode = null;
                 line.productDutchGroup = new IdProductDutchGroup { id = DutchGroup1 };
             }
 

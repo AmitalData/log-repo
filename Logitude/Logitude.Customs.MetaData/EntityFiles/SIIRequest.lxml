@@ -44,7 +44,7 @@
   LocalDefaultTextBack_up="&quot;בקשות למכון תקנים&quot;"
   LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;31a3&quot;"
+  Code="&quot;0485&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2615,6 +2615,20 @@
       DefaultText="&quot;Request data not completed&quot;"
       LocalDefaultTextBack_up="&quot;לא הושלמו נתוני בקשה&quot;"
       LocalDefaultText="&quot;BS64:Itec15Ag15TXldep15zXnteVINeg16rXldeg15kg15HXp9ep15Qi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.quantityByDeclaredUnit&quot;"
+      DefaultText="&quot;quantity By Declared Unit&quot;"
+      LocalDefaultTextBack_up="&quot;כמות במשלוח לפי יחידה מוצהרת&quot;"
+      LocalDefaultText="&quot;BS64:Iteb157XldeqINeR157Xqdec15XXlyDXnNek15kg15nXl9eZ15PXlCDXnteV16bXlNeo16oi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.declaredUnitCode&quot;"
+      DefaultText="&quot;declared Unit Code&quot;"
+      LocalDefaultTextBack_up="&quot;יחידת מידה מוצהרת&quot;"
+      LocalDefaultText="&quot;BS64:IteZ15fXmdeT16og157XmdeT15Qg157Xldem15TXqNeqIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

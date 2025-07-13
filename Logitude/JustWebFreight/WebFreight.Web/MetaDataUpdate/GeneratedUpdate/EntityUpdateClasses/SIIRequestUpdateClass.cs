@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "a0f80b2eff070c28c84fb5b238bb3166";
+		public const string HashString = "634b0805663d8fc0025a4e9222249aba";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "31a3",
+			      				    Code =  "0485",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2038,6 +2038,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOAttachment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Attachment", DefaultText = "Attachment",LocalDefaultText = @"BS64:Item16jXldek15Qi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestODataNotCompleted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.DataNotCompleted", DefaultText = "Request data not completed",LocalDefaultText = @"BS64:Itec15Ag15TXldep15zXnteVINeg16rXldeg15kg15HXp9ep15Qi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOquantityByDeclaredUnit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.quantityByDeclaredUnit", DefaultText = "quantity By Declared Unit",LocalDefaultText = @"BS64:Iteb157XldeqINeR157Xqdec15XXlyDXnNek15kg15nXl9eZ15PXlCDXnteV16bXlNeo16oi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOdeclaredUnitCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.declaredUnitCode", DefaultText = "declared Unit Code",LocalDefaultText = @"BS64:IteZ15fXmdeT16og157XmdeT15Qg157Xldem15TXqNeqIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
