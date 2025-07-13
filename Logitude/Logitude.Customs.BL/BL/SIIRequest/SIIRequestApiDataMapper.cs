@@ -322,8 +322,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 line.productCode = NoProduct;
                 line.quantityToRelease = null;
                 line.siiUnitCode = null;
-                line.quantityByDeclaredUnit = null;
-                line.declaredUnitCode = null;
                 line.productDutchGroup = new IdProductDutchGroup { id = DutchGroup1 };
             }
 
