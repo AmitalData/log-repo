@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "0d74d91c3215b0b545fe98c0a61b56e3";
+		public const string HashString = "00f33c3bd9c37eef335f37ab42f6f40f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "בקשות למכון תקנים",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "1d7f",
+			      				    Code =  "386c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2065,6 +2065,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOAttachment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Attachment", DefaultText = "Attachment",LocalDefaultText = @"צרופה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestODataNotCompleted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.DataNotCompleted", DefaultText = "Request data not completed",LocalDefaultText = @"לא הושלמו נתוני בקשה", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOquantityByDeclaredUnit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.quantityByDeclaredUnit", DefaultText = "quantity By Declared Unit",LocalDefaultText = @"כמות במשלוח לפי יחידה מוצהרת", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOdeclaredUnitCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.declaredUnitCode", DefaultText = "declared Unit Code",LocalDefaultText = @"יחידת מידה מוצהרת", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
