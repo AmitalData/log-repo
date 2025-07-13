@@ -164,7 +164,7 @@ export class SIIRequestTabComponent extends BaseComponent implements OnInit {
             this.supplierInvoiceItemsForSIIRequest = myResponse.Result;
             args.supplierInvoiceItemsForSIIRequest = myResponse.Result;
             args.errorMassage = [];
-            this.openLogWindow(siiRequestMode, args);1
+            this.openLogWindow(siiRequestMode, args);
           }
           else {
             this.supplierInvoiceItemsForSIIRequest = [];
