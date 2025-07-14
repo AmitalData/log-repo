@@ -107,14 +107,13 @@ namespace WebFreight.Web
             }
             else
             {
+                int size = string.IsNullOrEmpty(pt.psize) ? -1 : Convert.ToInt32(pt.psize);
                 if (pt.ptype.ToLower() == "varchar")
                 {
-                    int size = string.IsNullOrEmpty(pt.psize) ? -1 : Convert.ToInt32(pt.psize);
                     ret = new SqlParameter(name, SqlDbType.VarChar, size);
                 }
                 else if (pt.ptype.ToLower() == "nvarchar")
                 {
-                    int size = string.IsNullOrEmpty(pt.psize) ? -1 : Convert.ToInt32(pt.psize);
                     ret = new SqlParameter(name, SqlDbType.NVarChar, size);
                 }
                 else if (pt.ptype.ToLower() == "int")
@@ -124,6 +123,10 @@ namespace WebFreight.Web
                 else if (pt.ptype.ToLower() == "datetime")
                 {
                     ret = new SqlParameter(name, SqlDbType.DateTime);
+                }
+                else if (pt.ptype.ToLower() == "datetime2")
+                {
+                    ret = new SqlParameter(name, SqlDbType.DateTime2,size);
                 }
                 else if (pt.ptype.ToLower() == "date")
                 {
@@ -170,9 +173,377 @@ namespace WebFreight.Web
             this.psize = psize;
         }
     }
+
+    /*
+    SUPPLIERINVOICES
+    DECLARATIONID=varchar,15
+
+    CONSIGNMENTS
+    DECLARATIONID=varchar,15
+
+    */
+
     public class CfiLogi
     {
         static public string DB = @"<root>
+<OCC>
+<DAT name=""CODE"">A109</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIQGRSTSRCOU</DAT>
+<DAT name=""REFERENCE"">DECLARATIONCOURIERSTATUSES</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select DECLARATIONCOURIERSTATUSES.COURIERPENDINGREASONCODE from CUSTOMS.DECLARATIONCOURIERSTATUSES where DECLARATIONCOURIERSTATUSES.DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select DECLARATIONCOURIERSTATUSES.COURIERPENDINGREASONCODE from CUSTOMS.DECLARATIONCOURIERSTATUSES where DECLARATIONCOURIERSTATUSES.DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A108</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFCOUDECXML</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">CUSTOMFILENO=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT top(1) DECLARATIONS.CARGODESCRIPTION FROM CUSTOMS.CONSIGNMENTS,CUSTOMS.DECLARATIONS WHERE 
+CONSIGNMENTS.DECLARATIONID = DECLARATIONS.ID AND DECLARATIONS.CUSTOMFILENO=@CUSTOMFILENO and DECLARATIONS.TENANT=@Tenant  and CONSIGNMENTS.TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT top(1) DECLARATIONS.CARGODESCRIPTION FROM CUSTOMS.CONSIGNMENTS,CUSTOMS.DECLARATIONS WHERE 
+CONSIGNMENTS.DECLARATIONID = DECLARATIONS.ID AND DECLARATIONS.CUSTOMFILENO=@CUSTOMFILENO and DECLARATIONS.TENANT=@Tenant  and CONSIGNMENTS.TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A107</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFCOUDECXML</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">CUSTOMFILENO=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT top(1) InvoiceAmount,InvoiceCurrencyTypeCode  FROM CUSTOMS.SUPPLIERINVOICES,CUSTOMS.DECLARATIONS 
+WHERE SUPPLIERINVOICES.DECLARATIONID = DECLARATIONS.ID AND DECLARATIONS.CUSTOMFILENO=@CUSTOMFILENO and DECLARATIONS.TENANT=@Tenant  and SUPPLIERINVOICES.TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT top(1) InvoiceAmount,InvoiceCurrencyTypeCode  FROM CUSTOMS.SUPPLIERINVOICES,CUSTOMS.DECLARATIONS 
+WHERE SUPPLIERINVOICES.DECLARATIONID = DECLARATIONS.ID AND DECLARATIONS.CUSTOMFILENO=@CUSTOMFILENO and DECLARATIONS.TENANT=@Tenant  and SUPPLIERINVOICES.TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A106</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CREUCARREL</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">ID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ISSIGNEDVERSION from CUSTOMS.DECLARATIONS where ID=@ID  and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select ISSIGNEDVERSION from CUSTOMS.DECLARATIONS where ID=@ID  and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A105</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CENUPACKIIG</DAT>
+<DAT name=""REFERENCE"">SUPPLIERINVOICEITEMS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True·;LINENUMBER=True·;COUNTERKEY=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select SEQUENCENUMERIC from CUSTOMS.SUPPLIERINVOICEITEMS where DECLARATIONID=@DECLARATIONID and COUNTERKEY=@COUNTERKEY and LINENUMBER=@LINENUMBER and  TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select SEQUENCENUMERIC from CUSTOMS.SUPPLIERINVOICEITEMS where DECLARATIONID=@DECLARATIONID and COUNTERKEY=@COUNTERKEY and LINENUMBER=@LINENUMBER and  TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15&uSEP;COUNTERKEY=int,1&uSEP;LINENUMBER=int,1</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A104</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFDEF</DAT>
+<DAT name=""REFERENCE"">PAYMENTORDERS,PAYMENTORDERLINES,PARAGRAPHTYPES</DAT>
+<DAT name=""PARAMETERS"">PAYMENTNUMBER=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select PAYMENTORDERS.ID,PARAGRAPHTYPES.LOCALNAME,PAYMENTORDERLINES.AMOUNT 
+from CUSTOMS.PAYMENTORDERS,CUSTOMS.PAYMENTORDERLINES,CUSTOMS.PARAGRAPHTYPES 
+where PAYMENTORDERS.PAYMENTNUMBER = @PAYMENTNUMBER AND 
+PAYMENTORDERS.ID = PAYMENTORDERLINES.PAYMENTORDERID AND 
+PAYMENTORDERLINES.PARAGRAPHTYPECODE =  PARAGRAPHTYPES.CODE  and PAYMENTORDERS.TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select PAYMENTORDERS.ID,PARAGRAPHTYPES.LOCALNAME,PAYMENTORDERLINES.AMOUNT 
+from CUSTOMS.PAYMENTORDERS,CUSTOMS.PAYMENTORDERLINES,CUSTOMS.PARAGRAPHTYPES 
+where PAYMENTORDERS.PAYMENTNUMBER = @PAYMENTNUMBER AND 
+PAYMENTORDERS.ID = PAYMENTORDERLINES.PAYMENTORDERID AND 
+PAYMENTORDERLINES.PARAGRAPHTYPECODE =  PARAGRAPHTYPES.CODE  and PAYMENTORDERS.TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE""></DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A103</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CENUPACKIIG</DAT>
+<DAT name=""REFERENCE"">SUPPLIERINVOICES</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True·;INVOICECOUNTERKEY=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select SEQUENCENUMERIC from CUSTOMS.SUPPLIERINVOICES where DECLARATIONID=@DECLARATIONID and INVOICECOUNTERKEY=@INVOICECOUNTERKEY  and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select SEQUENCENUMERIC from CUSTOMS.SUPPLIERINVOICES where DECLARATIONID=@DECLARATIONID and INVOICECOUNTERKEY=@INVOICECOUNTERKEY  and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15&uSEP;INVOICECOUNTERKEY=int,1</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A102</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIRNOSTSCOU</DAT>
+<DAT name=""REFERENCE"">COURIERMASTERS</DAT>
+<DAT name=""PARAMETERS"">ID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ESTIMATEDARRIVALDATE,LANDINGDATE  from CUSTOMS.COURIERMASTERS where COURIERMASTERS.ID=@ID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select ESTIMATEDARRIVALDATE,LANDINGDATE  from CUSTOMS.COURIERMASTERS where COURIERMASTERS.ID=@ID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">ID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A101</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIRNOSTSCOU</DAT>
+<DAT name=""REFERENCE"">COURIERDECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select COURIERDECLARATIONS.COURIERMASTERID from CUSTOMS.COURIERDECLARATIONS where COURIERDECLARATIONS.DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select COURIERDECLARATIONS.COURIERMASTERID from CUSTOMS.COURIERDECLARATIONS where COURIERDECLARATIONS.DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A100</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFTOCOU</DAT>
+<DAT name=""REFERENCE"">CONSIGNMENTPACKAGES</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select GROSSMASSMEASURE, PACKAGEQUANTITY from CUSTOMS.CONSIGNMENTPACKAGES where DECLARATIONID = @DECLARATIONID AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select GROSSMASSMEASURE, PACKAGEQUANTITY from CUSTOMS.CONSIGNMENTPACKAGES where DECLARATIONID = @DECLARATIONID AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE""></DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A99</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFTOCOU</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">CUSTOMFILENO=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select PROCEDURECURRENTCODE from CUSTOMS.DECLARATIONS where CUSTOMFILENO = @CUSTOMFILENO AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select PROCEDURECURRENTCODE from CUSTOMS.DECLARATIONS where CUSTOMFILENO = @CUSTOMFILENO AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A98</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CENUPACKC</DAT>
+<DAT name=""REFERENCE"">MEASURMENTUNITS</DAT>
+<DAT name=""PARAMETERS"">MALAMID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select code from customs.measurmentunits where malamid=@MALAMID</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select code from customs.measurmentunits where malamid=@MALAMID</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">false</DAT>
+<DAT name=""PARAMETERS_TYPE"">MALAMID=int,1</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A97</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CENUPACKC</DAT>
+<DAT name=""REFERENCE"">PROPERTIESDETAILSHISTORYS</DAT>
+<DAT name=""PARAMETERS"">CUSTOMSITEMID=True·;ENDDATE=True·;STARTDATE=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select measurementunitid from CUSTOMS.propertiesdetailshistorys where 
+CUSTOMSITEMID =@CUSTOMSITEMID  and startdate &lt;= cast(@STARTDATE as date)
+and enddate &gt; cast(@ENDDATE as date)</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select measurementunitid from CUSTOMS.propertiesdetailshistorys where 
+CUSTOMSITEMID =@CUSTOMSITEMID  and startdate &lt;= cast(@STARTDATE as date)
+and enddate &gt; cast(@ENDDATE as date)</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">false</DAT>
+<DAT name=""PARAMETERS_TYPE"">CUSTOMSITEMID=varchar,9&uSEP;STARTDATE=date,7&uSEP;ENDDATE=date,7</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A96</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CENUPACKC</DAT>
+<DAT name=""REFERENCE"">CUSTOMSITEMS</DAT>
+<DAT name=""PARAMETERS"">FULLCLASSIFICATION=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select id from CUSTOMS.customsitems where fullclassification =@FULLCLASSIFICATION  </DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select id from CUSTOMS.customsitems where fullclassification =@FULLCLASSIFICATION  </DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">false</DAT>
+<DAT name=""PARAMETERS_TYPE"">FULLCLASSIFICATION=varchar,13</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A95</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFFORMS</DAT>
+<DAT name=""REFERENCE"">CONSIGNMENTS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select ConsignmentNumber, CargoTypeCode, ManifestNumber, SecondCargoId, ThirdCargoId
+from CUSTOMS.Consignments where(1=1) 
+and Tenant=@Tenant and DeclarationId=@DECLARATIONID</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select ConsignmentNumber, CargoTypeCode, ManifestNumber, SecondCargoId, ThirdCargoId
+from CUSTOMS.Consignments where(1=1) 
+and Tenant=@Tenant and DeclarationId=@DECLARATIONID</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A94</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFFORMS</DAT>
+<DAT name=""REFERENCE"">CONSIGNMENTS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select count(ConsignmentNumber) from CUSTOMS.Consignments where(1=1) and 
+Tenant=@Tenant and DeclarationId=@DECLARATIONID</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select count(ConsignmentNumber) from CUSTOMS.Consignments where(1=1) and 
+Tenant=@Tenant and DeclarationId=@DECLARATIONID</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A93</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFMAIN</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONNUMBER=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT DECLARATIONS.ID from CUSTOMS.DECLARATIONS WHERE DeclarationNumber =@DECLARATIONNUMBER and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT DECLARATIONS.ID from CUSTOMS.DECLARATIONS WHERE DeclarationNumber =@DECLARATIONNUMBER and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A92</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIHRSA</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONNUMBER=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select DECLARATIONS.CUSTOMFILENO from CUSTOMS.DECLARATIONS where DECLARATIONS.DECLARATIONNUMBER = @DECLARATIONNUMBER  and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select DECLARATIONS.CUSTOMFILENO from CUSTOMS.DECLARATIONS where DECLARATIONS.DECLARATIONNUMBER = @DECLARATIONNUMBER  and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A91</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFUMOTORINV</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">ID=False</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select LOADINGFACTOR from CUSTOMS.Declarations where id=@ID AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select LOADINGFACTOR from CUSTOMS.Declarations where id=@ID AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A90</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIHYFI</DAT>
+<DAT name=""REFERENCE"">CONSIGNMENTS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT CARGOTYPECODE,MANIFESTNUMBER,SECONDCARGOID,THIRDCARGOID FROM CUSTOMS.CONSIGNMENTS  where CONSIGNMENTS.DECLARATIONID =@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CARGOTYPECODE,MANIFESTNUMBER,SECONDCARGOID,THIRDCARGOID FROM CUSTOMS.CONSIGNMENTS  where CONSIGNMENTS.DECLARATIONID =@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-1,1,1,1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A89</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIHYFI</DAT>
+<DAT name=""REFERENCE"">CONSIGNMENTS</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT CARGOTYPECODE,MANIFESTNUMBER,THIRDCARGOID FROM CUSTOMS.CONSIGNMENTS  where CONSIGNMENTS.DECLARATIONID =@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT CARGOTYPECODE,MANIFESTNUMBER,THIRDCARGOID FROM CUSTOMS.CONSIGNMENTS  where CONSIGNMENTS.DECLARATIONID =@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-1,1,1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A88</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFAUTOPAY</DAT>
+<DAT name=""REFERENCE"">SUPPLIERINVOICES</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select INCOTERMCODE from CUSTOMS.SUPPLIERINVOICES where DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select INCOTERMCODE from CUSTOMS.SUPPLIERINVOICES where DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A87</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIHMAIN</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">EXTERNALDECLARATIONNUMBER=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ID from CUSTOMS.DECLARATIONS where EXTERNALDECLARATIONNUMBER=@EXTERNALDECLARATIONNUMBER and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select ID from CUSTOMS.DECLARATIONS where EXTERNALDECLARATIONNUMBER=@EXTERNALDECLARATIONNUMBER and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A86</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIHMAIN</DAT>
+<DAT name=""REFERENCE"">CUSTOMSDOCUMENTS</DAT>
+<DAT name=""PARAMETERS"">DOCUMENTSFILINGID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT IsPartOfDeclaration,DOCUMENTTYPECODE FROM CUSTOMS.CustomsDocuments WHERE DOCUMENTSFILINGID=@DOCUMENTSFILINGID AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT IsPartOfDeclaration,DOCUMENTTYPECODE FROM CUSTOMS.CustomsDocuments WHERE DOCUMENTSFILINGID=@DOCUMENTSFILINGID AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1,1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A85</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIHMAIN</DAT>
+<DAT name=""REFERENCE"">Select UNLOADPORTCODE</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select UNLOADPORTCODE from CUSTOMS.CONSIGNMENTS where DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select UNLOADPORTCODE from CUSTOMS.CONSIGNMENTS where DECLARATIONID=@DECLARATIONID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1-1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A84</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIRMEVAKERREJ</DAT>
+<DAT name=""REFERENCE"">Select count(LINENUMBER)</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select count(LINENUMBER) from CUSTOMS.SUPPLIERINVOICEITEMS where DECLARATIONID='1-1' AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select count(LINENUMBER) from CUSTOMS.SUPPLIERINVOICEITEMS where DECLARATIONID=@DECLARATIONID AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A83</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIRMEVAKERREJ</DAT>
+<DAT name=""REFERENCE"">Select count(DECLARATIONID)</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select count(DECLARATIONID) from CUSTOMS.SUPPLIERINVOICES where DECLARATIONID='1-1' AND TENANT=1</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select count(DECLARATIONID) from CUSTOMS.SUPPLIERINVOICES where DECLARATIONID=@DECLARATIONID AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>1</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A82</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CCUHMAIN.Lp_HAWB_Details</DAT>
+<DAT name=""REFERENCE"">CCUHMAIN.Lp_HAWB_Details</DAT>
+<DAT name=""PARAMETERS"">CUSTOMFILENO=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select DECLARATIONSTATUSTYPECODE,ISCLOSE,ISCANCELLED from CUSTOMS.Declarations where Declarations.ID = '1-1'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select DECLARATIONSTATUSTYPECODE,ISCLOSE,ISCANCELLED from CUSTOMS.Declarations where Declarations.ID = @ID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'>12	2066 6	0</DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12</DAT>
+</OCC>
 <OCC>
 <DAT name=""CODE"">A81</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>CFIUDEL.IsOK2Delete</DAT>
@@ -191,7 +562,7 @@ namespace WebFreight.Web
 <DAT name=""NAME_ENG"" xml:space='preserve'>PrepareCourierDefault</DAT>
 <DAT name=""REFERENCE"">GGGQWBLOGITUDE.Lp_PrepareCourierDefault</DAT>
 <DAT name=""PARAMETERS"">CODE=True</DAT>
-<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select * from %%vTable%%%s where code = '@CODE'</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select * from %%vTable%%%s where code = '1-1'</DAT>
 <DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select * from CUSTOMS.@CLOSE_TABLE where code = @CODE</DAT>
 <DAT name=""EXAMPLE_RESULT"">1</DAT>
 <DAT name=""LINQ"">true</DAT>
