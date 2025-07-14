@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CommunicationLogUpdateClass
    {  		
-		public const string HashString = "210affddc029cf6c06279eea08bbd6ea";
+		public const string HashString = "df40199b3603ef34a4e804c5d27ef0dd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -793,10 +793,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "צור תאריך",
+					  						FullLocalDefaultText =  "נוצר בתאריך",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "צור תאריך",
+					  						ListLocalDefaultText =  "נוצר בתאריך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1001,10 +1001,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InOut",
 					  						DefaultText =  "In/Out",
-					  						FullLocalDefaultText =  "כניסה / יציאה",
+					  						FullLocalDefaultText =  "נכנס / יוצא",
 					  						ListFieldLable =  "InOutListLable",
 					  						ListLableDefaultText =  "In/Out",
-					  						ListLocalDefaultText =  "כניסה / יציאה",
+					  						ListLocalDefaultText =  "נכנס / יוצא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1138,7 +1138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentOutId",
 					  						DefaultText =  "Document Out",
-					  						FullLocalDefaultText =  "מסמך החוצה",
+					  						FullLocalDefaultText =  "מסמך יוצא",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DocumentOut",
 					  						NavigationPropertyName =  "InternalDocument",
@@ -1274,10 +1274,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "To",
 					  						DefaultText =  "To",
-					  						FullLocalDefaultText =  "אל",
+					  						FullLocalDefaultText =  "מקבל",
 					  						ListFieldLable =  "ToListLable",
 					  						ListLableDefaultText =  "To",
-					  						ListLocalDefaultText =  "אל",
+					  						ListLocalDefaultText =  "מקבל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1481,7 +1481,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CommunicationLogTypeCode",
 					  						DefaultText =  "Log Type",
-					  						FullLocalDefaultText =  "התחבר סוג",
+					  						FullLocalDefaultText =  "סוג שידור",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CommunicationLogType",
 					  						NavigationPropertyName =  "CommunicationLogType",
@@ -1548,10 +1548,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CommunicationLogTypeName",
 					  						DefaultText =  "Log Type",
-					  						FullLocalDefaultText =  "התחבר סוג",
+					  						FullLocalDefaultText =  "סוג שידור",
 					  						ListFieldLable =  "CommunicationLogTypeNameListLable",
 					  						ListLableDefaultText =  "Log Type",
-					  						ListLocalDefaultText =  "התחבר סוג",
+					  						ListLocalDefaultText =  "סוג שידור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1755,7 +1755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ObjectTableId",
 					  						DefaultText =  "Object Table",
-					  						FullLocalDefaultText =  "טבלת אובייקט",
+					  						FullLocalDefaultText =  "אובייקט משוייך",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ObjectTable",
 					  						NavigationPropertyName =  "ObjectTable",
@@ -1892,10 +1892,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "From",
 					  						DefaultText =  "From",
-					  						FullLocalDefaultText =  "מן",
+					  						FullLocalDefaultText =  "שולח",
 					  						ListFieldLable =  "FromListLable",
 					  						ListLableDefaultText =  "From",
-					  						ListLocalDefaultText =  "מן",
+					  						ListLocalDefaultText =  "שולח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2030,10 +2030,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EntityReference",
 					  						DefaultText =  "Entity Reference",
-					  						FullLocalDefaultText =  "התייחסות לישות",
+					  						FullLocalDefaultText =  "ישות משוייכת",
 					  						ListFieldLable =  "EntityReferenceListLable",
 					  						ListLableDefaultText =  "Entity Reference",
-					  						ListLocalDefaultText =  "התייחסות לישות",
+					  						ListLocalDefaultText =  "ישות משוייכת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4050,7 +4050,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.Status", DefaultText = "Status",LocalDefaultText = @"סטטוס", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode CommunicationLogTextCode_CommunicationLogOFromTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.From/To", DefaultText = "From/To",LocalDefaultText = @"מ / אל", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode CommunicationLogTextCode_CommunicationLogOFromTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.From/To", DefaultText = "From/To",LocalDefaultText = @"מקבל", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode CommunicationLogTextCode_CommunicationLogOUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CommunicationLog.O.User", DefaultText = "User",LocalDefaultText = @"משתמש", ObjectTableId = CommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
