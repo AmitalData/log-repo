@@ -33,13 +33,25 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         internal const string LineCode = "Customs.SIIRequest.O.Line";
 
         public const string NoProduct = "0";
-        public const string DutchGroup1 = "1";
+        public const int DutchGroup1 = 1;
         private static readonly HashSet<string> AllowedExts = new HashSet<string>(new[] { "pdf", "gif", "jpg" }, StringComparer.OrdinalIgnoreCase);
 
+        private static readonly System.Text.RegularExpressions.Regex HebrewRegex = new System.Text.RegularExpressions.Regex(@"\p{IsHebrew}", System.Text.RegularExpressions.RegexOptions.Compiled);
         public SIIRequestApiDataMapper(int tenant)
         {
             _tenant = tenant;
         }
+        private static int ToInt(string value, string fieldName)
+        {
+            if (int.TryParse(value, out var n)) return n;
+            throw new InvalidOperationException(
+                $"Value '{value}' supplied for '{fieldName}' is not a valid integer.");
+        }
+        private static long ToLong(string value, string field) =>
+            long.TryParse(value, out var n)
+            ? n
+            : throw new InvalidOperationException($"'{field}' value '{value}' is not a valid long.");
+
 
         public ReleaseRequestApiDto Build(CredentialsDto credentials,
             string siiRequestId,
@@ -102,9 +114,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                     attachments.Add(new FormAttachmentDto
                     {
                         formAttachmentIndex = idx,
-                        attachmentType = new IdDto { id = ptr.DocumentTypeCode },
+                        attachmentType = new IdDto { id = ToInt(ptr.DocumentTypeCode, "DocumentTypeCode") },
                         attachmentDescription = ptr.DocumentTypeCode == "101"
-                                ? ptr.DocumentTypeCodeName   
+                                ? ptr.DocumentTypeCodeName
                                 : null,
                         formAttachment = url,
                         fileExtension = GetSafeExtension(url)
@@ -225,24 +237,26 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             string GetSiiCompanyName() => DefaultService.Instance.Get(_tenant, "SIIApplicationName", "SIIApplicationName")?.Value1
                 ?? throw new InvalidOperationException("Default 'SIIApplicationName' is missing.");
 
-            var formApplicationId = !string.IsNullOrWhiteSpace(sii.FromApplicationId) 
-                ? sii.FromApplicationId 
+            var formApplicationId = !string.IsNullOrWhiteSpace(sii.FromApplicationId)
+                ? sii.FromApplicationId
                 : $"{GetSiiCompanyName()}-{siiService.GetSIIFormApplicationMaxNumber(_tenant) + 1}";
 
-            var contactName = !string.IsNullOrWhiteSpace(contact?.LocalName)
-                ? contact.LocalName
-                : !string.IsNullOrWhiteSpace(contact?.EnglishName)
-                    ? contact.EnglishName
-                    : string.Empty;
+            var contactName = contact?.LocalName;
 
             return new ReleaseRequestFormDto
             {
                 formApplicationId = formApplicationId,
-                customsAgentRegisteredNumber = dec?.AgentId,
+                customsAgentRegisteredNumber = dec?.AgentId != null
+                    ? ToLong(dec.AgentId, "AgentId")
+                    : 0,
                 agentFileId = dec?.CustomFileNo,
                 customsAgentName = agentName,
 
-                importerNumber = importer?.Code ?? dec?.ImporterCode,
+                importerNumber = importer?.Code != null
+                ? ToLong(importer.Code, "ImporterCode")
+                : dec?.ImporterCode != null
+                ? ToLong(dec.ImporterCode, "ImporterCode")
+                : 0,
                 importerEmail = sii.ContactEmail,
                 importerPhone = sii.ContactTel,
                 importerCellPhone = sii.ContactCellPhone,
@@ -269,8 +283,17 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 importCountry = new CountryAlphaDto { alphaCode = sii.OriginCountryCode },
 
                 warehouseLocationName = sii.WareHouseAddress,
-                warehouseSettlement = new IdDto { id = sii.WareHouseCity },
-                destinationPort = new IdDto { id = GetComputingPartnerCodeTranslation(sii.UnloadPortCode, SIIRequestComputingPartner, ComputingPartnerTableUnloadingSiteType, _tenant) },
+                warehouseSettlement = new IdDto { id = ToInt(sii.WareHouseCity, "WareHouseCity") },
+                destinationPort = new IdDto
+                {
+                    id = ToInt(
+                        GetComputingPartnerCodeTranslation(
+                            sii.UnloadPortCode,
+                            SIIRequestComputingPartner,
+                            ComputingPartnerTableUnloadingSiteType,
+                            _tenant),
+                        "destinationPort")
+                }
 
             };
         }
@@ -302,7 +325,13 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 customsItem = item.ClassificationCode,
                 productFileNumber = item.ProductFileNumber,
                 quantityToRelease = item.InvoiceQuantity,
-                siiUnitCode = GetComputingPartnerCodeTranslation(item.InvoiceQuantityTypeCode, SIIRequestComputingPartner, ComputingPartnerTableMeasurmentUnit, _tenant),
+                siiUnitCode = ToInt(
+                    GetComputingPartnerCodeTranslation(
+                        item.InvoiceQuantityTypeCode,
+                        SIIRequestComputingPartner,
+                        ComputingPartnerTableMeasurmentUnit,
+                        _tenant),
+                    "siiUnitCode"),
                 quantityByDeclaredUnit = item.StatisticQuantity,
                 declaredUnitCode = GetComputingPartnerCodeTranslation(item.StatisticQuantityTypeCode, SIIRequestComputingPartner, ComputingPartnerTableMeasurmentUnit, _tenant),
                 originCountry = new CountryAlphaDto { alphaCode = item.OriginCountryCode },
@@ -310,10 +339,18 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 modelCode = item.ItemNo,
                 modelDescription = item.ItemName,
                 comment = item.Remarks,
-                isDutchGroup1Requested = item.DutchRequested,
+                isDutchGroup1Requested = string.IsNullOrWhiteSpace(item.ProductFileNumber),
                 supplierInvoiceNumber = item.InvoiceNumber,
                 supplierInvoiceDate = item.IssueDate,
-                supplier = item.VendorName,
+                supplier = string.IsNullOrWhiteSpace(item.VendorName)
+                ? item.VendorName
+                : HebrewRegex                     
+                .Replace(item.VendorName, "")
+               .Trim()                       
+               .Substring(0, Math.Min(20,     
+                                      HebrewRegex
+                                          .Replace(item.VendorName, "")
+                                          .Trim().Length)),
                 formAttachmentIndexes = new List<int>()
             };
 

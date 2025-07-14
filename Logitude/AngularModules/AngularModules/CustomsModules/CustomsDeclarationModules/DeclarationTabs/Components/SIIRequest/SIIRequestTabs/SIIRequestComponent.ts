@@ -462,21 +462,41 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
     public SearchFilterChangedEvent: any;
     SearchText: string = "";
-    Search(SearchText: string) {
-        this.SearchText = AppTool.IsNullOrEmpty(SearchText) ? "" : SearchText.toLowerCase();
-        const original: SupplierInvoiceItemsForSIIRequestLine[] = this.originalSupplierInvoiceItemsCollection.Collection;
-        let filtered: SupplierInvoiceItemsForSIIRequestLine[] = [];
-        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-            filtered = original.filter(i => i.ClassificationCode?.toLowerCase().includes(this.SearchText) || i.ItemCode?.toLowerCase().includes(this.SearchText));
-            this.supplierInvoiceItemsCollection.Clear();
-            if (filtered.length > 0) {
-                filtered.forEach((i, index) => {
-                    i.Counter = index + 1;
-                    this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this));
-                });
-            }
+    Search(searchText: string): void {
+
+        this.SearchText = AppTool.IsNullOrEmpty(searchText)
+            ? ""
+            : searchText.toLowerCase();
+
+        let filtered: SupplierInvoiceItemsForSIIRequestLine[] =
+            this.supplierInvoiceItemsCollection.Collection.slice();
+
+
+        if (this.DemandStateFilterSelectedValue !== this.filterOptionsAll) {
+            filtered = filtered.filter(i => i.HasDemandState === true);
         }
-        else this.DemandStateFilterItemClicked(this.DemandStateFilterSelectedValue, true);
+
+        if (this.LevelSelectionFilterSelectedValue === this.filterOptionsInvoice &&
+            !AppTool.IsNullOrEmpty(this.SelectedInvoiceNumber)) {
+
+            filtered = filtered.filter(i => i.InvoiceNumber === this.SelectedInvoiceNumber);
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            const term = this.SearchText;
+            filtered = filtered.filter(i =>
+                (i.ClassificationCode || "").toLowerCase().indexOf(term) > -1 ||
+                (i.ItemCode || "").toLowerCase().indexOf(term) > -1
+            );
+        }
+
+        this.supplierInvoiceItemsCollection.Clear();
+        for (let idx = 0; idx < filtered.length; idx++) {
+            filtered[idx].Counter = idx + 1;
+            this.supplierInvoiceItemsCollection.Insert(
+                new SupplierInvoiceItemsForSIIRequestLine(filtered[idx], this)
+            );
+        }
     }
     //#endregion Properties Filter Methods
 
@@ -496,6 +516,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             this.supplierInvoiceItemsCollection.Clear();
             if (filtered.length > 0)
                 filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+
+            if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+                this.Search(this.SearchText);
+            }
         }
     }
 
@@ -522,6 +546,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             item.Counter = index + 1;
             this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
         });
+        if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+            this.Search(this.SearchText);
+        }
     }
 
     InvoicesNumbersList: any[];
@@ -553,6 +580,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     item.Counter = index + 1;
                     this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
                 });
+                if (!AppTool.IsNullOrEmpty(this.SearchText)) {
+                    this.Search(this.SearchText);
+                }
             }
         }
     }
@@ -732,7 +762,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
     }
     public set ContactFax(newValue: string) {
         if (this.entityPM.ContactFax != newValue){
-        this.entityPM.ContactFax = newValue;
+            this.entityPM.ContactFax = newValue;
         }
     }
 

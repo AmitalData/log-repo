@@ -8,20 +8,22 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
     {
         public CredentialsDto credentials { get; set; }
         public ReleaseRequestFormDto releaseRequestForm { get; set; }
-        public List<FormAttachmentDto> formAttachments { get; set; }
+        public List<FormAttachmentDto> formAttachments { get; set; }                                              
     }
 
     public class ReleaseRequestFormDto
     {
         public string formApplicationId { get; set; }
-        public string importerNumber { get; set; }
+
+        public long importerNumber { get; set; }
+
         public string importerEmail { get; set; }
         public string importerPhone { get; set; }
         public string importerCellPhone { get; set; }
         public string importerFax { get; set; }
         public string applicantIdNumber { get; set; }
         public string applicantFullName { get; set; }
-        public string customsAgentRegisteredNumber { get; set; }
+        public long customsAgentRegisteredNumber { get; set; }
         public string customsAgentName { get; set; }
         public string agentFileId { get; set; }
         public CountryAlphaDto importCountry { get; set; }
@@ -34,7 +36,6 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public IdDto warehouseSettlement { get; set; }
         public string warehouseLocationName { get; set; }
 
-        // Contact person
         public string contactPersonFirstName { get; set; }
         public string contactPersonLastName { get; set; }
         public string contactPersonEmail { get; set; }
@@ -59,7 +60,7 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public string customsItem { get; set; }
         public string supplier { get; set; }
         public decimal? quantityToRelease { get; set; }
-        public string siiUnitCode { get; set; }
+        public int? siiUnitCode { get; set; }
         public decimal? quantityByDeclaredUnit { get; set; }
         public string comment { get; set; }
         public List<int> formAttachmentIndexes { get; set; }
@@ -75,20 +76,13 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
         public IdDto attachmentType { get; set; }
         public string attachmentDescription { get; set; }
         public string formAttachment { get; set; }
+        public string temporaryUrlToDownload { get; set; }
+
         public string fileExtension { get; set; }
     }
 
-    public class CountryAlphaDto
-    {
-        public string alphaCode { get; set; }
-    }
+    public class CountryAlphaDto{public string alphaCode { get; set; }}
 
-    public class IdDto
-    {
-        public string id { get; set; }
-    }
-    public class IdProductDutchGroup
-    {
-        public string id { get; set; }
-    }
+    public class IdDto { public int id { get; set; } }
+    public class IdProductDutchGroup { public int id { get; set; } }
 }
