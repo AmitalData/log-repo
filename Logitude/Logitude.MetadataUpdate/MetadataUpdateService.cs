@@ -83,11 +83,13 @@ namespace Logitude.MetadataUpdate
 
                     Console.WriteLine($"Building Object table zip files for DB Connection: {dbConnection} ...");
                     bool buildCustomsZipFiles = false;
-                    if(moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include)
+                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, currentTenantId);
+                    if (moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include)
                     {
                         buildCustomsZipFiles = true;
                     }
                     TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, currentTenantId);
+
                     Console.WriteLine($"Building zip files finished for DB Connection: {dbConnection} ...");
 
                     processedDBConnections.Add(currentTenantId, dbConnection);
