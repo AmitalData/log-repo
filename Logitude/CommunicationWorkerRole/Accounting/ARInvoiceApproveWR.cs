@@ -30,6 +30,7 @@ using Logitude.Server.Tools.Models;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Server.Tools;
 
 namespace CommunicationWorkerRole
 {
@@ -298,8 +299,11 @@ namespace CommunicationWorkerRole
                             NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in UpdateInterestInvoiceStatus");
                         }
                     }
-                        
 
+                    if (aRInvoicePM.IsAutoCredit)
+                    {
+                        invoiceService.OnCreatingAutoCredit();
+                    }
 
                 }
                 catch (BusinessErrorException ex)
