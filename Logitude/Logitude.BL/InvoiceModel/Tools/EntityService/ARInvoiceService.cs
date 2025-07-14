@@ -711,12 +711,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.isVoidingInvoice = entityPM.SetVoided;
 
-            if (entityPM.IsAutoCredit)
-            {
-                entityPM.SetApproved = false;
-                entityPM.StatusCode = "AC";
-                this.GenerateInvoiceNumber();
-            }
+            
             if (entityPM.ARInvoiceTypeCode == "IT")
             {
                 if (CheckIfReportConnectedToInvoice(entityPM))
@@ -736,6 +731,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 invoiceRepository.Update(invoice);
                 invoiceRepository.SubmitChanges();
             }
+            if (entityPM.IsAutoCredit && entityPM.StatusCode != "DR" && entityPM.SetApproved)
+            {
+                entityPM.SetApproved = false;
+                entityPM.StatusCode = "AC";
+                this.GenerateInvoiceNumber();
+            }
             if (invoice.StatusCode == "AR")
             {
                 if (this.entityPM.StatusCode == "AD")
@@ -746,7 +747,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.ValidateInvoiceConnected();
 
-            if (entityPM.SetApproved)
+            if (entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus))
             {
                 if (invoice.StatusCode == "LL")
                 {
@@ -845,7 +846,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-                if (entityPM.SetApproved)
+                if (entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus))
                 {
                     if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                     {
@@ -1872,7 +1873,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeTransferFields();
             this.InitializeGLAccountFields();
 
-            if (this.entityPM.SetApproved && string.IsNullOrEmpty(entityPM.TransferError))
+            if ((this.entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus)) && string.IsNullOrEmpty(entityPM.TransferError))
             {
                 if (this.isTransferToDropbox && this.TransferToDropboxActivated)
                 {
@@ -1889,7 +1890,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 isInitializing = true;
             }
 
-            else if (entityPM.SetApproved)
+            else if (entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus))
             {
                 isInitializing = true;
             }
@@ -4619,6 +4620,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             int tenant = theEntityPm.Tenant;
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            isApprovingInvoice = isApprovingInvoice || (theEntityPm.IsAutoCredit && theEntityPm.StatusCode == InvoiceAutoCreditStatus);
             if (tenantPOCO.AccountingActivated)
             {
                 if (theEntityPm.InvoiceLines != null && theEntityPm.InvoiceLines.Count() > 0)
@@ -4744,10 +4746,6 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     SendInvoiceToSAT();
                 }
 
-                if (entityPM.IsAutoCredit)
-                {
-                    this.OnCreatingAutoCredit();
-                }
             }
 
             else
