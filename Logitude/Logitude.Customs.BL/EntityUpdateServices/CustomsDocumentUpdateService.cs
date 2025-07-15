@@ -191,7 +191,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         public const string SetCustomsRequestSheetStatus = "SetCustomsRequestSheetStatus";
-        private void AddHybridTaskDocumentFilingChange(DocumentsFilingPM documentsFilingPM)//Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
+        private void AddHybridTaskDocumentFilingChange(DocumentsFilingPM documentsFilingPM, CustomsDocumentPM currentCustomsDoc = null)//Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
         {
 
             //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
@@ -229,7 +229,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 Subject = "New Documents Filing Created",
                 FolderName = "ExternalTasksQueue",
             };
-            DocumentsFilingPM mappedPM = DocumentsFilingHybridMapping.MapEntityToHybrid(documentsFilingPM);
+            DocumentsFilingPM mappedPM = DocumentsFilingHybridMapping.MapEntityToHybrid(documentsFilingPM,currentCustomsDoc);
 
             string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedPM);
             List<QueueTask> queue1Tasks = new List<QueueTask>();
@@ -259,7 +259,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 LogitudeSettings.HandleLogMe("start update :" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
 
-
+                LogMessagingUtil.Instance.AppendLine($"IsPartOfDeclaration changed → PM={entityPM.IsPartOfDeclaration}, POCO={entityPOCO.IsPartOfDeclaration}");
                 if (entityPM.IsPartOfDeclaration != entityPOCO.IsPartOfDeclaration)
                 {
                     string documentsFilingId = entityPM.DocumentsFilingId ?? EntityPOCO.DocumentsFilingId;
@@ -273,7 +273,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 unifreightFUStatusTaskService.DeleteINAFUStatus(entityPM.Tenant, pm.ExternalEntityReference);
                             
                         }
-                        AddHybridTaskDocumentFilingChange(pm); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
+                        LogMessagingUtil.Instance.AppendLine("documentsFilingId resolved: " + documentsFilingId);
+                        AddHybridTaskDocumentFilingChange(pm, entityPM); //Bug 36694: Disconnecting document from the ticket  does not create trigger to UNF
                     }
 
                 }
