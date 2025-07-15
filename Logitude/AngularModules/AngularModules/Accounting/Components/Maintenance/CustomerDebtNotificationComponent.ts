@@ -16,6 +16,7 @@ import { ReportGroupService } from 'Common/Services/ExtendedLists/ReportGroupSer
 import { ReportService } from 'Common/Services/ExtendedLists/ReportService';
 import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventManager';
 import { TasksSchedulerExtendedService } from 'Infrastructure/Services/ExtendedPMs/TasksSchedulerExtendedService';
+import { Subscription } from 'rxjs';
 @Component({
 
     selector: 'CustomerDebtNotificationComponent',
@@ -25,13 +26,14 @@ import { TasksSchedulerExtendedService } from 'Infrastructure/Services/ExtendedP
 export class CustomerDebtNotificationComponent extends BaseComponent implements OnInit, OnDestroy {
     public DataContext: any = this;
     public ObjectTableName: string = "CustomerDebtNotification";
-    private CustomerDebtNotificationPM: CustomerDebtNotificationPM;
-    
+    public CustomerDebtNotificationPM: CustomerDebtNotificationPM;
+    public CustomerDebtNotificationMaintenance: CustomerDebtNotificationPM;
+
     public ValidationErrorsList: string[];
     public IsVisibile = false;
     private CurrentSession = SessionLocator.SelectedSession;
    
-    
+    private taskSchedulerSub: Subscription;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     ApiQueryFilters:ApiQueryFilters;
     IsFromMaintenance:boolean;
@@ -59,8 +61,9 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
         });
     }
     ngOnDestroy(): void {
-        AccountingEventManager.TasksSchedulerId.unsubscribe();
+        this.taskSchedulerSub.unsubscribe(); 
     }
+
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.IsFromMaintenance = args.IsFromMaintenance;
@@ -68,7 +71,7 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
     }
     
     Listen() {
-        AccountingEventManager.TasksSchedulerId.subscribe((event: string) => {
+        this.taskSchedulerSub = AccountingEventManager.TasksSchedulerId.subscribe((event: string) => {
             if (!AppTool.IsNullOrEmpty(event)) {
                this.TasksSchedulerId = event;
             }
@@ -78,29 +81,28 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
    
     private LoadCustomerDebtNotification() {
         var myService: CustomerDebtNotificationExtendedPMService = new CustomerDebtNotificationExtendedPMService();
-        myService.GetCustomerDebtNotificationByAccountId(this.GLAccountId).subscribe((response: ServiceResponse) => {
+           myService.GetCustomerDebtNotificationByAccountId(this.GLAccountId).subscribe((response: ServiceResponse) => {
             this.CustomerDebtNotificationPM = response.Result as CustomerDebtNotificationPM;
-       
-            if (this.CustomerDebtNotificationPM == null || this.CustomerDebtNotificationPM == undefined) {
-                this.CustomerDebtNotificationPM = new CustomerDebtNotificationPM();
-                this.CustomerDebtNotificationPM.Tenant = SessionLocator.Tenant;
-                this.CustomerDebtNotificationPM.AccountId = this.GLAccountId;    
-                this.TypesDebts = TypesDebtsEnum.Obligato;
-                this.DebtLevel = DebtLevelEnum.Percentage;
 
+           myService.GetCustomerDebtNotificationByAccountId(null).subscribe((res: ServiceResponse) => {
+            this.CustomerDebtNotificationMaintenance = res.Result as CustomerDebtNotificationPM;
+
+                const isMaintenanceNoActive =  this.CustomerDebtNotificationMaintenance?.InActive === IsActiveEnum.NotActive ||
+                                               AppTool.IsNullOrEmpty(this.CustomerDebtNotificationMaintenance?.InActive);
+
+               
+            if (!this.CustomerDebtNotificationPM) {
+               this.createDefaultNotification();
+                
                 if(!this.IsFromMaintenance) 
-                {
-                    myService.GetCustomerDebtNotificationByAccountId(null).subscribe((response: ServiceResponse) => {
-                        var customerDebtNotification = response.Result as CustomerDebtNotificationPM;
-                       if(customerDebtNotification != null) {
-                        this.InActive = (customerDebtNotification.InActive == IsActiveEnum.NotActive || AppTool.IsNullOrEmpty(customerDebtNotification.InActive)) ? IsActiveEnum.NotActive : IsActiveEnum.ActiveAllCustomers;
-                        this.IsActive = (customerDebtNotification.InActive == IsActiveEnum.NotActive || AppTool.IsNullOrEmpty(customerDebtNotification.InActive)) ? false : true;
-                       }
-                       else{
+                {           
+                    if (this.CustomerDebtNotificationMaintenance) {
+                        this.InActive = isMaintenanceNoActive || this.CustomerDebtNotificationMaintenance.InActive == IsActiveEnum.ActiveSelectedCustomers? IsActiveEnum.NotActive : IsActiveEnum.ActiveAllCustomers;
+                        this.IsActive = !(isMaintenanceNoActive || this.CustomerDebtNotificationMaintenance.InActive == IsActiveEnum.ActiveSelectedCustomers);
+                    } else {
                         this.InActive = IsActiveEnum.NotActive;
                         this.IsActive = false;
-                       }
-                    });
+                    }                   
                 }
                 else{
                     this.InActive = IsActiveEnum.NotActive;
@@ -108,20 +110,34 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
              }
              else
              {
-                this.IsActive = this.CustomerDebtNotificationPM.InActive == IsActiveEnum.NotActive  ? false : true;
-                this.InActive = this.CustomerDebtNotificationPM.InActive;
+                    if(!this.IsFromMaintenance && isMaintenanceNoActive)
+                    {
+                       this.IsActive =  false; 
+                       this.InActive = IsActiveEnum.NotActive;    
+                    }
+                    else 
+                    {
+                        this.IsActive = this.CustomerDebtNotificationPM.InActive == IsActiveEnum.NotActive  ? false : true;
+                        this.InActive = this.CustomerDebtNotificationPM.InActive;
+                    }
                 this.TypesDebts = this.CustomerDebtNotificationPM.TypesDebts;
                 this.DebtLevel = this.CustomerDebtNotificationPM.DebtLevel;
              }
             
             this.CurrentSession.StopBusyIndicator();
             this.IsVisibile = true;
-
+        });
         });
 
-
     }
-
+    private createDefaultNotification() {
+        this.CustomerDebtNotificationPM = new CustomerDebtNotificationPM();
+        this.CustomerDebtNotificationPM.Tenant = SessionLocator.Tenant;
+        this.CustomerDebtNotificationPM.AccountId = this.GLAccountId;
+        this.TypesDebts = TypesDebtsEnum.Obligato;
+        this.DebtLevel = DebtLevelEnum.Percentage;
+      
+    }
     onReportSchedulerClick() {
         var groupService = new ReportGroupService();
         var reportService = new ReportService();
@@ -170,11 +186,19 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
     {
             this.TypesDebts = itemValue;
     }
-    public DebtLevelFilter: string;
-    DebtLevelFilterItemClicked(itemValue: string)
-    {
-            this.DebtLevel = itemValue;
+
+
+    SelectedDebtLevelTypeItem =  { Code: '1', EnglishName: "Percentage", LocalName: "%" };
+    DebtLevelTypeChanged(type){
+        this.SelectedDebtLevelTypeItem = type;
+        this.DebtLevel = type.Code;
     }
+    SelectedBalanceTypeCode: string;
+    DebtLevelTypes = [
+        { Code: '1', EnglishName: "Percentage", LocalName: "%" },
+        { Code: '2', EnglishName: "Total Amount", LocalName: "FIX" },
+    ]; 
+
 
     get InActive() { return this.CustomerDebtNotificationPM?.InActive; }
     set InActive(value: string) {
@@ -198,11 +222,10 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
     }
     get DebtLevel() { return this.CustomerDebtNotificationPM?.DebtLevel; }
     set DebtLevel(value: string) {
-
         if (this.CustomerDebtNotificationPM.DebtLevel != value) {
             this.CustomerDebtNotificationPM.DebtLevel = value;
         }
-        this.DebtLevelFilter = value;
+        this.SelectedDebtLevelTypeItem = this.DebtLevelTypes.find(x=> x.Code === value);
 
     }
 

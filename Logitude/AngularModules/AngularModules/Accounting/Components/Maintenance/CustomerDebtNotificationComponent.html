@@ -120,7 +120,7 @@
                                                                                   </ul>
                                                                                 </td>
                                                                                 <td *ngIf="!IsFromMaintenance" style="width: 300px;">
-                                                                                    <CheckBox [IsChecked]="IsActive" (Checked)="IsActiveChecked($event)"> </CheckBox>                                                                              
+                                                                                    <CheckBox [IsChecked]="IsActive" [IsEnabled]="!(this.CustomerDebtNotificationMaintenance == null ||this.CustomerDebtNotificationMaintenance?.InActive === IsActiveEnum.NotActive)" (Checked)="IsActiveChecked($event)"> </CheckBox>                                                                              
                                                                                 </td>
                                                                                 <td>
                                                                                     <div></div>
@@ -168,30 +168,19 @@
                                                                                
                                                                                     <td style="width:300x;">
                                                                                         <div class="container">
-                                                                                        <div style="width: 50px;">
-
-                                                                                            <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="true">
-                                                                                                <li style="width: 20px;" [class.FiltersMenuDisabled]="InActive === IsActiveEnum.NotActive"
-                                                                                                float-start  (click)="DebtLevelFilterItemClicked(DebtLevelEnum.TotalAmount)"
-                                                                                                [class.SelectedFilter]="DebtLevelFilter === DebtLevelEnum.TotalAmount" [title]="'CustomerDebtNotification.O.TotalAmount' | TextCodeTranslationPipe">
-                                                                                                {{'|X|'}}
-                                                                                            </li>
-                                                                                                <li style="width: 20px;"  [class.FiltersMenuDisabled]="InActive === IsActiveEnum.NotActive || TypesDebts != TypesDebtsEnum.Obligato"
-                                                                                                      float-start   (click)="DebtLevelFilterItemClicked(DebtLevelEnum.Percentage)"
-                                                                                                      [class.SelectedFilter]="DebtLevelFilter === DebtLevelEnum.Percentage" [title]="'CustomerDebtNotification.O.Percentage' | TextCodeTranslationPipe">
-                                                                                                    {{'%'}}
-                                                                                                </li>
-                                                                                               
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                        <div [class.disabled]="IsActiveEnum.NotActive == InActive"  style="width: 100px;">
-                                                                                        <LogTextBox [ObjectFieldName]="'DebtLevelAmount'" [InputType]="'unsinteger'" [DataContext]="DataContext" [Text]="DebtLevelAmount"
-                                                                                        [NoObjectField]="true"   [HideColumns]="true"></LogTextBox>
-                                                                                    </div>
-                                                                                      
-                                                                                       
-
-                                                                                        <div style="width: 120px;"></div>
+                                                                                            <div [class.disabled]="IsActiveEnum.NotActive == InActive"  style="width: 100px;">
+                                                                                                <LogTextBox [ObjectFieldName]="'DebtLevelAmount'" [InputType]="'unsinteger'" [DataContext]="DataContext" [Text]="DebtLevelAmount"
+                                                                                                [NoObjectField]="true"   [HideColumns]="true"></LogTextBox>
+                                                                                            </div>
+                                                                                            <div style="width: 10px;"></div>  
+                                                                                            <div style="width: 50px;" *ngIf="TypesDebts == TypesDebtsEnum.Obligato">
+                                                                                               <td style="width: 100px;">
+                                                                                                   <ComboBox [ItemsSource]="DebtLevelTypes" (SelectedItemChanged)="DebtLevelTypeChanged($event)"
+                                                                                                             style="display: block;width: 120px;" [SelectedItem]="SelectedDebtLevelTypeItem"
+                                                                                                             [Binding]="'LocalName'" [IsDisabled]="InActive === IsActiveEnum.NotActive"></ComboBox>
+                                                                                                </td>                                                                                          
+                                                                                            </div>                                        
+                                                                                        <div style="width: 110px;"></div>
                                                                                     </div>
                                                                                     </td>
                                                                                     
