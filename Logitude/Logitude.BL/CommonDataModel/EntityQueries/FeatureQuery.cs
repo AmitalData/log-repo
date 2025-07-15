@@ -425,7 +425,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
 
-        public List<FeaturePM> GetAllowedFeaturesForRole(string myRoleId, List<string> allowedPackages, int tenant)
+        public List<FeaturePM> GetAllowedFeaturesForRole(string myRoleId, List<string> allowedPackages, int tenant, bool ignoreCache = false)
         {
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"GetAllowedFeaturesForRole myRoleId: {myRoleId} , tenant: {tenant}");
 
@@ -473,9 +473,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (myRole.IsCustomRole)
                 {
 
-					allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.ParentRoleId, tenant);
+					allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.ParentRoleId, tenant, ignoreCache);
 
-					List<RoleFeature> allChildFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant);
+					List<RoleFeature> allChildFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant, ignoreCache);
 
 
                     foreach (RoleFeature item in allChildFeatures)
@@ -502,7 +502,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 else
                 {
-                    allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant);
+                    allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant, ignoreCache);
 				}
                 #endregion
 

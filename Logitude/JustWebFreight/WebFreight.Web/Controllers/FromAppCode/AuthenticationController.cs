@@ -986,7 +986,7 @@ namespace WebFreight.Web
                     loginsList = loginsList.Where(s => s.LicensedUser == true || s.IsUser == false).OrderBy(c => c.CompanyName).ToList();
                     if (loginParameters.IsCustomsBook)
                     {
-                        List<CompanyLogin> cbList = loginsList?.Where(s => SecurityUtility.CheckFeature("Customs.CB_CustomsItemComputedData", "CustomsBookFeature", s.Tenant)).ToList();
+                        List<CompanyLogin> cbList = loginsList?.Where(s => SecurityUtility.CheckFeature("Customs.CB_CustomsItemComputedData", "CustomsBookFeature", s.Tenant, true)).ToList();
                         loginsList = cbList?.Count > 0 ? cbList : loginsList;
                     }
 

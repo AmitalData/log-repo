@@ -79,13 +79,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
-		public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant)
+		public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant,bool ignoreCache=false)
 		{
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"After GetRoleFeaturesForRoleFromCache roleId: {roleId},tenant: {tenant}");
 
             string cacheKey = $"RoleFeature_{roleId}_{tenant}";
             List<RoleFeature> entity= (List<RoleFeature>)CacheManager.CacheWrapper.Get(cacheKey);
-            if (entity == null)
+            if (entity == null || ignoreCache)
             {
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo(message: $"Before GetAllowedFeaturesForRole repository.context.RoleFeatures.GetConnection().Database: {repository.context.GetConnection()?.Database}");
 
