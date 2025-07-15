@@ -469,7 +469,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             : searchText.toLowerCase();
 
         let filtered: SupplierInvoiceItemsForSIIRequestLine[] =
-            this.supplierInvoiceItemsCollection.Collection.slice();
+            this.originalSupplierInvoiceItemsCollection.Collection.slice();
 
 
         if (this.DemandStateFilterSelectedValue !== this.filterOptionsAll) {
