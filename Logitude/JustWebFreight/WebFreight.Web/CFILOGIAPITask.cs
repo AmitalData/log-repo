@@ -187,6 +187,54 @@ namespace WebFreight.Web
     {
         static public string DB = @"<root>
 <OCC>
+<DAT name=""CODE"">A113</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIRPNDCOU</DAT>
+<DAT name=""REFERENCE"">CourierPendingReasons</DAT>
+<DAT name=""PARAMETERS"">CODE=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select ENGLISHNAME from CUSTOMS.CourierPendingReasons where code=@CODE and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select ENGLISHNAME from CUSTOMS.CourierPendingReasons where code=@CODE and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">CODE=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A112</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFCOUDISTXML</DAT>
+<DAT name=""REFERENCE"">DECLARATIONCOURIERSTATUSES</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select TruckerId from CUSTOMS.DeclarationCourierStatuses where declarationid=@DECLARATIONID  and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select TruckerId from CUSTOMS.DeclarationCourierStatuses where declarationid=@DECLARATIONID  and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DECLARATIONID=varchar,15</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A111</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIFCOUDISTXML</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">ID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select CourierCustomStatusCode,AcceptanceStatusCode from CUSTOMS.Declarations where ID=@ID and TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select CourierCustomStatusCode,AcceptanceStatusCode from CUSTOMS.Declarations where ID=@ID and TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
+<DAT name=""CODE"">A110</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIUDIAMONDS</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">ID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID=@ID AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID=@ID AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
 <DAT name=""CODE"">A109</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>CFIQGRSTSRCOU</DAT>
 <DAT name=""REFERENCE"">DECLARATIONCOURIERSTATUSES</DAT>
