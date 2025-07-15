@@ -951,6 +951,10 @@ export class ARInvoicePM {
     public get SetApproved() { return this.setApproved; }
     public set SetApproved(newValue: boolean) { if (this.setApproved != newValue) { this.setApproved = newValue; this.MarkAsDirty("SetApproved"); } }
        
+    private setApprovedAutoCredit: boolean;
+    public get SetApprovedAutoCredit() { return this.setApprovedAutoCredit; }
+    public set SetApprovedAutoCredit(newValue: boolean) { if (this.setApprovedAutoCredit != newValue) { this.setApprovedAutoCredit = newValue; this.MarkAsDirty("SetApprovedAutoCredit"); } }
+      
 	 
     private setReTransfer: boolean;
     public get SetReTransfer() { return this.setReTransfer; }
