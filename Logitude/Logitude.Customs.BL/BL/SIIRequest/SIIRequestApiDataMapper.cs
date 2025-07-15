@@ -37,6 +37,11 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         private static readonly HashSet<string> AllowedExts = new HashSet<string>(new[] { "pdf", "gif", "jpg" }, StringComparer.OrdinalIgnoreCase);
 
         private static readonly System.Text.RegularExpressions.Regex HebrewRegex = new System.Text.RegularExpressions.Regex(@"\p{IsHebrew}", System.Text.RegularExpressions.RegexOptions.Compiled);
+
+        private static string SanitizePhone(string raw) =>
+            string.IsNullOrWhiteSpace(raw)
+            ? raw
+            : new string(raw.Where(char.IsDigit).ToArray());
         public SIIRequestApiDataMapper(int tenant)
         {
             _tenant = tenant;
@@ -258,9 +263,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 ? ToLong(dec.ImporterCode, "ImporterCode")
                 : 0,
                 importerEmail = sii.ContactEmail,
-                importerPhone = sii.ContactTel,
-                importerCellPhone = sii.ContactCellPhone,
-                importerFax = sii.ContactFax,
+                importerPhone = SanitizePhone(sii.ContactTel),
+                importerCellPhone = SanitizePhone(sii.ContactCellPhone),
+                importerFax = SanitizePhone(sii.ContactFax),
 
                 applicantFullName = contactName,
                 applicantIdNumber = contact == null
@@ -275,9 +280,9 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 contactPersonFirstName = contactName,
                 contactPersonLastName = contactName,
                 contactPersonEmail = contact?.Email,
-                contactPersonPhone = contact?.BusinessPhone ?? contact?.Mobile,
-                contactPersonCellPhone = contact?.Mobile ?? contact?.BusinessPhone,
-                contactPersonFax = contact?.Fax,
+                contactPersonPhone = SanitizePhone(contact?.BusinessPhone ?? contact?.Mobile),
+                contactPersonCellPhone = SanitizePhone(contact?.Mobile ?? contact?.BusinessPhone),
+                contactPersonFax = SanitizePhone(contact?.Fax),
 
                 isNumericCountryCode = false, // we always send AlphaCode
                 importCountry = new CountryAlphaDto { alphaCode = sii.OriginCountryCode },
