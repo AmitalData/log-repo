@@ -233,6 +233,9 @@ namespace Logitude.Accounting.BL.Utils
 
         private static InterestTransactionPM CreateInterestTransaction(JournalLinePM line)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$"[InterestTransactionPM] CreateInterestTransaction  EntityId (Id={line?.JournalId}) -  AccountingDate: {line?.AccountingDate},(JournalPM, Id={line?.JournalId}) ");
+
             InterestTransactionPM newInterestTransaction = new InterestTransactionPM();
             newInterestTransaction.EntityId = line.JournalId;
             newInterestTransaction.OriginalEntityLineNumber = line.Line;
