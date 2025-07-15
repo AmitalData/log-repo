@@ -31,16 +31,16 @@ using Logitude.Server.Tools.Utils;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-
+ using Simplog.Data.CommonDataModel.EntityPOCOs;
+ using Microsoft.WindowsAzure.Storage.Queue.Protocol;
+ 
 
 namespace CustomsWorkerRole
 {
 	public class DocumentAzureQueueWR : CustomsWorkerEntryPoint
 	{
 
-		//DbQueueService queueService;
-		static AzureQueueMessageApi AzureQueueMessageApi;
+		AzureQueueMessageApi AzureQueueMessageApi;
 		DocumentApiExecutionService DocumentApiExecutionService;
 		UnifreightFillingService UnifreightFillingService;
 		static string connectionString;
@@ -77,6 +77,8 @@ namespace CustomsWorkerRole
 					catch (Exception exception)
 					{
 						Thread.Sleep(new TimeSpan(0, 0, 1));
+						NetCommonHelper.Logger.DevLog.Instance.WriteError(exception.Message.ToString());
+
 					}
 				}
 				else Thread.Sleep(new TimeSpan(0, 0, 1));
@@ -97,6 +99,8 @@ namespace CustomsWorkerRole
 			}
 			catch (Exception ex)
 			{
+				NetCommonHelper.Logger.DevLog.Instance.WriteError(ex.Message.ToString());
+
 			}
 		}
 
@@ -113,7 +117,7 @@ namespace CustomsWorkerRole
 			{
 				Thread.Sleep(new TimeSpan(0, 0, 1));
 				_OnStartDone = false;
-
+				NetCommonHelper.Logger.DevLog.Instance.WriteError(exception.Message.ToString());
 			}
 
 		}
@@ -338,7 +342,7 @@ namespace CustomsWorkerRole
 			documentsFilingPM.Received = true;
 			documentsFilingPM.ReceivedDate = null;
 			documentsFilingPM.SearchFields = code + "," + declaration?.CustomFileNo + "," + documentType?.Code + "," + documentType?.Name + "," + user?.EnglishName + "," + user?.LocalName;//add DESCREPTION
-			documentsFilingPM.SecurityId = "";//ask tomer
+			documentsFilingPM.SecurityId = "";
 			documentsFilingPM.SentSize = 0;
 			documentsFilingPM.SignDueDate = null;
 			documentsFilingPM.Tenant = tenant;
