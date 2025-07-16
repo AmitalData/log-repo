@@ -2631,6 +2631,12 @@
       LocalDefaultText="&quot;BS64:IteZ15fXmdeT16og157XmdeT15Qg157Xldem15TXqNeqIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.FileTypeNotAllowed&quot;"
+      DefaultText="&quot;File type {0} cannot be sent to SII. Allowed: {1}.&quot;"
+      LocalDefaultText="&quot;קובץ מסוג {0} אינו מותר לשליחה למכון התקנים. סוגים מותרים: {1}.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
