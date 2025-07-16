@@ -153,10 +153,6 @@ export class LoginComponent implements OnInit {
         let LogInToTenant = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
         SessionInfo.DisplayCookies = true;
         sessionStorage.setItem("DisplayCookies", JSON.stringify(true));
-        if (LogInToTenant) tenantList = [LogInToTenant];
-        else if (tenantList?.length > 1 && LoginParams.IsCustomsBook) {
-            LogInToTenant = tenantList[0];
-        }
 
         if (tenantList?.length > 1 && LoginParams.IsCustomsBook && !LogInToTenant) {
             this.errorMessage = "Login failed! Feature installed on more than one company.";
