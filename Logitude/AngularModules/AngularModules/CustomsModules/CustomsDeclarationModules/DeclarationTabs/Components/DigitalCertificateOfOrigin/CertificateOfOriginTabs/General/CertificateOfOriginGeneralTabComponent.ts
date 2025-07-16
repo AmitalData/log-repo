@@ -255,7 +255,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         let XMLOfConsignmentsDetailsToCertificateOfOriginOut = UnifreightMessageM.GetStringValue(mess, "XMLOfConsignmentsDetailsToCertificateOfOriginOut");
                         const xmlData = (xml: string) => xml.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
                         const result = this.parseXml(xmlData(XMLOfConsignmentsDetailsToCertificateOfOriginOut));
-                        
+
                         EntityPM.ExporterName = result?.ExporterName || this.entityPM.ExporterName;
                         EntityPM.ExporterAddress = result?.ExporterAddress || this.entityPM.ExporterAddress;
                         EntityPM.ConsigneeName = result?.ConsigneeName || this.entityPM.ConsigneeName;
@@ -295,7 +295,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (!unifreightItem) return;
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             mappedConsignments.Tenant = EntityPM.Tenant;
-           
+
             // Initialize from Unifreight data if available
             mappedConsignments.ItemSerial = unifreightItem.itemSerial || '';
             mappedConsignments.MarksAndNumbers = unifreightItem.marksAndNumbers || '';
@@ -305,6 +305,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedConsignments.PackageQuantity = unifreightItem.PackageQuantity || '';
             mappedConsignments.PackageType = unifreightItem.PackageType || '';
             this.getPackageTypeNameFromCache(mappedConsignments.PackageType, mappedConsignments);
+            if(AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
             
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
@@ -323,6 +324,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
+            }
+            else {
+                const firstConsignmentPackage = this.currentDeclaration.Consignments?.[0]?.ConsignmentPackages?.[0] || null;
+                if (firstConsignmentPackage) {
+                    mappedConsignments.MeasureType = firstConsignmentPackage?.GrossMassMeasureTypeCode || '';
+                    mappedConsignments.MeasureTypeName = firstConsignmentPackage?.GrossMassMeasureTypeName || '';
+                }
             }
 
             // Add to collections
