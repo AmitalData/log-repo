@@ -713,10 +713,10 @@
                             </div>
                         </td>
 
-                        <td *ngIf="currentDeclaration.Direction == 'E' && currentDeclaration.TransportModeId == 'O'"
+                        <td *ngIf="currentDeclaration.Direction === 'E'"
                             class="width165">
                             <div class="actionLineContainer">
-                                <SearchTextBox
+                                <SearchTextBox *ngIf="currentDeclaration.TransportModeId === 'O'"
                                     [PlaceHolder]="'Customs.CertificateOfOriginItem.O.SearchItems' | TextCodeTranslationPipe"
                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                     (SearchTextChangeEvent)="Search($event)"></SearchTextBox>
