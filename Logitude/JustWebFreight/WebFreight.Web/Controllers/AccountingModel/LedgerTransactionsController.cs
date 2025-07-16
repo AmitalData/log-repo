@@ -189,7 +189,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext, isFutureOpenCheques == "True", isUnpaidChecks == "True");
-            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId, sortBy, sortDirection, cardId);
+            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId, sortBy, sortDirection, cardId,true);
             return tranactions;
         }
 
