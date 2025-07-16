@@ -387,15 +387,28 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         {
             if (string.IsNullOrWhiteSpace(ext) || !AllowedExts.Contains(ext))
             {
-                var allowed = string.Join(", ", AllowedExts.Select(e => e.ToUpperInvariant()));
-                var bad = string.IsNullOrWhiteSpace(ext) ? "UNKNOWN" : ext.ToUpperInvariant();
-
-                var template = SIIRequestValidator.Translate(FileTypeNotAllowed, tenant);   // new key
+                string template = SIIRequestValidator.Translate(FileTypeNotAllowed, tenant);
                 if (string.IsNullOrWhiteSpace(template))
-                    template = "קובץ מסוג {0} אינו מותר לשליחה למכון התקנים. סוגים מותרים: {1}.";
+                {
+                    template = $"$Text({FileTypeNotAllowed})";
+                }
 
-                throw new InvalidOperationException(string.Format(template, bad, allowed));
+                string bad = string.IsNullOrWhiteSpace(ext) ? "?" : ext;
+                string allowedList = string.Join(", ", AllowedExts);
+
+                string msg;
+                try
+                {
+                    msg = string.Format(template, bad, allowedList);
+                }
+                catch (FormatException)
+                {
+                    msg = template + $" ({bad} / {allowedList})";
+                }
+
+                throw new InvalidOperationException(msg);
             }
+
             return ext.ToLowerInvariant();
         }
 
