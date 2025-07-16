@@ -31,6 +31,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         internal const string ItemNotCompleted = "Customs.SIIRequest.O.DataNotCompleted";
         internal const string LineCode = "Customs.SIIRequest.O.Line";
+        internal const string FileTypeNotAllowed = "Customs.SIIRequest.O.FileTypeNotAllowed";
+
 
         public const string NoProduct = "0";
         public const int DutchGroup1 = 1;
@@ -124,7 +126,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                                 ? ptr.DocumentTypeCodeName
                                 : null,
                         formAttachment = url,
-                        fileExtension = GetSafeExtension(url)
+                        fileExtension = EnsureAllowedExtOrThrow(ExtractExtension(url), _tenant)
                     });
 
                     bool hasChild2 = !string.IsNullOrWhiteSpace(ptr.Child2EntityId);
@@ -196,13 +198,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             return value;
         }
 
-        private static string GetSafeExtension(string url)
-        {
-            var ext = Path.GetExtension(new Uri(url).AbsolutePath)
-                         ?.TrimStart('.')
-                         ?.ToLowerInvariant();
-            return AllowedExts.Contains(ext) ? ext : "pdf";
-        }
 
         public string GetComputingPartnerCodeTranslation(string logitudeCode, string computingPartner, string objectTableName, int tenant)
         {
@@ -371,5 +366,40 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         }
 
         private int _lineCounter;
+
+        private static string ExtractExtension(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return string.Empty;
+
+            try
+            {
+                var ext = Path.GetExtension(new Uri(url).AbsolutePath);
+                return string.IsNullOrEmpty(ext) ? string.Empty : ext.TrimStart('.');
+            }
+            catch
+            {
+                var lastDot = url.LastIndexOf('.');
+                return lastDot >= 0 ? url.Substring(lastDot + 1) : string.Empty;
+            }
+        }
+
+        private string EnsureAllowedExtOrThrow(string ext, int tenant)
+        {
+            if (string.IsNullOrWhiteSpace(ext) || !AllowedExts.Contains(ext))
+            {
+                var allowed = string.Join(", ", AllowedExts.Select(e => e.ToUpperInvariant()));
+                var bad = string.IsNullOrWhiteSpace(ext) ? "UNKNOWN" : ext.ToUpperInvariant();
+
+                var template = SIIRequestValidator.Translate(FileTypeNotAllowed, tenant);   // new key
+                if (string.IsNullOrWhiteSpace(template))
+                    template = "קובץ מסוג {0} אינו מותר לשליחה למכון התקנים. סוגים מותרים: {1}.";
+
+                throw new InvalidOperationException(string.Format(template, bad, allowed));
+            }
+            return ext.ToLowerInvariant();
+        }
+
     }
+
+
 }

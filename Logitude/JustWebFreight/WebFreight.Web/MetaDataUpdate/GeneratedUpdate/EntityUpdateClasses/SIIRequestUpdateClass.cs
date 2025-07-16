@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "00f33c3bd9c37eef335f37ab42f6f40f";
+		public const string HashString = "dde7fe999c206f4e725b55baef425e97";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,7 +133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "בקשות למכון תקנים",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "386c",
+			      				    Code =  "7b9b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2069,6 +2069,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOquantityByDeclaredUnit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.quantityByDeclaredUnit", DefaultText = "quantity By Declared Unit",LocalDefaultText = @"כמות במשלוח לפי יחידה מוצהרת", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOdeclaredUnitCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.declaredUnitCode", DefaultText = "declared Unit Code",LocalDefaultText = @"יחידת מידה מוצהרת", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestOFileTypeNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.FileTypeNotAllowed", DefaultText = "File type {0} cannot be sent to SII. Allowed: {1}.",LocalDefaultText = @"קובץ מסוג {0} אינו מותר לשליחה למכון התקנים. סוגים מותרים: {1}.", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
