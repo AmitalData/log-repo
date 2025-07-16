@@ -14,11 +14,12 @@ namespace Unifreight.Data.AmitalModel
         {
             DateTime? lastSync = null;
             TryCatch(() =>
-            {
-                string cacheKey = GetLastSyncKey(fileNo, tenant);
-                lastSync = CacheHelper.GetFromCache(cacheKey, () =>
-                    new SyncRecordRepository(tenant).GetLastSyncDate(tenant, fileNo));                
-            });
+                lastSync = new SyncRecordRepository(tenant).GetLastSyncDate(tenant, fileNo));
+            //{
+                //string cacheKey = GetLastSyncKey(fileNo, tenant);
+                //lastSync = CacheHelper.GetFromCache(cacheKey, () =>
+                //    new SyncRecordRepository(tenant).GetLastSyncDate(tenant, fileNo));
+            //});
 
             return lastSync;
         }
@@ -30,8 +31,8 @@ namespace Unifreight.Data.AmitalModel
                 if (tenant == null || IsConnectedToUniFreight(tenant))
                     return;
 
-                string cacheKey = GetLastSyncKey(fileNo, tenant);
-                CacheHelper.ClearCache(cacheKey);
+                //string cacheKey = GetLastSyncKey(fileNo, tenant);
+                //CacheHelper.ClearCache(cacheKey);
             });
         }
 
@@ -46,7 +47,7 @@ namespace Unifreight.Data.AmitalModel
                 if (fileNo == null)
                     return;
 
-                ClearCacheLastSync(fileNo.Value.ToString(), tenant.Value);
+                //ClearCacheLastSync(fileNo.Value.ToString(), tenant.Value);
             });
         }
 
