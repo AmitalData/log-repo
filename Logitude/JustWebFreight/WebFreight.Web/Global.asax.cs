@@ -359,7 +359,7 @@ namespace WebFreight.Web
                 () => (new EntityGetReflectorService()) as IEntityGetReflectorService,
                 () => (new TreeFilterQueryService()) as ITreeFilterQueryService
                 );
-            ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
+            ProxyUtil.SecurityUtilityCheckFeature = (a, b, c) => SecurityUtility.CheckFeature(a, b, c);
             InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
                 (string courierMasterId, int tenant) =>
                 {
