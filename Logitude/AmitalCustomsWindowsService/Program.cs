@@ -160,7 +160,7 @@ namespace AmitalCustomsWindowsService
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
                 InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null, null , () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
-                ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
+                ProxyUtil.SecurityUtilityCheckFeature = (a, b, c) => SecurityUtility.CheckFeature(a, b, c);
                 InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
                     (string courierMasterId, int tenant) =>
                     {
