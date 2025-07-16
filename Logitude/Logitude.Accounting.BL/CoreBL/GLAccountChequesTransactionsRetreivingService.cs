@@ -33,11 +33,11 @@ namespace Logitude.Accounting.BL.CoreBL
             _IsUnpaidChecks = isUnpaidChecks;
         }
 
-        public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection,string cardId = "")
+        public List<LedgerTransactionList> GetAccountChequesTransactions(string accountId, string sortBy, string sortDirection,string cardId = "",bool isFromTransaction = false)
         {
             GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
 
-            List<LedgerTransactionList> arPaymentTransactions = gLAccountMoreDataRepository.GetAllChecks(accountId, tenant, isFuture: _IsFutureOpenCheques,showLocal: showLocal);
+            List<LedgerTransactionList> arPaymentTransactions = gLAccountMoreDataRepository.GetAllChecks(accountId, tenant, isFuture: _IsFutureOpenCheques,showLocal: showLocal, isFromTransaction: isFromTransaction);
             /*GetARPaymentLedgerTransactions(accountId).Distinct().ToList();*/
             //List<LedgerTransactionList> externalTransactions = GetExternalTransactionsForAccount(accountId, tenant);
 

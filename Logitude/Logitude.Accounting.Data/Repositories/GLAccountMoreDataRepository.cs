@@ -24,7 +24,7 @@ namespace Logitude.Accounting.Data.Repositories
             
 			throw new NotImplementedException();
         }
-        public List<LedgerTransactionList> GetAllChecks(string accountId, int tenant, bool isFuture, bool showLocal = true, bool withoutDate = false)
+        public List<LedgerTransactionList> GetAllChecks(string accountId, int tenant, bool isFuture, bool showLocal = true, bool withoutDate = false,bool isFromTransaction = false)
         {
 
            DateTime today = GetCurrentDate(tenant);
@@ -37,8 +37,8 @@ namespace Logitude.Accounting.Data.Repositories
                          from b in bj.DefaultIfEmpty()
                          join ba in context.BankAccounts on b.DepositBankAccountId equals ba.Id into baj
                          from ba in baj.DefaultIfEmpty()
-                         where a.AccountId == accountId && a.Tenant == tenant
-            && (withoutDate || (isFuture && a.ValueDate > today) || (!isFuture && a.ValueDate <= today))
+                         where a.AccountId == accountId && a.Tenant == tenant && (!isFromTransaction || l.IsOutOfDeposit == false)
+			&& (withoutDate || (isFuture && a.ValueDate > today) || (!isFuture && a.ValueDate <= today))
                          select new LedgerTransactionList()
                          {
                              PaymentValueDate = a.ValueDate,
