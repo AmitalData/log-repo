@@ -335,6 +335,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this._IsDisplayOnly = v;
     }
 
+    RefreshData() {
+        this.checkLedgerCreated();
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+    }
+
     checkLedgerCreated(firstCall: boolean = false)
     {
 
@@ -1077,7 +1082,15 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
         });
     }
-    
+    APPROVED_STATUS = 'AD';
+    DRAFT_STATUS = 'DR';
+    PRINTED_STATUS = 'PR';
+
+    RECONCILIATION_STATUS_CODES = [
+        this.APPROVED_STATUS,
+    ];
+
+
 	AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];  
     filterByPartnerTypeCode: string;
     isPartnerTypesFilterEnabled: boolean = false;
