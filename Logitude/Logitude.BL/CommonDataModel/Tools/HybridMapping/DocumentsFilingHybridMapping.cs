@@ -21,12 +21,13 @@ using Simplog.Data.QuoteModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 {
     public class DocumentsFilingHybridMapping
     {
-        public static DocumentsFilingPM MapEntityToHybrid(DocumentsFilingPM originalPM)
+        public static DocumentsFilingPM MapEntityToHybrid(DocumentsFilingPM originalPM, CustomsDocumentPM currentCustomsDoc = null)
         {
             byte[] serializedEntity = LogitudeXmlSerializer.SerializeObject(originalPM);
             DocumentsFilingPM documentsFilingPM = LogitudeXmlSerializer.DeserializeObject<DocumentsFilingPM>(serializedEntity);
@@ -161,9 +162,11 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 			if (LogitudeSettings.IsCostomsDeploy)
 			{
 				ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-				//CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-				CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false, documentsFilingPM.Tenant);
-				if (customsDoc != null &&
+                //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+                CustomsDocumentPM customsDoc = currentCustomsDoc ?? customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false, documentsFilingPM.Tenant);
+                if (customsDoc == null)
+                    LogMessagingUtil.Instance.AppendLine("customsDoc is null inside MapEntityToHybrid.");
+                if (customsDoc != null &&
 					!String.IsNullOrEmpty(customsDoc.CustomsDocId))
 				{
 					documentsFilingPM.DocumentsFilingMetaDataValues.Add(new DocumentsFilingMetaDataValuePM()
@@ -277,6 +280,10 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
                 if (!string.IsNullOrEmpty(documentsFilingPM.ReceivedByUserId))
                 {
                     User user = userRepository.GetSingleUserByCodeOrEmailForTenant(documentsFilingPM.ReceivedByUserId, documentsFilingPM.OwnerId, documentsFilingPM.Tenant, true);
+                    if (user == null)
+                    {
+                        user = userRepository.GetSingleUser(documentsFilingPM.ReceivedByUserId, documentsFilingPM.Tenant);
+                    }
                     if (user != null)
                     {
                         documentsFilingPM.ReceivedByUserId = user.Id;

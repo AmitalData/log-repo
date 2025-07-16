@@ -188,6 +188,7 @@ namespace Logitude.FullAccounting.Test.Models
         public bool SetVoided { get; set; }
         public bool SetAsSent { get; set; }
         public bool SetApproved { get; set; }
+        public bool SetApprovedAutoCredit { get; set; }
         public bool SetReTransfer { get; set; }
         public bool SetCancelDraft { get; set; }
         public bool IsExternalAPI { get; set; }

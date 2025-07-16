@@ -31,9 +31,9 @@ using Logitude.Server.Tools.Utils;
 using Simplog.Data.InfrastructureModel.EntityPOCOs; 
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Microsoft.WindowsAzure.Storage.Queue.Protocol;
-
+ using Simplog.Data.CommonDataModel.EntityPOCOs;
+ using Microsoft.WindowsAzure.Storage.Queue.Protocol;
+ 
 
 namespace CustomsWorkerRole
 {

@@ -242,6 +242,9 @@ namespace CommunicationWorkerRole
 
                      aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
+                    if (aRInvoicePM.StatusCode == "AC")
+                        aRInvoicePM.SetApprovedAutoCredit = true;
+
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.Update(aRInvoicePM, true);
                    

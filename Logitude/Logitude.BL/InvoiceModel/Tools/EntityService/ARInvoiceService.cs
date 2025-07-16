@@ -747,8 +747,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             this.ValidateInvoiceConnected();
 
-            if (entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus))
-            {
+             if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+             {
                 if (invoice.StatusCode == "LL")
                 {
                     throw new ApplicationException("this invoice is Draft cancelled");
@@ -846,8 +846,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-                if (entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus))
-                {
+                 if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+                 {
                     if (entityPM.ConfirmationNumberStatus == null && !entityPM.IsExternalEntity)
                     {
                         SetConfirmationNumberStatus(entityPM);
@@ -1873,8 +1873,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.InitializeTransferFields();
             this.InitializeGLAccountFields();
 
-            if ((this.entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus)) && string.IsNullOrEmpty(entityPM.TransferError))
-            {
+             if ((this.entityPM.SetApproved || entityPM.SetApprovedAutoCredit) && string.IsNullOrEmpty(entityPM.TransferError))
+             {
                 if (this.isTransferToDropbox && this.TransferToDropboxActivated)
                 {
                     this.entityPM.TransferStatusCode = "TR";
@@ -1890,8 +1890,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 isInitializing = true;
             }
 
-            else if (entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus))
-            {
+             else if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+             {
                 isInitializing = true;
             }
 
@@ -2175,8 +2175,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         Tenant tenantPOCO;
         private void InitializeGLAccountFields()
         {
-            if (entityPM.SetApproved || (entityPM.IsAutoCredit && entityPM.StatusCode == InvoiceAutoCreditStatus))
-            {
+             if (entityPM.SetApproved || entityPM.SetApprovedAutoCredit)
+             {
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 tenantPOCO = tenantRepository.GetSingleTenant(tenant);
 
@@ -4620,8 +4620,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             int tenant = theEntityPm.Tenant;
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            isApprovingInvoice = isApprovingInvoice || (theEntityPm.IsAutoCredit && theEntityPm.StatusCode == InvoiceAutoCreditStatus);
-            if (tenantPOCO.AccountingActivated)
+             isApprovingInvoice = isApprovingInvoice || theEntityPm.SetApprovedAutoCredit;
+             if (tenantPOCO.AccountingActivated)
             {
                 if (theEntityPm.InvoiceLines != null && theEntityPm.InvoiceLines.Count() > 0)
                 {
@@ -4853,8 +4853,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void OnApprovingInvoice()
         {
-            if (this.isApprovingInvoice || (this.entityPM.StatusCode == InvoiceAutoCreditStatus && this.entityPM.IsAutoCredit))
-            {
+             if (this.isApprovingInvoice || this.entityPM.SetApprovedAutoCredit)
+             {
                 if (String.IsNullOrEmpty(entityPM.ExternalAccountingEntityId) || String.IsNullOrEmpty(entityPM.JournalId))
                 {
                     // Journal Work
