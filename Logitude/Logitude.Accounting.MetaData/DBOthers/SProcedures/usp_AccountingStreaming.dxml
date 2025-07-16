@@ -337,6 +337,10 @@ SELECT @myrowcount = @@ROWCOUNT
 print N'affected rows :'
 print @myrowcount 
 
+print N'START TaxReports'
+update TaxReports
+set StatusCode = 'J'
+where Id =  (select top 1 AccountingEntityId from Journals where id = @pJournalId and Tenant = @pTenant and AccountingEntityCode = '13')
 
 ---RAISERROR (52000,-1,-1 ,'The journal not in StatusCode 2 !! occure only OnApproveUpdating');   
 
