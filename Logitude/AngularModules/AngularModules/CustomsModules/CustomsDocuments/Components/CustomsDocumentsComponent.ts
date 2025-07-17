@@ -610,8 +610,13 @@ export class CustomsDocumentsComponent
             this.RefreshDocsScreen = true;
             //  this.RefreshButtonClicked();
             this.RefreshEntity();
+            this.isSaved = true;
         }
+        else
+            this.isSaved = false;
+
     }
+    isSaved: boolean = false;
 
     RefreshEntity() {
 
@@ -671,6 +676,7 @@ export class CustomsDocumentsComponent
         }
 
     }
+    originalCustomsDocumentPointers = [];
 
     ApplyEditCustomsDocumentTicket(isThereRequests: boolean, customsDocumentsTicket: CustomsDocumentsTicketPM, customsDocument: CustomsDocumentPM) {
         if (this.CurrentSession.CurrentEditComponent) {
@@ -681,6 +687,12 @@ export class CustomsDocumentsComponent
         var windowArgs: any = {};
         if (customsDocumentsTicket) {
             windowArgs.CustomsDocumentsTicket = customsDocumentsTicket;
+
+            this.originalCustomsDocumentPointers = this.originalCustomsDocumentPointers?.length === 0 ? customsDocumentsTicket?.CustomsDocumentPointers : this.originalCustomsDocumentPointers;
+            if (!this.isSaved) {
+                windowArgs.CustomsDocumentsTicket.CustomsDocumentPointers = this.originalCustomsDocumentPointers;
+            }
+
             windowArgs.CustomsDocumentsTicket.Tenant = SessionLocator.Tenant;
             if (!customsDocumentsTicket.Id) {
                 windowArgs.IsNewState = true;
