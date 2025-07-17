@@ -341,7 +341,7 @@ namespace WebFreight.Web.Security
             {
                 email = AuthenticationUtil.ResolveLoggingUserId(tenant);
             }
-            ContactInfo contactinfo = GetContactInfo(email, tenant);
+            ContactInfo contactinfo = GetContactInfo(email, tenant, ignoreCache);
 
             if (contactinfo != null)
             {
