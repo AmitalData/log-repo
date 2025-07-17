@@ -289,6 +289,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 Tenant = tenant,
                 AccountingDate = firstOfMonth,
             };
+
             SubmitInterestTransaction(openBalanceInterestTransaction);
             return openBalanceInterestTransaction;
         }

@@ -175,6 +175,9 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 return null;
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$"[InterestTransactionPM] MapInterestTransactionPMFromARPaymentPM  ARPayment (Id={payment?.Id}) -  AccountingDate: {journalPM?.AccountingDate}ת (JournalPM, Id={journalPM?.Id}) ");
+
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -201,6 +204,9 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 return null;
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  ARPayment (Id={payment?.Id}) -  AccountingDate: {journalPM?.AccountingDate}ת (JournalPM, Id={journalPM?.Id}) ");
+
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",

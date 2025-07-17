@@ -3579,6 +3579,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             if (interestTransactionGLAccount.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && interestTransactionGLAccount.AccountTypeCode == CustomerGLAccountType)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$"[InterestTransactionPM] CreateInterestTransactionLineForVatLine  ARInvoiceId (Id={invoiceTotalVat?.ARInvoiceId}) -  AccountingDate: {entityPM?.InvoiceDate}, (JournalPM, Id={entityPM?.JournalId}) ");
+
                 InterestTransactionPM InterestTransactionVatLine = new InterestTransactionPM()
                 {
 
@@ -3663,6 +3666,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             if (interestTransactionGLAccount.ChartOfAccountsTypeCode == CustomerChartOfAccountsTypeCode && interestTransactionGLAccount.AccountTypeCode == CustomerGLAccountType)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoiceId (Id={invoiceLine?.ARInvoiceId}) -  AccountingDate: {entityPM?.InvoiceDate}, (JournalPM, Id={entityPM?.JournalId}) ");
+
                 InterestTransactionPM interestTransaction = new InterestTransactionPM()
                 {
                     InterestEntityTypeCode = "1",
