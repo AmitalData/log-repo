@@ -28,6 +28,7 @@ export class ReportFliter {
     Level: string;
     DisablePreview: boolean;
     NotDisplayInMenu : boolean;
+    IsInteractive: boolean;
 
     constructor() {
 

@@ -378,12 +378,9 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
         }
         return this.ValidationErrorsList.length == 0;
     }
-    RunReport() {
-       
+    RunReport(isInteractive: boolean) {
         if (this.ValidateSelectedFilters()) {
-
-            this.BuildReport();
-
+            this.BuildReport(isInteractive);
         }
     }
     public RunReportTitle: string = 'Run Report';
@@ -480,7 +477,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
 
         }
     }
-    public IsSchedulerReport: boolean = true;
+    public IsSchedulerReport: boolean = false;
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>,isSchedulerReport:boolean=true) { 
         this.IsSchedulerReport = isSchedulerReport;
         if (queryFilterItems) {
@@ -574,7 +571,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
     
         }
     }
-    BuildReport() {
+    BuildReport(isInteractive: boolean) {
         this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
@@ -586,7 +583,7 @@ export class ControlInvoiceLinesReportFilterComponent extends BaseComponent {
         this.reportFliter.NumberOfPage = 1;
         this.reportFliter.ProcessType = "GenerateReport";
 
-        this.ReportsPreview.GenerateReport(this.reportFliter, true);
+        this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
     }
 
     GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {

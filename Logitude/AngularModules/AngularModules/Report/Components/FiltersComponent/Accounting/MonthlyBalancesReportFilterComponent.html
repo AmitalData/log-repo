@@ -85,6 +85,13 @@
             </LogTextBox>
         </td>
 
+        <td></td>
+
+        <td colspan="3" style="padding-right: 100px;">
+            <div style="width: 90px;">
+                <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunReport($event)"></app-run-report-toggle>
+            </div>
+        </td>
 
     </tr>
     <tr style="height:10px"></tr>
@@ -123,16 +130,6 @@
             <CheckBox [IsChecked]="DetailedForJobs" (Checked)="DetailedForJobs = $event"></CheckBox>
         </td>
         <td style="width:100px"></td>
-        <td colspan="3" style="padding-right: 100px;">
-            <div style="width: 90px;">
-                <button class="GreenButton" (click)="RunReport()">
-                    {{
-                    'AgingReport.O.RunReport' | TextCodeTranslationPipe
-                    }}
-                </button>
-            </div>
-        </td>
-
 
     </tr>
 </table>

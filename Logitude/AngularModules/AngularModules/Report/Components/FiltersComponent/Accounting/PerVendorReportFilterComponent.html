@@ -86,7 +86,10 @@
                 </li>
             </ul>
         </td>
-        <td></td>
+
+        <td style="float: right; margin-right: 100px;">
+            <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+        </td>
     </tr>
 
 
@@ -151,20 +154,6 @@
     </tr>
     <tr style="height: 32px;">
         <td colspan="5">
-            <table>
-                <tr>
-                    <td [style.width]="isRTL? '440px': '370px'"></td>
-                    <td style="width:90px;text-align:left">
-                        <button (click)="RunButtonClicked()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
-                        </button>
-
-                    </td>
-                    <td></td>
-
-                </tr>
-
-            </table>
 
         </td>
     </tr>

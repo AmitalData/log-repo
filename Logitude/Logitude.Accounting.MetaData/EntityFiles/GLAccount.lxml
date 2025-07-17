@@ -14334,7 +14334,6 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="false"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -19727,6 +19726,12 @@
       Code="&quot;GLAccounts.O.MissingFieldInAccount&quot;"
       DefaultText="&quot;Missing {field} in vendor account: {account} &quot;"
       LocalDefaultText="&quot;לא נמצא {field} בכרטיס ספק: {account}&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.RunReportImmediately&quot;"
+      DefaultText="&quot;Run Immediately&quot;"
+      LocalDefaultText="&quot;הרץ מיידית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

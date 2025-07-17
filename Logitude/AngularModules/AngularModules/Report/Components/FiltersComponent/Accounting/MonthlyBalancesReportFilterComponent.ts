@@ -181,12 +181,9 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         }
     }
    
-    RunReport() {
-              
+    RunReport(isInteractive: boolean) {
         if (this.ValidateSelectedFilters()) {
-
-            this.BuildReport();
-
+            this.BuildReport(isInteractive);
         }
     }
     ValidateSelectedFilters(){
@@ -227,7 +224,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
 
         }
     }
-    BuildReport() {
+    BuildReport(isInteractive: boolean) {
         
         this.reportFliter = new ReportFliter();
         this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
@@ -238,7 +235,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         this.reportFliter.NumberOfPage = 1;
         this.reportFliter.ProcessType = "GenerateReport";
 
-        this.ReportsPreview.GenerateReport(this.reportFliter, true);
+        this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
     }
 
     GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {

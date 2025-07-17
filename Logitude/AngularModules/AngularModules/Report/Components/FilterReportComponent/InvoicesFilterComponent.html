@@ -1,4 +1,4 @@
-﻿
+
 
 
 <style>
@@ -183,13 +183,23 @@
                                         </tr>
                                     </table>
                                 </td>
+
                                 <td></td>
 
 
                         </table>
 
                     </td>
+
+                    <td style="width:70px;"><div style="width:70px;"></div></td>
+
+                    <td style="width:120px; float: left">
+                        <div>
+                            <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunReport($event)"></app-run-report-toggle>
+                        </div>
+                    </td>
                 </tr>
+
                 <tr>
                     <td></td>
                     <td colspan="9">
@@ -259,12 +269,6 @@
 
                                                         <td style="width:30px"><div style="width:30px"></div></td>
 
-                                                        <td style="width:90px;">
-                                                            <button (click)="RunReport(true)" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                                                                <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
-                                                            </button>
-
-                                                        </td>
                                                         <td></td>
                                                 </table>
 
@@ -280,7 +284,7 @@
                     <td></td>
                     <td colspan="4"></td>
                 </tr>
-                <tr><td colspan="9"></td></tr>
+                <tr style="height: 30px;"><td colspan="9"></td></tr>
             </table>
         </td>
         <td></td>

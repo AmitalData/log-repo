@@ -1,0 +1,17 @@
+<div [style.right]="isRTL ? 'initial' : '2px'" 
+     [style.left]="isRTL ? '2px' : 'initial'" 
+     style="height:22px; width: 80px; position: absolute; top:0px; text-align:left;">
+
+  <div *ngIf="!Preview" tabindex="0" class="ToggleButton" style="margin: auto; text-align:left; width: 100% !important; height: 100% !important">
+    <label>{{ RunReportTitle }}</label>
+    <img src="./Images/ToggleIcon.png" />
+    <div [style.right]="isRTL ? 'initial' : '0'" 
+         [style.left]="isRTL ? '0' : 'initial'" 
+         style="width: 120px" class="ToggleButtonMenu">
+      <button class="GreenButton" (click)="RunReport(false)">{{ RunReportTitle }}</button>
+      <button class="GreenButton" (click)="RunReport(true)">{{ RunReportImmediatelyTitle }}</button>
+    </div>
+  </div>
+
+  <button *ngIf="Preview" (click)="RunReport(true)" class="GreenButton">{{RunReportTitle}}</button>
+</div>
