@@ -234,6 +234,25 @@ using WebFreight.Web.Helpers;
                 rv.Date = interestReportPM.InterestCalculationDate;
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.OpenAmount", interestReportPM.Tenant);
                 rv.LocalAmount = interestReportPM.OpenBalance ?? 0m;
+                rv.TotalToDate = rv.LocalAmount;
+                rv.TotalLocalInPeriod = rv.LocalAmount;
+
+                var openline = interestReportPM.InterestReportLinesByDates.FirstOrDefault(l => l.IsOpenBalanceLine == true);
+                if (openline != null)
+                {
+                    rv.NumberOfDays = openline.TotalInterestDays;
+                    rv.CalculatedStdInterestAmount = openline.CalculatedStandInterestAmount;
+                    rv.StdPercentage = openline.StandardInterestPercentage;
+                    rv.TotalStdInterest = openline.StandardInterestAmount;
+                    rv.CalculatedExcInterestAmount = openline.CalculatedExcepInterestAmount;
+                    rv.ExcPercentage = openline.ExceptionalInterestPercentage;
+                    rv.TotalExcInterest = openline.ExceptionalInterestAmount;
+                    rv.CalculatedCrdInterestAmount = openline.CalculatedCreditInterestAmount;
+                    rv.CrdPercentage = openline.CreditInterestPercentage;
+                    rv.TotalCrdInterest = openline.CreditInterestAmount;
+                    rv.CalculationDetails = openline.CalculationDetails;
+                }
+
             }
             return rv;
         }
