@@ -723,33 +723,17 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         }
     }
 
-    RunButtonClicked() {
+    RunButtonClicked(isInteractive: boolean) {
         this.SetUIProperties();
 
-        var errors: string[] = [];
-        var categoryValue = null;
-        var categoryIndex = null;
-
         if (this.ValidateSelectedFilters()) {
-
-
-            // // Selecting category
-            // if (this.SelectedCategory) {
-            //     categoryIndex = this.SelectedCategory.replace(' ', ''); // remove space from selected category
-
-            //     if (categoryIndex)
-            //         categoryValue = this.DataContext[categoryIndex]; // select the value from the context
-            // }
-            // myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
-            // myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            myReportFliter.IsInteractive = isInteractive;
 
             this.RunReportEvent.emit(myReportFliter);
-
         }
     }
 

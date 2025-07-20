@@ -1,5 +1,5 @@
 declare var window: any;
-import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef, Output, EventEmitter}  from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ViewContainerRef, ComponentRef, ChangeDetectorRef, EventEmitter, Output}  from '@angular/core';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../Components/Filters/ReportFliter';
 import {ReportService} from '../../Common/Services/ExtendedLists/ReportService';
@@ -19,6 +19,7 @@ import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { MenuTypes } from './ProcessMenuComponent';
+import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
 
 @Component({
     selector: 'ReportsPreviewComponent',
@@ -241,7 +242,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 //this.CurrentSession.ResizeCurrentWindow(1050);
                             }
 
-                            this.GenerateReport(s, false);
+                            this.GenerateReport(s, s?.IsInteractive || false);
                         }
                     });
                 }
@@ -342,7 +343,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
 
 
-    GenerateReport(filter: ReportFliter, isloading: boolean) {
+    GenerateReport(filter: ReportFliter, isInteractive: boolean) {
 
         if (!this.ShowBusyIndicator) {
             this.ShowBusyIndicator = true;
@@ -394,7 +395,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     this.StopBusyIndicator();
                     return;
                 }
-                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
+                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, isInteractive);
             }
         }
     }
@@ -549,7 +550,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
 
-    StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isUsedWorkerRoleAlalways = false) {
+    StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isInteractive?: boolean) {
         filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
         this.StartBusyIndicator("Generating...");
@@ -558,23 +559,18 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
 
             if (!myResponse.HasError) {
+
                 this.ReportFliter = myResponse.Result;
 
-               if(!this.IsSchedulerReport){
+                if (isInteractive) {
+                    this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+                }
+                else {
                     var messageWindow = new MessageWindow();
                     messageWindow.ShowSuccessIcon = true;
-      
                     messageWindow.Show(TextCodeTranslator.Translate("General.O.ReportInProcess"));
-                SessionLocator.HomeComponent.IsProcessMenuVisible = true;
-                SessionLocator.HomeComponent.CurrentProcessId  = myResponse.Result.ReportKey;
-                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
-                    SessionLocator.HomeComponent.isPinned = true;
-      
-                    this.BackButtonClicked()
-                    this.StopBusyIndicator();
-                }
-                else{
-                    this.StartCheckStimulSoftSoftReportBliudViaWorkerRoleTimer();
+
+                    this.SendToBackground();
                 }
                 
             } else {
@@ -634,7 +630,10 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 if (result.HasError) {
                                     this.StopBusyIndicator();
                                     var messageWindow = new MessageWindow();
-                                    messageWindow.Show(result.ExceptionMessage);
+
+                                    if (result.ExceptionMessage.indexOf("Stopped manually by") == -1) {
+                                        messageWindow.Show(result.ExceptionMessage);
+                                    }
                                 }
 
                                 else if (result.StatusCode == "P") {
@@ -744,6 +743,26 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     }
 
+    ReportExecutionLogPMService: ReportExecutionLogPMService = new ReportExecutionLogPMService();
+    CancelReport() {
+        if (this.ReportFliter.ReportKey)
+        {
+            this.ReportExecutionLogPMService.Cancel(this.ReportFliter.ReportKey).subscribe((res: any) => {
+                this.CurrentSession.StopBusyIndicator();
+            });
+        }
+    }
+
+    SendToBackground () {
+        if (this.ReportFliter.ReportKey)
+        {
+            SessionLocator.HomeComponent.IsProcessMenuVisible = false;
+            SessionLocator.HomeComponent.CurrentProcessId  = this.ReportFliter.ReportKey;
+            SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
+            SessionLocator.HomeComponent.isPinned = false;
+            this.StopBusyIndicator();
+        }
+    }
 
     StopBusyIndicator() {
 

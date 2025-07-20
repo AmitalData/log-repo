@@ -186,6 +186,11 @@
                             <!-- 7 -->
                             <td style="">
                             </td>
+
+                            <!-- 8 -->
+                            <td style="padding:  0 50px;">
+                                <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+                            </td>
                         </tr>
 
                         <!-- Row 2 -->
@@ -364,16 +369,6 @@
 
                                 <!-- <ComboBox [ItemsSource]="SortDirections" (SelectedItemChanged)="SortDirectionChanged($event)"
                 style="display: block;width: 120px;" [Binding]="showLocals ? 'LocalName' : 'EnglishName'"></ComboBox> -->
-                            </td>
-
-                            <!-- 7 -->
-                            <td style="padding:  0 50px;">
-                                <div style="width: 90px;">
-                                    <button class="GreenButton"
-                                            (click)="RunButtonClicked()">
-                                        {{ RunReportTitle }}
-                                    </button>
-                                </div>
                             </td>
                         </tr>
 

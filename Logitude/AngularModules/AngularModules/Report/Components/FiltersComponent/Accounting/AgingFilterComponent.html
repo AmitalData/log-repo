@@ -335,11 +335,7 @@
                             </td>
 
                             <td colspan="3" style="padding-right: 100px;">
-                                <div   style="width: 90px;">
-                                    <button class="GreenButton" (click)="RunButtonClicked()">
-                                        {{RunReportTitle}}
-                                    </button>
-                                </div>
+                                <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
                             </td>
                         </tr>
 

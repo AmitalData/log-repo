@@ -349,18 +349,18 @@ export class VendorChargesAnalysisFilterComponent extends BaseComponent {
 
         }
     }
-    RunButtonClicked() {
 
-
+    RunButtonClicked(isInteractive: boolean) {
         if (this.ValidateSelectedFilters()) {
-
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            myReportFliter.IsInteractive = isInteractive;
             this.RunReportEvent.emit(myReportFliter);
         }
     }
+
     GetQueryFilterItems() {
         var myFilterItems: QueryFilterItem[] = [];
         myFilterItems.push(new QueryFilterItem("VendorId", this.VendorId));

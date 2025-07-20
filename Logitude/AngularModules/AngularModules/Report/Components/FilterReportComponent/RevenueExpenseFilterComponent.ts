@@ -418,15 +418,9 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         }
     }
     
-    RunReport() {
+    RunReport(isInteractive: boolean) {
         
         if (this.ValidateSelectedFilters()) {
-
-           
-
-
-
-
             this.reportFliter = new ReportFliter();
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
             this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
@@ -439,7 +433,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
 
             this.ReportsPreview.CleanPartnersObslist();
 
-            this.ReportsPreview.GenerateReport(this.reportFliter, true);
+            this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
         }
 
     }

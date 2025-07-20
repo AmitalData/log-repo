@@ -59,10 +59,10 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
 
 
 
-    RunReport() {
+    RunReport(isInteractive: boolean) {
         this.ValidateSelectedFilters();
         if (this.ValidationErrorsList.length == 0) {
-           this.BuildReport();
+           this.BuildReport(isInteractive);
         }
     }
 
@@ -164,10 +164,10 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
         return this.queryFilterItems;
     }
 
-    BuildReport(){
+    BuildReport(isInteractive: boolean){
         this.GetQueryFilterItems();
         this.SetReportFilters();
-        this.ReportsPreview.GenerateReport(this.reportFliter, true);
+        this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
     }
 
     SetReportFilters(){
