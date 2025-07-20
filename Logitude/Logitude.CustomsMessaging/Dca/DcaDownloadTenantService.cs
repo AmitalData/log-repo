@@ -37,6 +37,8 @@ using System.Collections.Concurrent;
 using Logitude.Server.Tools.Utils;
 using Logitude.BL.Security;
 using System.Globalization;
+using Logitude.Customs.BL.CloseTables;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.Dca
 {
@@ -53,6 +55,16 @@ namespace Logitude.CustomsMessaging.Dca
 
         private List<InterfaceTenantDefinitionManagementPM> _AllInterface;
         private CustomsSettingPM _CustomsSettingPM;
+
+        private IDcaManagerShim _dcaManagerShim;          
+        private DcaManager _legacyDcaManager;             
+        private bool _featureDownloadDcaSftp;              
+        private PartnerSftpConfig _sftpCfg;
+        private DateTime _lastSftpPurge = DateTime.MinValue;
+
+
+        private IDcaManagerShim Shim => _dcaManagerShim;
+
 
         static List<DCAIncomeDirStateM> _LastAccessFileInDCADirList = new List<DCAIncomeDirStateM>();
 
@@ -192,6 +204,31 @@ namespace Logitude.CustomsMessaging.Dca
 				}
 
             }
+
+            FeatureQuery featureQuery = new FeatureQuery();
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(
+                                   AuthenticationUtil.ResolveUserId(_CustomsSettingPM.Tenant),
+                                   _CustomsSettingPM.Tenant);
+
+            _featureDownloadDcaSftp =
+                features.Features.Any(f => f.Code.Equals("DownloadDcaSftp", StringComparison.OrdinalIgnoreCase));
+
+            if (_featureDownloadDcaSftp)
+            {
+                _sftpCfg = LoadPartnerSftpConfig();
+                if (_sftpCfg != null)
+                {
+                    _dcaManagerShim = new SftpDcaManagerShim(_sftpCfg, _CustomsSettingPM.Tenant);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SFTP shim active for tenant {_CustomsSettingPM.Tenant}");
+                }
+            }
+
+            if (_dcaManagerShim == null)
+            {
+                _legacyDcaManager = GetDcaManagr();                     
+                _dcaManagerShim = new LegacyDcaManagerShim(_legacyDcaManager);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Legacy shim active for tenant {_CustomsSettingPM.Tenant}");
+            }
         }
 
         public bool HasFeature_DcaDirect9200()
@@ -299,7 +336,12 @@ namespace Logitude.CustomsMessaging.Dca
                 return;
             }
 
-            var suppressFeature = false;
+            if (_featureDownloadDcaSftp &&
+                DateTime.UtcNow.Subtract(_lastSftpPurge) > TimeSpan.FromHours(24))
+            {
+                _dcaManagerShim.PurgeOldFiles();
+                _lastSftpPurge = DateTime.UtcNow;
+            }
 
             if (!CanIStartWork())
             {
@@ -796,7 +838,7 @@ out myMessageOut);
             //searchPattren = "";
             _DcaManager = GetDcaManagr();
             myMoreParams = "";// _DownloadMoreParams;
-            myFileListing = _DcaManager.FileListing(
+            myFileListing = Shim.FileListing(
 //this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant), 
 searchPattren, _AppendToDownloadFolderName,
 ref myMoreParams,
@@ -876,7 +918,7 @@ out myMessageOut);
             try
             {
                 var sw = Stopwatch.StartNew();
-                fileContentsBASE64 = _DcaManager.GetContentsBASE64OfDownloadIncomeFile(
+                fileContentsBASE64 = Shim.GetContentsBASE64OfDownloadIncomeFile(
             //this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant),
             dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
             //out FileName, out FileContentsBASE64,
@@ -949,18 +991,14 @@ out myMessageOut);
             }
 
 
-            myMoreParams = "";// _DownloadMoreParams;
-            _DcaManager.DeleteIncomeFile(//this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant),
+            myMoreParams = "";
+            Shim.DeleteIncomeFile(
                dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
                   ref myMoreParams,
                 out myErrorOccurred, out myMessageOut);
 
             if (myErrorOccurred)
             {
-                if (_EnableLog)
-                {
-                    //LogMessage(TRequestParams requestParams, string subject, string InOut, out string communicationLogId)
-                }
                 return false;
             }
             //PushToQueue();
@@ -1112,6 +1150,39 @@ out myMessageOut);
                 scope.Complete();
             }
         }
+
+        private PartnerSftpConfig LoadPartnerSftpConfig()
+        {
+            const string InterfaceName_DownloadCustomsFilesFromSftp = "DownloadCustomsFilesFromSftp";
+
+            var ftpQry = new CustomsPartnerFtpQueryService(_CustomsSettingPM.Tenant);
+
+            var pm = ftpQry.GetBy(
+                _CustomsSettingPM.Tenant,
+                InterfaceName_DownloadCustomsFilesFromSftp,
+                CustomsPartnerFtpDetails.PartnerCode_AMITAL,
+                CustomsPartnerFtpDetails.TypeCode_In);
+
+            if (pm == null)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                    $"No SFTP row found for interface {InterfaceName_DownloadCustomsFilesFromSftp}");
+                return null;
+            }
+
+            var d = pm.MyFtpDetail;        
+            if (d == null || !d.UseSFTP) return null;
+
+            return new PartnerSftpConfig
+            {
+                Host = d.Host,                    
+                Username = d.UserName,
+                Password = d.Password,
+                RemotePath = string.IsNullOrWhiteSpace(d.Folder) ? "/" : d.Folder,
+                UsePrivateKey = false
+            };
+        }
+
 
         public bool AddUnifreightTester { get; set; }
         public Action LogDoneItemInMemoryAction { get; set; }
