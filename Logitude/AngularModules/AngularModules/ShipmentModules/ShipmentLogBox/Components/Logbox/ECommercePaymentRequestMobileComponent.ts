@@ -153,7 +153,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     }
                 }
                 else {
-                    var myMessage = "משלוח זה כבר שולם בתםריך";
+                    var myMessage = "משלוח זה כבר שולם בתאריך";
                     if (this.AdditionalData.PaymentDateTime != null) {
                         var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                         myMessage = myMessage + " " + formatedPaymentDateTime;
@@ -184,7 +184,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage ="התיק לם קיים בסביבה הזו";
+                this.FinalMessage ="תיק לא קיים";
                 this.ShowFinalMessage = true;
                 this.ShowErrorMessage = true;
                 this.StopBusyIndicator();
@@ -242,7 +242,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                         }
                     }
                     else {
-                        var myMessage = "משלוח זה כבר שולם בתםריך";
+                        var myMessage = "משלוח זה כבר שולם בתאריך" ;
                         if (this.AdditionalData.PaymentDateTime != null) {
                             var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                             myMessage = myMessage + " " + formatedPaymentDateTime;
@@ -254,7 +254,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage ="התיק לם קיים בסביבה הזו";
+                    this.FinalMessage ="תיק לא קיים";
                     this.ShowFinalMessage = true;
                     this.ShowErrorMessage = true;
                 }
@@ -268,7 +268,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get TotalAmount() { return this.totalAmount }
     public set TotalAmount(newValue: number) { this.totalAmount = newValue; }
     public ValidationWarningsList: string = null;
-    public FinalMessage: string = "גרסה זו םושרה";
+    public FinalMessage: string = "גרסה זו אושרה";
 
     private ecommerceSupportEmail: string = "";
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
