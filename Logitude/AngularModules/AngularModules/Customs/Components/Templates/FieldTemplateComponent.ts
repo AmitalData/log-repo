@@ -118,9 +118,7 @@ export class FieldTemplateComponent {
                 AmitalGatewayUtil.Instance.DeclarationMessaging.UnifreightEntity()
             );
 
-            ufMsg.Requset.push(["XMLRequest",
-                this.buildMevakerMesavegStatusRequestXml(customFileNo, statusList)
-            ]);
+            ufMsg.Requset.push(["StatusList",statusList]);
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "AmitalGatewayUtil.MevakerMesavegStatusList",
                 "CFIFILEM.LogitudeTask",
@@ -129,19 +127,6 @@ export class FieldTemplateComponent {
                 ""
             );
         }
-    }
-
-    private subjectSuffixFromStatusList(statusList: string): string {
-        const s = (statusList || "").toUpperCase();
-        const hasSivug = s.includes("SVC") || s.includes("SVR");
-        const hasMevaker = s.includes("INA") || s.includes("INC");
-        if (hasSivug) {
-            return TextCodeTranslator.Translate("Customs.StatusRemarks.SivugTitle");
-        }
-        if (hasMevaker) {
-            return TextCodeTranslator.Translate("Customs.StatusRemarks.MevakerTitle");
-        }
-        return null;
     }
 
     private parseMevakerMesavegStatusXml(xml: string): any[] {
@@ -179,36 +164,6 @@ export class FieldTemplateComponent {
         });
     }
 
-    private buildMevakerMesavegStatusRequestXml(customFileNo: string, statusList: string): string {
-        const subject = `GAQHSIVUG:${this.subjectSuffixFromStatusList(statusList)}`;
-        const doc = document.implementation.createDocument("", "", null);
-        const root = doc.createElement("ArrayOfEntry");
-
-        const add = (k: string, v: string) => {
-            const entry = doc.createElement("Entry");
-
-            const key = doc.createElement("Key");
-            key.appendChild(doc.createCDATASection(k));
-
-            const val = doc.createElement("Value");
-            val.appendChild(doc.createCDATASection(v));
-
-            entry.appendChild(key);
-            entry.appendChild(val);
-            root.appendChild(entry);
-        };
-
-        add("Subject", subject);
-        add("StatusList", statusList || "");
-        add("componentname", "parseMevakerMesavegStatusXml");
-        add("Operation", "GetStatusList");
-        add("FileNo", customFileNo);
-        add("CFIHMAIN:Xml", "");
-
-        doc.appendChild(root);
-        const xmlString = new XMLSerializer().serializeToString(doc);
-        return xmlString;
-    }
 
     public ButtonClick() {
         this._ListComponentArgs.SuppressOnRowSelectedField = true;
