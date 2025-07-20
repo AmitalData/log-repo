@@ -1816,8 +1816,7 @@ namespace WebFreight.Web.InfrastructureModel
 
                     if (!globalContactExists)
                     {
-
-                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = newContact.Tenant, IsUser = true, };
+                        GlobalContact gcontact = new GlobalContact() { Email = newContact.Email, Id = newContact.Id, GlobalTenantId = 0, IsUser = true, };
 
                         globalContactRep.Add(gcontact);
                         globalContactRep.SubmitChanges();
