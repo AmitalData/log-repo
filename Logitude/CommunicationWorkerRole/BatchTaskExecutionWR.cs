@@ -1,25 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-
-
-using System.Threading;
-using Logitude.SystemLogs;
-using Logitude.Infrastructure.BL.EntityQueryServices;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.BL.EntityQueryServices;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.BL.ExtendedServices;
 using Logitude.Server.Tools.QueueService;
-using System.Web;
+using Logitude.SystemLogs;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using Logitude.Infrastructure.BL.EntityUpdateServices;
+using System.Threading;
+using System.Web;
 
 namespace CommunicationWorkerRole
 {
     class BatchTaskExecutionWR : WorkerEntryPoint
     {
-        IQueueService batchTaskExecutionQueue;
+        DbQueueService batchTaskExecutionQueue;
         int tenant;
 
         public bool SupressStartThread { get; internal set; }
+        private static DateTime freeTenantsDateTime = DateTime.Now;
+        private string objectTable = "BatchTaskExecution";
 
         public override void Run()
         {
@@ -27,9 +30,15 @@ namespace CommunicationWorkerRole
             {
                 if (!General.IsUpdating())
                 {
+
                     batchTaskExecutionQueue = new DbQueueService();
                     batchTaskExecutionQueue.InitializeQueue("batchtaskexecutionqueue", 0);
-                    var response = batchTaskExecutionQueue.Receive();
+                    if (DateTime.Now.Subtract(freeTenantsDateTime) >= TimeSpan.FromMinutes(10))
+                    {
+                        freeTenantsDateTime = DateTime.Now;
+                        batchTaskExecutionQueue.FreeTenants(objectTable);
+                    }
+                    var response = batchTaskExecutionQueue.ReceiveDetailsByTenant(objectTable, new TimeSpan(0, 0, 0, 5));
                     if (response != null && response.MessageId != null)
                     {
                         ExecuteQueue(response);
@@ -58,7 +67,6 @@ namespace CommunicationWorkerRole
 
                 if (batchTaskExecutionPM != null)
                 {
-                    //batchTaskExecutionPM.ClassName this is the path of the class i want to execute which inhirits from BatchTaskExecutionService plus the assembly name.
                     List<object> args = new List<object>();
                     args.Add(batchTaskExecutionPM);
                     object[] ArrArgs = args.ToArray();
@@ -73,7 +81,6 @@ namespace CommunicationWorkerRole
                     var batchTaskService = System.Activator.CreateInstance(executedClassType, ArrArgs) as BatchTaskExecutionsService;
                     if (!this.SupressStartThread)
                     {
-                        // open a new thread and call the class runcode.
                         Thread thread = new Thread(batchTaskService.Execute);
                         thread.Start();
                     }
@@ -81,7 +88,6 @@ namespace CommunicationWorkerRole
                     {
                         batchTaskService.Execute();
                     }
-                    //batchTaskExecutionQueue.Complete();
 
                 }
 
@@ -134,6 +140,10 @@ namespace CommunicationWorkerRole
                 }
                 #endregion
             }
+            finally
+            {
+                SetTenantIdle(response.Tenant);
+            }
         }
 
         public override bool OnStart()
@@ -164,5 +174,16 @@ namespace CommunicationWorkerRole
 
         }
 
+        private void SetTenantIdle(int tenant)
+        {
+            TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
+            TenantIdleStatus tenantObj = tenantRepository.GetAllByObjectTable(tenant, objectTable).FirstOrDefault();
+            if (tenantObj == null) return;
+            tenantObj.Idle = false;
+            tenantObj.UpdateDate = DateTime.Now;
+            tenantRepository.Update(tenantObj);
+            tenantRepository.SubmitChanges();
+
+        }
     }
 }
