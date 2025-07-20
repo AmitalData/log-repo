@@ -2,7 +2,7 @@ declare var System: any;
 declare var window: any;
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Component, OnInit}  from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, SimpleChanges}  from '@angular/core';
 import {DocumentTypePM} from '../../../../Common/EntityPMs/DocumentTypePM';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -41,6 +41,8 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
     DocumentTypeTemplates: DocumentTypeTemplatePM[];
     private CurrentSession = SessionLocator.SelectedSession;
     public documentTypePMService: DocumentTypePMService;
+    @Output() LoadTemplate: EventEmitter<any> = new EventEmitter<any>();
+
     constructor() {
         super();
          
@@ -228,7 +230,9 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
             logWindow.WindowArgs = windowArgs;
             logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/HtmlDocumentPreviewComponent");
-
+            logWindow.WindowClosed.subscribe((res: any) => {
+                this.LoadTemplate.emit();
+            })  
         }
 
         else {
@@ -265,12 +269,21 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
                         this.designerPopUpClosed();
                     }
                 }, 200);
+
+                logWindow.WindowClosed.subscribe((res: any) => {
+                this.LoadTemplate.emit();
+                })   
            
         }
 
 
     }
-
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['DocumentTypeTemplates']) {
+            this.DocumentTypeTemplates = changes['DocumentTypeTemplates'].currentValue;
+            this.FillDocumentTypeTemplate();
+        }
+    }
     RunStimulsoftDesigner(templateId: string) {
         var URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token + "&tenant=" + SessionInfo.LoggedUserTenant + "&templateId=" + templateId;
 
