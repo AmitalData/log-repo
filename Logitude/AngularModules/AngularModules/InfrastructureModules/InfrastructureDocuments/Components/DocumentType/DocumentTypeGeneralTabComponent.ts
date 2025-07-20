@@ -194,7 +194,10 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
     SetSelectedObjectTable() {
         this.SelectedObjectTableId = this.EntityPM.ObjectTableId;
     }
+    public LoadTemplateEvent() {
 
+        this.LoadTemplate();
+    }
     public get IsDocOut() { return this.EntityPM.IsDocOut }
     public set IsDocOut(value: boolean) {
         if (value == this.EntityPM.IsDocOut) return;
@@ -358,6 +361,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
                 var result = pmResponse.Result;
                 if (result) {
                     this.DocumentTypeTemplates = result;
+
                 }
             }
             this.IsLoadTemplate = true;
