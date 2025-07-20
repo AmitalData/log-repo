@@ -32,6 +32,7 @@ import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/Exte
 import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
 import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
 import { PaymentTermPMService } from 'Common/Services/StandardPMs/PaymentTermPMService';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 declare var makeAmBarChart;
 @Component({
 
@@ -164,6 +165,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     //}
     //#endregion
     TenantCurrency:string;
+    AmitalBrowserInUse: boolean = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
     accountCardlist: CardList[];
     accountCardnumberLists:string[]=[];
     GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard");
@@ -808,8 +810,58 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     //
 
+
+
+    /**
+     * Handler for "Display Open Files" link click.
+     * @param accountCardlist list of account cards, each may contain an OpenFiles array
+     */
+    DisplayOpenFilesClicked(accountCardlist: any[]): void {
+        // guard against empty input
+        if (!accountCardlist || accountCardlist.length === 0) {
+            console.info('No account cards provided.');
+            return;
+        }
+
+        let myViewModelName = "Logitude.Accounting.Components.EditTabs.GLAccount.MyEnterViewUnifreightController";
+
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (mess: UnifreightMessageM) => {
+                    var IsMatchUnifreightCallbackCommand = (
+                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.GeneralMessaging.ShowOpenFiles &&
+                        mess.LogitudeEntityNumber == this.EntityPM.Id &&
+                        mess.LogitudeViewModel == myViewModelName);
+                    if (IsMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                }
+            );
+
+        var unifreightMessageM =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(this.accountCardnumberLists[0], this.EntityPM.Id, myViewModelName
+                    , "GNDUNF");
+        unifreightMessageM.Requset.push(["CardList", this.accountCardnumberLists.toString()]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "ScriptableGatewayUtil.ShowOpenFiles",
+            "GNDHMAIN.LogitudeTask",
+            "ShowOpenFiles",
+            unifreightMessageM,
+            "Show Open Files");
+    }
+
+
     //#endregion
 
+
+
+    
     //#region Aging Details
     chartId: string = "";
 

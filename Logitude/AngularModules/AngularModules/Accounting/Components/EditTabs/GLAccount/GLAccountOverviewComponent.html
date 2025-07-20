@@ -725,7 +725,10 @@
                                                     {{OpenShipments | NumbersPipe:'N2'}}
                                                 </div>
                                             </div>
-
+                                            <a style="font-size: 11px;line-height: 22px;padding: 0 4px;" *ngIf="AmitalBrowserInUse && accountCardlist && accountCardlist.length > 0" 
+                                                (click)="DisplayOpenFilesClicked(accountCardlist)" float-start text-start >
+                                                {{ ('GLAccounts.O.DisplayOpenFiles' | TextCodeTranslationPipe) || 'Display Open Files' }}
+                                            </a>
                                         </div>
 
 

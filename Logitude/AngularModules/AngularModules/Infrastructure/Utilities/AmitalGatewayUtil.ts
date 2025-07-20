@@ -1056,7 +1056,8 @@ export class AmitalGatewayUtil {
         public static get ResponseEntityAlreadyLockKey() { return "Response.EntityAlreadyLock"; }
         public static get ResponseEntityAlreadyLockMessage() { return "Response.EntityAlreadyLockMessage"; }
         public static get RaiseUnlockIIGEntityMessageId() { return "RaiseUnlockIIGEntityMessage"; }
-        
+        public static get ShowOpenFiles() { return "ShowOpenFiles"; }
+
         
         public static get RaiseLockIIGEntReturnEntityAlreadyLockMessage() { return "RaiseLockIIGEntReturnEntityAlreadyLockMessage"; }
         public static RaiseLockIIGEntityReturnEntityAlreadyLock
