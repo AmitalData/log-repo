@@ -3145,6 +3145,19 @@ namespace WebFreight.Web.InfrastructureModel
             };
 
             tenantIdleStatusRepository.Add(tenantIdleStatusARInvoice);
+
+            TenantIdleStatus tenantIdleStatusBatchTaskExecution = new TenantIdleStatus()
+            {
+                Id = theTenant.ToString(),
+                Tenant = theTenant,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                SearchFields = null,
+                Idle = false,
+                ObjectTable = "BatchTaskExecution",
+            };
+            tenantIdleStatusRepository.Add(tenantIdleStatusBatchTaskExecution);
+
             tenantIdleStatusRepository.SubmitChanges();
         }
 
