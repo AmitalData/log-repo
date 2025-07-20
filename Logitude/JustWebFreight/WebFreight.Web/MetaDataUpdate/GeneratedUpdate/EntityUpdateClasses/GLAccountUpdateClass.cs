@@ -14401,7 +14401,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_APInvoiceOCheckInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger than the Accounting Date",LocalDefaultText = @"לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-            TextCode GLAccountTextCode_GLAccountsODisplayOpenFiles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayOpenFiles", DefaultText = "Display Open Files", LocalDefaultText = @"הצג תיקים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GLAccountTextCode_GLAccountsODisplayOpenFiles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayOpenFiles", DefaultText = "Display Open Files", LocalDefaultText = @"הצג תיקים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
 
             TextCode GLAccountTextCode_APPaymentOVendorGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The vendor is not connected to GLAccount",LocalDefaultText = @"הספק לא קושר לכרטיס הנהלת חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
