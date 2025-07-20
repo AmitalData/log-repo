@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, Input } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { MultiSelectLOVComponent } from '../../../../Infrastructure/Components/LogitudeComponents/MultiSelectLOVComponent';
@@ -39,6 +39,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: DeclarationReferantDataFiltersMenuComponent = this;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
+    @Input() public isPreDefindReferrantDataFilters: boolean = false;
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
@@ -131,11 +132,11 @@ export class DeclarationReferantDataFiltersMenuComponent
         var DepartmentFromFilters = this.DepartmentFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
 
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0])) {
+        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0]) && this.isPreDefindReferrantDataFilters) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
-                let ul = new UserList();
-                ul.Id = value;
-                this.LOVListUsers.push(ul)
+                    let ul = new UserList();
+                    ul.Id = value;
+                    this.LOVListUsers.push(ul)
             }, this);
         } else {
         }
@@ -541,8 +542,8 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
         this.apiQueryFilters.addAdditionalFilter("ReferantUserName", this.UserNamesListString, null, null, "Equal", true, false, false, "string", true);
         this.apiQueryFilters.addAdditionalFilter("ReferentUserId", this.UsersListString, null, null, "InListExact", false, false, false, "string", this._LOVListUsers.length == 0);
-       // this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
-       this.FilterChangeSubject.next();
+        // this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+        this.FilterChangeSubject.next();
         this.apiQueryFiltersChanged = true;
     }
 
@@ -589,7 +590,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         this.FilterChangeSubject.next();
 
     }
-    
+
     transportmodeId: string = "All";
     itemClicked(itemValue: string) {
         this.transportmodeId = itemValue;
