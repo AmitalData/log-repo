@@ -821,7 +821,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ExternalEntityName = _DeclarationPM?.Direction=="E" ? "EFIFILEM": "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
-            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
+            documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId, true);
             LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + logMessage);
             _ReturnMessage = string.Concat(_ReturnMessage, " ונוצר מסמך ", documentsFilingPM.Code);
         }
