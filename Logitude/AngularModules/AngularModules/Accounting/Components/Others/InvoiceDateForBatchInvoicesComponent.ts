@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { InterestReportPMService } from 'Accounting/Services/StandardPMs/InterestReportPMService';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
-import { AppTool } from 'Infrastructure/Tools';
+import { AppTool, DateTool } from 'Infrastructure/Tools';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
@@ -45,14 +45,17 @@ export class InvoiceDateForBatchInvoicesComponent extends BaseComponent{
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
-        if(!AppTool.IsNullOrEmpty(this.InvoiceDate)){
-            this.CurrentSession.CloseCurrentWindowEmit(this.invoiceDate+"");
-        }
-        else{
+        if(AppTool.IsNullOrEmpty(this.InvoiceDate)){
             var FIELD_IS_REQUIERD: string = null;
             FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
             FIELD_IS_REQUIERD=FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")); 
             this.ValidationErrorsList.push(FIELD_IS_REQUIERD);
+        }
+        else if (this.InvoiceDate > DateTool.GetCurrentDateTimeAsUtc()) {
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDateNotAllowed"));
+        }
+        else {
+            this.CurrentSession.CloseCurrentWindowEmit(this.invoiceDate+"");
         }
     }
     private invoiceDate:Date; 
