@@ -1186,8 +1186,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         documentTypeTemplates.Add(newDocumentTypeTemplate);
                     }
                 }
+
+                if (string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultReportTemplateId))
+                {
                 usedDocumenttype.DocumentTypeDefaultReportTemplateId = GetDocumentTypeDefaultReportTemplateId(documentTypeTemplates, documenttype, coutryCode);
+                }
+                if (string.IsNullOrEmpty(usedDocumenttype.DocumentTypeDefaultHTMLTemplateId))
+                {
                 usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = GetDocumentTypeDefaultHTMLTemplateId(documentTypeTemplates, documenttype, coutryCode);
+                }
 
                 usedDocumenttype.IsDocOut = documenttype.IsDocOut;
                 theDocumentTypeRepository.Update(usedDocumenttype);
