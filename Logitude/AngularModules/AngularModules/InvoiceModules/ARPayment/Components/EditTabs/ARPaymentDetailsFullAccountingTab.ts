@@ -174,7 +174,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.SetUIProperties();
         this.ComputeRelativeRateDate();
         this.Listen();
-        this.CheckARPaymentCashBook();
+        this.CheckARPaymentCashBook(true);
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
@@ -1727,11 +1727,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public BranchGLAccountNumber: string;
     public IsCashBookValid: boolean = false;
     public BranchGLAccountId: string;
-    CheckARPaymentCashBook()
+    CheckARPaymentCashBook(removeOnWrongBranchId?: boolean)
     {
         this.IsCashBookValid = false;
 
-        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
+        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH" || removeOnWrongBranchId)) {
             var service: InvoiceDomainService = new InvoiceDomainService();
 
             service.CheckARPaymentCashBook(this.AccountingPaymentMethodCode, this.PaymentCurrencyId, this.BranchId).subscribe((myResponse: ServiceResponse) =>
@@ -1757,6 +1757,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                     else {
                         var msg = "There is no cashbook that compatible to this ARPayment, create one please";
                         this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
+
+                        if (removeOnWrongBranchId) {
+                            this.EntityPM.BranchId = null;
+                        }
                     }
                 }
             });
