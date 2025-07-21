@@ -14,8 +14,8 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.AccountingModel.DomainServices
 {
-	public partial class AccountingDomainService
-	{
+    public partial class AccountingDomainService
+    {
         public List<BankDepositLineList> GetBankDepositLineFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
@@ -34,5 +34,27 @@ namespace WebFreight.Web.AccountingModel.DomainServices
             QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
             return queryService.GetListCount(queryOperations, tenant);
         }
+
+
+        public List<BankAccountList> GetBankAccountFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+            accountingContext = AccountingContext.GetContext(tenant);
+            BankAccountListQueryService listService = new BankAccountListQueryService(accountingContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+        }
+
+        public int GetBankAccountFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            accountingContext = AccountingContext.GetContext(tenant);
+            BankAccountListQueryService queryService = new BankAccountListQueryService(accountingContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations, tenant);
+        }
+
+        //GetBankAccountFilters
     }
 }
