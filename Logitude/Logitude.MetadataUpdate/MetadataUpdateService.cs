@@ -92,10 +92,8 @@ namespace Logitude.MetadataUpdate
                     TenantsUpdateClass.BuildObjectTablesZipFilesData(false, false, currentTenantId);
                     if (isCustomsTenant)
                     {
-                        //Console.WriteLine("TableLastUpdateClass.UpdateCacheTableHistory:" + DateTime.Now.ToString());
-                        //BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory(currentTenantId);
-                        //Console.WriteLine("TenantsUpdateClass.UpdateTenants:" + DateTime.Now.ToString());
-                        //WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateTenants();
+                        Console.WriteLine("TenantsUpdateClass.UpdateTenants:" + DateTime.Now.ToString());
+                        WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateTenants(currentTenantId);
                     }
 
 
