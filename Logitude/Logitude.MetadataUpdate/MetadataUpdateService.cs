@@ -82,12 +82,21 @@ namespace Logitude.MetadataUpdate
 
 
                     Console.WriteLine($"Building Object table zip files for DB Connection: {dbConnection} ...");
-                    bool buildCustomsZipFiles = false;
-                    if(moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include)
+                    bool isCustomsTenant = moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include;
+                    if (isCustomsTenant)
                     {
-                        buildCustomsZipFiles = true;
+                        Console.WriteLine("Build ObjectTables Zip Files Data for customs:" + DateTime.Now.ToString());
+                        TenantsUpdateClass.BuildObjectTablesZipFilesData(false, true, currentTenantId);
                     }
-                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, currentTenantId);
+                    Console.WriteLine("Build ObjectTables Zip Files Data:" + DateTime.Now.ToString());
+                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, false, currentTenantId);
+                    if (isCustomsTenant)
+                    {
+                        Console.WriteLine("TenantsUpdateClass.UpdateTenants:" + DateTime.Now.ToString());
+                        WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateTenants(currentTenantId);
+                    }
+
+
                     Console.WriteLine($"Building zip files finished for DB Connection: {dbConnection} ...");
 
                     processedDBConnections.Add(currentTenantId, dbConnection);

@@ -200,7 +200,6 @@
     <None Include="DBScripts\CommonModel\202203291200_AddShipmentOrderDocumentTypes.sxml" />
     <None Include="DBScripts\CommonModel\202206020830_FillHorsesGenderCode.sxml" />
     <None Include="DBScripts\CommonModel\202206191403_UpdateChargesTypesGLAccountLocalName.sxml" />
-    <None Include="DBScripts\CommonModel\202215031220_AddGeneralGustomerGroups.sxml" />
     <None Include="DBScripts\GlobalModel\202203271236_AddImporterShipmentOrderDocumentsWR.sxml" />
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
     <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />

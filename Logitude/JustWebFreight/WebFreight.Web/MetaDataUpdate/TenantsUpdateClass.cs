@@ -632,7 +632,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
         }
 
-        public static void UpdateTenants()
+        public static void UpdateTenants(int contextTenant=0)
         {
             try
             {
@@ -651,10 +651,10 @@ namespace WebFreight.Web.MetaDataUpdate
                                                             select a).ToList();
                     if (upgradableTenants.Count > 0)
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
-                        ICommonDataContext commonContext = CommonDataContext.GetContext(0);
-                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(0);
-                        IAccountingContext accountingContext = AccountingContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
+                        ICommonDataContext commonContext = CommonDataContext.GetContext(contextTenant);
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(contextTenant);
+                        IAccountingContext accountingContext = AccountingContext.GetContext(contextTenant);
 
                         MeasurementRepository measurementsRepository = new MeasurementRepository(commonContext);
                         EntityStatusRepository entityStatusRepository = new EntityStatusRepository(context);
@@ -693,13 +693,14 @@ namespace WebFreight.Web.MetaDataUpdate
                             {
                                 try
                                 {
-                                    UpdateDataForTenant(tenant.Id, "");
+                                    UpdateDataForTenant(tenant.Id, "",multiDB:true);
 
                                     AzureLog.SaveLogsInStorage("Update Data for tenant:" + tenant.Id + " Completed successfully", "P", DateTime.Now, "", "", 0, "", "WorkerRole", null);
                                 }
                                 catch (Exception e)
                                 {
-                                    GlobalTenantRepository GlobaltenantRep = new GlobalTenantRepository();
+                                    IGlobalContext globalContext = GlobalContext.GetContext(contextTenant);
+                                    GlobalTenantRepository GlobaltenantRep = new GlobalTenantRepository(globalContext);
                                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "WorkerRole", null);
 
                                     tenant.Version = -1;
