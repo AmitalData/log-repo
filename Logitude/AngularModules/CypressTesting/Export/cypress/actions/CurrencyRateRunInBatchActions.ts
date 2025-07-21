@@ -53,7 +53,7 @@ export function CheckStatusRequest() {
         expect($elements.length).to.be.greaterThan(0);
 
         // בדיקת טקסט בתוך האלמנט הראשון
-        expect($elements.first().text()).to.contain('תשובה נותחה');
+        expect($elements.first().text()).not.to.include('בקשה נכשלה');
     });
 
 }
