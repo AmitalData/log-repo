@@ -617,16 +617,16 @@ namespace WebFreight.Web.Security
                             }
 
                             bool isLogitudeAdmin = false;
-                            //if (tenant != 0)
-                            //{
-                            //    UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
-                            //    User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
-                            //    if (user != null)
-                            //    {
-                            //        tenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                            //        isLogitudeAdmin = true;
-                            //    }
-                            //}
+                            if (tenant != 0)
+                            {
+                                UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
+                                User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
+                                if (user != null)
+                                {
+                                    tenant = LogitudeSettings.LogitudeCRMTenantNumber;
+                                    isLogitudeAdmin = true;
+                                }
+                            }
 
                             RoleQuery roleQuery = new RoleQuery(contact.Tenant);
                             List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
