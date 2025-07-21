@@ -937,7 +937,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
             }
             else if (item.length > 9) {
                 valid = false;
-                errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode");
+                errorMessage = this.EntityPM.Direction !='E' ? TextCodeTranslator.Translate("Customs.Declaration.O.ImporterIsTooShort") : TextCodeTranslator.Translate("Customs.Declaration.O.TooLongExporterCode");
                 //this.UIProperties.SetValidity("ImporterCode", "Customs.Declaration", false, TextCodeTranslator.Translate("Customs.Declaration.O.TooLongCode"));
             }
             else {
