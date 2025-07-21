@@ -3424,13 +3424,13 @@ namespace WebFreight.Web.Helpers
 
 		private static void SetReportDefaultTemplates(CopyReportTemplateArgs copyReportTemplateArgs, Report currentTenantReport, string reportTemplateId)
 		{
-			if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "R")
-			{
-				currentTenantReport.DefaultTemplateId = reportTemplateId;
+            if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "R" && string.IsNullOrEmpty(currentTenantReport.DefaultTemplateId))
+            {
+                currentTenantReport.DefaultTemplateId = reportTemplateId;
 			}
-			else if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "M")
-			{
-				currentTenantReport.DefaultMessageTemplateId = reportTemplateId;
+            else if (copyReportTemplateArgs.systemReportTemplate.TemplateType == "M" && string.IsNullOrEmpty(currentTenantReport.DefaultMessageTemplateId))
+            {
+                currentTenantReport.DefaultMessageTemplateId = reportTemplateId;
 			}
 		}
 
