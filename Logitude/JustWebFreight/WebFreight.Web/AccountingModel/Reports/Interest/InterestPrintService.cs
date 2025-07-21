@@ -26,16 +26,16 @@ using WebFreight.Web.Helpers;
 {
     public class InterestPrintService
     {
-        public InterestReportPM InteerstReportPM;
+        public InterestReportPM _InterestReportPM;
         public InterestDataProvider LoadDataProvider(string entityId, int tenant)
         {
             InterestDataProvider InterestReportDP = new InterestDataProvider();
             InterestReportQueryService InterestReportQuery = new InterestReportQueryService(tenant);
-            InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
+            _InterestReportPM = InterestReportQuery.GetSingle(entityId, true, false);
             InterestReportService interestReportService = new InterestReportService();
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
-            List<InterestReportLinesByDateProvider> InterestReportLines = InteerstReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
+            List<InterestReportLinesByDateProvider> InterestReportLines = _InterestReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
             {
                 FromDate = d.FromDate,
                 ToDate = d.ToDate,
@@ -74,8 +74,10 @@ using WebFreight.Web.Helpers;
             List<FutureInterestTransactionProvider> futureInterestTransactions = new List<FutureInterestTransactionProvider>();
             IAccountingContext context = AccountingContext.GetContext(tenant);
             InterestTransactionListQueryService interestTransactionQueryService = new InterestTransactionListQueryService(context);
-            DateTime reportMonthLastDay = DateTimeStaticExtention.GetLastDayOfMonth(InteerstReportPM.InterestCalculationDate.Date);
-            IQueryable<InterestTransactionList> futureQuery = interestTransactionQueryService.GetFutureInterestTransactionsByInterestReportMonth(reportMonthLastDay, tenant);
+            DateTime reportMonthLastDay = DateTimeStaticExtention.GetLastDayOfMonth(_InterestReportPM.InterestCalculationDate.Date);
+            IQueryable<InterestTransactionList> futureQuery = 
+                interestTransactionQueryService.GetFutureInterestTransactionsByInterestReportMonth(reportMonthLastDay, 
+                _InterestReportPM.GLAccountId, tenant);
             if (futureQuery != null)
             { 
                 List<InterestTransactionList> transactionLists = futureQuery.ToList();
@@ -107,6 +109,7 @@ using WebFreight.Web.Helpers;
                             SourceType = transactionList.SourceType,
                             SourceTypeCode = transactionList.SourceTypeCode,
                             Tenant = transactionList.Tenant,
+                            Reference1 = GetReference1(transactionList),
                         };
                         futureInterestTransactions.Add(futureInterestTransactionProvider);
                     }
@@ -114,35 +117,42 @@ using WebFreight.Web.Helpers;
             }
             InterestReportDP.FutureInterestTransactions = futureInterestTransactions;
 
-            GetGLAccountDisplayNumber(tenant, InterestReportDP, InteerstReportPM);
+            GetGLAccountDisplayNumber(tenant, InterestReportDP, _InterestReportPM);
 
-            InterestReportDP.OpenBalance = InteerstReportPM.OpenBalance;
-            InterestReportDP.CustomerName = InteerstReportPM.CustomerName;
-            InterestReportDP.InterestCalculationDate = InteerstReportPM.InterestCalculationDate;
-            InterestReportDP.InvoiceNumber = InteerstReportPM.ARInvoiceNumber;
+            InterestReportDP.OpenBalance = _InterestReportPM.OpenBalance;
+            InterestReportDP.CustomerName = _InterestReportPM.CustomerName;
+            InterestReportDP.InterestCalculationDate = _InterestReportPM.InterestCalculationDate;
+            InterestReportDP.InvoiceNumber = _InterestReportPM.ARInvoiceNumber;
             InterestReportDP.InterestReportLinesByDateList = InterestReportLines;
-            InterestReportDP.TotalAmount = InteerstReportPM.TotalAmount;
-            InterestReportDP.CreditAllotmentPercentage = InteerstReportPM.CreditAllotmentPercentage;
-            InterestReportDP.CalCreditAllotmentCommission = InteerstReportPM.CalCreditAllotmentCommission;
-            InterestReportDP.CalculatedPostponedChequesCommision = InteerstReportPM.CalculatedPostponedChequesCommision;
-            InterestReportDP.AllotmentCommession = InteerstReportPM.CalCreditAllotmentCommission;
-            InterestReportDP.AllotmentCalculation = SetAllotmentCalculationEquation(InterestReportDP, InteerstReportPM);
+            InterestReportDP.TotalAmount = _InterestReportPM.TotalAmount;
+            InterestReportDP.CreditAllotmentPercentage = _InterestReportPM.CreditAllotmentPercentage;
+            InterestReportDP.CalCreditAllotmentCommission = _InterestReportPM.CalCreditAllotmentCommission;
+            InterestReportDP.CalculatedPostponedChequesCommision = _InterestReportPM.CalculatedPostponedChequesCommision;
+            InterestReportDP.AllotmentCommession = _InterestReportPM.CalCreditAllotmentCommission;
+            InterestReportDP.AllotmentCalculation = SetAllotmentCalculationEquation(InterestReportDP, _InterestReportPM);
 
             return InterestReportDP;
         }
 
-        private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider InterestReportDP, InterestReportPM InteerstReportPM)
+        private string GetReference1(InterestTransactionList interestTransactionList)
+        {
+
+            return interestTransactionList.InterestEntityNumber;
+
+        }
+
+        private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider InterestReportDP, InterestReportPM _InterestReportPM)
         {
             GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
-            GLAccountPM gLAccount = glAccountQuery.GetSinglePM(InteerstReportPM.GLAccountId, tenant);
+            GLAccountPM gLAccount = glAccountQuery.GetSinglePM(_InterestReportPM.GLAccountId, tenant);
             InterestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
         }
 
-        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InteerstReportPM)
+        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM _InterestReportPM)
         {
-            if (InteerstReportPM.CreditAllotmentPercentage != null)
+            if (_InterestReportPM.CreditAllotmentPercentage != null)
             {
-                return string.Concat(InteerstReportPM.GLAccountInterestCreditLimit, " * ", '(', InteerstReportPM.CreditAllotmentPercentage, " / 100)");
+                return string.Concat(_InterestReportPM.GLAccountInterestCreditLimit, " * ", '(', _InterestReportPM.CreditAllotmentPercentage, " / 100)");
             }
             return null;
         }
