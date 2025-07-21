@@ -293,7 +293,7 @@ namespace CommunicationWorkerRole
                 }
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
                 ARInvoiceService service = new ARInvoiceService(MyContext, tenant);
-                service.Create(aRInvoicePM);
+                 service.Create(aRInvoicePM);
                  invoiceApiCommunicationLog.ARInvoiceId = aRInvoicePM.Id;
                 UpdateCommunicationStatus(InvoiceApiStepEnum.GenerateInvoice, InvoiceApiStatusEnum.Done);
 
@@ -549,6 +549,11 @@ namespace CommunicationWorkerRole
                                     var percentagePM = percentages
                                         .OrderByDescending(d => d.FromDate).FirstOrDefault();
                                     vatPercentage = percentagePM?.Percentage ?? 0;
+                                }
+                                else
+                                {
+                                    exception += $"VatTypeId not found for Code: {chargeType.Code} \n";
+
                                 }
                             }
 
