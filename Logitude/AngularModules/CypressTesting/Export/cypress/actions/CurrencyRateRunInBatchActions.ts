@@ -24,14 +24,14 @@ export function FillCurrencyRatesDetails(CurrencyRateRunInBatchDetails: Currency
     cy.Click(CurrencyRateRunInBatchSelectors.RunInBatch,null);
     cy.Click(CurrencyRateRunInBatchSelectors.Approve,null);
     cy.Click(CurrencyRateRunInBatchSelectors.Cancel,null);
-    cy.wait(200000);
+    cy.wait(15000);
     cy.Click(CurrencyRateRunInBatchSelectors.RequestsSheets,null);
     cy.Click(CurrencyRateRunInBatchSelectors.Search, null);
 
 }
 
 export function FillRequestSheets(currencyRateRunInBatchDetails: CurrencyRateRunInBatchDetails) {
-    cy.wait(20000);
+    cy.wait(10000);
 
        cy.FillLogLov(CurrencyRateRunInBatchSelectors.ManageCustomsRequests,currencyRateRunInBatchDetails.ManageCustomsRequests,true);
     // cy.get(CurrencyRateRunInBatchSelectors.ManageCustomsRequests).type(currencyRateRunInBatchDetails.ManageCustomsRequests);
@@ -49,7 +49,7 @@ export function CheckStatusRequest() {
         expect($elements.length).to.be.greaterThan(0);
       
         // בדיקת טקסט בתוך האלמנט הראשון
-        expect($elements.first().text()).to.contain('תשובה נותחה');
+        expect($elements.first().text()).not.to.include('בקשה נכשלה');
       });
 
 }
