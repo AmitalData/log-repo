@@ -351,16 +351,20 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             foreach (ARInvoiceLinePM item in lines)
             {
                 string importStorageChargeId = null;
+                string lineInfo = "";
+
                 if (item.ChargesTypeId == null)
                 {
                     string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.ChargesTypeId", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
                 }
 
                 else
                 {
                     ChargesType chargesType = chargesTypeRepository.GetSingleChargesTypeByCode("ISTOR", entityPM.Tenant);
-                    if(chargesType != null)
+                    lineInfo = $" (Line: {item.LineActionCode ?? "?"}, ChargesTypeId: {chargesType?.Code ?? "?"})";
+
+                    if (chargesType != null)
                     {
                         importStorageChargeId = chargesType.Id;
                     }
@@ -369,13 +373,13 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 if (item.VatTypeId == null)
                 {
                     string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.VatTypeId", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
                 }
 
                 if (item.ForiegnCurrencyId == null)
                 {
                     string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.ForiegnCurrencyId", entityPM.Tenant);
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
                 }
 
                 if (item.MeasurementCode == "STFE" && item.ChargesTypeId == importStorageChargeId)
@@ -388,34 +392,34 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     if (item.Quantity == null)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.Quantity", entityPM.Tenant);
-                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
                     }
 
                     if (item.UnitPrice == null)
                     {
                         string fieldLabel = TranslateTextsClass.Translate("ARInvoiceLine.F.UnitPrice", entityPM.Tenant);
-                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                        throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel) + lineInfo);
                     }
                 }
 
                 if (item.ForiegnExchangeRate == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Exchange Rate"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Exchange Rate") + lineInfo);
                 }
 
                 if (item.ForiegnCurrencyAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Currency Amount"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Foriegn Currency Amount") + lineInfo);
                 }
 
                 if (item.LocalCurrencyAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Local Currency Amount"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Local Currency Amount") + lineInfo);
                 }
 
                 if (item.InvoiceCurrencyAmount == null)
                 {
-                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Currency Amount"));
+                    throw new ApplicationException(msgRequired.Replace("%FieldName", "Invoice Currency Amount") + lineInfo);
                 }
             }
         }
