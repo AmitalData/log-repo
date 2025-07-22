@@ -144,26 +144,8 @@ export class GLAccountOverviewComponent extends BaseComponent {
         //this.LoadGLAccountFollowUpData();
 
     }
-    //LoadGLAccountFollowUpData() {
-    //    this.gLAccountFollowUpDataPMService.getByAccountId(this.EntityPM.Id).subscribe((myResult: any) => {
 
-    //        var mm: ServiceResponse = myResult;
-    //        if (!mm.HasError) {
-    //            this.gLAccountFollowUpDataPM = mm.Result;
-    //        }
-    //        else {
-    //        }
-    //    });
-
-    //}
-    //#region Properties
-    //get DisplayNumber() { return this.EntityPM.DisplayNumber; }
-    //set DisplayNumber(value: string) {
-    //    if (this.EntityPM.DisplayNumber != value) {
-    //        this.EntityPM.DisplayNumber = value;
-    //    }
-    //}
-    //#endregion
+    
     TenantCurrency:string;
     AmitalBrowserInUse: boolean = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
     accountCardlist: CardList[];
@@ -818,23 +800,23 @@ export class GLAccountOverviewComponent extends BaseComponent {
      */
     DisplayOpenFilesClicked(accountCardlist: any[]): void {
         // guard against empty input
-        if (!accountCardlist || accountCardlist.length === 0) {
+        if (!accountCardlist?.length) {
             console.info('No account cards provided.');
             return;
         }
 
-        let myViewModelName = "Logitude.Accounting.Components.EditTabs.GLAccount.MyEnterViewUnifreightController";
+        const myViewModelName = 'Logitude.Accounting.Components.EditTabs.GLAccount.MyEnterViewUnifreightController';
 
 
         SessionLocator.SelectedSession.StopBusyIndicator();
-        let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+        const sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (mess: UnifreightMessageM) => {
-                    var IsMatchUnifreightCallbackCommand = (
-                        mess.LogitudeEntity == AmitalGatewayUtil.Instance.GeneralMessaging.ShowOpenFiles &&
-                        mess.LogitudeEntityNumber == this.EntityPM.Id &&
-                        mess.LogitudeViewModel == myViewModelName);
-                    if (IsMatchUnifreightCallbackCommand) {
+                    const isMatchUnifreightCallbackCommand = (
+                        mess.LogitudeEntity === AmitalGatewayUtil.Instance.GeneralMessaging.ShowOpenFiles &&
+                        mess.LogitudeEntityNumber === this.EntityPM.Id &&
+                        mess.LogitudeViewModel === myViewModelName);
+                    if (isMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
@@ -842,18 +824,20 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 }
             );
 
-        var unifreightMessageM =
+        const cardNumber = this.accountCardnumberLists?.[0];
+
+        var message =
             AmitalGatewayUtil.Instance.
-                DeclarationMessaging.GetMessage(this.accountCardnumberLists[0], this.EntityPM.Id, myViewModelName
-                    , "GNDUNF");
-        unifreightMessageM.Requset.push(["CardList", this.accountCardnumberLists.toString()]);
+                DeclarationMessaging.GetMessage(cardNumber, this.EntityPM.Id, myViewModelName
+                    , 'GNDUNF');
+        message.Requset.push(['CardList', this.accountCardnumberLists?.toString()]);
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-            "ScriptableGatewayUtil.ShowOpenFiles",
-            "GNDHMAIN.LogitudeTask",
-            "ShowOpenFiles",
-            unifreightMessageM,
-            "Show Open Files");
+            'ScriptableGatewayUtil.ShowOpenFiles',
+            'GNDHMAIN.LogitudeTask',
+            'ShowOpenFiles',
+            message,
+            'Show Open Files');
     }
 
 
