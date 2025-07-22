@@ -889,8 +889,6 @@ out myMessageOut);
             string myMessageOut;
 
             string fileContentsBASE64 = "";
-            string fileContents = "";
-            myMoreParams = "";
             SetLastActivity?.Invoke();
 
             try
@@ -1092,21 +1090,25 @@ out myMessageOut);
 
             var ftpQry = new CustomsPartnerFtpQueryService(_CustomsSettingPM.Tenant);
 
-            var pm = ftpQry.GetBy(
+            var partnerFtpPM = ftpQry.GetBy(
                 _CustomsSettingPM.Tenant,
                 interfaceName,
                 CustomsPartnerFtpDetails.PartnerCode_AMITAL,
                 CustomsPartnerFtpDetails.TypeCode_In);
 
-            if (pm?.MyFtpDetail == null || !pm.MyFtpDetail.UseSFTP) return null;
-
-            var d = pm.MyFtpDetail;
+            if (partnerFtpPM == null|| partnerFtpPM.MyFtpDetail == null|| !partnerFtpPM.MyFtpDetail.UseSFTP)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                    $"No valid SFTP config found for interface {interfaceName}");
+                return null;
+            }
+            var ftpDetail = partnerFtpPM.MyFtpDetail;
             return new PartnerSftpConfig
             {
-                Host = d.Host,
-                Username = d.UserName,
-                Password = d.Password,
-                RemotePath = string.IsNullOrWhiteSpace(d.Folder) ? "/" : d.Folder,
+                Host = ftpDetail.Host,
+                Username = ftpDetail.UserName,
+                Password = ftpDetail.Password,
+                RemotePath = string.IsNullOrWhiteSpace(ftpDetail.Folder) ? "/" : ftpDetail.Folder,
                 UsePrivateKey = false
             };
         }
