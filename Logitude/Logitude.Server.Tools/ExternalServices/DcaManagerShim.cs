@@ -234,15 +234,22 @@ namespace Logitude.Server.Tools.ExternalServices
 
         private void Purge(IEnumerable<string> list, string subDir, DateTime threshold)
         {
+            int deleted = 0;
             foreach (var file in list)
             {
                 if (GetTimeStamp(file) < threshold)
                 {
-                    bool err; string log; string mp = "";
+                    bool err;
+                    string log;
+                    string mp = "";
                     DeleteIncomeFile(file, subDir, ref mp, out err, out log);
+                    if (!err) deleted++;
                 }
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                $"Purged {deleted} files from {subDir} older than {threshold}");
         }
+
         private bool TryChangeDir(SFTPService sftp, string path)
         {
             string st, msg, more = "";
