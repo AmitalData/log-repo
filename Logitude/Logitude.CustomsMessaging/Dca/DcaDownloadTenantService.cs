@@ -45,25 +45,23 @@ namespace Logitude.CustomsMessaging.Dca
     public /*Test outside from C:\Users\itzik\Documents\Visual Studio 2012\Projects\CustomsWorkerRoleWindowsFormsApplication\CustomsWorkerRoleWindowsFormsApplication */
         class DcaDownloadTenantService
     {
-        //private readonly string _PartnerID;
-        //private readonly string _UnifreightEnvironmentID;
-
-        //private readonly string _DownloadMoreParams;
         private readonly string _AppendToDownloadFolderName;
-        private readonly bool _EnableLog;
-        //private readonly CustomsDeploymentStage _CustomsDeploymentStage;
 
         private List<InterfaceTenantDefinitionManagementPM> _AllInterface;
         private CustomsSettingPM _CustomsSettingPM;
+        private readonly bool _EnableLog;
 
-        private IDcaManagerShim _dcaManagerShim;          
-        private DcaManager _legacyDcaManager;             
-        private bool _featureDownloadDcaSftp;              
-        private PartnerSftpConfig _sftpCfg;
-        private DateTime _lastSftpPurge = DateTime.MinValue;
+        private bool _featureDcaSftp;   
+        
+        private PartnerSftpConfig _downloadCfg;     
+        private PartnerSftpConfig _uploadCfg;
 
+        private DcaManager _legacyDcaManager;
+        private LegacyDcaManagerShim _legacyShim;
+        private SftpDcaManagerShim _downloadShim;
+        private IDcaManagerShim Shim => (IDcaManagerShim)_downloadShim ?? _legacyShim;
 
-        private IDcaManagerShim Shim => _dcaManagerShim;
+        private DateTime _lastSftpPurge = DateTime.MinValue;   
 
 
         static List<DCAIncomeDirStateM> _LastAccessFileInDCADirList = new List<DCAIncomeDirStateM>();
@@ -74,9 +72,7 @@ namespace Logitude.CustomsMessaging.Dca
 
         public DcaDownloadTenantService(CustomsSettingPM customsSettingPM)
         {
-            // TODO: Complete member initialization
             this._CustomsSettingPM = customsSettingPM;
-            //_CustomsDeploymentStage = CustomsSettingUtil.GetCustomsDeploymentStage(customsSettingPM.Tenant);
             _MyDCAIncomeDirStateM = _LastAccessFileInDCADirList.FirstOrDefault(rec => rec.Tenant == _CustomsSettingPM.Tenant);
             if (_MyDCAIncomeDirStateM == null)
             {
@@ -94,8 +90,6 @@ namespace Logitude.CustomsMessaging.Dca
             }
             _EnableLog = true;
             var interfaceTypeQueryService = new InterfaceTenantDefinitionQueryService(_CustomsSettingPM.Tenant);
-            //interfaceTypeQueryService.GetInterfaceManagementwithDefinition(_CustomsSettingPM.Tenant);
-            ////var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(_CustomsSettingPM.Tenant);
 
             _AllInterface = interfaceTypeQueryService.GetWithInterfaceManagementDefinition(_CustomsSettingPM.Tenant);
 
@@ -204,36 +198,43 @@ namespace Logitude.CustomsMessaging.Dca
 				}
 
             }
-
+            
             FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(
                                    AuthenticationUtil.ResolveUserId(_CustomsSettingPM.Tenant),
                                    _CustomsSettingPM.Tenant);
 
-            _featureDownloadDcaSftp =
+            _featureDcaSftp =
                 features.Features.Any(f => f.Code.Equals("DownloadDcaSftp", StringComparison.OrdinalIgnoreCase));
 
-            if (_featureDownloadDcaSftp)
+            if (_featureDcaSftp)
             {
-                _sftpCfg = LoadPartnerSftpConfig();
-                if (_sftpCfg != null)
+                _downloadCfg = LoadPartnerSftpConfig(
+                                       CustomsPartnerFtpDetails.TypeCode_In,  
+                                       "DownloadCustomsFilesFromSftp");
+
+                _uploadCfg = LoadPartnerSftpConfig(
+                                   CustomsPartnerFtpDetails.TypeCode_Out,
+                                   "Upload9100FilesToSftp");
+                if (_downloadCfg != null)
                 {
-                    _dcaManagerShim = new SftpDcaManagerShim(_sftpCfg, _CustomsSettingPM.Tenant);
+                    _downloadShim = new SftpDcaManagerShim(_downloadCfg, _CustomsSettingPM.Tenant);
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SFTP shim active for tenant {_CustomsSettingPM.Tenant}");
                 }
             }
 
-            if (_dcaManagerShim == null)
+            _legacyShim = new LegacyDcaManagerShim(GetDcaManagr());
+            if (_downloadShim == null)
             {
-                _legacyDcaManager = GetDcaManagr();                     
-                _dcaManagerShim = new LegacyDcaManagerShim(_legacyDcaManager);
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Legacy shim active for tenant {_CustomsSettingPM.Tenant}");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                    $"Legacy shim active for tenant {_CustomsSettingPM.Tenant}");
             }
+
+
         }
 
         public bool HasFeature_DcaDirect9200()
         {
-            //this.IsDcaActive = !(FeatureLocator.HasFeaturePermession("Customs.Declaration", "DCA"));
             string email = AuthenticationUtil.ResolveUserIdentityName(this._CustomsSettingPM.Tenant);
             bool suppressUnifreightDCAServer = SecurityUtility.CheckFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant);
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"suppressUnifreightDCAServer={suppressUnifreightDCAServer} ");
@@ -284,10 +285,6 @@ namespace Logitude.CustomsMessaging.Dca
                                                         DateTimeStyles.None,
                                                         out stopLogAt))
                 {
-                    //stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
-                    //                                        "yyyyMMdd",
-                    //                                        CultureInfo.InvariantCulture,
-                    //                                        DateTimeStyles.None);
                     IsOn = DateTime.Now <= stopLogAt;
 
                 }
@@ -315,7 +312,8 @@ namespace Logitude.CustomsMessaging.Dca
                         this._InterfaceListDCA,
                         _AllInterface,
                         dedicatedCourierDCAModel,
-						_AllDcaPreFixByEnvironment
+						_AllDcaPreFixByEnvironment,
+                        _uploadCfg
 						);
                     dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
                     if (dedicatedCourierDCAModel != null)
@@ -336,10 +334,9 @@ namespace Logitude.CustomsMessaging.Dca
                 return;
             }
 
-            if (_featureDownloadDcaSftp &&
-                DateTime.UtcNow.Subtract(_lastSftpPurge) > TimeSpan.FromHours(24))
+            if (_downloadShim != null && DateTime.UtcNow.Subtract(_lastSftpPurge) > TimeSpan.FromHours(24))
             {
-                _dcaManagerShim.PurgeOldFiles();
+                _downloadShim.PurgeOldFiles();     
                 _lastSftpPurge = DateTime.UtcNow;
             }
 
@@ -372,7 +369,6 @@ namespace Logitude.CustomsMessaging.Dca
             int iMultiThread = 5;
             int _totalDownload = 0;
             List<DCAFileModel> dcaFileList = null;
-            //foreach (var dcaFile in ListOfDCAFile)
             while ((dcaFileList =
                 GetNextList(debugIIGMessageId, _totalDownload, iMultiThread)) != null)
             {
@@ -414,7 +410,6 @@ namespace Logitude.CustomsMessaging.Dca
 
 
                                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
-                                            //_totalDownload--;
                                             if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                                             {
                                                 _LastErrordateTime = DateTime.Now;
@@ -423,14 +418,13 @@ namespace Logitude.CustomsMessaging.Dca
                                             string myMoreParams = "";
                                             bool myErrorOccurred;
                                             string myMessageOut = "";
-                                            _DcaManager.DeleteIncomeFile(//this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant),
+                                            Shim.DeleteIncomeFile(
                    dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
                       ref myMoreParams, out myErrorOccurred, out myMessageOut);
                                         }
                                         catch (Exception)
                                         {
 
-                                            //throw;
                                         }
 
                                         return;
@@ -440,7 +434,7 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-                                    bool dcaMessageFileSuccess = DoDcaMessageFile(messageDCA, dcaFile);//exc handler !!
+                                    bool dcaMessageFileSuccess = DoDcaMessageFile(messageDCA, dcaFile);
                                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DoDcaMessageFile:" + dcaFile.SelectedFileDownload + " Elapsed:" + _swDownAll.Elapsed);
                                     LogMessagingUtil.Instance.Clear();
                                 }
@@ -458,7 +452,6 @@ namespace Logitude.CustomsMessaging.Dca
 
                 }
 
-                //catch (OperationCanceledException e)
                 catch (Exception eee)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, "DCAMulti");
@@ -493,7 +486,6 @@ namespace Logitude.CustomsMessaging.Dca
         {
             int _totalDownload = 0;
             DCAFileModel dcaFile = null;
-            //foreach (var dcaFile in ListOfDCAFile)
             while ((dcaFile = GetNext(debugIIGMessageId, _totalDownload)) != null)
             {
 
@@ -515,9 +507,7 @@ namespace Logitude.CustomsMessaging.Dca
                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log");
                     _totalDownload--;
                     continue;
-                    //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                     throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
-                    //return;
                 }
 
 
@@ -546,11 +536,9 @@ namespace Logitude.CustomsMessaging.Dca
             string searchPattren = "*.*";
             string ourSufix = CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
-            //searchPattren = "";
             _DcaManager = GetDcaManagr();
-            myMoreParams = "";// _DownloadMoreParams;
-            myFileListing = _DcaManager.FileListing(
-//this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant), 
+            myMoreParams = "";
+            myFileListing = Shim.FileListing(
 searchPattren, _AppendToDownloadFolderName,
 ref myMoreParams,
 out myErrorOccurred,
@@ -601,7 +589,7 @@ out myMessageOut);
 
             string MoveUnUseDCAFilesToDIr = ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr");
 
-            using (var myDCAMoveIncomeFileToDirService = new DCAMoveIncomeFileToDirService(_DcaManager))
+            using (var myDCAMoveIncomeFileToDirService = new DCAMoveIncomeFileToDirService(Shim))
             {
 
                 return myDCAMoveIncomeFileToDirService.MoveItToDir(fileName, this._AppendToDownloadFolderName, MoveUnUseDCAFilesToDIr);
@@ -746,13 +734,11 @@ out myMessageOut);
             {
 
                 string myMessageOut = "";
-                var myDcaManager = GetDcaManagr();// new DcaManager(_CustomsSettingPM.DCAServiceAddress, _CustomsSettingPM.DCAPartnerVault, _CustomsSettingPM.Tenant);
-                var myMoreParams = "";// _DownloadMoreParams;
+                var myMoreParams = "";
 
                 var CurrentAllXmlFileInMyBranch = GetVaultFileListInCustomDeployStage();
 
                 if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch))
-                //unchanged
                 {
                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir unchanged");
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
@@ -835,11 +821,8 @@ out myMessageOut);
 
             var searchPattren = dcaPrefixName + "*" + CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
-            //searchPattren = "";
-            _DcaManager = GetDcaManagr();
-            myMoreParams = "";// _DownloadMoreParams;
+            myMoreParams = "";
             myFileListing = Shim.FileListing(
-//this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant), 
 searchPattren, _AppendToDownloadFolderName,
 ref myMoreParams,
 out myErrorOccurred,
@@ -912,31 +895,24 @@ out myMessageOut);
 
             string fileContentsBASE64 = "";
             string fileContents = "";
-            myMoreParams = "";// _DownloadMoreParams;
+            myMoreParams = "";
             SetLastActivity?.Invoke();
 
             try
             {
                 var sw = Stopwatch.StartNew();
                 fileContentsBASE64 = Shim.GetContentsBASE64OfDownloadIncomeFile(
-            //this.GetPartnerID(messageDCA.Tenant), this.GetUnifreightEnvironmentID(messageDCA.Tenant),
             dcaFile.SelectedFileDownload, this._AppendToDownloadFolderName,
-            //out FileName, out FileContentsBASE64,
             ref myMoreParams,
             out myErrorOccurred, out myMessageOut);
                 dcaFile.DownloadLog = "GetContentsBASE64OfDownloadIncomeFile:Took=" + sw.Elapsed.ToString();
                 if (myErrorOccurred)
                 {
-                    if (_EnableLog)
-                    {
-                        //LogMessage(TRequestParams requestParams, string subject, string InOut, out string communicationLogId)
-                    }
                     return false;
                 }
 
 
                 SaveRequestSheet(messageDCA, dcaFile, fileContentsBASE64
-                //messageBytes
                 );
 
                 LogDoneItemInMemoryAction?.Invoke();
@@ -945,8 +921,6 @@ out myMessageOut);
             {
                 var log = LogMessagingUtil.Instance.ToString();
                 var FormatedException = ExceptionFormatUtil.GetFormated(ex);
-                //_sbGatewayLog.Insert(0, "ProccessRequest():Exception " + FormatedException.ToString() + Environment.NewLine + "---------------------------------------------");
-                //Debug.WriteLine("ProccessRequest():Exception " + FormatedException.ToString(), true);
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "DCA Wroker role DbEntityValidationException", null, null);
             }
             catch (CustomsRequestsSheetDomainModelServiceException ex)
@@ -971,7 +945,7 @@ out myMessageOut);
                     }
                     else
                     {
-                        using (var myDCARenameIncomeFileService = new DCARenameIncomeFileService(_DcaManager))
+                        using (var myDCARenameIncomeFileService = new DCARenameIncomeFileService(Shim))
                         {
 
                             return myDCARenameIncomeFileService.RenameIt(messageDCA, dcaFile, this._AppendToDownloadFolderName);
@@ -1001,13 +975,10 @@ out myMessageOut);
             {
                 return false;
             }
-            //PushToQueue();
             return true;
         }
 
-        private void SaveRequestSheet(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile, string fileContentsBASE64
-                //byte[] messageBytes
-                )
+        private void SaveRequestSheet(InterfaceTenantDefinitionManagementPM messageDCA, DCAFileModel dcaFile, string fileContentsBASE64)
         {
 
 
@@ -1018,9 +989,7 @@ out myMessageOut);
 
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log"); return;
-                //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
-                //return;
             }
 
 
@@ -1031,8 +1000,6 @@ out myMessageOut);
 
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
-                //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.Clear();
-
                 anaO.DcaReceivedCustomResponseCorrelation(messageDCA.InterfaceManagement, _CustomsSettingPM.Tenant, dcaFile, fileContents);
                 scope.Complete();
             }
@@ -1042,27 +1009,10 @@ out myMessageOut);
 
         private string GetExternalId(string selectedFile)
         {
-            /*
-        In 
-
-        Customs Push
-        \\GK-UNISVC1\CyberArk_DCA\amital_shipping\Download\ranar\UDCAServerHistory\SendMN_MSG1171_SendManifestFeedBack_Message_Out.IL941079089.2014-06-15_12-46-40-871.a60c718f-3d68-4d15-9b9a-6043dabb7574.PRD.xml.zip
-
-
-        Return after our Req
-        "\\GK-UNISVC1\CyberArk_DCA\amital_shipping\Download\ranar\UDCAServerHistory\SaveMN_MSG1170_1171_MANIFESTRequest_Out.IL941079089.2014-06-15_09-22-58-890.20140615083441612924803021008.PRD.xml.zip"
-
-         */
-
-
-            //\\dev2008\CyberArk_DCA\dev64bit_amitestm53\Download\IIG\GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60.TST.xml
-            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(selectedFile);//GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60.TST.xml
-
-            fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithoutExtension);///GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60.TST
-                                                                                                  ///GetSYSTBL_MSG9000_9001_SystemTableRequest_Out.IL941079089.2014-06-15_17-51-26-314.653bc69d-31e4-4e47-b973-28bd2cd8fe60
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(selectedFile);
+            fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileNameWithoutExtension);
             var extension = Path.GetExtension(fileNameWithoutExtension);
-            //.653bc69d-31e4-4e47-b973-28bd2cd8fe60
-            extension = extension.Substring(1);//remove dot 
+            extension = extension.Substring(1);
             return extension;
         }
 
@@ -1070,7 +1020,6 @@ out myMessageOut);
 
 
         public void TestDownloadFile(string dcaFile,
-            //byte[] bytsDcaFile
             string base64StringInnerUTF8
             )
         {
@@ -1084,13 +1033,8 @@ out myMessageOut);
             {
                 throw new Exception("dcaFile=" + dcaFile + " Not found in InterfaceManagement.DcaPrefixName* ");
             }
-            //    var base64String =
-            //System.Convert.ToBase64String(bytsDcaFile,
-            //                       0,
-            //                       bytsDcaFile.Length);
             var selectedDcaFile = DCAFilePraser.GetDCAFileModel(dcaFile);
             this.SaveRequestSheet(messageDCA, selectedDcaFile,
-                 //base64String
                  base64StringInnerUTF8
                  );
         }
@@ -1125,14 +1069,11 @@ out myMessageOut);
             }
 
 
-            //string currMessagingService = GetMainMessagingService(messageDCA);
             if (!ContainerAccessor.Container.IsRegistered<IMessagingServiceInterfaceType>(crs.InterfaceTypeCode))
             {
 
                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log"); return;
-                //ExceptionHandler.HandleException(null, DateTime.Now, 0, "", "WorkerRole", "DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + currMessagingService);
                 throw new Exception("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass=" + crs.InterfaceTypeCode);
-                //return;
             }
 
 
@@ -1151,31 +1092,23 @@ out myMessageOut);
             }
         }
 
-        private PartnerSftpConfig LoadPartnerSftpConfig()
+        private PartnerSftpConfig LoadPartnerSftpConfig(string typeCode, string interfaceName)
         {
-            const string InterfaceName_DownloadCustomsFilesFromSftp = "DownloadCustomsFilesFromSftp";
 
             var ftpQry = new CustomsPartnerFtpQueryService(_CustomsSettingPM.Tenant);
 
             var pm = ftpQry.GetBy(
                 _CustomsSettingPM.Tenant,
-                InterfaceName_DownloadCustomsFilesFromSftp,
+                interfaceName,
                 CustomsPartnerFtpDetails.PartnerCode_AMITAL,
                 CustomsPartnerFtpDetails.TypeCode_In);
 
-            if (pm == null)
-            {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
-                    $"No SFTP row found for interface {InterfaceName_DownloadCustomsFilesFromSftp}");
-                return null;
-            }
+            if (pm?.MyFtpDetail == null || !pm.MyFtpDetail.UseSFTP) return null;
 
-            var d = pm.MyFtpDetail;        
-            if (d == null || !d.UseSFTP) return null;
-
+            var d = pm.MyFtpDetail;
             return new PartnerSftpConfig
             {
-                Host = d.Host,                    
+                Host = d.Host,
                 Username = d.UserName,
                 Password = d.Password,
                 RemotePath = string.IsNullOrWhiteSpace(d.Folder) ? "/" : d.Folder,

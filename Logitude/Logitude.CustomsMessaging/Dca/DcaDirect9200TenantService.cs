@@ -21,6 +21,9 @@ using System.Threading;
 using Logitude.Server.Tools.Utils;
 using System.IO;
 using System.Collections.Concurrent;
+using Logitude.CustomsMessaging.Dca.Utilities;
+using Logitude.Server.Tools.ExternalServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.Dca
 {
@@ -31,6 +34,7 @@ namespace Logitude.CustomsMessaging.Dca
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
         private List<InterfaceTenantDefinitionManagementPM> _AllInterface;
         private readonly DedicatedCourierDCAModel _DedicatedCourierDCAModel;
+        private readonly FTPDetail _uploadFtpDetail;
         StringBuilder _SBInfoLog;
         StringBuilder _SBErrorLog;
         Stopwatch sw;
@@ -39,9 +43,10 @@ namespace Logitude.CustomsMessaging.Dca
         private static DateTime _LastErrordateTime;
 		private List<string> _AllDcaPreFixByEnvironment;
 
-		public DcaDirect9200TenantService(
+
+        public DcaDirect9200TenantService(
             CustomsSettingPM costomSetting, List<string> allDcaPreFixWithoutInOutUpper, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA,
-            List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel,List<string> allDcaPreFixByEnvironment)
+            List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel,List<string> allDcaPreFixByEnvironment, PartnerSftpConfig uploadCfg)
         {
             this._CustomsSettingPM = costomSetting;
             this._AllDcaPreFixWithoutInOutUpper = allDcaPreFixWithoutInOutUpper;
@@ -49,7 +54,8 @@ namespace Logitude.CustomsMessaging.Dca
             this._AllInterface = allInterface;
             this._DedicatedCourierDCAModel = dedicatedCourierDCAModel;
 			this._AllDcaPreFixByEnvironment = allDcaPreFixByEnvironment;
-		}
+            _uploadFtpDetail = ToFtpDetail(uploadCfg);
+        }
 
         public Action SetLastActivity { get; set; }
         public Action LogDoneItemInMemoryAction { get; set; }
@@ -275,6 +281,7 @@ namespace Logitude.CustomsMessaging.Dca
 
                     foreach (var itemOutgoingMessage in outgoingMessageFilterByEnvironment /*response.OutgoingMessage*/)
                     {
+                        // if not my file , send to sftp 
                         SaveInDB(correlationIdsCanClear, sbFilename, itemOutgoingMessage);
                     }
 
@@ -388,25 +395,9 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 }
                 else
                 {
-
-                    sbFilename.Enqueue($"NOT NEEDED!!!! {myFileName}");
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
-                    if (_DedicatedCourierDCAModel != null)
-                    {
-                        string fileBackupPath = null;
-                        try
-                        {
-                            fileBackupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, myFileName);
-                            File.WriteAllText(fileBackupPath, itemOutgoingMessage.MSG);
-                        }
-                        catch (System.Exception e)
-                        {
-
-                            sbFilename.Enqueue($"WriteAllText error!!!! {e.Message} {fileBackupPath}");
-                        }
-                    }
-                    //NumOfMessages++;
-                    correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
+                    HandleNotNeededMessage(myFileName, itemOutgoingMessage.MSG, s => sbFilename.Enqueue(s));
+                    correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs
+                    { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                 }
 
             }
@@ -454,25 +445,10 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 }
                 else
                 {
-
-                    sbFilename.AppendLine($"NOT NEEDED!!!! {myFileName}");
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
-                    if (_DedicatedCourierDCAModel != null)
-                    {
-                        string fileBackupPath = null;
-                        try
-                        {
-                            fileBackupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, myFileName);
-                            File.WriteAllText(fileBackupPath, itemOutgoingMessage.MSG);
-                        }
-                        catch (System.Exception e)
-                        {
-
-                            sbFilename.AppendLine($"WriteAllText error!!!! {e.Message} {fileBackupPath}");
-                        }
-                    }
+                    HandleNotNeededMessage(myFileName, itemOutgoingMessage.MSG, s => sbFilename.AppendLine(s));
                     NumOfMessages++;
-                    correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
+                    correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs
+                    { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                 }
 
             }
@@ -554,6 +530,52 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 
             }
             return currMessagingService;
+        }
+        private static FTPDetail ToFtpDetail(PartnerSftpConfig cfg)
+        {
+            return cfg == null ? null : new FTPDetail
+            {
+                Host = cfg.Host,
+                UserName = cfg.Username,
+                Password = cfg.Password,
+                Folder = cfg.RemotePath
+            };
+        }
+        private void HandleNotNeededMessage(string fileName,string fileContents,Action<string> logLineOut)    
+        {
+            logLineOut?.Invoke($"NOT NEEDED!!!! {fileName}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                $"NOT NEEDED!!!! SaveInDB({fileName})");
+
+            if (_uploadFtpDetail != null)
+            {
+                try
+                {
+                    var uploader = new PartnerSftpUploader(_uploadFtpDetail);
+                    uploader.UploadBytes(fileName, Encoding.UTF8.GetBytes(fileContents));
+                }
+                catch (System.Exception ex)
+                {
+                    logLineOut?.Invoke($"SFTP upload error!!!! {ex.Message} for {fileName}");
+                    NetCommonHelper.Logger.DevLog.Instance
+                        .WriteError($"SFTP‑Upload‑NotNeeded: {ex}");  
+                }
+            }
+
+            if (_DedicatedCourierDCAModel != null)
+            {
+                try
+                {
+                    string backupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, fileName);
+                    File.WriteAllText(backupPath, fileContents);
+                }
+                catch (System.Exception ex)
+                {
+                    logLineOut?.Invoke($"WriteAllText error!!!! {ex.Message}");
+                    NetCommonHelper.Logger.DevLog.Instance
+                        .WriteError($"Backup‑NotNeeded: {ex}");
+                }
+            }
         }
     }
 }
