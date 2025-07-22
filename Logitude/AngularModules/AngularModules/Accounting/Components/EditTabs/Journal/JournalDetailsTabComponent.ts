@@ -1627,6 +1627,7 @@ class JournalLineModel extends BaseComponent {
                     this.parent.EntityWarningsList.push(TextCodeTranslator.Translate("Journal.O.DifferenceExchangeRate"));
                 }
             })
+            this.AmountChanged('foreign', this.LocalAmount, this.ForeignAmount);
             return userExchageRate && Math.abs(this.currencyRate - userExchageRate) > 0.05;
         }
         else {
