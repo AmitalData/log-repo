@@ -97,7 +97,6 @@ namespace Logitude.CustomsMessaging.Dca
 
                     .Where(
                        r =>
-                    //INTERFACETYPE
                     //ערכים NULL== הכל, C == רק עמילות, B == רק בלדרות
                     string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)//All
 
@@ -105,16 +104,11 @@ namespace Logitude.CustomsMessaging.Dca
                     (
                     !string.IsNullOrWhiteSpace(r.InterfaceManagement.InterfaceType)
                     &&
-                     //COMPANYTYPE שם שדה ערכים C -דיפולטיבי(בסקריפט), או B == בלדרות - אסור ריק יאותחל עם הפצה ראשונה + DEFAULT == C
                      r.InterfaceManagement.InterfaceType == customsSettingPM.CompanyType
                      )
                      )
 
                    .Where(rec =>
-                       //rec.InterfaceManagement.INOUT ==  Logitude.Customs.BL.ClosedTable.InOutType.In  &&
-                       //!string.IsNullOrWhiteSpace(rec.InterfaceManagement.DcaPrefixName) && 
-                       //!rec.OverrideInActive &&
-                       ///////rec.Interactive == Logitude.Customs.BL.ClosedTable.InteractiveMode.DCABatchIn &&
                        !String.IsNullOrWhiteSpace(
                        rec.InterfaceManagement.DcaPrefixName +
                        rec.InterfaceManagement.DcaPrefixName2 +
@@ -539,7 +533,6 @@ namespace Logitude.CustomsMessaging.Dca
             string searchPattren = "*.*";
             string ourSufix = CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
-            myMoreParams = "";
             myFileListing = Shim.FileListing(
 searchPattren, _AppendToDownloadFolderName,
 ref myMoreParams,
