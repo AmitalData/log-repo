@@ -55,6 +55,9 @@ namespace Logitude.CustomsMessaging.Dca
         private DCAIncomeDirStateM _MyDCAIncomeDirStateM;
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
 
+        public const string InterfaceName_DownloadCustomsFilesFromSftp = "DWN_CUSTOMS_SFTP";
+        public const string InterfaceName_UploadNotNeeded9100FilesToSftp = "UPLOAD_NOTNEEDED9100_TOSFTP";
+
 
         public DcaDownloadTenantService(CustomsSettingPM customsSettingPM)
         {
@@ -196,12 +199,12 @@ namespace Logitude.CustomsMessaging.Dca
             if (_featureDcaSftp)
             {
                 _downloadCfg = LoadPartnerSftpConfig(
-                                       CustomsPartnerFtpDetails.TypeCode_In,  
-                                       "DownloadCustomsFilesFromSftp");
+                                       CustomsPartnerFtpDetails.TypeCode_In,
+                                       InterfaceName_DownloadCustomsFilesFromSftp);
 
                 _uploadCfg = LoadPartnerSftpConfig(
                                    CustomsPartnerFtpDetails.TypeCode_Out,
-                                   "Upload9100FilesToSftp");
+                                   InterfaceName_UploadNotNeeded9100FilesToSftp);
                 if (_downloadCfg != null)
                 {
                     _downloadShim = new SftpDcaManagerShim(_downloadCfg, _CustomsSettingPM.Tenant);
