@@ -25,11 +25,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-                if (!HttpContext.Current.Request.Headers.AllKeys.Contains("Token"))
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, "Missing authentication token.");
 
                 string token = HttpContext.Current.Request.Headers["Token"]; 
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (authToken == null)
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, "Empty authentication token.");
+
                 if (string.IsNullOrWhiteSpace(id))
                     return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing or empty ID.");
 
