@@ -30625,5 +30625,14 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
+	<Feature
+	  Code="&quot;DownloadDcaSftp&quot;"
+	  FeatureTypeCode="&quot;ACT&quot;"
+	  FeatureTextCodeCode="&quot;Customs.Declaration.Features.DownloadDcaSftp&quot;"
+	  FeatureDefaultText="&quot;Download Dca Sftp&quot;"
+	  IsPackagable="true"
+	  IsOld="false"
+	  IsCoreFeature="false"
+	  IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>

@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "d8d189cd7c806de7b71b6549f5336a44";
+		public const string HashString = "228367703fb3efb924d8acc449c4949e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -20919,6 +20919,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_IsSendSFTP = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsSendSFTP", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IsSendSFTP", NameTextCodeDefaultText = @"Is Send SFTP" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
 
 		   Feature DeclarationFeature_ImportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ImportDiamonds", NameTextCodeDefaultText = @"Diamond Declaration - Import" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
+
+		   Feature DeclarationFeature_DownloadDcaSftp = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DownloadDcaSftp", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DownloadDcaSftp", NameTextCodeDefaultText = @"Download Dca Sftp" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
 
    
 	    
