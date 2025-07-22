@@ -519,7 +519,7 @@ b4UnZip:fileContentsBASE64.Length" + fileContentsBASE64.Length, false, "DCA", Da
                 return ms.ToArray();
             }
         }
-        public void MoveIncomeFileTorDir(
+        public void MoveIncomeFileToDir(
         string Filename, string RenameFilename,
         string appendToDownloadFolderName,
         string MoveUnUseDCAFilesToDIr,

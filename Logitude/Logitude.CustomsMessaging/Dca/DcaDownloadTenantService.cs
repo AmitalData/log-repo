@@ -1,5 +1,4 @@
 ﻿
-using Microsoft.ServiceBus.Messaging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,33 +7,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Logitude.SystemLogs;
-using Simplog.Server.Infrastructure.Azure;
-using Simplog.Server.Infrastructure;
-//using Simplog.Global.Data.GlobalModel.Repositories;
-//using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Server.Tools.Counters;
-using Simplog.Data.Helpers;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.Data;
-using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Server.Tools.Helpers;
 using System.Data.Entity.Validation;
 using System.Transactions;
 using Logitude.Server.Tools.ExternalServices;
 using Logitude.Server.Tools;
-using Logitude.CustomsMessaging.MessagingServices;
 using Microsoft.Practices.Unity;
-using Logitude.Customs.Data.EntityLists;
 using System.Diagnostics;
 using Logitude.Customs.BL.Messaging.Customs;
-using Logitude.Customs.Def.ClosedTable;
 using Logitude.Customs.BL.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.CustomsMessaging.Common.DCAParams;
 using System.Configuration;
 using System.Collections.Concurrent;
-using Logitude.Server.Tools.Utils;
 using Logitude.BL.Security;
 using System.Globalization;
 using Logitude.Customs.BL.CloseTables;
@@ -42,8 +29,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.Dca
 {
-    public /*Test outside from C:\Users\itzik\Documents\Visual Studio 2012\Projects\CustomsWorkerRoleWindowsFormsApplication\CustomsWorkerRoleWindowsFormsApplication */
-        class DcaDownloadTenantService
+    public  class DcaDownloadTenantService
     {
         private readonly string _AppendToDownloadFolderName;
 
@@ -295,43 +281,19 @@ namespace Logitude.CustomsMessaging.Dca
         }
         public void DownloadAll(string debugIIGMessageId, DedicatedCourierDCAModel dedicatedCourierDCAModel)
         {
-            if (this.HasFeature_DcaDirect9200() || dedicatedCourierDCAModel != null)
+            bool run9200 =
+                   HasFeature_DcaDirect9200()        
+                   || dedicatedCourierDCAModel != null;
+
+            bool sftpFeature = _featureDcaSftp;     
+            if (run9200 && !sftpFeature)
             {
-                var sb = new StringBuilder();
-                var sw = Stopwatch.StartNew();
-
-                if (IsAppSettingOn("SuppressDownloadDCA.UntilDateyyyyMMdd"))
-                {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SuppressDownloadDCA.UntilDateyyyyMMdd");
-                }
-                else
-                {
-                    var dcaDirect9200TenantService = new DcaDirect9200TenantService(
-                        this._CustomsSettingPM,
-                        _AllDcaPreFixWithoutInOutUpper,
-                        this._InterfaceListDCA,
-                        _AllInterface,
-                        dedicatedCourierDCAModel,
-						_AllDcaPreFixByEnvironment,
-                        _uploadCfg
-						);
-                    dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
-                    if (dedicatedCourierDCAModel != null)
-                    {
-                        var removeOldOrphanedFilesFromBackupService = new RemoveOldOrphanedFilesFromBackupService();
-                        removeOldOrphanedFilesFromBackupService.RemoveOldFiles(dedicatedCourierDCAModel.BackupPath);
-                    }
-                }
-                sb.AppendLine($"DownloadAll({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
-                sw.Restart();
-
-
-                var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA, _AllDcaPreFixByEnvironment);
-                restoreWaitingImportService.RestoreWaitingImportSaveInDB();
-
-                sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
-                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString()+":"+ "DCAStopwatch");
+                this.Send9200(debugIIGMessageId, dedicatedCourierDCAModel);
                 return;
+            }
+            if (sftpFeature)
+            {
+                this.Send9200(debugIIGMessageId, dedicatedCourierDCAModel);
             }
 
             if (_downloadShim != null && DateTime.UtcNow.Subtract(_lastSftpPurge) > TimeSpan.FromHours(24))
@@ -362,6 +324,44 @@ namespace Logitude.CustomsMessaging.Dca
             {
                 MoveUnUseDCAFilesToDIr();
             }
+        }
+
+        private void Send9200(string debugIIGMessageId, DedicatedCourierDCAModel dedicatedCourierDCAModel)
+        {
+            var sb = new StringBuilder();
+            var sw = Stopwatch.StartNew();
+
+            if (IsAppSettingOn("SuppressDownloadDCA.UntilDateyyyyMMdd"))
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SuppressDownloadDCA.UntilDateyyyyMMdd");
+            }
+            else
+            {
+                var dcaDirect9200TenantService = new DcaDirect9200TenantService(
+                    this._CustomsSettingPM,
+                    _AllDcaPreFixWithoutInOutUpper,
+                    this._InterfaceListDCA,
+                    _AllInterface,
+                    dedicatedCourierDCAModel,
+                    _AllDcaPreFixByEnvironment,
+                    _uploadCfg
+                    );
+                dcaDirect9200TenantService.DownloadAll(/*debugIIGMessageId*/);
+                if (dedicatedCourierDCAModel != null)
+                {
+                    var removeOldOrphanedFilesFromBackupService = new RemoveOldOrphanedFilesFromBackupService();
+                    removeOldOrphanedFilesFromBackupService.RemoveOldFiles(dedicatedCourierDCAModel.BackupPath);
+                }
+            }
+            sb.AppendLine($"DownloadAll({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
+            sw.Restart();
+
+
+            var restoreWaitingImportService = new Restore9100.RestoreWaitingImportMessagesService(_CustomsSettingPM, this._InterfaceListDCA, _AllDcaPreFixByEnvironment);
+            restoreWaitingImportService.RestoreWaitingImportSaveInDB();
+
+            sb.AppendLine($"RestoreWaitingImportSaveInDB({this._CustomsSettingPM.Tenant}):took:{sw.Elapsed}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString() + ":" + "DCAStopwatch");
         }
         static DateTime _LastErrordateTime = DateTime.MinValue;
         private void Take50_MultiThread(string debugIIGMessageId)
@@ -536,7 +536,6 @@ namespace Logitude.CustomsMessaging.Dca
             string searchPattren = "*.*";
             string ourSufix = CustomsSettingUtil.GetSufix(_CustomsSettingPM.Tenant);
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("searchPattren = {0} _CustomsSettingPM.Tenant = {1} ", searchPattren, _CustomsSettingPM.Tenant));
-            _DcaManager = GetDcaManagr();
             myMoreParams = "";
             myFileListing = Shim.FileListing(
 searchPattren, _AppendToDownloadFolderName,

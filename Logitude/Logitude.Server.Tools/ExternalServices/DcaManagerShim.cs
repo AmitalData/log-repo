@@ -15,7 +15,7 @@ namespace Logitude.Server.Tools.ExternalServices
                                  out bool error, out string log);
         void RenameIncomeFile(string filename, string newFilename, string appendFolder, ref string moreParams,
                                  out bool error, out string log);
-        void MoveIncomeFileTorDir(string filename, string renameFilename, string appendFolder, string targetDir,
+        void MoveIncomeFileToDir(string filename, string renameFilename, string appendFolder, string targetDir,
                                  ref string moreParams, out bool error, out string log);
         void PurgeOldFiles(int keepDays = 14);
     }
@@ -50,10 +50,10 @@ namespace Logitude.Server.Tools.ExternalServices
             _inner.RenameIncomeFile(filename, newFilename, appendFolder, ref moreParams, out error, out log);
         }
 
-        public void MoveIncomeFileTorDir(string filename, string renameFilename, string appendFolder,
+        public void MoveIncomeFileToDir(string filename, string renameFilename, string appendFolder,
             string targetDir, ref string moreParams, out bool error, out string log)
         {
-            _inner.MoveIncomeFileTorDir(filename, renameFilename, appendFolder, targetDir, ref moreParams, out error, out log);
+            _inner.MoveIncomeFileToDir(filename, renameFilename, appendFolder, targetDir, ref moreParams, out error, out log);
         }
 
         public void PurgeOldFiles(int keepDays = 14) {  }
@@ -308,7 +308,7 @@ namespace Logitude.Server.Tools.ExternalServices
             catch (Exception ex)
             {
                 error = true;
-                log = $"SFTP delete error: {ex.Message}";
+                log = $"SFTP delete error: {ex.Message}\n{ex.StackTrace}";
             }
         }
 
@@ -364,7 +364,7 @@ namespace Logitude.Server.Tools.ExternalServices
             }
         }
 
-        public void MoveIncomeFileTorDir(string filename, string renameFilename, string appendFolder,
+        public void MoveIncomeFileToDir(string filename, string renameFilename, string appendFolder,
             string targetDir, ref string moreParams, out bool error, out string log)
         {
             error = false;
@@ -423,10 +423,15 @@ namespace Logitude.Server.Tools.ExternalServices
                 return path1;
 
             var separator = "/";
-            path1 = path1?.TrimEnd('/', '\\') ?? "";
+            path1 = string.IsNullOrWhiteSpace(path1)
+                ? "/"
+                : path1.TrimEnd('/', '\\');
+
             path2 = path2?.TrimStart('/', '\\') ?? "";
 
-            return string.IsNullOrWhiteSpace(path1) ? path2 : $"{path1}{separator}{path2}";
+            return string.IsNullOrWhiteSpace(path1)
+                ? path2
+                : $"{path1}{separator}{path2}";
         }
     }
     public class PartnerSftpConfig

@@ -36,7 +36,7 @@ namespace Logitude.CustomsMessaging.Dca
                 
                 bool errorOccurred = false; string MessageLog = "";
                 string MoreParams = "";
-                _dca.MoveIncomeFileTorDir(SelectedFileDownload, SelectedFileDownload, _AppendToDownloadFolderName,MoveUnUseDCAFilesToDIr, ref MoreParams,
+                _dca.MoveIncomeFileToDir(SelectedFileDownload, SelectedFileDownload, _AppendToDownloadFolderName,MoveUnUseDCAFilesToDIr, ref MoreParams,
                     out errorOccurred, out MessageLog);
                 if (errorOccurred)
                 {
