@@ -210,6 +210,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 ObjectTableName = "ARPayment",
                 IsAddedManually = false,
                 EventTypeCode = "R2CB",
+                Notes = $"Cheque Number: {chequePM.ChequeNumber} ({chequePM.Id}) - {chequePM.LocalAmount}"
             });
             //EventTracer.CreateTraceEvent(new EventTracerArgs()
             //{
