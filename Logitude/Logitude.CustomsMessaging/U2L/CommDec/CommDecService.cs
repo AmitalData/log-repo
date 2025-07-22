@@ -166,9 +166,13 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 			  out string MessageOut, out string customFileNo, out string decId, out string courierMasterID)
 		{
 
-			try
-			{
-				Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = true;
+            try
+            {
+                var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
+
+                IsConnectedToUniFreight = setting != null && setting.IsConnectedToUniFreight;
+
+                Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = true;
 				_PBId = PBId;
 				_tenant = tenant;
 				customFileNo = "";
