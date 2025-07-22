@@ -228,7 +228,6 @@ namespace Logitude.CustomsMessaging.Dca
             bool suppressUnifreightDCAServer = SecurityUtility.CheckFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant);
            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"suppressUnifreightDCAServer={suppressUnifreightDCAServer} ");
             return suppressUnifreightDCAServer;
-            //return SecurityUtility.CheckContactFeature("Customs.Declaration", "DCA", this._CustomsSettingPM.Tenant, email);
         }
         private List<string> GetAllPreFix(InterfaceTenantDefinitionManagementPM rec)
         {
@@ -299,10 +298,11 @@ namespace Logitude.CustomsMessaging.Dca
                 this.Send9200(debugIIGMessageId, dedicatedCourierDCAModel);
             }
 
-            if (_downloadShim != null && DateTime.UtcNow.Subtract(_lastSftpPurge) > TimeSpan.FromHours(24))
+            var nowUtc = DateTime.UtcNow;
+            if (_downloadShim != null && nowUtc - _lastSftpPurge > TimeSpan.FromHours(24))
             {
                 _downloadShim.PurgeOldFiles();     
-                _lastSftpPurge = DateTime.UtcNow;
+                _lastSftpPurge = nowUtc;
             }
 
             if (!CanIStartWork())
