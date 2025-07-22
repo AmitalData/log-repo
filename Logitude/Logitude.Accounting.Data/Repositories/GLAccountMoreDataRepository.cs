@@ -39,7 +39,7 @@ namespace Logitude.Accounting.Data.Repositories
                          join ba in context.BankAccounts on b.DepositBankAccountId equals ba.Id into baj
                          from ba in baj.DefaultIfEmpty()
                          where a.AccountId == accountId && a.Tenant == tenant
-                         && (!isFromTransaction || ((l.IsOutOfDeposit == false || l.IsOutOfDeposit == null) && (a.Notes == null || a.Notes != CreditLineNotes)))
+                         && (!isFromTransaction || a.Notes == null || a.Notes != CreditLineNotes)
             && (withoutDate || (isFuture && a.ValueDate > today) || (!isFuture && a.ValueDate <= today))
                          select new LedgerTransactionList()
                          {
