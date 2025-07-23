@@ -144,7 +144,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-
         public HttpResponseMessage Put(TasksSchedulerPM entityPM)
         {
 
@@ -199,7 +198,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage PutRunTaskNow([FromBody] RunTaskNowRequest request)
+        public HttpResponseMessage PostRunTaskNow([FromBody] RunTaskNowRequest request)
         {
 
             try
