@@ -25,7 +25,8 @@ export function FillTrailBalanceReportDetails(tailBalanceReportDetails:TrailBala
 }
 
 export function RunTrailBalanceReport() {
-    cy.Click(TrailBalanceReportSelectors.GreenButton, null);
+    cy.Click(TrailBalanceReportSelectors.SelectReportRun, null);    
+    cy.Click(TrailBalanceReportSelectors.RunReportButton, null);
 }
 
 export function AssertRunTrailBalanceReport() {
