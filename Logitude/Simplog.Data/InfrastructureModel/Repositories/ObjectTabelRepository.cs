@@ -350,12 +350,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-        public List<ObjectTable> GetAllCacheOnClient(int tenant)
+        public List<ObjectTable> GetAllCacheOnClient(int tenant,int contextTenant=0)
         {
             
 
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
-            var q = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
+            var q = (from a in context.ObjectTables
                      where (a.Tenant == tenant && a.InActive == false && a.CacheOnClient == true)
                      select a);
             if (LogitudeSettings.IsCostomsDeploy)
