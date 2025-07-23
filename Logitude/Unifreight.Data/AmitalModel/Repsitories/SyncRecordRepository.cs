@@ -78,17 +78,14 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         }
 
         public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string item, bool allTask)
-        {
-            DateTime yesterday = DateTime.Now.AddDays(-1);
+        {            
             DateTime dateTimeNow = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
             dateTimeNow = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, dateTimeNow.Hour, dateTimeNow.Minute, dateTimeNow.Second, dateTimeNow.Millisecond);            
 
             IQueryable<SyncRecord> recordsQurey = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 (allTask ? syncRecord.IsSync < SyncRecordStatus.SyncedAndUpdated : (syncRecord.IsSync == SyncRecordStatus.InQueue || syncRecord.IsSync == SyncRecordStatus.Synced)) &&
-                (syncRecord.FileNo == item) &&
-                syncRecord.CreateDate > yesterday
-            );
+                (syncRecord.FileNo == item));
 
             logger.WriteTrace($"SyncRecord, GetUnsyncAndMarkAsInProcess query {recordsQurey}");
             
