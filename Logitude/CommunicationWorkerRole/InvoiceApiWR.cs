@@ -225,7 +225,7 @@ namespace CommunicationWorkerRole
                 UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.InProgress);
                 invoiceApiService = new InvoiceApiService();
 
-                invoiceApiService.OpenConnection();
+                invoiceApiService.OpenConnection(tenant);
                 UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.Done);
                 GetInvoice();
 
@@ -439,6 +439,7 @@ namespace CommunicationWorkerRole
 
             if (invoice != null)
             {
+                aRInvoicePM.IsGeneralInvoice = true;
                 aRInvoicePM.IsExternalEntity = false;
                 aRInvoicePM.SetApproved = false;
                 aRInvoicePM.BillToPartnerTypeId = "CS";
