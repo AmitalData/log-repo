@@ -439,6 +439,7 @@ namespace CommunicationWorkerRole
 
             if (invoice != null)
             {
+                aRInvoicePM.IsGeneralInvoice = true;
                 aRInvoicePM.IsExternalEntity = false;
                 aRInvoicePM.SetApproved = false;
                 aRInvoicePM.BillToPartnerTypeId = "CS";
