@@ -32,8 +32,9 @@ namespace Logitude.Accounting.Data.Repositories
            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             var query = (from a in context.AllARPaymentChequesViews
-                         join l in context.BankDepositLines on a.ChequeId equals l.ARPaymentChequeId into lj
+                         join l in context.BankDepositLines on a.ChequeId equals l.ARPaymentChequeId  into lj
                          from l in lj.DefaultIfEmpty()
+                         where l == null || l.IsOutOfDeposit == false
                          join b in context.BankDeposits on l.DepositId equals b.Id into bj
                          from b in bj.DefaultIfEmpty()
                          join ba in context.BankAccounts on b.DepositBankAccountId equals ba.Id into baj
