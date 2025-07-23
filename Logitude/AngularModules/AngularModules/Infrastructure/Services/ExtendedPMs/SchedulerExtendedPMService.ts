@@ -133,9 +133,9 @@ export class SchedulerExtendedPMService {
                 FromDate: fromDate,
                 ToDate: toDate
             };
-            var url = this.apiUrl + '/PutRunTaskNow' ;
+            var url = this.apiUrl + '/PostRunTaskNow';
 
-            return this.httpClient.put(url, body, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
+            return this.httpClient.post(url, body, ServiceHelper.GetHttpFullHeaders()).pipe(map((response: HttpEvent<any>) => {
                 if (response instanceof HttpResponse) {
                     return response;
                 }
