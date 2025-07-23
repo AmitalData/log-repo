@@ -65,9 +65,4 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="EventTypeId"
-    ReferencedTable="EventTypes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
 </Table>
