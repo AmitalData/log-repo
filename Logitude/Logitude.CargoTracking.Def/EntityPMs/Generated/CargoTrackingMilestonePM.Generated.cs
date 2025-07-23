@@ -181,6 +181,52 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string eventTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EventTypeId  
+	   {
+	    
+	     get
+		{
+		   return eventTypeId;
+		 }
+		 set
+		 {
+		   if(eventTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EventTypeId",OldValue=eventTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   eventTypeId=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

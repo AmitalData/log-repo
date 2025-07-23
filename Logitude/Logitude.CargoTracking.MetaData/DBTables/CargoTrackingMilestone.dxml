@@ -5,7 +5,6 @@
   DBType="CargoTracking"
   Module="CargoTracking">
   <Column
-    
     Name="Code"
     Type="varchar"
     Size="2">
@@ -53,4 +52,22 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EventTypeId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="EventTypeId"
+    ReferencedTable="EventTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>
