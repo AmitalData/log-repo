@@ -20,20 +20,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             Context = context;
         }
 
-
         public ExternalLink GetSingleExternalLink(string id, int tenant) =>
             Context.ExternalLinks.FirstOrDefault(x => x.Id == id && x.Tenant == tenant);
 
         public ExternalLink GetSingleExternalLinkByRef(string reference, int tenant) =>
             Context.ExternalLinks.FirstOrDefault(x => x.Ref == reference && x.Tenant == tenant);        
 
-        public IQueryable<ExternalLink> GetExternalLinks(int tenant)
-        {
-            if (tenant != 0 && Context.ExternalLinks.All(x => x.Tenant != tenant))
-                tenant = 0;
-
-            return Context.ExternalLinks.Where(x => x.Tenant == tenant);
-        }        
+        public IQueryable<ExternalLink> GetExternalLinks(int tenant) =>
+            Context.ExternalLinks.Where(x => x.Tenant == tenant || x.Tenant == 0)
+                .GroupBy(x => x.Ref)
+                .Select(g => g.FirstOrDefault(x => x.Tenant == tenant) ?? g.FirstOrDefault(x => x.Tenant == 0));
 
         public void Add(ExternalLink entity)
         {

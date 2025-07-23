@@ -97,10 +97,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             authenticationTokenRepository.SubmitChanges();
-
-            string link = $"/Angular/index.html?Menu=REDI&Token={authenticationToken.Token}";
-            link = AddDomain(link, externalLinkPM);
-            return link;
+                      
+            return param;
         }
 
         public IQueryable<ExternalLinkList> GetIQueryableEntityList(IQueryable<ExternalLink> iQueryable) =>
