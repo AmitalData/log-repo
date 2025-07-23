@@ -570,9 +570,17 @@ namespace CommunicationWorkerRole
                         }
                         object[] ArrArgs = args.ToArray();
                         var classname = (Service.ClassName == "CustomsSchedularWR" ? "SchedularWorkerRole" : (Service.ClassName == "ReportExecutionLogWR" ? "ReportExecutionLogWorkerRole" : Service.ClassName));
-                        var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + classname), ArrArgs) as WorkerEntryPoint;
-                        Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
-                        workers.Add(Item);
+                        try
+                        {
+                            var Item = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole." + classname), ArrArgs) as WorkerEntryPoint;
+                            Item.MaxWorkingTimeInMinutes = Service.MaxWorkingTimeInMinutes;
+                            workers.Add(Item);
+                        }
+                        catch (Exception ex)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError("Error creating instance for service: " + Service?.ClassName + " with args: " + string.Join(",", ArrArgs) + " - " + ex.ToString());
+                         }
+                       
                     }
                 }
                 catch(Exception ex)
