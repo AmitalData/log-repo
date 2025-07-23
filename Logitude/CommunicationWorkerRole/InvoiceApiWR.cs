@@ -225,7 +225,7 @@ namespace CommunicationWorkerRole
                 UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.InProgress);
                 invoiceApiService = new InvoiceApiService();
 
-                invoiceApiService.OpenConnection();
+                invoiceApiService.OpenConnection(tenant);
                 UpdateCommunicationStatus(InvoiceApiStepEnum.OpenInvoiceApiSession, InvoiceApiStatusEnum.Done);
                 GetInvoice();
 

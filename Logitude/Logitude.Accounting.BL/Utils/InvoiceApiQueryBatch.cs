@@ -51,7 +51,7 @@ namespace Logitude.Accounting.BL.Utils
             {
                 var InvoiceApiService = new InvoiceApiService();
 
-                InvoiceApiService.OpenConnection();
+                InvoiceApiService.OpenConnection(tenant);
 
                 var  xml= InvoiceApiService.QueryLog(
                     startDate,

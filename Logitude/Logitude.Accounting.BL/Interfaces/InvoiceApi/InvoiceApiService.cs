@@ -2,11 +2,9 @@
 using Logitude.Accounting.BL.MagayaRef;
 using Logitude.Accounting.BL.Utils;
 using Logitude.Accounting.Data.Repositories;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Logitude.BL.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 
 namespace Logitude.Accounting.BL.Interfaces.Magaya
 {
@@ -15,12 +13,12 @@ namespace Logitude.Accounting.BL.Interfaces.Magaya
         private CSSoapService helper;
         private int _accessKey;
 
-        public void OpenConnection()
+        public void OpenConnection(int tenant)
         {
             try
             {
-                var user = ConfigurationManager.AppSettings["MagayaUser"];
-                var password = ConfigurationManager.AppSettings["MagayaPassword"];
+                var user = DefaultService.Instance.Get(tenant, "Magaya", "Magaya")?.Value1;
+                var password = DefaultService.Instance.Get(tenant, "Magaya", "Magaya")?.Value2;
                 NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OpenConnection Started");
                 if(string.IsNullOrEmpty(user) ||  string.IsNullOrEmpty(password))
                 {
