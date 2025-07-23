@@ -69,7 +69,7 @@ namespace CommunicationWorkerRole.Services
         {
             this.currentTask = task;
 			this.reportSchedulerTaskService = new ReportSchedulerTaskService(this.currentTask);
-
+			this.reportSchedulerTaskService.IsCUstomerDebitNotification = true;
 		}
 
         public void RunTask(TasksSchedulerPM reportTask)
@@ -90,7 +90,9 @@ namespace CommunicationWorkerRole.Services
                 }
                 else if (customerDebtNotification.InActive == IsActiveEnum.ActiveAllCustomers)
                 {
-                    GLAccountRepository glAccountRepository = new GLAccountRepository(reportTask.Tenant);
+					this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("status TasksScheduler Maintainence ActiveAllCustomers"));
+
+					GLAccountRepository glAccountRepository = new GLAccountRepository(reportTask.Tenant);
                     var GLAccountByTenantAndCustomerDebtNotification = glAccountRepository.GetGLAccountByTenantAndCustomerDebtNotification(reportTask.Tenant);
 
                     foreach (var account in GLAccountByTenantAndCustomerDebtNotification)

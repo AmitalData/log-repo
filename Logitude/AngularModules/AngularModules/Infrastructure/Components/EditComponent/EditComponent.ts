@@ -1030,6 +1030,12 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                         myTabsSorted.push(tab);
                                     break;
                                 }
+                            case "CDNO":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
                             case InterestTransactionTabCode:
                                 {
                                     if (this.EntityPM.AccountTypeCode == CustomerGLAccountTypeCode)
