@@ -1703,15 +1703,18 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
 
 
 
-    CheckIdDateBetween2Times(times: any, date1: Date) {
+    CheckIdDateBetween2Times(times: any, date1: any): boolean {
+        if (!times || !date1) return false;
 
-        if (times == null) return false;
-        var startTime = times.split("-")[0];
-        var endTime = times.split("-")[1];
+        if (!(date1 instanceof Date)) {
+            date1 = new Date(date1);
+            if (isNaN(date1.getTime())) return false;
+        }
 
-        if (startTime == null || endTime == null) return false;
-        var date = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getUTCHours(), date1.getUTCMinutes(), 0);
+        const [startTime, endTime] = times.split("-");
+        if (!startTime || !endTime) return false;
 
+        const date = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate(), date1.getUTCHours(), date1.getUTCMinutes(), 0);
         var startDate = new Date(date.getTime());
         startDate.setHours(startTime.split(":")[0]);
         startDate.setMinutes(startTime.split(":")[1]);
