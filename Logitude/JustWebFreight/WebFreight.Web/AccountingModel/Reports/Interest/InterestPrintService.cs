@@ -3,6 +3,7 @@ using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
@@ -136,7 +137,9 @@ using WebFreight.Web.Helpers;
 
         private string GetReference1(InterestTransactionList interestTransactionList)
         {
-
+            return interestTransactionList.InterestEntityType == InterestEntityTypeCodes.Journal
+                                            ? interestTransactionList.Reference1
+                                            : interestTransactionList.InterestEntityNumber;
             return interestTransactionList.InterestEntityNumber;
 
         }
