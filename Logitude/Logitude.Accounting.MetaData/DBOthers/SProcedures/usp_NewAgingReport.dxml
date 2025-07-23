@@ -181,10 +181,7 @@ SELECT max(a.AccountId) as AccountId,
 SUM( CASE WHEN a.ValueDate <= @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotPastOpenChequesInLocalCur,
 SUM( CASE WHEN a.ValueDate > @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotFutureOpenChequesInLocalCur
 FROM AllARPaymentChequesViews a
-LEFT JOIN BankDepositLines l ON a.ChequeId = l.ARPaymentChequeId
-LEFT JOIN BankDeposits b ON l.DepositId = b.Id
-LEFT JOIN BankAccounts ba ON b.DepositBankAccountId = ba.Id
-WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)
+WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)  and a.Notes !=N'החזרת שיק ללקוח'
 AND a.Tenant = @tenant
 group by  a.AccountId
 )  FUTQ ON FUTQ.AccountId = GL.ID
