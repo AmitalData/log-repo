@@ -1990,7 +1990,6 @@ export class CertificateOfOriginItemLine extends BaseComponent {
     public entityPM: CertificateOfOriginItemPM;
     public ObjectTableName: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
-    private packingTypeListService: PackingTypeListService = new PackingTypeListService();
     Parent: CertificateOfOriginGeneralTabComponent;
     constructor(EntityPM: CertificateOfOriginItemPM, parent: CertificateOfOriginGeneralTabComponent) {
         super();
