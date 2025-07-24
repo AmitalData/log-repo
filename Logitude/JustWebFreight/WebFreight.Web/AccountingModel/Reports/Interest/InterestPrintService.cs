@@ -37,6 +37,7 @@ using WebFreight.Web.Helpers;
         {
             InterestDataProvider interestReportDP = InitializeInterestDataProvider(entityId, tenant);
             List<InterestReportLinesByDateProvider> interestReportPeriods = GetInterestReportPeriods(entityId, tenant);
+            interestReportDP.FutureInterestTransactions = GetFutureInterestTransactions(tenant);
 
 
             ProcessInterestTransactions(interestReportDP, interestReportPeriods, tenant);
@@ -123,51 +124,7 @@ using WebFreight.Web.Helpers;
                    }).ToList(),
             }).ToHashSet();
 
-            List<FutureInterestTransactionProvider> futureInterestTransactions = new List<FutureInterestTransactionProvider>();
-            IAccountingContext context = AccountingContext.GetContext(tenant);
-            InterestTransactionListQueryService interestTransactionQueryService = new InterestTransactionListQueryService(context);
-            DateTime reportMonthLastDay = DateTimeStaticExtention.GetLastDayOfMonth(_InterestReportPM.InterestCalculationDate.Date);
-            IQueryable<InterestTransactionList> futureQuery =
-                interestTransactionQueryService.GetFutureInterestTransactionsByInterestReportMonth(reportMonthLastDay,
-                _InterestReportPM.GLAccountId, tenant);
-            if (futureQuery != null)
-            {
-                List<InterestTransactionList> transactionLists = futureQuery.ToList();
-                if (transactionLists.Count > 0)
-                {
-                    foreach (InterestTransactionList transactionList in transactionLists)
-                    {
-                        FutureInterestTransactionProvider futureInterestTransactionProvider = new FutureInterestTransactionProvider()
-                        {
-                            AccountEntityCode = transactionList.AccountEntityCode,
-                            AccountingEntityCode = transactionList.AccountingEntityCode,
-                            AccountingDate = transactionList.AccountingDate??DateTime.Now,
-                            CreateDateTime = transactionList.CreateDateTime,
-                            CurrencyCode = transactionList.CurrencyCode,
-                            ForeignAmount = transactionList.ForeignAmount,
-                            EntityType = transactionList.InterestEntityIconCode,
-                            EntityNumber = transactionList.InterestEntityNumber,
-                            InterestValueDate = transactionList.InterestValueDate,
-                            IsCancelled = transactionList.IsCancelled,
-                            IsClosed = transactionList.IsClosed,
-                            InterestEntityTypeCode = transactionList.InterestEntityTypeCode,
-                            InterestEntityType = transactionList.InterestEntityType,
-                            JournalNumber = transactionList.JournalNumber,
-                            LocalAmount = transactionList.LocalAmount,
-                            Notes = transactionList.Notes,
-                            OriginalEntityLineNumber = transactionList.OriginalEntityLineNumber,
-                            SearchFields = transactionList.SearchFields,
-                            Source = transactionList.Source,
-                            SourceType = transactionList.SourceType,
-                            SourceTypeCode = transactionList.SourceTypeCode,
-                            Tenant = transactionList.Tenant,
-                           // Reference1 = GetReference1(transactionList),
-                        };
-                        futureInterestTransactions.Add(futureInterestTransactionProvider);
-                    }
-                }
-            }
-            _InterestReportDP.FutureInterestTransactions = futureInterestTransactions;
+
 
 
 
@@ -263,6 +220,54 @@ using WebFreight.Web.Helpers;
 
         }
 
+        private List<FutureInterestTransactionProvider> GetFutureInterestTransactions(int tenant)
+        {
+            List<FutureInterestTransactionProvider> futureInterestTransactions = new List<FutureInterestTransactionProvider>();
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            InterestTransactionListQueryService interestTransactionQueryService = new InterestTransactionListQueryService(context);
+            DateTime reportMonthLastDay = DateTimeStaticExtention.GetLastDayOfMonth(_InterestReportPM.InterestCalculationDate.Date);
+            IQueryable<InterestTransactionList> futureQuery =
+                interestTransactionQueryService.GetFutureInterestTransactionsByInterestReportMonth(reportMonthLastDay,
+                _InterestReportPM.GLAccountId, tenant);
+            if (futureQuery != null)
+            {
+                List<InterestTransactionList> transactionLists = futureQuery.ToList();
+                if (transactionLists.Count > 0)
+                {
+                    foreach (InterestTransactionList transactionList in transactionLists)
+                    {
+                        FutureInterestTransactionProvider futureInterestTransactionProvider = new FutureInterestTransactionProvider()
+                        {
+                            AccountEntityCode = transactionList.AccountEntityCode,
+                            AccountingEntityCode = transactionList.AccountingEntityCode,
+                            AccountingDate = transactionList.AccountingDate ?? DateTime.Now,
+                            CreateDateTime = transactionList.CreateDateTime,
+                            CurrencyCode = transactionList.CurrencyCode,
+                            ForeignAmount = transactionList.ForeignAmount,
+                            EntityType = transactionList.InterestEntityIconCode,
+                            EntityNumber = transactionList.InterestEntityNumber,
+                            InterestValueDate = transactionList.InterestValueDate,
+                            IsCancelled = transactionList.IsCancelled,
+                            IsClosed = transactionList.IsClosed,
+                            InterestEntityTypeCode = transactionList.InterestEntityTypeCode,
+                            InterestEntityType = transactionList.InterestEntityType,
+                            JournalNumber = transactionList.JournalNumber,
+                            LocalAmount = transactionList.LocalAmount,
+                            Notes = transactionList.Notes,
+                            OriginalEntityLineNumber = transactionList.OriginalEntityLineNumber,
+                            SearchFields = transactionList.SearchFields,
+                            Source = transactionList.Source,
+                            SourceType = transactionList.SourceType,
+                            SourceTypeCode = transactionList.SourceTypeCode,
+                            Tenant = transactionList.Tenant,
+                            Reference1 = GetReference1FromITList(transactionList),
+                        };
+                        futureInterestTransactions.Add(futureInterestTransactionProvider);
+                    }
+                }
+            }
+            return futureInterestTransactions;
+        }
 
 
         /// Creates and returns the first flat line of the interest report.
@@ -316,6 +321,13 @@ using WebFreight.Web.Helpers;
             }
             return rv;
 
+        }
+
+        private string GetReference1FromITList(InterestTransactionList interestTransactionList)
+        {
+            return interestTransactionList.InterestEntityTypeCode == InterestEntityTypes.Journal
+                                            ? interestTransactionList.Reference1
+                                            : interestTransactionList.Source;
         }
 
         private string GetNotes(InterestTransactionProvider interestTransactionDP)
