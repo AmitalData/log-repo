@@ -31,6 +31,8 @@ namespace Logitude.Customs.BL.BL
         private string declarationObjectTableId;
         private string objectTableIdCourierMaster;
         private readonly string userId;
+        private DateTime futureSendTime = DateTime.Now.AddMinutes(5);
+
         public AutomatedCustomsMessagingService(int tenant)
         {
             FeatureQuery featureQuery = new FeatureQuery();
@@ -150,7 +152,6 @@ namespace Logitude.Customs.BL.BL
 
                 string unifreightList = SetBankIdInUnifreightListOnServerOnly(bankIds[0]);
 
-                var futureSendTime = DateTime.Now.AddMinutes(5);
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                 {
                     var requestParams2755 = new GenericRequestParams()
@@ -204,8 +205,9 @@ namespace Logitude.Customs.BL.BL
                         InterfaceTypeCode = "2750",
                         LoggingUserId = userId,
                         RequestVIA = SendRequestVIA.WebServiceBatch,
+                        FutureSendDateTime = futureSendTime,
                     };
-                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false);
+                    SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false , futureSendTime );
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId})");
 
                     scopeNewCRS.Complete();
@@ -246,8 +248,9 @@ namespace Logitude.Customs.BL.BL
                     RequestVIA = SendRequestVIA.WebServiceBatch,
                     DeclarationId = declarationCourierStatusPM.DeclarationId,
                     LoggingEntityReference = declarationCourierStatusPM.DeclarationId,
+                    FutureSendDateTime = futureSendTime,
                 };
-                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false);
+                SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false, futureSendTime);
                 LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId})");
 
             }
