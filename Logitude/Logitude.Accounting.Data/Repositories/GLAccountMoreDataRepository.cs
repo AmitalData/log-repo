@@ -33,8 +33,8 @@ namespace Logitude.Accounting.Data.Repositories
 
             var query = (from a in context.AllARPaymentChequesViews
                          join l in context.BankDepositLines on a.ChequeId equals l.ARPaymentChequeId  into lj
-                         from l in lj.DefaultIfEmpty()
-                         where l == null || l.IsOutOfDeposit == false
+                         from l in lj.Where(x => x.IsOutOfDeposit == false)
+                         .DefaultIfEmpty()
                          join b in context.BankDeposits on l.DepositId equals b.Id into bj
                          from b in bj.DefaultIfEmpty()
                          join ba in context.BankAccounts on b.DepositBankAccountId equals ba.Id into baj
