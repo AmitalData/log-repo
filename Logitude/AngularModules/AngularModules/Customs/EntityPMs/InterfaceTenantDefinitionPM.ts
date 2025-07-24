@@ -86,6 +86,16 @@ export class InterfaceTenantDefinitionPM {
     public set SendTime(newValue: string) { if (this.sendTime != newValue) { this.sendTime = newValue; this.MarkAsDirty("SendTime"); } }
        
 	 
+    private isCustomsFile: boolean;
+    public get IsCustomsFile() { return this.isCustomsFile; }
+    public set IsCustomsFile(newValue: boolean) { if (this.isCustomsFile != newValue) { this.isCustomsFile = newValue; this.MarkAsDirty("IsCustomsFile"); } }
+       
+	 
+    private isUnifreight: boolean;
+    public get IsUnifreight() { return this.isUnifreight; }
+    public set IsUnifreight(newValue: boolean) { if (this.isUnifreight != newValue) { this.isUnifreight = newValue; this.MarkAsDirty("IsUnifreight"); } }
+       
+	 
 
     public OldEntityPM: InterfaceTenantDefinitionPM;
 		

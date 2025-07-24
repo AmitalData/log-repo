@@ -379,7 +379,10 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                         correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                         sbFilename.Enqueue(myFileName);
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
-                        //NumOfMessages++;
+                        if (messageDCA.InterfaceManagement.IsUnifreight.GetValueOrDefault())
+                        {
+                            UploadViaSftp(myFileName, itemOutgoingMessage.MSG, s => sbFilename.Enqueue(s));
+                        }
                     }
                     catch (System.Exception EE)
                     {
@@ -425,11 +428,14 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 
 
                         SaveRequestSheet(messageDCA, dcaFile, itemOutgoingMessage.MSG);
-
                         correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                         sbFilename.AppendLine(myFileName);
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
                         NumOfMessages++;
+                        if (messageDCA.InterfaceManagement.IsUnifreight.GetValueOrDefault())
+                        {
+                            UploadViaSftp(myFileName, itemOutgoingMessage.MSG, s => sbFilename.AppendLine(s));
+                        }
                     }
                     catch (System.Exception EE)
                     {
@@ -537,26 +543,34 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 Folder = cfg.RemotePath
             };
         }
+        private void UploadViaSftp(string fileName, string fileContents, Action<string> logLineOut)
+        {
+            if (_uploadFtpDetail == null) return;          // nothing configured → skip
+
+            try
+            {
+                var uploader = new PartnerSftpUploader(_uploadFtpDetail);
+                uploader.UploadBytes(fileName, Encoding.UTF8.GetBytes(fileContents));
+
+                logLineOut?.Invoke($"SFTP upload OK → {fileName}");
+                NetCommonHelper.Logger.DevLog.Instance
+                    .WriteDebug($"SFTP upload OK → {fileName}");
+            }
+            catch (System.Exception ex)
+            {
+                logLineOut?.Invoke($"SFTP upload error!!!! {ex.Message} for {fileName}");
+                NetCommonHelper.Logger.DevLog.Instance
+                    .WriteError($"SFTP‑Upload: {ex}");
+                _SaveError = true;               // optional – follow your convention
+            }
+        }
         private void HandleNotNeededMessage(string fileName, string fileContents, Action<string> logLineOut)
         {
             logLineOut?.Invoke($"NOT NEEDED!!!! {fileName}");
             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
                 $"NOT NEEDED!!!! SaveInDB({fileName})");
 
-            if (_uploadFtpDetail != null)
-            {
-                try
-                {
-                    var uploader = new PartnerSftpUploader(_uploadFtpDetail);
-                    uploader.UploadBytes(fileName, Encoding.UTF8.GetBytes(fileContents));
-                }
-                catch (System.Exception ex)
-                {
-                    logLineOut?.Invoke($"SFTP upload error!!!! {ex.Message} for {fileName}");
-                    NetCommonHelper.Logger.DevLog.Instance
-                        .WriteError($"SFTP‑Upload‑NotNeeded: {ex}");
-                }
-            }
+            UploadViaSftp(fileName, fileContents, logLineOut);
 
             if (_DedicatedCourierDCAModel != null)
             {
