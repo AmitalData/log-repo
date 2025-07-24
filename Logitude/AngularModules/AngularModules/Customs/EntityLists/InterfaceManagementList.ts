@@ -38,6 +38,8 @@ export class InterfaceManagementList {
 	Environment: string;
 	EntityLockId: string;
 	EntityLockName: string;
+	IsCustomsFile: boolean;
+	IsUnifreight: boolean;
 	
 }
  

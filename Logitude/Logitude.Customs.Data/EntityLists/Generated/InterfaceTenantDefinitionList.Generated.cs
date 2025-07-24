@@ -45,6 +45,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string QueueGroupCode  { get; set; }
        [DataMember]
        public string SendTime  { get; set; }
+       [DataMember]
+       public bool? IsCustomsFile  { get; set; }
+       [DataMember]
+       public bool? IsUnifreight  { get; set; }
    }
 
 }
