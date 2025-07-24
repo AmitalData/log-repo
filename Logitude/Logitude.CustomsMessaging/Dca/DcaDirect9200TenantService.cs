@@ -42,6 +42,7 @@ namespace Logitude.CustomsMessaging.Dca
         private bool _SaveError;
         private static DateTime _LastErrordateTime;
         private List<string> _AllDcaPreFixByEnvironment;
+        public static bool SkipCorrelationClearForTests { get; set; } = false;
 
 
         public DcaDirect9200TenantService(
@@ -200,7 +201,7 @@ namespace Logitude.CustomsMessaging.Dca
                 }
                 exceptionBag.ToList().ForEach(err => _SBErrorLog.AppendLine(err));
 
-                if (correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
+                if (!SkipCorrelationClearForTests && correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
                 {
                     UpdateIIGCorralationAreDone(correlationIdsCanClear.ToList());
 
@@ -288,16 +289,12 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-                if (correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
+                if (!SkipCorrelationClearForTests && correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
                 {
                     UpdateIIGCorralationAreDone(correlationIdsCanClear);
-
-
-
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sbFilename.ToString() + "TenantDownloaderFilename");
                     string haveMore = response.Result.HowManyOtherWaitingMessages > 0 ? "Have more .." : "";
                     _SBInfoLog.AppendLine("All messages received  " + haveMore);
-
                 }
 
 
