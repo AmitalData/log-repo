@@ -299,12 +299,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             // Initialize from Unifreight data if available
             mappedConsignments.ItemSerial = unifreightItem.itemSerial || '';
             mappedConsignments.MarksAndNumbers = unifreightItem.marksAndNumbers || '';
-            mappedConsignments.Weight = unifreightItem.weight || '';
-            mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
             mappedConsignments.ItemDescription = unifreightItem.description || '';
             mappedConsignments.PackageQuantity = unifreightItem.PackageQuantity || '';
             mappedConsignments.PackageType = unifreightItem.PackageType || '';
-            this.getPackageTypeNameFromCache(mappedConsignments.PackageType, mappedConsignments);
+            this.getPackageTypeNameFromCache(mappedConsignments);
+            mappedConsignments.Weight = unifreightItem.weight || '';
+            mappedConsignments.ContainerIsoCode = unifreightItem.isoContainerType || '';
+
             if(AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
             
             // Find corresponding consignment item by serial or other identifier
@@ -313,15 +314,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (consignment) {
                 const consignmentPackage = consignment.ConsignmentPackages[0];
                 // Update fields if not set by Unifreight data:
-                mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
-                mappedConsignments.PackageQuantity = consignmentPackage?.PackageQuantity || 0;
-                mappedConsignments.Weight = mappedConsignments.Weight || consignmentPackage?.GrossMassMeasure || 0;
+                if(this.currentDeclaration.TransportModeId !== 'O'){
+                    mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
+                    mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
+                    mappedConsignments.PackageQuantity = mappedConsignments.PackageQuantity || consignmentPackage?.PackageQuantity || 0;
+                    mappedConsignments.PackageType = mappedConsignments.PackageType || consignmentPackage?.PackageTypeCode || '';
+                    mappedConsignments.PackingTypeName = mappedConsignments.PackingTypeName || consignmentPackage?.PackageTypeName || '';
+                    mappedConsignments.Weight = mappedConsignments.Weight || consignmentPackage?.GrossMassMeasure || 0;
+                }
                 mappedConsignments.MeasureType = consignmentPackage?.GrossMassMeasureTypeCode || '';
-                mappedConsignments.PackageType = consignmentPackage?.PackageTypeCode || '';
-                mappedConsignments.PackingTypeName = consignmentPackage?.PackageTypeName || '';
                 mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
-                mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
-                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
             }
@@ -332,6 +334,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                     mappedConsignments.MeasureTypeName = firstConsignmentPackage?.GrossMassMeasureTypeName || '';
                 }
             }
+            mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
 
             // Add to collections
             const certificateOfOriginItemLine = new CertificateOfOriginItemLine(mappedConsignments, this);
@@ -568,7 +571,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // update CertificateOriginItemItems list:
         certificateOriginItemItems.forEach((item) => {
             this.getMeasureNameFromCache(item.MeasureType, item);
-            this.getPackageTypeNameFromCache(item.PackageType, item);
+            this.getPackageTypeNameFromCache(item);
             this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
 
             const certificateOfOriginItemLine = new CertificateOfOriginItemLine(item, this);
@@ -655,8 +658,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
         });
     }
-    getPackageTypeNameFromCache(code, item) {
-        this.packingTypeListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
+    getPackageTypeNameFromCache(item) {
+        this.packingTypeListService.getSingleFromCache(item.PackageType).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: PackingTypeList = myResponse.Result;
                 if (result != null) {
