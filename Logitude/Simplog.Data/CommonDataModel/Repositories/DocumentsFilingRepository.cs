@@ -64,19 +64,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                  select a).FirstOrDefault();
             return d;
         }
-        public IList<FilingSecurityDto> GetSecurityIdsByFilingIds(IEnumerable<string> filingIds, int tenant)
+        public IList<FilingDocumentInfoDto> GetSecurityIdsByFilingIds(IEnumerable<string> filingIds, int tenant)
         {
             if (filingIds == null || !filingIds.Any())
-                return new List<FilingSecurityDto>();
+                return new List<FilingDocumentInfoDto>();
 
-            return context.DocumentsFilings
-                  .Where(f => f.Tenant == tenant && filingIds.Contains(f.Id))
-                  .Select(f => new FilingSecurityDto   
-                  {
-                      Id = f.Id,
-                      SecurityId = f.SecurityId
-                  })
-                  .ToList();
+            return (from f in context.DocumentsFilings
+                    join d in context.Documents
+                         on f.DocumentId equals d.Id            
+                    where f.Tenant == tenant && filingIds.Contains(f.Id)
+                    select new FilingDocumentInfoDto
+                    {
+                        Id = f.Id,
+                        SecurityId = f.SecurityId,
+                        Extension = d.Extension                  
+                    })
+              .ToList();
         }
 
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId1(string entityId, int tenant)
@@ -453,10 +456,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public string DocumentTypeId { get; internal set; }
         public string DocumentId { get; internal set; }
     }
-    public sealed class FilingSecurityDto
+    public sealed class FilingDocumentInfoDto
     {
         public string Id { get; set; }
         public string SecurityId { get; set; }
+        public string Extension { get; set; }
     }
 
 }
