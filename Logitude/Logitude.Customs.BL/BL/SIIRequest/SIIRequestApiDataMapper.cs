@@ -95,8 +95,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                                         .Where(id => id != null)
                                         .Distinct()
                                         .ToList();
-                var security = filingRepo.GetSecurityIdsByFilingIds(filingIds, _tenant)
-                                    .ToDictionary(x => x.Id, x => x.SecurityId);
+                var filingInfo = filingRepo.GetSecurityIdsByFilingIds(filingIds, _tenant)
+                                    .ToDictionary(x => x.Id);
 
                 var mainFormAttachmentIndexes = new List<int>();
                 var invoiceDict = new Dictionary<string, List<int>>();
@@ -109,12 +109,12 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
                 foreach (var ptr in pointers)
                 {
-                    if (!security.TryGetValue(ptr.DocumentsFilingId, out var secId)
-                        || string.IsNullOrWhiteSpace(secId))
+                    if (!filingInfo.TryGetValue(ptr.DocumentsFilingId, out var info)
+                        || string.IsNullOrWhiteSpace(info.SecurityId))
                         continue;
 
                     var url = urlTemplate
-                        .Replace("<SecurityID>", secId)
+                        .Replace("<SecurityID>", info.SecurityId)
                         .Replace("<Tenant>", cloudTenant);
 
                     var idx = nextIndex++;
@@ -126,7 +126,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                                 ? ptr.DocumentTypeCodeName
                                 : null,
                         formAttachment = url,
-                        fileExtension = EnsureAllowedExtOrThrow(ExtractExtension(url), _tenant)
+                        fileExtension = EnsureAllowedExtOrThrow(info.Extension, _tenant)
                     });
 
                     bool hasChild2 = !string.IsNullOrWhiteSpace(ptr.Child2EntityId);
@@ -367,21 +367,6 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         private int _lineCounter;
 
-        private static string ExtractExtension(string url)
-        {
-            if (string.IsNullOrWhiteSpace(url)) return string.Empty;
-
-            try
-            {
-                var ext = Path.GetExtension(new Uri(url).AbsolutePath);
-                return string.IsNullOrEmpty(ext) ? string.Empty : ext.TrimStart('.');
-            }
-            catch
-            {
-                var lastDot = url.LastIndexOf('.');
-                return lastDot >= 0 ? url.Substring(lastDot + 1) : string.Empty;
-            }
-        }
 
         private string EnsureAllowedExtOrThrow(string ext, int tenant)
         {
