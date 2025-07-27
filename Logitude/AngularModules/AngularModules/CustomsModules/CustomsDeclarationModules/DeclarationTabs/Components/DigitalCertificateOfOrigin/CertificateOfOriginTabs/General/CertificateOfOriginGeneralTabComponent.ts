@@ -310,6 +310,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
+            if (this.currentDeclaration.TransportModeId === 'O')
+                consignment = this.currentDeclaration.Consignments.filter(c => c.ManifestNumber == unifreightItem.manifestNumber)[0];
 
             if (consignment) {
                 const consignmentPackage = consignment.ConsignmentPackages[0];
@@ -527,9 +529,15 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     exportStorageWebService = new ExportStorageWebService();
     getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM, ManifestNumberFromUnifreight = null) {
-        // Validate consignment data:
-        if (!ManifestNumberFromUnifreight) consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
-        else consignment.ManifestNumber = ManifestNumberFromUnifreight;
+        if (this.currentDeclaration.TransportModeId !== 'O' && AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) { 
+           consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
+        }
+        else if(AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)){
+            mappedConsignments.ContainerIsoCode = "";
+            return;
+        }
+        else    
+            consignment.ManifestNumber = ManifestNumberFromUnifreight;
 
         consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';
         consignment.ThirdCargoID = consignment.ThirdCargoID ? consignment.ThirdCargoID : '';
