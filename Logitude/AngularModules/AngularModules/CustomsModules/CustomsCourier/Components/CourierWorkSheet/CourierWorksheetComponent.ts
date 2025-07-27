@@ -2498,7 +2498,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי םתר פריקה";
+        logitudeWindow.Title = "שינו יאתר פריקה";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
         this.ChangedUnloadPortSite = true;
@@ -2583,11 +2583,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
         currRequestParams.PendingCode = [];
-        let text = "נם םשר םישור פנדינג גורף";
+        let text = "נא אשר אישור פנדינג גורף";
         currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-            text = "נם םשר לבצע םישור רק לשורות שסומנו";
+            text = "נא אשר לבצע אישור רק לשורות שסומנו";
         }
 
         var confirmWindow = new ConfirmWindow();
@@ -2672,7 +2672,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         if (this.entityPM.IsReadyForInvoice) {
-            let text = "הםם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show(text);
             confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -2757,7 +2757,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAInUCBApproveAllPending")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לםישור PENDING ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2776,7 +2776,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי נמל טעינה/םתר םחסון/פריקה ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי נמל טעינה/אתר אחסון/פריקה ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2795,7 +2795,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBAC")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לםישור סיווג ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור סיווג ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
