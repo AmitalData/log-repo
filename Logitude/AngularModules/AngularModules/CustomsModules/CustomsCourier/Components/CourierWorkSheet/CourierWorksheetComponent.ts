@@ -2359,7 +2359,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען"); //TextCodeTranslator.TextCodeTranslator("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.TextCodeTranslator("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -2400,7 +2400,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     SendDelayForm() {
 
         var titleText = "הפקת תעודת עיכוב";
-        var questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+        var questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
         var confirm = new ConfirmWindow();
         confirm.Width = 350;
         confirm.Height = 200;
@@ -2498,7 +2498,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינו יאתר פריקה";
+        logitudeWindow.Title = "שינוי אתר פריקה";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
         this.ChangedUnloadPortSite = true;
@@ -2522,7 +2522,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
-        let text = "נם םשר מחיקת קוד עיכוב";
+        let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -2976,11 +2976,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         var confirm = new ConfirmWindow();
         confirm.Width = 320;
         confirm.Height = 180;
-        confirm.Title =  "םישור סיווג";
+        confirm.Title =  "אישור סיווג";
         confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         confirm.ShowNoButton = true;
         confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-        confirm.Show("נם םשר סיווג לכל הטיסה");
+        confirm.Show("נא אשר סיווג לכל הטיסה");
         
         confirm.WindowClosed.subscribe((event: any) => {
             if (confirm.Yes) {
