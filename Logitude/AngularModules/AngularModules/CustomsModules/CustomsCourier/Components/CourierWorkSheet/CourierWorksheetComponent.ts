@@ -2359,7 +2359,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לם ניתן לבצע גייטפס העברות ללם מזהה מטען"); //TextCodeTranslator.TextCodeTranslator("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.TextCodeTranslator("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -2400,7 +2400,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     SendDelayForm() {
 
         var titleText = "הפקת תעודת עיכוב";
-        var questionText = "םשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
+        var questionText = "אשר שליחת מסר פעולה מיוחדת של תעודת עיכוב למסוף";
         var confirm = new ConfirmWindow();
         confirm.Width = 350;
         confirm.Height = 200;
@@ -2498,7 +2498,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי םתר פריקה";
+        logitudeWindow.Title = "שינוי אתר פריקה";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetUnloadPortCodeComponent');
         this.ChangedUnloadPortSite = true;
@@ -2522,7 +2522,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.Tenant = SessionLocator.Tenant;
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
-        let text = "נם םשר מחיקת קוד עיכוב";
+        let text = "נא אשר מחיקת קוד עיכוב";
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
         }
@@ -2583,11 +2583,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         currRequestParams.CourierMasterId = this.entityPM.Id;
         currRequestParams.MAWB = this.entityPM.MAWB;
         currRequestParams.PendingCode = [];
-        let text = "נם םשר םישור פנדינג גורף";
+        let text = "נא אשר אישור פנדינג גורף";
         currRequestParams.PendingCode.push(this.SelectedPendingCodeFilter.Key);
         if (this._CourierWorksheetSharedDataService._SelectedItems != null && this._CourierWorksheetSharedDataService._SelectedItems.Collection.length > 0) {
             currRequestParams.DeclarationsList = this._CourierWorksheetSharedDataService._SelectedItems.Collection;
-            text = "נם םשר לבצע םישור רק לשורות שסומנו";
+            text = "נא אשר לבצע אישור רק לשורות שסומנו";
         }
 
         var confirmWindow = new ConfirmWindow();
@@ -2637,7 +2637,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         logitudeWindow.Width = 350;
         logitudeWindow.Height = 250;
         logitudeWindow.IsShowCloseButton = true;
-        logitudeWindow.Title = "שינוי םתר םחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.Title = "שינוי אתר אחסון";//TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./CustomsModules/CustomsCourier/Components/CourierWorkSheet/GetStorageSiteCodeComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
@@ -2672,7 +2672,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
 
         if (this.entityPM.IsReadyForInvoice) {
-            let text = "הםם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
+            let text = "האם לבטל סימון הטיסה כמוכנה להפקת חשבונית";
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Show(text);
             confirmWindow.WindowClosed.subscribe((event: any) => {
@@ -2757,7 +2757,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "DCAInUCBApproveAllPending")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לםישור PENDING ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור PENDING ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2776,7 +2776,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBCMSS")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי נמל טעינה/םתר םחסון/פריקה ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לשינוי נמל טעינה/אתר אחסון/פריקה ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2795,7 +2795,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                 let customsRequestsSheetPM: CustomsRequestsSheetPM = displayOnlyCheckResult.filter(r => r.InterfaceTypeCode == "UCBAC")[0];
                 if (customsRequestsSheetPM != null) {
                     this.IsDisplayOnly = true;
-                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לםישור סיווג ברקע ";
+                    this.DisplayOnlyMessage = "לתצוגה בלבד - קיימת בקשה לאישור סיווג ברקע ";
                     this._CourierWorksheetSharedDataService.IsDisplayOnly = true;
                 }
             }
@@ -2976,11 +2976,11 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         var confirm = new ConfirmWindow();
         confirm.Width = 320;
         confirm.Height = 180;
-        confirm.Title =  "םישור סיווג";
+        confirm.Title =  "אישור סיווג";
         confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
         confirm.ShowNoButton = true;
         confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-        confirm.Show("נם םשר סיווג לכל הטיסה");
+        confirm.Show("נא אשר סיווג לכל הטיסה");
         
         confirm.WindowClosed.subscribe((event: any) => {
             if (confirm.Yes) {
