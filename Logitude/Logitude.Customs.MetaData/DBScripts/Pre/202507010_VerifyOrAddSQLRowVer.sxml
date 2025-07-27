@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs">
+  <Sql Version="1">
+    <![CDATA[
+-- Add RowVer column and indexes to Customs.Declarations (SQL Server only)
+-- Only proceed if RowVer does not exist and no other timestamp/rowversion column exists
+
+IF NOT EXISTS (
+	SELECT 1 
+	FROM sys.columns 
+	WHERE name = 'RowVer' 
+	  AND object_id = OBJECT_ID('Customs.Declarations')
+)
+AND NOT EXISTS (
+	SELECT 1
+	FROM sys.columns
+	WHERE system_type_id = 189 -- 189 = timestamp/rowversion
+	  AND object_id = OBJECT_ID('Customs.Declarations')
+)
+BEGIN
+	ALTER TABLE Customs.Declarations
+	ADD RowVer timestamp NOT NULL;
+
+	CREATE INDEX IX_Declarations_RowVer
+	ON Customs.Declarations (RowVer);
+
+	CREATE INDEX IX_Declarations_UpdatedAt_Desc
+	ON Customs.Declarations (UPDATEDATETIME DESC);
+END
+        ]]>
+  </Sql>
+</Script>
