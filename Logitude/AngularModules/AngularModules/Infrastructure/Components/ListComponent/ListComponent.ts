@@ -153,6 +153,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     fastSearchSettings: FastSearchSettings = null;
     $fastSearchEnable: BehaviorSubject<boolean> = null;
     fastSearchAllow: boolean = false;
+    intialAdditionalFilters: string[] = [];
 
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -163,7 +164,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     onColumnsClick() {
         var windowArgs: any = {};
         windowArgs.queryId = this.SelectedQueryId;
-        windowArgs.queryCode = /*this.ObjectTableName + '.' +*/this.SelectedQueryCode;
+        windowArgs.queryCode = this.SelectedQueryCode;
         windowArgs.isNewQueryMode = false;
         windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
@@ -173,14 +174,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            //var myfilterAgrs = this.CurrentQueryFilters;
-            // if (this.AdvanceFilters) {
-            //     this.AdvanceFilters.AdditionalFilters.forEach((filter, key) => {
-            //         myfilterAgrs.AdditionalFilters.push(filter);
-            //     });
-            // }
             this.QueryValueChanged({ QueryCode: this.SelectedQueryCode, Title: TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode), Filters: this.CurrentQueryFilters, IgnoreSearchFields: true });
-            //this.onQueryChangeEvent.emit({ QueryId: this.SelectedQueryId, Filters: this.CurrentQueryFilters });
         });
     }
 
@@ -230,6 +224,15 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
    
     fastSearchCheckbox(check: boolean) {
+         const hasAdvancedFilters = this.CurrentQueryFilters.AdditionalFilters.some(f => !this.intialAdditionalFilters.includes(f.FieldName) && f.FieldName != "SearchFields");
+         if(hasAdvancedFilters && check) {
+                this.fastSearchAllow = false;
+                this.CD.detectChanges();
+                this.fastSearchAllow = true;
+                this.CD.detectChanges();
+            return;
+         }
+
         this.fastSearchService.$fastSearchEnable.next(check);
         if(!check && this.fastSearchService.orginalCurrentAdditionalFilters != null) {
             this.CurrentQueryFilters.AdditionalFilters = [...this.fastSearchService.orginalCurrentAdditionalFilters];
@@ -824,22 +827,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         AppTool.KillEventEmitter(this.ReloadAllListEvent);
     }
 
-
     ngAfterViewInit() {
-        //if (this.ObjectTable.HasFiltersMenu) {
-        //    let myLocation: LocationDirective = this.AllLocations.toArray().filter(d => d.Code == "MNH")[0];
-        //    if (myLocation != null) {
-
-        //        var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + this.ObjectTable.Name + "FiltersMenuComponent";
-
-        //        SessionLocator.DynamicLoader.Load(myComponentPath, myLocation.viewContainerRef)
-        //            .then(cmpRef => {
-        //                cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter }));
-        //            });
-        //    }
-        //}
-
-
+        this.intialAdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.map(f => f.FieldName)
     }
 
     public CheckPermissions(objectTableName: string, featureCode: string, showWindow: boolean) {
