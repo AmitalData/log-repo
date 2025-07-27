@@ -347,7 +347,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
         if (!this.ShowBusyIndicator) {
             this.ShowBusyIndicator = true;
-            this.ReportFliter = this.FillReportFilter(filter);
+            this.ReportFliter = this.FillReportFilter(filter, isInteractive);
             if (this.IsUsedExportToExel || this.ReportFliter.ReportCode == "EXDE")
             {
                this.StartBusyIndicator("Exporting to Excel...");
@@ -415,7 +415,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         this.IsRunReportFailed = false;
 
         if (!this.Report.DisablePreview) {
-            this.ReportFliter = this.FillReportFilter(filter);
+            this.ReportFliter = this.FillReportFilter(filter, false);
             this.ValiditySelectedTemplate();
             this.NumberOfRequests += 1;
             this._reportService.GenerateReportMethod(this.ReportFliter).subscribe((myResponse: ServiceResponse) => {
@@ -480,7 +480,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
     }
 
-    FillReportFilter(filter: ReportFliter) {
+    FillReportFilter(filter: ReportFliter, isInteractive: boolean) {
         if (AppTool.IsNullOrEmpty(filter.DefaultTemplateId)) {
             if (this.StimulsoftArg) {
                 filter.DefaultTemplateId = this.StimulsoftArg.DefaultTemplateId;
@@ -498,7 +498,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
         filter.UserId = SessionLocator.LoggedUserId;
         filter.ReportId = this.Report.Id;
         filter.DisablePreview = this.Report.DisablePreview;
-        filter.NotDisplayInMenu = this.IsSchedulerReport;
+        filter.NotDisplayInMenu = this.IsSchedulerReport || isInteractive;
         if (this.ReportsTemplateLists && !this.IsUsedExportToExel) {
             var reportTemplate: any = this.ReportsTemplateLists.filter(d => d.Id == filter.DefaultTemplateId)[0];
             if (reportTemplate) {
@@ -756,11 +756,13 @@ export class ReportsPreviewComponent implements AfterViewInit {
     SendToBackground () {
         if (this.ReportFliter.ReportKey)
         {
-            SessionLocator.HomeComponent.IsProcessMenuVisible = false;
-            SessionLocator.HomeComponent.CurrentProcessId  = this.ReportFliter.ReportKey;
-            SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
-            SessionLocator.HomeComponent.isPinned = false;
-            this.StopBusyIndicator();
+            this.ReportExecutionLogPMService.SendToBackground(this.ReportFliter.ReportKey).subscribe((res: any) => {
+                SessionLocator.HomeComponent.IsProcessMenuVisible = false;
+                SessionLocator.HomeComponent.CurrentProcessId  = this.ReportFliter.ReportKey;
+                SessionLocator.HomeComponent.SelectedTab = MenuTypes.ReportExecutionLog.toString();
+                SessionLocator.HomeComponent.isPinned = false;
+                this.StopBusyIndicator();
+            });
         }
     }
 
