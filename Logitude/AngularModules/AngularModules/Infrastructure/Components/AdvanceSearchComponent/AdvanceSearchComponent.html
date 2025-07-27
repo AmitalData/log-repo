@@ -213,6 +213,11 @@
                                     <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
                             </div>
+                            <div *ngSwitchCase="'DateTime2'" style="display: inline-flex;">
+                                <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                </div>
+                            </div>
                             <div *ngSwitchCase="'Date'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
                                     <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)"[QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
@@ -307,6 +312,11 @@
                                 </div>
                             </div>
                             <div *ngSwitchCase="'DateTime'" style="display: inline-flex;">
+                                <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
+                                    <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'DateTime2'" style="display: inline-flex;">
                                 <div style="width:300px;" [style.margin-right]="LayoutDirection=='rtl' ? '6px' : ''">
                                     <CustomDatePicker (SelectedItemChanged)="item.onTextChange($event)" [QueryCode]="QueryCode"   [ObjectField]="item.ObjectField"></CustomDatePicker>
                                 </div>
