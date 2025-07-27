@@ -308,13 +308,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
             if(AppTool.IsNullOrEmpty(mappedConsignments.MarksAndNumbers)) mappedConsignments.MarksAndNumbers = mappedConsignments.ItemDescription;
             
+            const TransportModeOcean = 'O';
             // Find corresponding consignment item by serial or other identifier
             let consignment = this.currentDeclaration.Consignments.filter(c => c.SequenceNumeric == unifreightItem.itemSerial)[0];
+            if (this.currentDeclaration.TransportModeId === TransportModeOcean)
+                consignment = this.currentDeclaration.Consignments.filter(c => c.ManifestNumber == unifreightItem.manifestNumber)[0];
 
             if (consignment) {
                 const consignmentPackage = consignment.ConsignmentPackages[0];
                 // Update fields if not set by Unifreight data:
-                if(this.currentDeclaration.TransportModeId !== 'O'){
+                if(this.currentDeclaration.TransportModeId !== TransportModeOcean){
                     mappedConsignments.MarksAndNumbers = mappedConsignments.MarksAndNumbers || consignmentPackage?.MarksNumbers || '';
                     mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
                     mappedConsignments.PackageQuantity = mappedConsignments.PackageQuantity || consignmentPackage?.PackageQuantity || 0;
@@ -527,9 +530,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     exportStorageWebService = new ExportStorageWebService();
     getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM, ManifestNumberFromUnifreight = null) {
-        // Validate consignment data:
-        if (!ManifestNumberFromUnifreight) consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
-        else consignment.ManifestNumber = ManifestNumberFromUnifreight;
+        const TransportModeOcean = 'O';
+        if (this.currentDeclaration.TransportModeId !== TransportModeOcean && AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)) {
+            consignment.ManifestNumber = consignment.ManifestNumber ? consignment.ManifestNumber : '';
+        }
+        else if(AppTool.IsNullOrEmpty(ManifestNumberFromUnifreight)){
+            mappedConsignments.ContainerIsoCode = "";
+            return;
+        }
+        else    
+            consignment.ManifestNumber = ManifestNumberFromUnifreight;
 
         consignment.SecondCargoID = consignment.SecondCargoID ? consignment.SecondCargoID : '';
         consignment.ThirdCargoID = consignment.ThirdCargoID ? consignment.ThirdCargoID : '';
