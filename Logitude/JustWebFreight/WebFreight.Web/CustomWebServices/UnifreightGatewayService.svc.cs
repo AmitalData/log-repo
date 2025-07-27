@@ -23,6 +23,9 @@ using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Threading;
+using Logitude.Customs.BL.EntityQueryServices;
+using WebFreight.Web.App_Code.AngularJS_App_Code.Generated;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -443,25 +446,18 @@ SUCCESS={4}"
                 {
                     _sbGatewayLog.AppendLine("UnifreightImpersonate  Failed ");
                 }
-                unifreightGenericService.SetTenant(iTenanat);
-                if (false)
+                var customsSettings = CustomsSettingQueryService.GetSettingByTenant(iTenanat);
+                if (customsSettings == null)
                 {
-                    AuthenticationUtil.DebugUsers();
-
-
-                    // Wait for all tasks to complete.
-                    Task[] tasks = new Task[10];
-                    for (int i = 0; i < 10; i++)
-                    {
-                        //System.Threading.Tasks.Task.Factory.StartNew(() => {  ; });
-                        tasks[i] = Task.Factory.StartNew(() => AuthenticationUtil.DebugUsers());
-                    }
-                    Task.WaitAll(tasks);
+                    _sbGatewayLog.AppendLine("CustomsSettingQueryService.GetSettingByTenant(iTenanat) is null");
+                    throw new BusinessErrorException("CustomsSettingQueryService.GetSettingByTenant(iTenanat) is null");
+                }
+                if (!customsSettings.IsConnectedToUniFreight)
+                {
+                    var authToken = TokenGuard.Validate(iTenanat);
                 }
 
-
-
-
+                unifreightGenericService.SetTenant(iTenanat);
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))//new TransactionScope(TransactionScopeOption.RequiresNew, TimeSpan.FromMinutes(10)))
                 {
                     unifreightGenericService.ProccessGenericRequest(DataIn1, ref MoreParams, out MessageOutWS);
@@ -472,7 +468,6 @@ SUCCESS={4}"
                         }
  
                 }
-                //DataOut1 = XmlGenericUtil<GenericResponseObj>.SerializeObject(unifreightGenericService.MyGenericResponseObj);
             }
             catch (BusinessErrorException businessErrorException)
             {
