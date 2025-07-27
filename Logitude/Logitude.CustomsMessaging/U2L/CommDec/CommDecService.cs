@@ -168,7 +168,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             try
             {
-                var setting = CustomsSettingQueryService.GetSettingByTenant(_tenant);
+                var setting = CustomsSettingQueryService.GetSettingByTenant(tenant);
 
                 IsConnectedToUniFreight = setting != null && setting.IsConnectedToUniFreight;
 
