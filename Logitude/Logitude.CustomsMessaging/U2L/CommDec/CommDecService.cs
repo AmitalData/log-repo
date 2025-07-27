@@ -180,6 +180,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             try
             {
+                var setting = CustomsSettingQueryService.GetSettingByTenant(tenant);
+
+                IsConnectedToUniFreight = setting != null && setting.IsConnectedToUniFreight;
+
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = true;
                 _PBId = PBId;
                 _tenant = tenant;
