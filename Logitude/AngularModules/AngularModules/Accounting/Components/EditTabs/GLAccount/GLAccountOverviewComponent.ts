@@ -32,6 +32,7 @@ import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/Exte
 import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
 import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
 import { PaymentTermPMService } from 'Common/Services/StandardPMs/PaymentTermPMService';
+import { AmitalGatewayUtil, UnifreightMessageM } from '../../../../Infrastructure/Utilities/AmitalGatewayUtil';
 declare var makeAmBarChart;
 @Component({
 
@@ -143,27 +144,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
         //this.LoadGLAccountFollowUpData();
 
     }
-    //LoadGLAccountFollowUpData() {
-    //    this.gLAccountFollowUpDataPMService.getByAccountId(this.EntityPM.Id).subscribe((myResult: any) => {
 
-    //        var mm: ServiceResponse = myResult;
-    //        if (!mm.HasError) {
-    //            this.gLAccountFollowUpDataPM = mm.Result;
-    //        }
-    //        else {
-    //        }
-    //    });
-
-    //}
-    //#region Properties
-    //get DisplayNumber() { return this.EntityPM.DisplayNumber; }
-    //set DisplayNumber(value: string) {
-    //    if (this.EntityPM.DisplayNumber != value) {
-    //        this.EntityPM.DisplayNumber = value;
-    //    }
-    //}
-    //#endregion
+    
     TenantCurrency:string;
+    AmitalBrowserInUse: boolean = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
     accountCardlist: CardList[];
     accountCardnumberLists:string[]=[];
     GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard");
@@ -808,8 +792,60 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     //
 
+
+
+    /**
+     * Handler for "Display Open Files" link click.
+     * @param accountCardlist list of account cards, each may contain an OpenFiles array
+     */
+    DisplayOpenFilesClicked(accountCardlist: any[]): void {
+        // guard against empty input
+        if (!accountCardlist?.length) {
+            console.info('No account cards provided.');
+            return;
+        }
+
+        const myViewModelName = 'Logitude.Accounting.Components.EditTabs.GLAccount.MyEnterViewUnifreightController';
+
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+        const sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
+            .subscribe(
+                (mess: UnifreightMessageM) => {
+                    const isMatchUnifreightCallbackCommand = (
+                        mess.LogitudeEntity === AmitalGatewayUtil.Instance.GeneralMessaging.ShowOpenFiles &&
+                        mess.LogitudeEntityNumber === this.EntityPM.Id &&
+                        mess.LogitudeViewModel === myViewModelName);
+                    if (isMatchUnifreightCallbackCommand) {
+                        sub.unsubscribe();
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+                        SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                    }
+                }
+            );
+
+        const cardNumber = this.accountCardnumberLists?.[0];
+
+        var message =
+            AmitalGatewayUtil.Instance.
+                DeclarationMessaging.GetMessage(cardNumber, this.EntityPM.Id, myViewModelName
+                    , 'GNDUNF');
+        message.Requset.push(['CardList', this.accountCardnumberLists?.toString()]);
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            'ScriptableGatewayUtil.ShowOpenFiles',
+            'GNDHMAIN.LogitudeTask',
+            'ShowOpenFiles',
+            message,
+            'Show Open Files');
+    }
+
+
     //#endregion
 
+
+
+    
     //#region Aging Details
     chartId: string = "";
 

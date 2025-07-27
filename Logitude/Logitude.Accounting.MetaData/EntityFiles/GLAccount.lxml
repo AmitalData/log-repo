@@ -18537,7 +18537,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;APPayment.O.VendorGLAccount&quot;"
+      Code="&quot;GLAccounts.Q.DisplayOpenFiles&quot;"
+      DefaultText="&quot;Display Open Files&quot;"
+      LocalDefaultText="&quot;הצג תיקים פתוחים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode      Code="&quot;APPayment.O.VendorGLAccount&quot;"
       DefaultText="&quot;The vendor is not connected to GLAccount&quot;"
       LocalDefaultText="&quot;הספק לא קושר לכרטיס הנהלת חשבונות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
