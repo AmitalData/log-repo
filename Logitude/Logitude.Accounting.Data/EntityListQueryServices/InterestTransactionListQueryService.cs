@@ -400,12 +400,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 
-        public IQueryable<InterestTransactionList> GetFutureInterestTransactionsByInterestReportMonth(DateTime reportMonthLastDay, int tenant)
+        public IQueryable<InterestTransactionList> GetFutureInterestTransactionsByInterestReportMonth(DateTime reportMonthLastDay, string gLAccountId, int tenant)
         {
             DateTime reportMonthLastDayDate = reportMonthLastDay.Date;
             DateTime nextMonth1st = reportMonthLastDayDate.Date.AddDays(1);
 
-            IQueryable<InterestTransactionList> query = from interestTransaction in context.InterestTransactions.Where(a => a.InterestReportId == null && a.Tenant == tenant
+            IQueryable<InterestTransactionList> query = from interestTransaction in context.InterestTransactions.Where(a => a.GLAccountId == gLAccountId
+                    && a.InterestReportId == null && a.Tenant == tenant
                     && a.IsCancelled == false && a.IsClosed == false
                     && a.CreateDateTime < nextMonth1st
                     && a.InterestValueDate > reportMonthLastDayDate).Include("Currency")
