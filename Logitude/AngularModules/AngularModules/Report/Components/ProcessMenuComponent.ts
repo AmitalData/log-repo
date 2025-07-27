@@ -29,6 +29,7 @@ export class ProcessMenuComponent implements OnDestroy {
     @Output() PinnedChanged = new EventEmitter<boolean>();
     @Output() NumberCompletedProcesses = new EventEmitter<number>();
     @Output() CloseMenu = new EventEmitter<MenuItemClass>();
+    @Output() ViewedItem = new EventEmitter<string>();
 
     SelectedMenuItem: MenuItemClass;
     private menuItemsSubject = new BehaviorSubject<MenuItemClass[]>([]);
@@ -123,7 +124,8 @@ export class ProcessMenuComponent implements OnDestroy {
     DeleteMenuItem(relatedRep: MenuItemClass) {
 
         this.processMenuService.DeleteFromMenu(relatedRep.Id,relatedRep.ItemType).subscribe((res: any) => {
-                   });
+            this.ViewedItem.emit(relatedRep.Id);
+        });
     }
 
     CancelMenuItem(relatedRep: MenuItemClass) {
@@ -133,8 +135,11 @@ export class ProcessMenuComponent implements OnDestroy {
                 this.processMenuService.LoadMenuItems();
             }
             this.CurrentSession.StopBusyIndicator();
+
+            this.ViewedItem.emit(relatedRep.Id);
         });
     }
+
     ViewMenuItem(relatedRep: MenuItemClass) {
         switch (relatedRep.ItemType) {
             case MenuTypes.ReportExecutionLog:
@@ -147,8 +152,11 @@ export class ProcessMenuComponent implements OnDestroy {
                 this.ShowNoSupportWindow();
                 break;
         }
-        
 
+        // unpin and close
+        this.PinnedChanged.emit(false);
+        this.CloseMenu.emit();
+        this.ViewedItem.emit(relatedRep.Id);
     }
     ShowNoSupportWindow() {
         var msg = new MessageWindow();
