@@ -406,7 +406,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}");
 
-                 if (declarationPM.PaymentDate.HasValue || declarationPM.isSubmitDeclaration)
+                 if (declarationPM.PaymentDate.HasValue || declarationPM.IsSubmitDeclaration == true)
                 {
                     shouldCreateDCAComm = false;
                      NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Declaration has already been payed id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
