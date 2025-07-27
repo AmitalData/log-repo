@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+  <Sql Version="1">
+    <![CDATA[
+      alter table objectfields add fieldname_temp varchar(200);
+      update objectfields set fieldname_temp = fieldname;
+      alter table objectfields drop column fieldname;
+      alter table objectfields add fieldname varchar(200);
+      update objectfields set fieldname = fieldname_temp;
+      alter table objectfields drop column fieldname_temp;
+    ]]>
+  </Sql>
+
+  <Oracle Version="1">
+    <![CDATA[
+      alter table objectfields add fieldname_temp varchar2(200 char);
+      update objectfields set fieldname_temp = fieldname;
+      alter table objectfields drop column fieldname;
+      alter table objectfields add fieldname varchar2(200 char);
+      update objectfields set fieldname = fieldname_temp;
+      alter table objectfields drop column fieldname_temp;
+    ]]>
+  </Oracle>
+</Script>
