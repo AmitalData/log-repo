@@ -407,7 +407,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
                     GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
-                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(ledgerTrasnctions[0].AccountId, _Tenant, false, withoutDate: true, isFromTransaction: true);
+                    List<LedgerTransactionList> allChecks = gLAccountMoreDataRepository.GetAllChecks(ledgerTrasnctions[0].AccountId, _Tenant, false, withoutDate: true);
 
                     GLAccountMoreData glAccountMoreData = gLAccountMoreDataRepository.GetSingle(ledgerTrasnctions[0].AccountId, _Tenant);
                     GLAccountMoreDataPM moreDataPM = gLAccountMoreDataQueryService.GetEntityPM(glAccountMoreData);

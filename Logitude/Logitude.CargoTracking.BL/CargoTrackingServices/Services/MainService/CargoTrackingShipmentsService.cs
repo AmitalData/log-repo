@@ -1,4 +1,6 @@
-﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+﻿using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.CustomMapping;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.SearchService;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
@@ -500,6 +502,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
                         if (item.DeliveredDone.HasValue && item.DeliveredDone.Value)
                             CheckMilestone(current, milestone, item.DeliveredDate);
                         break;
+					case CargoTrackingMilestoneValues.DeliveryArrived:
+                      
+                        var DeliveryArrivedDate = GetDefaultEventMilstone(item.Tenant,item.EntityId,item.ForwardingShipmentHeaderId)?.EventDateTime;
+						if (DeliveryArrivedDate.HasValue)
+							CheckMilestone(current, milestone, DeliveryArrivedDate);
+						break;
                     //case CargoTrackingMilestoneValues.Invoiced:
                     //if (item.CreatedDone.HasValue && item.Done.Value)
                     //    CheckMilestone(current, milestone, item); break;
@@ -512,7 +520,28 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
 
         }
 
-        private static void CheckMilestone(CurrentMilestone current, CargoTrackingMilestoneList milestone, DateTime? date)
+		public static EventMilestoneResult GetDefaultEventMilstone( int tenant,string entityId, string forwardingShipmentHeaderId)		
+		{
+			var defaultEventAddMilestone = DefaultService.Instance.Get(tenant, "EventAddMilestone", "EventAddMilestone")?.Value1;
+
+			if (string.IsNullOrEmpty(defaultEventAddMilestone)) return null;
+
+			var eventTypeQuery = new EventTypeQuery(tenant);
+			var shipmentEvents = eventTypeQuery.GetEventByShipment(entityId, tenant, forwardingShipmentHeaderId, true);
+
+
+			var matchedEvent = shipmentEvents.FirstOrDefault(e => e.Code == defaultEventAddMilestone);
+
+			if (matchedEvent == null) return null;
+
+			return new EventMilestoneResult
+			{
+				EventDateTime = matchedEvent.EventDatetime,
+				Notes = matchedEvent.Notes
+			};
+
+		}
+		private static void CheckMilestone(CurrentMilestone current, CargoTrackingMilestoneList milestone, DateTime? date)
         {
             if (milestone.Weight > current.Wheight)
             {
@@ -573,4 +602,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService
         public string CurrentMilestoneCode = null;
         public DateTime? CurrentMilestoneDate = null;
     }
+	public class EventMilestoneResult
+	{
+		public DateTime? EventDateTime { get; set; }
+		public string Notes { get; set; }
+	}
 }
