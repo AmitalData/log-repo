@@ -2702,7 +2702,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         CollectorId = a.CollectorId,
                                                         PaymentTermId = a.PaymentTermId,
                                                         PaymentTermLocalName = a.PaymentTerm.LocalName,
-                                                        PaymentTermEnglishName = a.PaymentTerm.EnglishName
+                                                        PaymentTermEnglishName = a.PaymentTerm.EnglishName,
+                                                        ExternalSystem = a.ExternalSystem,
                                                     };
 
 
