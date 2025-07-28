@@ -29,7 +29,6 @@ import { MessageWindow } from '../../../../../../Controls/Windows/MessageWindow'
 import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 import { WindowArgs } from '../../../../../../Infrastructure/DataContracts/WindowArgs';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
-import { Dictionary } from '../../../../../../Infrastructure/GenericTypes/Dictionary';
 import { DeclarationCourierStatusList } from '../../../../../../Customs/EntityLists/DeclarationCourierStatusList';
 import { DeclarationCourierStatusListService } from '../../../../../../Customs/Services/StandardLists/DeclarationCourierStatusListService';
 import { EntityResourceService } from '../../../../../../Infrastructure/Services/EntityResourceService';
@@ -172,6 +171,14 @@ export class ConsigmentTabContentComponent
         //if (this.Tab.ComponentReference && this.Tab.ComponentReference.ngOnDestroy) {
         //    this.Tab.ComponentReference.ngOnDestroy();
         //}
+        if(this.EntityPM.IsDirty){
+            this.declarationPM.IsChanged = true;
+            this._DeclarationPMService.update(this.declarationPM).subscribe((response: ServiceResponse) => {
+                if (!response.HasError) {
+                    this.EntityPM = response.Result;
+                }
+            });
+        }
 
         if (this.Tab) {
             this.Tab.ComponentReference = null;

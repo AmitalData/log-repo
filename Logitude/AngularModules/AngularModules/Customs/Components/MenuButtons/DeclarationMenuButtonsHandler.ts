@@ -1991,11 +1991,13 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         if (this.EntityPM.Direction == "E") {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.PaymentsExport");
             logWindow.Height = 400;
+             this.CurrentSession.CurrentEditComponent.ReloadEntityPM()
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentExportComponent');
         }
         else {
             logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.Payments");
             logWindow.Height = 700;
+             this.CurrentSession.CurrentEditComponent.ReloadEntityPM()
             logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/DeclarationPayment/DeclarationPaymentComponent');
         }
         logWindow.WindowClosed.subscribe(($event: any) => {
