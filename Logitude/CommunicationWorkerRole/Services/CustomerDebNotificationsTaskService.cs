@@ -179,7 +179,7 @@ namespace CommunicationWorkerRole.Services
 					}
 					else if(customerDebtNotification.DebtLevel == DebtLevelEnum.Percentage)
 					{
-						isDebt = glAccountMoreData.BalanceInLocalCurrency > (obligoAmount * ((customerDebtNotification.DebtLevelAmount / 100) + 1));
+						isDebt = glAccountMoreData.BalanceInLocalCurrency < (obligoAmount * ((customerDebtNotification.DebtLevelAmount / 100) + 1));
 					}
 					break;
 				case TypesDebtsEnum.AccountingBalance:
