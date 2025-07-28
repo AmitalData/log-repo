@@ -290,7 +290,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                         {
                             IWebFreightContext context = WebFreightContext.GetContext(tenant);
                             currentTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
-                                                   where (a.Tenant == tenant && a.InActive == false)
+                                                   where (a.Tenant == 0 && a.InActive == false)
                                                  select a).ToList();
                             scope.Complete();
                         }
