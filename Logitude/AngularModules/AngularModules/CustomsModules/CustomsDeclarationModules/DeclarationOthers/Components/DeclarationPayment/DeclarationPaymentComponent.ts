@@ -162,7 +162,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
             event.preventDefault();
             event.target.checked = false;
             var myMessageWindow = new MessageWindow();
-            myMessageWindow.Show("לם ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
+            myMessageWindow.Show("לא ניתן לבצע תשלום בזמינות עם תםריך תשלום עתידי");//TextCodeTranslator.Translate("")
 
         }
 
@@ -220,7 +220,7 @@ export class DeclarationPaymentComponent extends BaseComponent implements OnInit
                                                     }
                                                 }
 
-
+                                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                                                 this.DeclarationPM = args.EntityPM;
 
                                                 if (this.DeclarationPM.IsCourierDeclaration) {
