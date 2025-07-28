@@ -430,6 +430,8 @@ namespace Logitude.Customs.BL.CloseTables
             all.Add(new KeyValuePair<string, string>(PartnerCode_ILOVS, "Overseas"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_ILSWS, "Swissport"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_SII, "SII"));
+            all.Add(new KeyValuePair<string, string>(PartnerCode_AMITAL, "Amital"));
+
             return all;
         }
 
