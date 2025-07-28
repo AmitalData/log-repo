@@ -43,7 +43,6 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='EventTypeId' Type='varchar' Size='15'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
-"  <Relation ForeignKeyColumn='EventTypeId' ReferencedTable='EventTypes' ReferencedColumn='Id' ReferencedTableSchema='dbo' />"+
 "</Table>";
 		
 		   return dxmlFile;

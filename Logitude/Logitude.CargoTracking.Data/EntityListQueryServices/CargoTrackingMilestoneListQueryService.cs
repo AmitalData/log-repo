@@ -36,6 +36,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 					                          Inactive = a.Inactive,
 					                          Weight = a.Weight,
 											  ExportWeight = a.ExportWeight,
+
+											  Tenant = a.Tenant,
+
+											  EventTypeId = a.EventTypeId
 					
 		                    	            });
             return query;

@@ -1,3 +1,122 @@
+/* Timeline label for completed/current milestones (bold) */
+.timeline-label.colored {
+  font-weight: normal;
+  color: #000 !important;
+}
+
+.timeline-label.current {
+    font-weight: bold;
+    color: #000 !important;
+}
+/* Future milestones: hollow and grey */
+.timeline-point.hollow {
+  background: #fff !important;
+  border: 2px solid #d2d2d2;
+  box-shadow: 0 0 0 2px #d2d2d2;
+}
+
+/* Hollow but with secondary color border for milestones <= current */
+.timeline-point.hollow.colored {
+  border: 2px solid var(--secondaryColor, #4caf50);
+  box-shadow: 0 0 0 2px var(--secondaryColor, #4caf50);
+}
+
+/* Timeline label for future milestones (light grey) */
+.timeline-label.hollow {
+  color: #e0e0e0 !important;
+  font-weight: 500;
+}
+/* Timeline bar for milestones */
+.timeline-bar {
+  width: 95%;
+  margin: 30px 0 20px 10px;
+  position: relative;
+  height: 60px;
+}
+
+.timeline-points {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  height: 60px;
+  gap: 24px;
+}
+
+.timeline-point-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;
+  position: relative;
+}
+
+
+/* Timeline point base */
+.timeline-point {
+  width: 18px;
+  height: 18px;
+  background: #d2d2d2;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  z-index: 2;
+  margin-bottom: 6px;
+  box-shadow: 0 0 0 2px #d2d2d2;
+  position: relative;
+  transition: background 0.3s, box-shadow 0.3s, border 0.3s, width 0.3s, height 0.3s;
+}
+
+/* Completed or current */
+.timeline-point.colored {
+  background: var(--secondaryColor) !important;
+  box-shadow: 0 0 0 2px var(--secondaryColor);
+}
+
+/* Current milestone: centered on the timeline bar, but does not overlap the label */
+.timeline-point.current {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  margin-top: -4.5px; /* (27-18)/2 = 4.5px, assuming base is 18px */
+  margin-bottom: 6px;
+  z-index: 3;
+}
+
+/* Future milestones: hollow and grey */
+.timeline-point.hollow {
+  background: #fff !important;
+  border: 2px solid #d2d2d2;
+  box-shadow: 0 0 0 2px #d2d2d2;
+}
+
+/* Hollow but with secondary color border for milestones <= current */
+.timeline-point.hollow.colored {
+  border: 2px solid var(--secondaryColor, #4caf50);
+  box-shadow: 0 0 0 2px var(--secondaryColor, #4caf50);
+}
+
+.timeline-point-wrapper:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 100%;
+  height: 4px;
+  background: #d2d2d2;
+  z-index: 1;
+  transform: translateX(9px);
+}
+
+.timeline-label {
+  font-size: 11px;
+  color: #000;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.1;
+  margin-top: 2px;
+  cursor: pointer;
+}
 .content-wrapper {
     max-width: 1400px;
     margin: 20px auto;
@@ -201,7 +320,7 @@ ul.line-list li.tick {
 }
 
 .shipment-timeline {
-    width: 70%;
+    width: 95%;
     margin: 0 auto;
     position: relative;
     margin-bottom: 40px;
@@ -696,4 +815,65 @@ ul.line-list li.tick {
     position: relative;
     bottom: -30px;
     transform: rotate(45deg);
+}
+
+
+.progressbar-container {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.progressbar {
+  width: 100%;
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.progressbar-fill {
+  height: 100%;
+  background: var(--secondaryColor, #4caf50);
+  transition: width 0.4s;
+}
+
+.progressbar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.progressbar-labels span {
+  color: #aaa;
+  font-weight: normal;
+  min-width: 60px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progressbar-labels span.completed {
+  color: var(--secondaryColor, #4caf50);
+  font-weight: bold;
+}
+
+.progressbar-labels span.current {
+  color: var(--MainColor, #2196f3);
+  font-weight: bold;
+}
+
+.progressbar-labels span {
+  font-size: 11px;
+  min-width: 40px;
+  max-width: 70px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
 }
