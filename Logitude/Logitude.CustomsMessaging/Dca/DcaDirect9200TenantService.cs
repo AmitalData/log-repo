@@ -21,6 +21,10 @@ using System.Threading;
 using Logitude.Server.Tools.Utils;
 using System.IO;
 using System.Collections.Concurrent;
+using Logitude.CustomsMessaging.Dca.Utilities;
+using Logitude.Server.Tools.ExternalServices;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 
 namespace Logitude.CustomsMessaging.Dca
 {
@@ -31,33 +35,42 @@ namespace Logitude.CustomsMessaging.Dca
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
         private List<InterfaceTenantDefinitionManagementPM> _AllInterface;
         private readonly DedicatedCourierDCAModel _DedicatedCourierDCAModel;
+        private readonly FTPDetail _uploadFtpDetail;
         StringBuilder _SBInfoLog;
         StringBuilder _SBErrorLog;
         Stopwatch sw;
         int NumOfMessages;
         private bool _SaveError;
         private static DateTime _LastErrordateTime;
-		private List<string> _AllDcaPreFixByEnvironment;
+        private List<string> _AllDcaPreFixByEnvironment;
+        public static bool SkipCorrelationClearForTests { get; set; } = false;
+        internal static NG_9101_MSG_OutgoingMessageResponse testResponse;
 
-		public DcaDirect9200TenantService(
+        public DcaDirect9200TenantService(
             CustomsSettingPM costomSetting, List<string> allDcaPreFixWithoutInOutUpper, List<InterfaceTenantDefinitionManagementPM> interfaceListDCA,
-            List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel,List<string> allDcaPreFixByEnvironment)
+            List<InterfaceTenantDefinitionManagementPM> allInterface, DedicatedCourierDCAModel dedicatedCourierDCAModel, List<string> allDcaPreFixByEnvironment, PartnerSftpConfig uploadCfg)
         {
             this._CustomsSettingPM = costomSetting;
             this._AllDcaPreFixWithoutInOutUpper = allDcaPreFixWithoutInOutUpper;
             this._InterfaceListDCA = interfaceListDCA;
             this._AllInterface = allInterface;
             this._DedicatedCourierDCAModel = dedicatedCourierDCAModel;
-			this._AllDcaPreFixByEnvironment = allDcaPreFixByEnvironment;
-		}
+            this._AllDcaPreFixByEnvironment = allDcaPreFixByEnvironment;
+            _uploadFtpDetail = ToFtpDetail(uploadCfg);
+        }
 
         public Action SetLastActivity { get; set; }
         public Action LogDoneItemInMemoryAction { get; set; }
 
 
 
-        public void DownloadAll(/*string debugIIGMessageId*/)
+        public void DownloadAll(NG_9101_MSG_OutgoingMessageResponse testResponse = null)
         {
+            if (testResponse == null && DcaDirect9200TenantService.testResponse != null)
+            {
+                testResponse = DcaDirect9200TenantService.testResponse;
+                DcaDirect9200TenantService.testResponse = null;
+            }
 
             _SBInfoLog = new StringBuilder($"Tenant:{_CustomsSettingPM.Tenant} Start At {DateTime.Now}");
             _SBErrorLog = new StringBuilder($"Tenant:{_CustomsSettingPM.Tenant} Start At {DateTime.Now}");
@@ -85,11 +98,11 @@ namespace Logitude.CustomsMessaging.Dca
                     int dcaMessagesLeftInIIGServer = 0;
                     if (useTPL.GetValueOrDefault())
                     {
-                        dcaMessagesLeftInIIGServer = TPL_Send9100Take100Messages_HaveMore().GetValueOrDefault();
+                        dcaMessagesLeftInIIGServer = TPL_Send9100Take100Messages_HaveMore(testResponse).GetValueOrDefault();
                     }
                     else
                     {
-                        dcaMessagesLeftInIIGServer = Send9100Take100Messages_HaveMore().GetValueOrDefault();
+                        dcaMessagesLeftInIIGServer = Send9100Take100Messages_HaveMore(testResponse).GetValueOrDefault();
                     }
                     if (dcaMessagesLeftInIIGServer > 0)
                     {
@@ -122,14 +135,14 @@ namespace Logitude.CustomsMessaging.Dca
             {
                 if (_SaveError)
                 {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteError(_SBErrorLog.ToString()+":"+"DcaDirect9200TenantService");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(_SBErrorLog.ToString() + ":" + "DcaDirect9200TenantService");
                 }
 
             }
         }
 
 
-        public int? TPL_Send9100Take100Messages_HaveMore()
+        public int? TPL_Send9100Take100Messages_HaveMore(NG_9101_MSG_OutgoingMessageResponse testResponse = null)
         {
             var correlationIdsCanClear = new ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs>();
             var exceptionBag = new ConcurrentBag<String>();
@@ -138,37 +151,47 @@ namespace Logitude.CustomsMessaging.Dca
             NG_9101_MSG_OutgoingMessageResponse response = null;
             try
             {
-                var request = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.NG_9100_MSG_OutgoingMessageRequest()
+                if (testResponse != null)
                 {
-                    PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
+                    response = testResponse;
+                }
+                else
+                {
+                    var request = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.NG_9100_MSG_OutgoingMessageRequest()
                     {
-                        Peek_Way = 2,
-                        Take = _CustomsSettingPM.QtyFeedbackInPendingMessage ?? 20,
-                    },
-                    GetOptions = null,
+                        PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
+                        {
+                            Peek_Way = 2,
+                            Take = _CustomsSettingPM.QtyFeedbackInPendingMessage ?? 20,
+                        },
+                        GetOptions = null,
 
-                    RequestContentHeader = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.RequestContentHeader()
+                        RequestContentHeader = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.RequestContentHeader()
+                        {
+                            SenderID = 1,
+                            TransmitionDateTime = DateTime.Now,
+                            RecieverID = new int[] { 11 }
+
+                        }
+                    };
+
+                    var myIIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
+
+
+
+                    using (var uifreightSdkGateway = new UnifreightSdkGateway(_CustomsSettingPM.IIGServiceAddress))
                     {
-                        SenderID = 1,
-                        TransmitionDateTime = DateTime.Now,
-                        RecieverID = new int[] { 11 }
+                        var _ResponseHeader = uifreightSdkGateway.GetChannel<IOutgoingMessageRequestOperation>()
+                            .OutgoingMessageRequest(
+                            RequestsSheetExternalId,
+                            _CustomsSettingPM.CustomsAgentId,
+                            request,
+                            ref myIIGGatewayMoreParams,
+                            out response);
 
                     }
-                };
-
-                var myIIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-
-                using (var uifreightSdkGateway = new UnifreightSdkGateway(_CustomsSettingPM.IIGServiceAddress))
-                {
-                    var _ResponseHeader = uifreightSdkGateway.GetChannel<IOutgoingMessageRequestOperation>()
-                        .OutgoingMessageRequest(
-                        RequestsSheetExternalId,
-                        _CustomsSettingPM.CustomsAgentId,
-                        request,
-                        ref myIIGGatewayMoreParams,
-                        out response);
-
                 }
+
                 var files = new List<String>();
                 _SBInfoLog.AppendLine($"HowManyOtherWaitingMessages {response.Result.HowManyOtherWaitingMessages}  took:{sw.Elapsed}");
                 _SBInfoLog.AppendLine($"RowNumbers {response.Result.RowNumbers}");
@@ -176,9 +199,9 @@ namespace Logitude.CustomsMessaging.Dca
                 sbFilenameQueue.Enqueue($"Start Tenant {_CustomsSettingPM.Tenant}");
                 if (response.OutgoingMessage != null)
                 {
-                                        
-                    var dcaUtil = new DcaFilterByEnvironmentService(); 
-                    var res =  dcaUtil
+
+                    var dcaUtil = new DcaFilterByEnvironmentService();
+                    var res = dcaUtil
                         .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList(), _AllDcaPreFixByEnvironment);
                     var outgoingMessageFilterByEnvironment = res.OutgoingMessage;
                     sbFilenameQueue.Enqueue(res.SbLocal.ToString());
@@ -186,7 +209,8 @@ namespace Logitude.CustomsMessaging.Dca
                     Parallel.ForEach(
                         outgoingMessageFilterByEnvironment,
                         new ParallelOptions { MaxDegreeOfParallelism = 4 },//cpu
-                        itemOutgoingMessage => {
+                        itemOutgoingMessage =>
+                        {
                             TPL_SaveInDB(correlationIdsCanClear, sbFilenameQueue, itemOutgoingMessage, exceptionBag);
                         }
                         );
@@ -194,7 +218,7 @@ namespace Logitude.CustomsMessaging.Dca
                 }
                 exceptionBag.ToList().ForEach(err => _SBErrorLog.AppendLine(err));
 
-                if (correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
+                if (!SkipCorrelationClearForTests && correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
                 {
                     UpdateIIGCorralationAreDone(correlationIdsCanClear.ToList());
 
@@ -220,7 +244,7 @@ namespace Logitude.CustomsMessaging.Dca
             return response?.Result?.HowManyOtherWaitingMessages;
         }
 
-        public int? Send9100Take100Messages_HaveMore()
+        public int? Send9100Take100Messages_HaveMore(NG_9101_MSG_OutgoingMessageResponse testResponse = null)
         {
             var correlationIdsCanClear = new List<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs>();
 
@@ -228,36 +252,45 @@ namespace Logitude.CustomsMessaging.Dca
             NG_9101_MSG_OutgoingMessageResponse response = null;
             try
             {
-                var request = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.NG_9100_MSG_OutgoingMessageRequest()
+                if (testResponse != null)
                 {
-                    PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
+                    response = testResponse;
+                }
+                else
+                {
+                    var request = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.NG_9100_MSG_OutgoingMessageRequest()
                     {
-                        Peek_Way = 2,
-                        Take = _CustomsSettingPM.QtyFeedbackInPendingMessage ?? 20,
-                    },
-                    GetOptions = null,
+                        PeekWay = new NG_9100_MSG_OutgoingMessageRequestPeekWay()
+                        {
+                            Peek_Way = 2,
+                            Take = _CustomsSettingPM.QtyFeedbackInPendingMessage ?? 20,
+                        },
+                        GetOptions = null,
 
-                    RequestContentHeader = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.RequestContentHeader()
+                        RequestContentHeader = new UnifreightIIG.Common.OutgoingMessageRequestServiceReference.RequestContentHeader()
+                        {
+                            SenderID = 1,
+                            TransmitionDateTime = DateTime.Now,
+                            RecieverID = new int[] { 11 }
+
+                        }
+                    };
+
+                    var myIIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
+
+
+
+                    using (var uifreightSdkGateway = new UnifreightSdkGateway(_CustomsSettingPM.IIGServiceAddress))
                     {
-                        SenderID = 1,
-                        TransmitionDateTime = DateTime.Now,
-                        RecieverID = new int[] { 11 }
+                        var _ResponseHeader = uifreightSdkGateway.GetChannel<IOutgoingMessageRequestOperation>()
+                            .OutgoingMessageRequest(
+                            RequestsSheetExternalId,
+                            _CustomsSettingPM.CustomsAgentId,
+                            request,
+                            ref myIIGGatewayMoreParams,
+                            out response);
 
                     }
-                };
-
-                var myIIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-
-                using (var uifreightSdkGateway = new UnifreightSdkGateway(_CustomsSettingPM.IIGServiceAddress))
-                {
-                    var _ResponseHeader = uifreightSdkGateway.GetChannel<IOutgoingMessageRequestOperation>()
-                        .OutgoingMessageRequest(
-                        RequestsSheetExternalId,
-                        _CustomsSettingPM.CustomsAgentId,
-                        request,
-                        ref myIIGGatewayMoreParams,
-                        out response);
-
                 }
                 var files = new List<String>();
                 _SBInfoLog.AppendLine($"HowManyOtherWaitingMessages {response.Result.HowManyOtherWaitingMessages}  took:{sw.Elapsed}");
@@ -266,7 +299,7 @@ namespace Logitude.CustomsMessaging.Dca
                 sbFilename.AppendLine($"Start Tenant {_CustomsSettingPM.Tenant}");
                 if (response.OutgoingMessage != null)
                 {
-                    
+
                     var dcaUtil = new DcaFilterByEnvironmentService();
                     var resFilterByEnvironmentOutGoing = dcaUtil
                         .FilterByEnvironmentOutGoing(_CustomsSettingPM.Tenant, response.OutgoingMessage.ToList(), _AllDcaPreFixByEnvironment);
@@ -282,16 +315,12 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-                if (correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
+                if (!SkipCorrelationClearForTests && correlationIdsCanClear != null && correlationIdsCanClear.Count() > 0)
                 {
                     UpdateIIGCorralationAreDone(correlationIdsCanClear);
-
-
-
                     NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sbFilename.ToString() + "TenantDownloaderFilename");
                     string haveMore = response.Result.HowManyOtherWaitingMessages > 0 ? "Have more .." : "";
                     _SBInfoLog.AppendLine("All messages received  " + haveMore);
-
                 }
 
 
@@ -359,54 +388,53 @@ namespace Logitude.CustomsMessaging.Dca
                 var myFileName = System.IO.Path.GetFileName(itemOutgoingMessage.Filename);
                 var dcaFile = DCAFilePraser.GetDCAFileModel(myFileName);
                 InterfaceTenantDefinitionManagementPM messageDCA = _InterfaceListDCA.FirstOrDefault(
-rec => IsStart(rec.InterfaceManagement.DcaPrefixName, myFileName) ||
-IsStart(rec.InterfaceManagement.DcaPrefixName2, myFileName) ||
-IsStart(rec.InterfaceManagement.DcaPrefixName3, myFileName) ||
-IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
-);
+                    rec => IsStart(rec.InterfaceManagement.DcaPrefixName, myFileName) ||
+                    IsStart(rec.InterfaceManagement.DcaPrefixName2, myFileName) ||
+                    IsStart(rec.InterfaceManagement.DcaPrefixName3, myFileName) ||
+                    IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName) ||
+                    (rec.InterfaceManagement.DcaPrefixName == null && rec.InterfaceManagement.DcaPrefixName2 == null
+                    && rec.InterfaceManagement.DcaPrefixName3 == null && rec.InterfaceManagement.DcaPrefixName4 == null));
+                var IsUnifreight = messageDCA.IsUnifreight == true ? messageDCA.IsUnifreight : messageDCA.InterfaceManagement.IsUnifreight;
+                var IsCustomsFile = messageDCA.IsCustomsFile == true ? messageDCA.IsCustomsFile : messageDCA.InterfaceManagement.IsCustomsFile;
 
-                if (messageDCA != null && _AllDcaPreFixWithoutInOutUpper.Any(prefix => myFileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+
+                if (IsUnifreight == true && IsCustomsFile == false)
                 {
-                    try
-                    {
-
-
-                        SaveRequestSheet(messageDCA, dcaFile, itemOutgoingMessage.MSG);
-
-                        correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
-                        sbFilename.Enqueue(myFileName);
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
-                        //NumOfMessages++;
-                    }
-                    catch (System.Exception EE)
-                    {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE,$"SaveInDB({myFileName})");
-                        _SaveError = true;
-                        exceptionBag.Add($"Error while save message in DCA : {EE.ToString()}");
-                        //throw;
-                    }
+                    UploadViaSftp(myFileName, itemOutgoingMessage.MSG, s => sbFilename.Enqueue(s));
                 }
                 else
                 {
 
-                    sbFilename.Enqueue($"NOT NEEDED!!!! {myFileName}");
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
-                    if (_DedicatedCourierDCAModel != null)
+                    if (messageDCA != null && _AllDcaPreFixWithoutInOutUpper.Any(prefix => myFileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
                     {
-                        string fileBackupPath = null;
                         try
                         {
-                            fileBackupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, myFileName);
-                            File.WriteAllText(fileBackupPath, itemOutgoingMessage.MSG);
-                        }
-                        catch (System.Exception e)
-                        {
 
-                            sbFilename.Enqueue($"WriteAllText error!!!! {e.Message} {fileBackupPath}");
+
+                            SaveRequestSheet(messageDCA, dcaFile, itemOutgoingMessage.MSG);
+
+                            correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
+                            sbFilename.Enqueue(myFileName);
+                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
+                            if (IsUnifreight == true)
+                            {
+                                UploadViaSftp(myFileName, itemOutgoingMessage.MSG, s => sbFilename.Enqueue(s));
+                            }
+                        }
+                        catch (System.Exception EE)
+                        {
+                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE, $"SaveInDB({myFileName})");
+                            _SaveError = true;
+                            exceptionBag.Add($"Error while save message in DCA : {EE.ToString()}");
+                            //throw;
                         }
                     }
-                    //NumOfMessages++;
-                    correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
+                    else
+                    {
+                        HandleNotNeededMessage(myFileName, itemOutgoingMessage.MSG, s => sbFilename.Enqueue(s));
+                        correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs
+                        { CorrelationIDs = itemOutgoingMessage.CorrelationId });
+                    }
                 }
 
             }
@@ -438,15 +466,18 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 
 
                         SaveRequestSheet(messageDCA, dcaFile, itemOutgoingMessage.MSG);
-
                         correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                         sbFilename.AppendLine(myFileName);
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
                         NumOfMessages++;
+                        if (messageDCA.InterfaceManagement.IsUnifreight.GetValueOrDefault())
+                        {
+                            UploadViaSftp(myFileName, itemOutgoingMessage.MSG, s => sbFilename.AppendLine(s));
+                        }
                     }
                     catch (System.Exception EE)
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE, $"SaveInDB({myFileName})");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE, $"SaveInDB({myFileName})");
                         _SaveError = true;
                         _SBErrorLog.AppendLine($"Error while save message in DCA : {EE.ToString()}");
                         //throw;
@@ -454,25 +485,10 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 }
                 else
                 {
-
-                    sbFilename.AppendLine($"NOT NEEDED!!!! {myFileName}");
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"NOT NEEDED!!!! needed in our tenant =SaveInDB({myFileName})");
-                    if (_DedicatedCourierDCAModel != null)
-                    {
-                        string fileBackupPath = null;
-                        try
-                        {
-                            fileBackupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, myFileName);
-                            File.WriteAllText(fileBackupPath, itemOutgoingMessage.MSG);
-                        }
-                        catch (System.Exception e)
-                        {
-
-                            sbFilename.AppendLine($"WriteAllText error!!!! {e.Message} {fileBackupPath}");
-                        }
-                    }
+                    HandleNotNeededMessage(myFileName, itemOutgoingMessage.MSG, s => sbFilename.AppendLine(s));
                     NumOfMessages++;
-                    correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
+                    correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs
+                    { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                 }
 
             }
@@ -507,13 +523,13 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
             {
                 try
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCA MessagingSheetWR: SaveMessageToAnalyzeQueueN():!ContainerAccessor.Container.IsRegistered :analyzeClass = " + currMessagingService);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Due infinite errors i cancel writing log");
 
                     if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                     {
                         _LastErrordateTime = DateTime.Now;
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log"+":"+"DCANotIsRegistered");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log" + ":" + "DCANotIsRegistered");
                     }
                 }
                 catch
@@ -554,6 +570,60 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
 
             }
             return currMessagingService;
+        }
+        private static FTPDetail ToFtpDetail(PartnerSftpConfig cfg)
+        {
+            return cfg == null ? null : new FTPDetail
+            {
+                Host = cfg.Host,
+                UserName = cfg.Username,
+                Password = cfg.Password,
+                Folder = cfg.RemotePath
+            };
+        }
+        private void UploadViaSftp(string fileName, string fileContents, Action<string> logLineOut)
+        {
+            if (_uploadFtpDetail == null) return;         
+
+            try
+            {
+                var uploader = new PartnerSftpUploader(_uploadFtpDetail);
+                uploader.UploadBytes(fileName, Encoding.UTF8.GetBytes(fileContents));
+
+                logLineOut?.Invoke($"SFTP upload OK → {fileName}");
+                NetCommonHelper.Logger.DevLog.Instance
+                    .WriteDebug($"SFTP upload OK → {fileName}");
+            }
+            catch (System.Exception ex)
+            {
+                logLineOut?.Invoke($"SFTP upload error!!!! {ex.Message} for {fileName}");
+                NetCommonHelper.Logger.DevLog.Instance
+                    .WriteError($"SFTP‑Upload: {ex}");
+                _SaveError = true;               
+            }
+        }
+        private void HandleNotNeededMessage(string fileName, string fileContents, Action<string> logLineOut)
+        {
+            logLineOut?.Invoke($"NOT NEEDED!!!! {fileName}");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                $"NOT NEEDED!!!! SaveInDB({fileName})");
+
+            UploadViaSftp(fileName, fileContents, logLineOut);
+
+            if (_DedicatedCourierDCAModel != null)
+            {
+                try
+                {
+                    string backupPath = Path.Combine(_DedicatedCourierDCAModel.BackupPath, fileName);
+                    File.WriteAllText(backupPath, fileContents);
+                }
+                catch (System.Exception ex)
+                {
+                    logLineOut?.Invoke($"WriteAllText error!!!! {ex.Message}");
+                    NetCommonHelper.Logger.DevLog.Instance
+                        .WriteError($"Backup‑NotNeeded: {ex}");
+                }
+            }
         }
     }
 }

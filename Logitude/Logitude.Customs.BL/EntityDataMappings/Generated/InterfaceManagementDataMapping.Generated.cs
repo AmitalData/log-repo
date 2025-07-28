@@ -47,7 +47,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UseRabbitMQ, 
 	         SendTime, 
 	         Environment, 
-	         EntityLockId,
+	         EntityLockId, 
+	         IsCustomsFile, 
+	         IsUnifreight,
 	      }
 
 
@@ -82,7 +84,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SendTime, 
 	         Environment, 
 	         EntityLockId, 
-	         EntityLockName,
+	         EntityLockName, 
+	         IsCustomsFile, 
+	         IsUnifreight,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -184,6 +188,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityLockId))
             {
 				entityPOCO.EntityLockId = entityPM.EntityLockId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsFile))
+            {
+				entityPOCO.IsCustomsFile = entityPM.IsCustomsFile;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUnifreight))
+            {
+				entityPOCO.IsUnifreight = entityPM.IsUnifreight;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -292,6 +306,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.EntityLockId = entityPOCO.EntityLockId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCustomsFile))
+            {
+					entityPM.IsCustomsFile = entityPOCO.IsCustomsFile;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsUnifreight))
+            {
+					entityPM.IsUnifreight = entityPOCO.IsUnifreight;
+            }
+
 		}
 
 		public void PMToOldPM(InterfaceManagementPM entityPM, InterfaceManagementPM oldEntityPM)
@@ -391,6 +415,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityLockId))
             {
                 oldEntityPM.EntityLockId = entityPM.EntityLockId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCustomsFile))
+            {
+                oldEntityPM.IsCustomsFile = entityPM.IsCustomsFile;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsUnifreight))
+            {
+                oldEntityPM.IsUnifreight = entityPM.IsUnifreight;
             }
 			
 		}

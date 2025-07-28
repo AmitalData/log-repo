@@ -20,6 +20,8 @@ export class InterfaceTenantDefinitionList {
 	UseRabbitMQ: boolean;
 	QueueGroupCode: string;
 	SendTime: string;
+	IsCustomsFile: boolean;
+	IsUnifreight: boolean;
 	
 }
  

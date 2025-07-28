@@ -22,6 +22,8 @@ using System.Diagnostics;
 using Logitude.CustomsMessaging.Dca;
 using System.Configuration;
 using Logitude.Server.Tools.Utils;
+using UnifreightIIG.DCA;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace CustomsWorkerRole
 {
