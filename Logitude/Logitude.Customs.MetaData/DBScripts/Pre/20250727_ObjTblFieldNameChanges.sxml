@@ -19,57 +19,18 @@
           EXECUTE IMMEDIATE v_sql;
         END LOOP;
       END;
-      
+    
+      EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" ADD "FIELDNAME_TEMP" VARCHAR2(200 CHAR)';
 
-      -- Add FIELDNAME_TEMP only if not exists
-      BEGIN
-        EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" ADD "FIELDNAME_TEMP" VARCHAR2(200 CHAR)';
-      EXCEPTION
-        WHEN OTHERS THEN
-          IF SQLCODE != -01430 THEN -- ignore 'column already exists'
-            RAISE;
-          END IF;
-      END;
-      
-
-      -- Copy data
       EXECUTE IMMEDIATE 'UPDATE "OBJECTFIELDS" SET "FIELDNAME_TEMP" = "FIELDNAME"';
 
-      -- Drop original column
-      BEGIN
-        EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" DROP COLUMN "FIELDNAME"';
-      EXCEPTION
-        WHEN OTHERS THEN
-          IF SQLCODE != -00904 THEN -- ignore if column doesn't exist
-            RAISE;
-          END IF;
-      END;
-      
+      EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" DROP COLUMN "FIELDNAME"';
 
-      -- Add FIELDNAME back only if not exists
-      BEGIN
-        EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" ADD "FIELDNAME" VARCHAR2(200 CHAR)';
-      EXCEPTION
-        WHEN OTHERS THEN
-          IF SQLCODE != -01430 THEN
-            RAISE;
-          END IF;
-      END;
-      
+      EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" ADD "FIELDNAME" VARCHAR2(200 CHAR)';
 
-      -- Restore data
       EXECUTE IMMEDIATE 'UPDATE "OBJECTFIELDS" SET "FIELDNAME" = "FIELDNAME_TEMP"';
 
-      -- Drop temp column
-      BEGIN
-        EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" DROP COLUMN "FIELDNAME_TEMP"';
-      EXCEPTION
-        WHEN OTHERS THEN
-          IF SQLCODE != -00904 THEN
-            RAISE;
-          END IF;
-      END;
-      
+      EXECUTE IMMEDIATE 'ALTER TABLE "OBJECTFIELDS" DROP COLUMN "FIELDNAME_TEMP"';
     ]]>
   </Oracle>
 </Script>
