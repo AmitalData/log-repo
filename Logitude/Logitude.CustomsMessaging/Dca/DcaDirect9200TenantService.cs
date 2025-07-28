@@ -394,7 +394,11 @@ namespace Logitude.CustomsMessaging.Dca
                     IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName) ||
                     (rec.InterfaceManagement.DcaPrefixName == null && rec.InterfaceManagement.DcaPrefixName2 == null
                     && rec.InterfaceManagement.DcaPrefixName3 == null && rec.InterfaceManagement.DcaPrefixName4 == null));
-                if (messageDCA.IsUnifreight == true && messageDCA.IsCustomsFile == false)
+                var IsUnifreight = messageDCA.IsUnifreight == true ? messageDCA.IsUnifreight : messageDCA.InterfaceManagement.IsUnifreight;
+                var IsCustomsFile = messageDCA.IsCustomsFile == true ? messageDCA.IsCustomsFile : messageDCA.InterfaceManagement.IsCustomsFile;
+
+
+                if (IsUnifreight == true && IsCustomsFile == false)
                 {
                     UploadViaSftp(myFileName, itemOutgoingMessage.MSG, s => sbFilename.Enqueue(s));
                 }
@@ -412,7 +416,7 @@ namespace Logitude.CustomsMessaging.Dca
                             correlationIDs.Add(new NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs { CorrelationIDs = itemOutgoingMessage.CorrelationId });
                             sbFilename.Enqueue(myFileName);
                             NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -Done");
-                            if (messageDCA.InterfaceManagement.IsUnifreight == true)
+                            if (IsUnifreight == true)
                             {
                                 UploadViaSftp(myFileName, itemOutgoingMessage.MSG, s => sbFilename.Enqueue(s));
                             }
@@ -579,7 +583,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
         }
         private void UploadViaSftp(string fileName, string fileContents, Action<string> logLineOut)
         {
-            if (_uploadFtpDetail == null) return;          // nothing configured → skip
+            if (_uploadFtpDetail == null) return;         
 
             try
             {
@@ -595,7 +599,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                 logLineOut?.Invoke($"SFTP upload error!!!! {ex.Message} for {fileName}");
                 NetCommonHelper.Logger.DevLog.Instance
                     .WriteError($"SFTP‑Upload: {ex}");
-                _SaveError = true;               // optional – follow your convention
+                _SaveError = true;               
             }
         }
         private void HandleNotNeededMessage(string fileName, string fileContents, Action<string> logLineOut)

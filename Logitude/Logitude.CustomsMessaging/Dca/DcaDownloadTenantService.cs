@@ -189,11 +189,14 @@ namespace Logitude.CustomsMessaging.Dca
             _featureDcaSftp =
                 features.Features.Any(f => f.Code.Equals("DownloadDcaSftp", StringComparison.OrdinalIgnoreCase));
 
-            _uploadCfg = LoadPartnerSftpConfig(
-                                   CustomsPartnerFtpDetails.TypeCode_Out,
-                                   InterfaceName_UploadNotNeeded9100FilesToSftp);
+            
             if (_featureDcaSftp)
             {
+
+                _uploadCfg = LoadPartnerSftpConfig(
+                                   CustomsPartnerFtpDetails.TypeCode_Out,
+                                   InterfaceName_UploadNotNeeded9100FilesToSftp);
+
                 _downloadCfg = LoadPartnerSftpConfig(
                                        CustomsPartnerFtpDetails.TypeCode_In,
                                        InterfaceName_DownloadCustomsFilesFromSftp);
