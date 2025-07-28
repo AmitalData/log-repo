@@ -815,7 +815,7 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
             if (!(!String.IsNullOrWhiteSpace(this._MySupplierInvoicePM.InvoiceCurrencyTypeCode) && String.IsNullOrWhiteSpace(this._INVOICE.CURRENCYCODE)))
             {
-                this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = this._INVOICE.CURRENCYCODE;
+                this._MySupplierInvoicePM.InvoiceCurrencyTypeCode = this._INVOICE.CURRENCYCODE == "" ? null : this._INVOICE.CURRENCYCODE;
             }
             if (this._INVOICE.INVOICEAMOUNT != null && !String.IsNullOrWhiteSpace(this._INVOICE.INVOICEAMOUNT))
             {
