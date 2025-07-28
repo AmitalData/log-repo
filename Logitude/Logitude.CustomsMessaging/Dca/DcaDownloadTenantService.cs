@@ -1093,7 +1093,7 @@ out myMessageOut);
                 _CustomsSettingPM.Tenant,
                 interfaceName,
                 CustomsPartnerFtpDetails.PartnerCode_AMITAL,
-                CustomsPartnerFtpDetails.TypeCode_In);
+                typeCode);
 
             if (partnerFtpPM == null|| partnerFtpPM.MyFtpDetail == null|| !partnerFtpPM.MyFtpDetail.UseSFTP)
             {
