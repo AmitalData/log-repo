@@ -79,7 +79,7 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
             return this.entityPM.TaxYear.toString();
         }
 
-        if (this.entityPM.FromMonth === this.entityPM.Month) {
+        if (this.entityPM.FromMonth === this.entityPM.Month || !this.entityPM.FromMonth) {
             return `${TextCodeTranslator.Translate("TaxDeductionReport.F.Month")} ${this.FormatDateToMonthYear(this.entityPM.Month)}`;
         }
 

@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxDeductionReportUpdateClass
    {  		
-		public const string HashString = "2467ae0ea0bd8ab6e16057e5f4c35b25";
+		public const string HashString = "b0fcd6585ea0b4762e5e31a2076a4b51";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1741,15 +1741,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalPayments", DefaultText = "Total Payments",LocalDefaultText = @"סה''כ תשלומים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalDeductions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalDeductions", DefaultText = "Total Deductions",LocalDefaultText = @"סה''כ ניכויים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalDeductions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalDeductions", DefaultText = "Total Deductions", LocalDefaultText = @"סה''כ ניכויים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.Month", DefaultText = "Month", LocalDefaultText = @"חודש", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportONumberOfVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.NumberOfVendors", DefaultText = "Number Of Vendors", LocalDefaultText = @"סה''כ ספקים", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalPaymentsWODividend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalPaymentsWODividend", DefaultText = "Total Payments without Dividend", LocalDefaultText = @"סה''כ תשלומים ללא דיבידנד", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode TaxDeductionReportTextCode_TaxDeductionReportOTotalDeductionsWODividend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxDeductionReport.O.TotalDeductionsWODividend", DefaultText = "Total Deductions without Dividend", LocalDefaultText = @"סה''כ ניכויים ללא דיבידנד", ObjectTableId = TaxDeductionReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
 
-    
 
-   }
+        }
+
+
+
+    }
     
 }
 	 

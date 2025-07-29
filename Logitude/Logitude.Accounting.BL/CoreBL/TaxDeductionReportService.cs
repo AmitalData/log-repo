@@ -41,11 +41,13 @@ namespace Logitude.Accounting.BL.CoreBL
     public class TaxDeductionReportService
     {
         private string _AggregateKey;
-        public static DocumentsFilingPM Create856File(string taxDeductionReportId, int tenant)
+        public static DocumentsFilingPM Create856File(ref TaxDeductionReportPM taxDeductionReportPM, int tenant)
         {
+            string taxDeductionReportId = taxDeductionReportPM.Id;
+
             IAccountingContext context = AccountingContext.GetContext(tenant);
             TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(context);
-            TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
+            //TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
 
             List<string> linesArray = new List<string>();
             TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant,null);
@@ -625,6 +627,21 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
+        public static void CreateReportDataForOlderReports(ref TaxDeductionReportPM taxDeductionReportPM, int tenant)
+        {
+            string taxDeductionReportId = taxDeductionReportPM.Id;
+
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(context);
+
+            List<string> linesArray = new List<string>();
+            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM, tenant, null);
+            TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
+
+            // Create an instance of the service to handle saving and updating the tax deduction report with concurrency control (locking)
+            TaxDeductionReportService taxDeductionReportServiceOcrnc = new TaxDeductionReportService();
+            taxDeductionReportServiceOcrnc.SaveAndUpdateReportWithLock(context, taxDeductionReportPM, data, tenant, taxDeductionReportId);
+        }
 
         private static DocumentsFilingPM CreateDocumnetFiling(StringBuilder lines,string DeductionFileNumber, TaxDeductionReportPM taxDeductionReport, bool isFromWR = false)
         {

@@ -85,16 +85,20 @@ export class TaxDeductionReportExtendedPMService {
 
 
     GetTaxDeductionReportData(tenant: number, reportId: string): Observable<ServiceResponse> {
-        const url = `${this._apiUrl}/GetTaxDeductionReportDataField?tenant=${encodeURIComponent(tenant)}&taxDeductionReport=${encodeURIComponent(reportId)}`;
+        const url = `${this._apiUrl}/GetTaxDeductionReportData?tenant=${encodeURIComponent(tenant)}&reportId=${encodeURIComponent(reportId)}`;
         return this.httpClient.get<any[]>(url, ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
-            //const mappedList = (response ?? []).map(json => this.MapJsonToEntityData(json));
-            const mappedList = Array.isArray(response)
-                ? response.map(json => this.MapJsonToEntityData(json))
-                : [this.MapJsonToEntityData(response)];
-        const serviceResponse = new ServiceResponse();
-        serviceResponse.Result = mappedList[0];
-        return serviceResponse;
+            const returnedval = response as any;
+            console.log("Returned value:", returnedval);
+            let mappedList;
+            if (Array.isArray(response)) {
+                mappedList = response.map(json => this.MapJsonToEntityData(json));
+            } else {
+                mappedList = this.MapJsonToEntityData(response);
+            }
+            const serviceResponse = new ServiceResponse();
+            serviceResponse.Result = mappedList;
+            return serviceResponse;
         }),
         catchError(ServiceHelper.HandleServiceError)
         );

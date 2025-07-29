@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
@@ -11,11 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using System.Text.Json;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -49,7 +50,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
         [HttpGet]
-        public HttpResponseMessage GetTaxDeductionReportDataField(int tenant, string taxDeductionReport)
+        [Route("TaxDeductionReportFile/GetTaxDeductionReportData")]
+        public HttpResponseMessage GetTaxDeductionReportData(int tenant, string reportId)
         {
             try
             {
@@ -65,15 +67,21 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 }
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
-                
+
                 IAccountingContext context = AccountingContext.GetContext(authToken.Tenant);
                 TaxDeductionReportQueryService taxDeductionReportQuery = new TaxDeductionReportQueryService(context);
                 taxDeductionReportQuery.InitializeSettings();
-                TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQuery.GetSingle(taxDeductionReport, true, false);
+                TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQuery.GetSingle(reportId, true, false);
                 if (taxDeductionReportPM == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Tax Deduction Report not found.");
                 }
+
+                if (taxDeductionReportPM.StatusTypeCode == TaxDeductionReportStatusValues.Completed && String.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData))
+                {
+                    TaxDeductionReportService.CreateReportDataForOlderReports(ref taxDeductionReportPM, tenant);
+                }
+
                 TaxDeductionReportData taxDeductionReportData = string.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData)
                                 ? new TaxDeductionReportData()
                                 : JsonSerializer.Deserialize<TaxDeductionReportData>(taxDeductionReportPM.ReportSavedData);
