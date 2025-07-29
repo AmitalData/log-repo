@@ -453,8 +453,9 @@ export class ARPaymentMenuButtonsHandler {
                 _edit.ValidationErrorsList = [TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines')];
                 return;
             }else{
-                if(_edit.ValidationErrorsList !== null && _edit.ValidationErrorsList.length > 0){ 
-                   return;
+                this.Validate();
+                if (!this.isValid) {
+                    return;
                 }
                 _edit.ValidationErrorsList = [];
             }
