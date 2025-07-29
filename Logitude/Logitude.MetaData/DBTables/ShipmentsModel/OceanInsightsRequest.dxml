@@ -72,4 +72,11 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="System"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

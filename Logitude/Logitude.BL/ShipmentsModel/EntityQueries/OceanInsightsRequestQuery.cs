@@ -36,8 +36,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          UpdateDate = a.UpdateDate,
                                                          Type = a.Type,
                                                          BLNumber = a.BLNumber,
-                                                         FromPushPage = a.FromPushPage
-                                                     }).FirstOrDefault();
+                                                         FromPushPage = a.FromPushPage,
+														 System = a.System
+											   }).FirstOrDefault();
 
               
             return myResult;
@@ -58,8 +59,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
-                                               }).FirstOrDefault();
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System
+											   }).FirstOrDefault();
 
 
             return myResult;
@@ -80,8 +82,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
-                                               }).FirstOrDefault();
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System
+											   }).FirstOrDefault();
 
 
             return myResult;
@@ -102,8 +105,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
-                                               }).ToList();
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System
+											   }).ToList();
 
 
             return myResult;
@@ -124,8 +128,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
-                                               }).FirstOrDefault();
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System
+											   }).FirstOrDefault();
 
 
             return myResult;
@@ -169,7 +174,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   UpdateDate = a.UpdateDate,
 												   Type = a.Type,
 												   BLNumber = a.BLNumber,
-												   FromPushPage = a.FromPushPage
+												   FromPushPage = a.FromPushPage,
+												   System = a.System
 											   }).FirstOrDefault();
 
 
@@ -191,7 +197,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   UpdateDate = a.UpdateDate,
 												   Type = a.Type,
 												   BLNumber = a.BLNumber,
-												   FromPushPage = a.FromPushPage
+												   FromPushPage = a.FromPushPage,
+												   System = a.System
 											   }).FirstOrDefault();
 
 
@@ -213,8 +220,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          UpdateDate = a.UpdateDate,
                                                          Type = a.Type,
                                                          BLNumber = a.BLNumber,
-                                                         FromPushPage = a.FromPushPage
-                                                     }).ToList(); 
+                                                         FromPushPage = a.FromPushPage,
+														 System = a.System
+													 }).ToList(); 
             return myResult;
         }
 
