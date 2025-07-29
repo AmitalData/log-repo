@@ -152,6 +152,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency; 
 				   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
                    temp.InternalNotes = MyEntityPM.InternalNotes;
+				   temp.ReferenceDate = MyEntityPM.ReferenceDate;
 
                 if (MyEntityPM.TransferStatusCode != null)
 				   {
@@ -185,6 +186,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId;
                    temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
                    temp.InternalNotes = MyEntityPM.InternalNotes;
+				   temp.ReferenceDate = MyEntityPM.ReferenceDate;
 
                 if (MyEntityPM.StatusCode != null)
 				   {
@@ -710,9 +712,15 @@ using Simplog.Data.CommonDataModel.Repositories;
 						} 
 
 					}
-			
-										   
-					return temp;
+
+
+					if (!IsUpdate)
+					{
+						temp.ReferenceDate = MyEntity.ReferenceDate;
+
+					}
+
+                return temp;
 		    }
             catch (Exception ex)
             {
