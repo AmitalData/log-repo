@@ -65,12 +65,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.ObjectTables;
         }
 
-        public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache)
+        public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache,int contextTenant=0)
         {
+            if(contextTenant == 0) {
+                contextTenant = SettingUtil.GetCurrentTenant();
+            }
             ObjectTable entity;
             if (getFromCache)
             {
-                string entityName = "ObjectTable" + name + tenant;
+                string entityName = "ObjectTable" + name + tenant + contextTenant;
 
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {

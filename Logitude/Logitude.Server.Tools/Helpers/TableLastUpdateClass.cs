@@ -44,17 +44,17 @@ namespace Logitude.BL.Helpers
 
 
 
-            entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
+            entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
             tableName = tableName ?? "";
             if (entityObjectTable == null && tableName.EndsWith("s", StringComparison.OrdinalIgnoreCase))
             {
                 var tableWithoutS = tableName.Substring(0, Math.Max(0, tableName.Length - 1));
-                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
+                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
             }
 
 
             loggedUser = loggedUser ?? GetUser(tenant, tableLastUpdateM, contextTenant);
-            entityObjectTable = entityObjectTable ?? GetObjectTable(tenant, tableName, tableLastUpdateM, context);
+            entityObjectTable = entityObjectTable ?? GetObjectTable(tenant, tableName, tableLastUpdateM, context,contextTenant);
 
 
             if (loggedUser == null)
@@ -109,7 +109,7 @@ namespace Logitude.BL.Helpers
         }
     
 
-        private static ObjectTable GetObjectTable(int tenant, string tableName, TableLastUpdateM tableLastUpdateM, IWebFreightContext context)
+        private static ObjectTable GetObjectTable(int tenant, string tableName, TableLastUpdateM tableLastUpdateM, IWebFreightContext context,int contextTenant=0)
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
             ObjectTable entityObjectTable = null;
@@ -121,7 +121,7 @@ namespace Logitude.BL.Helpers
             }
             if (entityObjectTable == null)
             {
-                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
+                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
             }
             return entityObjectTable;
         }
