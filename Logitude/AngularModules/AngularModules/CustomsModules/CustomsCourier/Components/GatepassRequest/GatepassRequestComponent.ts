@@ -59,11 +59,11 @@ export class GatepassRequestComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        if (!AppTool.IsNullOrEmpty(args)) {
-            this.CourierMasterPM = args.CourierMasterPM;
+        if (!AppTool.IsNullOrEmpty(args)) {  
+            this.CourierMasterPM = args;
             this.EntityPM = new GatepassRequestPM();
 
-            if (AppTool.IsNullOrEmpty(this.CourierMasterPM.MAWB)) {
+            if (AppTool.IsNullOrEmpty(this.CourierMasterPM?.MAWB)) {
                 var myMessageWindow = new MessageWindow();
                 myMessageWindow.Width = 250;
                 myMessageWindow.Height = 150;
@@ -102,17 +102,17 @@ export class GatepassRequestComponent extends BaseComponent {
     }
 
     //#region Properties
-    public get MAWB() { return this.CourierMasterPM.MAWB; }
+    public get MAWB() { return this.CourierMasterPM?.MAWB; }
     public set MAWB(newValue: string) {
         this.CourierMasterPM.MAWB = newValue;
     }
 
-    public get AirlinePrefix() { return this.CourierMasterPM.AirlinePrefix; }
+    public get AirlinePrefix() { return this.CourierMasterPM?.AirlinePrefix; }
     public set AirlinePrefix(newValue: string) {
         this.CourierMasterPM.AirlinePrefix = newValue;
     }
 
-    public get HAWB() { return this.CourierMasterPM.HAWB; }
+    public get HAWB() { return this.CourierMasterPM?.HAWB; }
     public set HAWB(newValue: string) {
         this.CourierMasterPM.HAWB = newValue;
     }
