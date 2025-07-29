@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "519537e92b223767576e7d85ab56a586";
+		public const string HashString = "134c0faa2fe5b53ea26558f275c56dde";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -83,6 +83,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -4542,7 +4543,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalOAccountIsAccountControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIsAccountControl", DefaultText = "{account} is a control account",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlNeV15Ag15fXqdeR15XXnyDXnteo15vXliI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-  		   TextCode JournalTextCode_JournalOSplitByDifferentExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SplitByDifferentExchangeRate", DefaultText = "The %debitAccountName card has a conversion rate of %debitExchangeRateName and the %creditAccountName card has a conversion rate of %creditExchangeRateName. A debit/credit transaction cannot be recorded. Please split the transactions.",LocalDefaultText = @"BS64:Itec15vXqNeY15nXoSAlZGViaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlZGViaXRFeGNoYW5nZVJhdGVOYW1lINeV15zXm9eo15jXmdehICVjcmVkaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlY3JlZGl0RXhjaGFuZ2VSYXRlTmFtZSwg15zXkCDXoNeZ16rXnyDXnNeo16nXldedINeq16DXldei16og15fXmdeV15Ev15bXmdeb15XXmSwg16DXkCDXnNek16bXnCDXkNeqINeU16rXoNeV16LXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOSplitByDifferentExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SplitByDifferentExchangeRate", DefaultText = "The %debitAccountName card has a conversion rate of %debitExchangeRateName and the %creditAccountName card has a conversion rate of %creditExchangeRateName. A debit/credit transaction cannot be recorded. Please split the transactions.",LocalDefaultText = @"BS64:Itec15vXqNeY15nXoSAlZGViaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlZGViaXRFeGNoYW5nZVJhdGVOYW1lINeV15zXm9eo15jXmdehICVjcmVkaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlY3JlZGl0RXhjaGFuZ2VSYXRlTmFtZSwg15zXkCDXoNeZ16rXnyDXnNeo16nXldedINeq16DXldei16og15fXmdeV15Ev15bXmdeb15XXmSwg16DXkCDXnNek16bXnCDXkNeqINeU16rXoNeV16LXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
     
 	    
