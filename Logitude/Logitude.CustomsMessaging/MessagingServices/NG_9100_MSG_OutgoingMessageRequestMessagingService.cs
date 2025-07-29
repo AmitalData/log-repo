@@ -1,7 +1,10 @@
 ﻿
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
+using Logitude.CustomsMessaging.Dca;
 using Logitude.CustomsMessaging.Dca.Restore9100;
+using Logitude.CustomsMessaging.FakeMessagingServices;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.CustomsMessaging.ResponseServices;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -31,7 +34,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
         protected override NG_9101_MSG_OutgoingMessageResponse CallWS(NG_9100_MSG_OutgoingMessageRequest customRequest, MessageWaitingRequestParams requestParams, out string exceptionMessage)
         {
 #if true
-           
+
+            if (requestParams.TestCase != null)
+            {
+                var fake = new Fake_9100(requestParams).CallWS();
+                _ResponseHeader = fake.header;
+                exceptionMessage = fake.exceptionMessage;
+                DcaDirect9200TenantService.testResponse = fake.response;
+                DcaDirect9200TenantService.SkipCorrelationClearForTests = true;
+                var customsSettingQueryService = new CustomsSettingQueryService(requestParams.Tenant);
+                var customsSetting = customsSettingQueryService.GetSingleByTenant(requestParams.Tenant);
+                var downloadDcaMessageSheetWR = new DcaDownloadTenantService(customsSetting);
+                downloadDcaMessageSheetWR.DownloadAll(null,null);
+                return null;
+            }
             var sendNG_9100_MSG_OutgoingMessageRequestService = new SendNG_9100_MSG_OutgoingMessageRequestService();
             var result = sendNG_9100_MSG_OutgoingMessageRequestService.CallWS(customRequest, base.CustomsSetting, _IIGGatewayMoreParams, this.RequestsSheetExternalId);
             exceptionMessage = result.exceptionMessage;

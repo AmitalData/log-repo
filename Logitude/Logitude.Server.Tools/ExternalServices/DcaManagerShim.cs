@@ -116,17 +116,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     string status, message;
                     var remotePath = CombinePath(_config.RemotePath, appendFolder);
 
-                    if (_config.UsePrivateKey)
-                    {
-                        sftp.LogonWithKey(_config.Host, _config.Username, _config.PrivateKeyPath,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
-                    else
-                    {
-                        sftp.Logon(_config.Host, _config.Username, _config.Password,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
-
+                    SftpLogin(sftp, remotePath, out status, out message);
                     if (status != "0")
                     {
                         error = true;
@@ -136,7 +126,7 @@ namespace Logitude.Server.Tools.ExternalServices
 
                     files = sftp.DirList(searchPattern, true, false, out status, out message);
 
-                    if (status != "0" && status != null)
+                    if (status != "0" && string.IsNullOrWhiteSpace(status))
                     {
                         error = true;
                         log = message;
@@ -171,16 +161,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     string status, message;
                     var remotePath = CombinePath(_config.RemotePath, appendFolder);
 
-                    if (_config.UsePrivateKey)
-                    {
-                        sftp.LogonWithKey(_config.Host, _config.Username, _config.PrivateKeyPath,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
-                    else
-                    {
-                        sftp.Logon(_config.Host, _config.Username, _config.Password,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
+                    SftpLogin(sftp, remotePath, out status, out message);
 
                     if (status != "0")
                     {
@@ -280,17 +261,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     string status, message;
                     var remotePath = CombinePath(_config.RemotePath, appendFolder);
 
-                    // Connect
-                    if (_config.UsePrivateKey)
-                    {
-                        sftp.LogonWithKey(_config.Host, _config.Username, _config.PrivateKeyPath,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
-                    else
-                    {
-                        sftp.Logon(_config.Host, _config.Username, _config.Password,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
+                    SftpLogin(sftp, remotePath, out status, out message);
 
                     if (status != "0")
                     {
@@ -332,17 +303,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     string status, message;
                     var remotePath = CombinePath(_config.RemotePath, appendFolder);
 
-                    // Connect
-                    if (_config.UsePrivateKey)
-                    {
-                        sftp.LogonWithKey(_config.Host, _config.Username, _config.PrivateKeyPath,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
-                    else
-                    {
-                        sftp.Logon(_config.Host, _config.Username, _config.Password,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
+                    SftpLogin(sftp, remotePath, out status, out message);
 
                     if (status != "0")
                     {
@@ -384,17 +345,7 @@ namespace Logitude.Server.Tools.ExternalServices
                     string status, message;
                     var remotePath = CombinePath(_config.RemotePath, appendFolder);
 
-                    // Connect
-                    if (_config.UsePrivateKey)
-                    {
-                        sftp.LogonWithKey(_config.Host, _config.Username, _config.PrivateKeyPath,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
-                    else
-                    {
-                        sftp.Logon(_config.Host, _config.Username, _config.Password,
-                            _config.Port.ToString(), remotePath, out status, out message);
-                    }
+                    SftpLogin(sftp, remotePath, out status, out message);
 
                     if (status != "0")
                     {
@@ -439,6 +390,21 @@ namespace Logitude.Server.Tools.ExternalServices
             return string.IsNullOrWhiteSpace(path1)
                 ? path2
                 : $"{path1}{separator}{path2}";
+        }
+
+
+       private void SftpLogin(SFTPService sftp, string remotePath, out string status, out string message)
+        {
+            if (_config.UsePrivateKey)
+            {
+                sftp.LogonWithKey(_config.Host, _config.Username, _config.PrivateKeyPath,
+                                  _config.Port.ToString(), remotePath, out status, out message);
+            }
+            else
+            {
+                sftp.Logon(_config.Host, _config.Username, _config.Password,
+                           _config.Port.ToString(), remotePath, out status, out message);
+            }
         }
     }
     public class PartnerSftpConfig

@@ -303,6 +303,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                         .ToList();
                                 }
                                 break;
+                            case "SincroSend9100":
+                                { 
+                                    mySincroTestCaseDetailList
+                                        =
+                                        queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "9100")
+                                        .ToList();
+                                }
+                                break;
 
                             default:
                                 throw new Exception($"SincroScreen is not valid (SincroScreen)");
