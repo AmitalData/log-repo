@@ -20,7 +20,8 @@ import { AmitalAPIAddWindowService, fieldsError } from "../WindowsComponent/Amit
             <LogDatePicker [IsDisabled]='_disabled' *ngSwitchCase='"date"' [ObjectFieldName]="name" [DataContext]="_DataContext" [SelectedDateValue]='date' [ForceSubscribe]='true' (ValueChanged)='change.emit(_DataContext[name])'></LogDatePicker>
             
             <LogLov *ngSwitchCase='"logLov"' [IsDisabled]='_disabled' [SelectedValue]='_DataContext[name]' [ObjectFieldName]="name" [DataContext]="_DataContext" 
-            [LookUpTableName]="params?.LookUpTableName" [HideColumns]="true" (SelectedItemChanged)='changeEvent.emit($event)' (ValueChanged)='change.emit(_DataContext[name])'></LogLov>
+            [LookUpTableName]="params?.LookUpTableName" [HideColumns]="true" (SelectedItemChanged)='changeEvent.emit($event)' (ValueChanged)='change.emit(_DataContext[name])'
+            [SearchFieldName]="params?.searchField"></LogLov>
 
             <LogTextBox *ngSwitchDefault [InputType]='_type || "text"' [DataContext]="_DataContext" [ObjectFieldName]='name' [dir]="dir" (changed)='change.emit(_DataContext[name])'></LogTextBox>
         </div>    
