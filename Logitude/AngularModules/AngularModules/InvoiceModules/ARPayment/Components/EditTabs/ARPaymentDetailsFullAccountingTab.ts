@@ -174,7 +174,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.SetUIProperties();
         this.ComputeRelativeRateDate();
         this.Listen();
-        this.CheckARPaymentCashBook(true);
+        this.CheckARPaymentCashBook();
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
             this.LoadCurrencyRates();
@@ -1717,7 +1717,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (this.EntityPM != null) {
             if (this.EntityPM.BranchId != value) {
                 this.EntityPM.BranchId = value;
-                this.Validate();
+                this.CheckDefaultBranchId = false;
                 this.CheckARPaymentCashBook();
             }
         }
@@ -1727,11 +1727,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public BranchGLAccountNumber: string;
     public IsCashBookValid: boolean = false;
     public BranchGLAccountId: string;
-    CheckARPaymentCashBook(removeOnWrongBranchId?: boolean)
+    public CheckDefaultBranchId = true;
+    CheckARPaymentCashBook()
     {
         this.IsCashBookValid = false;
 
-        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH" || removeOnWrongBranchId)) {
+        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
             var service: InvoiceDomainService = new InvoiceDomainService();
 
             service.CheckARPaymentCashBook(this.AccountingPaymentMethodCode, this.PaymentCurrencyId, this.BranchId).subscribe((myResponse: ServiceResponse) =>
@@ -1758,11 +1759,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         var msg = "There is no cashbook that compatible to this ARPayment, create one please";
                         this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
 
-                        if (removeOnWrongBranchId) {
-                            this.EntityPM.BranchId = null;
+                        if (this.CheckDefaultBranchId) {
+                            this.BranchId = null;
                         }
                     }
                 }
+                this.CheckDefaultBranchId = false;
             });
         }
     }
@@ -2546,8 +2548,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return this.PaymenyAmount - this.paymentReconciledAmountTotal - this.amount2reconcileTotal;
     }
 
-    Validate() {
-        return this.CurrentSession.CurrentEditComponent.ValidationErrorsList = this.ARPaymentValidator.Validate(this.EntityPM);
+    ValidateChequeFields() {
+        if(this.CurrentSession.CurrentEditComponent.ValidationErrorsList === null && this.CurrentSession.CurrentEditComponent.ValidationErrorsList.length === 0) {
+            return this.CurrentSession.CurrentEditComponent.ValidationErrorsList = this.ARPaymentValidator.Validate(this.EntityPM);
+        }
+        return this.CurrentSession.CurrentEditComponent.ValidationErrorsList;
     }
 
     async ValidateDuplicateCheques(bank:string,bankBranch:string,bankAccount:string,chequeOrPaymentRef:string) {
@@ -2560,7 +2565,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         return errors;
     }
     AddChequesButtonClicked() {
-        var errors: string[] = this.Validate();
+        var errors: string[] = this.ValidateChequeFields();
         if (errors.length > 0) {
             return;
         }
