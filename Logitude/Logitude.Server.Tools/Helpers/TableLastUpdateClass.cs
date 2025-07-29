@@ -36,28 +36,25 @@ namespace Logitude.BL.Helpers
             
             User loggedUser = null;
             ObjectTable entityObjectTable = null;
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
             ObjectTableLastUpdateRepository tableLastUpdateRepository = new ObjectTableLastUpdateRepository(context);
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
-            //ContactRepository contactRepository = new ContactRepository(tenant);
-            UserRepository userRepository = new UserRepository(tenant);
+            UserRepository userRepository = new UserRepository(contextTenant);
 
 
 
 
-            entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
-            //Customs.CurrencyTypes
+            entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
             tableName = tableName ?? "";
             if (entityObjectTable == null && tableName.EndsWith("s", StringComparison.OrdinalIgnoreCase))
             {
-                //Customs.CurrencyType
                 var tableWithoutS = tableName.Substring(0, Math.Max(0, tableName.Length - 1));
-                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
+                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
             }
 
 
-            loggedUser = loggedUser ?? GetUser(tenant, tableLastUpdateM);
-            entityObjectTable = entityObjectTable ?? GetObjectTable(tenant, tableName, tableLastUpdateM, context);
+            loggedUser = loggedUser ?? GetUser(tenant, tableLastUpdateM, contextTenant);
+            entityObjectTable = entityObjectTable ?? GetObjectTable(tenant, tableName, tableLastUpdateM, context,contextTenant);
 
 
             if (loggedUser == null)
@@ -127,7 +124,7 @@ namespace Logitude.BL.Helpers
         }
     
 
-        private static ObjectTable GetObjectTable(int tenant, string tableName, TableLastUpdateM tableLastUpdateM, IWebFreightContext context)
+        private static ObjectTable GetObjectTable(int tenant, string tableName, TableLastUpdateM tableLastUpdateM, IWebFreightContext context,int contextTenant=0)
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(context);
             ObjectTable entityObjectTable = null;
@@ -139,7 +136,7 @@ namespace Logitude.BL.Helpers
             }
             if (entityObjectTable == null)
             {
-                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true);
+                entityObjectTable = objectTabelRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
             }
             return entityObjectTable;
         }
