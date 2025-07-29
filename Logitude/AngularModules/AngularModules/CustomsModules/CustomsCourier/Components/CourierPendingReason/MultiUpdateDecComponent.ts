@@ -379,11 +379,11 @@ export class MultiUpdateDecComponent extends BaseComponent {
             var confirm = new ConfirmWindow();
             confirm.Width = 320;
             confirm.Height = 180;
-            confirm.Title = "עדכון קוד תהליך/הנחה פטור";
+            confirm.Title = "עדכון הצהרה";
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
             confirm.ShowNoButton = true;
             confirm.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
-            confirm.Show("שינוי יבצע עדכון גורף של קוד תהליך בהצהרות,\n ועדכון קוד הנחה פטור לכל שורות פרטי המכס");
+            confirm.Show("שינוי יבצע עדכון גורף בהצהרות ובכל שורות פרטי המכס \n האם להמשיך?");
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     this.SendMultiUpdate();
