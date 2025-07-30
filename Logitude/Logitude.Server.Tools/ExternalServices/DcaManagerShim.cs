@@ -390,7 +390,7 @@ namespace Logitude.Server.Tools.ExternalServices
             return string.IsNullOrWhiteSpace(path1)
                 ? path2
                 : $"{path1}{separator}{path2}";
-        }.
+        }
 
 
        private void SftpLogin(SFTPService sftp, string remotePath, out string status, out string message)
