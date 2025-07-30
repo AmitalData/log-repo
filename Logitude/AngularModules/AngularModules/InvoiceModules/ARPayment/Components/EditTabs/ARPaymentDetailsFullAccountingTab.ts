@@ -2806,7 +2806,7 @@ export class TextStore
 
     static ErrorsInSelectedLines: string = SessionLocator.TenantPM.AccountingActivated ? TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines') : "";
     static invoiceAmount2reconcileMSG: string = TextCodeTranslator.Translate('Accounting.O.ARP.invoiceAmount2reconcileMSG');
-    static invoiceAmount2reconcileMSGLower: string = TextCodeTranslator.Translate('Accounting.O.ARP.invoiceAmount2reconcileMSGLower');
+    static invoiceAmount2reconcileMSGLower: string = TextCodeTranslator.Translate('ARPayment.O.InvoiceAmount2reconcileMSGLower');
 }
 
 export class TransactionLineModel extends BaseComponent
