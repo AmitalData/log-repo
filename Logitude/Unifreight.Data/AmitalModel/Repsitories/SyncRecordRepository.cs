@@ -198,6 +198,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
             return records;
         }
+
+        public string GetTimeZone()
+        {
+            try
+            {
+                string sql = "SELECT RIGHT(FORMAT(SYSDATETIMEOFFSET(), 'yyyy-MM-dd HH:mm:ss.fffffff zzz'), 6) AS CurrentTimeZoneOffset";
+                return context.GetActiveDbContext().Database.SqlQuery<string>(sql).FirstOrDefault();                
+            }
+            catch (Exception ex)
+            {
+                logger.WriteFatal(ex, $"GetTimeZone failed: {ex.Message}");
+                return null;
+            }
+        }
     }
 
     public class SyncRecordStatus
