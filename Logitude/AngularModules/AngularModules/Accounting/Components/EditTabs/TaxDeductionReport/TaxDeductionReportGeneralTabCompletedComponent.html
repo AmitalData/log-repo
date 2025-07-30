@@ -3,6 +3,13 @@
         color: #1b90cb;
         font-size: 16px;
     }
+
+    .FieldWide {
+        width: 15vw;
+        min-width: 150px;
+        max-width: 400px;
+    }
+
     .InnerReportTable {
         border-collapse: collapse;
         table-layout: fixed;
@@ -17,6 +24,24 @@
     .InnerReportTable th {
         background: #f0f0f0;
     }
+
+    .TotalsTable {
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 15vw !important;
+        min-width: 150px;
+        max-width: 400px;
+    }
+    .TotalsTable thead,
+    .TotalsTable th,
+    .TotalsTable tr,
+    .TotalsTable td {
+        border: 1px solid #888;
+        padding: 4px;
+    }
+    .TotalsTable th {
+        background: #f0f0f0;
+    }
 </style>
 <table>
     <tr>
@@ -24,7 +49,7 @@
             <div class="TableHolder"   [style.direction]="isRTL ? 'rtl' : 'ltr'">
                 <table>
                     <tr class="TabTitleRow">
-                        <td>{{'TaxDeductionReport.TH.Log' | TextCodeTranslationPipe}} </td>
+                        <td>{{'TaxDeductionReport.TH.General' | TextCodeTranslationPipe}} </td>
                     </tr>
 
                     <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
@@ -55,14 +80,14 @@
                                             </tr>
 
                                             <!-- Report Period -->
-                                            <tr class="FormFieldRow" style="width: 200px;">
+                                            <tr class="FormFieldRow" style="width: 400px;">
                                                 <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <LogLabel [NoObjectField]="true"    [TextCode]="'TaxDeductionReport.O.ReportPeriod'" 
                                                               [ObjectFieldName]="'ReportPeriod'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" class="FieldWide">
                                                     <LogTextBox [Text]="ReportPeriod"
                                                                 [ObjectFieldName]="'ReportPeriod'" [ObjectTableName]="ObjectTableName"
                                                                 [DataContext]="DataContext"
@@ -88,13 +113,13 @@
                                             </tr>
 
                                             <!-- Email -->
-                                            <tr class="FormFieldRow" style="width: 300px;">
+                                            <tr class="FormFieldRow" style="width: 400px;">
                                                 <td style="vertical-align:top;width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                                                     <LogLabel [ObjectFieldName]="'Email'" [ObjectTableName]="ObjectTableName"
                                                               [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td [style.text-align]="isRTL ? 'right' : 'left'" >
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'" class="FieldWide">
                                                     <LogTextBox [ObjectFieldName]="'Email'" [InputType]="'Text'" [DataContext]="DataContext"
                                                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                                 </td>
@@ -111,21 +136,21 @@
                                                 <td colspan="2">
                                                     <div style="max-width: 50vw; width: 100%;">
                                                         <!-- Totals Table -->
-                                                        <table class="InnerReportTable" style="width: 100%; margin-bottom: 10px;">
+                                                        <table class="TotalsTable" style="width: 100%; margin-bottom: 10px;">
                                                             <tr>
-                                                                <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
                                                                 <LogLabel [NoObjectField]="true"    [Text]="('TaxDeductionReport.O.TotalPayments' | TextCodeTranslationPipe) || 'Total Payments'" 
                                                                         [ObjectFieldName]="'TotalPayments'" [ObjectTableName]="DataObjectTableName"
                                                                         [DataContext]="DataContext"></LogLabel>
                                                                 </td>
-                                                                <td [style.text-align]="isRTL ? 'right' : 'left'">{{_TaxDeductionReportData?.TotalForCompany?.TotalPayments}}</td>
+                                                                <td [style.text-align]="isRTL ? 'right' : 'left'">{{firstTotalPayments}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                                <td [style.text-align]="isRTL ? 'right' : 'left'">
                                                                 <LogLabel [NoObjectField]="true"    [Text]="('TaxDeductionReport.O.TotalDeductions' | TextCodeTranslationPipe) || 'Total Deductions'" 
                                                                         [ObjectFieldName]="'TotalDeductions'" [ObjectTableName]="DataObjectTableName"
                                                                         [DataContext]="DataContext"></LogLabel>                                                        </td>
-                                                                <td [style.text-align]="isRTL ? 'right' : 'left'">{{_TaxDeductionReportData?.TotalForCompany?.TotalDeductions}}</td>
+                                                                <td [style.text-align]="isRTL ? 'right' : 'left'">{{firstTotalDeductions}}</td>
                                                             </tr>
                                                         </table>
 

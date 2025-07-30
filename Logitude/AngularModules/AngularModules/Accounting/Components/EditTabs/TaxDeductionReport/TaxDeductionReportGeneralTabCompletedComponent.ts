@@ -29,8 +29,9 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
     _BatchTaskExecutionListService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
     failed: boolean = false;
     taxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
-   
-    
+    firstTotalPayments?: number;
+    firstTotalDeductions?: number;
+
     _TaxDeductionReportData: TaxDeductionReportData;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -93,15 +94,19 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
     get Email() { return this.entityPM?.Email ?? ''; }
 
     BuildTaxDeductionReportData() {
-
-
         this.taxDeductionReportExtendedPMService
             .GetTaxDeductionReportData(this.entityPM.Tenant, this.entityPM.Id)
             .subscribe({
             next: (response: ServiceResponse) => {
-            if (!response?.HasError) {
-            this._TaxDeductionReportData = response.Result;
-            }
+                if (!response?.HasError) {
+                    this._TaxDeductionReportData = response.Result;
+
+                    this.firstTotalPayments =
+                        this._TaxDeductionReportData?.TotalForCompany?.[0]?.TotalPayments;
+                        
+                    this.firstTotalDeductions =
+                        this._TaxDeductionReportData?.TotalForCompany?.[0]?.TotalDeductions;
+                }
             },
             error: err => {
             console.error("Failed to load TaxDeductionReportData", err);

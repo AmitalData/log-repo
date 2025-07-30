@@ -17,7 +17,7 @@ export class TaxDeductionReportData {
     taxYear: string;
     byMonthList: ByMonthList[];
     byVendorList: ByVendorList[];
-    totalForCompany: TotalForCompany[];
+    TotalForCompany: TotalForCompany[];
     dbVendorsList: DBVendorsList[];
     totalAmountInLocalCurrency?: number;
     totalDeductionInLocalCurrency?: number;
@@ -44,8 +44,8 @@ export interface TaxDeductionReportLine {
 export interface TotalForCompany {
     companyName?: string;
     deductionFileNumber?: string;
-    totalPayments?: number;
-    totalDeductions?: number;
+    TotalPayments?: number;
+    TotalDeductions?: number;
 }
 
 export interface DBVendorsList {
