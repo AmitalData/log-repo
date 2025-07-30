@@ -50,7 +50,7 @@ export class ARInvoicesSignedStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatuses", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatus", "GetSingleList", 'code=' + code); 
 
 						return serviceResponse;
 					}),
@@ -82,7 +82,7 @@ export class ARInvoicesSignedStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatuses", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatus", "GetAll", ""); 
 
 						return serviceResponse;
 					}),
@@ -150,7 +150,7 @@ export class ARInvoicesSignedStatusListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatuses", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARInvoicesSignedStatus", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
                  								            
 						return serviceResponse;
 					}),
@@ -179,7 +179,7 @@ export class ARInvoicesSignedStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatuses").pipe(
+            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatus").pipe(
 				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ARInvoicesSignedStatusList> = [];
@@ -197,7 +197,7 @@ export class ARInvoicesSignedStatusListService {
 					serviceResponse.Result = filteredData; 
 					serviceResponse.CallTime = callTime;
 			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatuses", "GetSingleListFromCache", 'code=' + code); 
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatus", "GetSingleListFromCache", 'code=' + code); 
 
 					return serviceResponse;
 				}),
@@ -245,7 +245,7 @@ export class ARInvoicesSignedStatusListService {
         }
 
         else {
-            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatuses").pipe(
+            return CachedDataManager.GetClosedTableData("ARInvoicesSignedStatus").pipe(
 				map((cachedJson:any) => {
 
 					var _mappedListsArray: Array<ARInvoicesSignedStatusList> = [];
@@ -266,7 +266,7 @@ export class ARInvoicesSignedStatusListService {
 
 						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
 
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatuses", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "ARInvoicesSignedStatus", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
                  	
 						serviceResponse.Result = _mappedListsArray; 
 						serviceResponse.CallTime = callTime;

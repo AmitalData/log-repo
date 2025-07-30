@@ -37,12 +37,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
 
-          
+            GatepassRequestPM myGatepassRequestPM = myGatepassRequestQueryService.GetGatepassRequestByMasterCourierId(requestParams.MasterCourierId, requestParams.Tenant);
+            myGatepassRequestMessage.gatepassNumber = myGatepassRequestPM.GatepassNumber;
 
             CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
             CustomsSettingPM CustomsSetting = customsSettingQuery.GetSingleByTenant(_CourierMasterPM.Tenant);
             myGatepassRequestMessage.ExternalID = CustomsSetting.CustomsAgentId;
 
+            myGatepassRequestMessage.originSiteCode = myGatepassRequestPM.OriginSiteCode;
             myGatepassRequestMessage.processTypeCode = 1;
             myGatepassRequestMessage.requestDate = DateTime.Now;
             myGatepassRequestMessage.customerActivityType = 7;
@@ -52,16 +54,10 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite> myGatepassDestinationSiteList = new List<GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite>();
             GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite myGatepassDestinationSite = new GP_NG_1030_MSG1_GatepassRequestMessageGatepassRequestMessageGatepassDestinationSite();
+            myGatepassDestinationSite.designateSiteCode = myGatepassRequestPM.DesignateSiteCode;
             int transportationTypeCode;
-            GatepassRequestPM myGatepassRequestPM = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
-            if (myGatepassRequestPM != null)
-            {
-                myGatepassRequestMessage.gatepassNumber = myGatepassRequestPM.GatepassNumber;
-                myGatepassRequestMessage.originSiteCode = myGatepassRequestPM.OriginSiteCode;
-                myGatepassDestinationSite.designateSiteCode = myGatepassRequestPM.DesignateSiteCode;
-                int.TryParse(myGatepassRequestPM.TransportationTypeCode, out transportationTypeCode);
-                myGatepassDestinationSite.transportationTypeCode = transportationTypeCode;
-            }
+            int.TryParse(myGatepassRequestPM.TransportationTypeCode, out transportationTypeCode);
+            myGatepassDestinationSite.transportationTypeCode = transportationTypeCode;
             myGatepassDestinationSite.isFinalDestination = true;
 
             myGatepassDestinationSiteList.Add(myGatepassDestinationSite);

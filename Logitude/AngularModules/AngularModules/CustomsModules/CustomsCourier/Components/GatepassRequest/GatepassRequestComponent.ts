@@ -14,6 +14,7 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { GatepassRequestWebService } from 'Customs/Services/WebServices/GatepassRequestWebService';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class GatepassRequestComponent extends BaseComponent {
     _entityResourceService: EntityResourceService = new EntityResourceService();
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _GatepassRequestPMService: GatepassRequestPMService = new GatepassRequestPMService()
+    _GetGatepassRequestWebService: GatepassRequestWebService = new GatepassRequestWebService()
 
     UpdateCodeList: UpdateCodeClass[] = [{ 'EnumId': 1, 'Name': 'חדש' }, { 'EnumId': 2, 'Name': 'ביטול' } ];
     Loaded: boolean = false;
@@ -77,7 +79,7 @@ export class GatepassRequestComponent extends BaseComponent {
 
     SetGatepassRequest() {
 
-        this._GatepassRequestPMService.get(this.CourierMasterPM.Id).subscribe(rsptPMget => {
+        this._GetGatepassRequestWebService.GetGatepassRequestByMasterCourierId(this.CourierMasterPM.Id, this.CourierMasterPM.Tenant).subscribe(rsptPMget => {
             let entityPMResult = rsptPMget.Result;
             if (entityPMResult != null) {
                 this.IsNew = false;
@@ -273,13 +275,19 @@ export class GatepassRequestComponent extends BaseComponent {
         if (this.IsNew) {
             this._GatepassRequestPMService.insert(this.EntityPM).subscribe(res => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
-                this.SendGatepassRequestMessage(customSendOptionsArgs);
+                if(!AppTool.IsNullOrEmpty(res.Result) && !res.HasError) {
+                    this.EntityPM = res.Result;
+                    this.SendGatepassRequestMessage(customSendOptionsArgs);
+                }
             });
         }
         else {
             this._GatepassRequestPMService.update(this.EntityPM).subscribe(res => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
-                this.SendGatepassRequestMessage(customSendOptionsArgs);
+                if(!AppTool.IsNullOrEmpty(res.Result) && !res.HasError) {
+                    this.EntityPM = res.Result;
+                    this.SendGatepassRequestMessage(customSendOptionsArgs);
+                }
             });
         }
     }
