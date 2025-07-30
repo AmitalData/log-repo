@@ -65,14 +65,14 @@ namespace WebFreight.Web.WcfApi
                     OceanInsightsRequestPM OceanInsightsRequestPm;// = new OceanInsightsRequestPM();
                     if (Type == "c_id")
                     {
-                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
+                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant, System);
                     }
                     else
                     {
-                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant);
+                        OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant , System);
                         if (OceanInsightsRequestPm == null)
                         {
-                            OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
+                            OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant, System);
                         }
                     }
 

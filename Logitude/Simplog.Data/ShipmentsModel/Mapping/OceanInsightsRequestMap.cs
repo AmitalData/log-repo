@@ -22,8 +22,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.BLNumber).HasMaxLength(18).IsUnicode(false);
             this.Property(t => t.FromPushPage).IsRequired();
 			this.Property(t => t.System).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.IsClosed).IsRequired();
 
-			this.ToTable("OceanInsightsRequests");
+            this.ToTable("OceanInsightsRequests");
             this.Property(t => t.Id).HasColumnName("Id"); 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.SCACCode).HasColumnName("SCACCode");
@@ -35,9 +36,11 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.BLNumber).HasColumnName("BLNumber");
             this.Property(t => t.FromPushPage).HasColumnName("FromPushPage");
 			this.Property(t => t.System).HasColumnName("System");
+            this.Property(t => t.IsClosed).HasColumnName("IsClosed");
 
 
 
-		}
-	}
+
+        }
+    }
 }

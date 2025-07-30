@@ -34,6 +34,7 @@ using Logitude.SystemLogs;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.Server.Tools.QueueService;
+using System.Data.Entity.Core.Objects;
 
 namespace WebFreight.Web
 {
@@ -217,7 +218,8 @@ namespace WebFreight.Web
 								string newcontainernumber = "";
 								string newblnumber = "";
 								string newcarrierscac = "";
-								foreach (XmlNode item1 in item.ChildNodes)
+                                string mpty_return_actual = "";
+                                foreach (XmlNode item1 in item.ChildNodes)
 								{
 									if (item1.Name == "shipmentsubscription_id")
 									{
@@ -235,29 +237,35 @@ namespace WebFreight.Web
 									{
 										newcarrierscac = item1.InnerText;
 									}
+                                    else if (item1.Name == "mpty_return_actual")
+                                    {
+                                        mpty_return_actual = item1.InnerText;
+                                    }
 
-								}
-								//if (!string.IsNullOrEmpty(newId))
-								//{
+                                }
+						 
 								var TempReq = query.GetSinglePMByOceanInsightsId(Id);
-								if (TempReq != null)
-								{
-									UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
+                                IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+                                OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, tenant);
+
+                                if (TempReq != null)
+                                {
+                                    TempReq.IsClosed = TempReq.System == SystemType.Export && !string.IsNullOrEmpty(mpty_return_actual);
+                                    service.Create(TempReq);
+                                    UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
 								}
 								else
 								{
 									TempReq = new OceanInsightsRequestPM();
-									IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
-									OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
 									TempReq.ContainerNumber = newcontainernumber;
-									//TempReq.ContainerNumber = newblnumber;
 									TempReq.SCACCode = newcarrierscac;
 									TempReq.Tenant = TempRec.Tenant;
 									TempReq.OceanInsigntId = Id;
 									TempReq.Type = "BLS";
 									TempReq.BLNumber = newblnumber;
 									TempReq.FromPushPage = true;
-									service.Create(TempReq);
+                                 
+                                    service.Create(TempReq);
 									UpdateStatus(TempReq, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
 								}
 								//}
@@ -597,4 +605,6 @@ namespace WebFreight.Web
         }
 
     }
+
+   
 }

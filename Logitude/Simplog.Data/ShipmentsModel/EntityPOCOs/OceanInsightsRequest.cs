@@ -21,6 +21,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string BLNumber { get; set; }
         public bool FromPushPage { get; set; }
         public string System { get; set; }
+        public bool IsClosed { get; set; }
+
 
     }
 }

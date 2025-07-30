@@ -79,4 +79,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+  Name="IsClosed"
+  Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
 </Table>
