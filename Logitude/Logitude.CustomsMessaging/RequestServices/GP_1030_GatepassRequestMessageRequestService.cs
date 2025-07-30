@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             myGatepassRequestMessage.CargoIdentifier.cargoIdentifierKey3 = _CourierMasterPM.HAWB;
             myGatepassRequestMessage.exportFromDifferentPortIndication = false;
 
-            GatepassRequestPM myGatepassRequestPM = myGatepassRequestQueryService.GetSingle(requestParams.MasterCourierId, false, false);
+            GatepassRequestPM myGatepassRequestPM = myGatepassRequestQueryService.GetGatepassRequestByMasterCourierId(requestParams.MasterCourierId, requestParams.Tenant);
             myGatepassRequestMessage.gatepassNumber = myGatepassRequestPM.GatepassNumber;
 
             CustomsSettingQueryService customsSettingQuery = new CustomsSettingQueryService(dbContext);
