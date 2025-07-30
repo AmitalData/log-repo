@@ -75,7 +75,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         }
 
 
-        public HttpResponseMessage Post(TasksSchedulerPM entityPM)
+        public HttpResponseMessage PostInsertScheduler(TasksSchedulerPM entityPM)
         {
             if (ModelState.IsValid)
             {

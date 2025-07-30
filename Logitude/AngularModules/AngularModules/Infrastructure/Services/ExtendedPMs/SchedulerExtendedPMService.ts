@@ -57,7 +57,7 @@ export class SchedulerExtendedPMService {
 
     insert(entityPM: TasksSchedulerPM) {
         var callTime = new Date();
-        var url = this.apiUrl;
+        var url = this.apiUrl + '/PostInsertScheduler';
         var validator: ClassLevelValidator;
         validator = new ClassLevelValidator();
         var errorsArray = validator.Validate("TasksScheduler", entityPM);
