@@ -151,10 +151,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public List<SyncRecord> GetAndMarkNewSyncRecord(List<int> tenants)
         {
-            DateTime yesterday = DateTime.Now.AddDays(-1);
-
             IEnumerable<SyncRecord> query = context.SyncRecord
-                .Where(syncRecord => syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday && tenants.Contains(syncRecord.Tenant))
+                .Where(syncRecord => syncRecord.IsSync == SyncRecordStatus.New && tenants.Contains(syncRecord.Tenant))
                 .Take(1000);
 
             logger.WriteDebug($"SyncRecord, GetAndMarkNewSyncRecord db: {context.GetConnection().Database}");
