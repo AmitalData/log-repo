@@ -227,7 +227,7 @@ namespace Logitude.Customs.BL.BL
 
 				if (myFutureSendDateTime > DateTime.Now)
 				{
-					string stringDatetime = myFutureSendDateTime?.ToString("yyyy-MM-dd HH:mm:ss");
+					string stringDatetime = myFutureSendDateTime?.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
 
 					string text1 = " הוגדרה בקשה מתוזמנת לתאריך" + stringDatetime +
 					"-לא ניתן להמשיך עד לסיום טיפול או ביטול הבקשה";
