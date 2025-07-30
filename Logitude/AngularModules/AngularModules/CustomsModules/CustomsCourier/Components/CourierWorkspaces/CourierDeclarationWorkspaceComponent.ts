@@ -651,7 +651,7 @@ export class CourierDeclarationWorkspaceComponent implements AfterViewInit {
         }
 
         this._TabFilterList.push(new TabFilter("OPN", "טיסות פתוחות ", null, null));
-        this._TabFilterList.push(new TabFilter("PEN", "Pending ", null, null));
+        this._TabFilterList.push(new TabFilter("PEN", "בהמתנה", null, null));
         this._SelectedTabFilter = this._TabFilterList[0];
         this.PendingObservableList = new ObservableCollection([]);
 
