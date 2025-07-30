@@ -563,7 +563,7 @@
                             <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">
                                 <table>
                                     <tr>
-                                        <td [style.width]="IsProcessMenuVisible? '80%': '100%'">
+                                        <td>
                                             <div class="MediaFillAbsolute" *ngFor="let tab of Tabs;" [hidden]="!tab.IsSelected">
                                                 <div style="width: 120px;padding-right:10px;">                                                                                
 
@@ -573,8 +573,8 @@
                                                 
                                             </div>
                                         </td>
-                                        <td style="width: 20%">
-                                            <div *ngIf="IsProcessMenuVisible"  (mouseleave)="CloseMenu()" >
+                                        <td style="width: 250px" *ngIf="IsProcessMenuVisible">
+                                            <div (mouseleave)="CloseMenu()" >
                                                 <ProcessMenuComponent (PinnedChanged)="TogglePinMenu($event)" (ViewedItem)="ViewedItem($event)" (mouseenter)="KeepMenuOpen()" (mouseleave)="CloseMenu()"  [IsProcessMenuVisible]="IsProcessMenuVisible" [IsPinned]="isPinned" [CurrentProcessId]="CurrentProcessId" [CurrentSelectedTab]="SelectedTab" (CloseMenu)="CloseMenu()"></ProcessMenuComponent>
                                             </div>
                                         </td>
