@@ -170,6 +170,8 @@ namespace Unifreight.BL.EntityQueryServices
 
         public void UpdateStatus(List<SyncRecord> records, int status) => repository.UpdateStatus(records, status);
 
+        public void Update(List<SyncRecord> records) => repository.Update(records);
+
         public void Add(List<SyncRecord> records)
         {
             repository.Add(records);

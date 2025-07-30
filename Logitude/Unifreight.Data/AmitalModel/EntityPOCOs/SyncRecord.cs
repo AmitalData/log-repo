@@ -26,5 +26,9 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         public DateTime? SyncDT { get; set; }
         [Column("IsSync")]
         public int IsSync { get; set; }
+        [Column("LastRequeueTime")]
+        public DateTime? LastRequeueTime { get; set; }
+        [Column("IsRequeued")]
+        public bool IsRequeued { get; set; }
     }
 }

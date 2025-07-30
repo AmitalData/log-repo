@@ -13456,6 +13456,16 @@ namespace Unifreight.Data.AmitalModel
                 .IsRequired()
                 .HasColumnName(@"IsSync")
                 .HasColumnType("int");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.LastRequeueTime)
+                .IsRequired()
+                .HasColumnName(@"LastRequeueTime")
+                .HasColumnType("Datetime");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.IsRequeued)
+                .IsRequired()
+                .HasColumnName(@"IsRequeued")
+                .HasColumnType("bool");
 
 
             #endregion
