@@ -67,6 +67,7 @@ namespace Unifreight.BL.EntityQueryServices
             List<SyncRecord> groupRecord = repository.GetUnsyncAndMarkAsInProcess(tenant, item, allTask);
             AddGGGQC(groupRecord);
 
+            string offset = GetTimeZone(tenant);
             List<EntityRecord> entityRecords = groupRecord.Select(syncRecord =>
             {
                 string recordAsJson = GetRecordOfRowNeedSync(syncRecord);
@@ -85,7 +86,10 @@ namespace Unifreight.BL.EntityQueryServices
                     Entname = syncRecord.Entname,
                     RecordAsJson = recordAsJson,
                     UpdateDate = syncRecord.SyncDT,
-                    CraeteDate = syncRecord.CreateDate
+                    CraeteDate = syncRecord.CreateDate,
+                    CreateDate = syncRecord.CreateDate,
+                    DbOffset = offset
+
                 };
             }).Where(x => x != null).ToList();
 
@@ -183,5 +187,8 @@ namespace Unifreight.BL.EntityQueryServices
         }
 
         public List<SyncRecord> GetNeedToReturnToQueue() => repository.GetNeedToReturnToQueue();
+
+        public string GetTimeZone(int tenant) => 
+            CacheHelper.GetFromCache("SyncRecord_timeZone_" + tenant,() => repository.GetTimeZone());
     }
 }
