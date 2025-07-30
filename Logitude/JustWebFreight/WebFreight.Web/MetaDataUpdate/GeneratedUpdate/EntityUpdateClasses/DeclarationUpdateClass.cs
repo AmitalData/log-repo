@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "228367703fb3efb924d8acc449c4949e";
+		public const string HashString = "d8d189cd7c806de7b71b6549f5436a23";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -20920,8 +20920,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_ImportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ImportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ImportDiamonds", NameTextCodeDefaultText = @"Diamond Declaration - Import" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
 
-		   Feature DeclarationFeature_DownloadDcaSftp = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DownloadDcaSftp", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DownloadDcaSftp", NameTextCodeDefaultText = @"Download Dca Sftp" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable,contextTenant);
-
    
 	    
 		}
@@ -23687,7 +23685,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOTooLongCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TooLongCode", DefaultText = "Importer code is too long",LocalDefaultText = @"BS64:Itee16HXpNeoINeZ15HXldeQ158g15DXqNeV15og157Xk9eZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOImporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXoNeV16HXpNeZ150g15zXmdeR15XXkNefL9eZ16bXldeQ158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+           TextCode DeclarationTextCode_CustomsDeclarationOExporterTooLongCode  = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.TooLongExporterCode", DefaultText = "Exporter code is too long", LocalDefaultText = @"BS64:Itee16HXpNeoINeZ16bXldeQ158g15DXqNeV15og157Xk9eZIg==", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode DeclarationTextCode_CustomsDeclarationOImporterDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ImporterDetails", DefaultText = "Importer Details",LocalDefaultText = @"BS64:Iteg16rXldeg15nXnSDXoNeV16HXpNeZ150g15zXmdeR15XXkNefL9eZ16bXldeQ158i", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOFillAgentObjection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.FillAgentObjection", DefaultText = "You must fill objection",LocalDefaultText = @"BS64:IteZ16kg15zXntec15Ag16LXqNei15XXqCDXnNeq16nXldeR15Qi", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
