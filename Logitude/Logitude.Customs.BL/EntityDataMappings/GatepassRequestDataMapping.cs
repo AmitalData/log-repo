@@ -26,6 +26,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 entityPOCO.MasterCourierId = entityPM.MasterCourierId;
+                entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
         }
