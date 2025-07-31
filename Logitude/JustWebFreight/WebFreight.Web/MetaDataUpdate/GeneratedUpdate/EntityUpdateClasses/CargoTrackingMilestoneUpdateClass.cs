@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CargoTrackingMilestoneUpdateClass
    {  		
-		public const string HashString = "031ac935abef91fbb77c8db7c16befcd";
+		public const string HashString = "768561cdd2c3531c93bf16f84c28222a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -644,8 +644,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "EventTypeId",
 					  						ObjectTableName =  "CargoTrackingMilestone",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "EventType",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -688,9 +687,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:IteQ15nXqNeV16Ii",
 					  						ListFieldLable =  "EventTypeIdListLable",
 					  						ListLableDefaultText =  "Event Type Id",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "EventType",
-					  						NavigationPropertyName =  "EventType",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
