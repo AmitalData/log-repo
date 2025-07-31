@@ -765,11 +765,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card> cards = new List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card>();
 
-
+            const string EXTERNAL_SYSTEM_UNF = "UNIFREIGHT"; // Only UNIFREIGHT cards are relevant for GLAccount.Upsert
 
             if (gLAccount.PartnerTypeId != null)
             {
-                cardLists = cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId).ToList();
+                cardLists = cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId && d.ExternalSystem == EXTERNAL_SYSTEM_UNF).ToList();
             }
             foreach (CardList card in cardLists)
 
