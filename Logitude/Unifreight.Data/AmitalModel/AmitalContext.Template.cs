@@ -13465,7 +13465,7 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.IsRequeued)
                 .IsRequired()
                 .HasColumnName(@"IsRequeued")
-                .HasColumnType("bool");
+                .HasColumnType("bit");
 
 
             #endregion
