@@ -23,7 +23,6 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
-    //[RoutePrefix("api/TaxDeductionReportData")]
     public class TaxDeductionReportDataController : ApiController
     {
         public TaxDeductionReportDataController()
@@ -31,7 +30,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
-        public HttpResponseMessage GetTaxDeductionReportData(int tenant, string taxDeductionReport)
+        [HttpGet]
+        [Route("TaxDeductionReportData/GetTaxDeductionReportData")]
+        public HttpResponseMessage GetTaxDeductionReportData(string reportId)
         {
             try
             {
@@ -41,17 +42,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 }
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                if (authToken.Tenant != tenant)
-                {
-                    return Request.CreateResponse(HttpStatusCode.Forbidden, "Tenant mismatch.");
-                }
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
+                int tenant = authToken.Tenant;
 
                 IAccountingContext context = AccountingContext.GetContext(authToken.Tenant);
                 TaxDeductionReportQueryService taxDeductionReportQuery = new TaxDeductionReportQueryService(context);
                 taxDeductionReportQuery.InitializeSettings();
-                TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQuery.GetSingle(taxDeductionReport, true, false);
+                TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQuery.GetSingle(reportId, true, false);
                 if (taxDeductionReportPM == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, "Tax Deduction Report not found.");

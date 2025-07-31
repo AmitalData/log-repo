@@ -15,9 +15,9 @@ export class TaxDeductionReportData {
     tenantVatNumber: string;
     phone: string;
     taxYear: string;
-    byMonthList: ByMonthList[];
+    ByMonthList: ByMonthList[];
     byVendorList: ByVendorList[];
-    totalForCompany: TotalForCompany[];
+    TotalForCompany: TotalForCompany[];
     dbVendorsList: DBVendorsList[];
     totalAmountInLocalCurrency?: number;
     totalDeductionInLocalCurrency?: number;
@@ -44,8 +44,8 @@ export interface TaxDeductionReportLine {
 export interface TotalForCompany {
     companyName?: string;
     deductionFileNumber?: string;
-    totalPayments?: number;
-    totalDeductions?: number;
+    TotalPayments?: number;
+    TotalDeductions?: number;
 }
 
 export interface DBVendorsList {
@@ -59,15 +59,15 @@ export interface DBVendorsList {
 }
 
 export interface ByMonthList {
-    month: number;
-    reportMonth: string;
-    totalAmountInLocalCurrency?: number;
-    totalTaxDeductionLocalAmount?: number;
-    totalVendors: number;
-    totalPaymentsWithoutDivided?: number;
-    totalDeductionsWithoutDivided?: number;
-    totalDivided?: number;
-    totalDeductionsFromDivided?: number;
+    Month: number;
+    ReportMonth: string;
+    TotalAmountInLocalCurrency?: number;
+    TotalTaxDeductionLocalAmount?: number;
+    TotalVendors: number;
+    TotalPaymentsWithoutDivided?: number;
+    TotalDeductionsWithoutDivided?: number;
+    TotalDivided?: number;
+    TotalDeductionsFromDivided?: number;
 }
 
 export interface ByVendorList {

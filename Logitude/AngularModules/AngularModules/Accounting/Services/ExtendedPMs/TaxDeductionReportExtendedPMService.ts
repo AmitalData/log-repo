@@ -92,10 +92,17 @@ export class TaxDeductionReportExtendedPMService {
         const url = `${this._apiUrl}/GetTaxDeductionReportData?reportId=${encodeURIComponent(reportId)}`;
         return this.httpClient.get<any[]>(url, ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
-        const mappedList = (response ?? []).map(json => this.MapJsonToEntityData(json));
-        const serviceResponse = new ServiceResponse();
-        serviceResponse.Result = mappedList;
-        return serviceResponse;
+            const returnedval = response as any;
+            console.log("Returned value:", returnedval);
+            let mappedList;
+            if (Array.isArray(response)) {
+                mappedList = response.map(json => this.MapJsonToEntityData(json));
+            } else {
+                mappedList = this.MapJsonToEntityData(response);
+            }
+            const serviceResponse = new ServiceResponse();
+            serviceResponse.Result = mappedList;
+            return serviceResponse;
         }),
         catchError(ServiceHelper.HandleServiceError)
         );
