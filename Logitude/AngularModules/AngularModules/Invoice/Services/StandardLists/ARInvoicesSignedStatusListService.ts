@@ -16,9 +16,7 @@ import {InfraGenericFilter} from '../../../Infrastructure/Utilities/InfraGeneric
 import {CachedDataManager} from '../../../Infrastructure/Utilities/CachedDataManager';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-import {LocalStorageManager} from '../../../Infrastructure/Utilities/LocalStorageManager';
 import {ARInvoicesSignedStatusList} from '../../EntityLists/ARInvoicesSignedStatusList';
 
 @Injectable()
