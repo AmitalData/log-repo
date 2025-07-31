@@ -3079,6 +3079,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
+            else if (this.ObjectTableName == "ChargesType") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate("ChargesType.O.NewChargeType");
+            }
 
             else {
                 //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
@@ -3668,6 +3671,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
             else if (this.ObjectTableName == "InterestReport") {
                 str = TextCodeTranslator.Translate('InterestReport.O.NewReport');
+            }
+            else if (this.ObjectTableName == "ChargesType") {
+                str = TextCodeTranslator.Translate('ChargesType.O.NewChargeType');
             }
             else if (this.ObjectTableName == "OpenFormatReport") {
                 str = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
