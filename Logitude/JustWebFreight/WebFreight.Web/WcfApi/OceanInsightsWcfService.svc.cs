@@ -4,34 +4,25 @@ using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
-using Logitude.XSD.Simulators;
-using Microsoft.VisualStudio.OLE.Interop;
 using Newtonsoft.Json.Linq;
-using Org.BouncyCastle.Asn1.X509;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
-using System.IdentityModel;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.ServiceModel;
 using System.ServiceModel.Activation;
-using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Xml;
 using Unifreight.ContainerTasks;
 using WebFreight.Web.Security;
 using WWApi.Models;
-using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -91,14 +82,12 @@ namespace WebFreight.Web.WcfApi
 		}
         public Response OceanInsight(int Tenant, string ScacCode, string ReferenceNo, string Type, string System = null)
         {
-			//ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+ 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			Response response = new Response();
 			try
 			{				
 				SecurityUtility.AuthenticationOnTenant(Tenant);
 				string OIToken = LogitudeSettings.OceanInsightsToken;
-				//SecurityUtility.CheckContactFeature("Shipment", "UPDATE", entityPM.Tenant);//UPDATE//READ
 				using (TransactionScope scope = TransactionFactory.GetTransaction())
 				{
 
@@ -126,28 +115,24 @@ namespace WebFreight.Web.WcfApi
 					OceanInsightsRequestPM OceanInsightsRequestPm;// = new OceanInsightsRequestPM();
 					if (Type == "c_id")
 					{
-						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
+						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant, System);
 					}
 					else
 					{
-						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant);
+						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, Tenant, System);
 						if (OceanInsightsRequestPm == null)
 						{
-							OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant);
+							OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, Tenant, System);
 						}
 					}
 
-					//Hashtable Table = new Hashtable();
-					//Table.Add("CONTAINER_NO", ContainerNo);
-					//Table.Add("CARRIER_SCAC", ScacCode);
-					//Table.Add("TOKEN", "a020db8267898a2502414e8479215ed32de41106");
-					//Table.Add("REQ_ID","142707");
+
 					bool UseOIV2 = FeatureToggleHelper.HasFeatureToggle("OI2", 0);
 					ContainerTasks Task = new ContainerTasks(UseOIV2);
 					string Result;
 					string Status;
 					string Errors;
-					object Temp = null;//STARTMONITOR
+					object Temp = null;
 					if (OceanInsightsRequestPm == null)
 					{
 						OceanInsightsRequestPm = new OceanInsightsRequestPM();
@@ -242,10 +227,8 @@ namespace WebFreight.Web.WcfApi
 							xmldoc.LoadXml(Result);
 							XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
 							string Id = string.Empty;
-							//foreach (XmlNode item in nodeList)
-							//{
-							Id = nodeList.Item(0).InnerText;//item.InnerText;
-															//}
+
+							Id = nodeList.Item(0).InnerText;
 							OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, Tenant);
 							OceanInsightsRequestPm.OceanInsigntId = Id;
 
@@ -300,8 +283,7 @@ namespace WebFreight.Web.WcfApi
 			Response response = new Response();
 			try
 			{
-				//SecurityUtility.AuthenticationOnTenant(WWtenant);
-				
+ 				
 				using (TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 				{
 
@@ -321,17 +303,17 @@ namespace WebFreight.Web.WcfApi
 					}
 				
 					OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(WWtenant);
-					OceanInsightsRequestPM OceanInsightsRequestPm;// = new OceanInsightsRequestPM();
+					OceanInsightsRequestPM OceanInsightsRequestPm;
 					if (Type == "c_id")
 					{
-						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, WWtenant);
+						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, WWtenant, System);
 					}
 					else
 					{
-						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, WWtenant);
+						OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByCareierScacBLNoTenant(ScacCode, ReferenceNo, WWtenant, System);
 						if (OceanInsightsRequestPm == null)
 						{
-							OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, WWtenant);
+							OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(ScacCode, ReferenceNo, WWtenant, System);
 						}
 					}
 					string Result = "";
@@ -407,7 +389,6 @@ namespace WebFreight.Web.WcfApi
 					
                     response.Result = OceanInsightsRequestPm.OceanInsigntId;
 					scope.Complete();
-					//scope.Dispose();
 					
 				}
 				return response;
@@ -462,7 +443,7 @@ namespace WebFreight.Web.WcfApi
 			try
 			{
 				OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(WWtenant);
-				OceanInsightsRequestPM OceanInsightsRequestPm;// = new OceanInsightsRequestPM();
+				OceanInsightsRequestPM OceanInsightsRequestPm;
 				if (Type == "c_id")
 				{
 					OceanInsightsRequestPm = query.GetSinglePMByOceanInsightsByScacCodeContainerNo(ScacCode, ReferenceNo);
