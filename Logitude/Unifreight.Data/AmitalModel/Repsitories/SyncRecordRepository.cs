@@ -52,6 +52,17 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             context.SetAsModified(entity);
         }
 
+        public void Update(List<SyncRecord> records)
+        {
+            for (int i = 0; i < records.Count; i++)
+            {                
+                context.SyncRecord.Attach(records[i]);
+                context.SetAsModified(records[i]);
+            }
+
+            context.SaveChanges();
+        }
+
         public List<SyncRecord> All()
         {
             return context.SyncRecord.ToList();
@@ -189,7 +200,8 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             if (inQueue > 200)
                 return new List<SyncRecord>();
 
-            var q = context.SyncRecord.Where(syncRecord =>
+            IQueryable<SyncRecord> q = context.SyncRecord.Where(syncRecord =>
+                syncRecord.IsRequeued == false &&
                 syncRecord.IsSync > SyncRecordStatus.New && syncRecord.IsSync < SyncRecordStatus.SyncedAndUpdated &&
                 syncRecord.CreateDate > yesterday && syncRecord.CreateDate < DbFunctions.AddMinutes(DateTime.Now, -30)).Take(100);
 
