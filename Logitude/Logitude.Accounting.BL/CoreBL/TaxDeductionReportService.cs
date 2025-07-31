@@ -34,7 +34,7 @@ using System.Transactions;
 using System.Web;
 using System.Xml.Serialization;
 
-//using WebFreight.Web.Helpers;
+
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -47,7 +47,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             IAccountingContext context = AccountingContext.GetContext(tenant);
             TaxDeductionReportQueryService taxDeductionReportQueryService = new TaxDeductionReportQueryService(context);
-            //TaxDeductionReportPM taxDeductionReportPM = taxDeductionReportQueryService.GetSingle(taxDeductionReportId, false, false);
+            
 
             List<string> linesArray = new List<string>();
             TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant,null);

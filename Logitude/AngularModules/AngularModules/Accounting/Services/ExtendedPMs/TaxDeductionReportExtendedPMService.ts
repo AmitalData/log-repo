@@ -84,8 +84,8 @@ export class TaxDeductionReportExtendedPMService {
 
 
 
-    GetTaxDeductionReportData(tenant: number, reportId: string): Observable<ServiceResponse> {
-        const url = `${this._apiUrl}/GetTaxDeductionReportData?tenant=${encodeURIComponent(tenant)}&reportId=${encodeURIComponent(reportId)}`;
+    GetTaxDeductionReportData(reportId: string): Observable<ServiceResponse> {
+        const url = `${this._apiUrl}/GetTaxDeductionReportData?reportId=${encodeURIComponent(reportId)}`;
         return this.httpClient.get<any[]>(url, ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             const returnedval = response as any;

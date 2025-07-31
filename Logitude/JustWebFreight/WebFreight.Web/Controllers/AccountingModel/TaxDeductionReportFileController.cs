@@ -20,7 +20,6 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
-    //[RoutePrefix("api/TaxDeductionReportFile")]
     public class TaxDeductionReportFileController: ApiController
     {
 
@@ -51,7 +50,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         [HttpGet]
         [Route("TaxDeductionReportFile/GetTaxDeductionReportData")]
-        public HttpResponseMessage GetTaxDeductionReportData(int tenant, string reportId)
+        public HttpResponseMessage GetTaxDeductionReportData(string reportId)
         {
             try
             {
@@ -61,12 +60,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 }
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                if (authToken.Tenant != tenant)
-                {
-                    return Request.CreateResponse(HttpStatusCode.Forbidden, "Tenant mismatch.");
-                }
-                SecurityUtility.AuthenticationOnTenant(tenant);
-
+                int tenant = authToken.Tenant;
 
                 IAccountingContext context = AccountingContext.GetContext(authToken.Tenant);
                 TaxDeductionReportQueryService taxDeductionReportQuery = new TaxDeductionReportQueryService(context);

@@ -95,17 +95,22 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
 
     BuildTaxDeductionReportData() {
         this.taxDeductionReportExtendedPMService
-            .GetTaxDeductionReportData(this.entityPM.Tenant, this.entityPM.Id)
+            .GetTaxDeductionReportData(this.entityPM.Id)
             .subscribe({
             next: (response: ServiceResponse) => {
                 if (!response?.HasError) {
                     this._TaxDeductionReportData = response.Result;
 
-                    this.firstTotalPayments =
-                        this._TaxDeductionReportData?.TotalForCompany?.[0]?.TotalPayments;
-                        
-                    this.firstTotalDeductions =
-                        this._TaxDeductionReportData?.TotalForCompany?.[0]?.TotalDeductions;
+
+                    this.firstTotalPayments = this._TaxDeductionReportData?.TotalForCompany &&
+                        this._TaxDeductionReportData.TotalForCompany[0]
+                        ? this._TaxDeductionReportData.TotalForCompany[0].TotalPayments
+                        : undefined;
+
+                    this.firstTotalDeductions = this._TaxDeductionReportData?.TotalForCompany &&
+                        this._TaxDeductionReportData.TotalForCompany[0]
+                        ? this._TaxDeductionReportData.TotalForCompany[0].TotalDeductions
+                        : undefined;
                 }
             },
             error: err => {
