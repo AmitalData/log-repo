@@ -93,10 +93,10 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public BillToFilter:ApiQueryFilters;
-  
+ 
 
    get TextStore()
-     {
+    {
         return TextStore;
     }
 
@@ -1089,7 +1089,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     RECONCILIATION_STATUS_CODES = [
         this.APPROVED_STATUS,
     ];
-
+    
 
 	AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];  
     filterByPartnerTypeCode: string;
@@ -2815,8 +2815,7 @@ export class TextStore
 
     static ErrorsInSelectedLines: string = SessionLocator.TenantPM.AccountingActivated ? TextCodeTranslator.Translate('Reconciliations.O.ErrorsInSelectedLines') : "";
     static invoiceAmount2reconcileMSG: string = TextCodeTranslator.Translate('Accounting.O.ARP.invoiceAmount2reconcileMSG');
-
-
+    static invoiceAmount2reconcileMSGLower: string = TextCodeTranslator.Translate('ARPayment.O.InvoiceAmount2reconcileMSGLower');
 }
 
 export class TransactionLineModel extends BaseComponent
@@ -3064,28 +3063,25 @@ export class TransactionLineModel extends BaseComponent
                 this.isLineValid = true;
                 this.parent.SetEntityValidity();
             } else {
-                this.SetLineAmountValidity();
+                this.SetLineAmountValidity(this.AmountToReconcile < this.originalOpenAmount ? TextStore.invoiceAmount2reconcileMSGLower: TextStore.invoiceAmount2reconcileMSG);
             }
-
         }
         else {
             if (this.AmountToReconcile >= 0 && this.AmountToReconcile <= Math.abs(this.originalOpenAmount)) {
                 this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, true, "valid");
                 this.isLineValid = true;
                 this.parent.SetEntityValidity();
-
-
             } else {
-                this.SetLineAmountValidity();
+                this.SetLineAmountValidity(this.AmountToReconcile > Math.abs(this.originalOpenAmount) ? TextStore.invoiceAmount2reconcileMSG: TextStore.invoiceAmount2reconcileMSGLower);
             }
         }
 
 
     }
 
-    private SetLineAmountValidity()
+    private SetLineAmountValidity(message)
     {
-        this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, TextStore.invoiceAmount2reconcileMSG);
+        this.UIProperties.SetValidity("AmountToReconcile", this.ObjectTableName, false, message);
         this.isLineValid = false;
         this.parent.SetEntityValidity();
 
