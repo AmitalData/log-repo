@@ -20,7 +20,7 @@ namespace WebFreight.Web.WcfApi
     // NOTE: In order to launch WCF Test Client for testing this service, please select OceanInsightsWcfService.svc or OceanInsightsWcfService.svc.cs at the Solution Explorer and start debugging.
     //  ss
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class OceanInsightsTestWcfService : IOceanInsightsWcfService
+    public class OceanInsightsTestWcfService : IOceanInsightsV2WcfService
     {
         public Response Insert(int Tenant, string ScacCode, string ReferenceNo, string Type, string System = null)
         {
