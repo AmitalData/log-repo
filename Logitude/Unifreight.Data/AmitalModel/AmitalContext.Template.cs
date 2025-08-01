@@ -13458,7 +13458,6 @@ namespace Unifreight.Data.AmitalModel
                 .HasColumnType("int");
             modelBuilder.Entity<SyncRecord>()
                 .Property(p => p.LastRequeueTime)
-                .IsRequired()
                 .HasColumnName(@"LastRequeueTime")
                 .HasColumnType("Datetime");
             modelBuilder.Entity<SyncRecord>()
