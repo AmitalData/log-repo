@@ -19860,6 +19860,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             TextCode DeclarationTextCode_20 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.DiamondsDeclarations", DefaultText = @"Diamonds Declarations", LocalDefaultText = "BS64:IteU16bXlNeo15XXqiDXmdeU15zXldee15nXnSI=", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes, contextTenant);
             Feature DeclarationFeature_20 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.DiamondsDeclarations", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DiamondsDeclarations", NameTextCodeDefaultText = "DiamondsDeclarations", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes, DeclarationObjectTable, addedFeatures, addedTextCodes, contextTenant);
 
+            TextCode DeclarationTextCode_21 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Declaration.Q.IsCancelled", DefaultText = @"Is Cancelled", LocalDefaultText = "מבוטל", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes, contextTenant);
+            Feature DeclarationFeature_21 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Q.IsCancelled", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.IsCancelled", NameTextCodeDefaultText = "IsCancelled", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes, DeclarationObjectTable, addedFeatures, addedTextCodes, contextTenant);
+
             //TextCodeRepository.SubmitChanges();
             //FeaturesRepository.SubmitChanges();    
 
@@ -20581,6 +20584,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsDiamondDeclaration", PredefinedValue = "true", PredefinedValue2 = null, CustomPredefined = false, QueryId = DiamondsDeclarationsQuery.Id, QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0, Operator = "Equal" }, addedQueryFilters, contextTenant);
+
+            Query IsCancelledQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_21.Id, NameTextCodeCode = DeclarationTextCode_21.Code, ObjectTableName = "Customs.Declaration", Code = "IsCancelled", QueryGroupCode = "DECL", IndexOrder = 21, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_21.Id, FeatureUniqeCode = DeclarationFeature_21.FeatureUniqeCode, DefaultSortName = "IsCancelled", DefaultSortDirection = "Desending", Perspective = null }, addedQueries, contextTenant);
 
             SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes, contextTenant);
             SqlBulkInsert.BulkInsert("Features", addedFeatures, contextTenant);

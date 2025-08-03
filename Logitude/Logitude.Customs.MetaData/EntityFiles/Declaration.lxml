@@ -25030,6 +25030,23 @@
         CustomPredefined="false" />
     </QueryFilters>
   </Query>
+      <Query
+    Code="&quot;IsCancelled&quot;"
+    TextCode="&quot;Is Cancelled&quot;"
+    LocalTextCode="&quot;מבוטל&quot;"
+    QueryGroupCode="&quot;DECL&quot;"
+    IndexOrder="21"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    QuerySection="&quot;Customs.Declaration&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;IsCancelled&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns />
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
