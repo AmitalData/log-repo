@@ -84,6 +84,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var PaymentOrderUpdateService = new PaymentOrderUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
             string declarationId = null;
+            string originialDeclarationId = null;
 
             if (customResponse.ResponseContentHeader.Exception != null)
             {
@@ -140,10 +141,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 isAddConnectionToAccountingFile = true;
                 //    declarationId = declarationQueryService.GetIdByCustomFileNo(_PaymentOrderPM.AccountingCustomFile, _PaymentOrderPM.Tenant);
-              
+
                 var declaration = declarationQueryService.GetAcceptDeclarationAmendmentByCustomsFile(_PaymentOrderPM.AccountingCustomFile, _PaymentOrderPM.Tenant);
-               if(declaration!=null)
-                declarationId = declaration.Id;
+                if (declaration != null)
+                {
+                    declarationId = declaration.Id;
+                    originialDeclarationId = declaration.IsAmendment == true ? declaration.AmendmentOriginalDeclartation : declaration.Id;
+                    LogMessagingUtil.Instance.AppendLine("declaration id," + declarationId + " originialDeclarationId: " + originialDeclarationId);
+                }
 
                 if (_PaymentOrderPM.PaymentOrderConnectionTables != null && !string.IsNullOrWhiteSpace(declarationId))
                 {
@@ -286,9 +291,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
             bool task44020 = true;
             if (!task44020)
             {
-                if (!string.IsNullOrWhiteSpace(declarationId))
+                if (!string.IsNullOrWhiteSpace(originialDeclarationId))
                 {
-                    UpdatePaymentDocument(declarationId, requestParams.Tenant, requestParams.LoggingUserId);
+                    UpdatePaymentDocument(originialDeclarationId, requestParams.Tenant, requestParams.LoggingUserId);
                 }
             }
             else
@@ -296,9 +301,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
              
                 DeclarationPM myDeclarationPM = null;
                 var myDeclarationQueryService = new DeclarationQueryService(requestParams.Tenant);
-                if (!string.IsNullOrWhiteSpace(declarationId))
+                if (!string.IsNullOrWhiteSpace(originialDeclarationId))
                 {
-                    myDeclarationPM = myDeclarationQueryService.GetSingle(declarationId, false, false);
+                    myDeclarationPM = myDeclarationQueryService.GetSingle(originialDeclarationId, false, false);
                 }
 
                 var myAnalyzePaymentDocumentManager = new AnalyzePaymentDocumentManager(null, _PaymentOrderPM, myDeclarationPM);
