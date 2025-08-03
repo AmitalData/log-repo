@@ -1619,7 +1619,9 @@ export class DeclarationPM {
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
- 	
+ if(!AppTool.IsNullOrEmpty(this.Id) && !this.IsDirty) {
+            ServiceHelper.CheckIsLock(this.Id, "Customs.Declaration",true);
+        }	
         this.IsDirty = true;
 		  	
 		 
