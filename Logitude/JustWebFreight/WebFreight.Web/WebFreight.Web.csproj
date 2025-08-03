@@ -2163,7 +2163,6 @@
     <Compile Include="CustomModel\DomainServices\Generated\CB_QuotaComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_RequirementComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_TariffComputedDataDomainService.Generated.cs" />
-    <Compile Include="CustomModel\DomainServices\Generated\ClaimDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CourtInstanceDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CustomsAirlineDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\DeclarationCargoSplitDomainService.Generated.cs" />
