@@ -154,11 +154,32 @@ if ( MyContext == null)
             }
         
 		
-     
+            List<DecCargoSplitConPM> DecCargoSplitConsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.DecCargoSplitCons).Cast<DecCargoSplitConPM>().ToList();
+            foreach (DecCargoSplitConPM DecCargoSplitCargoIdentifier in DecCargoSplitConsChangeSet)
+            {  
+                entityPM.DecCargoSplitCons.Where(d => d.DeclarationCargoSplitId == DecCargoSplitCargoIdentifier.DeclarationCargoSplitId && d.LineNumber == DecCargoSplitCargoIdentifier.LineNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
+            List<DecCargoSplitConsItemPM> DecCargoSplitConsItemsChangeSet = ChangeSet.GetAssociatedChanges(DecCargoSplitCon, d => d.DecCargoSplitConsItems).Cast<DecCargoSplitConsItemPM>().ToList();
+            foreach (DecCargoSplitConsItemPM DecCargoSplitConsItem in DecCargoSplitConsItemsChangeSet)
+            {  
+                DecCargoSplitCon.DecCargoSplitConsItems.Where(d => d.DeclarationCargoSplitId == DecCargoSplitConsItem.DeclarationCargoSplitId && d.DecCargoSplitConsLineNo == DecCargoSplitConsItem.DecCargoSplitConsLineNo && d.ItemLine == DecCargoSplitConsItem.ItemLine).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert; 
+            List<DecCargoSplitConsPackDetPM> DecCargoSplitConsPackDetsChangeSet = ChangeSet.GetAssociatedChanges(DecCargoSplitConsItem, d => d.DecCargoSplitConsPackDets).Cast<DecCargoSplitConsPackDetPM>().ToList();
+            foreach (DecCargoSplitConsPackDetPM DecCargoSplitConsPackDet in DecCargoSplitConsPackDetsChangeSet)
+            {  
+                DecCargoSplitConsItem.DecCargoSplitConsPackDets.Where(d => d.DeclarationCargoSplitId == DecCargoSplitConsPackDet.DeclarationCargoSplitId && d.DecCargoSplitConsLineNo == DecCargoSplitConsPackDet.DecCargoSplitConsLineNo && d.DecCargoSplitConsItemLine == DecCargoSplitConsPackDet.DecCargoSplitConsItemLine && d.PackageLine == DecCargoSplitConsPackDet.PackageLine).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
         
-		  
+		 
+            }
+        
+		 
+            }
+        
 		
-       
+            List<DecCargoSplitCargoIdentifierPM> DecCargoSplitCargoIdentifiersChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.DecCargoSplitCargoIdentifiers).Cast<DecCargoSplitCargoIdentifierPM>().ToList();
+            foreach (DecCargoSplitCargoIdentifierPM DecCargoSplitCargoIdentifier in DecCargoSplitCargoIdentifiersChangeSet)
+            {  
+                entityPM.DecCargoSplitCargoIdentifiers.Where(d => d.DeclarationCargoSplitId == DecCargoSplitCargoIdentifier.DeclarationCargoSplitId && d.LineNumber == DecCargoSplitCargoIdentifier.LineNumber).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
         
 				    service.Update(entityPM,true); 
 
@@ -209,7 +230,23 @@ if ( MyContext == null)
             {
                 switch (ChangeSet.GetChangeOperation(itemPM))
                 {
-         
+                    case ChangeOperation.Insert:
+                        { 
+                            DecCargoSplitConPM currentItemPM = entityPM.DecCargoSplitCons.Where(d => d.DeclarationCargoSplitId == itemPM.DeclarationCargoSplitId && d.LineNumber == itemPM.LineNumber).FirstOrDefault();
+                            currentItemPM.ChangeSetOp = ChangeSetOperation.Insert; 
+		                	SetDecCargoSplitConsItemChangeSet(currentItemPM);
+			                                           
+                            break;
+                        }
+
+                    case ChangeOperation.Update:
+                        {
+                           DecCargoSplitConPM currentItemPM = entityPM.DecCargoSplitCons.Where(d => d.DeclarationCargoSplitId == itemPM.DeclarationCargoSplitId && d.LineNumber == itemPM.LineNumber).FirstOrDefault();
+						    currentItemPM.ChangeSetOp = ChangeSetOperation.Update; 
+		                	SetDecCargoSplitConsItemChangeSet(currentItemPM);
+			                
+                            break;
+                        }
 
                     case ChangeOperation.Delete:
                         {

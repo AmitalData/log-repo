@@ -36,8 +36,8 @@ export class CustomsSettingList {
 	HSMToken: string;
 	StandAlone: boolean;
 	OcrToken: string;
- 	ForbiddenSigns: string;
- 	CourierDocToken: string;
- 	
+	CourierDocToken: string;
+	ForbiddenSigns: string;
+	
 }
  
