@@ -205,7 +205,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                         
                     sb.AppendLine("ILSWS!!!");
                     
-                    if (drityEntityPM.StorageSiteCode != dbPM.StorageSiteCode || IsNewFromU2L)
+                    if (drityEntityPM.CourierCustomStatusCode != dbPM.CourierCustomStatusCode || drityEntityPM.StorageSiteCode != dbPM.StorageSiteCode || IsNewFromU2L)
                     {
                          var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                         if (IsNewFromU2L) dataHaveChangeSendIt = true;
