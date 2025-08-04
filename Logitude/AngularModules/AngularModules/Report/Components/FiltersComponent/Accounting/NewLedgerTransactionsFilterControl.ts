@@ -37,7 +37,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     public GLAccountFilterRadio: string;
 
 
-    public IsListGLAccounts: boolean = false;
+    public IsListGLAccounts: boolean = true;
     ObjectTableName: string = "LedgerTransaction";
     public ReportsPreview: ReportsPreviewComponent;
     public RunReportTitle: string = 'Run Report';
@@ -277,15 +277,6 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         queryFilterItem.FieldValue = this.ToDate ? this.ToDate : null;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
-
-       
-
-        queryFilterItem.FieldName = "CollectorId";
-        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.collector);
-        queryFilterItem.Operator = "Equals";
-        queryFilterItem.DisplayInList = true; 
-        queryFilterItems.push(queryFilterItem);
-
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "SalesmanUserId";
