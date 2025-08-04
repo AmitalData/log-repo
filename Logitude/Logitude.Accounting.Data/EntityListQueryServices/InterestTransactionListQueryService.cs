@@ -428,8 +428,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                     join ten in context.Tenants on interestTransaction.Tenant equals ten.Id
                     into joinData
                     from x in joinData.DefaultIfEmpty()
-                    where journal.AccountingEntityCode == Enums.AccountingEntityValues.ARPayment && journallines.ActionCode == creditActionCodeType
-                    && interestTransaction.LocalAmount == journallines.LocalAmount * -1
+                    where (journal.AccountingEntityCode == Enums.AccountingEntityValues.ARPayment
+                            &&  journallines.ActionCode == creditActionCodeType
+                            && interestTransaction.LocalAmount == journallines.LocalAmount * -1) 
+                    || journal.AccountingEntityCode != Enums.AccountingEntityValues.ARPayment
 
                     select new InterestTransactionList()
                     {
