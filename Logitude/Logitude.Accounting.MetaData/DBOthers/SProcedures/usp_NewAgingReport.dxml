@@ -139,17 +139,17 @@ WHEN T.CreateDate < @InputDate THEN (T.ForeignAmountDebit - T.ForeignAmountCredi
 ELSE 0
 END) AS TotalForeign,
 SUM(
-    CASE 
-        WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount 
-        ELSE t.OpenAmount * t.ExchangeRate
-    END
+CASE
+WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount
+ELSE t.OpenAmount * t.ExchangeRate
+END
 ) AS BalanceInLocalCurrency,
-
 SUM(
-    CASE 
-        WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount * t.ExchangeRate
-        ELSE t.OpenAmount
-    END
+  CASE
+    WHEN GL.ReconcileMethodCode = 0  AND t.ExchangeRate != 0
+      THEN t.OpenAmount / t.ExchangeRate
+    ELSE t.OpenAmount
+  END
 ) AS BalanceInForeignCurrency,
 SUM(CASE
 WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
