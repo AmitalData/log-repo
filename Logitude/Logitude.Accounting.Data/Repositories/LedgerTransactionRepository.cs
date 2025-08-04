@@ -1918,6 +1918,13 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
                     }).FirstOrDefault();
         }
+
+        public bool ExistsLedgerTransactionByReferenceGLAccountId(string reference1, string gLAccountId, int tenant)
+        {
+            return context.LedgerTransactions
+                .Where(a => a.Reference1 == reference1 && a.AccountId == gLAccountId && a.Tenant == tenant)
+                .Any();
+        }
     }
     public class JournalOriginal
     {

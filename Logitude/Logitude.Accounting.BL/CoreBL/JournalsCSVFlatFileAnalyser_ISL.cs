@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -14,13 +15,14 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
     public class JournalsCSVFlatFileAnalyser_ISL
     {
         private Opening_LineDTO_JCSV_ISL Opening_Line = null;
-        // private Closing_LineDTO_ISL Closing_Line = null;
+
         private List<JournalSrcLineDTO_ISL> _JournalSrcLinesDTO;
         private FullAccountingSettingPM _FullAccountingSettingPM;
         private IAccountingContext accountingContext;
@@ -29,7 +31,16 @@ namespace Logitude.Accounting.BL.CoreBL
         private string _resolveLoggingUserId;
         private Contact _contact;
         private const bool useLocal = true;
+        private int DuplicatesSkippedCount = 0;
 
+
+        public JournalAnalyseResult AnalyseWithSkip(int? ptenant, string FileContent)
+        {
+            JournalAnalyseResult journalAnalyseResult = new JournalAnalyseResult();
+            journalAnalyseResult.JournalPM = this.Analyse(ptenant, FileContent);
+            journalAnalyseResult.DuplicatesSkipped = this.DuplicatesSkippedCount;
+            return journalAnalyseResult;
+        }
 
         public JournalPM Analyse(int? ptenant, string FileContent)
         {
@@ -37,7 +48,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string fileContent = ConvertFromDosHebrewToWinHebrew(FileContent);
                 int? tenantFromPage4Tester = null;
-                //     FileContent = fileContent.Replace("\"", "");
+
                 _JournalSrcLinesDTO = CreateJournalSrcLinesDTOFromFile(FileContent, out tenantFromPage4Tester);
 
                 if (tenantFromPage4Tester.HasValue)
@@ -56,6 +67,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 accountingContext = AccountingContext.GetContext(tenant);
                 _FullAccountingSettingPM = GetFullAccountingSettings(accountingContext, tenant);
                 ValidateFlatFile(tenant);
+                if (!_JournalSrcLinesDTO.Where(ln => ln.SkipLine == false).Any() && _JournalSrcLinesDTO.Where(ln => ln.SkipLine == true).Any())
+                {
+                    string error_text = TranslateTextsClassTranslate("Journal.O.OnlyDuplicates", 0, useLocal);
+                    if (String.IsNullOrEmpty(error_text)) error_text = "All lines in the file already exist in the system. The file was rejected.";
+                    throw new ApplicationException(error_text);
+                }
                 if (this.MyCSVFlatFileLoadResult.ErrorRowList.Count == 0)
                 {
                     IAccountingContext MyContext = AccountingContext.GetContext(tenant);
@@ -74,7 +91,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             Tenant = tenant,
-                            ///journal.JournalNumber = "1";
                             CreateDate = @now,
                             AccountingDate = j1stLineDTO.AccountingDate,
                             TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
@@ -97,10 +113,8 @@ namespace Logitude.Accounting.BL.CoreBL
                         };
 
 
-                        foreach (JournalSrcLineDTO_ISL jLineDTO in _JournalSrcLinesDTO)
+                        foreach (JournalSrcLineDTO_ISL jLineDTO in _JournalSrcLinesDTO.Where(ln => ln.SkipLine == false))
                         {
-                            count++;
-                            bool errors = false;
 
                             journal.JournalLines.Add(new JournalLinePM()
                             {
@@ -117,10 +131,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                                 DocumentDate = jLineDTO.DocumentDate,
                                 DueDate = jLineDTO.DueDate,
-                                Reference1 = jLineDTO.Rererence1,
-                                Reference2 = jLineDTO.Rererence2,
-                                Reference3 = jLineDTO.Rererence3,
+                                Reference1 = jLineDTO.Reference1,
+                                Reference2 = jLineDTO.Reference2,
+                                Reference3 = jLineDTO.Reference3,
                                 Notes = jLineDTO.Notes,
+
                             });
 
 
@@ -137,11 +152,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
                             throw new ApplicationException($"{text_1}");
                         }
-                        //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
-                        //    {
-                        //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
-                        //        throw new ApplicationException($"{text}");
-                        //    }
+
                         scope.Complete();
                         return journal;
 
@@ -159,10 +170,6 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-                //string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
-                //if (String.IsNullOrEmpty(text)) text = "failed while performing";
-
-                //throw new ApplicationException($"{text} ", e);
                 throw;
             }
 
@@ -181,17 +188,18 @@ namespace Logitude.Accounting.BL.CoreBL
             var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
             string winHebrewString = winHebrewEncoding.GetString(hebBytes);
             return winHebrewString;
-            //File.WriteAllBytes(@"C: \Users\itzik\Desktop\zevel\Pages\pages_win1255.txt", hebBytes);
-            //File.WriteAllText(@"C: \Users\itzik\Desktop\zevel\Pages\pages_win1255.txt", hebrewString);
 
         }
 
 
         private void AddErrorRow(String errorLine)
         {
-
             this.MyCSVFlatFileLoadResult.ErrorRowList.Add(errorLine + " " + Environment.NewLine);
+        }
 
+        private void AddAccountLineRow(String errorLine)
+        {
+            this.MyCSVFlatFileLoadResult.ValidateAccountLineList.Add(errorLine + " " + Environment.NewLine);
         }
 
 
@@ -201,9 +209,13 @@ namespace Logitude.Accounting.BL.CoreBL
             bool reading_Lines = false;
             bool finished = false;
             var JournalSrcLines = new List<JournalSrcLineDTO_ISL>();
-            var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            int currentLine = 0;
 
+            var lines = FileContent
+                .Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            int currentLine = 0;
+            string error_text = String.Empty;
             foreach (string rawLine in lines)
             {
                 currentLine++;
@@ -218,10 +230,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 var rowtype = rawLine.Split(',')[0];///.Substring(0, 1);
 
-                //if (Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype) || (rowtype.Length >= 1 && Opening_LineDTO_JCSV_ISL.RowType.Contains(rowtype.Substring(0, 1))))
                 if (!reading_Lines)
                 {
-                    //   Opening_Line = Opening_LineDTO_JCSV_ISL.Create(rawLine);
                     reading_Lines = true;
                     continue;
                 }
@@ -230,25 +240,29 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (!reading_Lines)
                     {
                         reading_Lines = true;
-                        //string text_3 = TranslateTextsClassTranslate("JournalsCSV.O.AccountLine", 0, useLocal);
-                        //string text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AppearsBefore", 0, useLocal);
-                        //string text_2 = TranslateTextsClassTranslate("JournalsCSV.O.HeaderType", 0, useLocal);
-                        //throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO_JCSV_ISL.RowType} ");
                     }
                     JournalSrcLineDTO_ISL taxLine = JournalSrcLineDTO_ISL.Create(rawLine, currentLine);
                     JournalSrcLines.Add(taxLine);
 
                 }
-                else
+                else if (error_text == String.Empty && !String.IsNullOrEmpty(rawLine))
                 {
-                    string text = TranslateTextsClassTranslate("JournalsCSV.O.NotValidRowType", 0, useLocal);
-                    if (String.IsNullOrEmpty(text)) text = "Not a valid Row Type";
-                    throw new ApplicationException($"{text}  {rawLine}");
+                    error_text = TranslateTextsClassTranslate("JournalsCSV.O.NotValidRowType", 0, useLocal);
+                    if (String.IsNullOrEmpty(error_text)) error_text = "Not a valid Row Type";
+                    error_text += $" {rowtype}  {rawLine}";
+                    if (JournalSrcLines.Any()) // An error after some lines - throw on the spot
+                    { 
+                        throw new ApplicationException(error_text); 
+                    }
                 }
                 if (finished)
                 {
                     break;
                 }
+            }
+            if (!JournalSrcLines.Any() & String.IsNullOrEmpty(error_text))
+            {
+                throw new ApplicationException(error_text);
             }
             return JournalSrcLines;
         }
@@ -261,7 +275,6 @@ namespace Logitude.Accounting.BL.CoreBL
             if (date == DateTime.MinValue)
             {
                 throw new
-                //  Exception($"{fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
                     Exception($"Line {currentLine}: {fieldname} should be {@format}  Substring({pos}) ={txtDateTime}  ");
             }
 
@@ -278,19 +291,13 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private FullAccountingSettingPM GetFullAccountingSettings(IAccountingContext accountingContext, int tenant)
         {
-            //string text;
             var myFullAccountingSettingQueryService = new FullAccountingSettingQueryService(accountingContext);
             var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
                 throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
-            //if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.DeductionFileNumber))
-            //{
-            //    text = TranslateTextsClassTranslate("JournalsCSV.O.DeductionFileNumber", 0, useLocal);
-            //    // Deduction File Number is undefined.
-            //    throw new ApplicationException(text);
-            //}
+
             return myFullAccountingSettingPM;
         }
 
@@ -300,48 +307,7 @@ namespace Logitude.Accounting.BL.CoreBL
             string text;
             string text_2;
             string text_44;
-            //if (Opening_Line == null)
-            //{
-            //    text = TranslateTextsClassTranslate("JournalsCSV.O.HeaderLine", 0, useLocal);
-            //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.NotEncountered", 0, useLocal);
-            //    throw new ApplicationException($"{text} {Opening_LineDTO_JCSV_ISL.RowType} {text_2}  ");
-            //}
-            //if (Closing_Line == null)
-            //{
-            //    text = TranslateTextsClassTranslate("JournalsCSV.O.StartingRowType", 0, useLocal);
-            //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.NotEncountered", 0, useLocal);
-            //    throw new ApplicationException($"{text} {Closing_LineDTO_ISL.RowType} {text_2}  ");
-            //}
 
-            //if (Closing_Line.DeductionFileNum != Opening_Line.DeductionFileNum)
-            //{
-            //    text = TranslateTextsClassTranslate("JournalsCSV.O.StartingRowDeductionFile", 0, useLocal);
-            //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.DiffersFrom", 0, useLocal);
-            //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.FinishingRowDeductionFile", 0, useLocal);
-            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {Opening_Line.DeductionFileNum} ");
-            //}
-            //string myDeduc = _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
-            //if (Closing_Line.DeductionFileNum != myDeduc)
-            //{
-            //    text = TranslateTextsClassTranslate("JournalsCSV.O.StartingRowDeductionFile", 0, useLocal);
-            //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.DiffersFrom", 0, useLocal);
-            //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.OurDeductionFile", 0, useLocal);
-            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
-            //}
-
-            //if (Opening_Line.TotalInvalidRecords + Opening_Line.TotalValidRecords != Opening_Line.TotalVendorNumber)
-            //{
-            //    text = TranslateTextsClassTranslate("JournalsCSV.O.FinishingRowTotals", 0, useLocal);
-            //    throw new ApplicationException($"{text} {Opening_Line.TotalInvalidRecords} + {Opening_Line.TotalValidRecords} != {Opening_Line.TotalVendorNumber} ");
-            //}
-
-            //if (Opening_Line.TotalValidRecords != _VendorLinesDTO.Count)
-            //{
-            //    text = TranslateTextsClassTranslate("JournalsCSV.O.FinishingRowTotalVendors", 0, useLocal);
-            //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.DiffersFrom", 0, useLocal);
-            //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CountVendorRows", 0, useLocal);
-            //    throw new ApplicationException($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
-            //}
 
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             long count = 1;
@@ -383,10 +349,14 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.CreditGLAccountId = creditPM.Id;
                     }
-					totalCredit+= Math.Round(jLine.LocalAmount, 2);
+                    if (jLine.DuplCheck)
+                    {
+                        jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.CreditGLAccountId, tenant, jLine.CreditGLAccount);
+                    }
+                    if (!jLine.SkipLine) totalCredit += Math.Round(jLine.LocalAmount, 2);
 
 				}
-                if (jLine.ActionCode != "1")
+                if (!jLine.SkipLine && jLine.ActionCode != "1")
                 {
                     if (String.IsNullOrEmpty(jLine.DebitGLAccount))
                     {
@@ -419,52 +389,15 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.DebitGLAccountId = debitPM.Id;
                     }
-					totalDebit += Math.Round(jLine.LocalAmount, 2);
+                    if (jLine.DuplCheck)
+                    {
+                        jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.DebitGLAccountId, tenant, jLine.DebitGLAccount);
+                    }
+                    if (!jLine.SkipLine) totalDebit += Math.Round(jLine.LocalAmount, 2);
 
 				}
-				//if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
-				//{
-				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.LocalName", 0, useLocal);
-				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44}");
-				//}
-				//if (String.IsNullOrEmpty(jLine.ChartCode))
-				//{
-				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ChartCode", 0, useLocal);
-				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-				//}
-				//if (!jLine.IsMulti && String.IsNullOrEmpty(jLine.CurrencyCode))
-				//{
-				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
-				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-				//}
-				//if (!jLine.IsMulti && jLine.CurrencyCode == "##")
-				//{
-				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.IsMissing", 0, useLocal);
-				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CurrencyCode", 0, useLocal);
-				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-				//}
-				//if (jLine.IsMulti && !String.IsNullOrEmpty(jLine.CurrencyCode) && jLine.CurrencyCode != "##")
-				//{
-				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AccountIsaMulti", 0, useLocal);
-				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_44} ");
-				//}
-				//if (jLine.RecoMethod == "1" && (jLine.IsMulti || jLine.CurrencyCode == "NIS"))
-				//{
-				//    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
-				//    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.Wrong", 0, useLocal);
-				//    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.ReconciliationMethod", 0, useLocal);
-				//    this.AddErrorRow($"{text}{count} ({jLine.InternalNumber}) {text_2} {text_44} ");
-				//}
 
-				count++;
+                count++;
             }
             if(totalDebit != totalCredit) 
             {
@@ -475,17 +408,32 @@ namespace Logitude.Accounting.BL.CoreBL
 
 		}
 
+        private bool CheckDuplicateRef(string reference1, string gLAccountId, int tenant, string account)
+        {
+            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
+            if (ledgerTransactionQueryService.ExistsLedgerTransactionByReferenceGLAccountId(reference1,gLAccountId, tenant))
+            {
+                string text = "Reference " + reference1 + " exists already in G.L.Account " + account;
+                this.AddAccountLineRow(text);
+                this.DuplicatesSkippedCount += 1;
+                return true;
+            }
+            return false;
+        }
+    }
 
-
-	}
-
+    public class JournalAnalyseResult
+    {
+        public JournalPM JournalPM { get; set; }
+        public int DuplicatesSkipped { get; set; }
+    }
 
     public class CSVJournalFlatFileLoadResult_ISL
     {
         public List<string> SuccessAccountLineList = new List<string>();
         public List<string> ExceptionAccountLineList = new List<string>();
         public List<string> ErrorRowList = new List<string>();
-        public List<string> ValidateAccountLineLineAgainstDBErrors = new List<string>();
+        public List<string> ValidateAccountLineList = new List<string>();
     }
 
 
@@ -510,7 +458,7 @@ namespace Logitude.Accounting.BL.CoreBL
             string actualRowType = "";
             if (rawLine.Length >= 1)
             {
-                actualRowType = rawLine.Split(',')[0]; ////rawLine.Substring(0, 1);
+                actualRowType = rawLine.Split(',')[0];  
                 if (RowType.Contains(actualRowType) || (actualRowType.Length >= 1 && RowType.Contains(actualRowType.Substring(0, 1)))) startsWithRowTypeOk = true;
             }
 
@@ -526,46 +474,6 @@ namespace Logitude.Accounting.BL.CoreBL
             return rec;
         }
     }
-
-    //class Closing_LineDTO_ISL
-    //{
-    //    public const string RowType = "X";
-    //    private const bool useLocal = true;
-
-    //    public static string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
-    //    {
-    //        return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
-    //    }
-
-    //    public string RawLine { get; set; }
-    //    //public string DeductionFileNum { get; private set; }
-
-    //    //public long TotalVendorNumber { get; set; }
-    //    //public long TotalValidRecords { get; set; }
-    //    //public long TotalInvalidRecords { get; set; }
-
-    //    internal static Closing_LineDTO_ISL Create(string rawLine)
-    //    {
-
-    //        rawLine = rawLine ?? "";
-    //        if (!rawLine.StartsWith(RowType))
-    //        {
-    //            string text = TranslateTextsClassTranslate("JournalsCSV.O.DoesntStartWithRowType", 0, useLocal);
-    //            throw new ApplicationException($"{text} {RowType} ");
-    //        }
-
-    //        var rec = new Closing_LineDTO_ISL();
-    //        rec.RawLine = rawLine;
-    //        //rec.DeductionFileNum = rawLine.Substring(2 - 1, 9);
-
-    //        //rec.TotalVendorNumber = long.Parse(rawLine.Substring(11 - 1, 4));
-    //        //rec.TotalValidRecords = long.Parse(rawLine.Substring(15 - 1, 4));
-    //        //rec.TotalInvalidRecords = long.Parse(rawLine.Substring(19 - 1, 4));
-
-
-    //        return rec;
-    //    }
-    //}
 
 
 
@@ -604,13 +512,12 @@ namespace Logitude.Accounting.BL.CoreBL
         public decimal LocalAmount { get; private set; }
         public decimal ForeignAmount { get; private set; }
         public decimal ExternalOpenAmount { get; private set; }
-        public string Rererence1 { get; private set; }
-        public string Rererence2 { get; private set; }
-        public string Rererence3 { get; private set; }
+        public string Reference1 { get; private set; }
+        public string Reference2 { get; private set; }
+        public string Reference3 { get; private set; }
         public string Notes { get; private set; }
-
-        // public string Cancelled { get; private set; }
-        // public bool IsCancelled { get; private set; }
+        public bool DuplCheck { get; private set; }
+        public bool SkipLine { get; set; } = false;
 
         internal static JournalSrcLineDTO_ISL Create(string rawLine, int currentLine)
         {
@@ -624,7 +531,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
 
                 if (rawLine.Length >= 2)
-                { 
+                {
                     cddc = rawLine.Substring(0, 2).ToUpperInvariant();
                     if (cddc == "CD")
                     {
@@ -741,16 +648,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 3)
             {
-                //txtDateTime = values[3];
-                //if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
-                //rec.AccountingDateString = txtDateTime;
-                //if (rec.AccountingDateString != _EmptyDate)
-                //{
-                //    fieldname = "AccountingDate";
-                //    pos = "0, 8";
-                //    date = JournalsCSVFlatFileAnalyser_ISL.TryGetDateTime(values[3], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
-                //    rec.AccountingDate = date;
-                //}
                 txtDateTime = values[3].TrimEnd(' ');
                 if (txtDateTime.Length >= 10)
                 {
@@ -781,16 +678,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 4)
             {
-                //txtDateTime = values[4];
-                //if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
-                //rec.DocumentDateString = txtDateTime;
-                //if (rec.DocumentDateString != _EmptyDate)
-                //{
-                //    fieldname = "DocumentDate";
-                //    pos = "0, 8";
-                //    date = JournalsCSVFlatFileAnalyser_ISL.TryGetDateTime(values[4], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
-                //    rec.DocumentDate = date;
-                //}
                 txtDateTime = values[4].TrimEnd(' ');
                 if (txtDateTime.Length >= 10)
                 {
@@ -821,16 +708,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 5)
             {
-                //txtDateTime = values[5];
-                //if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
-                //rec.DueDateString = txtDateTime;
-                //if (rec.DueDateString != _EmptyDate)
-                //{
-                //    fieldname = "DueDate";
-                //    pos = "0, 8";
-                //    date = JournalsCSVFlatFileAnalyser_ISL.TryGetDateTime(values[5], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
-                //    rec.DueDate = date;
-                //}
                 txtDateTime = values[5].TrimEnd(' ');
                 if (txtDateTime.Length >= 10)
                 {
@@ -885,74 +762,25 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            //if (count > 9)
-            //{
-            //    rec.ExternalOpenAmount = 0M;
-            //    try
-            //    {
-            //        rec.ExternalOpenAmount = decimal.Parse(values[9]);
-            //    }
-            //    catch (Exception e)
-            //    { }
-            //}
 
 
-            if (count > 9) rec.Rererence1 = values[9];
-            if (count > 10) rec.Rererence2 = values[10];
-            //           if (count > 11) rec.Rererence3 = values[11];
+            if (count > 9) rec.Reference1 = values[9];
+            if (count > 10) rec.Reference2 = values[10];
+
             if (count > 11) rec.Notes = values[11];
 
-
-
-
-            //string txtDateTime = rawLine.Substring(11 - 1, 8);
-            //string fieldname = "";
-            //string pos = "";
-            //DateTime date = DateTime.MinValue;
-            //rec.ReferenceDateString = txtDateTime;
-            //if (rec.ReferenceDateString != _EmptyDate)
-            //{
-            //    fieldname = "ReferenceDate";
-            //    pos = "11 - 1, 8";
-            //    date = JournalsCSVFlatFileAnalyser_ISL.TryGetDateTime(rawLine, txtDateTime, fieldname, pos, currentLine, format: "yyyyMMdd");
-            //    rec.ReferenceDate = date;
-            //}
-
-
-
-            //rec.ReferenceGroup = rawLine.Substring(19 - 1, 4);
-            //rec.Reference = rawLine.Substring(23 - 1, 9);
-            //rec.VatAmount = 0M;
-            //try
-            //{
-            //    rec.VatAmount = decimal.Parse(rawLine.Substring(32 - 1, 9));
-            //}
-            //catch (Exception e)
-            //{ }
-
-            //rec.InvoiceAmountSign = rawLine.Substring(41 - 1, 1);
-            //rec.VatableInvoiceAmount = 0M;
-            //try
-            //{
-            //    rec.VatableInvoiceAmount = decimal.Parse(rawLine.Substring(42 - 1, 10));
-            //}
-            //catch (Exception e)
-            //{ }
-
-            //if (rec.InvoiceAmountSign == "-") rec.VatableInvoiceAmount = -rec.VatableInvoiceAmount;
-
-            //rec.APS_Reference = rawLine.Substring(52 - 1, 9);
-
-            //if (actualRowType == "S" || actualRowType == "L" || actualRowType == "M" || actualRowType == "Y" || actualRowType == "I")
-            //{
-            //    rec.OutputOrInput = "O";
-            //}
-            //else
-            //{
-            //    rec.OutputOrInput = "I";
-            //}
-
-            //rec.LineTypeCode = actualRowType;
+            if (count > 12)
+            { 
+                string dupl_chk_str = values[12].TrimEnd(' ');
+                if (!String.IsNullOrWhiteSpace(dupl_chk_str) && dupl_chk_str.ToUpperInvariant() == "Y") 
+                {
+                    rec.DuplCheck = true;
+                }
+                else
+                {
+                    rec.DuplCheck = false;
+                }
+            }
 
             return rec;
         }

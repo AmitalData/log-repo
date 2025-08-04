@@ -5624,6 +5624,18 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Journal.O.DuplicateLinesSkipped&quot;"
+      DefaultText="&quot;Duplicate Lines Skipped&quot;"
+      LocalDefaultText="&quot;שורות כפולות אותרו ולא נקלטו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Journal.O.OnlyDuplicates&quot;"
+      DefaultText="&quot;All lines in the file already exist in the system. The file was rejected.&quot;"
+      LocalDefaultText="&quot;כל השורות בקובץ כבר קיימות במערכת. הקובץ לא נקלט&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Journal.O.DifferenceExchangeRate&quot;"
       DefaultText="&quot;Difference between new and old value is more than 5 Percent Exchange rate&quot;"
       LocalDefaultTextBack_up="&quot;השער החדש קטן\גדול ביותר מחמישה אחוזים מהשער הקודם&quot;"

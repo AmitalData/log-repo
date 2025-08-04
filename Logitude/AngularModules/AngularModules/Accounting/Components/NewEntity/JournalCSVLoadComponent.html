@@ -21,7 +21,7 @@
 
     <!-- Request -->
     <div class="class-request-content" *ngIf="!HasError">
-        <table style="width: 350px;height: 270px;padding-top: 10px;">
+        <table style="width: 350px;height: 120px;padding-top: 10px;">
 
 
             <!-- Request Fields -->
@@ -82,7 +82,7 @@
 
 
 
-    <div *ngIf="_NewJournalPM" style="overflow:auto; height:300px;">
+    <div *ngIf="_NewJournalPM" style="overflow:auto; height:50px;">
         <table>
             <tr class="MyTR">
                 <td>
@@ -91,11 +91,29 @@
             </tr>
             <tr>
                 <td>
-                    <a *ngIf="_NewJournalPM"
+                    <a *ngIf="NewJournalNumber"
                        href="javascript:;" (click)="OpenJournal()">
-                        Adjust Journal have created :{{ _NewJournalPM['JournalNumber'] }}
+                        New Journal created: {{ NewJournalNumber }}
                     </a>
                 </td>
+            </tr>
+            <tr>
+                <td><div></div></td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <div *ngIf="_DuplicateLinesSkippedNumber > 0" style="overflow:auto; height:50px;">
+        <table>
+            <tr class="MyTR">
+                <td>
+                    <span>{{GetDuplicateLinesSkippedMessage()}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><div></div></td>
             </tr>
             <tr>
                 <td><div></div></td>
