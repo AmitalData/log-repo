@@ -251,6 +251,7 @@ using WebFreight.Web.Helpers;
                     rv.CrdPercentage = openline.CreditInterestPercentage;
                     rv.TotalCrdInterest = openline.CreditInterestAmount;
                     rv.CalculationDetails = openline.CalculationDetails;
+                    rv.Date = openline.FromDate;
                 }
 
             }
