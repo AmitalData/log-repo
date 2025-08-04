@@ -66,6 +66,8 @@ MainGlaccountId VARCHAR(75),
 TotalForeign DECIMAL(30, 2),
 BalanceInLocalCurrency DECIMAL(30, 2),
 BalanceInForeignCurrency DECIMAL(30, 2),
+TotalToCollect DECIMAL(30, 2),
+
 );
 INSERT INTO #TemporaryTable
 SELECT
@@ -136,11 +138,16 @@ ELSE t.OpenAmount * t.ExchangeRate
 END
 ) AS BalanceInLocalCurrency,
 SUM(
-CASE
-WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount * t.ExchangeRate
-ELSE t.OpenAmount
-END
+  CASE
+    WHEN GL.ReconcileMethodCode = 0  AND t.ExchangeRate != 0
+      THEN t.OpenAmount / t.ExchangeRate
+    ELSE t.OpenAmount
+  END
 ) AS BalanceInForeignCurrency
+SUM(CASE
+WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
+ELSE 0
+END) AS TotalToCollect
 FROM
 GLACCOUNTS GL
 LEFT JOIN
@@ -256,6 +263,7 @@ max(t.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
 max(t.CreditAllotmentPercentage) as CreditAllotmentPercentage,
 SUM(T.BalanceInLocalCurrency) AS BalanceInLocalCurrency,
 sum(t.BalanceInForeignCurrency) as BalanceInForeignCurrency,
+sum(t.TotalToCollect) as TotalToCollect,
 sum(t.TotalForeign) as TotalForeign,
 sum(t.ExternalTransactionsTotal) as ExternalTransactionsTotal,
 MAX(t.Past) AS Past,
