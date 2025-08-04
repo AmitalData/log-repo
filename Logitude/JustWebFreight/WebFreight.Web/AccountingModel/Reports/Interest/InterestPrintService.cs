@@ -231,7 +231,10 @@ using WebFreight.Web.Helpers;
                 _InterestReportPM.GLAccountId, tenant);
             if (futureQuery != null)
             {
-                List<InterestTransactionList> transactionLists = futureQuery.ToList();
+                List<InterestTransactionList> transactionLists = futureQuery.ToHashSet()
+                                                                            .GroupBy(t => t.Id)
+                                                                            .Select(g => g.First())
+                                                                            .ToList();
                 if (transactionLists.Count > 0)
                 {
                     foreach (InterestTransactionList transactionList in transactionLists)
