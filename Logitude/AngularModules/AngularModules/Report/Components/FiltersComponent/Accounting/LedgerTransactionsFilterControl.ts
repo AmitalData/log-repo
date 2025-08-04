@@ -76,6 +76,8 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
     private fullAccountingSetting: FullAccountingSettingList = new FullAccountingSettingList();
     private ChartOfAccountSecurityLevel: any;
+    private IsDisableGlaccountId: boolean = false;
+
     constructor(private CD: ChangeDetectorRef) {
         super();
 
@@ -650,6 +652,9 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     if (this.operatorsList.filter(x => x.Code == queryFilterItem.Operator).length > 0) {
                         this.selectedAmountOperatorLocalBalanceInDue = this.operatorsList.filter(x => x.Code == queryFilterItem.Operator)[0];
                     }
+                    break;
+                case "IsDisableGlaccountId":
+                    this.IsDisableGlaccountId = queryFilterItem.FieldValue;
                     break;
             }
         }

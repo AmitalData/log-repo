@@ -261,15 +261,27 @@ export class AddEditReportSchedulerComponent implements OnInit {
         let reportTemplateId = this.PageChild_RETASK.GetReportTemplateId();
         let reportFilterItems = this.PageChild_RETASK.GetReportFilterItems();
         let messageTemplateId = this.PageChild_RETASK.GetMessageTemplateId();
-        if (this.IsCustomerDebNotification && !AppTool.IsNullOrEmpty(this.GLAccountId))
+        if (this.IsCustomerDebNotification)
         {
-            var queryFilterItems = new Array<QueryFilterItem>();
-            var queryFilterItem = new QueryFilterItem();
-            queryFilterItem.FieldName = "GLAccountId";
-            queryFilterItem.FieldValue = this.GLAccountId;
-            queryFilterItem.Operator = "Equals";
-            queryFilterItems.push(queryFilterItem);
-            this.PageChild_PRREP.SetReportFilterItems(queryFilterItems);
+            if(!AppTool.IsNullOrEmpty(this.GLAccountId)){
+               var queryFilterItems = new Array<QueryFilterItem>();
+               var queryFilterItem = new QueryFilterItem();
+               queryFilterItem.FieldName = "GLAccountId";
+               queryFilterItem.FieldValue = this.GLAccountId;
+               queryFilterItem.Operator = "Equals";
+               queryFilterItems.push(queryFilterItem);
+               this.PageChild_PRREP.SetReportFilterItems(queryFilterItems);
+            }
+            else{
+                var queryFilterItems = new Array<QueryFilterItem>();
+               var queryFilterItem = new QueryFilterItem();
+               queryFilterItem.FieldName = "IsDisableGlaccountId";
+               queryFilterItem.FieldValue = true;
+               queryFilterItem.Operator = "Equals";
+               queryFilterItem.IsCustom = true;
+               queryFilterItems.push(queryFilterItem);
+               this.PageChild_PRREP.SetReportFilterItems(queryFilterItems); 
+            }
          }
 
          this.PageChild_PRREP.SetReportFilterItems(reportFilterItems);      
