@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebFreight.Web.WcfApi.OceanInsightsWcfService" CodeBehind="OceanInsightsV2WcfService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="WebFreight.Web.WcfApi.OceanInsightsV2WcfService" CodeBehind="OceanInsightsV2WcfService.svc.cs" %>

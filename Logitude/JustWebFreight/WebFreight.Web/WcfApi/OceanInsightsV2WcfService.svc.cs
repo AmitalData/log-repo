@@ -26,8 +26,8 @@ using WWApi.Models;
 
 namespace WebFreight.Web.WcfApi
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "OceanInsightsWcfService" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select OceanInsightsWcfService.svc or OceanInsightsWcfService.svc.cs at the Solution Explorer and start debugging.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "OceanInsightsV2WcfService" in code, svc and config file together.
+    // NOTE: In order to launch WCF Test Client for testing this service, please select OceanInsightsV2WcfService.svc or OceanInsightsV2WcfService.svc.cs at the Solution Explorer and start debugging.
     //  ss
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class OceanInsightsV2WcfService : IOceanInsightsV2WcfService
