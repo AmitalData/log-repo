@@ -143,7 +143,7 @@ SUM(
       THEN t.OpenAmount / t.ExchangeRate
     ELSE t.OpenAmount
   END
-) AS BalanceInForeignCurrency
+) AS BalanceInForeignCurrency,
 SUM(CASE
 WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
 ELSE 0
