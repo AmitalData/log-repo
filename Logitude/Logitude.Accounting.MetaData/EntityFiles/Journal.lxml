@@ -62,7 +62,6 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
-  ShowFastSearch="false"
   Code1="&quot;cbc2&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -5626,13 +5625,15 @@
     <TextCode
       Code="&quot;Journal.O.DuplicateLinesSkipped&quot;"
       DefaultText="&quot;Duplicate Lines Skipped&quot;"
-      LocalDefaultText="&quot;שורות כפולות אותרו ולא נקלטו&quot;"
+      LocalDefaultTextBack_up="&quot;שורות כפולות אותרו ולא נקלטו&quot;"
+      LocalDefaultText="&quot;BS64:Itep15XXqNeV16og15vXpNeV15zXldeqINeQ15XXqteo15Ug15XXnNeQINeg16fXnNeY15Ui&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Journal.O.OnlyDuplicates&quot;"
       DefaultText="&quot;All lines in the file already exist in the system. The file was rejected.&quot;"
-      LocalDefaultText="&quot;כל השורות בקובץ כבר קיימות במערכת. הקובץ לא נקלט&quot;"
+      LocalDefaultTextBack_up="&quot;כל השורות בקובץ כבר קיימות במערכת. הקובץ לא נקלט&quot;"
+      LocalDefaultText="&quot;BS64:Iteb15wg15TXqdeV16jXldeqINeR16fXldeR16Ug15vXkdeoINen15nXmdee15XXqiDXkdee16LXqNeb16ouINeU16fXldeR16Ug15zXkCDXoNen15zXmCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
