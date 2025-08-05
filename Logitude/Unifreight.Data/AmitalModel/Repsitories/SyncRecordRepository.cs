@@ -3,7 +3,6 @@ using System.Linq;
 using Simplog.Server.Infrastructure;
 using System;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
-using NLog;
 using NetCommonHelper.Logger;
 using System.Data.Entity;
 
@@ -89,9 +88,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         }
 
         public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string item, bool allTask)
-        {            
+        {
             DateTime dateTimeNow = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
-            dateTimeNow = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, dateTimeNow.Hour, dateTimeNow.Minute, dateTimeNow.Second, dateTimeNow.Millisecond);            
+            dateTimeNow = new DateTime(dateTimeNow.Year, dateTimeNow.Month, dateTimeNow.Day, dateTimeNow.Hour, dateTimeNow.Minute, dateTimeNow.Second, dateTimeNow.Millisecond);
 
             IQueryable<SyncRecord> recordsQurey = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
@@ -99,7 +98,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 (syncRecord.FileNo == item));
 
             logger.WriteTrace($"SyncRecord, GetUnsyncAndMarkAsInProcess query {recordsQurey}");
-            
+
             List<SyncRecord> records = recordsQurey.ToList();
 
             foreach (SyncRecord syncRecord in records)
@@ -128,16 +127,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void UpdateSyncDate(string itemUpdate, DateTime syncDT, int tenant)
         {
-            DateTime yesterday = DateTime.Now.AddDays(-1);
             syncDT = syncDT.AddSeconds(1);
 
             IEnumerable<SyncRecord> query = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 (syncRecord.FileNo == itemUpdate || syncRecord.Entname == itemUpdate) &&
                 syncRecord.IsSync == SyncRecordStatus.Synced &&
-                syncRecord.SyncDT <= syncDT &&
-                syncRecord.CreateDate > yesterday
-            );
+                syncRecord.SyncDT <= syncDT);
 
             List<SyncRecord> records = query.ToList();
 
@@ -189,24 +185,20 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public List<SyncRecord> GetNeedToReturnToQueue()
         {
-            DateTime yesterday = DateTime.Now.AddDays(-1);
-            DateTime halfHourBefore = DateTime.Now.AddMinutes(-30);
-
-            int inQueue = context.SyncRecord.Count(syncRecord =>
-                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
+            int inQueue = context.SyncRecord.Count(syncRecord => syncRecord.IsSync == SyncRecordStatus.New);
 
             DevLog.Instance.WriteDebug($"SyncRecord, GetNeedToReturnToQueue, in queue: {inQueue}");
 
             if (inQueue > 200)
                 return new List<SyncRecord>();
 
-            IQueryable<SyncRecord> q = context.SyncRecord.Where(syncRecord =>
+            IQueryable<SyncRecord> query = context.SyncRecord.Where(syncRecord =>
                 syncRecord.IsRequeued == false &&
                 syncRecord.IsSync > SyncRecordStatus.New && syncRecord.IsSync < SyncRecordStatus.SyncedAndUpdated &&
-                syncRecord.CreateDate > yesterday && syncRecord.CreateDate < DbFunctions.AddMinutes(DateTime.Now, -30)).Take(100);
+                syncRecord.CreateDate < DbFunctions.AddMinutes(DateTime.Now, -30)).Take(100);
 
-            System.Diagnostics.Debug.Print($"*************** SyncRecord, GetNeedToReturnToQueue query {q}");
-            List<SyncRecord> records = q.ToList();
+            System.Diagnostics.Debug.Print($"*************** SyncRecord, GetNeedToReturnToQueue query {query}");
+            List<SyncRecord> records = query.ToList();
 
             return records;
         }
@@ -216,7 +208,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             try
             {
                 string sql = "SELECT RIGHT(FORMAT(SYSDATETIMEOFFSET(), 'yyyy-MM-dd HH:mm:ss.fffffff zzz'), 6) AS CurrentTimeZoneOffset";
-                return context.GetActiveDbContext().Database.SqlQuery<string>(sql).FirstOrDefault();                
+                return context.GetActiveDbContext().Database.SqlQuery<string>(sql).FirstOrDefault();
             }
             catch (Exception ex)
             {
