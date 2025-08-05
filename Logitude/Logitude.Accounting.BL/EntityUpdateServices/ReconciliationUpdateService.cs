@@ -315,6 +315,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                 int lineCounter = 0;
 
+
+                var qs = new LedgerTransactionQueryService(reconciliationPM.Tenant);
+                var ledgerTransactionPMsUpdated = qs.GetLedgerTransactionPMsByIdList(reconciliationPM.ReconciliationLines.Select(ln => ln.TransactionId).ToList(), reconciliationPM.Tenant);
+
                 // Lines one pair for each currency
                 var groupedReconciliationLines = reconciliationPM.ReconciliationLines
                     .GroupBy(line => line.CurrencyId);
@@ -323,9 +327,43 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 foreach (var group in groupedReconciliationLines)
                 {
-                    var groupLocalRecoAmount = Math.Round(group
-                        .Where(x => x.CurrencyRate != null)
-                        .Sum(x => x.ReconciliationAmount * x.CurrencyRate) ?? 0, 2);
+
+                    var groupLocalRecoAmount = 0m;
+                    foreach (ReconciliationLinePM recoLine in group)
+                    {
+                        decimal localRecoAmount = 0m;
+                     
+                        var ledgerTransactionPM = ledgerTransactionPMsUpdated.FirstOrDefault(lt => lt.Id == recoLine.TransactionId);
+
+                        if (ledgerTransactionPM == null)
+                        {
+                            throw new ApplicationException("Ledger Transaction not found for " + recoLine.TransactionId);
+                        }
+                        decimal origLocalAmount = ledgerTransactionPM.LocalAmountDebit - ledgerTransactionPM.LocalAmountCredit;
+                        decimal origForeignAmount = ledgerTransactionPM.ForeignAmountDebit - ledgerTransactionPM.ForeignAmountDebit;
+
+
+                        if (origForeignAmount == origLocalAmount)
+                        {
+                            localRecoAmount = recoLine.ReconciliationAmount;
+                        }
+                        else // have to convert to local currency
+                        {
+                            //if ()
+                            //{
+                                
+                            //}
+                            if (ledgerTransactionPM.ExchangeRate == 0 && origForeignAmount == 0)
+                            {
+                                throw new ApplicationException("Currency Rate is not set for " + recoLine.TransactionId);
+                            }
+                            decimal exchangeRate = ledgerTransactionPM.ExchangeRate == 0 ? origLocalAmount / origForeignAmount : ledgerTransactionPM.ExchangeRate;
+                            localRecoAmount = Math.Round(recoLine.ReconciliationAmount * exchangeRate, 2);
+                        }
+                        groupLocalRecoAmount += localRecoAmount;
+
+                    }
+
 
                     if (groupLocalRecoAmount != 0)
                     {
