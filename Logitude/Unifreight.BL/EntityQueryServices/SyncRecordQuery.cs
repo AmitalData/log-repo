@@ -11,7 +11,6 @@ using Unifreight.BL.Models;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
 using NetCommonHelper.Logger;
-using Simplog.Data.CommonDataModel;
 using System.Text.Encodings.Web;
 using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel;
@@ -21,9 +20,19 @@ namespace Unifreight.BL.EntityQueryServices
     public class SyncRecordQuery
     {
         SyncRecordRepository repository;
-        DevLog logger = DevLog.Instance;
+        static DevLog logger = DevLog.Instance;
+      
+        public SyncRecordQuery(int tenant)
+        {
+            repository = new SyncRecordRepository(tenant);
+        }
 
-        public SyncRecordQuery()
+        public SyncRecordQuery(SyncRecordRepository repository)
+        {
+            this.repository = repository;
+        }
+
+        public static int GetTenantOfSyncRecord()
         {
             int tenant = CacheHelper.GetFromCache("SyncRecordQuery_tenant", () =>
             {
@@ -34,17 +43,8 @@ namespace Unifreight.BL.EntityQueryServices
                 logger.WriteDebug($"for up SyncRecordQuery Get first tenant from custsom.customssetting that have value in field UnfConnectionString, tenant: {settings.Tenant}, UnfConnectionString: {settings.UnfConnectionString}");
                 return settings.Tenant;
             });
-            repository = new SyncRecordRepository(tenant);
-        }
 
-        public SyncRecordQuery(int tenant)
-        {
-            repository = new SyncRecordRepository(tenant);
-        }
-
-        public SyncRecordQuery(SyncRecordRepository repository)
-        {
-            this.repository = repository;
+            return tenant;
         }
 
         public List<SyncRecord> get()
