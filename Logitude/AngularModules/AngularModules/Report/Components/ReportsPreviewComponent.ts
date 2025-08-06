@@ -553,7 +553,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isInteractive?: boolean) {
         filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
-        this.StartBusyIndicator("Generating...");
+        this.StartBusyIndicator(TextCodeTranslator.Translate("General.O.Generating"));
 
 
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
@@ -637,7 +637,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                                 }
 
                                 else if (result.StatusCode == "P") {
-                                    this.StartBusyIndicator("Report is in progress");
+                                    this.StartBusyIndicator(TextCodeTranslator.Translate("General.O.ReportInProgress"));
                                 }
                                 else if (result.StatusCode == "D") {
                                     this.ReportFliter.ProcessType = "ReportsRunUsingWR";
