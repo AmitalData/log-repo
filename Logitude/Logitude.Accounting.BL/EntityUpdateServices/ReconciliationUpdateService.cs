@@ -355,11 +355,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             CreditAccountId = diffAccountId,
                             DebitControlAccountId = controlAccountId,
                             CreditControlAccountId = null,
-
-                            DocumentDate = newJournal.AccountingDate,
-                            AccountingDate = newJournal.AccountingDate,
-                            DueDate = newJournal.AccountingDate,
-
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
@@ -379,11 +374,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             CreditAccountId = diffAccountId,
                             DebitControlAccountId = null,
                             CreditControlAccountId = null,
-
-                            DocumentDate = newJournal.AccountingDate,
-                            AccountingDate = newJournal.AccountingDate,
-                            DueDate = newJournal.AccountingDate,
-
                             LocalAmount = groupLocalRecoAmount,
                             ForeignAmount = 0,
                             CurrencyId = group.Key,
@@ -421,7 +411,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
 
-                    newJournal.JournalReconciles = new List<JournalReconcilePM>();  
+                    newJournal.JournalReconciles = new List<JournalReconcilePM>();
                     JournalUpdateService journalUpdateService = new JournalUpdateService(this.MainContext, this.AdditionalContexts, reconciliationPM.Tenant);
                     journalUpdateService.Update(newJournal, true);
                 }
