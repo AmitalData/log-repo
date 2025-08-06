@@ -253,7 +253,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (glAccountPM != null 
                         && glAccountPM.ReconcileMethodCode == ReconcileMethodValues.ForeignCurrency)
                     {
-                        if (Math.Round(entityPM.ReconciliationLines
+                        if (entityPM.ReconciliationLines.Any(x => x.CurrencyRate == null) || Math.Round(entityPM.ReconciliationLines
                             .Where(x => x.CurrencyRate != null)
                             .Sum(x => x.ReconciliationAmount * x.CurrencyRate) ?? 0, 2) != 0)
                         {
@@ -297,35 +297,52 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 // Start
                 JournalPM newJournal = new JournalPM();
-
-                newJournal.Tenant = reconciliationPM.Tenant;
-                newJournal.CreateDate = DateTime.Now;
-                newJournal.AccountingDate = reconciliationPM.CreateDate.Date;
-                newJournal.TypeCode = JournalTypeValues.Regular;
-                newJournal.StatusCode = JournalStatusTypeValues.InProcessing; 
-                newJournal.CreatedByUserId = reconciliationPM.CreatedByUserId;
-                newJournal.AccountingEntityId = reconciliationPM.Id;
-                newJournal.AccountingEntityReference = reconciliationPM.Number.ToString();
-                newJournal.ExternalNo = null;
-                newJournal.UpdateDate = DateTime.Now;
-                newJournal.UpdatedByUserId = reconciliationPM.CreatedByUserId;
-                newJournal.ApproveDate = reconciliationPM.CreateDate;
-                newJournal.ApprovedByUserId = reconciliationPM.CreatedByUserId;
                 newJournal.JournalLines = new List<JournalLinePM>();
-                newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+
                 int lineCounter = 0;
+
+                DateTime THE_DATE = reconciliationPM.CreateDate.Date;
+                var qs = new LedgerTransactionQueryService(reconciliationPM.Tenant);
+                var ledgerTransactionPMsUpdated = qs.GetLedgerTransactionPMsByIdList(reconciliationPM.ReconciliationLines.Select(ln => ln.TransactionId).ToList(), reconciliationPM.Tenant);
 
                 // Lines one pair for each currency
                 var groupedReconciliationLines = reconciliationPM.ReconciliationLines
                     .GroupBy(line => line.CurrencyId);
 
-                var newJournalReconcilesHS = new HashSet<JournalReconcilePM>();
-
                 foreach (var group in groupedReconciliationLines)
                 {
-                    var groupLocalRecoAmount = Math.Round(group
-                        .Where(x => x.CurrencyRate != null)
-                        .Sum(x => x.ReconciliationAmount * x.CurrencyRate) ?? 0, 2);
+                    var groupLocalRecoAmount = 0m;
+                    foreach (ReconciliationLinePM recoLine in group)
+                    {
+                        decimal localRecoAmount = 0m;
+
+                        var ledgerTransactionPM = ledgerTransactionPMsUpdated.FirstOrDefault(lt => lt.Id == recoLine.TransactionId);
+
+                        if (ledgerTransactionPM == null)
+                        {
+                            throw new ApplicationException("Ledger Transaction not found for " + recoLine.TransactionId);
+                        }
+                        decimal origLocalAmount = ledgerTransactionPM.LocalAmountDebit - ledgerTransactionPM.LocalAmountCredit;
+                        decimal origForeignAmount = ledgerTransactionPM.ForeignAmountDebit - ledgerTransactionPM.ForeignAmountCredit;
+
+
+                        if (origForeignAmount == origLocalAmount)
+                        {
+                            localRecoAmount = recoLine.ReconciliationAmount;
+                        }
+                        else // have to convert to local currency
+                        {
+                            if (ledgerTransactionPM.ExchangeRate == 0 && origForeignAmount == 0)
+                            {
+                                throw new ApplicationException("Currency Rate is not set for " + recoLine.TransactionId);
+                            }
+                            decimal exchangeRate = origForeignAmount != 0 ? origLocalAmount / origForeignAmount : ledgerTransactionPM.ExchangeRate;
+                            localRecoAmount = Math.Round(recoLine.ReconciliationAmount * exchangeRate, 2);
+                        }
+                        groupLocalRecoAmount += localRecoAmount;
+
+                    }
+
 
                     if (groupLocalRecoAmount != 0)
                     {
@@ -348,6 +365,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             CurrencyId = group.Key,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             Notes = "Revaluation on Foreign Currency Reco.",
+                            AccountingDate = THE_DATE,
+                            DocumentDate = THE_DATE,
+                            DueDate = THE_DATE,
                         });
 
                         newJournal.JournalLines.Add(new JournalLinePM()
@@ -369,32 +389,42 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             CurrencyId = group.Key,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             Notes = "Revaluation on Foreign Currency Reco.",
+                            AccountingDate = THE_DATE,
+                            DocumentDate = THE_DATE,
+                            DueDate = THE_DATE,
                         });
 
 
-                        List<ReconciliationLinePM> recoLines = reconciliationPM.ReconciliationLines
-                            .Where(x => x.CurrencyId == group.Key)
-                            .ToList();
-                        newJournalReconcilesHS.Union(from item in recoLines
-                                                     select new JournalReconcilePM()
-                                                     {
-                                                         ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                                                         Tenant = reconciliationPM.Tenant,
-                                                         LedgerTransactionId = item.TransactionId,
-                                                         Line = item.Line,
-                                                         CurrencyId = tenantCurrencyId,
-                                                         ReconciliationAmount = groupLocalRecoAmount,
-                                                         IsPartial = item.IsPartial,
-
-                                                     }).ToHashSet();
 
                     }
                 }
+                if (newJournal.JournalLines.Any())  // if there are no lines, do not create journal 
+                                                    // this can be if there are no reconciliation lines with different exchange rates 
+                {
+                    // Header fields
+                    newJournal.Tenant = reconciliationPM.Tenant;
+                    newJournal.CreateDate = DateTime.Now;
+                    newJournal.AccountingDate = THE_DATE;
+                    newJournal.DocumentDate = THE_DATE;
+                    newJournal.DueDate = THE_DATE;
+                    newJournal.TypeCode = JournalTypeValues.Regular;
+                    newJournal.StatusCode = JournalStatusTypeValues.InProcessing;
+                    newJournal.CreatedByUserId = reconciliationPM.CreatedByUserId;
+                    newJournal.AccountingEntityId = reconciliationPM.Id;
+                    newJournal.AccountingEntityReference = reconciliationPM.Number.ToString();
+                    newJournal.ExternalNo = null;
+                    newJournal.UpdateDate = DateTime.Now;
+                    newJournal.UpdatedByUserId = reconciliationPM.CreatedByUserId;
+                    newJournal.ApproveDate = reconciliationPM.CreateDate;
+                    newJournal.ApprovedByUserId = reconciliationPM.CreatedByUserId;
 
-                newJournal.JournalReconciles = newJournalReconcilesHS.ToList();
-                JournalUpdateService journalUpdateService = new JournalUpdateService(this.MainContext, this.AdditionalContexts, reconciliationPM.Tenant);
-                journalUpdateService.Update(newJournal, true);
+                    newJournal.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
+
+                    newJournal.JournalReconciles = new List<JournalReconcilePM>();  
+                    JournalUpdateService journalUpdateService = new JournalUpdateService(this.MainContext, this.AdditionalContexts, reconciliationPM.Tenant);
+                    journalUpdateService.Update(newJournal, true);
+                }
 
 
 
