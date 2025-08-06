@@ -163,6 +163,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.StatusNameHeb = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StatusNameHeb));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.StatusNameEng)) //T4 find type == nText 
+            {
+                entityPM.StatusNameEng = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.StatusNameEng));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 
