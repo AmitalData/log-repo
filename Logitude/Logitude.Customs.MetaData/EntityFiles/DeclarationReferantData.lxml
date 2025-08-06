@@ -10134,6 +10134,48 @@
       LocalDefaultText="&quot;BS64:IteQ16nXqCDXpNeq15nXl9eqINeq15nXpyI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.StatusRemarks.SivugTitle&quot;"
+      DefaultText="&quot;Status remarks - Classifier&quot;"
+      LocalDefaultTextBack_up="&quot;הערות סטטוס - מסווג&quot;"
+      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og16HXmNeY15XXoSAtINee16HXldeV15Ii&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.StatusRemarks.MevakerTitle&quot;"
+      DefaultText="&quot;Status remarks - Inspector&quot;"
+      LocalDefaultTextBack_up="&quot;הערות סטטוס - מבקר&quot;"
+      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og16HXmNeY15XXoSAtINee15HXp9eoIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Remarks.MevakerShortTitle&quot;"
+      DefaultText="&quot;Inspector remarks&quot;"
+      LocalDefaultTextBack_up="&quot;הערות מבקר&quot;"
+      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og157Xkden16gi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Remarks.SivugShortTitle&quot;"
+      DefaultText="&quot;Classifier remarks&quot;"
+      LocalDefaultTextBack_up="&quot;הערות מסווג&quot;"
+      LocalDefaultText="&quot;BS64:IteU16LXqNeV16og157XodeV15XXkiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Errors.SivugRemarksLoad&quot;"
+      DefaultText="&quot;Error loading classifier remarks&quot;"
+      LocalDefaultTextBack_up="&quot;שגיאה בקריאת הערות מסווג&quot;"
+      LocalDefaultText="&quot;BS64:Itep15LXmdeQ15Qg15HXp9eo15nXkNeqINeU16LXqNeV16og157XodeV15XXkiI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Errors.MevakerRemarksLoad&quot;"
+      DefaultText="&quot;Error loading inspector remarks&quot;"
+      LocalDefaultTextBack_up="&quot;שגיאה בקריאת הערות מבקר&quot;"
+      LocalDefaultText="&quot;BS64:Itep15LXmdeQ15Qg15HXp9eo15nXkNeqINeU16LXqNeV16og157Xkden16gi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

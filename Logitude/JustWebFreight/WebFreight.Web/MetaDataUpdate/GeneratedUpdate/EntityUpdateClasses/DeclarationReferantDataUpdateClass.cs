@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationReferantDataUpdateClass
    {  		
-		public const string HashString = "1fa268f8fbefc8f6af102612f2410300";
+		public const string HashString = "b1353fde2fbfbded2449ec59245f1a33";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -7807,6 +7807,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOConfirmCloseFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ConfirmCloseFile", DefaultText = "Confirm Close File",LocalDefaultText = @"BS64:IteQ16nXqCDXodeS15nXqNeqINeq15nXpyI=", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode DeclarationReferantDataTextCode_CustomsDeclarationReferantDataOConfirmOpenFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationReferantData.O.ConfirmOpenFile", DefaultText = "Confirm Open File",LocalDefaultText = @"BS64:IteQ16nXqCDXpNeq15nXl9eqINeq15nXpyI=", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsStatusRemarksSivugTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.StatusRemarks.SivugTitle", DefaultText = "Status remarks - Classifier",LocalDefaultText = @"BS64:IteU16LXqNeV16og16HXmNeY15XXoSAtINee16HXldeV15Ii", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsStatusRemarksMevakerTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.StatusRemarks.MevakerTitle", DefaultText = "Status remarks - Inspector",LocalDefaultText = @"BS64:IteU16LXqNeV16og16HXmNeY15XXoSAtINee15HXp9eoIg==", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsRemarksMevakerShortTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Remarks.MevakerShortTitle", DefaultText = "Inspector remarks",LocalDefaultText = @"BS64:IteU16LXqNeV16og157Xkden16gi", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsRemarksSivugShortTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Remarks.SivugShortTitle", DefaultText = "Classifier remarks",LocalDefaultText = @"BS64:IteU16LXqNeV16og157XodeV15XXkiI=", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsErrorsSivugRemarksLoad = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Errors.SivugRemarksLoad", DefaultText = "Error loading classifier remarks",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qg15HXp9eo15nXkNeqINeU16LXqNeV16og157XodeV15XXkiI=", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode DeclarationReferantDataTextCode_CustomsErrorsMevakerRemarksLoad = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Errors.MevakerRemarksLoad", DefaultText = "Error loading inspector remarks",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qg15HXp9eo15nXkNeqINeU16LXqNeV16og157Xkden16gi", ObjectTableId = DeclarationReferantDataObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
