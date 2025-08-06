@@ -288,7 +288,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                         {
-                            IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                            IWebFreightContext context = WebFreightContext.GetContext(0);
                             currentTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                                    where (a.Tenant == 0 && a.InActive == false)
                                                  select a).ToList();
@@ -310,7 +310,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 {
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        IWebFreightContext context = WebFreightContext.GetContext(0);
                         zeroTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
                                             where (a.Tenant == 0 && a.InActive == false)
                                             select a).ToList();
