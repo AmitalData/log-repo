@@ -73,6 +73,14 @@ export class HomeComponent implements OnDestroy{
     countCompletedProcesses : number = null;
     selectedTab: string = '0';
 
+    private justOpened = false;
+    @ViewChild('processMenu') processMenuRef!: ElementRef;
+    @HostListener('document:click', ['$event'])
+    onClickOutside(event: MouseEvent) {
+        if (!this.justOpened && this.processMenuRef && !this.processMenuRef.nativeElement.contains(event.target)) {
+            this.CloseMenu();
+        }
+    }
 
     constructor(private processMenuService: ProcessMenuService) {
         this.Tenant = SessionLocator.Tenant;
@@ -840,7 +848,10 @@ export class HomeComponent implements OnDestroy{
         
         if(!newValue){
             this.isPinned = false;
-
+        }
+        else {
+            this.justOpened = true;
+            setTimeout(() => this.justOpened = false);
         }
     }
     get CurrentProcessId () { return this.currentProcessId ; }
