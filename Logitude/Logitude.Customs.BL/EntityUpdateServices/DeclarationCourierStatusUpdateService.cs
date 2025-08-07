@@ -475,19 +475,36 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         private void DetectEdges(DeclarationCourierStatusPM pm,
-                                  DeclarationCourierStatus poco)
+                          DeclarationCourierStatus poco)
         {
             pm.EdgeManifest =
                 poco.CourierManifestStatusCode != "R" &&
                 pm.CourierManifestStatusCode == "R";
 
-            pm.EdgeDeclaration =
-                pm.CourierManifestStatusCode == "V" &&
-                pm.CourierDeclarationStatusCode == "R" &&
-                pm.DocumentStatusCode == "V" &&
-               (poco.CourierManifestStatusCode != "V" ||
-                poco.CourierDeclarationStatusCode != "R" ||
-                poco.DocumentStatusCode != "V");
+            bool manifestNowV = pm.CourierManifestStatusCode == "V";
+            bool declNowR = pm.CourierDeclarationStatusCode == "R";
+            bool docNowV = pm.DocumentStatusCode == "V";
+
+            bool beforeDifferent =
+                   poco.CourierManifestStatusCode != "V" ||
+                   poco.CourierDeclarationStatusCode != "R" ||
+                   poco.DocumentStatusCode != "V";
+
+            pm.EdgeDeclaration = manifestNowV && declNowR && docNowV && beforeDifferent;
+
+            if (!pm.EdgeDeclaration && manifestNowV && declNowR && docNowV)
+            {
+                string blocker =
+                    beforeDifferent
+                        ? "‹should-have-been-true but unknown blocker›"
+                        : $"PrevSame: M={poco.CourierManifestStatusCode}, " +
+                          $"D={poco.CourierDeclarationStatusCode}, " +
+                          $"Doc={poco.DocumentStatusCode}";
+
+                LogMessagingUtil.Instance.AppendLine(
+                    $"[EdgeDecl-Miss] DeclId={pm.DeclarationId} | {blocker}");
+            }
+
 
             pm.EdgePayment = poco.CourierDeclarationStatusCode != "V" && pm.CourierDeclarationStatusCode == "V";
             pm.IsNewEntity = poco.CourierManifestStatusCode == null &&
