@@ -72,6 +72,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
                     false
                 );
                 this.entityPM.Month = new Date();
+                this.entityPM.Month.setDate(1);
                 this.entityPM.Month.setMonth(+value.Code - 1);
             } else {
                 this.UIProperties.SetRequired(
@@ -92,6 +93,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
             this.selectedFromMonth = value;
             if (value != null) {
                 this.entityPM.FromMonth = new Date();
+                this.entityPM.FromMonth.setDate(1);
                 this.entityPM.FromMonth.setMonth(+value.Code - 1);
             }
             this.UIProperties.SetRequired('FromMonth', this.ObjectTableName, AppTool.IsNullOrEmpty(value));
