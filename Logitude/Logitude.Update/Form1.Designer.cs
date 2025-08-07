@@ -305,6 +305,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.OITimer = new System.Windows.Forms.Timer(this.components);
+            this.button57 = new System.Windows.Forms.Button();
             this.invoiceDueDateLabel = new System.Windows.Forms.Label();
              this.UpdateTable1344 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
@@ -2005,6 +2006,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.button57);
             this.tabPage2.Controls.Add(this.button53);
             this.tabPage2.Controls.Add(this.UpdateTable1344);
             this.tabPage2.Controls.Add(this.MapUnifreightTables);
@@ -3887,6 +3889,15 @@
             this.invoiceDueDateLabel.Size = new System.Drawing.Size(16, 13);
             this.invoiceDueDateLabel.TabIndex = 4;
             this.invoiceDueDateLabel.Text = "...";
+
+            this.button57.Location = new System.Drawing.Point(271, 550);
+            this.button57.Name = "RetrieveImportDeclarationsFromCSV";
+            this.button57.Size = new System.Drawing.Size(184, 23);
+            this.button57.TabIndex = 117;
+            this.button57.Text = "שחזור הצהרה(CSV)";
+            this.button57.UseVisualStyleBackColor = true;
+            this.button57.Click += new System.EventHandler(this.RetrieveImportDeclarationsFromCsv_Click);
+
             // 
             // Form1
             // 
@@ -4238,6 +4249,8 @@
         private System.Windows.Forms.TextBox paymentTermTenantTextBox;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label invoiceDueDateLabel;
+        private System.Windows.Forms.Button button57;
+
     }
 }
 
