@@ -524,24 +524,30 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - IsNewEntity FirstTime");
                 return;
             }
-            bool run =
-                (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) ||
-                (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) ||
-                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P"));
 
-            if (!run) return;
+            string edgeKey = null;
+            if (pm.EdgeManifest) edgeKey = $"{pm.DeclarationId}:M";
+            else if (pm.EdgeDeclaration) edgeKey = $"{pm.DeclarationId}:D";
+            else if (pm.EdgePayment) edgeKey = $"{pm.DeclarationId}:P";
+
+            if (edgeKey == null || !AutoMsgScope.FirstTime(edgeKey)) return;
 
             LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] CALL AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
 
             try
             {
                 var svc = new AutomatedCustomsMessagingService(pm.Tenant);
-                svc.CheckAndSendMessageis(pm);
-
+                bool sent = svc.CheckAndSendMessageis(pm);
+                if (!sent)
+                {
+                    AutoMsgScope.Unstamp(edgeKey);
+                }
+                
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] DONE  AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
             }
             catch (Exception ex)
             {
+                AutoMsgScope.Unstamp(edgeKey);
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR DeclId={pm.DeclarationId} - {ex.Message} - {ex.StackTrace}");
             }
         }
