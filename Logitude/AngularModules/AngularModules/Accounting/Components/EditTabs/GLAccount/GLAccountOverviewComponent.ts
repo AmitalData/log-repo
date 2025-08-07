@@ -95,6 +95,11 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.Listen();
     }
 
+
+    ngAfterViewInit(): void {
+        this.CD.detectChanges();
+    }
+
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private TabSelectedEvent: any = null;
