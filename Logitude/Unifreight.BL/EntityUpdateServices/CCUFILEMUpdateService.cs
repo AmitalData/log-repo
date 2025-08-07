@@ -70,7 +70,10 @@ namespace Unifreight.BL.EntityUpdateServices
 
         private int GetCounter(string dirtyDeclarationPMId, int tenant)
         {
-            int i = Convert.ToInt32(dirtyDeclarationPMId.Replace(tenant+"-", "1"));
+            int i = Convert.ToInt32(
+                           dirtyDeclarationPMId.Contains('-')
+                               ? "1" + dirtyDeclarationPMId.Split('-')[1]
+                               : dirtyDeclarationPMId.Replace(tenant + "-", "1"));
             i = 50000000 + i;
             int fileNoLen = 15;
             if (i.ToString().Length > fileNoLen)
