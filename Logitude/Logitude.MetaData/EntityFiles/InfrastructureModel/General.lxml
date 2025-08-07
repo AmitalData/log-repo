@@ -3347,7 +3347,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.ReportTotalInterest&quot;"
-      DefaultText="&quot;Report Total Interest&quot;"
+      DefaultText="&quot;Report Total&quot;"
       LocalDefaultTextBack_up="&quot;סה”כ ריבית לדו”ח&quot;"
       LocalDefaultText="&quot;BS64:Iteh15TigJ3XmyDXqNeZ15HXmdeqINec15PXleKAndeXIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
