@@ -70,7 +70,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             else
             {
+                var notesBuilder = new StringBuilder();
+                if (entityPOCO.StatusTypeCode != entityPM.StatusTypeCode)
+                {
+                    notesBuilder.Append($"{TranslateTextsClass.Translate("TaxDeductionReport.F.StatusTypeCode", 0)} {TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0)} {entityPOCO.StatusTypeCode}{Environment.NewLine}{TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0)} {entityPM.StatusTypeCode}{Environment.NewLine}");
+                }
 
+                if (String.IsNullOrEmpty(entityPOCO.ReportSavedData) && !String.IsNullOrEmpty(entityPM.ReportSavedData))
+                {
+                    notesBuilder.Append($"{TranslateTextsClass.Translate("TaxDeductionReport.F.ReportSavedData", 0)} added {Environment.NewLine}");
+                }
+
+                if (String.IsNullOrEmpty(entityPOCO.ErrorMessage) && !String.IsNullOrEmpty(entityPM.ErrorMessage))
+                {
+                    notesBuilder.Append($"{TranslateTextsClass.Translate("TaxDeductionReport.F.ErrorMessage", 0)} added {Environment.NewLine}");
+                }
                 EventTracerArgs eventTracerArgs = new EventTracerArgs()
                 {
                     EntityId = entityPM.Id,
@@ -79,7 +93,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     ObjectTableName = "TaxDeductionReport",
                     IsAddedManually = false,
                     EventTypeCode = "UPEV",
-                    Notes = "",
+                    Notes = notesBuilder.ToString(),
                 };
                 EventTracer.CreateTraceEvent(eventTracerArgs);
 
