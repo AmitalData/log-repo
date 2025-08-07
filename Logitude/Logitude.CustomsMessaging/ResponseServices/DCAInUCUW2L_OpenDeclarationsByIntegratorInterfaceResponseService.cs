@@ -111,7 +111,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(decId, true, false);
                 if(currentDeclarationCourierStatusPM != null)
                 {
-                    svc.CheckAndSendMessageis(currentDeclarationCourierStatusPM);
+                    var sent=svc.CheckAndSendMessageis(currentDeclarationCourierStatusPM);
                 }
 
                 //   this.MyRequestSheetParam.RequestDescription = "הצהרה נפתחה בהצלחה :" + customFileNo + "_" + decId;
