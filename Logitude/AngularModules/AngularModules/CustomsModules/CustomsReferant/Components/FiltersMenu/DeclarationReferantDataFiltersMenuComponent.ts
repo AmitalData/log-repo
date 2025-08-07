@@ -36,10 +36,10 @@ export class DeclarationReferantDataFiltersMenuComponent
     public UserFilers: ApiQueryFilters;
     public apiQueryFiltersChanged: boolean = false;
     public StatusesFeature:boolean=false;
+    @Input() public isPreDefindReferrantDataFilters: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: DeclarationReferantDataFiltersMenuComponent = this;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
-    @Input() public isPreDefindReferrantDataFilters: boolean = false;
     TransportFilter_A: string;
     TransportFilter_O: string;
     TransportFilter_I: string;
@@ -680,7 +680,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                 "CFIHMAIN.LogitudeTask",
                 "ShowOCRQuery",
                 unifreightMessageM,
-                " הצגת מסך : שאילתא ל - OCR");
+                " הצגת מסך : שםילתם ל - OCR");
         }
         else {
             alert("ShowOCRQuery");
