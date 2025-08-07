@@ -41,7 +41,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הודעה&quot;"
   DefaultText="&quot;Notification&quot;"
-  Code="&quot;f658&quot;"
+  Code="&quot;a73d&quot;"
   Name="&quot;Customs.Notification Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2754,6 +2754,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;SenderName&quot;"
     ListPropertyPath="&quot;SenderName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3029,6 +3030,12 @@
       Code="&quot;Customs.Notification.O.OpenNotification&quot;"
       DefaultText="&quot;Open Notifications&quot;"
       LocalDefaultText="&quot;הצהרות פתוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Notification.O.PrivateName&quot;"
+      DefaultText="&quot;Private Name&quot;"
+      LocalDefaultText="&quot;שם פרטי מעריך:&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
