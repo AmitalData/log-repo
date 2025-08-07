@@ -33,7 +33,10 @@ namespace Logitude.BL.Helpers
         public static void UpdateTableHistory(int tenant, string tableName
             , TableLastUpdateM tableLastUpdateM = null,int contextTenant=0)
         {
-            
+            if (contextTenant == 0)
+            {
+                contextTenant = SettingUtil.GetCurrentTenant();
+            }
             User loggedUser = null;
             ObjectTable entityObjectTable = null;
             IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
