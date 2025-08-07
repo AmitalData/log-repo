@@ -181,7 +181,7 @@ namespace Logitude.CustomsMessaging.Dca
 
             }
             
-            FeatureQuery featureQuery = new FeatureQuery();
+            FeatureQuery featureQuery = new FeatureQuery(customsSettingPM.Tenant);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(
                                    AuthenticationUtil.ResolveUserId(_CustomsSettingPM.Tenant),
                                    _CustomsSettingPM.Tenant);
