@@ -70,9 +70,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             ObjectTable entity;
             if (getFromCache)
             {
-                string entityName = "ObjectTable" + name + tenant;
+                string entityName = $"ObjectTable{name}_{tenant}_{SettingUtil.GetCurrentTenant()}";
 
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
 
@@ -105,7 +105,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public ObjectTable GetSingleObjectTable(string id, int tenant, bool getFromCache)
         {
-            string entityName = "ObjectTable" + id + tenant;
+            string entityName = $"ObjectTable{id}_{tenant}_{SettingUtil.GetCurrentTenant()}";
             ObjectTable entity;
             getFromCache = true;
 
@@ -158,7 +158,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             if (!string.IsNullOrEmpty(id))
             {
-                string entityName = "ObjectTable" + id + tenant;
+                string entityName = $"ObjectTable{id}_{tenant}_{SettingUtil.GetCurrentTenant()}";
                 ObjectTable entity;
 
                 if (CacheManager.CacheWrapper != null)
