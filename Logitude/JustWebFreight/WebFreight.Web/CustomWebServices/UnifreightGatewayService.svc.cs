@@ -23,6 +23,7 @@ using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.Customs;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Threading;
+using System.Web;
 
 namespace WebFreight.Web.CustomWebServices
 {
@@ -444,6 +445,8 @@ SUCCESS={4}"
                     _sbGatewayLog.AppendLine("UnifreightImpersonate  Failed ");
                 }
                 unifreightGenericService.SetTenant(iTenanat);
+                HttpContext.Current.Items.Add("Tenant", iTenanat);
+
                 if (false)
                 {
                     AuthenticationUtil.DebugUsers();
