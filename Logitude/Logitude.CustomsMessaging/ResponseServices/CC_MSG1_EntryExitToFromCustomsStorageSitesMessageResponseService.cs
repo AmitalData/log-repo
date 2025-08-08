@@ -44,7 +44,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.HasException = false;
 
 
-            FeatureQuery featureQuery = new FeatureQuery();
+            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "EntryExit");
             if (customResponse.General.exitEntryEventType==1 && feature != null)
