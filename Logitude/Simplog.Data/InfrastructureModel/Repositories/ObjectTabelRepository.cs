@@ -67,11 +67,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache,int contextTenant=0)
         {
-            
+            var currenttenant = SettingUtil.GetCurrentTenant();
+            if (currenttenant == -1)
+            {
+                currenttenant = contextTenant;
+            }
             ObjectTable entity;
             if (getFromCache)
             {
-                string entityName = $"ObjectTable{name}_{tenant}_{SettingUtil.GetCurrentTenant()}";
+                string entityName = $"ObjectTable{name}_{tenant}_{currenttenant}";
 
                 if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
