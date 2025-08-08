@@ -65,12 +65,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.ObjectTables;
         }
 
-        public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache)
+        public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache,int contextTenant=0)
         {
+            if(contextTenant == 0) {
+                contextTenant = SettingUtil.GetCurrentTenant();
+            }
             ObjectTable entity;
             if (getFromCache)
             {
-                string entityName = "ObjectTable" + name + tenant;
+                string entityName = "ObjectTable" + name + tenant + contextTenant;
 
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
@@ -350,12 +353,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-        public List<ObjectTable> GetAllCacheOnClient(int tenant)
+        public List<ObjectTable> GetAllCacheOnClient(int tenant,int contextTenant=0)
         {
             
 
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
-            var q = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
+            var q = (from a in context.ObjectTables
                      where (a.Tenant == tenant && a.InActive == false && a.CacheOnClient == true)
                      select a);
             if (LogitudeSettings.IsCostomsDeploy)

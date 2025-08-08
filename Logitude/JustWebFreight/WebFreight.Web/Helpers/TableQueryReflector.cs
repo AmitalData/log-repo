@@ -45,7 +45,7 @@ namespace WebFreight.Web.Helpers
             }
 
             ObjectTableRepository obRepository = new ObjectTableRepository(contextTenant);
-            ObjectTable table = obRepository.GetObjectTableByName(tableName, tenant, true);
+            ObjectTable table = obRepository.GetObjectTableByName(tableName, tenant, true, contextTenant);
 
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             FilterSerializer filterSerializer = new FilterSerializer();
