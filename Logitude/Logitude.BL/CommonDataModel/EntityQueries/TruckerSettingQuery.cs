@@ -42,7 +42,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             throw new NotImplementedException();
         }
-
+        public bool AnyByAddressId(string addressId, int tenant)
+        {
+            return repository.context.TruckerSettings
+                .Any(ts => ts.Tenant == tenant && ts.AddressId == addressId);
+        }
         public IQueryable<TruckerSettingList> GetIQueryableEntityListByAddressId(string addressId, int tenant)
         {
             IQueryable<TruckerSettingList> entity = (from ts in repository.context.TruckerSettings.Include("CountryCity")
