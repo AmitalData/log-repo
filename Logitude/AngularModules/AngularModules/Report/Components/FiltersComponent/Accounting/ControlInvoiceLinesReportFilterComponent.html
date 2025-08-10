@@ -383,8 +383,11 @@
 
         </td>
    
-
-  
+        <td colspan="7"> 
+            <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunReport($event)"></app-run-report-toggle>
+        </td>
+        
+        <td style="width: 100px;"><div></div></td>
     </tr>
     <tr style="height: 32px;">
         <td style="width:15px"></td>
@@ -459,11 +462,6 @@
             </div>
 
        </td>
-        <td colspan="7"> 
-             <button (click)="RunReport()" class="greenButton" [style.right.px]="isRTL ? 280 : null" [style.left.px]="isRTL ? null : 288" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
-            </button>
-        </td>
         <td colspan="1" style="width: 60px;" [style.text-align]="isRTL ? 'right' : 'left'">
             {{'ניקוי שדות: '}}
         </td>

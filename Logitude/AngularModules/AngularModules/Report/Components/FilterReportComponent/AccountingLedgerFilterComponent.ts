@@ -149,7 +149,7 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
 
         return this.ValidationErrorsList.length == 0;
     }
-    RunReport() {
+    RunReport(isInteractive: boolean) {
         this.ValidationErrorsList = [];
        
 
@@ -172,7 +172,7 @@ export class AccountingLedgerFilterComponent extends BaseComponent implements On
                 this.ReportsPreview.AddPartner("Partner", this.CustomerId);
             }
 
-            this.ReportsPreview.GenerateReport(this.reportFliter, true);
+            this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
         }
     }
     GetQueryFilterItems(){

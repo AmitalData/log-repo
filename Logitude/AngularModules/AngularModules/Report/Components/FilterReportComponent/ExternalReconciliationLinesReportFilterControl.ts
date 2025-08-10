@@ -227,13 +227,9 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         return this.ValidationErrorsList.length == 0;
     }
 
-    RunReport() {
-       
-
+    RunReport(isInteractive: boolean) {
         if (this.ValidateSelectedFilters()) {
-
-           this.BuildReport();
-
+           this.BuildReport(isInteractive);
         }
     }
 
@@ -252,7 +248,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         return this.queryFilterItems;
     }
 
-    BuildReport(){
+    BuildReport(isInteractive: boolean){
         this.GetQueryFilterItems();
 
         this.reportFliter = new ReportFliter();
@@ -264,7 +260,7 @@ export class ExternalReconciliationLinesReportFilterControl extends BaseComponen
         this.reportFliter.NumberOfPage = 1;
         this.reportFliter.ProcessType = "GenerateReport";
 
-        this.ReportsPreview.GenerateReport(this.reportFliter, true);
+        this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
     }
 
     GetNewQueryFilterItem(FieldName:string,FieldValue:any,FieldDataType:string=null,Operator:string="Equals"){

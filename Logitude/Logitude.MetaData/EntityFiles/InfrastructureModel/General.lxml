@@ -40,9 +40,9 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;6063&quot;"
-   Name="&quot;General&quot;"
-   GenerateDomainService="false"
+  Code="&quot;04ec&quot;"
+  Name="&quot;General&quot;"
+  GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
   ServerModuleName="&quot;Generals&quot;"
   NoViewController="true"
@@ -3306,7 +3306,8 @@
     <TextCode
       Code="&quot;Accounting.General.O.JournalNoRef&quot;"
       DefaultText="&quot;Journal No. / Ref./ Amount&quot;"
-      LocalDefaultText="&quot;מס פקודת יומן/ אסמכתא/ סכום&quot;"
+      LocalDefaultTextBack_up="&quot;מס פקודת יומן/ אסמכתא/ סכום&quot;"
+      LocalDefaultText="&quot;BS64:Itee16Eg16TXp9eV15PXqiDXmdeV157Xny8g15DXodee15vXqteQLyDXodeb15XXnSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3347,10 +3348,11 @@
     <TextCode
       Code="&quot;Accounting.General.O.ReportTotalInterest&quot;"
       DefaultText="&quot;Report Total Interest&quot;"
-      LocalDefaultText="&quot;סה”כ ריבית לדו”ח&quot;"
+      LocalDefaultTextBack_up="&quot;סה”כ ריבית לדו”ח&quot;"
+      LocalDefaultText="&quot;BS64:Iteh15TigJ3XmyDXqNeZ15HXmdeqINec15PXleKAndeXIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-      <TextCode
+    <TextCode
       Code="&quot;Accounting.General.O.BankQueries&quot;"
       DefaultText="&quot;Bank Queries&quot;"
       LocalDefaultTextBack_up="&quot;שאילתות בנקים&quot;"
@@ -6610,8 +6612,8 @@
       LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
-     <TextCode
-       Code="&quot;General.O.Mine&quot;"
+    <TextCode
+      Code="&quot;General.O.Mine&quot;"
       DefaultText="&quot;Mine&quot;"
       LocalDefaultTextBack_up="&quot;שלי&quot;"
       LocalDefaultText="&quot;BS64:Itep15zXmSI=&quot;"
@@ -6697,13 +6699,16 @@
     <TextCode
       Code="&quot;General.O.DollarRateUpdated&quot;"
       DefaultText="&quot;The dollar exchange rate was last updated on&quot;"
-      LocalDefaultText="&quot;שער מטבע הדולר עודכן לאחרונה בתאריך &quot;"
+      LocalDefaultTextBack_up="&quot;שער מטבע הדולר עודכן לאחרונה בתאריך &quot;"
+      LocalDefaultText="&quot;BS64:Itep16LXqCDXnteY15HXoiDXlNeT15XXnNeoINei15XXk9eb158g15zXkNeX16jXldeg15Qg15HXqteQ16jXmdeaICI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.NewReport&quot;"
-      DefaultText="&quot;דוח חדש&quot;"
-      LocalDefaultText="&quot;דוח חדש&quot;"
+      DefaultTextBack_up="&quot;דוח חדש&quot;"
+      DefaultText="&quot;BS64:IteT15XXlyDXl9eT16ki&quot;"
+      LocalDefaultTextBack_up="&quot;דוח חדש&quot;"
+      LocalDefaultText="&quot;BS64:IteT15XXlyDXl9eT16ki&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6714,9 +6719,10 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-       Code="&quot;General.O.ReportInProcess&quot;"
+      Code="&quot;General.O.ReportInProcess&quot;"
       DefaultText="&quot;The report was created successfully and will be built in a background process.&quot;"
-      LocalDefaultText="&quot;הדוח נוצר בהצלחה ויבנה בתהליך רקע&quot;"
+      LocalDefaultTextBack_up="&quot;הדוח נוצר בהצלחה ויבנה בתהליך רקע&quot;"
+      LocalDefaultText="&quot;BS64:IteU15PXldeXINeg15XXpteoINeR15TXptec15fXlCDXldeZ15HXoNeUINeR16rXlNec15nXmiDXqNen16Ii&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -6732,30 +6738,54 @@
     <TextCode
       Code="&quot;Accounting.General.O.CreateANewTaxReport&quot;"
       DefaultText="&quot;Tax Report&quot;"
-      LocalDefaultText="&quot;דוח מעמ&quot;"
-       TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />    
-     <TextCode
-       Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
+      LocalDefaultTextBack_up="&quot;דוח מעמ&quot;"
+      LocalDefaultText="&quot;BS64:IteT15XXlyDXntei154i&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.CancelTaxReport&quot;"
       DefaultText="&quot;Cancel Tax Report&quot;"
-      LocalDefaultText="&quot;ביטול דוח מעמ&quot;"
-       TextCodeTypeCode="&quot;O&quot;"
+      LocalDefaultTextBack_up="&quot;ביטול דוח מעמ&quot;"
+      LocalDefaultText="&quot;BS64:IteR15nXmNeV15wg15PXldeXINee16LXniI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.SendParameters&quot;"
       DefaultText="&quot;Send Parameters&quot;"
-      LocalDefaultText="&quot;פרמטרים לשליחה&quot;"
+      LocalDefaultTextBack_up="&quot;פרמטרים לשליחה&quot;"
+      LocalDefaultText="&quot;BS64:Itek16jXnteY16jXmdedINec16nXnNeZ15fXlCI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.FastSearch&quot;"
       DefaultText="&quot;Fast Search&quot;"
-      LocalDefaultText="&quot;חיפוש מהיר&quot;"
+      LocalDefaultTextBack_up="&quot;חיפוש מהיר&quot;"
+      LocalDefaultText="&quot;BS64:IteX15nXpNeV16kg157XlNeZ16gi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.ReportInProgress&quot;"
+      DefaultText="&quot;Report is in progress&quot;"
+      LocalDefaultTextBack_up="&quot;הדוח בהכנה&quot;"
+      LocalDefaultText="&quot;BS64:IteU15PXldeXINeR15TXm9eg15Qi&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Generating&quot;"
+      DefaultText="&quot;Generating...&quot;"
+      LocalDefaultTextBack_up="&quot;מכין דוח&quot;"
+      LocalDefaultText="&quot;BS64:Itee15vXmdefINeT15XXlyI=&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.B.SendToBackground&quot;"
+      DefaultText="&quot;Send to Background&quot;"
+      LocalDefaultTextBack_up="&quot;שלח לרקע&quot;"
+      LocalDefaultText="&quot;BS64:Itep15zXlyDXnNeo16fXoiI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-
-   <AdditionalFeatures>
+  <AdditionalFeatures>
     <Feature
       Code="&quot;DASHBOARD&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
@@ -9223,7 +9253,8 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature Code="&quot;DOCUMENTSMETADATATYPES&quot;"
+    <Feature
+      Code="&quot;DOCUMENTSMETADATATYPES&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.DOCUMENTSMETADATATYPES&quot;"
       FeatureDefaultText="&quot;Documents Metadata Types&quot;"

@@ -60,4 +60,7 @@
 </div>
 
 
-<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator"></BusyIndicator>
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="WidthBusyIndicator" 
+    [LeftButtonText]="IsSchedulerReport? null: ('General.B.SendToBackground' | TextCodeTranslationPipe)" (leftButtonClicked)="SendToBackground()" 
+    [RightButtonText]="'General.B.Cancel' | TextCodeTranslationPipe" (rightButtonClicked)="CancelReport()">
+</BusyIndicator>

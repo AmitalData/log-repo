@@ -104,7 +104,7 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
         if (!AppTool.IsNullOrEmpty(this.CustomerId)) this.ReportsPreview.AddPartner("Partner", this.CustomerId);
     }
 
-    RunReport() {
+    RunReport(isInteractive: boolean) {
         if (this.ValidateSelectedFilters()) {
             var queryFilterItems: Array<QueryFilterItem> = this.GetQueryFilterItems();
             var reportFliter: ReportFliter;
@@ -117,6 +117,7 @@ export class StatementByInvoiceDateFilterComponent extends BaseComponent   {
             reportFliter.ReportCode = this.ReportsPreview.Report.Code;
             reportFliter.NumberOfPage = 1;
             reportFliter.ProcessType = "GenerateReport";
+            reportFliter.IsInteractive = isInteractive;
 
             this.PrepareContactList();
             this.RunReportEvent.emit(reportFliter);

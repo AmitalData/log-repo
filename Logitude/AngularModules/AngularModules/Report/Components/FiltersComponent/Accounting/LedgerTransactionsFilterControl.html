@@ -249,7 +249,9 @@
 
                     <!-- 6 -->
                     <td>
-                        <div></div>
+                        <div style="width: 100px;" float-left>
+                            <app-run-report-toggle [isRTL]="isRTL" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunButtonClicked($event)"></app-run-report-toggle>
+                        </div>
                     </td>
 
                     <!-- 7 -->
@@ -320,22 +322,6 @@
                                 {{'LedgerTransaction.O.IncludeRelatedCurrenciesAccount' | TextCodeTranslationPipe}}
                             </div>
                         </div>
-                    </td>
-
-
-                    <!-- 6 -->
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <!-- 7 -->
-                    <td>
-                        <div style="width: 100px;" float-left>
-                            <button class="GreenButton" (click)="RunButtonClicked()">
-                                {{RunReportTitle}}
-                            </button>
-                        </div>
-
                     </td>
 
                 </tr>
