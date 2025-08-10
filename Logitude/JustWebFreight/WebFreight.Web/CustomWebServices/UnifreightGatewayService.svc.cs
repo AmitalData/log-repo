@@ -445,8 +445,11 @@ SUCCESS={4}"
                     _sbGatewayLog.AppendLine("UnifreightImpersonate  Failed ");
                 }
                 unifreightGenericService.SetTenant(iTenanat);
-                HttpContext.Current.Items.Add("Tenant", iTenanat);
-
+                
+                if (!HttpContext.Current.Items.Contains("Tenant"))
+                {
+                    HttpContext.Current.Items.Add("Tenant", iTenanat);
+                }
                 if (false)
                 {
                     AuthenticationUtil.DebugUsers();
