@@ -1259,7 +1259,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             return mytransmission;
         }
 
-        private void DoCustomFile(bool fromAmendment = false )
+        public CCUFILEMPM DoCustomFile(bool fromAmendment = false )
         {
             var clientRepository = new ClientRepository(_DirtyDeclarationPM.Tenant);
             var cardRepository = new CardRepository(_DirtyDeclarationPM.Tenant);
@@ -1326,7 +1326,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         _CCUFILEMPM.INDICATORS = "";
                     }
-                    return;
+                    return _CCUFILEMPM;
                 }
             }
 
@@ -1358,7 +1358,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            _CCUFILEMPM.CUSTOMFILENO = lCUSTOMFILENO;
+            _CCUFILEMPM.CUSTOMFILENO = lCUSTOMFILENO==0? Convert.ToInt64(_DirtyDeclarationPM.CustomFileNo):lCUSTOMFILENO;
 
             _CCUFILEMPM.DRAWNO = null;
             _CCUFILEMPM.DRAWNON = null;
@@ -1638,6 +1638,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             _CCUFILEM4L2UPM_After = CCUFILEM_4L2U_Mapping(_CCUFILEMPM);
             _CCUTAX_4LD2UM_After = CCUTAX_4LD2U_Mapping(_CCUFILEMPM.CCUTAXPM);
+
+            return _CCUFILEMPM;
         }
 
         private CCUFILEM_4L2U CCUFILEM_4L2U_Mapping(CCUFILEMPM myCCUFILEMPM)

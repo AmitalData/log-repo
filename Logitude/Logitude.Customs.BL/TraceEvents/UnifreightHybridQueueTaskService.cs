@@ -1,23 +1,18 @@
 ﻿
-using Logitude.AmitalMessaging.Infrastructure.FuStatus;
 using Logitude.Customs.BL.Messaging.Amital;
 using Logitude.Server.Tools;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Logitude.AmitalMessaging.Infrastructure.Transmission;
 using Logitude.AmitalMessaging.Utils;
-using System.Diagnostics;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Def.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Customs.BL.TraceEvents
 {
@@ -37,8 +32,13 @@ namespace Logitude.Customs.BL.TraceEvents
         }
         protected virtual string GetLoggingObjectTableId()
         {
-            if (String.IsNullOrWhiteSpace(_CommunicationModel.objectTableName)) return "";//not must 
-            var objectTableRepository = new ObjectTableRepository(0); // ObjectTabelRepository tenant must be zero !!
+            var contextTenant = SettingUtil.GetCurrentTenant();
+            if(contextTenant == -1)
+            {
+                contextTenant = _CommunicationModel.Tenant;
+            }
+            if (String.IsNullOrWhiteSpace(_CommunicationModel.objectTableName)) return ""; 
+            var objectTableRepository = new ObjectTableRepository(contextTenant);
             var objectTable = objectTableRepository.GetObjectTableByName(_CommunicationModel.objectTableName,// "Customs.PhysicalCheck", 
                 0, true);
 
@@ -101,22 +101,17 @@ namespace Logitude.Customs.BL.TraceEvents
             return mytransmission;
 
         }
-        public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam ,bool  withTransmission=true)
+        public void Send(UnifreightHybridQueueTaskParam unifreightHybridQueueTasParam ,bool  withTransmission=true,bool alreadySerialized=false)
         {
             CustomsSettingPM setting = CustomsSettingQueryService.GetSettingByTenant(_CommunicationModel.Tenant);
             if (setting != null && setting.StandAlone)
                 return;
-            //if (string.IsNullOrWhiteSpace(unifreightHybridQueueTasParam.QueueName))
-            //{
-            //    throw new ArgumentNullException(nameof(unifreightHybridQueueTasParam.QueueName));
-            //}
-
+            
             const string queueName = "ExternalTasksQueue";
             _CommunicationsParams = new CommunicationsParams()
             {
                 Tenant = _CommunicationModel.Tenant,
                 CommunicationLogTypeCode = "Q",
-                //using   QueueName = "externaltasksqueue" + _CommunicationModel.Tenant + 1,
                 Priority = 1,
                 InOut = "O",
                 Status = "W",
@@ -141,8 +136,14 @@ namespace Logitude.Customs.BL.TraceEvents
                 myMainObject = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
             }else
             {
-
-                myMainObject = XmlGenericUtil<TransmissionBodyType>.SerializeObject(this._TransmissionBodyModel, true);
+                if (alreadySerialized && _TransmissionBodyModel is string s)
+                {
+                    myMainObject = s; 
+                }
+                else
+                {
+                    myMainObject = XmlGenericUtil<TransmissionBodyType>.SerializeObject(this._TransmissionBodyModel, true);
+                }
                 
 
 
