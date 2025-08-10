@@ -90,7 +90,7 @@ using NLog;
 using System.Windows.Media;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Practices.ObjectBuilder2;
-//using NPOI.SS.Formula.Functions;
+
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -11119,9 +11119,7 @@ namespace WebFreight.Web.ReportsWebServices
                 Category5 = category5,
                 DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance,
                 IsRevenueExpenseReport = false,
-                //Suppress_ControlAccount = true,
-                //  Skip = true
-                Suppress_DoNotShowCardWithoutActivity = false,
+                Suppress_DoNotShowCardWithoutActivity = true,
                 IsTrialBalanceReport = true,
 
             };
@@ -11165,7 +11163,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_ControlAccount = true;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = true;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                 trailReportParam.Category1 = category1;
                 trailReportParam.Category2 = category2;
@@ -11261,8 +11259,7 @@ namespace WebFreight.Web.ReportsWebServices
                 trailReportParam.DetailedControlJob = true;
                 trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
-               // trailReportParam.Suppress_ControlAccount = true;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = true;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
                  trailReportParam.Category1 = category1;
                 trailReportParam.Category2 = category2;
@@ -11804,8 +11801,7 @@ namespace WebFreight.Web.ReportsWebServices
                 if (chartOfAccountsTypeCodeList != null && chartOfAccountsTypeCodeList.Count > 0) trailReportParam.ChartOfAccountsTypeCodeList = chartOfAccountsTypeCodeList;
                 if (chartOfAccountsIdList != null && chartOfAccountsIdList.Count > 0) trailReportParam.ChartOfAccountsIdList = chartOfAccountsIdList;
                 trailReportParam.MyTrailReportLevel = ReportLevel.GLAccount;
-                //trailReportParam.Suppress_ControlAccount = true;
-                trailReportParam.Suppress_DoNotShowCardWithoutActivity = false; // may it be 'true' sometimes? 
+                trailReportParam.Suppress_DoNotShowCardWithoutActivity = true;
 
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = dontShowCardsWith0Balance;
 
