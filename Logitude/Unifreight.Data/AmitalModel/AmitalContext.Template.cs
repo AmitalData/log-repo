@@ -12351,9 +12351,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
-                .Property(p => p.PAYORDNO)
-                    .HasColumnName(@"PAY_ORD_NO")
-                    .HasColumnType("int");
+    .Property(p => p.PAYORDNO)
+    .HasColumnName(@"PAY_ORD_NO")
+    .HasColumnType("numeric");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYMETHOD)
                     .HasColumnName(@"PAY_METHOD")
