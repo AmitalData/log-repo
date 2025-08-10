@@ -128,30 +128,35 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 TruckerSettingQuery truckerSettingQuery = new TruckerSettingQuery(tenant);
                 TruckerSettingService truckeSettingservice = new TruckerSettingService(objectContext, entityPM.Tenant);
 
-                List<TruckerSettingList> truckerSettingChangeset = truckerSettingQuery.GetIQueryableEntityListByAddressId(entityPM.Id, tenant).ToList();
-                foreach(var item in truckerSettingChangeset)
+                bool hasDb = truckerSettingQuery.AnyByAddressId(entityPM.Id, tenant);
+                bool hasPm = (entityPM.TruckerSettings != null && entityPM.TruckerSettings.Count > 0);
+                if (hasDb || hasPm) 
                 {
-                    var itemPM = entityPM.TruckerSettings.FirstOrDefault(x => x.Id == item.Id);
-                    if(itemPM == null)
+                    List<TruckerSettingList> truckerSettingChangeset = truckerSettingQuery.GetIQueryableEntityListByAddressId(entityPM.Id, tenant).ToList();
+                    foreach(var item in truckerSettingChangeset)
                     {
-                        var truckerPM= truckerSettingQuery.GetSinglePM(item.Id, tenant);
-                        truckeSettingservice.Remove(truckerPM);
-                    }
-                }   
-
-                foreach (var item in entityPM.TruckerSettings)
-                {
-                    var itemPM= truckerSettingRepo.GetSingle(item.Id, item.Tenant);
-                    if(itemPM != null)
-                    {
-                        truckeSettingservice.Update(item);
-                    }
-                    else
-                    {
-                        truckeSettingservice.Create(item);
+                        var itemPM = entityPM.TruckerSettings.FirstOrDefault(x => x.Id == item.Id);
+                        if(itemPM == null)
+                        {
+                            var truckerPM= truckerSettingQuery.GetSinglePM(item.Id, tenant);
+                            truckeSettingservice.Remove(truckerPM);
+                        }
                     }
 
-                }
+                    foreach (var item in entityPM.TruckerSettings)
+                    {
+                        var itemPM= truckerSettingRepo.GetSingle(item.Id, item.Tenant);
+                        if(itemPM != null)
+                        {
+                            truckeSettingservice.Update(item);
+                        }
+                        else
+                        {
+                            truckeSettingservice.Create(item);
+                        }
+
+                    }
+                }            
             } 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

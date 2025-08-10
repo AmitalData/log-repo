@@ -119,7 +119,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 ContactEnglishName = reader["ContactEnglishName"] != DBNull.Value ? (string)reader["ContactEnglishName"] : null,
                                 MinimumInterestInvoiceBilling = reader["MinimumInterestInvoiceBilling"] != DBNull.Value ? (string)reader["MinimumInterestInvoiceBilling"] : null,
                                 CreditAllotmentPercentage = reader["CreditAllotmentPercentage"] != DBNull.Value ? (string)reader["CreditAllotmentPercentage"] : null,
-                               AccountCurrencyCode = reader["AccountCurrencyCode"] != DBNull.Value ? (string)reader["AccountCurrencyCode"] : null,
+                                PaymentTermLocalName = reader["PaymnetTermLocalName"] != DBNull.Value ? (string)reader["PaymnetTermLocalName"] : null,
+                                PaymentTermEnglishName = reader["PaymnetTermEnglishName"] != DBNull.Value ? (string)reader["PaymnetTermEnglishName"] : null,
+                                StandardInterestRateBaseLocalName = reader["StandardInterestRateBaseLocalName"] != DBNull.Value ? (string)reader["StandardInterestRateBaseLocalName"] : null,
+                                StandardAddInterestPercent = reader["StandardAddInterestPercent"] != DBNull.Value ? (decimal?)reader["StandardAddInterestPercent"] : null,
+                                AccountCurrencyCode = reader["AccountCurrencyCode"] != DBNull.Value ? (string)reader["AccountCurrencyCode"] : null,
                                Minus30Days = reader["Minus30Days"] != DBNull.Value ? (decimal?)reader["Minus30Days"] : 0,
                                   Minus60Days = reader["Minus60Days"] != DBNull.Value ? (decimal?)reader["Minus60Days"] : 0,
                               Minus90Days = reader["Minus90Days"] != DBNull.Value ? (decimal?)reader["Minus90Days"] : 0,
@@ -146,10 +150,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 return results;
             }
-
             catch (Exception ex)
             {
-                throw new Exception();
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to execute usp_NewAgingReport: {ex.Message}");
+                throw ex;
             }
         }
 
