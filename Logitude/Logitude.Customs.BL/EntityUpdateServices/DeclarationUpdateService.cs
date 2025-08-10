@@ -2450,6 +2450,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public bool CopyDeclaration(string fromDeclarationId, string toDeclarationId, int tenant)
         {
+
             using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 List<string> ids = new List<string>();
@@ -2595,312 +2596,249 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (toDeclaration.Consignments.Count > 0)
                 {
+                    var toIsExport = string.Equals(toDeclaration.Direction, "E", StringComparison.OrdinalIgnoreCase);
+                    var fromIsExport = string.Equals(fromDeclaration.Direction, "E", StringComparison.OrdinalIgnoreCase);
+
                     foreach (ConsignmentPM Consignment in fromDeclaration.Consignments)
                     {
-
-
-                        ConsignmentPM consignmentPM = toDeclaration.Consignments.Where(d => d.SequenceNumeric == Consignment.SequenceNumeric).FirstOrDefault();
+                        // try to match by ConsignmentNumber if both have it; otherwise by SequenceNumeric
+                        ConsignmentPM consignmentPM = toDeclaration.Consignments
+                            .FirstOrDefault(d =>
+                                (d.ConsignmentNumber != null && Consignment.ConsignmentNumber != null && d.ConsignmentNumber == Consignment.ConsignmentNumber)
+                                || (d.ConsignmentNumber == null && Consignment.ConsignmentNumber == null && d.SequenceNumeric == Consignment.SequenceNumeric));
 
                         if (consignmentPM != null)
                         {
-                            if (toDeclaration.Direction == "E")
-                            {
-                                consignmentPM.ConsignmentType = Consignment.ConsignmentType;
-                            }
-
-
-
+                            // ---------- COMMON (direction-agnostic) ----------
                             if (string.IsNullOrEmpty(consignmentPM.CargoTypeCode))
-                            {
                                 consignmentPM.CargoTypeCode = Consignment.CargoTypeCode;
 
-                            }
-
                             if (string.IsNullOrEmpty(consignmentPM.CargoTypeName))
-                            {
                                 consignmentPM.CargoTypeName = Consignment.CargoTypeName;
 
-                            }
-
-
-                            if (string.IsNullOrEmpty(consignmentPM.ConsignmentPackagesActiveIds))
-                            {
-                                consignmentPM.ConsignmentPackagesActiveIds = Consignment.ConsignmentPackagesActiveIds;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.LoadingPortCode))
-                            {
-                                consignmentPM.LoadingPortCode = Consignment.LoadingPortCode;
-
-                            }
-
                             if (consignmentPM.ManifestDate == null)
-                            {
                                 consignmentPM.ManifestDate = Consignment.ManifestDate;
 
-                            }
-
                             if (string.IsNullOrEmpty(consignmentPM.ManifestNumber))
-                            {
                                 consignmentPM.ManifestNumber = Consignment.ManifestNumber;
 
-                            }
-
-
                             if (string.IsNullOrEmpty(consignmentPM.OriginCountryCode))
-                            {
                                 consignmentPM.OriginCountryCode = Consignment.OriginCountryCode;
 
-                            }
-
                             if (string.IsNullOrEmpty(consignmentPM.OriginCountryName))
-                            {
                                 consignmentPM.OriginCountryName = Consignment.OriginCountryName;
 
-                            }
-                            if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseCode))
-                            {
-                                consignmentPM.ReceiverWarehouseCode = Consignment.ReceiverWarehouseCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseName))
-                            {
-                                consignmentPM.ReceiverWarehouseName = Consignment.ReceiverWarehouseName;
-
-                            }
-
                             if (string.IsNullOrEmpty(consignmentPM.SecondCargoID))
-                            {
                                 consignmentPM.SecondCargoID = Consignment.SecondCargoID;
 
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.StorageSiteCode))
-                            {
-                                consignmentPM.StorageSiteCode = Consignment.StorageSiteCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.StorageSiteName))
-                            {
-                                consignmentPM.StorageSiteName = Consignment.StorageSiteName;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.IsLastReleaseFromWarehous))
-                            {
-                                consignmentPM.IsLastReleaseFromWarehous = Consignment.IsLastReleaseFromWarehous;
-
-                            }
-
                             if (string.IsNullOrEmpty(consignmentPM.ThirdCargoID))
-                            {
                                 consignmentPM.ThirdCargoID = Consignment.ThirdCargoID;
 
-                            }
-
-
                             if (consignmentPM.UnloadDate == null)
-                            {
                                 consignmentPM.UnloadDate = Consignment.UnloadDate;
 
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.UnloadPortCode))
-                            {
-                                consignmentPM.UnloadPortCode = Consignment.UnloadPortCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.UnloadPortName))
-                            {
-                                consignmentPM.UnloadPortName = Consignment.UnloadPortName;
-
-                            }
-
                             if (string.IsNullOrEmpty(consignmentPM.CargoDescription))
-                            {
                                 consignmentPM.CargoDescription = Consignment.CargoDescription;
 
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
-                            {
-                                consignmentPM.ExportLoadingPortCode = Consignment.ExportLoadingPortCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.ExportRecieverWareHouseCode))
-                            {
-                                consignmentPM.ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode;
-
-                            }
-
-                            if (string.IsNullOrEmpty(consignmentPM.ExportUnloadingPortCode))
-                            {
-                                consignmentPM.ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode;
-
-                            }
+                            if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
+                                consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
 
                             consignmentPM.IsDangerousGoods = Consignment.IsDangerousGoods;
 
-
-
-                            if (string.IsNullOrEmpty(consignmentPM.FinalDestinationPortCode))
+                            // ---------- DIRECTION-SPECIFIC (NO cross-copy) ----------
+                            if (toIsExport)
                             {
-                                consignmentPM.FinalDestinationPortCode = Consignment.FinalDestinationPortCode;
+                                consignmentPM.ConsignmentType = Consignment.ConsignmentType; // you already had this for export
 
+                                if (string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
+                                    consignmentPM.ExportLoadingPortCode = fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode;
+
+                                if (string.IsNullOrEmpty(consignmentPM.ExportUnloadingPortCode))
+                                    consignmentPM.ExportUnloadingPortCode = fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode;
+
+                                if (string.IsNullOrEmpty(consignmentPM.ExportRecieverWareHouseCode))
+                                    consignmentPM.ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode ?? Consignment.ReceiverWarehouseCode;
                             }
+                            else
+                            {
+                                if (string.IsNullOrEmpty(consignmentPM.LoadingPortCode))
+                                    consignmentPM.LoadingPortCode = fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode;
 
+                                if (string.IsNullOrEmpty(consignmentPM.UnloadPortCode))
+                                    consignmentPM.UnloadPortCode = fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode;
+
+                                if (string.IsNullOrEmpty(consignmentPM.UnloadPortName))
+                                    consignmentPM.UnloadPortName = Consignment.UnloadPortName;
+
+                                if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseCode))
+                                    consignmentPM.ReceiverWarehouseCode = Consignment.ReceiverWarehouseCode ?? Consignment.ExportRecieverWareHouseCode;
+
+                                if (string.IsNullOrEmpty(consignmentPM.ReceiverWarehouseName))
+                                    consignmentPM.ReceiverWarehouseName = Consignment.ReceiverWarehouseName;
+
+                                if (string.IsNullOrEmpty(consignmentPM.StorageSiteCode))
+                                    consignmentPM.StorageSiteCode = Consignment.StorageSiteCode;
+
+                                if (string.IsNullOrEmpty(consignmentPM.StorageSiteName))
+                                    consignmentPM.StorageSiteName = Consignment.StorageSiteName;
+
+                                if (string.IsNullOrEmpty(consignmentPM.IsLastReleaseFromWarehous))
+                                    consignmentPM.IsLastReleaseFromWarehous = Consignment.IsLastReleaseFromWarehous;
+                            }
 
                             consignmentPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
-
                         else
                         {
+                            // safe increment (handles null Max)
+                            int? number = (toDeclaration.Consignments.Max(d => d.ConsignmentNumber) ?? 0) + 1;
 
-                            int? number = toDeclaration.Consignments.Max(d => d.ConsignmentNumber);
-                            number += 1;
                             consignmentPM = new ConsignmentPM()
                             {
-                                ConsignmentType = Consignment.ConsignmentType,
+                                DeclarationId = toDeclaration.Id,
+                                Tenant = Consignment.Tenant,
+                                ConsignmentNumber = number,
+                                SequenceNumeric = Consignment.SequenceNumeric,
+
+                                // ---------- COMMON ----------
                                 CargoDescription = Consignment.CargoDescription,
                                 CargoTypeCode = Consignment.CargoTypeCode,
                                 CargoTypeName = Consignment.CargoTypeName,
                                 ConsignmentInternalTransitionLastLineNumber = Consignment.ConsignmentInternalTransitionLastLineNumber,
-                                ConsignmentNumber = number,
                                 ConsignmentPackagesActiveIds = Consignment.ConsignmentPackagesActiveIds,
-                                DeclarationId = toDeclaration.Id,
                                 ConsignmentPackagLastLineNumber = Consignment.ConsignmentPackagLastLineNumber,
-                                IsLastReleaseFromWarehous = Consignment.IsLastReleaseFromWarehous,
-                                LoadingPortCode = Consignment.LoadingPortCode,
                                 ManifestDate = Consignment.ManifestDate,
                                 ManifestNumber = Consignment.ManifestNumber,
                                 OriginCountryCode = Consignment.OriginCountryCode,
                                 OriginCountryName = Consignment.OriginCountryName,
-                                ReceiverWarehouseCode = Consignment.ReceiverWarehouseCode,
-                                ReceiverWarehouseName = Consignment.ReceiverWarehouseName,
                                 SecondCargoID = Consignment.SecondCargoID,
-                                SequenceNumeric = Consignment.SequenceNumeric,
-                                StorageSiteCode = Consignment.StorageSiteCode,
-                                StorageSiteName = Consignment.StorageSiteName,
-                                Tenant = Consignment.Tenant,
                                 ThirdCargoID = Consignment.ThirdCargoID,
                                 UnloadDate = Consignment.UnloadDate,
-                                UnloadPortCode = Consignment.UnloadPortCode,
-                                UnloadPortName = Consignment.UnloadPortName,
-                                ExportLoadingPortCode = Consignment.ExportLoadingPortCode,
-                                ExportRecieverWareHouseCode = Consignment.ExportRecieverWareHouseCode,
-                                ExportUnloadingPortCode = Consignment.ExportUnloadingPortCode,
                                 IsDangerousGoods = Consignment.IsDangerousGoods,
                                 FinalDestinationPortCode = Consignment.FinalDestinationPortCode,
+
+                                // ---------- DIRECTION-SPECIFIC ----------
+                                // export
+                                ExportLoadingPortCode = toIsExport ? (fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode) : null,
+                                ExportUnloadingPortCode = toIsExport ? (fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode) : null,
+                                ExportRecieverWareHouseCode = toIsExport ? (Consignment.ExportRecieverWareHouseCode ?? Consignment.ReceiverWarehouseCode) : null,
+                                // import
+                                LoadingPortCode = toIsExport ? null : (fromIsExport ? Consignment.ExportLoadingPortCode : Consignment.LoadingPortCode),
+                                UnloadPortCode = toIsExport ? null : (fromIsExport ? Consignment.ExportUnloadingPortCode : Consignment.UnloadPortCode),
+                                UnloadPortName = toIsExport ? null : Consignment.UnloadPortName,
+                                ReceiverWarehouseCode = toIsExport ? null : (Consignment.ReceiverWarehouseCode ?? Consignment.ExportRecieverWareHouseCode),
+                                ReceiverWarehouseName = toIsExport ? null : Consignment.ReceiverWarehouseName,
+                                StorageSiteCode = toIsExport ? null : Consignment.StorageSiteCode,
+                                StorageSiteName = toIsExport ? null : Consignment.StorageSiteName,
+                                IsLastReleaseFromWarehous = toIsExport ? null : Consignment.IsLastReleaseFromWarehous,
+
+                                // export-only extra fields in your model (leave null on import)
+                                CargoTypeCodeForExport = toIsExport ? (Consignment.CargoTypeCodeForExport ?? Consignment.CargoTypeCode) : null,
+                                ExportStoragesId = toIsExport ? Consignment.ExportStoragesId : null,
+                                ExportContainerizationID = toIsExport ? Consignment.ExportContainerizationID : null,
+
+                                // export: you previously copied ConsignmentType only when E
+                                ConsignmentType = toIsExport ? Consignment.ConsignmentType : null,
 
                                 ChangeSetOp = ChangeSetOperation.Insert,
                             };
 
                             toDeclaration.Consignments.Add(consignmentPM);
-                            DeclarationConsignmentPM declarationConsignment = new DeclarationConsignmentPM()
+
+                            var declarationConsignment = new DeclarationConsignmentPM()
                             {
                                 DeclarationId = toDeclaration.Id,
                                 ManifestNumber = Consignment.ManifestNumber,
                                 SequenceNumeric = Consignment.SequenceNumeric,
                                 ConsignmentNumber = number,
-                                //ChangeSetOp = ChangeSetOperation.Insert,
-
                             };
-
                             toDeclaration.DeclarationConsignments.Add(declarationConsignment);
-
                         }
 
-
+                        // ---------- PACKAGES (bind to TARGET consignment; upsert by SequenceNumeric) ----------
                         if (consignmentPM.ConsignmentPackages.Count == 0)
                         {
                             foreach (ConsignmentPackagePM package in Consignment.ConsignmentPackages)
                             {
-                                ConsignmentPackagePM packagePM = new ConsignmentPackagePM()
+                                var packagePM = new ConsignmentPackagePM()
                                 {
-                                    ConsignmentNumber = package.ConsignmentNumber,
+                                    ConsignmentNumber = consignmentPM.ConsignmentNumber, // <— target number
                                     DeclarationId = toDeclaration.Id,
-                                    GrossMassMeasure = package.GrossMassMeasure,
+                                    Tenant = consignmentPM.Tenant,
+                                    SequenceNumeric = package.SequenceNumeric,
                                     LineNumber = package.LineNumber,
-                                    MarksNumbers = package.MarksNumbers,
+                                    PackageTypeCode = package.PackageTypeCode,
+                                    PackageTypeName = package.PackageTypeName,
                                     PackageMeasureQualifierCode = package.PackageMeasureQualifierCode,
                                     PackageMeasureQualifierName = package.PackageMeasureQualifierName,
                                     PackageQuantity = package.PackageQuantity,
-                                    PackageTypeCode = package.PackageTypeCode,
-                                    PackageTypeName = package.PackageTypeName,
-                                    Tenant = package.Tenant,
-                                    SequenceNumeric = package.SequenceNumeric,
+                                    GrossMassMeasure = package.GrossMassMeasure,
+                                    MarksNumbers = package.MarksNumbers,
                                     ChangeSetOp = ChangeSetOperation.Insert,
-
-
                                 };
                                 consignmentPM.ConsignmentPackages.Add(packagePM);
                             }
-
-
-
                         }
-
-
-                        else if (consignmentPM.ConsignmentPackages.Count > 0)
+                        else
                         {
                             foreach (ConsignmentPackagePM package in Consignment.ConsignmentPackages)
                             {
+                                var packagePM = consignmentPM.ConsignmentPackages
+                                    .FirstOrDefault(d => d.SequenceNumeric == package.SequenceNumeric);
 
-                                ConsignmentPackagePM packagePM = consignmentPM.ConsignmentPackages.Where(d => d.PackageQuantity == null && d.GrossMassMeasure == null && d.SequenceNumeric == package.SequenceNumeric).FirstOrDefault();
-                                if (packagePM != null)
+                                if (packagePM == null)
                                 {
-
-                                    packagePM.GrossMassMeasure = package.GrossMassMeasure;
-                                    packagePM.MarksNumbers = package.MarksNumbers;
+                                    packagePM = new ConsignmentPackagePM()
+                                    {
+                                        ConsignmentNumber = consignmentPM.ConsignmentNumber, // <— target number
+                                        DeclarationId = toDeclaration.Id,
+                                        Tenant = consignmentPM.Tenant,
+                                        SequenceNumeric = package.SequenceNumeric,
+                                        LineNumber = package.LineNumber,
+                                        PackageTypeCode = package.PackageTypeCode,
+                                        PackageTypeName = package.PackageTypeName,
+                                        PackageMeasureQualifierCode = package.PackageMeasureQualifierCode,
+                                        PackageMeasureQualifierName = package.PackageMeasureQualifierName,
+                                        PackageQuantity = package.PackageQuantity,
+                                        GrossMassMeasure = package.GrossMassMeasure,
+                                        MarksNumbers = package.MarksNumbers,
+                                        ChangeSetOp = ChangeSetOperation.Insert,
+                                    };
+                                    consignmentPM.ConsignmentPackages.Add(packagePM);
+                                }
+                                else
+                                {
+                                    packagePM.PackageTypeCode = package.PackageTypeCode;
+                                    packagePM.PackageTypeName = package.PackageTypeName;
                                     packagePM.PackageMeasureQualifierCode = package.PackageMeasureQualifierCode;
                                     packagePM.PackageMeasureQualifierName = package.PackageMeasureQualifierName;
                                     packagePM.PackageQuantity = package.PackageQuantity;
                                     packagePM.GrossMassMeasure = package.GrossMassMeasure;
-                                    packagePM.PackageTypeCode = package.PackageTypeCode;
-                                    packagePM.PackageTypeName = package.PackageTypeName;
+                                    packagePM.MarksNumbers = package.MarksNumbers;
                                     packagePM.ChangeSetOp = ChangeSetOperation.Update;
-
                                 }
-
                             }
-
-
                         }
 
-
-
-
+                        // ---------- INTERNAL TRANSITIONS (bind to TARGET consignment) ----------
                         if (consignmentPM.ConsignmentInternalTransitions.Count == 0)
                         {
                             foreach (ConsignmentInternalTransitionPM transition in Consignment.ConsignmentInternalTransitions)
                             {
-                                ConsignmentInternalTransitionPM transitionPM = new ConsignmentInternalTransitionPM()
+                                var transitionPM = new ConsignmentInternalTransitionPM()
                                 {
-                                    ConsignmentNumber = transition.ConsignmentNumber,
+                                    ConsignmentNumber = consignmentPM.ConsignmentNumber, // <— target number
                                     DeclarationId = toDeclaration.Id,
+                                    Tenant = consignmentPM.Tenant,
                                     LineNumber = transition.LineNumber,
-                                    Tenant = transition.Tenant,
                                     SiteCode = transition.SiteCode,
-
                                     ChangeSetOp = ChangeSetOperation.Insert,
-
                                 };
                                 consignmentPM.ConsignmentInternalTransitions.Add(transitionPM);
                             }
-
-
-
                         }
-
-
                     }
                 }
-
 
 
 
