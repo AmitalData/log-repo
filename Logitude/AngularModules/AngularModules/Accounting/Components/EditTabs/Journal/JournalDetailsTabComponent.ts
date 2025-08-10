@@ -1102,10 +1102,9 @@ class JournalLineModel extends BaseComponent {
             this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity ){
+                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
-                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
-                    this.GetExchangeRate(this.CurrencyId, ActionCode.Credit);
 
                 }
             });
@@ -1119,11 +1118,11 @@ class JournalLineModel extends BaseComponent {
             this.gLAccountPMService.get(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
-                    this.DebitAccount=entity;
-                    this.DebitAccountName=this.DebitAccount.LocalName;
                     this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
                     this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
-                    this.GetExchangeRate(this.CurrencyId ,ActionCode.Debit);
+                    this.DebitAccount=entity;
+                    this.DebitAccountName=this.DebitAccount.LocalName;
+                    
                 }
             });
         }
