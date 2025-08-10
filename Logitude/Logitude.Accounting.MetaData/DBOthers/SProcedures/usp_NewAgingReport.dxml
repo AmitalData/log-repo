@@ -70,6 +70,8 @@ MainGlaccountId VARCHAR(75),
 TotalForeign DECIMAL(30, 2),
 BalanceInLocalCurrency DECIMAL(30, 2),
 BalanceInForeignCurrency DECIMAL(30, 2),
+StandardInterestRateBaseLocalName NVARCHAR(256),
+StandardAddInterestPercent DECIMAL(4, 2),
 );
 
 INSERT INTO #TemporaryTable
@@ -148,9 +150,17 @@ SUM(
         WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount * t.ExchangeRate
         ELSE t.OpenAmount
     END
-) AS BalanceInForeignCurrency
-FROM
-GLACCOUNTS GL
+) AS BalanceInForeignCurrency,
+CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardInterestRateBaseLocalName) ELSE NULL END AS StandardInterestRateBaseLocalName,
+CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardAddInterestPercentData) ELSE NULL END AS StandardAddInterestPercent
+FROM GLACCOUNTS GL
+OUTER APPLY (
+        SELECT TOP 1 ibt.LocalName AS StandardInterestRateBaseLocalName, glaip.StandardAddInterestPercent as StandardAddInterestPercentData
+        FROM GLAccountInterestPeriods glaip
+        LEFT JOIN InterestBasesTypes ibt ON ibt.Id = glaip.StandardInterestRateBaseId
+        WHERE glaip.GLAccountId = GL.Id AND glaip.PeriodStartDate < GETDATE()
+        ORDER BY glaip.PeriodStartDate DESC
+    ) AS InterestData
 LEFT JOIN
 (
     SELECT 
@@ -258,6 +268,8 @@ MAX(CASE
 MAX(t.ContactId)AS ContactId,
 MAX(t.PaymnetTermLocalName) AS PaymnetTermLocalName,
 MAX(t.PaymnetTermEnglishName) AS PaymnetTermEnglishName,
+MAX(t.StandardInterestRateBaseLocalName) AS StandardInterestRateBaseLocalName,
+MAX(t.StandardAddInterestPercent) AS StandardAddInterestPercent,
 max(t.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
 max(t.CreditAllotmentPercentage) as CreditAllotmentPercentage,
 SUM(T.BalanceInLocalCurrency) AS BalanceInLocalCurrency,
