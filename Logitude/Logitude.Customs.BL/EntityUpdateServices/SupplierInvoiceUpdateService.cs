@@ -159,7 +159,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             sIModificationByCustomerCommissionService.EnsureReductionByVendorCommission(curDeclarationPm/*_DeclarationPM*/, entityPM,false);
             if (/*_DeclarationPM*/curDeclarationPm != null && /*_DeclarationPM*/curDeclarationPm.IsCourierDeclaration)
             {
-                decimal InvoiceAmountInUSD_round2 = (System.Math.Truncate((decimal)entityPM.InvoiceAmountInUSD * 100) / 100);
+                decimal InvoiceAmountInUSD_round2 = (System.Math.Truncate((decimal)entityPM.InvoiceAmountInUSD.GetValueOrDefault() * 100) / 100);
                 bool pHaveChange = //entityPM.InvoiceAmountInUSD 
                     InvoiceAmountInUSD_round2
                     != entityPOCO.InvoiceAmountInUSD;
