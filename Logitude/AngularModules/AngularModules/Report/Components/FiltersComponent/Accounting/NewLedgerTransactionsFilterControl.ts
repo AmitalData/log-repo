@@ -646,6 +646,9 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         else return true;
     }
     SettingListOrRangGlaccount() {
+        this.ListGLAccounts = [];
+        this.FromGLAccountId = null;
+        this.ToGLAccountId = null;
         this.IsListGLAccounts = !this.IsListGLAccounts;
     }
 

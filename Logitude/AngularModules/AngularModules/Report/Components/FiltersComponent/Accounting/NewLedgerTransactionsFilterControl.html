@@ -214,7 +214,7 @@
                     <td *ngIf="!IsListGLAccounts">
                         <table>
 
-                            <td class="FieldRow">
+                            <td class="FieldRow" >
                                 <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
                                     [ObjectFieldName]="'FromGLAccountId'" [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
@@ -226,7 +226,6 @@
 
                                 </LogLov>
 
-                                <div style="display: inline-block; width: 117px;padding: 0 5px;">
                                     <LogLov [ShowInActive]="true" style="display: block;width: 150px;" float-start
                                         [ObjectFieldName]="'ToGLAccountId'" [ObjectTableName]="ObjectTableName"
                                         [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
@@ -239,7 +238,6 @@
                                     </LogLov>
 
 
-                                </div>
                             </td>
                         </table>
                     </td>
