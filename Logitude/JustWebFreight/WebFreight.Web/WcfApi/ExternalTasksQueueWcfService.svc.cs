@@ -320,10 +320,16 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 bool from_global = false;
+                bool convert_bool = false;
                 if (queryParams.ContainsKey("from_global"))
                 {
                     bool.TryParse(queryParams["from_global"], out from_global);
                     queryParams.Remove("from_global");
+                }
+                if (queryParams.ContainsKey("convert_bool"))
+                {
+                    bool.TryParse(queryParams["convert_bool"], out convert_bool);
+                    queryParams.Remove("convert_bool");
                 }
 
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -461,7 +467,25 @@ namespace WebFreight.Web.WcfApi
 
                                         for (int pos = 0; reader.FieldCount > pos; pos++)
                                         {
-                                            one_line.Add(reader[pos].ToString());
+                                            if (convert_bool)
+                                            {
+                                                object val = reader.IsDBNull(pos) ? null : reader.GetValue(pos);
+
+                                                // Convert BIT/boolean to "1"/"0"
+                                                if (val is bool b)
+                                                {
+                                                    one_line.Add(b ? "1" : "0");
+                                                }
+                                                else
+                                                {
+                                                    // Keep everything else as string (null -> empty)
+                                                    one_line.Add(val?.ToString() ?? string.Empty);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                one_line.Add(reader[pos].ToString());
+                                            }
                                         }
                                         all_lines.Add(one_line);
                                     }
