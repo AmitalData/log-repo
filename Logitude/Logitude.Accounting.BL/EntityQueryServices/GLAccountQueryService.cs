@@ -1070,6 +1070,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         byVendorList.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
                         byVendorList.AssessingOfficerName = gLAccount.AssessingOfficeName;
                         byVendorList.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
+                        byVendorList.DeductionFileTypeName = gLAccount.DeductionFileTypeName;
                         byVendorList.DeductionFileNumber = gLAccount.DeductionFileNumber;
                         byVendorList.DeductionType = gLAccount.DeductionTypeId;
                         byVendorList.EnglishName = gLAccount.EnglishName;

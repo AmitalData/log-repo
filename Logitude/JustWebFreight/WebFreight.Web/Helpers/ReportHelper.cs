@@ -1980,9 +1980,32 @@ namespace WebFreight.Web.Helpers
 		public List<ISlvLeaf> GetPropertyNames(string dataProviderName, List<ISlvLeaf> mylist)
 		{
 			NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"dataProviderName: {dataProviderName}");
-			//var D = Assembly.GetAssembly(typeof(LogitudeCRMReportDataProvider)).GetTypes().Where(T => T.IsSubclassOf(typeof(LogitudeCRMReportDataProvider)));
-			Type t = Type.GetType(dataProviderName);
-			NetCommonHelper.Logger.DevLog.Instance.WriteDebug(message: $"dataProvider type: {t?.FullName}");
+        
+            Type t = null;
+
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                try
+                {
+                    var type = assembly.GetTypes().FirstOrDefault(x => x.FullName == dataProviderName);
+                    if (type != null)
+                    {
+                        t = type;
+                        break;
+                    }
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    var loaderErrors = ex.LoaderExceptions.Select(e => e.Message);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("LoaderExceptions: " + string.Join(" | ", loaderErrors));
+                }
+                catch (Exception ex)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("General Exception: " + ex.Message);
+                }
+            }
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(message: $"dataProvider type: {t?.FullName}");
 			var properties1 = t.GetProperties();
 
 			foreach (var property in properties1)
