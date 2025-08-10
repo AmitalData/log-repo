@@ -160,14 +160,14 @@ LEFT JOIN
         lt.OpenAmountCurrencyId,
         lt.ExchangeRate,
         CASE 
-            WHEN @CurrencyFilterSelectedValue = 'filter_LocalCurr' 
+            WHEN (@CurrencyFilterSelectedValue = 'filter_LocalCurr' 
                  OR (
                      EXISTS (
                          SELECT 1
                          FROM GLAccountCurrencies g
                          WHERE g.Tenant=@tenant and g.MainGLAccountId = lt.AccountId OR g.GLAccountId = lt.AccountId
                      ) AND @GroupMultiAccounts = 1
-                 )
+                 ))
                  AND lt.OpenAmountCurrencyId != ten.CurrencyId
             THEN lt.OpenAmount * lt.ExchangeRate
             ELSE lt.OpenAmount
