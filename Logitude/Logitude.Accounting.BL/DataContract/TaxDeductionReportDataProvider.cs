@@ -1022,6 +1022,7 @@ namespace Logitude.Accounting.BL.DataContract
             groupedbyVendor.AssessingOfficerCode = gLAccount.AssessingOfficeCode;
             groupedbyVendor.AssessingOfficerName = gLAccount.AssessingOfficeName;
             groupedbyVendor.DeductionFileTypeCode = gLAccount.DeductionFileTypeCode;
+            groupedbyVendor.DeductionFileTypeName = gLAccount.DeductionFileTypeName;
             groupedbyVendor.DeductionFileNumber = gLAccount.DeductionFileNumber;
             groupedbyVendor.DeductionType = gLAccount.DeductionTypeId;
             groupedbyVendor.EnglishName = childGLAccount != null ? childGLAccount.EnglishName : gLAccount.EnglishName;
