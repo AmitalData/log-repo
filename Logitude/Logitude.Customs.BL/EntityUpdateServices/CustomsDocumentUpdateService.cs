@@ -43,6 +43,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CustomsDocumentUpdateService : EntityUpdateService<CustomsDocument, CustomsDocumentPM, EntityPM>
     {
+        private string declarationObjectTableId;
+        private string customsDocumentObjecttTableId;
         protected override void OnCreating(CustomsDocumentPM entityPM, EntityPM entityParentPM)
         {
 
@@ -764,6 +766,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 bool isEffectiveFlight = myCourierMasterQueryService.GetByDeclarationId(declarationId, entityPM.Tenant)?.EffectiveFlight ?? false;
 
 
+
+                var objectTableRepository = new ObjectTableRepository(entityPM.Tenant); 
+                declarationObjectTableId = objectTableRepository.GetObjectTableByName("Customs.Declaration", 0,true, entityPM.Tenant).Id ?? ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                customsDocumentObjecttTableId = objectTableRepository.GetObjectTableByName("Customs.CustomsDocument", 0, true, entityPM.Tenant).Id ?? ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument");
+
+
                 var requestParams = new Logitude.CustomsMessaging.Common.RequestParams.D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam()
                 {
                     MainInterfaceCode = "2715",
@@ -772,9 +780,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     DeclaretionId = declarationId,
                     DocumentsTicketId = entityPM.CurrentCustomsDocumentsTicketId,
                     Tenant = entityPM.Tenant,
-                    LoggingObjectTableId = string.IsNullOrWhiteSpace(declarationId) ? null : ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),//task10676 
+                    LoggingObjectTableId = string.IsNullOrWhiteSpace(declarationId) ? null : declarationObjectTableId,//task10676 
                     LoggingEntityId = declarationId,
-                    LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CustomsDocument"),//task10676 
+                    LoggingObjectTableId2 = customsDocumentObjecttTableId,//task10676 
                     LoggingEntityId2 = entityPM.DocumentsFilingId,
                     FutureSendDateTime = date,
                     RequestVIAChangeDue = date.HasValue ? string.Concat("נרשמה בקשה מתוזמנת לשעה ", date.GetValueOrDefault().ToShortTimeString()) : "",
@@ -787,7 +795,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (String.IsNullOrWhiteSpace(declarationId) && !String.IsNullOrWhiteSpace(entityPM.ClaimId))
                 {
                     requestParams.LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Claim");
-                    requestParams.LoggingEntityId = entityPM.ClaimId;//ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    requestParams.LoggingEntityId = entityPM.ClaimId;
 
 
                 }
@@ -843,18 +851,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 var _CustomsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(requestParams.Tenant);
-
-                //var   listRequestInProgress = _CustomsRequestsSheetQueryService.GetRequestInProgress(
-                //            requestParams.Tenant, requestParams.InterfaceTypeCode,
-                //        ObjectTabelRepository.GetObjectTableByName("Customs.Declaration"), requestParams.DeclaretionId,
-                //        ObjectTabelRepository.GetObjectTableByName("Customs.CustomsDocument"), requestParams.DocumentsFilingId, 
-                //        null);
-                //if (listRequestInProgress != null && listRequestInProgress.Count >0)
-                //{
-                //    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("2715 RequestInProgress stop create a new one !! ");
-                //    return;
-                //}
-
                 try
                 {
                     LogitudeSettings.HandleLogMe("start send2:" + entityPM.ExternalAttachmentId, false, "SENDTOMEHES", stopLogAt);
