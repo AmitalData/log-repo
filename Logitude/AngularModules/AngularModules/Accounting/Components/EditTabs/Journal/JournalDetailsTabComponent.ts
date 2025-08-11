@@ -1101,11 +1101,10 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.CreditAccountId = value;
             this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
-                if(entity){
+                if(entity ){
+                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
-                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
-                    this.GetExchangeRate(this.CurrencyId, ActionCode.Credit);
 
                 }
             });
@@ -1119,11 +1118,11 @@ class JournalLineModel extends BaseComponent {
             this.gLAccountPMService.get(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
-                    this.DebitAccount=entity;
-                    this.DebitAccountName=this.DebitAccount.LocalName;
                     this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
                     this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
-                    this.GetExchangeRate(this.CurrencyId ,ActionCode.Debit);
+                    this.DebitAccount=entity;
+                    this.DebitAccountName=this.DebitAccount.LocalName;
+                    
                 }
             });
         }
@@ -1162,11 +1161,7 @@ class JournalLineModel extends BaseComponent {
            
 
         }
-        else {
-            if (this.CurrencyId !== SessionLocator.TenantPM.CurrencyId) {
-                this.GetExchangeRate(value);
-            }
-        }
+        
     }
     ClearAmounts() {
         this.LocalAmount = null;
@@ -1631,6 +1626,7 @@ class JournalLineModel extends BaseComponent {
                     this.parent.EntityWarningsList.push(TextCodeTranslator.Translate("Journal.O.DifferenceExchangeRate"));
                 }
             })
+            this.AmountChanged('foreign', this.LocalAmount, this.ForeignAmount);
             return userExchageRate && Math.abs(this.currencyRate - userExchageRate) > 0.05;
         }
         else {
