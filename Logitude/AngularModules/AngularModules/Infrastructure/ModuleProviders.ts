@@ -122,6 +122,7 @@ import { DigitalCustomizationService } from './Services/WebServices/DigitalCusto
 import { ReferenceCustomObjectPMService } from './Services/StandardPMs/ReferenceCustomObjectPMService';
 import { ReferenceCustomObjectListService } from './Services/StandardLists/ReferenceCustomObjectListService';
 import { DataCustomObjectPMService } from './Services/StandardPMs/DataCustomObjectPMService';
+import {ObjectTablePMExtendedService} from './Services/ExtendedPMs/ObjectTablePMExtendedService';
 import { DataCustomObjectListService } from './Services/StandardLists/DataCustomObjectListService';
 import { ReferantTeamListService } from '../Customs/Services/StandardLists/ReferantTeamListService';
 import { DeploymentPackageExecutionLogPM } from './EntityPMs/DeploymentPackageExecutionLogPM';
@@ -196,7 +197,8 @@ export class ModuleProviders {
             case "EmailAlertSettingPMService": { myResult = new EmailAlertSettingPMService(); break; }
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
             case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
-            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }     
+            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }  
+            case "ObjectTablePMExtendedService": { myResult = new ObjectTablePMExtendedService(); break; }   
             case "ReportService": { myResult = new ReportService(); break; }
 
             case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }

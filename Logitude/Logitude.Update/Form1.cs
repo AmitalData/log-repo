@@ -7178,6 +7178,7 @@ User/Pass",
             LogitudeSettings.WindWardSettings = setting.WindWardSettings;
             LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
             LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
+
         }
     }
 
