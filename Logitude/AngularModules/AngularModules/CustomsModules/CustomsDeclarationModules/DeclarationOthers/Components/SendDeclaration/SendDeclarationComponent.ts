@@ -203,7 +203,6 @@ export class SendDeclarationService implements OnDestroy {
     }
 
     Run(args: any) {
-        debugger;
         this.EntityPM = args.EntityPM;
         this.ObjectTable = args.ObjectTable;
 
