@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "ae6b2fe28c1e8d8ded5900d23f88587b";
+		public const string HashString = "a7f3c1b0e94d8f2a6c53d0e81b7a24cf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1810,7 +1810,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOOpenBalanceByCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.OpenBalanceByCurrency", DefaultText = "Open Balance By Currency",LocalDefaultText = @"BS64:Itee15DXltefINek16rXldeXINec16TXmSDXnteY15HXoiI=", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GeneralTextCode_AccountingGeneralOReportTotalInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReportTotalInterest", DefaultText = "Report Total Interest",LocalDefaultText = @"BS64:Iteh15TigJ3XmyDXqNeZ15HXmdeqINec15PXleKAndeXIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GeneralTextCode_AccountingGeneralOReportTotalInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ReportTotalInterest", DefaultText = "Report Total",LocalDefaultText = @"BS64:Iteh15TigJ3XmyDXqNeZ15HXmdeqINec15PXleKAndeXIg==", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GeneralTextCode_AccountingGeneralOBankQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.BankQueries", DefaultText = "Bank Queries",LocalDefaultText = @"BS64:Itep15DXmdec16rXldeqINeR16DXp9eZ150i", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
