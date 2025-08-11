@@ -897,8 +897,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter FromDate-ToDate ");
 
                 shipments = shipments.Where(x =>
-                      (shipmentSearchInput.FromDate.HasValue && x.CreateDate >= shipmentSearchInput.FromDate) ||
-                      (shipmentSearchInput.ToDate.HasValue && x.CreateDate <= shipmentSearchInput.ToDate)
+                      (shipmentSearchInput.FromDate.HasValue || x.CreateDate >= shipmentSearchInput.FromDate) &&
+                      (shipmentSearchInput.ToDate.HasValue || x.CreateDate <= shipmentSearchInput.ToDate)
                       );
             }
 
@@ -918,66 +918,115 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
 
         //Greater Than
-        private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput,IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan) &&
-                DateTime.TryParseExact(shipmentSearchInput.OpenDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateGreaterThan))
+                DateTime.TryParseExact(
+                    shipmentSearchInput.OpenDateGreaterThan,
+                    new[] { "d/M/yyyy", "dd/MM/yyyy", "yyyy/M/d", "yyyy-MM-dd", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out DateTime openDateGreaterThan))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                    string.Format("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan));
 
-                shipments = shipments.Where(d => d.CreateDate >= openDateGreaterThan);
+                var startOfDay = openDateGreaterThan.Date;
+                shipments = shipments.Where(d => d.CreateDate >= startOfDay);
             }
             return shipments;
         }
-        private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+
+        private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput,IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateGreaterThan) &&
-                DateTime.TryParseExact(shipmentSearchInput.ClearanceDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateGreaterThan))
+                DateTime.TryParseExact(
+                    shipmentSearchInput.ClearanceDateGreaterThan,
+                    new[] { "d/M/yyyy", "dd/MM/yyyy", "yyyy/M/d", "yyyy-MM-dd", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out DateTime clearanceDateGreaterThan))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter clearanceDateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                    string.Format("Filter ClearanceDateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan));
 
-                shipments = shipments.Where(d => d.ClearanceDate >= clearanceDateGreaterThan);
+                var startOfDay = clearanceDateGreaterThan.Date;
+                shipments = shipments.Where(d => d.ClearanceDate != null && d.ClearanceDate >= startOfDay);
             }
             return shipments;
         }
-        private static IQueryable<CargoTrackingShipmentList> FilterByATADateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+
+
+        private static IQueryable<CargoTrackingShipmentList> FilterByATADateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput,IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateGreaterThan) &&
-                DateTime.TryParseExact(shipmentSearchInput.ATADateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateGreaterThan))
+                DateTime.TryParseExact(
+                    shipmentSearchInput.ATADateGreaterThan,
+                    new[] { "d/M/yyyy", "dd/MM/yyyy", "yyyy/M/d", "yyyy-MM-dd", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out DateTime ATADateGreaterThan))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter ATADateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan));
-                shipments = shipments.Where(d => d.ArrivalDate >= ATADateGreaterThan);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                    string.Format("Filter ATADateGreaterThan {0} ", shipmentSearchInput.ATADateGreaterThan));
+
+                var startOfDay = ATADateGreaterThan.Date;
+                shipments = shipments.Where(d => d.ArrivalDate != null && d.ArrivalDate >= startOfDay);
             }
             return shipments;
         }
+
         // Less Than
-        private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+
+        private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput,IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateLessThan) &&
-                DateTime.TryParseExact(shipmentSearchInput.OpenDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateLessThan))
+                DateTime.TryParseExact(
+                    shipmentSearchInput.OpenDateLessThan,
+                    new[] { "d/M/yyyy", "dd/MM/yyyy", "yyyy/M/d", "yyyy-MM-dd", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out DateTime openDateLessThan))
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter OpenDateLessThan {0} ", shipmentSearchInput.OpenDateLessThan));
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                    string.Format("Filter OpenDateLessThan {0} ", shipmentSearchInput.OpenDateLessThan));
 
-                shipments = shipments.Where(d => d.CreateDate <= openDateLessThan);
+                var endOfDay = openDateLessThan.Date.AddDays(1).AddTicks(-1);
+                shipments = shipments.Where(d => d.CreateDate <= endOfDay);
             }
             return shipments;
         }
-        private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+
+        private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput,IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateLessThan) &&
-                DateTime.TryParseExact(shipmentSearchInput.ClearanceDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateLessThan))
+                DateTime.TryParseExact(
+                    shipmentSearchInput.ClearanceDateLessThan,
+                    new[] { "d/M/yyyy", "dd/MM/yyyy", "yyyy/M/d", "yyyy-MM-dd", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out DateTime clearanceDateLessThan))
             {
-                shipments = shipments.Where(d => d.ClearanceDate <= clearanceDateLessThan);
+                var endOfDay = clearanceDateLessThan.Date.AddDays(1).AddTicks(-1);
+                shipments = shipments.Where(d => d.ClearanceDate != null && d.ClearanceDate <= endOfDay);
             }
             return shipments;
         }
-        private static IQueryable<CargoTrackingShipmentList> FilterByATADateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+
+        private static IQueryable<CargoTrackingShipmentList> FilterByATADateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput,IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateLessThan) &&
-                DateTime.TryParseExact(shipmentSearchInput.ATADateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateLessThan))
+                DateTime.TryParseExact(
+                    shipmentSearchInput.ATADateLessThan,
+                    new[] { "d/M/yyyy", "dd/MM/yyyy", "yyyy/M/d", "yyyy-MM-dd", "yyyy-MM-ddTHH:mm:ss", "yyyy-MM-ddTHH:mm:ssZ" },
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out DateTime ATADateLessThan))
             {
-                shipments = shipments.Where(d => d.ArrivalDate <= ATADateLessThan);
+                var endOfDay = ATADateLessThan.Date.AddDays(1).AddTicks(-1);
+                shipments = shipments.Where(d => d.ArrivalDate != null && d.ArrivalDate <= endOfDay);
             }
+
             return shipments;
         }
 
