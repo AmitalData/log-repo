@@ -303,7 +303,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {
                     byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
-                    string winHebrewString = Encoding.GetEncoding("Windows-1255").GetString(dosBytes);
+                    string winHebrewString = Encoding.UTF8.GetString(dosBytes);
 
                     var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
                     var journalAnalyseResult = myJournalsCSVFlatFileAnalyser_ISL.AnalyseWithSkip(authToken.Tenant, winHebrewString);
