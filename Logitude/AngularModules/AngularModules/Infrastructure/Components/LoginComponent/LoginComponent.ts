@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit {
     private UserExtendedPMService: UserExtendedPMService;
     private generalDomainService: GeneralDomainService;
     private isLocalPrivateLable: boolean = false;
+    private _shouldFreshReload: boolean = true;
     constructor(
         private logitudeApplicationService: LogitudeApplicationService,
         private loginService: LoginService,
@@ -152,11 +153,16 @@ export class LoginComponent implements OnInit {
         //FileLoader.LoadFroalaResources();
         sessionStorage.setItem('SessionId', uuidv4());
 
+
     }
 
     idxdb: IDBOpenDBRequest;
     public authHeader;
     ngOnInit() {
+        
+        if(this._shouldFreshReload) {this.clearAppData();}
+        sessionStorage.setItem('SessionId', uuidv4());
+        
         let AmitalSSOAngular = this.getParameterByName(
             'AmitalSSOAngular',
             window.location.href
@@ -1410,6 +1416,15 @@ export class LoginComponent implements OnInit {
             CachedDataManager.GetCacheOnClientTablesData(
                 this.entityListService
             );
+        }
+    }
+    private clearAppData() {
+        localStorage.clear();
+        sessionStorage.clear();
+        if ('caches' in window) {
+            caches.keys().then((names) => {
+                names.forEach((name) => caches.delete(name));
+            });
         }
     }
 }
