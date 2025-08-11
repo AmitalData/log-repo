@@ -778,13 +778,13 @@ namespace Logitude.Accounting.BL.CoreBL
                         $"Message: {rootEx.Message} | StackTrace: {rootEx.StackTrace}");
                         throw;
                     }
-
-                    taxDeductionReportPM.ReportSavedData = JsonSerializer.Serialize(data);
-
-                    taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
-                    var taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                    taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
-
+                    if (String.IsNullOrEmpty(taxDeductionReportPM.ReportSavedData))
+                    {
+                        taxDeductionReportPM.ReportSavedData = JsonSerializer.Serialize(data);
+                        taxDeductionReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                        var taxDeductionReportUpdateService = new TaxDeductionReportUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                        taxDeductionReportUpdateService.Update(taxDeductionReportPM, true);
+                    }
                     if (!String.IsNullOrWhiteSpace(_AggregateKey))
                     {
                         TryDeleteLockRow(tenant);
