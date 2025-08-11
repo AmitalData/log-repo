@@ -1732,7 +1732,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     {
         this.IsCashBookValid = false;
 
-        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH")) {
+        if (this.isFullAccounting && (this.AccountingPaymentMethodCode == "CA" || this.AccountingPaymentMethodCode == "CH") && this.BranchId) {
             var service: InvoiceDomainService = new InvoiceDomainService();
 
             service.CheckARPaymentCashBook(this.AccountingPaymentMethodCode, this.PaymentCurrencyId, this.BranchId).subscribe((myResponse: ServiceResponse) =>
@@ -1756,11 +1756,12 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                         }
                     }
                     else {
-                        var msg = "There is no cashbook that compatible to this ARPayment, create one please";
-                        this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
-
                         if (this.CheckDefaultBranchId) {
                             this.BranchId = null;
+                        }
+                        else {
+                            var msg = "There is no cashbook that compatible to this ARPayment, create one please";
+                            this.UIProperties.SetValidity("BranchId", this.ObjectTableName, false, msg);
                         }
                     }
                 }
