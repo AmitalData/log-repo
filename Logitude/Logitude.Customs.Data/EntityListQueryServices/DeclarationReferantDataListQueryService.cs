@@ -18,7 +18,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<DeclarationReferantDataList> GetIqueryableList(IQueryable<DeclarationReferantData> iQueryable)
         {
-            var aWith = iQueryable
+            IQueryable<DeclarationReferantData> aWith = iQueryable
                 .Include(x => x.CustomsVendor)
                 .Include(x => x.ClassifiedUser.Contact)
                 .Include(x => x.CollectorUser.Contact)
@@ -30,7 +30,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 .Include(x => x.PackageType);
 
 
-            var dWith = context.Declarations
+            IQueryable<Declaration> dWith = context.Declarations
                 .Include(x => x.CustomerCard.Customer)
                 .Include(x => x.DeclarationOffice)
                 .Include(x => x.DeclarationStatusType)
@@ -40,7 +40,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 .Include(x => x.ReferentUser.Contact);
 
 
-            var query =
+            IQueryable<DeclarationReferantDataList> query =
                 from a in aWith
                 join d in dWith on a.DeclarationIdToDisplay equals d.Id
                 orderby a.DeclarationIdToDisplay
@@ -142,7 +142,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                     ListCounter = 0
                 };
 
-            var list = query.ToList();
+            List<DeclarationReferantDataList> list = query.ToList();
             for (int i = 0; i < list.Count; i++)
                 list[i].ListCounter = i + 1;
 
@@ -153,13 +153,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         private IQueryable<DeclarationReferantData> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<DeclarationReferantData> iQueryable, int tenant)
         {
             DeclarationReferantDataCustomFilters filters = new DeclarationReferantDataCustomFilters();
-            var filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "RetrievData");
-            var OccuredStatusesFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "OccuredStatuses");
-            var NotOccuredStatusesFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "NotOccuredStatuses");
+            QueryFilterItem filter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "RetrievData");
+            QueryFilterItem OccuredStatusesFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "OccuredStatuses");
+            QueryFilterItem NotOccuredStatusesFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "NotOccuredStatuses");
 
             if (OccuredStatusesFilter != null && !string.IsNullOrEmpty(OccuredStatusesFilter.FieldValue.ToString()))
             {
-                var q = context.DeclarationStatuses
+                IQueryable<string> q = context.DeclarationStatuses
                     .Where(decStatus => OccuredStatusesFilter.FieldValue.ToString().Contains(decStatus.StatusCode.Status_Code))
                     .Select(r => r.DeclarationId);
 
@@ -168,9 +168,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             if (NotOccuredStatusesFilter != null && !string.IsNullOrEmpty(NotOccuredStatusesFilter.FieldValue.ToString()))
             {
-                var notContainsFilter = NotOccuredStatusesFilter.FieldValue.ToString();
+                String notContainsFilter = NotOccuredStatusesFilter.FieldValue.ToString();
 
-                var notContainsQuery = context.DeclarationStatuses
+                IQueryable<string> notContainsQuery = context.DeclarationStatuses
                     .Where(decStatus => notContainsFilter.Contains(decStatus.StatusCode.Status_Code))
                     .Select(r => r.DeclarationId);
 
@@ -220,9 +220,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             if (depId.Count > 0)
                 declarationReferantDatas = declarationReferantDatas.Where(x => depId.Contains(x.DepartmentId));
 
-            var date2 = DateTime.Today.Date.AddDays(1);
+            DateTime date2 = DateTime.Today.Date.AddDays(1);
 
-            var qGroupIt =
+            IQueryable<DeclarationReferantDataSummary> qGroupIt =
                 from a in declarationReferantDatas
                 group a by 1
                 into groupBy1
