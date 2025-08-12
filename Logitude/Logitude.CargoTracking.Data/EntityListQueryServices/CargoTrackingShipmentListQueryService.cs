@@ -897,8 +897,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter FromDate-ToDate ");
 
                 shipments = shipments.Where(x =>
-                      (shipmentSearchInput.FromDate.HasValue || x.CreateDate >= shipmentSearchInput.FromDate) &&
-                      (shipmentSearchInput.ToDate.HasValue || x.CreateDate <= shipmentSearchInput.ToDate)
+                      (shipmentSearchInput.FromDate.HasValue && x.CreateDate >= shipmentSearchInput.FromDate) ||
+                      (shipmentSearchInput.ToDate.HasValue && x.CreateDate <= shipmentSearchInput.ToDate)
                       );
             }
 
@@ -951,7 +951,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     string.Format("Filter ClearanceDateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan));
 
                 var startOfDay = clearanceDateGreaterThan.Date;
-                shipments = shipments.Where(d => d.ClearanceDate != null && d.ClearanceDate >= startOfDay);
+                shipments = shipments.Where(d => d.ClearanceDate.HasValue && d.ClearanceDate >= startOfDay);
             }
             return shipments;
         }
@@ -971,7 +971,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     string.Format("Filter ATADateGreaterThan {0} ", shipmentSearchInput.ATADateGreaterThan));
 
                 var startOfDay = ATADateGreaterThan.Date;
-                shipments = shipments.Where(d => d.ArrivalDate != null && d.ArrivalDate >= startOfDay);
+                shipments = shipments.Where(d => d.ArrivalDate.HasValue && d.ArrivalDate >= startOfDay);
             }
             return shipments;
         }
@@ -1008,7 +1008,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     out DateTime clearanceDateLessThan))
             {
                 var endOfDay = clearanceDateLessThan.Date.AddDays(1).AddTicks(-1);
-                shipments = shipments.Where(d => d.ClearanceDate != null && d.ClearanceDate <= endOfDay);
+                shipments = shipments.Where(d => d.ClearanceDate.HasValue && d.ClearanceDate <= endOfDay);
             }
             return shipments;
         }
@@ -1024,7 +1024,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     out DateTime ATADateLessThan))
             {
                 var endOfDay = ATADateLessThan.Date.AddDays(1).AddTicks(-1);
-                shipments = shipments.Where(d => d.ArrivalDate != null && d.ArrivalDate <= endOfDay);
+                shipments = shipments.Where(d => d.ArrivalDate.HasValue && d.ArrivalDate <= endOfDay);
             }
 
             return shipments;
