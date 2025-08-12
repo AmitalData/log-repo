@@ -227,9 +227,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (CourierForceSignException e)
             {
-			
-				LogitudeSettings.HandleLogMe("line 230 CourierForceSignException" + e.Message.ToString(), false, "sendClosing", stopLogAt);
-
 				NoteClientNoRequestSheet4U(requestParams, e.Message);
                 throw new
                     CustomsRequestsSheetDomainModelServiceException(
@@ -238,7 +235,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (Exception e)
             {
-				LogitudeSettings.HandleLogMe("line 251 Exception: " + e.ToString(), false, "sendClosing", stopLogAt);
 
 				NoteClientNoRequestSheet4U(requestParams, e.ToString());
                 throw new

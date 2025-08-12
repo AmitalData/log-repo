@@ -150,8 +150,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsTransferdToQBO = entityPM.IsTransferdToQBO;
             poco.ReceivedByPartner = entityPM.ReceivedByPartner;
 			poco.IsFromCloud = entityPM.IsFromCloud;
+            poco.FileDataMD5Hash = entityPM.FileDataMD5Hash;
 
-		}
+
+        }
 
 		private static void MapUpdatedByUserId(DocumentsFilingPM entityPM, DocumentsFiling poco, ContactPM loggedContact)
         {
