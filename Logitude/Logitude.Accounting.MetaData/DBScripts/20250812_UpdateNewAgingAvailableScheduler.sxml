@@ -1,0 +1,9 @@
+<Script DBType="Main"  TargetTableName="Reports" AOT="false" >
+  <Sql Version="1">
+    <![CDATA[
+      UPDATE Reports
+      SET AvailableForScheduling = 1
+      WHERE Name = 'New Aging Report' 
+    ]]>      
+  </Sql>
+</Script> 
