@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, OnInit, Output, EventEmitter, isDevMode } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, isDevMode, AfterViewInit } from '@angular/core';
 
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -52,7 +52,7 @@ import { SessionInfo as CToolSessionInfo } from 'collaboration-tool-core';
         UserLastLoginPMService,
     ],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit ,AfterViewInit {
     @Output() Blocking: EventEmitter<any> = new EventEmitter();
     @Output() LoginCompleted: EventEmitter<any> = new EventEmitter();
     public Email: string;
@@ -160,7 +160,6 @@ export class LoginComponent implements OnInit {
     public authHeader;
     ngOnInit() {
         
-        
         let AmitalSSOAngular = this.getParameterByName(
             'AmitalSSOAngular',
             window.location.href
@@ -199,7 +198,11 @@ export class LoginComponent implements OnInit {
     // if (isDevMode())
         //     this.developerLogin();       
      }
-   
+     ngAfterViewInit() {
+      localStorage.clear();
+      sessionStorage.clear();
+    }
+
     async developerLogin() {
         this.Email = ''
         this.Password = '';
