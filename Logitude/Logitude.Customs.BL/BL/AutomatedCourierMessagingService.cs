@@ -32,6 +32,7 @@ namespace Logitude.Customs.BL.BL
         private string objectTableIdCourierMaster;
         private readonly string userId;
         private DateTime futureSendTime = DateTime.Now.AddMinutes(5);
+        public bool sent = false;
 
         public AutomatedCustomsMessagingService(int tenant)
         {
@@ -42,14 +43,15 @@ namespace Logitude.Customs.BL.BL
             _featureSendDeclaration = features.Features.Any(x => x.Code == "AutomatedSendDeclaration");
             _featureSendPayment = features.Features.Any(x => x.Code == "SendPaymentOn900Close");
 
-        }
-        public void CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
-        {
 
+        }
+        public bool CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
+        {
+             sent = false;
 
             if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment)
             {
-                return;
+                return sent;
             }
 
 
@@ -70,13 +72,13 @@ namespace Logitude.Customs.BL.BL
 
             if(declaration == null || declaration.IsAmendment == true)
             {
-                return;
+                return sent;
             }
 
             if (_featureSendManifest && declarationCourierStatusPM.CourierManifestStatusCode == "R")
             {
                 SendManifest(declarationCourierStatusPM);
-                return;
+                return sent;
             }
 
             if (_featureSendDeclaration
@@ -96,7 +98,7 @@ namespace Logitude.Customs.BL.BL
                 if (declaration != null && !hasActivePending && importerOk )
                 {
                     SendDeclaration(declarationCourierStatusPM);
-                    return;
+                    return sent;
                 }
             }
 
@@ -109,7 +111,7 @@ namespace Logitude.Customs.BL.BL
 
                 if (courierMaster == null || courierMaster.CourierMasterPaymentStatusCd != "1")
                 {
-                    return;
+                    return sent;
                 }
 
 
@@ -129,6 +131,8 @@ namespace Logitude.Customs.BL.BL
                     }
                 }
             }
+            return sent;
+
         }
         private void SendPayment(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
@@ -169,7 +173,7 @@ namespace Logitude.Customs.BL.BL
                         FutureSendDateTime = futureSendTime,
                     };
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2755, false, futureSendTime);
-
+                    sent = true;
                     scopeNewCRS.Complete();
                 }
             }
@@ -209,7 +213,7 @@ namespace Logitude.Customs.BL.BL
                     };
                     SBQMessageService.CreateSheetSBQMessage<GenericRequestParams>(requestParams2750, false , futureSendTime );
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId})");
-
+                    sent = true;
                     scopeNewCRS.Complete();
                 }
 
@@ -252,6 +256,7 @@ namespace Logitude.Customs.BL.BL
                 };
                 SBQMessageService.CreateSheetSBQMessage<MANIFESTRequestRequestParams>(requestParams1170, false, futureSendTime);
                 LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({declarationCourierStatusPM.DeclarationId})");
+                sent = true;
 
             }
             catch (System.Exception ex)
