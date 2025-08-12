@@ -273,14 +273,12 @@ export class AddEditReportSchedulerComponent implements OnInit {
                this.PageChild_PRREP.SetReportFilterItems(queryFilterItems);
             }
             else{
-                var queryFilterItems = new Array<QueryFilterItem>();
                var queryFilterItem = new QueryFilterItem();
                queryFilterItem.FieldName = "IsDisableGlaccountId";
                queryFilterItem.FieldValue = true;
                queryFilterItem.Operator = "Equals";
                queryFilterItem.IsCustom = true;
-               queryFilterItems.push(queryFilterItem);
-               this.PageChild_PRREP.SetReportFilterItems(queryFilterItems); 
+               reportFilterItems.push(queryFilterItem);
             }
          }
 
