@@ -1463,21 +1463,23 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
                 else
                 {
-                    var isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant)?.IsConnectedToUniFreight;
-                    var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
-                    DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
-                    string lastMd5 = MyUniFileVerM?.MD5HASH?? rep.GetFileDataMD5HashByDocumentIdAndTenant(document.Id, entityPM.Tenant);
-                    if (isConnectedToUniFreight == true && document.Folder == "docsin")
+                    bool? isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant)?.IsConnectedToUniFreight;
+                    
+                    if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null)
                     {
-                        if (isnew || string.IsNullOrEmpty(lastMd5))
+                        if (isnew)
                         {
-                            this.entityPM.LastVersion = 1;
+                            entityPM.LastVersion = 1;
                         }
                         else
                         {
+                            var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
+                            DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
+                            string lastMd5 = entityPM?.FileDataMD5Hash ?? rep.GetFileDataMD5HashByDocumentIdAndTenant(document.Id, entityPM.Tenant);
+
                             if (!string.Equals(fileDataMD5Hash, lastMd5, StringComparison.OrdinalIgnoreCase))
                             {
-                                this.entityPM.LastVersion = this.Poco.LastVersion + 1;
+                                this.entityPM.LastVersion = this.entityPM.LastVersion + 1;
                             }
 
                         }
