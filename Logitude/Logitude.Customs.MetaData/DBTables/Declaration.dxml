@@ -1126,6 +1126,12 @@
     Type="varchar"
     Size="15">
     <Constraints
+      Nullable="true" />  
+  </Column>
+  <Column
+    Name="RowVer"
+    Type="timestamp">
+    <Constraints
       Nullable="true" />
   </Column>
   <Relation

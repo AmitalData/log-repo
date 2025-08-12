@@ -411,9 +411,9 @@
       Nullable="false" />
   </Column>
 	<Column
-	   Name="IsFromCloud"
+	  Name="FileDataMD5Hash"
 	  Type="varchar"
-    Size="35">
+      Size="35">
     <Constraints
       Nullable="true" />
   </Column>
