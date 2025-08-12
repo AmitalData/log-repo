@@ -1194,22 +1194,23 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 this.updateDisplayList();
             });
         }
+
         this.MarkIsChecked.subscribe((res) => {
             this.AllCheckedRecords = res.SelectedLines.Collection;
 
-           for (let i=0 ; i < this.AllCheckedRecords.length ; i++){
-            var checkedRecord = this.AllCheckedRecords[i].Id ? this.AllCheckedRecords[i].Id:this.AllCheckedRecords[i].rowData.Id;
+            const checkedIds = new Set(this.AllCheckedRecords.map(rec => rec.Id ?? rec.rowData.Id));
+            for (const row of this.rows) {
+                if (checkedIds.has(row.rowData.Id)) {
+                    row.rowData.IsChecked = true;
 
-
-            var Row = this.rows.filter(a => a.rowData.Id === checkedRecord)[0];
-            if (Row) {
-               Row.rowData.IsChecked = true;
-               if (this.controller.cachedData[Row.rowIndex] && this.controller.cachedData[Row.rowIndex].IsChecked != null) {
-                   this.controller.cachedData[Row.rowIndex].IsChecked = true;//this.controller.cachedData[row.rowIndex] && this.controller.cachedData[row.rowIndex].IsChecked;// == false ? false : true;
-               }
+                    const cached = this.controller.cachedData[row.rowIndex];
+                    if (cached && cached.IsChecked != null) {
+                        cached.IsChecked = true;
+                    }
+                }
             }
             this.cd.detectChanges();
-         }
+
          var DeleteSelected = this.rows.filter(a => a.rowData.IsChecked ==true);
          for(let i =0 ; i < DeleteSelected.length ; i++){
             
