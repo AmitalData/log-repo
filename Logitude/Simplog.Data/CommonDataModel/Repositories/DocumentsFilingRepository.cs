@@ -429,7 +429,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                           where d.Id == DocumentsFilingId && a.Tenant == tenant
                           select a.FileSize).FirstOrDefault();
         }
-
+        public string GetFileDataMD5HashByDocumentIdAndTenant(string documentId, int tenant)
+        {
+            return context.DocumentsFilings
+                          .Where(df => df.DocumentId == documentId && df.Tenant == tenant)
+                          .Select(df => df.FileDataMD5Hash)
+                          .FirstOrDefault();
+        }
 
 
     }
