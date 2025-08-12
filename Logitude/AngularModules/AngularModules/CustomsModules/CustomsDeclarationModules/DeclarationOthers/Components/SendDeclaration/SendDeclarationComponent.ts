@@ -40,6 +40,7 @@ import { EntityPMService } from '../../../../../Infrastructure/Services/EntityPM
 import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { ExportStorageExtendedListService } from '../../../../../Customs/Services/ExtendedLists/ExportStorageExtendedListService';
+import { ObjectTablePMExtendedService } from 'Infrastructure/Services/ExtendedPMs/ObjectTablePMExtendedService';
 
 
 @Component({
@@ -204,6 +205,32 @@ export class SendDeclarationService implements OnDestroy {
     Run(args: any) {
         this.EntityPM = args.EntityPM;
         this.ObjectTable = args.ObjectTable;
+
+        const objTableName = (args.ObjectTable?.Name ?? args.ObjectTable?.name) as string;
+        const declarationTableName = "Customs.Declaration";
+        if (objTableName === declarationTableName) {
+            const objectTablePMExtendedService = new ObjectTablePMExtendedService();
+            const tenant = this.EntityPM?.Tenant ?? SessionLocator.Tenant;
+            objectTablePMExtendedService.GetObjectTableByName(declarationTableName, tenant)
+                .subscribe(res => {
+                    if (res?.Result) {
+                        const fresh = res.Result;
+                        if (fresh) {
+                            Object.assign(this.ObjectTable, fresh);
+                            try {
+                                const idx = Array.isArray(window.ObjectTables)
+                                    ? window.ObjectTables.findIndex(
+                                        (t: any) =>
+                                            (t?.Id && fresh?.Id && t.Id === fresh.Id) ||
+                                            (t?.Name ?? t?.name) === declarationTableName
+                                    )
+                                    : -1;
+                                if (idx >= 0) window.ObjectTables[idx] = this.ObjectTable;
+                            } catch {  }
+                        }
+                    }
+                });
+        }
         this.CourierWorksheetmode = args.CourierWorksheetmode;
         this.ValidationErrors = [];
         this.ValidationWarning = [];

@@ -142,6 +142,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public string AccountingEntityCode { get; set; }
         public DateTime AccountingDate { get; set; }
         public string Notes { get; set; }
+
         public string Reference1 { get; set; }
     }
 }

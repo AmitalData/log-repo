@@ -45,14 +45,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
             where TRequestParams : RequestParamsBase
         {
 
-            if (requestParams is DeclarationStatusRequestParams)
-            {
-
-                LogitudeSettings.HandleLogMe(
-                    "DeclarationId:" + requestParams.LoggingEntityId + Environment.NewLine + Environment.StackTrace.ToString()
-                    , false, "8250", new DateTime(2021, 1, 1));
-            }
-
             CustomsRequestsSheetDomainModelService<TRequestParams> customsRequestsSheetService = null;
             var reqSheetDetials = CustomsRequestsSheetDomainModelService<TRequestParams>.GetSheetDetailsFromRequestParam(requestParams);
             string customsRequestsSheetId = null;
