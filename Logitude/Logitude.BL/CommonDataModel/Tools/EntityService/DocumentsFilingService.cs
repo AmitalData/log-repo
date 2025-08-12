@@ -1422,6 +1422,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     FileSize = fileData.Length,
 
                 };
+                
                 if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew) || (entityPM.IsFromCloud && LogitudeSettings.StorageServiceMode != "db"))
                 {
                     var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
@@ -1455,12 +1456,40 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                     }
 
+
+
                     fileInfo.UDocumentsFilingId = DocumentsFilingId;
                     fileInfo.UCreateDate = document.CreateDate;
-                }//if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode())
+                }
+                else
+                {
+                    bool? isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant)?.IsConnectedToUniFreight;
+                    
+                    if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null)
+                    {
+                        if (isnew)
+                        {
+                            entityPM.LastVersion = 1;
+                        }
+                        else
+                        {
+                            var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
+                            DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
+                            string lastMd5 = entityPM?.FileDataMD5Hash ?? rep.GetFileDataMD5HashByDocumentIdAndTenant(document.Id, entityPM.Tenant);
+
+                            if (!string.Equals(fileDataMD5Hash, lastMd5, StringComparison.OrdinalIgnoreCase))
+                            {
+                                this.entityPM.LastVersion = this.entityPM.LastVersion + 1;
+                            }
+
+                        }
+                    }
+                }
                 storageservice.Write(fileData, fileInfo);
+                
 
             }
+            
 
      
             return document != null ? document.Id : null;
