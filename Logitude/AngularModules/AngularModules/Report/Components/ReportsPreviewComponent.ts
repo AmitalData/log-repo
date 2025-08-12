@@ -351,7 +351,6 @@ export class ReportsPreviewComponent implements AfterViewInit {
             if (this.IsUsedExportToExel || this.ReportFliter.ReportCode == "EXDE")
             {
                this.ReportFliter.ProcessType = "ExportToExcel";
-               this.StartBusyIndicator("Exporting to Excel...");
                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
                return
             }
@@ -544,7 +543,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
     StartBuildStimulReportViaWorkerRole(filter: ReportFliter, isInteractive?: boolean) {
         filter.ReportsRunUsingWR = this.IsUsedReportsRunUsingWR = true;
 
-        this.StartBusyIndicator(TextCodeTranslator.Translate("General.O.Generating"));
+
+        if(this.ReportFliter.ProcessType === "ExportToExcel")
+            this.StartBusyIndicator(TextCodeTranslator.Translate("General.B.ExportingDataToExcel"));
+        else{
+            this.StartBusyIndicator(TextCodeTranslator.Translate("General.O.Generating"));
+        }
 
 
         this._reportService.GenerateReportMethod(filter).subscribe((myResponse: ServiceResponse) => {
