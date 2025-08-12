@@ -7112,6 +7112,7 @@
     <Compile Include="Security\CargoTrackingSecurityService.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
     <Compile Include="Security\SessionContextInterceptor.cs" />
+    <Compile Include="Security\TokenGuard.cs" />
     <Compile Include="SendGridWebPage.aspx.cs">
       <DependentUpon>SendGridWebPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
