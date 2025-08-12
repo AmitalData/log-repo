@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
     private UserExtendedPMService: UserExtendedPMService;
     private generalDomainService: GeneralDomainService;
     private isLocalPrivateLable: boolean = false;
-    private _shouldFreshReload: boolean = true;
+
     constructor(
         private logitudeApplicationService: LogitudeApplicationService,
         private loginService: LoginService,
@@ -160,8 +160,6 @@ export class LoginComponent implements OnInit {
     public authHeader;
     ngOnInit() {
         
-        if(this._shouldFreshReload) {this.clearAppData();}
-        sessionStorage.setItem('SessionId', uuidv4());
         
         let AmitalSSOAngular = this.getParameterByName(
             'AmitalSSOAngular',
@@ -1418,13 +1416,5 @@ export class LoginComponent implements OnInit {
             );
         }
     }
-    private clearAppData() {
-        localStorage.clear();
-        sessionStorage.clear();
-        if ('caches' in window) {
-            caches.keys().then((names) => {
-                names.forEach((name) => caches.delete(name));
-            });
-        }
-    }
+  
 }
