@@ -25,13 +25,13 @@ declare var IsMobileDetected;
 export class RootComponent implements AfterViewInit {
     @ViewChild(ChildDirective) Child: ChildDirective;
 
-    private _shouldFreshReload: boolean = true;
+    private _shouldFreshReload: boolean = false;
 
     constructor() {
         if (this._shouldFreshReload) { this.clearAppData(); }
 
         var data = window.sessionStorage.getItem('userdata');
-        
+
         if (data != 'SignOut') {
             this.BuildExternalParams();
         }
