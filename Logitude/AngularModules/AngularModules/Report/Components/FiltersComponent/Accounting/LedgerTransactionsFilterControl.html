@@ -142,11 +142,11 @@
 
                     <!-- 2 -->
                     <td style="width:245px">
-                        <LogLov  [ShowInActive]="true" style="display: block;width: 150px;" float-start [ObjectFieldName]="'GLAccountId'"
+                        <LogLov  [ForceDisabled]="IsDisableGlaccountId" [ShowInActive]="true" style="display: block;width: 150px;" float-start [ObjectFieldName]="'GLAccountId'"
                             [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                             [LookUpTableName]="'GLAccount'" [QueryFilterItems]="GLAccountFilterItems"
                             (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true" [HideAddLink]="true"
-                            [HideColumns]="true" [StartSearchFromChar]="3" [StartSearchFromNumber]="5" [IsDisabled] = "'IsDisableGlaccountId'">
+                            [HideColumns]="true" [StartSearchFromChar]="3" [StartSearchFromNumber]="5" >
 
                         </LogLov>
                     </td>
