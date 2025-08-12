@@ -254,8 +254,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsTransferdToQBO).HasColumnName("IsTransferdToQBO");
             this.Property(t => t.ReceivedByPartner).HasColumnName("ReceivedByPartner");
 			this.Property(t => t.IsFromCloud).HasColumnName("IsFromCloud");
+            this.Property(t => t.FileDataMD5Hash).HasColumnName("FileDataMD5Hash");
 
-			this.HasOptional(t => t.Document)
+
+            this.HasOptional(t => t.Document)
                 .WithMany()
                 .HasForeignKey(d => d.DocumentId);
 
