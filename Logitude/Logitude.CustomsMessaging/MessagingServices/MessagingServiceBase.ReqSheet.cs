@@ -686,7 +686,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     //UnifreightQueueOutStatus  =SENT
 
                     LogMessagingUtil.Instance.AppendLine("UnifreightQueueOutStatus =" + UnifreightQueueOutStatus);
-                    if (String.IsNullOrWhiteSpace(UnifreightQueueOutStatus))
+
+					int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
+					FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
+					var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+					bool isSendSFTPEnabled = features.Features.Any(x => x.Code == "IsSendSFTP");
+
+					if (String.IsNullOrWhiteSpace(UnifreightQueueOutStatus)&& !isSendSFTPEnabled)
                     {
                         LogMessagingUtil.Instance.AppendLine("UnifreightQueueOutStatus==null ; error " + MessageOut);
                         throw new Exception("UnifreightQueueOutStatus==null ; error  " + MessageOut);
