@@ -1069,7 +1069,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     seal = cargoItem.SealDetails[0].sealNumber;
                                 }
-                                packingType = GetTranslationP2L("IIGC", "ITBPCKTY", cargoItem.characteristicCode);
+                                CustomsSettingQueryService settingService = new CustomsSettingQueryService(_MyDeclarationPM.Tenant);
+                                CustomsSettingPM setting = settingService.GetSettingByTenantN(_MyDeclarationPM.Tenant);
+                                if (setting.IsConnectedToUniFreight)
+                                {
+                                    packingType = GetTranslationP2L("IIGC", "ITBPCKTY", cargoItem.characteristicCode);
+                                }
+                                else
+                                {
+                                    packingType = cargoItem.characteristicCode;
+                                }
+
 
                                 CFIPACKS_DATA myCFIPACKS_DATA = new CFIPACKS_DATA
                                 {
