@@ -137,23 +137,31 @@ export class ReportService {
         }
         );
     }
-    GetExcel(filter: ReportFliter): Promise<any> {
+    GetExcel(reportKey:string,  reportName:string): Promise<any> {
         const authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
-
-        const filterString = encodeURIComponent(JSON.stringify(filter));
-
+    
+         reportKey = encodeURIComponent(reportKey);
+         reportName = encodeURIComponent(reportName);
+        
         return defer(() => {
-            return this._http.get(`${this._apiUrl}/GetExcel?filter=${filterString}`, {
-                headers: ServiceHelper.GetHttpHeaders().headers,
-                responseType: 'blob'
-            }).pipe(
-                map(response => {
-                    return response;
-                }),
-                catchError(ServiceHelper.HandleServiceError)
-            );
+            return this._http
+                .get(this._apiUrl +
+                    '/GetExcel' +
+                    '?reportKey=' +
+                    reportKey +
+                    '&reportName=' +
+                    reportName, {
+                    headers: ServiceHelper.GetHttpHeaders().headers,
+                    responseType: 'blob',
+                })
+                .pipe(
+                    map((response) => {
+                        return response;
+                    }),
+                    catchError(ServiceHelper.HandleServiceError)
+                );
         }).toPromise() as Promise<any>;
     }
 

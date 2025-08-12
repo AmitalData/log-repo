@@ -1,35 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Export;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
+using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Server.Infrastructure;
-using System.Text;
-using Newtonsoft.Json;
-using System.Configuration;
 using static WebFreight.Web.Helpers.ReportHelper;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.Helpers;
-using System.Data;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -485,20 +484,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetExcel(string filter)
+        public HttpResponseMessage GetExcel(string reportKey,string reportName)
         {
             try
             {
 				string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
-				var reportFliter = JsonConvert.DeserializeObject<ReportFliter>(filter);
-				MemoryStream res = new ReportHelper().CreateExcelOfReport(reportFliter);
-
-                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(res.ToArray()) };
+                MemoryStream res = new ReportHelper().GetExcel(reportKey, reportName, authToken.Tenant);
+                if (res == null || res.Length == 0)
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                res.Position = 0;
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new ByteArrayContent(res.ToArray())
+                };
                 result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = $"{reportFliter.ReportName}.xlsx" };
+                result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") { FileName = $"{reportKey}@{reportName}.xlsx" };
 
                 return result;
             }
