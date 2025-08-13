@@ -1480,6 +1480,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             if (!string.Equals(fileDataMD5Hash, lastMd5, StringComparison.OrdinalIgnoreCase))
                             {
                                 this.entityPM.LastVersion = this.entityPM.LastVersion + 1;
+                                this.entityPM.FileDataMD5Hash = fileDataMD5Hash
                             }
 
                         }
