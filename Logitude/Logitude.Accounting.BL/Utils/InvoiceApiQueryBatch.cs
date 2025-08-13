@@ -1,20 +1,14 @@
 ﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.BL.Interfaces.Magaya;
 using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Repositories;
+
 using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
-using Logitude.XSD.CW_API.ABM;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -82,6 +76,8 @@ namespace Logitude.Accounting.BL.Utils
 
                 foreach (var item in items)
                 {
+                    if(CheckIfExit(item.Guid,tenant))
+                        continue;
                     string InvoiceApiCommunicationLogId=AddInvoiceApiCommuicationLog(item?.Guid, tenant);
                     var messageBody = new Dictionary<string, string>
                     {
@@ -104,7 +100,21 @@ namespace Logitude.Accounting.BL.Utils
             }
         }
 
-
+        public bool CheckIfExit(string externalId, int tenant)
+        {
+            try
+            {
+                IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                InvoiceApiCommunicationLogQueryService invoiceApiCommunicationLogQueryService = new InvoiceApiCommunicationLogQueryService(accountingContext);
+                var invoiceApiCommunicationLog = invoiceApiCommunicationLogQueryService.GetByExternalID(externalId,tenant);
+                return invoiceApiCommunicationLog != null && !string.IsNullOrEmpty(invoiceApiCommunicationLog.Id);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"CheckIfExit Exception: {ex.Message}");
+                throw;
+            }
+        }
 
         public void SaveInvoiceApiInvoiceInQueue( Dictionary<string, string> messageBody, int tenant)
         {

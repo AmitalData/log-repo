@@ -40,6 +40,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ARInvoiceId  { get; set; }
        [DataMember]
        public string InvoiceNumber  { get; set; }
+       [DataMember]
+       public string ExternalInvoiceNumber  { get; set; }
    }
 
 }

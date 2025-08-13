@@ -795,6 +795,7 @@
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestBasesPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestLastBatchServiceQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportLineQueryService.cs" />
