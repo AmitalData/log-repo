@@ -1473,7 +1473,9 @@ namespace Logitude.CustomsMessaging.RequestServices
                     DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails = new DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails();
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.SequenceNumeric = supplierInvoicePayments.SequenceNumeric;
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentType = SetCodeTypeValue<PaymentType>(supplierInvoicePayments.PaymentTypeCode);
-                    InvoiceAmountType invoiceAmountType = SetAmountTypeValue<InvoiceAmountType>(supplierInvoicePM.InvoiceCurrencyTypeCode, supplierInvoicePM.InvoiceAmount.Value);
+                    decimal amount = supplierInvoicePM.InvoiceAmount ?? 0m;
+
+                    InvoiceAmountType invoiceAmountType = SetAmountTypeValue<InvoiceAmountType>(supplierInvoicePM.InvoiceCurrencyTypeCode, amount);
                     declarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.PaymentAmount = new PaymentAmountAmountType() { Value = supplierInvoicePayments.PaymentAmount, currencyID = direction == "E" ? invoiceAmountType.currencyID : ISO3AlphaCurrencyCodeContentType.USD, currencyIDSpecified = true };
 
 

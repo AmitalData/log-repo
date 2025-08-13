@@ -29,6 +29,14 @@ namespace Logitude.Customs.Data.Repsitories
 
             return gatepassRequest;
         }
+        public GatepassRequest GetGatepassRequestByMasterCourierId(string masterCourierId, int tenant)
+        {
+            GatepassRequest gatepassRequest = (from a in context.GatepassRequests
+                                               where a.MasterCourierId == masterCourierId && a.Tenant == tenant
+                                               select a).FirstOrDefault();
+
+            return gatepassRequest;
+        }
 
     }
 

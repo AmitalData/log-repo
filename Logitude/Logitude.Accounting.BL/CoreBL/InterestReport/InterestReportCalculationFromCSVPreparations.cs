@@ -166,6 +166,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                         && interestTransactionGetParameters.GLAccountIds.Contains( interestTransactionPM.GLAccountId)
                         && interestTransactionPM.InterestValueDate <= interestTransactionGetParameters.InterestCalculationDate)
                             interestTransactionPMs.Add(interestTransactionPM);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$" GetInterestTransactionsForGlAccountAndInterestValueDate   interestTransactionPM (Id={interestTransactionPM.EntityId}), interestTransactionPM.JournalId {interestTransactionPM.JournalId}");
+
+
+
                 }
             }
             return interestTransactionPMs;

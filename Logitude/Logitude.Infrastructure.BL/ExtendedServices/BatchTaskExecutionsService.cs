@@ -34,14 +34,29 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
                 this.RunCode();
 
                 // status will change to Done and update the done date time.
-                this.ChangeStatus("D");                
+                try
+                {
+                    this.ChangeStatus("D");
+                }
+                catch (Exception ex)
+                {
+                    string errorMessage = $"Tenant {BatchTaskExecution.Tenant} - Failed to change status to DONE in BatchTaskExecutionsService: {ex.Message}";
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(errorMessage);
+                    this.ChangeStatus("D", null, errorMessage);
+                }
             }
             catch (Exception ex)
             {
-                //log the exception.
-                this.ChangeStatus("F",ex);
-                //throw; Removed By Rabaia and Mohammad because it causes the WR to crash.
-                    
+                try
+                {
+                    this.ChangeStatus("F", ex);
+                }
+                catch (Exception otherEx)
+                {
+                    string errorMessage = $"Tenant {BatchTaskExecution.Tenant} - Failed to change status to FAILED in BatchTaskExecutionsService: {otherEx.Message}";
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(errorMessage);
+                    this.ChangeStatus("F", null, errorMessage);
+                }
             }
         }
 

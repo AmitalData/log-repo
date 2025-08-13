@@ -23,9 +23,7 @@ namespace Logitude.Server.Tools.ExternalServices
 		const int cloudBasicTenant = 10000;
 		public UnifreightFillingService()
         {
-            //ONPREMISEFILLINGSERVICE
-            //CustomsSettingQueryService.GetSettingByTenant(tenant)
-            //DMStroe
+           
             if (!LogitudeSettings.IsCostomsDeploy)
             {
                 throw new Exception("!LogitudeSettings.IsCostomsDeploy()");

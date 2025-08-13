@@ -238,7 +238,8 @@ namespace Logitude.Customs.BL.Messaging.ILSWS
 
 
             };
-
+            if (courierHawbMamanModel?.BoxBarcode?.Length > 20)
+                courierHawbMamanModel.BoxBarcode = courierHawbMamanModel.BoxBarcode.Substring(courierHawbMamanModel.BoxBarcode.Length - 20);
 
             if (!string.IsNullOrWhiteSpace(declarationCourierStatusPM.TruckerId))
             {

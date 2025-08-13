@@ -202,9 +202,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if ((!FromService || _OnCreateUnifreightFillingMode) && documentId == null)
             {
                 if (
-                    (entityPM.DirectionCode == "I")
-                    //|| 
-                    //(entityPM.DirectionCode == "E")
+                    (entityPM.DirectionCode == "I")               
                     )
                     
                 {
@@ -1424,6 +1422,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     FileSize = fileData.Length,
 
                 };
+                
                 if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode(isnew) || (entityPM.IsFromCloud && LogitudeSettings.StorageServiceMode != "db"))
                 {
                     var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
@@ -1457,12 +1456,40 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         }
                     }
 
+
+
                     fileInfo.UDocumentsFilingId = DocumentsFilingId;
                     fileInfo.UCreateDate = document.CreateDate;
-                }//if (document.Folder == "docsin" && fileInfo.IsUnifreightFillingMode())
+                }
+                else
+                {
+                    bool? isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant)?.IsConnectedToUniFreight;
+                    
+                    if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null)
+                    {
+                        if (isnew)
+                        {
+                            entityPM.LastVersion = 1;
+                        }
+                        else
+                        {
+                            var fileDataMD5Hash = MD5HashUtil.GetMD5Hash(fileData);
+                            DocumentsFilingRepository rep = new DocumentsFilingRepository(entityPM.Tenant);
+                            string lastMd5 = entityPM?.FileDataMD5Hash ?? rep.GetFileDataMD5HashByDocumentIdAndTenant(document.Id, entityPM.Tenant);
+
+                            if (!string.Equals(fileDataMD5Hash, lastMd5, StringComparison.OrdinalIgnoreCase))
+                            {
+                                this.entityPM.LastVersion = this.entityPM.LastVersion + 1;
+                            }
+
+                        }
+                    }
+                }
                 storageservice.Write(fileData, fileInfo);
+                
 
             }
+            
 
      
             return document != null ? document.Id : null;
@@ -1622,6 +1649,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 //INSERT INTO "TOGGLES" (CODE, NAME, SEARCHFIELDS) VALUES ('HCD', 'Hybrid Courier document-Prevent feedback', 'Hybrid document-Prevent feedback')
                                 //INSERT INTO "FEATURETOGGLES"(ID, TENANT, CREATEDATE, CREATEDBYUSERID, UPDATEDATE, UPDATEDBYUSERID, SEARCHFIELDS, TENANTNUMBER, INACTIVE, TOGGLECODE) VALUES('HCD', '1', TO_TIMESTAMP('2022-03-06 14:19:28.729000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', TO_TIMESTAMP('2022-03-06 14:19:46.456000000', 'YYYY-MM-DD HH24:MI:SS.FF'), '1-9', 'HCD', '1', '0', 'HCD')
                                 var IsCourierTenant = false;
+                                var isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant).IsConnectedToUniFreight;
                                 try
                                 {
                                     IDICustomsSettingQueryService customsSettingQueryService = ContainerAccessor.Container.Resolve(typeof(IDICustomsSettingQueryService), "DICustomsSettingQueryService", new ParameterOverride("", tenant)) as IDICustomsSettingQueryService;
@@ -1633,7 +1661,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                                 }
                                 bool sendHybridM = true;
 
-                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud)
+                                 if (extDocPM.ExternalEntityName == "CFIFILEM" && !extDocPM.IsFromCloud && isConnectedToUniFreight)
                                 {
                                     sendHybridM = false;
                                     SendCustomsReferenceByTask(tenant, extDocPM.ExternalEntityReference, extDocPM.CustomReference, xmlstring, loggedUserId);

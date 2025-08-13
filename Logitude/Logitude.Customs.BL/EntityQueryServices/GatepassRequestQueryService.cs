@@ -25,5 +25,18 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return gatepassRequestPM;
         }
+        
+        public GatepassRequestPM GetGatepassRequestByMasterCourierId(string masterCourierId, int tenant)
+        {
+            GatepassRequestRepository gatepassRequestRepository = new GatepassRequestRepository(context);
+            GatepassRequestPM gatepassRequestPM = null;
+
+            var poco = gatepassRequestRepository.GetGatepassRequestByMasterCourierId(masterCourierId, tenant);
+            if (poco != null)
+            {
+                gatepassRequestPM = this.GetEntityPM(poco, false, null);
+            }
+            return gatepassRequestPM;
+        }
     }
 }

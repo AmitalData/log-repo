@@ -9286,6 +9286,7 @@
     <TypeScriptCompile Include="Invoice\Services\StandardLists\APPaymentStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceStatusListService.ts" />
+    <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoicesSignedStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceTransferStatusListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARInvoiceTypeListService.ts" />
     <TypeScriptCompile Include="Invoice\Services\StandardLists\ARPaymentListService.ts" />

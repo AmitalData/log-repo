@@ -105,22 +105,23 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
 			}
 			catch (Exception ex)
 			{
-				//Logger.LogMe($"Failed --> UpdateParcelStatus: {ex.Message}{Environment.NewLine}{ex.ToString()}", true);
 			}
 
 		}
 
 		static object obj = new object();
 		static string ProjectPrefix = "API";
+		const string projectName = "SharOlami";
+
 		internal static string GetTempDirectory()
 		{
-			string threadtempfolder = Path.Combine(Path.GetTempPath(), "SharOlami", ProjectPrefix,
+			string threadtempfolder = Path.Combine(Path.GetTempPath(), projectName, ProjectPrefix,
 				String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + Thread.CurrentThread.ManagedThreadId);
 			if (Directory.Exists(threadtempfolder))
 				return threadtempfolder;
 			lock (obj)
 			{
-				string baseDir = Path.Combine(Path.GetTempPath(), "SharOlami");
+				string baseDir = Path.Combine(Path.GetTempPath(), projectName);
 				if (!Directory.Exists(baseDir))
 					Directory.CreateDirectory(baseDir);
 				string baseDir2 = Path.Combine(baseDir, ProjectPrefix);

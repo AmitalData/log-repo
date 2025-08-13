@@ -31,11 +31,12 @@ using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Logitude.BL.CommonDataModel.EntityPMs;
+  using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+  using Logitude.BL.CommonDataModel.EntityPMs;
 ///using Logitude.Customs.BL.Messaging.U2L.CommDec;
 using Logitude.Server.Tools.Contracts;
 using System.Diagnostics;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -104,6 +105,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 this.MyRequestSheetParam.EntityId1 = decId;
                 this.MyRequestSheetParam.RequestDescription = CommDecService.MyGenericResponseObj.EnglishDescription;
+
+                var svc = new AutomatedCustomsMessagingService(requestParams.Tenant);
+                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(context);
+                DeclarationCourierStatusPM currentDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(decId, true, false);
+                if(currentDeclarationCourierStatusPM != null)
+                {
+                    var sent=svc.CheckAndSendMessageis(currentDeclarationCourierStatusPM);
+                }
 
                 //   this.MyRequestSheetParam.RequestDescription = "הצהרה נפתחה בהצלחה :" + customFileNo + "_" + decId;
 
@@ -204,19 +213,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             
                var documentsFilingService = new UnifreightDocumentsFilingService(_DataContext, Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "" });
-               //var documentTypeQuery = new DocumentTypeQuery(Tenant);
-               
-               
-               //var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
+              
                DocumentsFilingPM documentsFilingPM = _documentsFilingQuery.GetSinglePM(documentsFilingId, Tenant);
                if (documentsFilingPM != null && documentsFilingPM.EntityId != DeclarationId)
                {
                    documentsFilingPM.EntityId = DeclarationId;
-                   documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                   //documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
-                   //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-                   //documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
-                   documentsFilingPM.IsHybrid = true;//this is as substituteto hybrid !!!!
+                   documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");                
+                   documentsFilingPM.IsHybrid = true;
                     if (!string.IsNullOrEmpty(CustomFileNo)) 
                     {
                         documentsFilingPM.EntityId = DeclarationId;

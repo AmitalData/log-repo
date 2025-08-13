@@ -175,15 +175,14 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
-                        this.CurrentSession.CurrentEditComponent.EntityPM = res.Result;
-                        this.EntityPM = res.Result;
+                        Object.assign(this.EntityPM, res.Result);
                         this.SetUIProperties();
                         this.BuildScreenData();
                     })
 
 
                 }
-            });
+            });           
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
@@ -474,7 +473,6 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     get BillToId() { return this.EntityPM.BillToId; }
     set BillToId(newValue: string) {
         if (this.EntityPM.BillToId != newValue) {
-            debugger;
             this.EntityPM.BillToId = newValue;
             this.EntityPM.CustomerRef = null;
             this.SetUIProperties_BillToAddress();

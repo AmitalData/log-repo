@@ -494,7 +494,7 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     logWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate");
     var myPath = "./Accounting/Components/Packages/Others/InvoiceDateForBatchInvoicesComponent";
     logWindow.Width = 360;
-    logWindow.Height = 160;
+    logWindow.Height = 180;
     //logWindow.DataContext = "" ;
     logWindow.Show(myPath);
     //logWindow.IsShowCloseButton=true;

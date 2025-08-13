@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Output, EventEmitter, ContentChild, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, Output, EventEmitter, ContentChild, Input, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { MultiSelectLOVComponent } from '../../../../Infrastructure/Components/LogitudeComponents/MultiSelectLOVComponent';
@@ -36,6 +36,7 @@ export class DeclarationReferantDataFiltersMenuComponent
     public UserFilers: ApiQueryFilters;
     public apiQueryFiltersChanged: boolean = false;
     public StatusesFeature:boolean=false;
+    @Input() public isPreDefindReferrantDataFilters: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: DeclarationReferantDataFiltersMenuComponent = this;
     public ObjectTableName: string = "Customs.DeclarationReferantData";
@@ -131,7 +132,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         var DepartmentFromFilters = this.DepartmentFilters.AdditionalFilters.map(({ FieldValue }) => FieldValue);
 
         var myService: UserListService = new UserListService();
-        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0])) {
+        if (UserListFromFilters[0] != "HowCare" && UserListFromFilters.length != 0 && !AppTool.IsNullOrEmpty(UserListFromFilters[0]) && this.isPreDefindReferrantDataFilters) {
             UserListFromFilters[0].split("%2C").forEach(function (value) {
                 let ul = new UserList();
                 ul.Id = value;

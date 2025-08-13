@@ -1661,11 +1661,12 @@ namespace Logitude.Customs.Data.Repsitories
 
             Declaration declaration = (from a in context.Declarations
                                               where a.Tenant == tenant && a.ExportFile == exportFile
-                                              select a).FirstOrDefault();
+                                               select a).FirstOrDefault();
 
             return declaration;
         }
-
+       
+ 
 		public Declaration GetDeclarationsByHawbAndIntegratore(int tenant, string hawb, string IntegratorCode)
 		{
 			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;

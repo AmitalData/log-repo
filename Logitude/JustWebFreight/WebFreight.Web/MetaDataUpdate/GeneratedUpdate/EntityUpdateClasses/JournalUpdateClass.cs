@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalUpdateClass
    {  		
-		public const string HashString = "73c719486307ed7494138e10ad7287ec";
+		public const string HashString = "519537e92b223767576e7d85ab56a586";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,6 +44,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -72,7 +73,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "",
-			      				    LocalDefaultText =  "פקודת יומן",
+			      				    LocalDefaultTextBack_up =  "פקודת יומן",
+			      				    LocalDefaultText =  "BS64:Itek16fXldeT16og15nXldee158i",
 			      				    DefaultText =  "Journal",
 			      				    Code =  "JNAC",
 			      				    Name =  "Journal Query Group",
@@ -137,10 +139,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Id",
 					  						DefaultText =  "Id",
-					  						FullLocalDefaultText =  "קוד",
+					  						FullLocalDefaultTextBack_up =  "קוד",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyI=",
 					  						ListFieldLable =  "IdListLable",
 					  						ListLableDefaultText =  "Id",
-					  						ListLocalDefaultText =  "קוד",
+					  						ListLocalDefaultTextBack_up =  "קוד",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,
@@ -202,10 +206,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Tenant",
 					  						DefaultText =  "Tenant",
-					  						FullLocalDefaultText =  "חברה",
+					  						FullLocalDefaultTextBack_up =  "חברה",
+					  						FullLocalDefaultText =  "BS64:IteX15HXqNeUIg==",
 					  						ListFieldLable =  "TenantListLable",
 					  						ListLableDefaultText =  "Tenant",
-					  						ListLocalDefaultText =  "חברה",
+					  						ListLocalDefaultTextBack_up =  "חברה",
+					  						ListLocalDefaultText =  "BS64:IteX15HXqNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,
@@ -268,10 +274,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "JournalNumber",
 					  						DefaultText =  "Journal Number",
-					  						FullLocalDefaultText =  "מספר פקודה",
+					  						FullLocalDefaultTextBack_up =  "מספר פקודה",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINek16fXldeT15Qi",
 					  						ListFieldLable =  "JournalNumberListLable",
 					  						ListLableDefaultText =  "Journal Number",
-					  						ListLocalDefaultText =  "מספר פקודה",
+					  						ListLocalDefaultTextBack_up =  "מספר פקודה",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINek16fXldeT15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -335,10 +343,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						FullLocalDefaultTextBack_up =  "תםריך יצירה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLocalDefaultTextBack_up =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -402,10 +412,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultText =  "תאריך חשבונאי",
+					  						FullLocalDefaultTextBack_up =  "תםריך חשבונםי",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultText =  "תאריך חשבונאי",
+					  						ListLocalDefaultTextBack_up =  "תםריך חשבונםי",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -468,10 +480,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TypeCode",
 					  						DefaultText =  "Type Code",
-					  						FullLocalDefaultText =  "סוג פקודה",
+					  						FullLocalDefaultTextBack_up =  "סוג פקודה",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXpNen15XXk9eUIg==",
 					  						ListFieldLable =  "TypeCodeListLable",
 					  						ListLableDefaultText =  "Type Code",
-					  						ListLocalDefaultText =  "סוג פקודה",
+					  						ListLocalDefaultTextBack_up =  "סוג פקודה",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXpNen15XXk9eUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "JournalType",
 					  						NavigationPropertyName =  "JournalType",
@@ -537,10 +551,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusCode",
 					  						DefaultText =  "Status Code",
-					  						FullLocalDefaultText =  "סטטוס פקודה",
+					  						FullLocalDefaultTextBack_up =  "סטטוס פקודה",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16TXp9eV15PXlCI=",
 					  						ListFieldLable =  "StatusCodeListLable",
 					  						ListLableDefaultText =  "Status Code",
-					  						ListLocalDefaultText =  "סטטוס פקודה",
+					  						ListLocalDefaultTextBack_up =  "סטטוס פקודה",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Eg16TXp9eV15PXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "JournalStatusType",
 					  						NavigationPropertyName =  "JournalStatusType",
@@ -606,10 +622,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "יוצר הפקודה",
+					  						FullLocalDefaultTextBack_up =  "יוצר הפקודה",
+					  						FullLocalDefaultText =  "BS64:IteZ15XXpteoINeU16TXp9eV15PXlCI=",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "יוצר הפקודה",
+					  						ListLocalDefaultTextBack_up =  "יוצר הפקודה",
+					  						ListLocalDefaultText =  "BS64:IteZ15XXpteoINeU16TXp9eV15PXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -674,10 +692,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingEntityCode",
 					  						DefaultText =  "Accounting Entity Code",
-					  						FullLocalDefaultText =  "סוג מסמך",
+					  						FullLocalDefaultTextBack_up =  "סוג מסמך",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXnteh157XmiI=",
 					  						ListFieldLable =  "AccountingEntityCodeListLable",
 					  						ListLableDefaultText =  "Accounting Entity Code",
-					  						ListLocalDefaultText =  "סוג מסמך",
+					  						ListLocalDefaultTextBack_up =  "סוג מסמך",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXnteh157XmiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AccountingEntity",
 					  						NavigationPropertyName =  "AccountingEntity",
@@ -742,10 +762,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingEntityId",
 					  						DefaultText =  "Accounting EntityId",
-					  						FullLocalDefaultText =  "מספר מסמך מקור",
+					  						FullLocalDefaultTextBack_up =  "מספר מסמך מקור",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINee16HXnteaINee16fXldeoIg==",
 					  						ListFieldLable =  "AccountingEntityIdListLable",
 					  						ListLableDefaultText =  "Accounting EntityId",
-					  						ListLocalDefaultText =  "מספר מסמך מקור",
+					  						ListLocalDefaultTextBack_up =  "מספר מסמך מקור",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINee16HXnteaINee16fXldeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -808,10 +830,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalNo",
 					  						DefaultText =  "External No",
-					  						FullLocalDefaultText =  "מספר חיצוני",
+					  						FullLocalDefaultTextBack_up =  "מספר חיצוני",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX15nXpteV16DXmSI=",
 					  						ListFieldLable =  "ExternalNoListLable",
 					  						ListLableDefaultText =  "External No",
-					  						ListLocalDefaultText =  "מספר חיצוני",
+					  						ListLocalDefaultTextBack_up =  "מספר חיצוני",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX15nXpteV16DXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -874,10 +898,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TypeName",
 					  						DefaultText =  "Type",
-					  						FullLocalDefaultText =  "סוג",
+					  						FullLocalDefaultTextBack_up =  "סוג",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiI=",
 					  						ListFieldLable =  "TypeNameListLable",
 					  						ListLableDefaultText =  "Type",
-					  						ListLocalDefaultText =  "סוג",
+					  						ListLocalDefaultTextBack_up =  "סוג",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -940,10 +966,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
 					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס ",
+					  						FullLocalDefaultTextBack_up =  "סטטוס ",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16EgIg==",
 					  						ListFieldLable =  "StatusNameListLable",
 					  						ListLableDefaultText =  "Status ",
-					  						ListLocalDefaultText =  "סטטוס ",
+					  						ListLocalDefaultTextBack_up =  "סטטוס ",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16EgIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1006,10 +1034,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserName",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "יוצר הפקודה",
+					  						FullLocalDefaultTextBack_up =  "יוצר הפקודה",
+					  						FullLocalDefaultText =  "BS64:IteZ15XXpteoINeU16TXp9eV15PXlCI=",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "יוצר הפקודה",
+					  						ListLocalDefaultTextBack_up =  "יוצר הפקודה",
+					  						ListLocalDefaultText =  "BS64:IteZ15XXpteoINeU16TXp9eV15PXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1072,10 +1102,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingEntityName",
 					  						DefaultText =  "Refernce",
-					  						FullLocalDefaultText =  "סוג ישות",
+					  						FullLocalDefaultTextBack_up =  "סוג ישות",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmdep15XXqiI=",
 					  						ListFieldLable =  "AccountingEntityNameListLable",
 					  						ListLableDefaultText =  "Refernce",
-					  						ListLocalDefaultText =  "סוג ישות",
+					  						ListLocalDefaultTextBack_up =  "סוג ישות",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmdep15XXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1201,10 +1233,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון אחרון",
+					  						FullLocalDefaultTextBack_up =  "תםריך עדכון םחרון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyDXkNeX16jXldefIg==",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון אחרון",
+					  						ListLocalDefaultTextBack_up =  "תםריך עדכון םחרון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyDXkNeX16jXldefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1268,10 +1302,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "מעדכן אחרון לפקודה",
+					  						FullLocalDefaultTextBack_up =  "מעדכן םחרון לפקודה",
+					  						FullLocalDefaultText =  "BS64:Itee16LXk9eb158g15DXl9eo15XXnyDXnNek16fXldeT15Qi",
 					  						ListFieldLable =  "UpdatedByUserIdListLable",
 					  						ListLableDefaultText =  "Updated By",
-					  						ListLocalDefaultText =  "מעדכן אחרון לפקודה",
+					  						ListLocalDefaultTextBack_up =  "מעדכן םחרון לפקודה",
+					  						ListLocalDefaultText =  "BS64:Itee16LXk9eb158g15DXl9eo15XXnyDXnNek16fXldeT15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "UpdatedByUser",
@@ -1336,10 +1372,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApproveDate",
 					  						DefaultText =  "Approve Date",
-					  						FullLocalDefaultText =  "תאריך אישור",
+					  						FullLocalDefaultTextBack_up =  "תםריך םישור",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXmdep15XXqCI=",
 					  						ListFieldLable =  "ApproveDateListLable",
 					  						ListLableDefaultText =  "Approve Date",
-					  						ListLocalDefaultText =  "תאריך אישור",
+					  						ListLocalDefaultTextBack_up =  "תםריך םישור",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXmdep15XXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1403,10 +1441,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApprovedByUserId",
 					  						DefaultText =  "Approved By",
-					  						FullLocalDefaultText =  "מאשר הפקודה",
+					  						FullLocalDefaultTextBack_up =  "מםשר הפקודה",
+					  						FullLocalDefaultText =  "BS64:Itee15DXqdeoINeU16TXp9eV15PXlCI=",
 					  						ListFieldLable =  "ApprovedByUserIdListLable",
 					  						ListLableDefaultText =  "Approved By",
-					  						ListLocalDefaultText =  "מאשר הפקודה",
+					  						ListLocalDefaultTextBack_up =  "מםשר הפקודה",
+					  						ListLocalDefaultText =  "BS64:Itee15DXqdeoINeU16TXp9eV15PXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "ApprovedByUser",
@@ -1471,10 +1511,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserName",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "מעדכן הפקודה",
+					  						FullLocalDefaultTextBack_up =  "מעדכן הפקודה",
+					  						FullLocalDefaultText =  "BS64:Itee16LXk9eb158g15TXpNen15XXk9eUIg==",
 					  						ListFieldLable =  "UpdatedByUserNameListLable",
 					  						ListLableDefaultText =  "Updated By",
-					  						ListLocalDefaultText =  "מעדכן הפקודה",
+					  						ListLocalDefaultTextBack_up =  "מעדכן הפקודה",
+					  						ListLocalDefaultText =  "BS64:Itee16LXk9eb158g15TXpNen15XXk9eUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1537,10 +1579,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ApprovedByUserName",
 					  						DefaultText =  "Approved By",
-					  						FullLocalDefaultText =  "מאשר הפקודה",
+					  						FullLocalDefaultTextBack_up =  "מםשר הפקודה",
+					  						FullLocalDefaultText =  "BS64:Itee15DXqdeoINeU16TXp9eV15PXlCI=",
 					  						ListFieldLable =  "ApprovedByUserNameListLable",
 					  						ListLableDefaultText =  "Approved By",
-					  						ListLocalDefaultText =  "מאשר הפקודה",
+					  						ListLocalDefaultTextBack_up =  "מםשר הפקודה",
+					  						ListLocalDefaultText =  "BS64:Itee15DXqdeoINeU16TXp9eV15PXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1602,11 +1646,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Journal No.",
-					  						FullLocalDefaultText =  "מספר פקודת יומן/רפרנסים",
+					  						FullLocalDefaultTextBack_up =  "מספר פקודת יומן/רפרנסים",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINek16fXldeT16og15nXldee158v16jXpNeo16DXodeZ150i",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Journal No.",
 					  						HelpTextCode =  "SearchFields",
-					  						HelpTextDefaultText =  "חיפוש",
+					  						HelpTextDefaultText =  "Search",
+					  						HelpLocalDefaultTextBack_up =  "חיפוש",
+					  						HelpLocalDefaultText =  "BS64:IteX15nXpNeV16ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -1669,10 +1716,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingEntityReference",
 					  						DefaultText =  "Source Reference",
-					  						FullLocalDefaultText =  "מספר ישות",
+					  						FullLocalDefaultTextBack_up =  "מספר ישות",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeZ16nXldeqIg==",
 					  						ListFieldLable =  "AccountingEntityReferenceListLable",
 					  						ListLableDefaultText =  "Source Reference",
-					  						ListLocalDefaultText =  "מספר ישות",
+					  						ListLocalDefaultTextBack_up =  "מספר ישות",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeZ16nXldeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1736,10 +1785,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OriginalJournalId",
 					  						DefaultText =  "Original Journal",
-					  						FullLocalDefaultText =  "פקודת מקור",
+					  						FullLocalDefaultTextBack_up =  "פקודת מקור",
+					  						FullLocalDefaultText =  "BS64:Itek16fXldeT16og157Xp9eV16gi",
 					  						ListFieldLable =  "OriginalJournalIdListLable",
 					  						ListLableDefaultText =  "Original Journal",
-					  						ListLocalDefaultText =  "פקודת מקור",
+					  						ListLocalDefaultTextBack_up =  "פקודת מקור",
+					  						ListLocalDefaultText =  "BS64:Itek16fXldeT16og157Xp9eV16gi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Journal",
 					  						NavigationPropertyName =  "OriginalJournal",
@@ -1805,10 +1856,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VoidedByUserId",
 					  						DefaultText =  "Voided By",
-					  						FullLocalDefaultText =  "מבטל הפקודה",
+					  						FullLocalDefaultTextBack_up =  "מבטל הפקודה",
+					  						FullLocalDefaultText =  "BS64:Itee15HXmNecINeU16TXp9eV15PXlCI=",
 					  						ListFieldLable =  "VoidedByUserIdListLable",
 					  						ListLableDefaultText =  "Voided By",
-					  						ListLocalDefaultText =  "מבטל הפקודה",
+					  						ListLocalDefaultTextBack_up =  "מבטל הפקודה",
+					  						ListLocalDefaultText =  "BS64:Itee15HXmNecINeU16TXp9eV15PXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "VoidedByUser",
@@ -1873,10 +1926,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VoidDate",
 					  						DefaultText =  "Void Date",
-					  						FullLocalDefaultText =  "תאריך ביטול",
+					  						FullLocalDefaultTextBack_up =  "תםריך ביטול",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15HXmdeY15XXnCI=",
 					  						ListFieldLable =  "VoidDateListLable",
 					  						ListLableDefaultText =  "Void Date",
-					  						ListLocalDefaultText =  "תאריך ביטול",
+					  						ListLocalDefaultTextBack_up =  "תםריך ביטול",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15HXmdeY15XXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1939,10 +1994,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OriginalJournalName",
 					  						DefaultText =  "Original Journal",
-					  						FullLocalDefaultText =  "מספר פקודת מקור",
+					  						FullLocalDefaultTextBack_up =  "מספר פקודת מקור",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINek16fXldeT16og157Xp9eV16gi",
 					  						ListFieldLable =  "OriginalJournalNameListLable",
 					  						ListLableDefaultText =  "Original Journal",
-					  						ListLocalDefaultText =  "מספר פקודת מקור",
+					  						ListLocalDefaultTextBack_up =  "מספר פקודת מקור",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINek16fXldeT16og157Xp9eV16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2005,10 +2062,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VoidedByUserName",
 					  						DefaultText =  "Voided By",
-					  						FullLocalDefaultText =  "מבטל הפקודה",
+					  						FullLocalDefaultTextBack_up =  "מבטל הפקודה",
+					  						FullLocalDefaultText =  "BS64:Itee15HXmNecINeU16TXp9eV15PXlCI=",
 					  						ListFieldLable =  "VoidedByUserNameListLable",
 					  						ListLableDefaultText =  "Voided By",
-					  						ListLocalDefaultText =  "מבטל הפקודה",
+					  						ListLocalDefaultTextBack_up =  "מבטל הפקודה",
+					  						ListLocalDefaultText =  "BS64:Itee15HXmNecINeU16TXp9eV15PXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2070,10 +2129,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsVoided",
 					  						DefaultText =  "Is Voided",
-					  						FullLocalDefaultText =  "האם מבוטל",
+					  						FullLocalDefaultTextBack_up =  "הםם מבוטל",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXnteR15XXmNecIg==",
 					  						ListFieldLable =  "IsVoidedListLable",
 					  						ListLableDefaultText =  "Is Voided",
-					  						ListLocalDefaultText =  "האם מבוטל",
+					  						ListLocalDefaultTextBack_up =  "הםם מבוטל",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXnteR15XXmNecIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2136,10 +2197,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VoidedByJournalId",
 					  						DefaultText =  "Voided By Journal",
-					  						FullLocalDefaultText =  "פקודת יומן מבטלת",
+					  						FullLocalDefaultTextBack_up =  "פקודת יומן מבטלת",
+					  						FullLocalDefaultText =  "BS64:Itek16fXldeT16og15nXldee158g157XkdeY15zXqiI=",
 					  						ListFieldLable =  "VoidedByJournalIdListLable",
 					  						ListLableDefaultText =  "Voided By Journal",
-					  						ListLocalDefaultText =  "פקודת יומן מבטלת",
+					  						ListLocalDefaultTextBack_up =  "פקודת יומן מבטלת",
+					  						ListLocalDefaultText =  "BS64:Itek16fXldeT16og15nXldee158g157XkdeY15zXqiI=",
 					  						IsForeignKey =  false,
 					  						ForeignEntity =  "Journal",
 					  						NavigationPropertyName =  "VoidedByJournal",
@@ -2204,10 +2267,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalSystem",
 					  						DefaultText =  "External System",
-					  						FullLocalDefaultText =  "מערכת חיצונית",
+					  						FullLocalDefaultTextBack_up =  "מערכת חיצונית",
+					  						FullLocalDefaultText =  "BS64:Itee16LXqNeb16og15fXmdem15XXoNeZ16oi",
 					  						ListFieldLable =  "ExternalSystemListLable",
 					  						ListLableDefaultText =  "External System",
-					  						ListLocalDefaultText =  "מערכת חיצונית",
+					  						ListLocalDefaultTextBack_up =  "מערכת חיצונית",
+					  						ListLocalDefaultText =  "BS64:Itee16LXqNeb16og15fXmdem15XXoNeZ16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2268,10 +2333,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "QueueId",
 					  						DefaultText =  "Queue Id",
-					  						FullLocalDefaultText =  "מונה תור",
+					  						FullLocalDefaultTextBack_up =  "מונה תור",
+					  						FullLocalDefaultText =  "BS64:Itee15XXoNeUINeq15XXqCI=",
 					  						ListFieldLable =  "QueueIdListLable",
 					  						ListLableDefaultText =  "Queue Id",
-					  						ListLocalDefaultText =  "מונה תור",
+					  						ListLocalDefaultTextBack_up =  "מונה תור",
+					  						ListLocalDefaultText =  "BS64:Itee15XXoNeUINeq15XXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2332,10 +2399,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityTypeName",
 					  						DefaultText =  "LastActivityTypeName",
-					  						FullLocalDefaultText =  "שם סוג הפעילות האחרונה",
+					  						FullLocalDefaultTextBack_up =  "שם סוג הפעילות הםחרונה",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXldeSINeU16TXoteZ15zXldeqINeU15DXl9eo15XXoNeUIg==",
 					  						ListFieldLable =  "LastActivityTypeNameListLable",
 					  						ListLableDefaultText =  "LastActivityTypeName",
-					  						ListLocalDefaultText =  "שם סוג הפעילות האחרונה",
+					  						ListLocalDefaultTextBack_up =  "שם סוג הפעילות הםחרונה",
+					  						ListLocalDefaultText =  "BS64:Itep150g16HXldeSINeU16TXoteZ15zXldeqINeU15DXl9eo15XXoNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2396,10 +2465,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityByUserName",
 					  						DefaultText =  "LastActivityByUserName",
-					  						FullLocalDefaultText =  "פעילות אחרונה לפי שם משתמש",
+					  						FullLocalDefaultTextBack_up =  "פעילות םחרונה לפי שם משתמש",
+					  						FullLocalDefaultText =  "BS64:Itek16LXmdec15XXqiDXkNeX16jXldeg15Qg15zXpNeZINep150g157Xqdeq157XqSI=",
 					  						ListFieldLable =  "LastActivityByUserNameListLable",
 					  						ListLableDefaultText =  "LastActivityByUserName",
-					  						ListLocalDefaultText =  "פעילות אחרונה לפי שם משתמש",
+					  						ListLocalDefaultTextBack_up =  "פעילות םחרונה לפי שם משתמש",
+					  						ListLocalDefaultText =  "BS64:Itek16LXmdec15XXqiDXkNeX16jXldeg15Qg15zXpNeZINep150g157Xqdeq157XqSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2460,10 +2531,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityDate",
 					  						DefaultText =  "Last Activity Date",
-					  						FullLocalDefaultText =  "תאריך פעילות אחרון",
+					  						FullLocalDefaultTextBack_up =  "תםריך פעילות םחרון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXoteZ15zXldeqINeQ15fXqNeV158i",
 					  						ListFieldLable =  "LastActivityDateListLable",
 					  						ListLableDefaultText =  "Last Activity Date",
-					  						ListLocalDefaultText =  "תאריך פעילות אחרון",
+					  						ListLocalDefaultTextBack_up =  "תםריך פעילות םחרון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXoteZ15zXldeqINeQ15fXqNeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2525,7 +2598,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusLocalName",
 					  						DefaultText =  "Status ",
-					  						FullLocalDefaultText =  "סטטוס ",
+					  						FullLocalDefaultTextBack_up =  "סטטוס ",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16EgIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2649,10 +2723,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TypeLocalName",
 					  						DefaultText =  "Type",
-					  						FullLocalDefaultText =  "סוג שם מקומי",
+					  						FullLocalDefaultTextBack_up =  "סוג שם מקומי",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXqdedINee16fXldee15ki",
 					  						ListFieldLable =  "TypeLocalNameListLable",
 					  						ListLableDefaultText =  "Type Local Name",
-					  						ListLocalDefaultText =  "סוג שם מקומי",
+					  						ListLocalDefaultTextBack_up =  "סוג שם מקומי",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXqdedINee16fXldee15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2713,10 +2789,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsLedgerCreated",
 					  						DefaultText =  "Is Ledger Created",
-					  						FullLocalDefaultText =  "האם נוצר",
+					  						FullLocalDefaultTextBack_up =  "הםם נוצר",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXoNeV16bXqCI=",
 					  						ListFieldLable =  "IsLedgerCreatedListLable",
 					  						ListLableDefaultText =  "Is Ledger Created",
-					  						ListLocalDefaultText =  "האם נוצר",
+					  						ListLocalDefaultTextBack_up =  "הםם נוצר",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXoNeV16bXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2962,10 +3040,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentDate",
 					  						DefaultText =  "Ref. Date",
-					  						FullLocalDefaultText =  "תאריך אסמכתא",
+					  						FullLocalDefaultTextBack_up =  "תםריך םסמכתם",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXodee15vXqteQIg==",
 					  						ListFieldLable =  "DocumentDateListLable",
-					  						ListLableDefaultText =  "תאריך אסמכתא",
-					  						ListLocalDefaultText =  "Ref. Date",
+					  						ListLableDefaultText =  "Ref. Date",
+					  						ListLocalDefaultTextBack_up =  "תםריך םסמכתם",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15DXodee15vXqteQIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3028,10 +3108,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
 					  						DefaultText =  "Due Date",
-					  						FullLocalDefaultText =  "תאריך פרעון",
+					  						FullLocalDefaultTextBack_up =  "תםריך פרעון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqNei15XXnyI=",
 					  						ListFieldLable =  "DueDateListLable",
 					  						ListLableDefaultText =  "Due Date",
-					  						ListLocalDefaultText =  "תאריך פרעון",
+					  						ListLocalDefaultTextBack_up =  "תםריך פרעון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXqNei15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3152,10 +3234,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyId",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultText =  "קוד מטבע",
+					  						FullLocalDefaultTextBack_up =  "קוד מטבע",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXnteY15HXoiI=",
 					  						ListFieldLable =  "CurrencyIdListLable",
 					  						ListLableDefaultText =  "Currency Id",
-					  						ListLocalDefaultText =  "קוד מטבע",
+					  						ListLocalDefaultTextBack_up =  "קוד מטבע",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnteY15HXoiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3398,10 +3482,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecurityLevel",
 					  						DefaultText =  "Viewing Security Level",
-					  						FullLocalDefaultText =  "רמת הרשאה לצפייה",
+					  						FullLocalDefaultTextBack_up =  "רמת הרשםה לצפייה",
+					  						FullLocalDefaultText =  "BS64:Iteo157XqiDXlNeo16nXkNeUINec16bXpNeZ15nXlCI=",
 					  						ListFieldLable =  "SecurityLevelListLable",
 					  						ListLableDefaultText =  "Security Level",
-					  						ListLocalDefaultText =  "רמת הרשאה לצפייה",
+					  						ListLocalDefaultTextBack_up =  "רמת הרשםה לצפייה",
+					  						ListLocalDefaultText =  "BS64:Iteo157XqiDXlNeo16nXkNeUINec16bXpNeZ15nXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3524,10 +3610,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExternalEntity",
 					  						DefaultText =  "Is External Entity",
-					  						FullLocalDefaultText =  "ישות חיצונית",
+					  						FullLocalDefaultTextBack_up =  "ישות חיצונית",
+					  						FullLocalDefaultText =  "BS64:IteZ16nXldeqINeX15nXpteV16DXmdeqIg==",
 					  						ListFieldLable =  "IsExternalEntityListLable",
 					  						ListLableDefaultText =  "Is External Entity",
-					  						ListLocalDefaultText =  "ישות חיצונית",
+					  						ListLocalDefaultTextBack_up =  "ישות חיצונית",
+					  						ListLocalDefaultText =  "BS64:IteZ16nXldeqINeX15nXpteV16DXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3570,23 +3658,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode JournalTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.ExternalJournals", DefaultText = @"External Journals",LocalDefaultText = " פקודות יומן חיצוניות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode JournalTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.ExternalJournals", DefaultText = @"External Journals",LocalDefaultText = "BS64:IiDXpNen15XXk9eV16og15nXldee158g15fXmdem15XXoNeZ15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature JournalFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Q.ExternalJournals", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.ExternalJournals", NameTextCodeDefaultText = "External Journals", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,JournalObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode JournalTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.AllJournals", DefaultText = @"All Journal",LocalDefaultText = "כל פקודות היומן", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode JournalTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.AllJournals", DefaultText = @"All Journal",LocalDefaultText = "BS64:Iteb15wg16TXp9eV15PXldeqINeU15nXldee158i", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature JournalFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Q.AllJournals", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.AllJournals", NameTextCodeDefaultText = "All Journals", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,JournalObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode JournalTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.ApprovedJournals", DefaultText = @"Approved Journals",LocalDefaultText = "פקודות יומן מאושרות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode JournalTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.ApprovedJournals", DefaultText = @"Approved Journals",LocalDefaultText = "BS64:Itek16fXldeT15XXqiDXmdeV157XnyDXnteQ15XXqdeo15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature JournalFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Q.ApprovedJournals", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.ApprovedJournals", NameTextCodeDefaultText = "Approved Journals", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,JournalObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode JournalTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.DraftJournals", DefaultText = @"Draft Journals",LocalDefaultText = "פקודות יומן בסטטוס טיוטה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode JournalTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.DraftJournals", DefaultText = @"Draft Journals",LocalDefaultText = "BS64:Itek16fXldeT15XXqiDXmdeV157XnyDXkdeh15jXmNeV16Eg15jXmdeV15jXlCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature JournalFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Q.DraftJournals", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.DraftJournals", NameTextCodeDefaultText = "Draft Journals", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,JournalObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode JournalTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.SavedJournals", DefaultText = @"Waiting for Approval Journals",LocalDefaultText = "פקודות יומן שממתינות לאישור", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode JournalTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.SavedJournals", DefaultText = @"Waiting for Approval Journals",LocalDefaultText = "BS64:Itek16fXldeT15XXqiDXmdeV157XnyDXqdee157XqteZ16DXldeqINec15DXmdep15XXqCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature JournalFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Q.SavedJournals", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.SavedJournals", NameTextCodeDefaultText = "Saved Journals", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,JournalObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -3768,15 +3856,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable JournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Journal" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode JournalDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Details", DefaultText = "Details",LocalDefaultText = "פרטים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode JournalDetailsTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Details", DefaultText = "Details",LocalDefaultText = "BS64:Itek16jXmNeZ150i", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature JournalDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Details", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNDT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable,contextTenant);
  
                  
-			   TextCode JournalDebugTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Debug", DefaultText = "Debug",LocalDefaultText = "ניהול", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode JournalDebugTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Debug", DefaultText = "Debug",LocalDefaultText = "BS64:Iteg15nXlNeV15wi", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature JournalDebugFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Debug", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNDB", NameTextCodeDefaultText = "Debug", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable,contextTenant);
  
                  
-			   TextCode JournalEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode JournalEventsTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature JournalEventsFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Journal.Tab.Events", ObjectTableId = JournalObjectTable.Id, Tenant = 0, NameTextCodeCode = "JournalFeatures.JNEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,JournalObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
@@ -4039,7 +4127,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "JAI",
                 EnglishName =  "Jouranl In approval process",
-                LocalName =  "פקודה בתהליך אישור",
+                LocalNameBack_up =  "פקודה בתהליך םישור",
+                LocalName =  "BS64:Itek16fXldeT15Qg15HXqteU15zXmdeaINeQ15nXqdeV16gi",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = JournalObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "JFTE",
+                EnglishName =  "Journal Failed",
+                LocalName =  "Journal Failed",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -4100,7 +4207,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = JournalFeature_MB0.Id,
 						Style = null,
-						LocalDefaultText = "שמור כטיוטה",
+						LocalDefaultText = "BS64:Itep157XldeoINeb15jXmdeV15jXlCI=",
 						FeatureUniqeCode = JournalFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -4140,7 +4247,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = JournalFeature_MB2.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = "אישור",
+						LocalDefaultText = "BS64:IteQ15nXqdeV16gi",
 						FeatureUniqeCode = JournalFeature_MB2.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -4160,7 +4267,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = null,
 						Style = null,
-						LocalDefaultText = "נוספים",
+						LocalDefaultText = "BS64:Iteg15XXodek15nXnSI=",
 						FeatureUniqeCode = null,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -4180,7 +4287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  JournalFeature_MB30.Id,
 						Style = null,
-						LocalDefaultText = "ביטול",
+						LocalDefaultText = "BS64:IteR15nXmNeV15wi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  JournalFeature_MB30.FeatureUniqeCode,
@@ -4200,7 +4307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  JournalFeature_MB31.Id,
 						Style = null,
-						LocalDefaultText = "הדפסה",
+						LocalDefaultText = "BS64:IteU15PXpNeh15Qi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  JournalFeature_MB31.FeatureUniqeCode,
@@ -4220,7 +4327,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  JournalFeature_MB32.Id,
 						Style = null,
-						LocalDefaultText = " שכפול פקודת יומן",
+						LocalDefaultText = "BS64:IiDXqdeb16TXldecINek16fXldeT16og15nXldee158i",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  JournalFeature_MB32.FeatureUniqeCode,
@@ -4240,7 +4347,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  JournalFeature_MB33.Id,
 						Style = null,
-						LocalDefaultText = "תיקון",
+						LocalDefaultText = "BS64:Iteq15nXp9eV158i",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  JournalFeature_MB33.FeatureUniqeCode,
@@ -4255,29 +4362,29 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable JournalObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Journal" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode JournalTextCode_JournalOQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Queries", DefaultText = "Journal Queries",LocalDefaultText = @"שאילתות פקודות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Queries", DefaultText = "Journal Queries",LocalDefaultText = @"BS64:Itep15DXmdec16rXldeqINek16fXldeT15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalORevelations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Revelations", DefaultText = "Revelations",LocalDefaultText = @"שערוך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalORevelations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Revelations", DefaultText = "Revelations",LocalDefaultText = @"BS64:Itep16LXqNeV15oi", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"פקודות אחרונות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalORecent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Recent", DefaultText = "Recent Journals",LocalDefaultText = @"BS64:Itek16fXldeT15XXqiDXkNeX16jXldeg15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.General", DefaultText = "General",LocalDefaultText = @"כללי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalTHGeneral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.TH.General", DefaultText = "General",LocalDefaultText = @"BS64:Iteb15zXnNeZIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_GeneralMCACCJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Journal", DefaultText = "Journal",LocalDefaultText = @"פקודת יומן", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_GeneralMCACCJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Journal", DefaultText = "Journal",LocalDefaultText = @"BS64:Itek16fXldeT16og15nXldee158i", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalQJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.Journal", DefaultText = "All Journal",LocalDefaultText = @"כל פקודות היומן", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalQJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.Journal", DefaultText = "All Journal",LocalDefaultText = @"BS64:Iteb15wg16TXp9eV15PXldeqINeU15nXldee158i", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalQApprovedJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.ApprovedJournal", DefaultText = "Approved Journals",LocalDefaultText = @"פקודות יומן מאושרות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalQApprovedJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.ApprovedJournal", DefaultText = "Approved Journals",LocalDefaultText = @"BS64:Itek16fXldeT15XXqiDXmdeV157XnyDXnteQ15XXqdeo15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalQDraftJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.DraftJournal", DefaultText = "Draft Journals",LocalDefaultText = @"פקודות יומן בסטטוס טיוטה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalQDraftJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.DraftJournal", DefaultText = "Draft Journals",LocalDefaultText = @"BS64:Itek16fXldeT15XXqiDXmdeV157XnyDXkdeh15jXmNeV16Eg15jXmdeV15jXlCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalQSavedJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.SavedJournal", DefaultText = "Waiting for Approval Journals",LocalDefaultText = @"פקודות יומן מחכות לאישור", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalQSavedJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.SavedJournal", DefaultText = "Waiting for Approval Journals",LocalDefaultText = @"BS64:Itek16fXldeT15XXqiDXmdeV157XnyDXnteX15vXldeqINec15DXmdep15XXqCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalQAutoCreatedJournals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.AutoCreatedJournals", DefaultText = "Auto Created Journals",LocalDefaultText = @" פקודות יומן אוטומטיות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalQAutoCreatedJournals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.Q.AutoCreatedJournals", DefaultText = "Auto Created Journals",LocalDefaultText = @"BS64:IiDXpNen15XXk9eV16og15nXldee158g15DXldeY15XXnteY15nXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOTheAccountingDayMustBeInRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.TheAccountingDayMustBeInRange", DefaultText = "The accounting day must be in the range of the accounting month.",LocalDefaultText = @"היום החשבונאי שהוקלד אינו קיים בטווח ימי החודש החשבונאי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOTheAccountingDayMustBeInRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.TheAccountingDayMustBeInRange", DefaultText = "The accounting day must be in the range of the accounting month.",LocalDefaultText = @"BS64:IteU15nXldedINeU15fXqdeR15XXoNeQ15kg16nXlNeV16fXnNeTINeQ15nXoNeVINen15nXmdedINeR15jXldeV15cg15nXnteZINeU15fXldeT16kg15TXl9ep15HXldeg15DXmSI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOAccDay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccDay", DefaultText = "Acc. Day",LocalDefaultText = @"יום חשבונאי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOAccDay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccDay", DefaultText = "Acc. Day",LocalDefaultText = @"BS64:IteZ15XXnSDXl9ep15HXldeg15DXmSI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalSDetailsDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.S.Details.Details", DefaultText = "Details",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -4307,111 +4414,117 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalTextCode_JournalCHNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.CH.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "CH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMForeignAmountNotZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignAmountNotZero", DefaultText = "Foreign amount is empty",LocalDefaultText = @"סכום במטח הינו חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMForeignAmountNotZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignAmountNotZero", DefaultText = "Foreign amount is empty",LocalDefaultText = @"BS64:Iteh15vXldedINeR157XmNeXINeU15nXoNeVINeX15XXkdeUIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMLocalAmountNotZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.LocalAmountNotZero", DefaultText = "Local amount is empty",LocalDefaultText = @"סכום במטבע מקומי הינו חובה ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMLocalAmountNotZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.LocalAmountNotZero", DefaultText = "Local amount is empty",LocalDefaultText = @"BS64:Iteh15vXldedINeR157XmNeR16Ig157Xp9eV157XmSDXlNeZ16DXlSDXl9eV15HXlCAi", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMYouShouldHaveOneLineAtLeast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldHaveOneLineAtLeast", DefaultText = "There must be at least one journal line",LocalDefaultText = @"חובה להזין לפחות שורת פקודת יומן אחת", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMYouShouldHaveOneLineAtLeast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldHaveOneLineAtLeast", DefaultText = "There must be at least one journal line",LocalDefaultText = @"BS64:IteX15XXkdeUINec15TXlteZ158g15zXpNeX15XXqiDXqdeV16jXqiDXpNen15XXk9eqINeZ15XXntefINeQ15fXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMCurrenyNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code",LocalDefaultText = @"מטבע הכרטיס לא תואם את המטבע הנבחר", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMCurrenyNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.CurrenyNotMatched", DefaultText = "Account Currncy does not equal to selected currecy code",LocalDefaultText = @"BS64:Itee15jXkdeiINeU15vXqNeY15nXoSDXnNeQINeq15XXkNedINeQ16og15TXnteY15HXoiDXlNeg15HXl9eoIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMJournalAmountNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Total debit amount must be equal to total credit amount. There is a difference of: ",LocalDefaultText = @" :סכום חובה שונה מסכום זכות. קיים הפרש של  ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMJournalAmountNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JournalAmountNotMatched", DefaultText = "Total debit amount must be equal to total credit amount. There is a difference of: ",LocalDefaultText = @"BS64:IiA616HXm9eV150g15fXldeR15Qg16nXldeg15Qg157Xodeb15XXnSDXlteb15XXqi4g16fXmdeZ150g15TXpNeo16kg16nXnCAgIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMExchangeRateEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ExchangeRateEmpty", DefaultText = "Exchange rate is not defined",LocalDefaultText = @"לא הוגדר שער המרה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMExchangeRateEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ExchangeRateEmpty", DefaultText = "Exchange rate is not defined",LocalDefaultText = @"BS64:Itec15Ag15TXldeS15PXqCDXqdei16gg15TXnteo15Qi", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMActionCodeCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCredit", DefaultText = "Please select a credit account",LocalDefaultText = @"נא לבחור כרטיס זכות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMActionCodeCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCredit", DefaultText = "Please select a credit account",LocalDefaultText = @"BS64:Iteg15Ag15zXkdeX15XXqCDXm9eo15jXmdehINeW15vXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMJLAccountingDateMustWithinJournalMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JLAccountingDateMustWithinJournalMonth", DefaultText = "Jornal Line Accounting Date must be within Accounting month of Journal",LocalDefaultText = @"תאריך בשורה חייב להיות בטווח של החודש החשבונאי של פ היומן", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMJLAccountingDateMustWithinJournalMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.JLAccountingDateMustWithinJournalMonth", DefaultText = "Jornal Line Accounting Date must be within Accounting month of Journal",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15HXqdeV16jXlCDXl9eZ15nXkSDXnNeU15nXldeqINeR15jXldeV15cg16nXnCDXlNeX15XXk9epINeU15fXqdeR15XXoNeQ15kg16nXnCDXpCDXlNeZ15XXntefIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMFutureDateForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed",LocalDefaultText = @"לא ניתן  להקליד תאריך עתידי ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMFutureDateForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FutureDateForbidden", DefaultText = "Future date is not allowed",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158gINec15TXp9ec15nXkyDXqteQ16jXmdeaINei16rXmdeT15kgIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMAccountIsBlocked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "GL Account (%name) is inactive",LocalDefaultText = @"כרטיס (%name) חסום", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMAccountIsBlocked = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AccountIsBlocked", DefaultText = "GL Account (%name) is inactive",LocalDefaultText = @"BS64:Iteb16jXmNeZ16EgKCVuYW1lKSDXl9eh15XXnSI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMActionCodeDebit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account",LocalDefaultText = @"אנא בחר כרטיס חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMActionCodeDebit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeDebit", DefaultText = "Please select a debit account",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16gg15vXqNeY15nXoSDXl9eV15HXlCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMActionCodeCreditAndCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account",LocalDefaultText = @"אנא בחר כרטיס זכות וכרטיס חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMActionCodeCreditAndCredit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeCreditAndCredit", DefaultText = "Please select a credit and a debit account",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16gg15vXqNeY15nXoSDXlteb15XXqiDXldeb16jXmNeZ16Eg15fXldeR15Qi", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMActionCodeNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeNotMatched", DefaultText = "Action Code does not Matched the account you picked",LocalDefaultText = @"שגיאה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMActionCodeNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCodeNotMatched", DefaultText = "Action Code does not Matched the account you picked",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qi", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMActionCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCode", DefaultText = "Please Select Action Code",LocalDefaultText = @"אנא בחר ציין את את סוג השורה  חובה/זכות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMActionCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ActionCode", DefaultText = "Please Select Action Code",LocalDefaultText = @"BS64:IteQ16DXkCDXkdeX16gg16bXmdeZ158g15DXqiDXkNeqINeh15XXkiDXlNep15XXqNeUICDXl9eV15HXlC/Xlteb15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMDocumentDateBiggerDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DocumentDateBiggerDueDate", DefaultText = "Document date must be earlier then due date ",LocalDefaultText = @"התאריך החשבונאי חייב להיות מוקדם מתאריך האסמכתא", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMDocumentDateBiggerDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DocumentDateBiggerDueDate", DefaultText = "Document date must be earlier then due date ",LocalDefaultText = @"BS64:IteU16rXkNeo15nXmiDXlNeX16nXkdeV16DXkNeZINeX15nXmdeRINec15TXmdeV16og157Xlden15PXnSDXnteq15DXqNeZ15og15TXkNeh157Xm9eq15Ai", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMDueDateMustgreaterthancurrent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateMustgreaterthancurrent", DefaultText = "Due Date ,Must be Equal or greater than current date ",LocalDefaultText = @"תאריך הפרעון צריך להיות גדול או שווה מהתאריך הנוכחי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMDueDateMustgreaterthancurrent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateMustgreaterthancurrent", DefaultText = "Due Date ,Must be Equal or greater than current date ",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15TXpNeo16LXldefINem16jXmdeaINec15TXmdeV16og15LXk9eV15wg15DXlSDXqdeV15XXlCDXnteU16rXkNeo15nXmiDXlNeg15XXm9eX15ki", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMJournalcurrencydoesnotexist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Journal.currencydoesnotexist", DefaultText = "Currency does not exist",LocalDefaultText = @"המטבע לא קיים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMJournalcurrencydoesnotexist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Journal.currencydoesnotexist", DefaultText = "Currency does not exist",LocalDefaultText = @"BS64:IteU157XmNeR16Ig15zXkCDXp9eZ15nXnSI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMControlAccountIdIsMust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsMust", DefaultText = "Account Which is not a card must Control Account definition",LocalDefaultText = @"חשבון שאיננו כרטיס תפעולי חייב להיות כרטיס מרכז", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMControlAccountIdIsMust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsMust", DefaultText = "Account Which is not a card must Control Account definition",LocalDefaultText = @"BS64:IteX16nXkdeV158g16nXkNeZ16DXoNeVINeb16jXmNeZ16Eg16rXpNei15XXnNeZINeX15nXmdeRINec15TXmdeV16og15vXqNeY15nXoSDXnteo15vXliI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMControlAccountIdIsNotMatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsNotMatch", DefaultText = "Control Account Is Not Match",LocalDefaultText = @"חשבון מרכז איננו תואם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMControlAccountIdIsNotMatch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ControlAccountIdIsNotMatch", DefaultText = "Control Account Is Not Match",LocalDefaultText = @"BS64:IteX16nXkdeV158g157XqNeb15Yg15DXmdeg16DXlSDXqteV15DXnSI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMDueDateIsMust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateIsMust", DefaultText = "Due Date Is Must",LocalDefaultText = @"תאריך פרעון הינו חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMDueDateIsMust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.DueDateIsMust", DefaultText = "Due Date Is Must",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16TXqNei15XXnyDXlNeZ16DXlSDXl9eV15HXlCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMFAMltiExchangerateNELA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FAMltiExchangerateNELA", DefaultText = "Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})",LocalDefaultText = @"סכום במטבע מקומי חייב להיות שווה לסכום במטבע זר כפול שער המרה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMFAMltiExchangerateNELA = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.FAMltiExchangerateNELA", DefaultText = "Foreign amount ({0}) multiplied by the exchange rate ({1}) does not equal the local amount ({2})",LocalDefaultText = @"BS64:Iteh15vXldedINeR157XmNeR16Ig157Xp9eV157XmSDXl9eZ15nXkSDXnNeU15nXldeqINep15XXldeUINec16HXm9eV150g15HXnteY15HXoiDXlteoINeb16TXldecINep16LXqCDXlNee16jXlCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMAllDateMustInit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AllDateMustInit", DefaultText = "All the dates must have a value",LocalDefaultText = @"חייבים להזין את כל שדות התאריכים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMAllDateMustInit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.AllDateMustInit", DefaultText = "All the dates must have a value",LocalDefaultText = @"BS64:IteX15nXmdeR15nXnSDXnNeU15bXmdefINeQ16og15vXnCDXqdeT15XXqiDXlNeq15DXqNeZ15vXmdedIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMYouShouldSelectTwoTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile",LocalDefaultText = @"יש לבחור לפחות שתי תנועות על מנת ליצור התאמה חדשה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMYouShouldSelectTwoTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile",LocalDefaultText = @"BS64:IteZ16kg15zXkdeX15XXqCDXnNek15fXldeqINep16rXmSDXqteg15XXoteV16og16LXnCDXnteg16og15zXmdem15XXqCDXlNeq15DXnteUINeX15PXqdeUIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOCodeShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeShort", DefaultText = "Journal Code Too Short",LocalDefaultText = @"פרט מכס קצר מידי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOCodeShort = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeShort", DefaultText = "Journal Code Too Short",LocalDefaultText = @"BS64:Itek16jXmCDXnteb16Eg16fXpteoINee15nXk9eZIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeLong", DefaultText = "Journal Code Too Long",LocalDefaultText = @"פרט המכס ארוך מדי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CodeLong", DefaultText = "Journal Code Too Long",LocalDefaultText = @"BS64:Itek16jXmCDXlNee15vXoSDXkNeo15XXmiDXnteT15ki", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @" ספרת הביקורת שגויה , הספרה הנכונה היא ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @"BS64:IiDXodek16jXqiDXlNeR15nXp9eV16jXqiDXqdeS15XXmdeUICwg15TXodek16jXlCDXlNeg15vXldeg15Qg15TXmdeQICI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Copy", DefaultText = "Copy",LocalDefaultText = @"העתק", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOCopy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Copy", DefaultText = "Copy",LocalDefaultText = @"BS64:IteU16LXqtenIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalODates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Dates", DefaultText = "Dates",LocalDefaultText = @"תאריכים", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalODates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.Dates", DefaultText = "Dates",LocalDefaultText = @"BS64:Iteq15DXqNeZ15vXmdedIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AmountsAndCurrencies", DefaultText = "Amounts / Currencies",LocalDefaultText = @"סכומים \ מטבעות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AmountsAndCurrencies", DefaultText = "Amounts / Currencies",LocalDefaultText = @"BS64:Iteh15vXldee15nXnSBcINee15jXkdei15XXqiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOReferencesAndNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ReferencesAndNotes", DefaultText = "References / Notes",LocalDefaultText = @"אסמכתאות \ הערות", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOReferencesAndNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ReferencesAndNotes", DefaultText = "References / Notes",LocalDefaultText = @"BS64:IteQ16HXnteb16rXkNeV16ogXCDXlNei16jXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOExchangeRateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ExchangeRateValidation", DefaultText = "There is no exchange rate for the selected currency on the accounting date for line",LocalDefaultText = @"לא הוגדר שער חליפין של המטבע שנבחר בתאריך החשבונאי שצויין בשורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOExchangeRateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ExchangeRateValidation", DefaultText = "There is no exchange rate for the selected currency on the accounting date for line",LocalDefaultText = @"BS64:Itec15Ag15TXldeS15PXqCDXqdei16gg15fXnNeZ16TXmdefINep15wg15TXnteY15HXoiDXqdeg15HXl9eoINeR16rXkNeo15nXmiDXlNeX16nXkdeV16DXkNeZINep16bXldeZ15nXnyDXkdep15XXqNeUIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOhaveFutureAccountingorReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.haveFutureAccountingorReferenceDate", DefaultText = "Can't approve The Journal . Some Lines have Future Accounting or Reference Date.",LocalDefaultText = @"לא ניתן לאשר את פקודת היומן , ישנם שורות עם תאריך חשבונאי/אסמכתא עתידי.", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOhaveFutureAccountingorReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.haveFutureAccountingorReferenceDate", DefaultText = "Can't approve The Journal . Some Lines have Future Accounting or Reference Date.",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXkNep16gg15DXqiDXpNen15XXk9eqINeU15nXldee158gLCDXmdep16DXnSDXqdeV16jXldeqINei150g16rXkNeo15nXmiDXl9ep15HXldeg15DXmS/XkNeh157Xm9eq15Ag16LXqteZ15PXmS4i", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMEditJournalLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.EditJournalLine", DefaultText = "Edit Journal Line",LocalDefaultText = @"ערוך שורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMEditJournalLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.EditJournalLine", DefaultText = "Edit Journal Line",LocalDefaultText = @"BS64:Itei16jXldeaINep15XXqNeUIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Note", DefaultText = "Note",LocalDefaultText = @"הערת", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMNote = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Note", DefaultText = "Note",LocalDefaultText = @"BS64:IteU16LXqNeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Line", DefaultText = "Line",LocalDefaultText = @"שורה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.Line", DefaultText = "Line",LocalDefaultText = @"BS64:Itep15XXqNeUIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOLoadCsv = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.LoadCsv", DefaultText = "Load Journal from CSV",LocalDefaultText = @"טען פקודת יומן מ CSV", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOLoadCsv = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.LoadCsv", DefaultText = "Load Journal from CSV",LocalDefaultText = @"BS64:IteY16LXnyDXpNen15XXk9eqINeZ15XXntefINeeIENTViI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalMForeignDiffLocalAmountButTenantCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignDiffLocalAmountButTenantCurrency", DefaultText = "Although the currency is accounting currency,The foreign amount is different from local amount ",LocalDefaultText = @"למרות שהמטבע היינו מטבע חשבונאי הסכום במטז שונה מסכום מקומי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalMForeignDiffLocalAmountButTenantCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.ForeignDiffLocalAmountButTenantCurrency", DefaultText = "Although the currency is accounting currency,The foreign amount is different from local amount ",LocalDefaultText = @"BS64:Itec157XqNeV16og16nXlNee15jXkdeiINeU15nXmdeg15Ug157XmNeR16Ig15fXqdeR15XXoNeQ15kg15TXodeb15XXnSDXkdee15jXliDXqdeV16DXlCDXnteh15vXldedINee16fXldee15ki", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOConfirmVoidJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ConfirmVoidJournal", DefaultText = "Are you sure you want to cancel this Journal?",LocalDefaultText = @"אנא אשר את ביטול פקודת היומן  ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOConfirmVoidJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ConfirmVoidJournal", DefaultText = "Are you sure you want to cancel this Journal?",LocalDefaultText = @"BS64:IteQ16DXkCDXkNep16gg15DXqiDXkdeZ15jXldecINek16fXldeT16og15TXmdeV157XnyAgIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"השער החדש קטן\גדול ביותר מחמישה אחוזים מהשער הקודם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalODuplicateLinesSkipped = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DuplicateLinesSkipped", DefaultText = "Duplicate Lines Skipped",LocalDefaultText = @"BS64:Itep15XXqNeV16og15vXpNeV15zXldeqINeQ15XXqteo15Ug15XXnNeQINeg16fXnNeY15Ui", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalREAccountingDateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateRequired", DefaultText = "Accounting Date is Required",LocalDefaultText = @"תאריך חשבונאי הינו שדה חובה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOOnlyDuplicates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.OnlyDuplicates", DefaultText = "All lines in the file already exist in the system. The file was rejected.",LocalDefaultText = @"BS64:Iteb15wg15TXqdeV16jXldeqINeR16fXldeR16Ug15vXkdeoINen15nXmdee15XXqiDXkdee16LXqNeb16ouINeU16fXldeR16Ug15zXkCDXoNen15zXmCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalREAccountingDateConfrimation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateConfrimation", DefaultText = "Leaving the accounting date / due date/ reference date/references/note  empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields",LocalDefaultText = "במידה ולא קיים ערך בשדות: תאריך חשבונאי/אסמכתא/פירעון אסמכתאות הערות הערכים ילקחו מהשורות שסומנו להתאמה. להמשיך הקש ''אישור'' לחזרה להשלמת הערכים הקש ''חזור", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalODifferenceExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.DifferenceExchangeRate", DefaultText = "Difference between new and old value is more than 5 Percent Exchange rate",LocalDefaultText = @"BS64:IteU16nXoteoINeU15fXk9epINen15jXn1zXkteT15XXnCDXkdeZ15XXqteoINee15fXnteZ16nXlCDXkNeX15XXlteZ150g157XlNep16LXqCDXlNen15XXk9edIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalREAccountingDateCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateCancellation", DefaultText = "Cancel",LocalDefaultText = @"חזור", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalREAccountingDateRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateRequired", DefaultText = "Accounting Date is Required",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15kg15TXmdeg15Ug16nXk9eUINeX15XXkdeUIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalREAdjustMulti1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti1", DefaultText = "Please note the selected account ( XXX ) is Multi Currency ",LocalDefaultText = @"לידיעתך הכרטיס הנבחר ( XXX ) שהיינו רב מטבעי", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalREAccountingDateConfrimation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateConfrimation", DefaultText = "Leaving the accounting date / due date/ reference date/references/note  empty will create adjustment journals with dates/references/note taken from the original ones. If you want to continue click ok. If not click cancel and fill the date/references/note fields",LocalDefaultText = @"BS64:IteR157XmdeT15Qg15XXnNeQINen15nXmdedINei16jXmiDXkdep15PXldeqOiDXqteQ16jXmdeaINeX16nXkdeV16DXkNeZL9eQ16HXnteb16rXkC/XpNeZ16jXoteV158g15DXodee15vXqteQ15XXqiDXlNei16jXldeqINeU16LXqNeb15nXnSDXmdec16fXl9eVINee15TXqdeV16jXldeqINep16HXldee16DXlSDXnNeU16rXkNee15QuINec15TXntep15nXmiDXlNen16kgIteQ15nXqdeV16giINec15fXlteo15Qg15zXlNep15zXnteqINeU16LXqNeb15nXnSDXlNen16kgIteX15bXldeoIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalREAdjustMulti2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti2", DefaultText = "Linked to the card ( XXX ) whose currency is YYY",LocalDefaultText = @"מקושר לכרטיס ( XXX ) שמטבעו YYY", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalREAccountingDateCancellation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AccountingDateCancellation", DefaultText = "Cancel",LocalDefaultText = @"BS64:IteX15bXldeoIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalREAdjustMulti3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti3", DefaultText = "Therefore the order will be registered on the linked card, should you continue",LocalDefaultText = @"ולכן הפקודה תירשם על הכרטיס המקושר , האם להמשיך", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalREAdjustMulti1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti1", DefaultText = "Please note the selected account ( XXX ) is Multi Currency ",LocalDefaultText = @"BS64:Itec15nXk9eZ16LXqteaINeU15vXqNeY15nXoSDXlNeg15HXl9eoICggWFhYICkg16nXlNeZ15nXoNeVINeo15Eg157XmNeR16LXmSI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalREReconcilePeriodClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.ReconcilePeriodClosed", DefaultText = "Accounting date is closed for line (X)",LocalDefaultText = @"התקופה החשבונאית לשורה (X) סגורה, יש לפתוח תחילה את התקופה החשבונאית.", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalREAdjustMulti2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti2", DefaultText = "Linked to the card ( XXX ) whose currency is YYY",LocalDefaultText = @"BS64:Itee16fXldep16gg15zXm9eo15jXmdehICggWFhYICkg16nXnteY15HXoteVIFlZWSI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOSecurityHigherThanUsers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SecurityHigherThanUsers", DefaultText = "Cannot set Journal Viewing Security Level higher than the User Security Level",LocalDefaultText = @"לא ניתן לתת רמת אבטחת לצפיה בפקודת היומן שגבוהה מרמת האבטחה שקיימת למשתמש", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalREAdjustMulti3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.AdjustMulti3", DefaultText = "Therefore the order will be registered on the linked card, should you continue",LocalDefaultText = @"BS64:IteV15zXm9efINeU16TXp9eV15PXlCDXqteZ16jXqdedINei15wg15TXm9eo15jXmdehINeU157Xp9eV16nXqCAsINeU15DXnSDXnNeU157XqdeZ15oi", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOViewingNotAuthorized = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ViewingNotAuthorized", DefaultText = "You are not authorized to view Journal No. ",LocalDefaultText = @"אינך מורשה לצפיה בפקודה מספר ", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalREReconcilePeriodClosed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.RE.ReconcilePeriodClosed", DefaultText = "Accounting date is closed for line (X)",LocalDefaultText = @"BS64:IteU16rXp9eV16TXlCDXlNeX16nXkdeV16DXkNeZ16og15zXqdeV16jXlCAoWCkg16HXkteV16jXlCwg15nXqSDXnNek16rXldeXINeq15fXmdec15Qg15DXqiDXlNeq16fXldek15Qg15TXl9ep15HXldeg15DXmdeqLiI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOCoefficientForAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CoefficientForAmountsAndCurrencies", DefaultText = "Coefficient",LocalDefaultText = @"מקדם", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOSecurityHigherThanUsers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SecurityHigherThanUsers", DefaultText = "Cannot set Journal Viewing Security Level higher than the User Security Level",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXqteqINeo157XqiDXkNeR15jXl9eqINec16bXpNeZ15Qg15HXpNen15XXk9eqINeU15nXldee158g16nXkteR15XXlNeUINee16jXnteqINeU15DXkdeY15fXlCDXqden15nXmdee16og15zXntep16rXntepIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOPermissionSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.PermissionSetting", DefaultText = "Permission Setting",LocalDefaultText = @"הגדרת הרשאה", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOViewingNotAuthorized = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.ViewingNotAuthorized", DefaultText = "You are not authorized to view Journal No. ",LocalDefaultText = @"BS64:IteQ15nXoNeaINee15XXqNep15Qg15zXptek15nXlCDXkdek16fXldeT15Qg157Xodek16ggIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode JournalTextCode_JournalOSuperPermissionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SuperPermissionRequired", DefaultText = "Correction requires super permission. Please contact Amital.",LocalDefaultText = @"תיקון דורש הרשאת על. נא לפנות לעמיטל", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode JournalTextCode_JournalOCoefficientForAmountsAndCurrencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.CoefficientForAmountsAndCurrencies", DefaultText = "Coefficient",LocalDefaultText = @"BS64:Itee16fXk9edIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode JournalTextCode_JournalOPermissionSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.PermissionSetting", DefaultText = "Permission Setting",LocalDefaultText = @"BS64:IteU15LXk9eo16og15TXqNep15DXlCI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode JournalTextCode_JournalOSuperPermissionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SuperPermissionRequired", DefaultText = "Correction requires super permission. Please contact Amital.",LocalDefaultText = @"BS64:Iteq15nXp9eV158g15PXldeo16kg15TXqNep15DXqiDXotecLiDXoNeQINec16TXoNeV16og15zXotee15nXmNecIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalOAccountIdenticalToFullAccountingSetting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIdenticalToFullAccountingSetting", DefaultText = "{account} is identical to {setting} in the full accounting settings",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlteU15Qg15x7c2V0dGluZ30g16nXkdeU15LXk9eo15XXqiDXlNeg15TXnNeqINeX16nXkdeV16DXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode JournalTextCode_JournalOAccountIsAccountControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.AccountIsAccountControl", DefaultText = "{account} is a control account",LocalDefaultText = @"BS64:InthY2NvdW50fSDXlNeV15Ag15fXqdeR15XXnyDXnteo15vXliI=", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode JournalTextCode_JournalOSplitByDifferentExchangeRate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.O.SplitByDifferentExchangeRate", DefaultText = "The %debitAccountName card has a conversion rate of %debitExchangeRateName and the %creditAccountName card has a conversion rate of %creditExchangeRateName. A debit/credit transaction cannot be recorded. Please split the transactions.",LocalDefaultText = @"BS64:Itec15vXqNeY15nXoSAlZGViaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlZGViaXRFeGNoYW5nZVJhdGVOYW1lINeV15zXm9eo15jXmdehICVjcmVkaXRBY2NvdW50TmFtZSDXnteV15LXk9eoINep16LXqCDXlNee16jXlCAlY3JlZGl0RXhjaGFuZ2VSYXRlTmFtZSwg15zXkCDXoNeZ16rXnyDXnNeo16nXldedINeq16DXldei16og15fXmdeV15Ev15bXmdeb15XXmSwg16DXkCDXnNek16bXnCDXkNeqINeU16rXoNeV16LXldeqIg==", ObjectTableId = JournalObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    

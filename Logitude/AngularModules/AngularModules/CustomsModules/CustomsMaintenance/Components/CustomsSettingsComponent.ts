@@ -1,27 +1,16 @@
 declare var window: any;
-import { Component, Output, EventEmitter, OnInit, ComponentRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from       '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { TextCodeTranslator } from  '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
-import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
-import { ListComponentArgs } from '../../../Infrastructure/Args';
-
 import { ApiQueryFilters } from  '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ServiceResponse } from  '../../../Infrastructure/DataContracts/ServiceResponse';
-import { EntityListService } from   '../../../Infrastructure/Services/EntityListService';
-
-
-
-
-
-import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { CustomsSettingPM } from '../../../Customs/EntityPMs/CustomsSettingPM';
 import { CustomsSettingList } from '../../../Customs/EntityLists/CustomsSettingList';
 
-//C: \LW\Customs\AngularModules\AngularModules\Customs\Services\StandardPMs\CustomsSettingPMService.ts
 import { CustomsSettingPMService } from '../../../Customs/Services/StandardPMs/CustomsSettingPMService';
 import { CustomsSettingListService } from '../../../Customs/Services/StandardLists/CustomsSettingListService';
 import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameClass';

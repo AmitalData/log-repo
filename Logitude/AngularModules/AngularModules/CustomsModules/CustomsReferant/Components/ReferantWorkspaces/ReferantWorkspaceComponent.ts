@@ -14,7 +14,7 @@ import { DeclarationReferantDataFiltersMenuComponent } from '../FiltersMenu/Decl
 import { AdvancedQueryFiltersPMService } from 'Infrastructure/Services/StandardPMs/AdvancedQueryFiltersPMService';
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { ServiceArgs } from 'Infrastructure/DataContracts/ServiceArgs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { debounce, throttleTime } from 'rxjs/operators';
 declare var makeAmBarChart, BarClick, ResetItem: any;
 
 @Component({
@@ -125,8 +125,8 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
     }
 
     constructor(public _declarationReferantDataWebService: DeclarationReferantDataWebService) {
-        this.setFilters();
         this.CurrentSession.StartBusyIndicatorLoading();
+        this.setFilters();
         this._entityResourceService.getEntityResourceByTableName("Customs.DeclarationReferantData").subscribe((response: any) => {
         });
 
@@ -393,7 +393,7 @@ export class ReferantWorkspaceComponent implements AfterViewInit {
 
     ApplyFilters(filters) {
         this.GetFilterForQueriesCount();
-        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).pipe(debounceTime(1000)).subscribe(
+        this._declarationReferantDataWebService.GetQueriesCounts(this.RefId, this.DepId, this.TransportModeId).pipe(throttleTime(2000)).subscribe(
             (data: any) => {
                 this.counters = data.Result;
                 this.InProgressDeclarationReferantDataId = this.InProgressDeclarationReferantDataId + this.CurrentSession.GetChartId();

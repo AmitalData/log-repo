@@ -747,7 +747,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.filterAgrs.PageSize = take;
         this.filterAgrs.PageIndex = skip;
         this.filterAgrs.GetAll = false;
-        this.filterAgrs.GetCount = true;
+        this.filterAgrs.GetCount = getCount;
         if (sortingCol) {
             this.filterAgrs.SortBy = sortingCol;
         }

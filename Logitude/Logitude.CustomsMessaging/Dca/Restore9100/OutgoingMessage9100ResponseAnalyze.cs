@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using UnifreightIIG.Common.OutgoingMessageDeliveryApprovalServiceReference;
 using UnifreightIIG.Common.OutgoingMessageRequestServiceReference;
 
@@ -74,13 +75,15 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                     LogIt($"OutgoingMessage9100ResponseAnalyze-nothing to do");
                     return;
                 }
+                HttpContext ctx = HttpContext.Current;
 
                 sw = Stopwatch.StartNew();
                 Parallel.ForEach(OutgoingMessageInterfaceList,
                             new ParallelOptions { MaxDegreeOfParallelism = 4 },//cpu
                             currMessage =>
+
                                 TPL_SaveInDB(currMessage.response, currMessage.messageDCA, currMessage.dcaFile,
-                                    correlationIdsCanClear, sbFilenameQueue, exceptionBag)
+                                    correlationIdsCanClear, sbFilenameQueue, exceptionBag, ctx)
                             );
                 sw.Stop();
                 LogIt($"OutgoingMessage9100ResponseAnalyze-Parallel Save took {sw.Elapsed}");
@@ -103,8 +106,12 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
             NG_9101_MSG_OutgoingMessageResponseOutgoingMessage itemOutgoingMessage,
             InterfaceTenantDefinitionManagementPM messageDCA,
             DCAFileModel dcaFile,
-            ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs> correlationIdsCanClear, ConcurrentQueue<string> sbFilenameQueue, ConcurrentBag<string> exceptionBag)
+            ConcurrentBag<NG_9200_OutgoingMessageDeliveryApprovalListOfCorrelationIDs> correlationIdsCanClear, 
+            ConcurrentQueue<string> sbFilenameQueue, ConcurrentBag<string> exceptionBag,
+            HttpContext context)
         {
+            var oldCtx = HttpContext.Current;
+            HttpContext.Current = context;
             try
             {
                 LogIt($"SaveRequestSheet... {itemOutgoingMessage.CorrelationId}");
@@ -124,6 +131,10 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
                 //_SaveError = true;
                 exceptionBag.Add($"Error while save message in DCA : {EE.ToString()}");
                 //throw;
+            }
+            finally
+            {
+                HttpContext.Current = oldCtx;
             }
         }
 

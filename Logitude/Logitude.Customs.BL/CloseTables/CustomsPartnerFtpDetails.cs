@@ -49,9 +49,13 @@ namespace Logitude.Customs.BL.CloseTables
         public const string InterfaceName_SIIProductFileCheck_Response = "SII_PRODUCT_FILE_CHECK_R";
         public const string InterfaceName_SIISendRequest = "SII_SEND_REQUEST";
         public const string InterfaceName_SIISendRequest_Response = "SII_SEND_REQUEST_R";
+        public const string InterfaceName_DownloadCustomsFilesFromSftp = "DWN_CUSTOMS_SFTP";
+        public const string InterfaceName_UploadNotNeeded9100FilesToSftp = "UPLOAD_NOTNEEDED9100_TOSFTP";
+
         public const string PartnerCode_Mamam = "MAMAN";
         public const string PartnerCode_ILOVS = "ILOVS";
         public const string PartnerCode_ILSWS = "ILSWS";
+        public const string PartnerCode_AMITAL = "AMITAL";
         public const string PartnerCode_SII = "SII";
         public const string TypeCode_Out = "OUT";
         public const string TypeCode_In = "IN";
@@ -95,7 +99,7 @@ namespace Logitude.Customs.BL.CloseTables
 
             }
             ,
-            
+
             new InterfaceDetails()
             {
                 Code = InterfaceName_ECOVSTHR,
@@ -153,7 +157,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                
+
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilitySpliterService,
                 Subject="Status/Availability Maman Raw"
             },
@@ -164,7 +168,7 @@ namespace Logitude.Customs.BL.CloseTables
                 TypeCode = TypeCode_In,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
-                
+
                 AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
                 Subject="Status/Availability Maman",
                 ServerInternalDef= true
@@ -179,7 +183,7 @@ namespace Logitude.Customs.BL.CloseTables
 
                 //AnalyzeQueueService= AnalyzeQueueServiceEnum.MamanStatusAvailabilityService,
                 Subject="2470 to Maman",
-                
+
             }
             ,
             new InterfaceDetails()
@@ -408,6 +412,22 @@ namespace Logitude.Customs.BL.CloseTables
                 Partner = PartnerCode_SII,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
                 ServerInternalDef= true,
+            },
+            new InterfaceDetails()
+            {
+                Code= InterfaceName_DownloadCustomsFilesFromSftp,
+                Name = "הורדת קבצי כספת משרת SFTP",
+                TypeCode = TypeCode_In,
+                Partner = PartnerCode_AMITAL,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
+            },
+            new InterfaceDetails()
+            {
+                Code= InterfaceName_UploadNotNeeded9100FilesToSftp,
+                Name = "העלאת קבצי 9100 ל SFTP",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_AMITAL,
+                ViaMethod = GetViaMethods().First(r => r.Key == "FTP").Key,
             }
             };
             ///
@@ -440,6 +460,8 @@ namespace Logitude.Customs.BL.CloseTables
             all.Add(new KeyValuePair<string, string>(PartnerCode_ILOVS, "Overseas"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_ILSWS, "Swissport"));
             all.Add(new KeyValuePair<string, string>(PartnerCode_SII, "SII"));
+            all.Add(new KeyValuePair<string, string>(PartnerCode_AMITAL, "Amital"));
+
             return all;
         }
 

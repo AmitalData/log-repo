@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("DeclarationStatus", "UPDATE", tenant);//UPDATE//READ
+                SecurityUtility.CheckContactFeature("Customs.DeclarationStatus", "UPDATE", tenant);//UPDATE//READ
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
                 {
 

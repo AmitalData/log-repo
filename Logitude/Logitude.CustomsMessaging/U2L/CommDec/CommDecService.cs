@@ -180,6 +180,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
             try
             {
+              
                 Customs.BL.Messaging.Maman.Send2MasofIfNeededService.SuppressSend = true;
                 _PBId = PBId;
                 _tenant = tenant;
@@ -1270,7 +1271,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 casualImportelTel = "0" + casualImportelTel;//Task 139114: בדיקת חוקיות של הזנת מספר טלפון והעלאת PENDING 903- טלפון לא חוקי + טיפול נוסף
             }
 
-            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, _AmitalCustomsFile.CasualImporterAddress1 + " " + _AmitalCustomsFile.CasualImporterAddress2, _MyDeclarationPM.Tenant))
+            if (customsAutonomyKeywordQueryService.CheckIfsAutonomy(_AmitalCustomsFile.CasualImporterCity, casualImportelTel, palestinianCode, _AmitalCustomsFile.CasualImporterAddress1 + " " + _AmitalCustomsFile.CasualImporterAddress2, _AmitalCustomsFile.CasualImporterZipCode,  _MyDeclarationPM.Tenant))
             {
                 this.IsAutonomy = true;
                 return;

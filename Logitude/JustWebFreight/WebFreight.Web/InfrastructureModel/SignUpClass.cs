@@ -573,7 +573,7 @@ namespace WebFreight.Web.InfrastructureModel
                 if (setting.WorkEnvironment == "customs")
                 {
                     AddCustomsRequiredFields(tenant, customsRequiredFieldRepository, tenantZeroCustomsRequiredFields);
-                    AddDocumentType(tenant, documentTypeRepository, tenantZeroDocumentTypes);
+                    AddDocumentType(tenant, documentTypeRepository, tenantZeroDocumentTypes.Where(a => !currentTenantDocumentTypes.Any(c => c.Code == a.Code)).ToList());
                     AddDocumentTypeCustomsData(tenant, documentTypeCustomsDataRepository, tenantZeroDocumentTypeCustomsDatas);
                     AddPendingsOver900(tenant);
                 }
@@ -3145,6 +3145,19 @@ namespace WebFreight.Web.InfrastructureModel
             };
 
             tenantIdleStatusRepository.Add(tenantIdleStatusARInvoice);
+
+            TenantIdleStatus tenantIdleStatusBatchTaskExecution = new TenantIdleStatus()
+            {
+                Id = theTenant.ToString(),
+                Tenant = theTenant,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                SearchFields = null,
+                Idle = false,
+                ObjectTable = "BatchTaskExecution",
+            };
+            tenantIdleStatusRepository.Add(tenantIdleStatusBatchTaskExecution);
+
             tenantIdleStatusRepository.SubmitChanges();
         }
 

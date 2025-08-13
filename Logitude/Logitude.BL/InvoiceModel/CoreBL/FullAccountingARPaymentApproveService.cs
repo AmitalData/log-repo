@@ -88,12 +88,16 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             if (!paymentPM.SetVoided && paymentPM.StatusCode != "CL")
             {
                 ARPaymentsJournalRepository arPaymentsJournalRepository = new ARPaymentsJournalRepository(tenant);
-                ARPaymentsJournal arPaymentsJournal = new ARPaymentsJournal();
-                arPaymentsJournal.Tenant = tenant;
-                arPaymentsJournal.IsVoided = false;
-                arPaymentsJournal.PaymentId = paymentPM.Id;
-                arPaymentsJournalRepository.Add(arPaymentsJournal);
-                arPaymentsJournalRepository.SubmitChanges();
+                ARPaymentsJournal arPaymentsJournal = arPaymentsJournalRepository.GetSingle(tenant, paymentPM.Id, false);
+                if (arPaymentsJournal == null)
+                {
+                    arPaymentsJournal = new ARPaymentsJournal();
+                    arPaymentsJournal.Tenant = tenant;
+                    arPaymentsJournal.IsVoided = false;
+                    arPaymentsJournal.PaymentId = paymentPM.Id;
+                    arPaymentsJournalRepository.Add(arPaymentsJournal);
+                    arPaymentsJournalRepository.SubmitChanges();
+                }
             }
         }
 
@@ -171,6 +175,9 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 return null;
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$"[InterestTransactionPM] MapInterestTransactionPMFromARPaymentPM  ARPayment (Id={payment?.Id}) -  AccountingDate: {journalPM?.AccountingDate}ת (JournalPM, Id={journalPM?.Id}) ");
+
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",
@@ -197,6 +204,9 @@ namespace Logitude.BL.InvoiceModel.CoreBL
             {
                 return null;
             }
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$"[InterestTransactionPM] MapInterestTransactionPMFromBankTransferARPaymentPM  ARPayment (Id={payment?.Id}) -  AccountingDate: {journalPM?.AccountingDate}ת (JournalPM, Id={journalPM?.Id}) ");
+
             InterestTransactionPM interestTransaction = new InterestTransactionPM()
             {
                 InterestEntityTypeCode = "2",

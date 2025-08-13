@@ -5,20 +5,20 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
 using System.Xml.Linq;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -190,8 +190,29 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void CloseTaxReport()
         {
-            CreateJournal();
-            CreateJournalAdditionalDatas();
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            JournalQueryService journalQuery = new JournalQueryService(MyContext);
+            var existingJournal = journalQuery.GetSingleWithLinesByEntityIdAndCode(taxReportId, AccountingEntityValues.TaxReport, tenant);
+            if (existingJournal != null && existingJournal?.JournalLines?.Count > 0)
+            {
+                var loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+                var currentDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                existingJournal.StatusCode = "6";
+                existingJournal.ChangeSetOp = ChangeSetOperation.Update;
+                existingJournal.UpdateDate = currentDate;
+                existingJournal.UpdatedByUserId = loggedContact?.Id;
+               existingJournal.ApproveDate = DateTime.Now;
+                existingJournal.ApprovedByUserId = loggedContact?.Id;
+                journalPM = existingJournal;
+                SubmitJournal();
+            }
+            else
+            {
+                CreateJournal();
+                CreateJournalAdditionalDatas();
+
+            }
             SetTaxReportAsTransmittedAndClosingJournal();
         }
 

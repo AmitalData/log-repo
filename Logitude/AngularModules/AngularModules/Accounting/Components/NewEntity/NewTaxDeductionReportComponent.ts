@@ -66,6 +66,7 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
                     false
                 );
                 this.entityPM.Month = new Date();
+                this.entityPM.Month.setDate(1);
                 this.entityPM.Month.setMonth(+value.Code - 1);
             } else {
                 this.UIProperties.SetRequired(

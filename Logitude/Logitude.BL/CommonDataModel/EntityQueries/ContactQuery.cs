@@ -132,10 +132,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         instance.IsOceanImport = cardContact.IsOceanImport;
                         instance.IsInlandDomestic = cardContact.IsInlandDomestic;
                         instance.IsCustomsImport = cardContact.IsCustomsImport;
-
-                        //CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
-                        //CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
-                        //instance.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant).ToList();
                     }
                 }
 
@@ -235,10 +231,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         instance.IsOceanImport = cardContact.IsOceanImport;
                         instance.IsInlandDomestic = cardContact.IsInlandDomestic;
                         instance.IsCustomsImport = cardContact.IsCustomsImport;
-
-                        //CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(repository.context);
-                        //CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(cardContactAdditionalServiceRepository);
-                        //instance.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant).ToList();
                     }
                 }
 
@@ -658,7 +650,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             email = email.ToLower();
             string cacheKey = $"ContactPM_{email}_{tenant}";
             ContactPM entity;
-            //UserRepository usersRepository = new UserRepository(tenant);
             if (HttpContext.Current != null)
             {
                 entity = (ContactPM)CacheManager.CacheWrapper.Get(cacheKey);
@@ -666,7 +657,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     bool isTenant0User = false;
                     ContactPM contact = (from a in repository.context.Contacts
-                                         where a.Email == email && a.InActive == false //  && a.UserType == "R" by Islam: all tracing classes call this method with the system user
+                                         where a.Email == email && a.InActive == false //  all tracing classes call this method with the system user
                                          && a.Tenant == tenant
                                          select new ContactPM()
                                          {
@@ -903,7 +894,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     bool isTenant0User = false;
                     ContactPM contact = (from a in repository.context.Contacts
-                                         where a.Email == id && a.InActive == false //  && a.UserType == "R" by Islam: all tracing classes call this method with the system user
+                                         where a.Email == id && a.InActive == false // all tracing classes call this method with the system user
                                          && a.Tenant == tenant
                                          select new ContactPM()
                                          {
@@ -1141,7 +1132,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             entityName = entityName.ToLower();
             ContactPM entity;
 
-            //UserRepository usersRepository = new UserRepository(tenant);
             if (getFromCache)
             {
                 if (HttpContext.Current != null)
@@ -1202,8 +1192,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                                 string cname = "ContactPM" + entity.Email + entity.Tenant;
                                 cname = cname.ToLower();
-
-                                //  c.User = usersRepository.GetSinglePM(c.Id, c.Tenant);
 
                                 if (CacheManager.CacheWrapper.Get(cname) == null)
                                 {
@@ -1790,6 +1778,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return null;
         }
 
+        public string GetRealEmailByEnglishName(string englishName, int tenant, string xxxDotCom)
+        {
+            if (string.IsNullOrEmpty(englishName) || string.IsNullOrEmpty(xxxDotCom))
+            {
+                return null;
+            }
+            englishName = englishName.ToUpperInvariant();
+            xxxDotCom = xxxDotCom.ToLowerInvariant();
+
+            return (from a in repository.context.Contacts
+                            where a.EnglishName.ToUpper() == englishName 
+                            && a.Tenant == tenant && a.Email.ToLower() != xxxDotCom && a.UserType == "R"
+                            && !a.InActive && a.Email != null && a.Email != string.Empty
+                            select a.Email).FirstOrDefault();
+        }
 
         public ContactPM GetFirstContactByEnglishNamePM(string Name, int tenant)
         {

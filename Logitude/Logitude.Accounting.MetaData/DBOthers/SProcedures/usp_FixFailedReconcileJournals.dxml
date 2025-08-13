@@ -24,8 +24,8 @@ BEGIN
     FROM JournalReconciles r
     INNER JOIN Journals j ON r.JournalId = j.Id
     INNER JOIN LedgerTransactions l ON r.LedgerTransactionId = l.Id
-    WHERE l.InReconcileProgress = 1 
-      AND l.IsReconciled = 0
+    WHERE 
+	  l.IsReconciled = 0
       AND j.StatusCode = '4' 
       AND (@Tenant = 0 OR (l.Tenant = @Tenant AND j.Tenant = @Tenant AND r.Tenant = @Tenant)) 
     UNION ALL

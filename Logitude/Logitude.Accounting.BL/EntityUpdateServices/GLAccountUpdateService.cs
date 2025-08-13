@@ -89,10 +89,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }
             AddAcitivityLog(entityPM, "N");
-
-            FillSearchFields(entityPM);
-
-
+                       
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
             entityPM.CreatedByUserId = loggedUser?.Id;
 
@@ -478,15 +475,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
             var tenant = entityPM.Tenant;
-
+            List<CardList> cardLists = null;
             if (entityPM.DisplayNumber != entityPOCO.DisplayNumber)
             {
-                List<CardList> cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
+               cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
                 foreach (CardList card in cardLists)
                 {
                     UpdateCardDisplayNumber(tenant, card.Id, entityPM.DisplayNumber, entityPM.Id, true);
                 }
             }
+            FillSearchFields(entityPM, cardLists);
             if (!entityPM.IsControlAccount.GetValueOrDefault())
             {
                 this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
@@ -631,7 +629,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             AddAcitivityLog(entityPM, "U");
 
             FillForeignFields(entityPM);
-            FillSearchFields(entityPM);
+           
             AddEventForGlAccountFollowUpData(entityPM);
             HandleGLAccountFollowUpData(entityPM);
 
@@ -767,11 +765,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card> cards = new List<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card>();
 
-
+            const string EXTERNAL_SYSTEM_UNF = "UNIFREIGHT"; // Only UNIFREIGHT cards are relevant for GLAccount.Upsert
 
             if (gLAccount.PartnerTypeId != null)
             {
-                cardLists = cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId).ToList();
+                cardLists = cardLists.Where(d => d.PartnerTypeId == gLAccount.PartnerTypeId && d.ExternalSystem == EXTERNAL_SYSTEM_UNF).ToList();
             }
             foreach (CardList card in cardLists)
 
@@ -825,9 +823,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return comParams;
         }
 
-        private void FillSearchFields(GLAccountPM entityPM)
+        private void FillSearchFields(GLAccountPM entityPM, List<CardList> cardLists)
         {
-            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName;
+            if (cardLists == null)
+            {
+                cardLists = GetCardsByGLAccountId(entityPM.Id, entityPM.Tenant);
+            }
+
+            string vatNumbers = string.Join(",", cardLists.Where(card => !string.IsNullOrEmpty(card?.VatNumber)).Select(card => card.VatNumber));
+
+            entityPM.SearchFields = entityPM.DisplayNumber + "," + entityPM.EnglishName + "," + entityPM.LocalName + "," + vatNumbers;
         }
 
         private void FillForeignFields(GLAccountPM entityPM)

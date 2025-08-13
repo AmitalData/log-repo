@@ -483,7 +483,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
     }
      private errors: string[];
-    RunButtonClicked()
+    RunButtonClicked(isInteractive: boolean)
     {
         this.SetUIProperties();
 
@@ -501,6 +501,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            myReportFliter.IsInteractive = isInteractive;
 
             this.RunReportEvent.emit(myReportFliter);
 

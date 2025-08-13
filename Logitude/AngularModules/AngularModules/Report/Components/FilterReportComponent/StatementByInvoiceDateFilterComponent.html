@@ -128,15 +128,10 @@
                                         </div>
                                     </td>
 
-                                    <td><div style="width:20px;"></div></td>
-                                    <td style="width:90px;">
-                                        <button (click)="RunReport()" class="greenButton" style="width:90px;height:22px;border:1px solid green;border-radius:3px;">
-                                            <div style="color:black;  text-align:center;vertical-align:central;font-size:12px;">{{RunReportTitle}}</div>
-                                        </button>
+                            <td><div style="width:20px;"></div></td>
 
-                                    </td>
 
-                                    <td></td>
+                            <td></td>
                                 </tr>
                             </table>
                         </td>
@@ -145,10 +140,15 @@
 
                         <td style="width:50px;"><div style="width:50px;"></div></td>
 
+                        <td style="width:90px;">
+                            <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="false" (runReport)="RunReport($event)"></app-run-report-toggle>
+                        </td>
 
                         <td></td>
 
                     </tr>
+
+                    <tr style="height: 50px;"><td></td></tr>
                 </table>
                 </td>
 </tr>

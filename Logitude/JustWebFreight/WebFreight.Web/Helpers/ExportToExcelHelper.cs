@@ -269,17 +269,6 @@ namespace WebFreight.Web.Helpers
 						stop = true;
 					}
 				}
-				if (stop == false)
-				{
-					MethodsInfo = getMethodsInfo("WebFreight.Web.CustomModel.DomainServices.ClaimDomainService", query);
-					if (MethodsInfo != null)
-					{
-						getListMethodInfo = MethodsInfo.ListMethodInfo;
-						getCountMethodInfo = MethodsInfo.CountMethodInfo;
-						context = MethodsInfo.context;
-						stop = true;
-					}
-				}
 
 				if (stop == false)
 				{
@@ -350,7 +339,18 @@ namespace WebFreight.Web.Helpers
 						stop = true;
 					}
 				}
-				if (stop == false)
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.PaymentChequeDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
+                if (stop == false)
 				{
 					MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.TaxDeductionReportDomainService", query);
 					if (MethodsInfo != null)
@@ -673,6 +673,10 @@ namespace WebFreight.Web.Helpers
 					}
 
 				}
+			}
+			else
+			{
+				throw new NotImplementedException("Export to excel is not implemented for this table");
 			}
 			//}
 			//catch (Exception e)

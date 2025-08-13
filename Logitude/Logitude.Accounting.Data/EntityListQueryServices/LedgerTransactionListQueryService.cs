@@ -872,7 +872,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              select new
                              {
                                  TotalRecord = gb.Count(),
-                                 MaxCreateDate = gb.Max(r => r.CreateDate.GetValueOrDefault())//.ToString("yyyy-MM-dd hh:mm:ss")
+                                 MaxCreateDate = gb.Max(r => r.CreateDate ?? DateTime.MinValue)
                              })
                          .FirstOrDefault() ?? new
                          {
@@ -910,7 +910,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                  select new
                  {
                      TotalRecord = gb.Count(),
-                     MaxCreateDate = gb.Max(r => r.CreateDate.GetValueOrDefault())
+                     MaxCreateDate = gb.Max(r => r.CreateDate ?? DateTime.MinValue)
                  })
              .FirstOrDefault() ?? new
              {

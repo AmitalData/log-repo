@@ -190,10 +190,7 @@ SELECT max(a.AccountId) as AccountId,
 SUM( CASE WHEN a.ValueDate <= @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotPastOpenChequesInLocalCur,
 SUM( CASE WHEN a.ValueDate > @InputDate THEN a.LocalAmountCredit ELSE 0 END) AS TotFutureOpenChequesInLocalCur
 FROM AllARPaymentChequesViews a
-LEFT JOIN BankDepositLines l ON a.ChequeId = l.ARPaymentChequeId
-LEFT JOIN BankDeposits b ON l.DepositId = b.Id
-LEFT JOIN BankAccounts ba ON b.DepositBankAccountId = ba.Id
-WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)
+WHERE  (@AccountID IS NULL OR a.AccountId = @AccountID)  and a.Notes !=N'החזרת שיק ללקוח'
 AND a.Tenant = @tenant
 group by  a.AccountId
 )  FUTQ ON FUTQ.AccountId = GL.ID
@@ -217,11 +214,11 @@ AND (@ChartOfAccountsId IS NULL OR GL.ChartOfAccountsId = @ChartOfAccountsId)
 AND (@CurrencyId IS NULL OR GL.CurrencyId = @CurrencyId)
 AND (
 (@CategoryName IS NULL OR
-(@CategoryName = 'Category1Id' AND GL.Category1Id = @CategoryValue) OR
-(@CategoryName = 'Category2Id' AND GL.Category2Id = @CategoryValue) OR
-(@CategoryName = 'Category3Id' AND GL.Category3Id = @CategoryValue) OR
-(@CategoryName = 'Category4Id' AND GL.Category4Id = @CategoryValue) OR
-(@CategoryName = 'Category5Id' AND GL.Category5Id = @CategoryValue))
+(@CategoryName = 'Category1' AND GL.Category1Id = @CategoryValue) OR
+(@CategoryName = 'Category2' AND GL.Category2Id = @CategoryValue) OR
+(@CategoryName = 'Category3' AND GL.Category3Id = @CategoryValue) OR
+(@CategoryName = 'Category4' AND GL.Category4Id = @CategoryValue) OR
+(@CategoryName = 'Category5' AND GL.Category5Id = @CategoryValue))
 )
 GROUP BY
 T.Tenant, T.AccountId,

@@ -21,8 +21,8 @@ using Microsoft.Practices.Unity;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
-// using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
-
+using Logitude.Server.Tools.Helpers;
+ 
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {

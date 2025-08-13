@@ -10,5 +10,7 @@ namespace Unifreight.BL.Models
         public string RecordAsJson { get; set; }
         public DateTime? UpdateDate { get; set; }
         public DateTime? CraeteDate { get; set; }
+        public DateTime? CreateDate { get; internal set; }
+        public string DbOffset { get; internal set; }
     }
 }

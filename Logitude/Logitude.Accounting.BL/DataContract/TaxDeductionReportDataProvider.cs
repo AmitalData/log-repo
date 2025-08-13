@@ -461,10 +461,10 @@ namespace Logitude.Accounting.BL.DataContract
 
 
         }
-        public List<GLAccountList> GetGLAccountsByIds(List<string> accountIds)
+        public List<GLAccountList> GetGLAccountsByIds(List<string> accountIds, bool dontExcludeFromdeductionReport = false)
         {
             return (from a in accountingContext.GLAccounts
-                    where a.Tenant == Tenant && a.ExcludeFromDeductionReport ==false
+                    where a.Tenant == Tenant && (a.ExcludeFromDeductionReport == false || dontExcludeFromdeductionReport)
                     && accountIds.Contains(a.Id)
                     select new GLAccountList()
                     {
@@ -773,6 +773,11 @@ namespace Logitude.Accounting.BL.DataContract
                     {
                         childGLAccount = gLAccount;
                         gLAccount = gLAccounts.Where(d => d.Id == mainGLAccountId).FirstOrDefault();
+
+                        if (gLAccount == null)
+                        {
+                            gLAccount = GetOneGLAccountByIds(mainGLAccountId);
+                        }
                     }
                     if (taxDeductionPerVendorReportParameters == null) ValidateGLAccountVendors(selectedVendors, gLAccount);
                     groupedbyVendor = SetGLAccountFields(gLAccount, groupedbyVendor, childGLAccount);
@@ -817,6 +822,12 @@ namespace Logitude.Accounting.BL.DataContract
                 .ToList();
 
             return byVendors;
+        }
+
+        private GLAccountList GetOneGLAccountByIds(string id)
+        {
+            List<string> gLAccountIds = new List<string>() { id };
+            return GetGLAccountsByIds(gLAccountIds, true).FirstOrDefault();
         }
 
         private ByVendorList CombineByVendorItems(IEnumerable<ByVendorList> gr)
@@ -1036,7 +1047,11 @@ namespace Logitude.Accounting.BL.DataContract
         }
         private void GenerateGLAccountRequiredFieldsError(string Fieldname, GLAccountList gLAccount)
         {
-            taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + "Glaccount without " + TextCodesTranslator.TranslateText("GLaccount.F." + Fieldname, Tenant) + " , " + TextCodesTranslator.TranslateText("GLAccount.F.DisplayNumber", Tenant) + ": " + gLAccount.DisplayNumber;
+            string missingField = TextCodesTranslator.TranslateText("GLAccounts.O.MissingFieldInAccount", Tenant, true)
+                .Replace("{field}", TextCodesTranslator.TranslateText("GLaccount.F." + Fieldname, Tenant, true))
+                .Replace("{account}", gLAccount.DisplayNumber);
+
+            taxDeductionReport.ErrorMessage = (taxDeductionReport.ErrorMessage ?? "") + Environment.NewLine + missingField;
         }
         private List<TaxDeductionReportLine> GroupDeductionLinesByVendorAndPercentage(List<TaxDeductionReportLine> deductionLines)
         {

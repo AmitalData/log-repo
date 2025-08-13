@@ -171,6 +171,16 @@ export class InterfaceManagementPM {
     public set EntityLockName(newValue: string) { if (this.entityLockName != newValue) { this.entityLockName = newValue; this.MarkAsDirty("EntityLockName"); } }
        
 	 
+    private isCustomsFile: boolean;
+    public get IsCustomsFile() { return this.isCustomsFile; }
+    public set IsCustomsFile(newValue: boolean) { if (this.isCustomsFile != newValue) { this.isCustomsFile = newValue; this.MarkAsDirty("IsCustomsFile"); } }
+       
+	 
+    private isUnifreight: boolean;
+    public get IsUnifreight() { return this.isUnifreight; }
+    public set IsUnifreight(newValue: boolean) { if (this.isUnifreight != newValue) { this.isUnifreight = newValue; this.MarkAsDirty("IsUnifreight"); } }
+       
+	 
 
     public OldEntityPM: InterfaceManagementPM;
 		

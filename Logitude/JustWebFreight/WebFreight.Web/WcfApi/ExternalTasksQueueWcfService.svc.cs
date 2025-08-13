@@ -320,10 +320,16 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 bool from_global = false;
-                if(queryParams.ContainsKey("from_global"))
+                bool convert_bool = false;
+                if (queryParams.ContainsKey("from_global"))
                 {
                     bool.TryParse(queryParams["from_global"], out from_global);
                     queryParams.Remove("from_global");
+                }
+                if (queryParams.ContainsKey("convert_bool"))
+                {
+                    bool.TryParse(queryParams["convert_bool"], out convert_bool);
+                    queryParams.Remove("convert_bool");
                 }
 
                 using (TransactionScope scope = TransactionFactory.GetTransaction())
@@ -378,7 +384,7 @@ namespace WebFreight.Web.WcfApi
                     return (response);
                 }
 
-                String remark ="";
+                String remark = "";
 
                 Dictionary<string, string> results = new Dictionary<string, string>();
                 List<List<string>> all_lines = new List<List<string>>();
@@ -410,20 +416,38 @@ namespace WebFreight.Web.WcfApi
                         string[] sourceConnectionArray = DBConnection.Split(',');
                         ConnectionStringArguments sourceConnectionStringArguments = GetConnectionStringArguments(sourceConnectionArray);
                         string ConnectionString = BuildConnectionString(sourceConnectionStringArguments);
-                        
+
                         connection.ConnectionString = ConnectionString;
                         NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GlobalDB : " + connection.ConnectionString);
-                        remark = "GlobalDB tenant=" + tenant.ToString()+ " " + connection.ConnectionString;
+                        remark = "GlobalDB tenant=" + tenant.ToString() + " " + connection.ConnectionString;
                     }
-                    
+
                     connection.Open();
                     using (var cmd = new SqlCommand(sqlQuery, connection))
                     {
                         foreach (var field in queryParams)
                         {
-                            cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
+
+                            cmd.Parameters.Add(sql_logi.get_SqlParameter(field.Key, field.Value));
                         }
-                        if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
+                        if (sql_logi.HAS_TENANT)
+                        {
+                            if (tenant > 0)
+                            {
+                                cmd.Parameters.Add(new SqlParameter
+                                {
+                                    ParameterName = "@Tenant",
+                                    SqlDbType = SqlDbType.Int,
+                                    SqlValue = tenant
+                                });
+                            }
+                            else
+                            {
+                                // Log the invalid tenant or handle the error appropriately
+                                throw new ArgumentException("Invalid tenant ID: " + tenant);
+                            }
+                        }
+
                         if (sql_logi.IS_INSERT)
                         {
                             rows_effected = cmd.ExecuteNonQuery();
@@ -443,7 +467,25 @@ namespace WebFreight.Web.WcfApi
 
                                         for (int pos = 0; reader.FieldCount > pos; pos++)
                                         {
-                                            one_line.Add(reader[pos].ToString());
+                                            if (convert_bool)
+                                            {
+                                                object val = reader.IsDBNull(pos) ? null : reader.GetValue(pos);
+
+                                                // Convert BIT/boolean to "1"/"0"
+                                                if (val is bool b)
+                                                {
+                                                    one_line.Add(b ? "1" : "0");
+                                                }
+                                                else
+                                                {
+                                                    // Keep everything else as string (null -> empty)
+                                                    one_line.Add(val?.ToString() ?? string.Empty);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                one_line.Add(reader[pos].ToString());
+                                            }
                                         }
                                         all_lines.Add(one_line);
                                     }

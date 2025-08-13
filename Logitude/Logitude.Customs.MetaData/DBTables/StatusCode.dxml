@@ -42,7 +42,7 @@
   </Column>
   <Column
     Name="StatusNameEng"
-    Type="varchar"
+    Type="nvarchar"
     Size="30">
     <Constraints
       Nullable="true" />

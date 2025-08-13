@@ -574,8 +574,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
     
                     }
                 };
-
-                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true);
+                bool isExport = dirtyDeclarationPM?.Direction == "E" ? true : false;
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel, suppress_RAISE_EVENT: true, iscustomUser: true, isExport: isExport);
             }
             catch(System.Exception ex)
             {

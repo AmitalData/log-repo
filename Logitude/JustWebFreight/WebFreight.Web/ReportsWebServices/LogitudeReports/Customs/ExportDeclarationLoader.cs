@@ -85,11 +85,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 join de in context.DeclarationExportRecipients
                                 .Select(x => new { x.DeclarationId, x.RecipientName })
                                 on a.Id equals de.DeclarationId into deJoin
-            from der in deJoin.DefaultIfEmpty().Take(1)
+                                from der in deJoin.DefaultIfEmpty().Take(1)
 
-                                join s in context.SupplierInvoices.Include(a => a.CurrencyType) 
+                                join s in context.SupplierInvoices.Include(a => a.CurrencyType)
                                 on a.Id equals showInvoices? s.DeclarationId : default(string) into sJoin
-            from si in sJoin.DefaultIfEmpty()
+                                from si in sJoin.DefaultIfEmpty()
 
                                 join item in context.SupplierInvoiceItems
                                 .Include(a => a.InvoiceMeasurmentUnit).Include(a => a.OriginCountry).Include(a => a.TransactionNatureType)
@@ -100,14 +100,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 join c in context.ExportDeclarationClosingDatas.Include(a => a.FinalCargoType)
                                 .Select(x => new { x.DeclarationId, x.FinalCargoTypeCode, x.FinalManifestNumber, x.FinalSecondCargoId, x.FinalThirdCargoId, x.FinalCargoType.LocalName })
                                 on a.Id equals c.DeclarationId into cJoin
-            from closing in cJoin.DefaultIfEmpty()
+                                from closing in cJoin.DefaultIfEmpty()
 
                                 join cl in context.Clients
                                 .Select(x => new { x.Code, x.FullName})
                                 on a.ImporterCode equals cl.Code into clJoin
                                 from importer in clJoin.DefaultIfEmpty().Take(1)
 
-                                where a.Tenant == tenant && a.Direction == "E"
+                                where a.Tenant == tenant && a.Direction == "E" && a.AmendmentDontDisplayInList == false
                                 select new
                                 {
                                     a.Id,

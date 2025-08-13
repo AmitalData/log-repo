@@ -1,7 +1,7 @@
 
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ReportsPreviewComponent } from '../../Components/ReportsPreviewComponent';
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { QueryFilterItem } from '../../Components/Filters/QueryFilterItem';
 import { ReportFliter } from '../../Components/Filters/ReportFliter';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
@@ -9,7 +9,6 @@ import { CodeNameClass } from '../../../Infrastructure/DataContracts/CodeNameCla
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { UIProperties, UIProperty } from '../../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ChartOfAccountsTypeListService } from 'Accounting/Services/StandardLists/ChartOfAccountsTypeListService';
@@ -35,6 +34,9 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     entityResourceService: EntityResourceService = new EntityResourceService();
     @ViewChild("comboBoxWithCheckBoxChartOfAccountsComboBoxValue") comboBoxWithCheckBox: ComboBoxWithInCheckBox;
 
+    private static readonly WITHOUT_OPTION = 'WITHOUT';
+    private static readonly WITH_OPTION    = 'WITH';
+
     GLAccountHtmlinputId: string;
     ChartofaccountHtmlinputId: string;
     chartofaccounttypeHtmlinputId: string;
@@ -43,11 +45,11 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     queryFilterItem: QueryFilterItem;
     Level: string = "GLAccount";
-    // ToDate: Date = new Date();
     DataContext: any = this;
     showLocal: boolean;
     ChartOfAccountsSelectedValue:string
     ChartOfAccountsTypeSelectedValue: string;
+
     constructor(private CD: ChangeDetectorRef) {
 
         super();
@@ -74,16 +76,16 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     public BalanceOptionsFilterList: CodeNameClass[];
     private BuildFilterList() {
         this.BalanceOptionsFilterList = [];
-        this.BalanceOptionsFilterList.push(new CodeNameClass("WITHOUT", "Without Transactions", "בלי תנועות"));
-        this.BalanceOptionsFilterList.push(new CodeNameClass("WITH", "With Transactions", "עם תנועות"));
+        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.WITHOUT_OPTION, "Without Transactions", "בלי תנועות"));
+        this.BalanceOptionsFilterList.push(new CodeNameClass(RevenueExpenseFilterComponent.WITH_OPTION, "With Transactions", "עם תנועות"));
 
-        this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0];
+        this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code === RevenueExpenseFilterComponent.WITHOUT_OPTION)[0];
     }
 
     private selectedBalanceOptionFilter: CodeNameClass;
     get SelectedBalanceOptionFilter() { return this.selectedBalanceOptionFilter; }
     set SelectedBalanceOptionFilter(value: CodeNameClass) {
-        if (this.selectedBalanceOptionFilter != value) {
+        if (this.selectedBalanceOptionFilter !== value) {
             this.selectedBalanceOptionFilter = value;
         }
     }
@@ -91,7 +93,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private useBalanceFilter: boolean;
     get UseBalanceFilter() { return this.useBalanceFilter; }
     set UseBalanceFilter(value: boolean) {
-        if (this.useBalanceFilter != value) {
+        if (this.useBalanceFilter !== value) {
             this.useBalanceFilter = value;
         }
     }
@@ -99,7 +101,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private fromDate: Date;
     public get FromDate() { return this.fromDate; }
     public set FromDate(value: Date) {
-        if (this.fromDate != value) {
+        if (this.fromDate !== value) {
             this.fromDate = value;
             this.Validate("FromDate");
         }
@@ -108,7 +110,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private toDate: Date = new Date()
     public get ToDate() { return this.toDate; }
     public set ToDate(value: Date) {
-        if (this.toDate != value) {
+        if (this.toDate !== value) {
             this.toDate = value;
             this.Validate("ToDate");
 
@@ -134,34 +136,10 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         }
 
 
-
-        //var errorMessage: string;
-        //if (dateFieldName == "FromDate") {
-        //    errorMessage = "Accounting.General.FromDateMustBeLTT";
-        //}
-        //else {
-        //    errorMessage = "Accounting.General.O.ToDateMustBeGTF";
-        //}
-        //if (this.ToDate < this.FromDate) {
-
-        //    setTimeout(() => {
-        //        this.UIProperties.SetValidity(dateFieldName, null, false, TextCodeTranslator.Translate(errorMessage));
-
-        //        this.CD.detectChanges();
-        //    }, 200);
-
-        //}
-        //else {
-        //    setTimeout(() => {
-        //        this.UIProperties.SetValidity(dateFieldName, null, true, null);
-        //        this.CD.detectChanges();
-        //    }, 200);
-
-        //}
     }
     public FilterSelectedValue: string = 'GLAccount';
     FilterItemClicked(itemValue: string) {
-        if (this.FilterSelectedValue != itemValue) {
+        if (this.FilterSelectedValue !== itemValue) {
             this.FilterSelectedValue = itemValue;
             this.Level = itemValue;
 
@@ -182,7 +160,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     public set ChartOfAccountsTypeComboboxValue(v: string) {
         this.chartOfAccountsTypeComboboxValue = v;
 
-        if (this.chartOfAccountsTypeComboboxValue == "All") {
+        if (this.chartOfAccountsTypeComboboxValue === "All") {
             this.idFilter = null;
             this.getChartOfAccounts();
         }
@@ -226,8 +204,8 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         this.isRevenueExpenseFilter = true;
         let apiQueryFilters = new ApiQueryFilters(true);
         
-        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked == true);
-        if (this.selectedChartOfAccountsTypes.length == 0 || this.selectedChartOfAccountsTypes.length == 2) {
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked === true);
+        if (this.selectedChartOfAccountsTypes.length === 0 || this.selectedChartOfAccountsTypes.length === 2) {
             apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", "1", "2", null, "Equals", true, false, false, "string");
         }
 
@@ -267,8 +245,8 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     }
 
     OnChartOfAccountsTypeItemClicked(items) {
-        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked == true);
-        this.idFilter = this.selectedChartOfAccountsTypes.length == 1 ? this.selectedChartOfAccountsTypes[0].Code : null;
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked === true);
+        this.idFilter = this.selectedChartOfAccountsTypes.length === 1 ? this.selectedChartOfAccountsTypes[0].Code : null;
         this.getChartOfAccounts();
         
         this.resetCheckBoxTitle();
@@ -282,7 +260,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     }
 
     OnChartOfAccountsItemClicked(items) {
-        this.selectedChartOfAccounts = this.chartOfAccounts.filter(item => item.Checked == true);
+        this.selectedChartOfAccounts = this.chartOfAccounts.filter(item => item.Checked === true);
 
         const haveSelectedItems = this.selectedChartOfAccounts.length > 0;
         this.DisableChartOfAccountsTypesField(haveSelectedItems);
@@ -291,19 +269,18 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     }
 
     SetChartOfAccountsFilterProperties() {
-        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked == true);
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked === true);
         let haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
         this.DisableChartOfAccountField(haveSelectedItems);
         this.DisableCategoryFields(haveSelectedItems);
         
-        this.selectedChartOfAccounts = this.chartOfAccounts.filter(item => item.Checked == true);
+        this.selectedChartOfAccounts = this.chartOfAccounts.filter(item => item.Checked === true);
         haveSelectedItems = this.selectedChartOfAccounts.length > 0;
         this.DisableChartOfAccountsTypesField(haveSelectedItems);
         this.DisableCategoryFields(haveSelectedItems);
     }
     private DisableChartOfAccountsTypesField(haveSelectedItems: boolean) {
         this.isChartOfAccountsTypesDisabled = haveSelectedItems;
-        // this.ChartOfAccountsTypeComboboxValue = null;
     }
     private DisableCategoryFields(haveSelectedItems: boolean) {
         this.IsCategoryDisabled = haveSelectedItems;
@@ -334,7 +311,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private category1: string;
     public get Category1() { return this.category1; }
     public set Category1(value: string) {
-        if (this.category1 != value) {
+        if (this.category1 !== value) {
             this.category1 = value;
         }
     }
@@ -342,7 +319,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private category2: string;
     public get Category2() { return this.category2; }
     public set Category2(value: string) {
-        if (this.category2 != value) {
+        if (this.category2 !== value) {
             this.category2 = value;
         }
     }
@@ -350,7 +327,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private category3: string;
     public get Category3() { return this.category3; }
     public set Category3(value: string) {
-        if (this.category3 != value) {
+        if (this.category3 !== value) {
             this.category3 = value;
         }
     }
@@ -358,7 +335,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private category4: string;
     public get Category4() { return this.category4; }
     public set Category4(value: string) {
-        if (this.category4 != value) {
+        if (this.category4 !== value) {
             this.category4 = value;
         }
     }
@@ -367,7 +344,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private category5: string;
     public get Category5() { return this.category5; }
     public set Category5(value: string) {
-        if (this.category5 != value) {
+        if (this.category5 !== value) {
             this.category5 = value;
         }
     }
@@ -394,39 +371,45 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     private SetFilterItem(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem) {
             switch (queryFilterItem.FieldName) {
-                case "CreateDate":
+                case "CreateDate":{
                     this.ToDate = new Date(queryFilterItem.FieldValue);
                     break;
-                case "FromDate":
+                }
+                case "FromDate":{
                     this.FromDate = new Date(queryFilterItem.FieldValue)
                     break;
+                }
                 case "ChartOfAccountsTypeCodeList":{
                     this.ChartOfAccountsTypeSelectedValue=queryFilterItem.FieldValue
                     break;
                 }
-                case"ChartOfAccountsTypeCodeList_param":
+                case"ChartOfAccountsTypeCodeList_param":{
                      this.chartOfAccountsTypeComboboxValue=queryFilterItem.FieldValue
                     break;
-                case "ChartOfAccountsIdList_param":
+                }
+                case "ChartOfAccountsIdList_param":{
                     this.chartOfAccountsComboBoxValue=queryFilterItem.FieldValue
                     break;
+                }
                 case "ChartOfAccountsIdList":{
                    this.ChartOfAccountsSelectedValue= queryFilterItem.FieldValue
                     
                     break;
                 }
-                case "Level":
+                case "Level":{
                     this.FilterSelectedValue = queryFilterItem.FieldValue;
                      break;
-                 case "CardFilter":
-                 {  this.BuildFilterList();
-                    this.SelectedBalanceOptionFilter = (queryFilterItem.FieldValue == "0" || queryFilterItem.FieldValue == "2")?this.BalanceOptionsFilterList.filter(d => d.Code == "WITHOUT")[0]:this.BalanceOptionsFilterList.filter(d => d.Code == "WITH")[0];
-                    this.UseBalanceFilter = queryFilterItem.FieldValue == "1" || queryFilterItem.FieldValue == "2";                            
-                    break;
-                 }
+                }
                     
-               
-              
+               case "SelectedBalance":{
+                    this.BuildFilterList();
+                     this.SelectedBalanceOptionFilter = this.BalanceOptionsFilterList.filter(d => d.Code === queryFilterItem.FieldValue)[0];
+                     break;
+                }
+               case"IncludeZeroBalance":{
+                     this.UseBalanceFilter = queryFilterItem.FieldValue;
+                     break;   
+               }
               
             }
     
@@ -435,17 +418,10 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         }
     }
     
-    RunReport() {
+    RunReport(isInteractive: boolean) {
         
         if (this.ValidateSelectedFilters()) {
-
-           
-
-
-
-
             this.reportFliter = new ReportFliter();
-            // this.reportFliter.Level = this.Level;
             this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
             this.reportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
             this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
@@ -457,7 +433,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
 
             this.ReportsPreview.CleanPartnersObslist();
 
-            this.ReportsPreview.GenerateReport(this.reportFliter, true);
+            this.ReportsPreview.GenerateReport(this.reportFliter, isInteractive);
         }
 
     }
@@ -498,17 +474,22 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         
         if (!this.Level) this.Level = "GLAccount";
         this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
-        if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+
+        this.queryFilterItems.push(new QueryFilterItem("IncludeZeroBalance", this.UseBalanceFilter));
+        this.queryFilterItems.push(new QueryFilterItem("SelectedBalance", this.SelectedBalanceOptionFilter.Code));
+
+        if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.WITHOUT_OPTION) {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "0"));
-
         }
-
-        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
+        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.WITHOUT_OPTION) {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "2"));
         }
-        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITH") {
+        else if (this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code === RevenueExpenseFilterComponent.WITH_OPTION) {
             this.queryFilterItems.push(new QueryFilterItem("CardFilter", "1"));
         }
+
+
+
         return this.queryFilterItems
     }
     ValidateSelectedFilters() {
@@ -517,11 +498,11 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         if (this.ToDate > new Date()) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.FutureDate"));
         }
-        if (this.ToDate == null) {
+        if (this.ToDate === null) {
             var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.ToDate"));
             this.ValidationErrorsList.push(s);
         }
-        if (this.FromDate == null) {
+        if (this.FromDate === null) {
             var s: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("Accounting.O.FromDate"));
             this.ValidationErrorsList.push(s);
         }
@@ -529,7 +510,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
         }
 
-        return this.ValidationErrorsList.length == 0;
+        return this.ValidationErrorsList.length === 0;
     }
 
 

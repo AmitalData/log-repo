@@ -454,7 +454,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
             }
         });
     }
-    RunButtonClicked() {
+    RunButtonClicked(isInteractive: boolean) {
         this.SetUIProperties();
       this.LoadAccSettings().then(res => {
 
@@ -474,6 +474,7 @@ export class CustomerStatusReportFilterComponent extends BaseComponent implement
               myReportFliter.NumberOfPage = 1;
               myReportFliter.ProcessType = "GenerateReport";
               myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+              myReportFliter.IsInteractive = isInteractive;
 
               this.RunReportEvent.emit(myReportFliter);
           }

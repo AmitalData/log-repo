@@ -475,21 +475,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         private void DetectEdges(DeclarationCourierStatusPM pm,
-                                  DeclarationCourierStatus poco)
+                          DeclarationCourierStatus poco)
         {
             pm.EdgeManifest =
                 poco.CourierManifestStatusCode != "R" &&
                 pm.CourierManifestStatusCode == "R";
 
-            pm.EdgeDeclaration =
-                pm.CourierManifestStatusCode == "V" &&
-                pm.CourierDeclarationStatusCode == "R" &&
-                pm.DocumentStatusCode == "V" &&
-               (poco.CourierManifestStatusCode != "V" ||
-                poco.CourierDeclarationStatusCode != "R" ||
-                poco.DocumentStatusCode != "V");
+            bool manifestNowV = pm.CourierManifestStatusCode == "V";
+            bool declNowR = pm.CourierDeclarationStatusCode == "R";
+            bool docNowV = pm.DocumentStatusCode == "V";
+
+            bool beforeDifferent =
+                   poco.CourierManifestStatusCode != "V" ||
+                   poco.CourierDeclarationStatusCode != "R" ||
+                   poco.DocumentStatusCode != "V";
+
+            pm.EdgeDeclaration = manifestNowV && declNowR && docNowV && beforeDifferent;
+
+            if (!pm.EdgeDeclaration && manifestNowV && declNowR && docNowV)
+            {
+                string blocker =
+                    beforeDifferent
+                        ? "‹should-have-been-true but unknown blocker›"
+                        : $"PrevSame: M={poco.CourierManifestStatusCode}, " +
+                          $"D={poco.CourierDeclarationStatusCode}, " +
+                          $"Doc={poco.DocumentStatusCode}";
+
+                LogMessagingUtil.Instance.AppendLine(
+                    $"[EdgeDecl-Miss] DeclId={pm.DeclarationId} | {blocker}");
+            }
+
 
             pm.EdgePayment = poco.CourierDeclarationStatusCode != "V" && pm.CourierDeclarationStatusCode == "V";
+            pm.IsNewEntity = poco.CourierManifestStatusCode == null &&
+                             poco.CourierDeclarationStatusCode == null &&
+                             poco.DocumentStatusCode == null;
 
         }
         private void HandleAutomatedMessaging(DeclarationCourierStatusPM pm)
@@ -499,24 +519,35 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - UpdateTaxationDateTime");
                 return;
             }
-            bool run =
-                (pm.EdgeManifest && AutoMsgScope.FirstTime($"{pm.DeclarationId}:M")) ||
-                (pm.EdgeDeclaration && AutoMsgScope.FirstTime($"{pm.DeclarationId}:D")) ||
-                (pm.EdgePayment && AutoMsgScope.FirstTime($"{pm.DeclarationId}:P"));
+            if (pm.IsNewEntity && AutoMsgScope.FirstTime($"{pm.DeclarationId}:I"))
+            {
+                LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] Skip AutomatedCustomsMessagingService  DeclId={pm.DeclarationId} - IsNewEntity FirstTime");
+                return;
+            }
 
-            if (!run) return;
+            string edgeKey = null;
+            if (pm.EdgeManifest) edgeKey = $"{pm.DeclarationId}:M";
+            else if (pm.EdgeDeclaration) edgeKey = $"{pm.DeclarationId}:D";
+            else if (pm.EdgePayment) edgeKey = $"{pm.DeclarationId}:P";
+
+            if (edgeKey == null || !AutoMsgScope.FirstTime(edgeKey)) return;
 
             LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] CALL AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
 
             try
             {
                 var svc = new AutomatedCustomsMessagingService(pm.Tenant);
-                svc.CheckAndSendMessageis(pm);
-
+                bool sent = svc.CheckAndSendMessageis(pm);
+                if (!sent)
+                {
+                    AutoMsgScope.Unstamp(edgeKey);
+                }
+                
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] DONE  AutomatedCustomsMessagingService  DeclId={pm.DeclarationId}");
             }
             catch (Exception ex)
             {
+                AutoMsgScope.Unstamp(edgeKey);
                 LogMessagingUtil.Instance.AppendLine($"[AfterUpdating] ERROR DeclId={pm.DeclarationId} - {ex.Message} - {ex.StackTrace}");
             }
         }

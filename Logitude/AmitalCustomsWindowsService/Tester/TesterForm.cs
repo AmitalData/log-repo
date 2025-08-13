@@ -6,6 +6,7 @@ using CustomsWorkerRole.Test;
 using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.Messaging;
 using Logitude.Customs.BL.Messaging.Maman;
+using Logitude.CustomsMessaging.Dca;
 using Logitude.CustomsMessaging.Dca.Restore9100;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.CustomsMessaging.RabbitMQ;
@@ -66,8 +67,6 @@ namespace AmitalCustomsWindowsService.Tester
 
             var t = new Thread(GetENV);
             t.Start();
-            //GetENV();an
-            ///customsMessagingSheetWRToolStripMenuItem_Click(this, null);
         }
 
         private static void GetENV()
@@ -303,7 +302,6 @@ namespace AmitalCustomsWindowsService.Tester
             }
 
 
-            //d.WorkerQueueType = checkBoxMQ.Checked ? Logitude.Server.Tools.WorkerQueueType.RabbitMQ : Logitude.Server.Tools.WorkerQueueType.DB;
             if (!String.IsNullOrWhiteSpace(textBoxOverrideRMQ.Text))
             {
                 d.OverrideRMQ = textBoxOverrideRMQ.Text;
@@ -1399,8 +1397,10 @@ namespace AmitalCustomsWindowsService.Tester
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            DcaDirect9200TenantService.SkipCorrelationClearForTests = true;
             var DownloadDcaMessageSheetWR = new DownloadDcaMessageSheetWR();
             DownloadDcaMessageSheetWR.WorkOnce();
+            DcaDirect9200TenantService.SkipCorrelationClearForTests = false;
         }
 
         //private void _CBInterfaceID_SelectedIndexChanged(object sender, EventArgs e)

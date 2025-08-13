@@ -735,16 +735,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  };
             return eventTypes;
         }
-        public List<Event> GetEventByShipment(string ShipmentId, int tenant, string forwardingShipmentHeaderId)
+        public List<Event> GetEventByShipment(string ShipmentId, int tenant, string forwardingShipmentHeaderId,bool IsFroMilstone = false)
         {
             var query = (from te in repository.context.TraceEvent
                          join et in repository.context.EventType on te.EventTypeId equals et.Id
                          join er in repository.context.EventRemarks on et.Id equals er.EventTypeId into erGroup
                          from er in erGroup.Where(e => e.PartnerTypeId == "CS").DefaultIfEmpty()
-                         where te.Deleted == false && et.InActive == false && et.IsCustomerView == true && et.Tenant == tenant && (te.EntityId == ShipmentId || te.EntityId == forwardingShipmentHeaderId) && et.Code != "EXCE"
+                         where te.Deleted == false && et.InActive == false && (IsFroMilstone || et.IsCustomerView == true) && et.Tenant == tenant && (te.EntityId == ShipmentId || te.EntityId == forwardingShipmentHeaderId) && et.Code != "EXCE"
                          select new Event()
                          {
-                             LocalName = et.LocalName,
+							 Code = et.Code,
+							 LocalName = et.LocalName,
 							 EventDatetime = EntityFunctions.AddSeconds(te.EventDateTime, -te.EventDateTime.Second),
 							 Notes = te.Notes,
                              IsChoose = er.IsChoose,
@@ -754,8 +755,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
             return query;
         }
-        public class Event
+		public class Event
         {
+            public string Code { get; set; }
             public string LocalName { get; set; }
             public DateTime? EventDatetime { get; set; }
             public string Notes { get; set; }

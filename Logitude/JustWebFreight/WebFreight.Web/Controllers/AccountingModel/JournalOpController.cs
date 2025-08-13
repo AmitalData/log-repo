@@ -263,18 +263,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                string documentId = "";
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {
                     byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
-                    //string decodedString = Encoding.UTF8.GetString(data);
 
-                    //var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
-                    //var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
-                    //string dosS = dosEnc.GetString(dosBytes);
-
-                    //var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dosBytes);
-                    //string winHebrewString = winHebrewEncoding.GetString(hebBytes);
                     string winHebrewString = Encoding.GetEncoding("Windows-1255").GetString(dosBytes);
 
                     var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
@@ -285,6 +277,42 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated //AccountingPerio
 
 
                     
+                }
+                else
+                {
+                    throw new Exception("fileUploadParamerter is empty");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+
+        public HttpResponseMessage PostJournalAsCSVWithSkip(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    byte[] dosBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
+                    string winHebrewString = Encoding.UTF8.GetString(dosBytes);
+
+                    var myJournalsCSVFlatFileAnalyser_ISL = new JournalsCSVFlatFileAnalyser_ISL();
+                    var journalAnalyseResult = myJournalsCSVFlatFileAnalyser_ISL.AnalyseWithSkip(authToken.Tenant, winHebrewString);
+
+
+                    return Request.CreateResponse(HttpStatusCode.OK, journalAnalyseResult);
+
+
+
                 }
                 else
                 {

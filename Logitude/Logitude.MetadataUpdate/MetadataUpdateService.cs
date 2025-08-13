@@ -45,7 +45,7 @@ namespace Logitude.MetadataUpdate
                 {
                     int currentTenantId =   db.Key;
                     string globalDbId = db.Value;
-
+            
                     if (tenantId.HasValue && currentTenantId != tenantId.Value)
                     {
                         continue;
@@ -79,19 +79,30 @@ namespace Logitude.MetadataUpdate
                         Console.WriteLine($"Updating module '{moduleName}' for Tenant {currentTenantId}, DB Connection: {dbConnection}");
                         TenantsUpdateClass.UpdateDataForTenant(currentTenantId, "UpdateTenantZeroNew", false, multiDB);
                     }
-
+                     
 
                     Console.WriteLine($"Building Object table zip files for DB Connection: {dbConnection} ...");
-                    bool buildCustomsZipFiles = false;
-                    if(moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include)
+                    bool isCustomsTenant = moduleToIncule.Modules.Contains("customs") && moduleToIncule.Include;
+                    if (isCustomsTenant)
                     {
-                        buildCustomsZipFiles = true;
+                        Console.WriteLine("Build ObjectTables Zip Files Data for customs:" + DateTime.Now.ToString());
+                        TenantsUpdateClass.BuildObjectTablesZipFilesData(false, true, currentTenantId);
                     }
-                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, buildCustomsZipFiles, currentTenantId);
+                    Console.WriteLine("Build ObjectTables Zip Files Data:" + DateTime.Now.ToString());
+                    TenantsUpdateClass.BuildObjectTablesZipFilesData(false, false, currentTenantId);
+                    if (isCustomsTenant)
+                    {
+                        Console.WriteLine("TableLastUpdateClass.UpdateCacheTableHistory:" + DateTime.Now.ToString());
+                        BL.Helpers.TableLastUpdateClass.UpdateCacheTableHistory(currentTenantId);
+                        Console.WriteLine("TenantsUpdateClass.UpdateTenants:" + DateTime.Now.ToString());
+                        WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.UpdateTenants(currentTenantId, multiDB);
+                    }
+
+
                     Console.WriteLine($"Building zip files finished for DB Connection: {dbConnection} ...");
 
                     processedDBConnections.Add(currentTenantId, dbConnection);
-                }
+                 }
 
                 Console.WriteLine("Updating all modules and building zip files finished successfully");
             }

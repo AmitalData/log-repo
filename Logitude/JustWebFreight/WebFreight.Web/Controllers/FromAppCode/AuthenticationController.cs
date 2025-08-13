@@ -986,7 +986,7 @@ namespace WebFreight.Web
                     loginsList = loginsList.Where(s => s.LicensedUser == true || s.IsUser == false).OrderBy(c => c.CompanyName).ToList();
                     if (loginParameters.IsCustomsBook)
                     {
-                        List<CompanyLogin> cbList = loginsList?.Where(s => SecurityUtility.CheckFeature("Customs.CB_CustomsItemComputedData", "CustomsBookFeature", s.Tenant)).ToList();
+                        List<CompanyLogin> cbList = loginsList?.Where(s => SecurityUtility.CheckFeature("Customs.CB_CustomsItemComputedData", "CustomsBookFeature", s.Tenant, true)).ToList();
                         loginsList = cbList?.Count > 0 ? cbList : loginsList;
                     }
 
@@ -1610,7 +1610,7 @@ namespace WebFreight.Web
                     customerCare = false;
                     bool distributor = false;
                     User logitudeUser = null;
-                    GlobalContact contact = globalContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.Email.ToLower() == parameters.Email.ToLower() && d.InActive == false).FirstOrDefault(); //mohammad
+                    GlobalContact contact = globalContext.GlobalContacts.Where(d => (d.GlobalTenantId == 0  || d.GlobalTenantId == tenant) && d.Email.ToLower() == parameters.Email.ToLower() && d.InActive == false).FirstOrDefault(); //mohammad
                     ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
                     if (contact != null)
                     {
@@ -2283,7 +2283,7 @@ namespace WebFreight.Web
             bool customerCare = false;
             bool distributor = false;
             User logitudeUser = null;
-            GlobalContact contact = globalObjectContext.GlobalContacts.Where(d => d.GlobalTenantId == 0 && d.InActive == false && d.Email == name).FirstOrDefault(); //mohammad
+            GlobalContact contact = globalObjectContext.GlobalContacts.Where(d => (d.GlobalTenantId == 0 || d.GlobalTenantId == tenant) && d.InActive == false && d.Email == name).FirstOrDefault(); //mohammad
 
 
 

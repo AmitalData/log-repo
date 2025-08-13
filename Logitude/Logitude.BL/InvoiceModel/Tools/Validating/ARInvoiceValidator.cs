@@ -1136,7 +1136,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                                                              && a.StatusCode != "PR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
-                                                             && (HasInterestFeature? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")
+                                                             && ((HasInterestFeature || entityPM.ARInvoiceTypeCode  == "IT") ? a.ARInvoiceTypeCode == "IT": a.ARInvoiceTypeCode != "IT")
                                                              select a).OrderByDescending(d => d.ApprovedDate).FirstOrDefault();
 
                             if (lastApprovedInvoice != null)

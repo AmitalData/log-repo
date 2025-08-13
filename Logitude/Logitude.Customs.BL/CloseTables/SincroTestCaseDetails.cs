@@ -330,7 +330,16 @@ MainInterfaceCode ="5002"
                     Code = "8235Rejected",
                     Name = "תיקון הצהרה (דחיה) יצוא",
                     Entity="Declaration",
-                     Param1= @"{ ""withSignature"":""false""}",
+                    Param1= @"{ ""withSignature"":""false""}",
+
+                },
+                new SincroTestCaseDetail()
+                {
+                    Code = "9100",
+                    Name = "9100",
+                    Entity="9100",
+                    Param1= @"{ ""msg"":"""",""servicename"":""SendDF_MSG2470_ReleaseGoodsMessage"",""filename"":""""}",
+                    AvoidSign= true
 
                 },
 

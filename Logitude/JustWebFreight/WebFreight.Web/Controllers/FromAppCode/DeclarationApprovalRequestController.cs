@@ -42,7 +42,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("DeclarationApprovalRequest", ApprovalRequest.Tenant, authToken.Tenant);
+                // SecurityUtility.AuthenticationOnTenant(ApprovalRequest.Tenant);
 
                 bool IsNewLog = false;
                 string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];

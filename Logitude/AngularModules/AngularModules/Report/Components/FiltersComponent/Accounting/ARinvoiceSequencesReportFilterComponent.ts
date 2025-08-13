@@ -157,7 +157,7 @@ export class ARinvoiceSequencesReportFilterComponent extends BaseComponent {
     }
     //#endregion
     private errors: string[] = [];
-    RunButtonClicked() {
+    RunButtonClicked(isInteractive: boolean) {
 
        
         if (this.ValidateSelectedFilters()) {
@@ -166,6 +166,7 @@ export class ARinvoiceSequencesReportFilterComponent extends BaseComponent {
             myReportFliter.NumberOfPage = 1;
             myReportFliter.ProcessType = "GenerateReport";
             myReportFliter.QueryFilterItemLists = this.GetQueryFilterItems();
+            myReportFliter.IsInteractive = isInteractive;
 
             this.RunReportEvent.emit(myReportFliter);
 

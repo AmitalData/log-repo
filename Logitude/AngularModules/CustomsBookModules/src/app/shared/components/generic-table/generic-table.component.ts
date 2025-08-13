@@ -35,6 +35,12 @@ export class GenericTableComponent {
     const fileURL = URL.createObjectURL(fileBlob); // Open the file in a new tab:
     window.open(fileURL, '_blank');
   }
+
+  shouldDisplayLink(condition: Condition | undefined, rowData: string): boolean {
+    if (!condition || !condition.key || !condition.value) 
+      return true;
+    return rowData && rowData.includes(condition.value);
+  }
 }
 
 export interface TableData {
@@ -53,7 +59,13 @@ export interface TableColumn {
 interface Link {
   url: string;
   key?: string;
+  condition?: Condition;
 }
+interface Condition {
+  key: string;
+  value: string;
+}
+
 export enum FileTypes {
   pdf = 'application/pdf',
   img = 'image/png'

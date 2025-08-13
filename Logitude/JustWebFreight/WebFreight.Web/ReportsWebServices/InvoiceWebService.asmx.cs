@@ -1713,6 +1713,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 if (invoiceTypeCode == "CD")
                 {
+                    if (invoicedataprovider.TotalVats != 0 && (invoiceSubTotals < 0 || invoiceAmount < 0))
+                    {
+                        invoicedataprovider.TotalVats = invoicedataprovider.TotalVats * -1;
+                    }
+
                     if (invoiceSubTotals < 0)
                     {
                         invoiceSubTotals = invoiceSubTotals * -1;

@@ -207,8 +207,8 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "18,Delivery on the way,יצא להפצה", 
                 LocalName = "יצא להפצה", 
                 Inactive = false, 
-                Weight = 180, 
-                ExportWeight = 180, 
+                Weight = 190, 
+                ExportWeight = 190, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -218,8 +218,8 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "19,Delivered,נמסר ללקוח", 
                 LocalName = "נמסר ללקוח", 
                 Inactive = false, 
-                Weight = 190, 
-                ExportWeight = 190, 
+                Weight = 200, 
+                ExportWeight = 200, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -229,8 +229,19 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "20,Invoice Issued,הופקה חשבונית", 
                 LocalName = "הופקה חשבונית", 
                 Inactive = false, 
-                Weight = 200, 
-                ExportWeight = 200, 
+                Weight = 210, 
+                ExportWeight = 210, 
+			});
+			 
+            all.Add(new CargoTrackingMilestoneDetails()
+            {    
+                Code = "21", 
+                EnglishName = "Arrived at Distribution Point", 
+                SearchFields = "21,Arrived at Distribution Point,המשלוח הגיע לנקודת החלוקה", 
+                LocalName = "המשלוח הגיע לנקודת החלוקה", 
+                Weight = 180, 
+                ExportWeight = 180, 
+                Inactive = false, 
 			});
 			
             return all;

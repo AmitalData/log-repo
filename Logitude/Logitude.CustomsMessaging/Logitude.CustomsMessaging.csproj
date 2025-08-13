@@ -298,6 +298,7 @@
     <Compile Include="Dca\RemoveOldOrphanedFilesFromBackupService.cs" />
     <Compile Include="Dca\Restore9100\RestoreWaitingImportMessagesService.cs" />
     <Compile Include="Dca\Restore9100\SendNG_9100_MSG_OutgoingMessageRequestService.cs" />
+    <Compile Include="Dca\Utilities\PartnerSftpUploader.cs" />
     <Compile Include="Dca\WaitingTester.cs" />
     <Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
     <Compile Include="FakeMessagingServices\Fake_2450_CancelContainerization.cs" />
@@ -305,6 +306,7 @@
     <Compile Include="FakeMessagingServices\Fake_2450_UpdateContainerWithError.cs" />
     <Compile Include="FakeMessagingServices\Fake_2450_Found.cs" />
     <Compile Include="FakeMessagingServices\DCASincroService.cs" />
+    <Compile Include="FakeMessagingServices\Fake_9100.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
     <Compile Include="FakeMessagingServices\Fake_2450_NotFound.cs" />

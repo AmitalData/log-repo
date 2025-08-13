@@ -251,7 +251,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ExcludeFromTaxReport = entityPM.ExcludeFromTaxReport;
             MapJournalAmount(entityPM);
 
-            //ForeignCurrencyAmount = localCurrencyAmount/ForeignExchangeRate;
         }
 
 

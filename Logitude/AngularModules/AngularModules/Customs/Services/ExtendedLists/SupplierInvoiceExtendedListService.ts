@@ -78,32 +78,46 @@ export class SupplierInvoiceExtendedListService {
         });
     }
 
-    GetSupplierInvoiceItemsForInvoices(declarationId: string, supplierInvoiceCounterKeys: string, skip: number, take: number, getCount: boolean) {
-        var authHeader = new Headers();
-        authHeader.append('Token', SessionInfo.Token);
-
-        var url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoices';
+    GetSupplierInvoiceItemsForInvoices(
+        declarationId: string,
+        supplierInvoiceCounterKeys: string,
+        skip: number,
+        take: number,
+        getCount: boolean,
+        SearchText: string = ''
+    ) {
+        const url = this._apiUrl + '/GetSupplierInvoiceItemsForInvoices?' +
+            'declarationId=' + declarationId +
+            '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys +
+            '&skip=' + skip +
+            '&take=' + take +
+            '&getCount=' + getCount;
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSupplierInvoiceItemsForInvoices/?' + 'declarationId=' + declarationId + '&supplierInvoiceCounterKeys=' + supplierInvoiceCounterKeys + '&skip=' + skip + '&take=' + take + '&getCount=' + getCount , ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+                map((response: any) => {
+                    const serviceResponse: ServiceResponse = response;
+                    const mappedItems: Array<SupplierInvoiceItemList> = [];
 
-
-                //var serviceResponse: ServiceResponse = new ServiceResponse();
-                var serviceResponse: ServiceResponse = response;
-                var _mappedListsArray: Array<SupplierInvoiceItemList> = [];
-                if (serviceResponse.Result) {
-                    for (var key in serviceResponse.Result) {
-
-                        var entity: SupplierInvoiceItemList;
-                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
-                        _mappedListsArray.push(entity);
-
+                    if (serviceResponse.Result) {
+                        for (const rawItem of serviceResponse.Result) {
+                            const entity: SupplierInvoiceItemList = this.MapJsonToEntityList(rawItem);
+                            if (
+                                !SearchText ||
+                                entity.ItemCode?.toString().includes(SearchText) ||
+                                entity.ClassificationCode?.toString().includes(SearchText)
+                            ) {
+                                mappedItems.push(entity);
+                            }
+                        }
                     }
-                }
 
-                serviceResponse.Result = _mappedListsArray;
-                return serviceResponse;
-            }),catchError(ServiceHelper.HandleServiceError));
+                    serviceResponse.Result = mappedItems;
+                    serviceResponse.Count = mappedItems?.length;
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError)
+            );
         });
     }
 

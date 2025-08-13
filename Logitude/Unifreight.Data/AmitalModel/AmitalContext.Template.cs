@@ -12351,9 +12351,9 @@ namespace Unifreight.Data.AmitalModel
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
                     .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
-                .Property(p => p.PAYORDNO)
-                    .HasColumnName(@"PAY_ORD_NO")
-                    .HasColumnType("int");
+    .Property(p => p.PAYORDNO)
+    .HasColumnName(@"PAY_ORD_NO")
+    .HasColumnType("numeric");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYMETHOD)
                     .HasColumnName(@"PAY_METHOD")
@@ -13456,6 +13456,15 @@ namespace Unifreight.Data.AmitalModel
                 .IsRequired()
                 .HasColumnName(@"IsSync")
                 .HasColumnType("int");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.LastRequeueTime)
+                .HasColumnName(@"LastRequeueTime")
+                .HasColumnType("Datetime");
+            modelBuilder.Entity<SyncRecord>()
+                .Property(p => p.IsRequeued)
+                .IsRequired()
+                .HasColumnName(@"IsRequeued")
+                .HasColumnType("bit");
 
 
             #endregion

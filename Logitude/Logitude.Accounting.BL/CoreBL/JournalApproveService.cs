@@ -141,10 +141,14 @@ namespace Logitude.Accounting.BL.CoreBL
 						{
 							var updater = new JournalUpdateService(_AccountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), _Tenant);
 							updater.SetStatusCodeFailed(_SeedJournalId, _Tenant);
-							scope.Complete();
+                             scope.Complete();
 						}
-					}
-					catch (Exception updateEx)
+                        var journalQueryService = new JournalQueryService(_AccountingContext);
+                        journalQueryService.FixFailedReconcileJournals(_Tenant);
+
+
+                    }
+                    catch (Exception updateEx)
 					{
 						NetCommonHelper.Logger.DevLog.Instance.WriteError(
 							$"[usp_AccountingStreaming] Failed to update journal status after primary exception. JournalId={_JournalPM?.Id} | Update Exception: {updateEx}");
@@ -152,7 +156,8 @@ namespace Logitude.Accounting.BL.CoreBL
 				}
 				return new ResultApproveJournalM()
 				{
-					Success = false
+					Success = false,
+                    FailDue = ex.Message
 				};
 			}
 			finally
@@ -1450,14 +1455,18 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 myDbQueueService.Delay(new TimeSpan(0, 0, 0, 50));
             }
-            if (message == null || message.RetryNumber > 5)
+            if (message == null || message.RetryNumber > 6)
             {
                 var journalFailedService = new JournalFailedService(tenant, seedJournalId);
-                journalFailedService.MarkAsFailed(ex);
+                journalFailedService.MarkAsFailed(ex );
                 if (myDbQueueService != null)
                 {
                     myDbQueueService.Complete();
                 }
+                var accountingContext = AccountingContext.GetContext(tenant);
+               var journalQueryService = new JournalQueryService(accountingContext);
+                journalQueryService.FixFailedReconcileJournals(tenant);
+
             }
         }
         /// <summary>
@@ -1523,7 +1532,7 @@ namespace Logitude.Accounting.BL.CoreBL
                               JournalLineNumber = r.JournalLineNumber,
                               Id = r.Id,
 
-                              CreateDate = r.CreateDate.GetValueOrDefault(),
+                              CreateDate = r.CreateDate ?? DateTime.MinValue,
                               ControlAccountId = r.ControlAccountId,
                               AccountId = r.AccountId,
 
@@ -1630,6 +1639,10 @@ namespace Logitude.Accounting.BL.CoreBL
                             up.SetStatusCodeFailed(_SeedJournalId, _Tenant);
                             scope.Complete();
                         }
+                        var journalQueryService = new JournalQueryService(_AccountingContext);
+                        journalQueryService.FixFailedReconcileJournals(_Tenant);
+
+
                     }
                     catch (Exception updateEx)
                     {

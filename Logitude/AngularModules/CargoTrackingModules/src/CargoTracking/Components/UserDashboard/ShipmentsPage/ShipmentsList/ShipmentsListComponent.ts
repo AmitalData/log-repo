@@ -316,7 +316,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
     private setDefaultDates() {
         const fromDate = new Date();
-        fromDate.setMonth(fromDate.getMonth() - 6);
+        fromDate.setMonth(fromDate.getMonth() - 1);
         this.FilterByOpenDateDataGreaterThan = fromDate.toISOString().slice(0, 10);
         this.FilterByOpenDateDataLessThan = new Date().toISOString().slice(0, 10);
         this.ApplyFilterButtonClicked(true)  

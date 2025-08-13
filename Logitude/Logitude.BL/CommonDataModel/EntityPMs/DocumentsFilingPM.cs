@@ -190,5 +190,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string BillToId { get; set; }
 
         public bool IsFromCloud { get; set; }
+        public string FileDataMD5Hash { get; set; }
+
     }
 }

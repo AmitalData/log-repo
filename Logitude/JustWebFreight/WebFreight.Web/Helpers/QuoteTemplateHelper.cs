@@ -1247,7 +1247,7 @@ namespace WebFreight.Web.Helpers
             }
             if (string.IsNullOrEmpty(quoteTemplateCopyDetails.UserId))
             {
-                ContactRepository contactRepository = new ContactRepository(0);
+                ContactRepository contactRepository = new ContactRepository(quoteTemplateCopyDetails.Tenant);
                 quoteTemplateCopyDetails.UserId = contactRepository.GetConactIdByemail("system@tenant" + quoteTemplateCopyDetails.Tenant.ToString() + ".com", quoteTemplateCopyDetails.Tenant);
             }
             if (quoteTemplateCopyDetails.UpdateFromTenantData)

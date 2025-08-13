@@ -106,6 +106,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
     public string InternalNotes { get; set; }
 
+    public DateTime? ReferenceDate { get; set; }
 
     }
 } 

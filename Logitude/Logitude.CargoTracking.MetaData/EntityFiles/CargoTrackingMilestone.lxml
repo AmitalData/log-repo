@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingMilestones&quot;"
-  Code="&quot;1f23&quot;"
+  Code="&quot;2680&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -745,24 +745,32 @@
       SearchFields="&quot;18,Delivery on the way,יצא להפצה&quot;"
       LocalName="&quot;יצא להפצה&quot;"
       Inactive="false"
-      Weight="180"
-      ExportWeight="180" />
+      Weight="190"
+      ExportWeight="190" />
     <Record
       Code="&quot;19&quot;"
       EnglishName="&quot;Delivered&quot;"
       SearchFields="&quot;19,Delivered,נמסר ללקוח&quot;"
       LocalName="&quot;נמסר ללקוח&quot;"
       Inactive="false"
-      Weight="190"
-      ExportWeight="190" />
+      Weight="200"
+      ExportWeight="200" />
     <Record
       Code="&quot;20&quot;"
       EnglishName="&quot;Invoice Issued&quot;"
       SearchFields="&quot;20,Invoice Issued,הופקה חשבונית&quot;"
       LocalName="&quot;הופקה חשבונית&quot;"
       Inactive="false"
-      Weight="200"
-      ExportWeight="200" />
+      Weight="210"
+      ExportWeight="210" />
+    <Record
+      Code="&quot;21&quot;"
+      EnglishName="&quot;Arrived at Distribution Point&quot;"
+      SearchFields="&quot;21,Arrived at Distribution Point,המשלוח הגיע לנקודת החלוקה&quot;"
+      LocalName="&quot;המשלוח הגיע לנקודת החלוקה&quot;"
+      Weight="180"
+      ExportWeight="180"
+      Inactive="false" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

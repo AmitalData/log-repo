@@ -136,7 +136,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
 
         private static void ValidateVAT_Unique(CustomerPM entityPM, ICommonDataContext myContext, Tenant myTenant, bool isNewEntity)
         {
-            if (entityPM.IsCustomer)
+            if (entityPM.IsCustomer && !entityPM.InActive)
             {
                 if (!string.IsNullOrEmpty(entityPM.VatNumber))
                 {

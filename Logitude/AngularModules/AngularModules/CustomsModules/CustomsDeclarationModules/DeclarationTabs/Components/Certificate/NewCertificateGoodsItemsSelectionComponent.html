@@ -167,14 +167,18 @@
     </tr>
 
     <!-- SupplierInvoicesList -->
-    <tr style="height: 55px;">
-        <td style="vertical-align: bottom; padding-bottom: 4px;" class="subTitle">
-            <div>
-                {{'Customs.Declaration.O.Items' | TextCodeTranslationPipe}}
-            </div>
-        </td>
-    </tr>
-    <tr>
+     <tr style="height: 55px;">
+  <td style="vertical-align: bottom; padding-bottom: 4px;" class="subTitle">    
+    <div style="display: flex; justify-content: space-between; align-items: flex-end;">     
+      <div style="white-space: nowrap;">
+        {{ 'Customs.Declaration.O.Items' | TextCodeTranslationPipe }}
+      </div>      
+      <div style="flex-grow: 1; max-width: 300px; margin-right: 10px; text-align: left;">
+            <SearchTextBox  [PlaceHolder]="'פרט מכס/מספר פריט'" (SearchTextChangeEvent)="SearchTextChanged($event)"></SearchTextBox>
+      </div>
+    </div>
+  </td>
+     <tr>
         <td>
             <div class="CellContent">
                 <logitude-grid GridWidth="100%" GridHeight="100%"
@@ -189,8 +193,8 @@
                                [SelectedRows]="SelectedInvoiceItems"
                                [IsGradiantSelectedColor]="true"
                                [EnableMultiSelection]="true"
-                               [IsCustomTemplate]="true">
-                </logitude-grid>
+                               [IsCustomTemplate]="true" >
+                            </logitude-grid>
             </div>
 
         </td>

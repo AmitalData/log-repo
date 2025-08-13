@@ -65,14 +65,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.ObjectTables;
         }
 
-        public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache)
+        public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache,int contextTenant=0)
         {
+            var currenttenant = SettingUtil.GetCurrentTenant();
+            if (currenttenant == -1)
+            {
+                currenttenant = contextTenant;
+            }
             ObjectTable entity;
             if (getFromCache)
             {
-                string entityName = "ObjectTable" + name + tenant;
+                string entityName = $"ObjectTable{name}_{tenant}_{currenttenant}";
 
-                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
 
@@ -105,7 +110,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public ObjectTable GetSingleObjectTable(string id, int tenant, bool getFromCache)
         {
-            string entityName = "ObjectTable" + id + tenant;
+            string entityName = $"ObjectTable{id}_{tenant}_{SettingUtil.GetCurrentTenant()}";
             ObjectTable entity;
             getFromCache = true;
 
@@ -158,7 +163,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             if (!string.IsNullOrEmpty(id))
             {
-                string entityName = "ObjectTable" + id + tenant;
+                string entityName = $"ObjectTable{id}_{tenant}_{SettingUtil.GetCurrentTenant()}";
                 ObjectTable entity;
 
                 if (CacheManager.CacheWrapper != null)
@@ -290,7 +295,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                         {
                             IWebFreightContext context = WebFreightContext.GetContext(tenant);
                             currentTenantTables = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
-                                                   where (a.Tenant == tenant && a.InActive == false)
+                                                   where (a.Tenant == 0 && a.InActive == false)
                                                  select a).ToList();
                             scope.Complete();
                         }
@@ -350,12 +355,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-        public List<ObjectTable> GetAllCacheOnClient(int tenant)
+        public List<ObjectTable> GetAllCacheOnClient(int tenant,int contextTenant=0)
         {
             
 
-            IWebFreightContext context = WebFreightContext.GetContext(tenant);
-            var q = (from a in context.ObjectTables//.Include("HeaderScreen").Include("DescriptionTextCode").Include("NewButtonTextCode")
+            IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
+            var q = (from a in context.ObjectTables
                      where (a.Tenant == tenant && a.InActive == false && a.CacheOnClient == true)
                      select a);
             if (LogitudeSettings.IsCostomsDeploy)

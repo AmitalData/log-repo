@@ -40,11 +40,13 @@ using Microsoft.Practices.Unity;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.VisualBasic.FileIO;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.ShipmentsModel;
@@ -115,6 +117,9 @@ using Newtonsoft.Json;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using WebFreight.Web.GlobalModel;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Customs.BL.Messaging.Customs;
 
 
 namespace Logitude.Update
@@ -6981,6 +6986,199 @@ User/Pass",
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             SetControlPropertyValue(invoiceDueDateLabel, "Text", "Done in " + ts.ToString());
+        }
+        private void RetrieveImportDeclarationsFromCsv_Click(object sender, EventArgs e)
+        {
+            using (var ofd = new OpenFileDialog
+            {
+                Filter = "CSV files (*.csv)|*.csv",
+                Title = "Choose CSV file"
+            })
+            {
+                if (ofd.ShowDialog() != DialogResult.OK) return;
+
+                List<string> customsFiles = ReadColumnFromCsv(ofd.FileName, 0);
+
+                var declarationQueryService = new DeclarationQueryService(1);
+
+                LoggedContactResolver.RegisterLoggedContactUtil();
+                DateTimeUtilResolver.RegisterDateTimeUtil();
+                TranslateTextsClassUtilResolver.RegisterTranslateTextsClassUtil();
+                IdCounterUtilResolver.RegisterIdCounterUtil();
+
+                MessagingServiceFactoryHelper.InitContainer(); ContainerAccessor.InitContainer();
+                FillAppSettings();
+                foreach (string customsFile in customsFiles)
+                {
+                    try
+                    {
+                        string decId = declarationQueryService.GetIdByCustomFileNo(customsFile, 1);
+                        if (string.IsNullOrEmpty(decId))
+                        {
+                            MessageBox.Show(
+                                $"No declaration ID found for Customs File: {customsFile}",
+                                "Not Found",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            continue;
+                        }
+
+                        var declarationPM = declarationQueryService.GetAcceptDeclarationAmendment(decId, 1);
+                        if (declarationPM == null)
+                        {
+                            MessageBox.Show(
+                                $"Declaration object is NULL for ID {decId} (Customs File {customsFile}).",
+                                "Not Found",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                            continue;
+                        }
+                        SendDeclarationStatusRequest(declarationPM);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            $"ERROR while processing Customs File {customsFile}.\n\n{ex}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
+                }
+
+            }
+
+        }
+        void SendDeclarationStatusRequest(DeclarationPM myDeclarationPM)
+        {
+
+
+            var newSearchDeclarationStatusRequestParams = new DeclarationStatusRequestParams()
+            {
+                LoggingEnabled = true,
+                CustomFileNo = myDeclarationPM.CustomFileNo,
+                DeclarationNumber = myDeclarationPM.DeclarationNumber,
+                Tenant = myDeclarationPM.Tenant,
+                RequestName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                ResponseName = "Declaration Status " + myDeclarationPM.DeclarationNumber,
+                RequestVIA = SendRequestVIA.WebServiceBatch,
+                InterfaceTypeCode = "8250",
+                LoggingEntityId = myDeclarationPM.Id,
+                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                LoggingUserId = AuthenticationUtil.ResolveUserId(myDeclarationPM.Tenant),
+            };
+
+
+
+            try
+            {
+                SBQMessageService.CreateSheetSBQMessage<Logitude.CustomsMessaging.Common.RequestParams.DeclarationStatusRequestParams>(newSearchDeclarationStatusRequestParams
+                    , false
+                    );
+
+            }
+            catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
+            {
+                if (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress)
+                {
+                    Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("8250 RequestInProgress stop create a new one !! ");
+                }
+            }
+        }
+        private static List<string> ReadColumnFromCsv(string path,
+                                              int columnIndex = 0,
+                                              bool skipHeader = true,
+                                              char delimiter = ',')
+        {
+            var values = new List<string>();
+
+            using (var parser = new TextFieldParser(path, Encoding.UTF8))
+            {
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(delimiter.ToString());
+                parser.HasFieldsEnclosedInQuotes = true;
+
+                if (skipHeader && !parser.EndOfData) parser.ReadLine();
+
+                while (!parser.EndOfData)
+                {
+                    string[] fields = parser.ReadFields();
+                    if (fields.Length > columnIndex)
+                    {
+                        string val = fields[columnIndex]?.Trim();
+                        if (!string.IsNullOrEmpty(val)) values.Add(val);
+                    }
+                }
+            }
+            return values;
+        }
+        private void FillAppSettings()
+        {
+            SettingRepository settingRepository = new SettingRepository();
+            Setting setting = settingRepository.GetSingleSetting("1");
+            LogitudeSettings.Id = setting.Id;
+            LogitudeSettings.ChampEnv = setting.ChampEnv;
+            LogitudeSettings.ChampURL = setting.ChampURL;
+            LogitudeSettings.ChampTestAPIURL = setting.ChampTestAPIURL;
+            LogitudeSettings.ChampTestAPIPassword = setting.ChampTestAPIPassword;
+            LogitudeSettings.ChampProdAPIURL = setting.ChampProdAPIURL;
+            LogitudeSettings.ChampProdAPIPassword = setting.ChampProdAPIPassword;
+            LogitudeSettings.CustomerCareIP = setting.CustomerCareIP;
+            LogitudeSettings.DeploymentStage = setting.DeploymentStage;
+            LogitudeSettings.IsLogEnabled = setting.IsLogEnabled;
+            LogitudeSettings.LogitudeURL = setting.LogitudeURL;
+            LogitudeSettings.TotangoServiceId = setting.TotangoServiceId;
+            LogitudeSettings.UsingAzure = setting.UsingAzure;
+            LogitudeSettings.StorageAccountKey = setting.StorageAccountKey;
+            LogitudeSettings.StorageAccountName = setting.StorageAccountName;
+            LogitudeSettings.StorageType = setting.StorageType;
+            LogitudeSettings.LogitudeCRMTenantNumber = setting.LogitudeCRMTenantNumber;
+            LogitudeSettings.AutoSignupEmail = setting.AutoSignupEmail;
+            LogitudeSettings.AutoSignupPassword = setting.AutoSignupPassword;
+            LogitudeSettings.ForceHttps = setting.ForceHttps;
+            LogitudeSettings.CheckConnectionURL = setting.CheckConnectionURL;
+            LogitudeSettings.AndroidSharedAppMinimumVersion = setting.AndroidSharedAppMinimumVersion;
+            LogitudeSettings.IOSSharedAppMinimumVersion = setting.IOSSharedAppMinimumVersion;
+            LogitudeSettings.WorkEnvironment = setting.WorkEnvironment;
+            LogitudeSettings.LogoCode = setting.LogoCode;
+            LogitudeSettings.EnableHybridQueue = setting.EnableHybridQueue;
+            LogitudeSettings.EmailAlertSignature = setting.EmailAlertSignature;
+            LogitudeSettings.IOSAppLink = setting.IOSAppLink;
+            LogitudeSettings.AndroidAppLink = setting.AndroidAppLink;
+            LogitudeSettings.AndroidPodAppMinimumVersion = setting.AndroidPodAppMinimumVersion;
+            LogitudeSettings.IOSPodAppMinimumVersion = setting.IOSPodAppMinimumVersion;
+            LogitudeSettings.MinimumOutlookVersion = setting.MinimumOutlookVersion;
+            LogitudeSettings.ABMProductId = setting.ABMProductId;
+            LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+            LogitudeSettings.SignAppVersion = setting.SignAppVersion;
+            LogitudeSettings.ReportsRunUsingWR = setting.ReportsRunUsingWR;
+            LogitudeSettings.SMSServiceUserId = setting.SMSServiceUserId;
+            LogitudeSettings.SMSServiceAuthToken = setting.SMSServiceAuthToken;
+            LogitudeSettings.SMSServicePhoneNumber = setting.SMSServicePhoneNumber;
+            LogitudeSettings.GLSHKEnv = setting.GLSHKEnv;
+            LogitudeSettings.GLSHKURL = setting.GLSHKURL;
+            LogitudeSettings.NotificationHubName = setting.NotificationHubName;
+            LogitudeSettings.NotificationHubConnectionString = setting.NotificationHubConnectionString;
+            LogitudeSettings.DomainName = setting.DomainName;
+            LogitudeSettings.ProductName = setting.ProductName;
+            LogitudeSettings.QueueServiceMode = setting.QueueServiceMode;
+            LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
+            LogitudeSettings.DropboxAppKey = setting.DropboxAppKey;
+            LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
+            LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken;
+            LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
+            LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
+            LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
+            LogitudeSettings.OITenantNumber = setting.OITenantNumber;
+            LogitudeSettings.AzurePrincipalSecretKey = setting.AzurePrincipalSecretKey;
+            LogitudeSettings.DNSZone = setting.DNSZone;
+            LogitudeSettings.DNSIPAddress = setting.DNSIPAddress;
+            LogitudeSettings.WorkflowStorageAccountName = setting.WorkflowStorageAccountName;
+            LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
+            LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
+            LogitudeSettings.WindWardSettings = setting.WindWardSettings;
+            LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
+            LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
+
         }
     }
 

@@ -173,8 +173,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ARPaymentChequeQueryService aRPaymentChequeQueryService = new ARPaymentChequeQueryService(tenant);
             string accountId = aRPaymentChequeQueryService.GetAccountIdForCheque(tenant, chequePM.PaymentId, chequePM.LineNumber);
 
-            if (accountId != null)
-            {
+            if (accountId != null)            {
                 GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
                 GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(tenant);
 

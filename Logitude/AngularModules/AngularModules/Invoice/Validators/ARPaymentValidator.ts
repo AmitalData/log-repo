@@ -150,7 +150,9 @@ export class ARPaymentValidator {
         if (AppTool.IsNullOrEmpty(entityPm.BankBranch)) {
             validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BankBranch")));
         }
-       
+        if (AppTool.IsNullOrEmpty(entityPm.BranchId)) {
+            validationResults.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARPayment.F.BranchId")));
+        }
     }
     arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
 

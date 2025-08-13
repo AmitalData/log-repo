@@ -406,7 +406,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"declarationPM.id={declarationPM.Id},CustomFileNo={declarationPM.CustomFileNo}");
 
-                 if (declarationPM.PaymentDate.HasValue)
+                 if (declarationPM.PaymentDate.HasValue || declarationPM.IsSubmitDeclaration == true)
                 {
                     shouldCreateDCAComm = false;
                      NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Declaration has already been payed id:{0} dec {1}", _DocumentsFilingPM.Id, declarationPM.CustomFileNo));
@@ -430,13 +430,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                          var amitalContext = AmitalContext.GetContext(tenant);
                         var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-                        var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGG_DEC_DOC_CLT", "NON", "NON", false, true);
-                        def.DEFDATA = def.DEFDATA ?? "";
-                        if (!String.IsNullOrWhiteSpace(def.DEFDATA))
+
+                        DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(tenant);
+                        var def = defaultValueQueryService.GetDefault("ISRAEL", "CGG_DEC_DOC_CLT", "NON", "NON", tenant); 
+                        if (!String.IsNullOrWhiteSpace(def))
                         {
                             var listStorageDefault = new List<string>();
 
-                            if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.DEFDATA.Contains(declarationPM.CustomerCode)) 
+                            if (!String.IsNullOrWhiteSpace(declarationPM.CustomerCode) && def.Contains(declarationPM.CustomerCode)) 
                             {
                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("def.DEFDATA.Contains(declarationPM.CustomerId)");
                                 shouldCreateDCAComm = true;

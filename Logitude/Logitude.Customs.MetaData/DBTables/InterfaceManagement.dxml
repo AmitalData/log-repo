@@ -141,6 +141,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsCustomsFile"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsUnifreight"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultSendOptionsCode"
     ReferencedTable="InterfaceSendOptions"

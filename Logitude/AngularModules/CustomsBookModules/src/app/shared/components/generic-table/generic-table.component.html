@@ -37,8 +37,12 @@
                                     </td>
                                     <ng-template #linkCell>
                                         <td *ngIf="col.visible && col.dataType == 'link'">
-                                            <a [href]="checkLink(col.link?.url, row[col.link?.key])" target="_blank">{{
+                                            <a *ngIf="shouldDisplayLink(col.link?.condition, row[col.key]); else linkCondition"
+                                                [href]="checkLink(col.link?.url, row[col.link?.key])" target="_blank">{{
                                                 row[col.key] ? row[col.key] : '' }}</a>
+                                            <ng-template #linkCondition>
+                                                <span>{{ row[col.key] ? row[col.key] : '' }}</span>
+                                            </ng-template>
                                         </td>
                                     </ng-template>
                                 </ng-template>

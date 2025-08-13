@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "709214448a7e574c307204b144edbcf6";
+		public const string HashString = "06ed7f8bc02b5b27290fed0d131ac615";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,6 +44,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -85,6 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -229,7 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreateDate",
 					  						ObjectTableName =  "TaxReport",
-					  						FieldsDataType =  "DateTime",
+					  						FieldsDataType =  "DateTime2",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  true,
@@ -2890,6 +2892,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RemoveDuplicates",
 					  						ListPropertyPath =  "RemoveDuplicates",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -3212,6 +3215,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes,contextTenant);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "TFTE",
+                EnglishName =  "Failed",
+                LocalName =  "Failed",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = TaxReportObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes,contextTenant);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext,int contextTenant)
@@ -3464,7 +3485,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode TaxReportTextCode_TaxReportODefaultDifferencesGLAccountIdIsNull = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.DefaultDifferencesGLAccountIdIsNull", DefaultText = "AccountingSettings - DefaultDifferencesGLAccountId is null",LocalDefaultText = @"BS64:IteU15LXk9eo15XXqiDXlNeg15TXnNeqINeX16nXkdeV16DXldeqIC0g15zXkCDXnteV15bXnyDXoteo15og15HXm9eo15jXmdehINeR16jXmdeo16og157Xl9eT15wg15zXlNek16jXqdeZ150i", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode TaxReportTextCode_TaxReportOReportIsEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ReportIsEdited", DefaultText = "Report in editing - click to recalculate",LocalDefaultText = @"BS64:IteT15XXlyDXkdei16jXmdeb15QgLSDXmdepINec15HXpteiINeR16DXmdeUINee15fXk9epIg==", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode TaxReportTextCode_TaxReportOReportIsEdited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ReportIsEdited", DefaultText = "Report in editing - click to recalculate",LocalDefaultText = @"BS64:IteT15XXlyDXkdei16jXmdeb15QgLSDXnNeX16Ug15zXl9eZ16nXldeRINee15fXk9epIg==", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode TaxReportTextCode_AccountingOFixDuplicates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.FixDuplicates", DefaultText = "Fix Duplicates",LocalDefaultText = @"BS64:IteY15nXpNeV15wg15HXm9ek15XXnNeZ150i", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 

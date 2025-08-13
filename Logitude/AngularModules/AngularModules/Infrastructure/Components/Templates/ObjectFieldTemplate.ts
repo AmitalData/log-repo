@@ -120,6 +120,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                 case "Boolean":
                 case "Date":
                 case "DateTime":
+                case "DateTime2":
                 case "Integer": {
                     if (this.HasTemplate != true) {
                         this.IsAutoFormat = true;

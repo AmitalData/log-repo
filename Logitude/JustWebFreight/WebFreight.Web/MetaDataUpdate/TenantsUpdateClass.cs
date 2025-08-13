@@ -629,10 +629,9 @@ namespace WebFreight.Web.MetaDataUpdate
                 NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Exiting function with Exception");
                 throw ex;
             }
-
         }
 
-        public static void UpdateTenants()
+        public static void UpdateTenants(int contextTenant=0, bool multiDB = false)
         {
             try
             {
@@ -646,15 +645,29 @@ namespace WebFreight.Web.MetaDataUpdate
                 if (globalTenants != null)
                 {
                     GlobalTenant tenantZero = globalTenants.Where(d => d.Id == 0).FirstOrDefault();
-                    List<GlobalTenant> upgradableTenants = (from a in globalTenants
-                                                            where a.Version != tenantZero.Version && a.Id != 0 && a.Version != -1 && a.IsActive == true
-                                                            select a).ToList();
+                    List<GlobalTenant> upgradableTenants;
+                    if (multiDB)
+                    {
+                        string contextDbId = contextTenant.ToString();
+                        upgradableTenants = (from a in globalTenants
+                                             where a.Version != tenantZero.Version && a.Id != 0 && a.Version != -1 && a.IsActive == true
+                                             && a.GlobalDBId == contextDbId
+                                             select a).ToList();
+                    }
+                    else
+                    {
+                         upgradableTenants = (from a in globalTenants
+                                                                where a.Version != tenantZero.Version && a.Id != 0 && a.Version != -1 && a.IsActive == true
+                                                                select a).ToList();
+                    }
+                   
+                
                     if (upgradableTenants.Count > 0)
                     {
-                        IWebFreightContext context = WebFreightContext.GetContext(0);
-                        ICommonDataContext commonContext = CommonDataContext.GetContext(0);
-                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(0);
-                        IAccountingContext accountingContext = AccountingContext.GetContext(0);
+                        IWebFreightContext context = WebFreightContext.GetContext(contextTenant);
+                        ICommonDataContext commonContext = CommonDataContext.GetContext(contextTenant);
+                        IInvoiceContext invoiceContext = InvoiceContext.GetContext(contextTenant);
+                        IAccountingContext accountingContext = AccountingContext.GetContext(contextTenant);
 
                         MeasurementRepository measurementsRepository = new MeasurementRepository(commonContext);
                         EntityStatusRepository entityStatusRepository = new EntityStatusRepository(context);
@@ -694,12 +707,12 @@ namespace WebFreight.Web.MetaDataUpdate
                                 try
                                 {
                                     UpdateDataForTenant(tenant.Id, "");
-
                                     AzureLog.SaveLogsInStorage("Update Data for tenant:" + tenant.Id + " Completed successfully", "P", DateTime.Now, "", "", 0, "", "WorkerRole", null);
                                 }
                                 catch (Exception e)
                                 {
-                                    GlobalTenantRepository GlobaltenantRep = new GlobalTenantRepository();
+                                    IGlobalContext globalContext = GlobalContext.GetContext(contextTenant);
+                                    GlobalTenantRepository GlobaltenantRep = new GlobalTenantRepository(globalContext);
                                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "", "WorkerRole", null);
 
                                     tenant.Version = -1;
@@ -953,8 +966,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 #region Dictionaries and lists
 
-                // Dictionary<string, TranslationHeader> tenantZeroTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(0).ToDictionary(d => d.Description, a => a);
-                //Dictionary<string, TranslationHeader> currentTenantTranslationHeaders = translationHeadersRepository.GetTranslationHeadersByTenant(tenant).ToDictionary(d => d.Description, a => a);
                 Dictionary<string, Measurement> tenantZeroMeasurements = TenantZeroMeasurements;
                 Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                 Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
@@ -979,7 +990,6 @@ namespace WebFreight.Web.MetaDataUpdate
                 Dictionary<string, DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).GroupBy(d => d.Code + d.ObjectTableId).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                 List<DocumentTypeCustomField> tenantZeroCustomFields = TenantZeroCustomFields;
                 Dictionary<string, CreditCardType> tenantZeroCreditCardTypes = TenantZeroCreditCardTypes;
-                //Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
                 Dictionary<string, MoveType> tenantZeroMoveTypes = TenantZeroMoveTypes;
                 Dictionary<string, MoveType> currentTenantMoveTypes = moveTypeRepository.GetMoveTypesByTenant(tenant).GroupBy(d => d.Code).ToDictionary(g => g.Key, a => a.FirstOrDefault());
                 Dictionary<string, EmailAlertSetting> tenantZeroEmailAlertSettings = TenantZeroEmailAlertSettings;
@@ -1007,10 +1017,8 @@ namespace WebFreight.Web.MetaDataUpdate
                     Stopwatch stopWatch = new Stopwatch();
                     stopWatch.Start();
 
-                    //UpdateTranslationHeaders(tenant, tenantZeroTranslationHeaders, currentTenantTranslationHeaders, translationHeadersRepository);
                     UpdateMeasurements(tenant, tenantZeroMeasurements, currentTenantMeasurements, measurementsRepository);
 
-                    //===========================
 
                     TenantRepository tenantRep = new TenantRepository(commonContext);
                     Tenant currentTenant = tenantRep.GetSingleTenant(tenant);
@@ -1020,15 +1028,10 @@ namespace WebFreight.Web.MetaDataUpdate
                         isHybridTenant = currentTenant.IsHybrid;
                     }
 
-                    //====================================
 
                     UpdateEntityStatus(tenant, tenantZeroEntityStatus, currentTenantEntityStatus, entityStatusRepository, isHybridTenant);
                     UpdateEventTypes(tenant, tenantZeroEventTypes, currentTenantEventTypes, eventTypeRepository, tenantZeroEntityStatus, currentTenantEntityStatus, isHybridTenant);
-
-                    //UpdateRanks(tenant, tenantZeroRanks, currentTenantRanks, rankRepository);
                     UpdateDocumentTypes(tenant, documentTypeRepository, documentTypeCopyRepository, tenantZeroDocumentTypes, currentTenantDocumentTypes, documentTypeCustomFieldRepository, tenantZeroCustomFields, documentTypeTemplateRepository);
-                    //UpdateCreditCardTypes(tenant, tenantZeroCreditCardTypes, currentTenantCreditCardTypes, creditCardTypeRepositoryRepository);
-                    //UpdateMoveTypes(tenant, tenantZeroMoveTypes, currentTenantMoveTypes, moveTypeRepository);
                     UpdateEmailAlertSettings(tenant, tenantZeroEmailAlertSettings, currentEmailAlertSettings, emailAlertSettingRepository);
                     ReportHelper reportHelper = new ReportHelper();
                     reportHelper.UpdateReports(tenant);
@@ -1045,15 +1048,6 @@ namespace WebFreight.Web.MetaDataUpdate
                     quoteTemplateHelper.CopyQuoteTemplateFromTenantZero(quoteTemplateCopyDetails);
 
                     if (!LogitudeSettings.IsCostomsDeploy)
-                    // what do u think ?? ok i suppose
-                    // but ihab yesterday said : if we can ..we shold do it ?!?!?
-                    // well lets ,ok lets ??? 
-                    ///wde/what ask ihab again ?
-                    //no we will tell ihab that we did so :)
-                    //!!!! goood !!!!!!
-                    // lets do it next branch >> mean next next (unknown time :) :) )
-                    // deal :)
-                    // i will leave this remarks !!!
                     {
                         UpdateFullAccSettings(tenant, fullAccSettingRepository);
                         UpdateJournalActionTypes(tenant, tenantZeroJournalActionTypes, currentJournalActionTypes, journalActionTypeRepository);
@@ -2393,7 +2387,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 user.SearchFields = email + "," + name + "," + phoneNumber;
                 user.UserType = "S";
                 user.BusinessUnitId = tenant.ToString();
-                InsertUser(user, theUserRepository, contactRepository, theRoleRepository, contactTenantRoleRepository, contactTenantRepository);
+                InsertUser(user, theUserRepository, contactRepository, theRoleRepository, contactTenantRoleRepository, contactTenantRepository, tenant);
 
                 return user.Password;
 
@@ -2445,7 +2439,7 @@ namespace WebFreight.Web.MetaDataUpdate
             user.BusinessUnitId = userPM.BusinessUnitId;
         }
 
-        public static void InsertUser(UserPM user, UserRepository usersRepository, ContactRepository contactsRepository, RoleRepository rolesRepository, ContactTenantRoleRepository contactTenantRolesRepository, ContactTenantRepository contactTenantsRepository)
+        public static void InsertUser(UserPM user, UserRepository usersRepository, ContactRepository contactsRepository, RoleRepository rolesRepository, ContactTenantRoleRepository contactTenantRolesRepository, ContactTenantRepository contactTenantsRepository,int tenant)
         {
             try
             {
@@ -2454,7 +2448,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 MapUserToContact(user, newContact);
 
                 newContact.Email = newContact.Email.ToLower();
-                Contact adminContact = contactsRepository.GetSingleContactByEmail("admin@fnarsoft.com", 0);
+                Contact adminContact = contactsRepository.GetSingleContactByEmailMultiDB("admin@fnarsoft.com", 0, contextTenant: tenant);
                 if (adminContact != null)
                 {
                     newContact.Signature = adminContact.Signature;
@@ -2582,11 +2576,6 @@ namespace WebFreight.Web.MetaDataUpdate
                     sameCountry = docType.CountryCode == countryCode;
                     if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode?.Trim()) || sameCountry))
                     {
-
-
-
-                        //if (!currentTenantDocumentTypes.Keys.Contains(docType.Code + docType.ObjectTableId))
-                        //{
                         var documentType = (from a in currentTenantDocumentTypes.Values
                                             where a.Code.Trim().ToUpper() == docType.Code.Trim().ToUpper()
                                             select a).FirstOrDefault();
@@ -2739,7 +2728,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             copyDocumentTypeTemplateService.Execute(documentType, docType);
                         }
-                        //}
 
                     }
                     try
@@ -2975,10 +2963,9 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private static void UpdateEntityStatus(int tenant, Dictionary<string, EntityStatus> tenantZeroEntityStatus, Dictionary<string, EntityStatus> currentTenantEntityStatus, EntityStatusRepository entityStatusRepository, bool isHybridTenant)
         {
-
             try
             {
-                string shipmentTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
+                string shipmentTableId = new ObjectTableRepository(tenant).GetObjectTableIdByName("Shipment");
                 foreach (EntityStatus entityStatus in tenantZeroEntityStatus.Values)
                 {
                     if (isHybridTenant)
@@ -2992,15 +2979,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.ObjectTableId))
 
                     {
-                        //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
-                        //updatedEntityStatus.Name = entityStatus.Name;
-                        //updatedEntityStatus.DisplayName = !string.IsNullOrEmpty(entityStatus.DisplayName) ? entityStatus.DisplayName : entityStatus.Name;  
-                        //updatedEntityStatus.ObjectTableId = entityStatus.ObjectTableId;
-                        //updatedEntityStatus.Tenant = tenant;
-                        //updatedEntityStatus.StatusWeight = entityStatus.StatusWeight;
-                        //updatedEntityStatus.InActive = entityStatus.InActive;
-                        //updatedEntityStatus.SearchFields = entityStatus.SearchFields;
-                        //entityStatusRepository.Update(updatedEntityStatus);
+                        
                     }
                     else
                     {
@@ -3035,7 +3014,8 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             try
             {
-                string shipmentTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
+
+                string shipmentTableId = new ObjectTableRepository(tenant).GetObjectTableIdByName("Shipment");
 
                 foreach (EventType eventType in tenantZeroEventTypes.Values)
                 {
@@ -3060,23 +3040,6 @@ namespace WebFreight.Web.MetaDataUpdate
                         EventType updatedEventType = currentTenantEventTypes[eventType.Code + eventType.ObjectTableId];
                         if ((updatedEventType.UpdateDate != eventType.UpdateDate))
                         {
-                            //updatedEventType.EnglishName = eventType.EnglishName;
-                            //updatedEventType.AddedManually = eventType.AddedManually;
-                            //if (!updatedEventType.IsStatusNotModified)
-                            //    updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
-                            //updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
-                            //updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
-                            //updatedEventType.InActive = eventType.InActive;
-                            //updatedEventType.IsFollowUp = eventType.IsFollowUp;
-                            //updatedEventType.IsManualEntry = eventType.IsManualEntry;
-                            //updatedEventType.LocalName = eventType.LocalName;
-                            //updatedEventType.ManualActivatedFollowUp = eventType.ManualActivatedFollowUp;
-                            //updatedEventType.ObjectTableId = eventType.ObjectTableId;
-                            //updatedEventType.ShortView = eventType.ShortView;
-                            //updatedEventType.Tenant = tenant;
-                            //updatedEventType.SearchFields = eventType.SearchFields;
-                            //updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
-                            //updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
                             updatedEventType.EventTrigger = eventType.EventTrigger;
                             eventTypesRepository.Update(updatedEventType);
                         }

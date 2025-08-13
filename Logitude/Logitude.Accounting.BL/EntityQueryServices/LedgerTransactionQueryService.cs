@@ -819,7 +819,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         GLAccountDisplayNumber = x.GLAccount.DisplayNumber,
                         LocalAmountCredit = x.LedgerTransaction.LocalAmountCredit,
                         LocalAmountDebit = x.LedgerTransaction.LocalAmountDebit,
-                        CreateDate = x.LedgerTransaction.CreateDate.GetValueOrDefault(),
+                        CreateDate = x.LedgerTransaction.CreateDate ?? DateTime.MinValue,
                         CurrencyId = x.LedgerTransaction.CurrencyId,
                         CreatedByUser = x.Journal.CreatedByUserId,
                         JournalLineNumber = x.LedgerTransaction.JournalLineNumber,
@@ -872,7 +872,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         GLAccountDisplayNumber = x.GLAccount.DisplayNumber,
                         LocalAmountCredit = x.LedgerTransaction.LocalAmountCredit,
                         LocalAmountDebit = x.LedgerTransaction.LocalAmountDebit,
-                        CreateDate = x.LedgerTransaction.CreateDate.GetValueOrDefault(),
+                        CreateDate =  x.LedgerTransaction.CreateDate ?? DateTime.MinValue,
                         CurrencyId = x.LedgerTransaction.CurrencyId,
                         CreatedByUser = x.Journal.CreatedByUserId,
                         JournalLineNumber = x.LedgerTransaction.JournalLineNumber,
@@ -1577,6 +1577,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pms;
         }
 
+        public bool ExistsLedgerTransactionByReferenceGLAccountId(string reference1, string gLAccountId, int tenant)
+        {
+            return repository.ExistsLedgerTransactionByReferenceGLAccountId(reference1, gLAccountId, tenant);
+        }
     }
     public class JournalLineLedgerDTO
     {
@@ -1586,10 +1590,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string AccountId { get; set; }
         public string AccountDisplayNumber { get; set; }
         public string CurrencyId { get; set; }
-        //public decimal LocalAmountCredit { get; set; }
-        //public decimal LocalAmountDebit { get; set; }
-        //public decimal ForeignAmountCredit { get; set; }
-        //public decimal ForeignAmountDebit { get; set; }
 
         public double LocalAmountCredit { get; set; }
         public double LocalAmountDebit { get; set; }

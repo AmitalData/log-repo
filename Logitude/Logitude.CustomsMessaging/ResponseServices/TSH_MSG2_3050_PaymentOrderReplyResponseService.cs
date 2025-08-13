@@ -818,7 +818,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
             documentsFilingPM.DirectionCode = "I";
             documentsFilingPM.Description = "הוראת תשלום " + _PaymentOrderPM.PaymentNumber;
-            documentsFilingPM.ExternalEntityName = "CFIFILEM";
+            documentsFilingPM.ExternalEntityName = _DeclarationPM?.Direction=="E" ? "EFIFILEM": "CFIFILEM";
             documentsFilingPM.FileExtension = "PDF";
 
             documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
@@ -996,7 +996,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             documentsFilingPM.DocumentTypeId = documentType.Id;
             if (_DeclarationPM != null)
             {
-                documentsFilingPM.EntityId = _DeclarationPM.Id;
+                documentsFilingPM.EntityId = _DeclarationPM.IsAmendment == true ? _DeclarationPM.AmendmentOriginalDeclartation : _DeclarationPM.Id;
                 documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
                 documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
                 documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");

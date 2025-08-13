@@ -96,7 +96,16 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                     else
                     {
                         ExceptionHandler.HandleException(new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DateTime.Now, 0, null, "WorkerRole Monitor", null,  System.Environment.MachineName);
-                        UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {Exception= new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });                      
+                        string error = "";
+                        if (documentsExecutionLog == null)
+                        {
+                            error += "documentsExecutionLog is null";
+                        }
+                        else
+                        {
+                            error += "documentsExecutionLog.RetryNumber = " + documentsExecutionLog.RetryNumber + ", documentsExecutionLog.CreateDate = " + documentsExecutionLog.CreateDate + ", documentsExecutionLog.StatusCode = " + documentsExecutionLog.StatusCode;
+                        }
+                        UpdateDocumentsExecutionLog(new DocumentsExecutionLogArgs() {Exception= new Exception("Document build failed after 3 retries or it reaches the time out.Please try again.If the issue is persistent then please kindly contact our Customer Support" + error), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });                      
                         queueService.Complete();
                     }
                 }
@@ -387,7 +396,7 @@ namespace WebFreight.Web.Helpers.WorkerRole.DocsOut
                                         if (!string.IsNullOrEmpty(docId))
                                         {
                                             bool okGotFromStorage = false;
-                                            okGotFromStorage = DocumentHelper.CheckPDFInvoiceInStorage(documentsFiling.Id, exportDocumentArgs.Tenant, accountingSettings);
+                                            okGotFromStorage = DocumentHelper.CheckPDFInvoiceInStorage(documentsFiling.Id, exportDocumentArgs.Tenant, accountingSettings, exportDocumentArgs.LoggedContactId);
                                             if (okGotFromStorage)
                                             {
                                                 lock (_locker)

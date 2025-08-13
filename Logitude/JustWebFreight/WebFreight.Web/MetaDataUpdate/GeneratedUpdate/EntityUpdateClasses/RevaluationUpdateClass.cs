@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RevaluationUpdateClass
    {  		
-		public const string HashString = "9a442de09c619e5962c0441324ef539e";
+		public const string HashString = "be414a2e31e18a46b0fd6803e4e81965";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1060,10 +1060,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Status",
 					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						FullLocalDefaultText =  "קוד סטטוס",
 					  						ListFieldLable =  "StatusListLable",
 					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "סטטוס",
+					  						ListLocalDefaultText =  "קוד סטטוס",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "RevaluationStatus",
 					  						NavigationPropertyName =  "RevaluationStatus",

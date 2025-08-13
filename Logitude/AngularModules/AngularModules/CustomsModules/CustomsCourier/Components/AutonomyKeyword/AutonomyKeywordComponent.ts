@@ -52,6 +52,7 @@ export class AutonomyKeywordComponent
         this._KeywordtypeCodes.push(new KeyValuePair("1", "עיר"));
         this._KeywordtypeCodes.push(new KeyValuePair("2", "טלפון"));
         this._KeywordtypeCodes.push(new KeyValuePair("3", "קידומת ת\"ז/ח\"פ פלסטינאי"));
+        this._KeywordtypeCodes.push(new KeyValuePair("4", "מיקוד"));
         SessionLocator.SelectedSession.StartBusyIndicator("");
         this._EntityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe(response => {
             this.Loaded = true;

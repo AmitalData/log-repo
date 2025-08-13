@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewContainerRef, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
@@ -35,7 +35,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     private CurrentSession = SessionLocator.SelectedSession;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     public isDataLoaded: boolean = false;
-    constructor(public entityArgs: EntityArgs) {
+    constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
         this.entityResourceService.getEntityResourceByTableName("Card").subscribe((response: any) => {
 
@@ -69,6 +69,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         this.SetUIProperties();
         this.LoadGeneratedComponents();
         this.LoadCreditLimitData();
+        this.CD.detectChanges();
+        this.SetUIProperties_GeneratedComponent();
     }
 
     ngOnInit() {
@@ -86,6 +88,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     private Retries: number = 0;
     private timerToken: any;
     private GeneratedComponent: any;
+    private readonly MAX_RETRIES: number = 100;
+    private readonly DELAY_MS: number = 500;
     private RunComponentTimer(componentName: String) {
         this.Retries++;
 
@@ -93,8 +97,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
             clearTimeout(this.timerToken);
         }
 
-        if (this.Retries < 20) {
-            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), 1) : setTimeout(() => this.LoadGeneratedComponents(), 1);
+        if (this.Retries < this.MAX_RETRIES) {
+            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), this.DELAY_MS) : setTimeout(() => this.LoadGeneratedComponents(), this.DELAY_MS);
         }
     }
     private LoadChildComponent(viewContainerRef) {
@@ -140,7 +144,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         if (SessionLocator.TenantPM.IsHybrid === true && this.IsAccountingActivated === true) {
 
             this.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
-            this.EntityPM.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
+            this.EntityPM?.UIProperties.SetEnabled("CreditLimitAmount", this.ObjectTableName, this.HasEditCreditAmountFeature);
             this.SetInsuredCreditLimitEnablitity();
 
         }
@@ -148,7 +152,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
     private SetInsuredCreditLimitEnablitity() {
         this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
-        this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
+        this.EntityPM?.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
     }
 
     public CreditLimitAmountLabel: string;

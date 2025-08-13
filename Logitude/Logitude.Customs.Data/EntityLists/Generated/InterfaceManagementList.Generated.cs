@@ -81,6 +81,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string EntityLockId  { get; set; }
        [DataMember]
        public string EntityLockName  { get; set; }
+       [DataMember]
+       public bool? IsCustomsFile  { get; set; }
+       [DataMember]
+       public bool? IsUnifreight  { get; set; }
    }
 
 }

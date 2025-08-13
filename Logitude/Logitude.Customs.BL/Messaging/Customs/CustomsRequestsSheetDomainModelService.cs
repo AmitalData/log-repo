@@ -227,9 +227,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (CourierForceSignException e)
             {
-			
-				LogitudeSettings.HandleLogMe("line 230 CourierForceSignException" + e.Message.ToString(), false, "sendClosing", stopLogAt);
-
 				NoteClientNoRequestSheet4U(requestParams, e.Message);
                 throw new
                     CustomsRequestsSheetDomainModelServiceException(
@@ -238,7 +235,6 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (Exception e)
             {
-				LogitudeSettings.HandleLogMe("line 251 Exception: " + e.ToString(), false, "sendClosing", stopLogAt);
 
 				NoteClientNoRequestSheet4U(requestParams, e.ToString());
                 throw new
@@ -536,6 +532,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
                 availableSignServer = SignQueue.Instance.
                     GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId);
+
                 RequestParams.SignMethodByQueue = SignMethodByQueueEnum.MemorySignQueue.ToString();//"MemorySignQueue";
 
             }
@@ -574,21 +571,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
         }
         void ThrowIfNoAvailablePersonalSignServer()
         {
-            //if (!IsInteractive)
-            //{
-            //    AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Critical);
-            //    return;
-            //}
-
-            //im+eitan : in worker role no need to check 
-             //if (Environment.CommandLine.ToLower().Contains("AmitalCustomsWindowsService.exe".ToLower())  && RequestParams.InterfaceTypeCode!="8235" && RequestParams.InterfaceTypeCode != "2751" && RequestParams.InterfaceTypeCode != "2755E")
-            //{
-            //    //2715 build from  UCBUD2LT --if (RequestParams.InterfaceTypeCode == "UCBUD2LT")
-            //    {
-            //        return;
-            //    }
-            //}
- 
+            var customsSettingsM = CustomsSettingQueryService.GetSettingByTenant(_RequestParams.Tenant);
 
             if (!SignQueue.Instance.IsPasiveSignMode())
             {
@@ -617,6 +600,11 @@ namespace Logitude.Customs.BL.Messaging.Customs
             {
 
                 case SignQueueByType.SignQueueByPersonId:
+                    if (RequestParams.RequestVIA != SendRequestVIA.WebServiceInteractive && customsSettingsM?.CompanyType=="B")
+                    {
+                        //no need to check if have 
+                        return;
+                    }
                     break;
                 case SignQueueByType.None:
                 case SignQueueByType.SignQueueByCustomsAgentId:

@@ -8,6 +8,7 @@ using Logitude.BL.Security;
 using System.Linq;
 using System.Collections.Generic;
 using Logitude.BL.Resolvers;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -83,7 +84,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.OpenAmountInLocalCurrency = entityPM.OpenAmountInLocalCurrency;
             entity.PrintByUserId = entityPM.PrintByUserId;
             entity.PrintDate = entityPM.PrintDate;
-            entity.PrintNotes = entityPM.PrintNotes;
+            entity.PrintNotes = string.IsNullOrEmpty(entityPM.PrintNotes) && isNewState ? TextCodesTranslator.TranslateText("ARPayment.S.ShortTitle", entity.Tenant, true) : entityPM.PrintNotes;
             entity.PaidBy = entityPM.PaidBy;
             entity.InternalNotes = entityPM.InternalNotes;
             entity.TransferTries = entityPM.TransferTries;

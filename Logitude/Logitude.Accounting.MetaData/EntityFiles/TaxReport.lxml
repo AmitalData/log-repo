@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="true"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -65,6 +66,7 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
+  ShowFastSearch="false"
   Code1="&quot;3b44&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -230,7 +232,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;TaxReport&quot;"
-    FieldsDataType="&quot;DateTime&quot;"
+    FieldsDataType="&quot;DateTime2&quot;"
     MinLength="0"
     MaxLength="0"
     IsRequired="true"
@@ -3332,6 +3334,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RemoveDuplicates&quot;"
     ListPropertyPath="&quot;RemoveDuplicates&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -3527,7 +3530,8 @@
     HtmlComponentURL="&quot;./Accounting/Components/EditTabs/TaxReport/TaxReportDetailsTabComponent&quot;"
     HtmlComponentName="&quot;TaxReportDetailsTabComponent&quot;"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <Tab
     TabName="&quot;Events&quot;"
     TabLocalNameBack_up="&quot;אירועים&quot;"
@@ -3539,7 +3543,8 @@
     IsPackagable="false"
     IndexOrder="1"
     IsSpellChecked="false"
-    HasGeneralFeature="false" />
+    HasGeneralFeature="false"
+    IsLocked="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -3613,6 +3618,19 @@
       EnglishName="&quot;Recalculated&quot;"
       LocalNameBack_up="&quot;חישוב מחדש&quot;"
       LocalName="&quot;BS64:IteX15nXqdeV15Eg157Xl9eT16ki&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
+    <EventType
+      Code="&quot;TFTE&quot;"
+      ObjectTableName="&quot;TaxReport&quot;"
+      EnglishName="&quot;Failed&quot;"
+      LocalName="&quot;Failed&quot;"
       IsManualEntry="false"
       ShortView="false"
       IsAgentView="false"
@@ -3894,7 +3912,7 @@
       Code="&quot;TaxReport.O.ReportIsEdited&quot;"
       DefaultText="&quot;Report in editing - click to recalculate&quot;"
       LocalDefaultTextBack_up="&quot;דוח בעריכה - לחץ לחישוב מחדש&quot;"
-      LocalDefaultText="&quot;BS64:IteT15XXlyDXkdei16jXmdeb15QgLSDXmdepINec15HXpteiINeR16DXmdeUINee15fXk9epIg==&quot;"
+      LocalDefaultText="&quot;BS64:IteT15XXlyDXkdei16jXmdeb15QgLSDXnNeX16Ug15zXl9eZ16nXldeRINee15fXk9epIg==&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3902,7 +3920,6 @@
       DefaultText="&quot;Fix Duplicates&quot;"
       LocalDefaultTextBack_up="&quot;טיפול בכפולים&quot;"
       LocalDefaultText="&quot;BS64:IteY15nXpNeV15wg15HXm9ek15XXnNeZ150i&quot;"
-
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

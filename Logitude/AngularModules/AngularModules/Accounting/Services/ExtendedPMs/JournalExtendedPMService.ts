@@ -97,6 +97,23 @@ export class JournalExtendedPMService {
   
       }
 
+    
+    PostJournalAsCSVWithSkip(fileUploadParamerter: ImageParameter) {
+
+        return this.httpClient.post(this._apiUrl + '/PostJournalAsCSVWithSkip', JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+
+                pmresponse.Result = result;
+                return pmresponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: JournalPM = null) {
 
 

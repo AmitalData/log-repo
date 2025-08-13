@@ -354,11 +354,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                           select a).FirstOrDefault();
                             }
                         }
-                        //}
-
-                        //entity = (Contact)CacheManager.CacheWrapper.Get(entityName);
-
-
                     }
                     else
                     {

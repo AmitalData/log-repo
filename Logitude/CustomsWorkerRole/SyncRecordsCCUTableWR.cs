@@ -201,7 +201,14 @@ namespace CustomsWorkerRole
             DevLog.Instance.WriteDebug("ReturnToQueue, records count: " + records.Count);
             DevLog.Instance.WriteTrace("ReturnToQueue, records: " + string.Join(", ", records));
 
-            syncRecordQuery.UpdateStatus(records, SyncRecordStatus.New);
+            records.ForEach(record =>
+            {
+                record.IsSync = SyncRecordStatus.New;
+                record.LastRequeueTime = DateTime.Now;
+                record.IsRequeued = true;
+            }) ;
+
+            syncRecordQuery.Update(records);            
 
             DevLog.Instance.WriteDebug("ReturnToQueue finish");
         }

@@ -143,6 +143,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public BackBtnTitle: string;
     public AddButtonTitle: string = "";
     public serviceArgs: ServiceArgs;
+    public ignoreRefresh: boolean = false;
     CurrentQueryFilters: ApiQueryFilters;    
     AdvanceFilters: ApiQueryFilters;
     @Output() onQueryChangeEvent = new EventEmitter();
@@ -198,7 +199,11 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.showRecentSearches() 
     }
 
-    async searchMethod() {        
+    async searchMethod() {       
+             if (this.ignoreRefresh) {
+            this.ignoreRefresh = false;
+            return;
+        } 
         const searchFieldName: string = this.IsUseCardSearchMechanism() ? "CardSearchField" : "SearchFields";
         this.CurrentQueryFilters.AdditionalFilters = this.CurrentQueryFilters.AdditionalFilters.filter(a => a.FieldName != searchFieldName);
         
@@ -1038,7 +1043,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                             var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/Components/FiltersMenu/" + /*this.ObjectTable.Name*/myObjectTableName + "FiltersMenuComponent";
                             if (isCustomsObjectTableWith) {
                                 myComponentPath = "./CustomsModules";
-                                myComponentPath = (myObjectTableName == "DeclarationReferantData") ? myComponentPath += "/CustomsReferant" : myComponentPath;
+                                if(myObjectTableName == "DeclarationReferantData") {
+                                    myComponentPath += "/CustomsReferant";
+                                    this.ignoreRefresh = true
+                                } 
                                 myComponentPath = (myObjectTableName == "DeclarationCargoSplit") ? myComponentPath += "/CustomsDeclarationCargoSplit" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "LogisticActionRequest") ? myComponentPath += "/CustomsLogisticActionRequest" : myComponentPath;
                                 myComponentPath = (myObjectTableName == "PhysicalCheck") ? myComponentPath += "/CustomsPhysicalCheck" : myComponentPath;
@@ -3082,6 +3090,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
+            else if (this.ObjectTableName == "ChargesType") {
+                this.NewEntityButtonLabel = TextCodeTranslator.Translate("ChargesType.O.NewChargeType");
+            }
 
             else {
                 //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
@@ -3669,6 +3680,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "InterestReport") {
                 str = TextCodeTranslator.Translate('InterestReport.O.NewReport');
             }
+            else if (this.ObjectTableName == "ChargesType") {
+                str = TextCodeTranslator.Translate('ChargesType.O.NewChargeType');
+            }
             else if (this.ObjectTableName == "OpenFormatReport") {
                 str = TextCodeTranslator.Translate('OpenFormatReport.O.NewReport');
             }
@@ -3932,7 +3946,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     DoRefresh() {
-
+   
         this.MyScrollTop = 0;
         this.MySelectedRowIndex = null;
         this.CurrentQueryFilters = new ApiQueryFilters();//this.listArgs.Filters;

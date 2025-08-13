@@ -303,6 +303,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool? isCustomsFile ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsCustomsFile  
+	   {
+	    
+	     get
+		{
+		   return isCustomsFile;
+		 }
+		 set
+		 {
+		   if(isCustomsFile != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCustomsFile",OldValue=isCustomsFile,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isCustomsFile=value;
+		   }
+			
+		 }
+	   }
+	  private bool? isUnifreight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool? IsUnifreight  
+	   {
+	    
+	     get
+		{
+		   return isUnifreight;
+		 }
+		 set
+		 {
+		   if(isUnifreight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsUnifreight",OldValue=isUnifreight,NewValue=value,PropertyType="bool?"};
+		    NotifyPropertyChanged(values);
+		   isUnifreight=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

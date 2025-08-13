@@ -22,6 +22,9 @@ using System.Diagnostics;
 using Logitude.CustomsMessaging.Dca;
 using System.Configuration;
 using Logitude.Server.Tools.Utils;
+using UnifreightIIG.DCA;
+using Logitude.Customs.Data.EntityPOCOs;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace CustomsWorkerRole
 {
@@ -37,9 +40,12 @@ namespace CustomsWorkerRole
 
         public DownloadDcaMessageSheetWR()
         {
+            _SeedDefaultTenant = SettingUtil.GetCurrentTenant();
+            if(_SeedDefaultTenant == -1)
+            {
+                _SeedDefaultTenant = 0;
+            }
 
-            _SeedDefaultTenant = 1;
-            _SeedDefaultTenant = 0;
             var dedicatedCourierDCAService = new DedicatedCourierDCAService();
 
             this._DedicatedCourierDCAModel = dedicatedCourierDCAService.CreateDedicatedCourierDCA();

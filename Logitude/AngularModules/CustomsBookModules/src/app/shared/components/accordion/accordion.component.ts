@@ -108,7 +108,7 @@ export class AccordionComponent implements OnInit {
         { key: 'RequirementGoodsDescription', displayName: 'תיאור טובין בדרישה/תיאור הזהרות', dataType: 'string', visible: true },
         { key: 'Authority', displayName: 'גורם מאשר (הפניה לאיש קשר)', dataType: 'string', visible: true },
         { key: 'ConfirmationType', displayName: 'סוג אישור', dataType: 'string', visible: true },
-        { key: 'TextualCondition', displayName: 'תיאור תנאים', dataType: 'link', visible: true, link: { url: `https://www.gov.il/he/Departments/DynamicCollectors/mandatory-standards-search?skip=0&standard_number_and_name=`, key: `TrNumber` } },
+        { key: 'TextualCondition', displayName: 'תיאור תנאים', dataType: 'link', visible: true, link: { url: `https://www.gov.il/he/Departments/DynamicCollectors/mandatory-standards-search?skip=0&standard_number_and_name=`, key: `TrNumber`, condition: { key: "TextualCondition", value: this.TrTextualCondition } } },
         { key: 'InterConditionsRelationship', displayName: 'יחס תנאים', dataType: 'string', visible: true },
         { key: 'IsPersonalImportIncluded', displayName: 'חל ביבוא אישי', dataType: 'boolean', visible: true },
         { key: 'IsCarnetIncluded', displayName: 'חל בקרנה', dataType: 'boolean', visible: true },
@@ -188,6 +188,7 @@ export class AccordionComponent implements OnInit {
       }
     );
   }
+  TrTextualCondition: string = 'ת"ר';
 
   // דרישות חוקיות
   buildRegularityRequirementList() {

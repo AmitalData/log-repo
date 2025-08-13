@@ -23,10 +23,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             globalContext = GlobalContext.GetContext();
         }
 
-        //public IQueryable<TenantManagement> GetAWBStockPrepaidTenants()
-        //{
-        //    return this.context.TenantManagements.Where(d => d.IsAWBStockPrepaid == true);
-        //}
+       
 
         public IQueryable<TenantManagement> GetTenants()
         {
@@ -42,7 +39,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             return this.context.TenantManagements.Include("GlobalTenant");
         }
-		public TenantManagement GetSingleTenantManagement(int id, bool getFromCache = true)
+
+        public TenantManagement GetSingleTenantManagement(int id, bool getFromCache = true)
 		{
 			string cacheKey = $"TenantManagement{id}";
 

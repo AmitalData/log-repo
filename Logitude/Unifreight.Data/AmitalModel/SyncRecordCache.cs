@@ -10,33 +10,43 @@ namespace Unifreight.Data.AmitalModel
         private static string GetLastSyncKey(string fileNo, int tenant) =>
             "SyncRecordQuery.." + fileNo + ";" + tenant;
 
-        public static DateTime? GetLastSyncDate(string fileNo, int tenant) 
+        public static DateTime? GetLastSyncDate(string fileNo, int tenant, bool useCache = false) // uri ask add parameter useCache
         {
             DateTime? lastSync = null;
+
             TryCatch(() =>
             {
-                string cacheKey = GetLastSyncKey(fileNo, tenant);
-                lastSync = CacheHelper.GetFromCache(cacheKey, () =>
-                    new SyncRecordRepository(tenant).GetLastSyncDate(tenant, fileNo));                
+
+                if (useCache)
+                {
+                    string cacheKey = GetLastSyncKey(fileNo, tenant);
+                    lastSync = CacheHelper.GetFromCache(cacheKey, () =>
+                        new SyncRecordRepository(tenant).GetLastSyncDate(tenant, fileNo));
+                }
+                else
+                    lastSync = new SyncRecordRepository(tenant).GetLastSyncDate(tenant, fileNo);
             });
 
             return lastSync;
         }
 
-        public static void ClearCacheLastSync(string fileNo, int tenant)
+        public static void ClearCacheLastSync(string fileNo, int tenant, bool useCache = false) // uri ask add parameter useCache
         {
             TryCatch(() =>
             {
                 if (tenant == null || IsConnectedToUniFreight(tenant))
                     return;
 
-                string cacheKey = GetLastSyncKey(fileNo, tenant);
-                CacheHelper.ClearCache(cacheKey);
+                if (useCache)
+                {
+                    string cacheKey = GetLastSyncKey(fileNo, tenant);
+                    CacheHelper.ClearCache(cacheKey);
+                }
             });
         }
 
-        public static void ClearCacheLastSyncByPrimaryNum(string primaryNum, int? tenant)
-        {            
+        public static void ClearCacheLastSyncByPrimaryNum(string primaryNum, int? tenant, bool useCache = false) // uri ask add parameter useCache
+        {
             TryCatch(() =>
             {
                 if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO) || IsConnectedToUniFreight(tenant.Value))
@@ -46,7 +56,8 @@ namespace Unifreight.Data.AmitalModel
                 if (fileNo == null)
                     return;
 
-                ClearCacheLastSync(fileNo.Value.ToString(), tenant.Value);
+                if (useCache)
+                    ClearCacheLastSync(fileNo.Value.ToString(), tenant.Value);
             });
         }
 
@@ -58,14 +69,14 @@ namespace Unifreight.Data.AmitalModel
             }
             catch (Exception e)
             {
-                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"Error in ClearCacheLastSync error" );
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "Error in ClearCacheLastSync error");
             }
         }
 
         private static bool IsConnectedToUniFreight(int tenant)
         {
             LogitudeCustomsSettingsM customsSettings = LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant);
-            return customsSettings.Id == null || customsSettings.IsConnectedToUniFreight;            
+            return customsSettings.Id == null || customsSettings.IsConnectedToUniFreight;
         }
     }
 }

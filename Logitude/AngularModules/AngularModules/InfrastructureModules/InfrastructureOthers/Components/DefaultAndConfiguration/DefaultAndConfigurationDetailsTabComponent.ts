@@ -31,7 +31,7 @@ export class DefaultAndConfigurationDetailsTabComponent {
     fields: TextBoxField[] = [
         { name: 'Is_Active', label: 'Is Active', type: 'boolean', value: true },
         { name: 'StoreInCache', label: 'Store In Cache', type: 'boolean', value: true },
-        { name: 'SetKey', label: 'Set Key', required: true, type: 'logLov', params: { LookUpTableName: 'DefaultAndConfigurationKey' } },
+        { name: 'SetKey', label: 'Set Key', required: true, type: 'logLov', params: { LookUpTableName: 'DefaultAndConfigurationKey', searchField: 'SetKey' } },
         { name: 'AdditionalKey', label: 'Additional Key', required: true },
         { name: 'SortOrder', label: 'Sort Order', type: 'number', required: true },
         { name: 'AllowInheritance', label: 'Allow Inheritance', type: 'boolean' },

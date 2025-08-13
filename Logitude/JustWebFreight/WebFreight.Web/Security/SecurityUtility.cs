@@ -314,7 +314,7 @@ namespace WebFreight.Web.Security
 
         }
 
-        public static bool CheckFeature(string objectTableName, string featureCode, int tenant)
+        public static bool CheckFeature(string objectTableName, string featureCode, int tenant, bool ignoreCache = false)
         {
             bool exists = false;
 
@@ -341,7 +341,7 @@ namespace WebFreight.Web.Security
             {
                 email = AuthenticationUtil.ResolveLoggingUserId(tenant);
             }
-            ContactInfo contactinfo = GetContactInfo(email, tenant);
+            ContactInfo contactinfo = GetContactInfo(email, tenant, ignoreCache);
 
             if (contactinfo != null)
             {
@@ -357,7 +357,7 @@ namespace WebFreight.Web.Security
                     {
                         foreach (string myRoleId in contactinfo.RolesIds)
                         {
-                            Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant);
+                            Dictionary<string, FeaturePM> features = GetFeaturesForRole(myRoleId, contactinfo.PackagesCodes, tenant, ignoreCache);
                             if (features.Keys.Contains(featureCode + objectTable.Id))
                             {
                                 FeaturePM feature = features[featureCode + objectTable.Id];
@@ -617,16 +617,16 @@ namespace WebFreight.Web.Security
                             }
 
                             bool isLogitudeAdmin = false;
-                            //if (tenant != 0)
-                            //{
-                            //    UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
-                            //    User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
-                            //    if (user != null)
-                            //    {
-                            //        tenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                            //        isLogitudeAdmin = true;
-                            //    }
-                            //}
+                            if (tenant != 0)
+                            {
+                                UserRepository userRep = new UserRepository(LogitudeSettings.LogitudeCRMTenantNumber);
+                                User user = userRep.GetSingleUserByEmail(email, LogitudeSettings.LogitudeCRMTenantNumber, true);
+                                if (user != null)
+                                {
+                                    tenant = LogitudeSettings.LogitudeCRMTenantNumber;
+                                    isLogitudeAdmin = true;
+                                }
+                            }
 
                             RoleQuery roleQuery = new RoleQuery(contact.Tenant);
                             List<RolePM> allRoles = roleQuery.GetRolesForContact(contact.Id, contact.Tenant).ToList();
@@ -908,7 +908,7 @@ namespace WebFreight.Web.Security
             if (CacheManager.CacheWrapper.Get(roleKey) == null || forceAPIFeaturesCheck)
             {
                 FeatureQuery featuresQuery = new FeatureQuery(tenant);
-                List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant);
+                List<FeaturePM> fet = featuresQuery.GetAllowedFeaturesForRole(roleId, allowedPackages, tenant, forceAPIFeaturesCheck);
                 features = fet.ToDictionary(d => d.Code + d.ObjectTableId, d => d);
                 CacheManager.CacheWrapper.Insert(roleKey, features, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
             }

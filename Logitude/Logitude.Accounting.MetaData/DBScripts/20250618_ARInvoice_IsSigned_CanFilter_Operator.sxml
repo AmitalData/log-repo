@@ -1,0 +1,9 @@
+<Script DBType="Main"  TargetTableName="ARInvoices" AOT="false" >
+  <Sql Version="1">
+    <![CDATA[
+   UPDATE ObjectFields 
+   SET CanFilter=1, Operator='Equals'
+   WHERE ObjectTableId='1-108' AND FieldName = 'IsSigned' 
+    ]]>      
+  </Sql>
+</Script> 

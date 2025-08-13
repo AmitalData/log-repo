@@ -297,7 +297,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.UIProperties.SetVisibility("Reference3", "Journal", false);
             this.UIProperties.SetVisibility("Notes", "Journal", false);
         }
-        else{
+        else if (this.EntityPM.StatusCode != "0" && this.EntityPM.StatusCode != "1") { // 0-draft and 1-waiting for approval
             this.DueDate=new Date();
             this.DocumentDate=new Date();
         }
@@ -1055,18 +1055,7 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
-    // get ActionCode() {
-    //     if(this.journalActionType)
-    //         return this.journalActionType.Code;
-    //     else
-    //         return this.JournalLinePM.ActionCode;
-    // }
-    // set ActionCode(value: string) {
 
-    //     if (this.journalActionType && this.journalActionType.Code != value) {
-    //         this.journalActionType.Code = value;
-    //     }
-    // }
 
     get ActionName() { return this.JournalLinePM.ActionName == null ? "" : this.JournalLinePM.ActionName }
     set ActionName(value: string) {
@@ -1112,11 +1101,10 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.CreditAccountId = value;
             this.glaccountListService.getSingle(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
-                if(entity){
+                if(entity ){
+                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
                     this.CreditAccount=entity;
                     this.CreditAccountName=this.CreditAccount.LocalName;
-                    this.JournalLinePM.CreditAccountCOACode = this.CreditAccount.ChartOfAccountsTypeCode;
-                    this.GetExchangeRate(this.CurrencyId);
 
                 }
             });
@@ -1130,11 +1118,11 @@ class JournalLineModel extends BaseComponent {
             this.gLAccountPMService.get(value).subscribe((result:ServiceResponse)=>{
                 var entity=result.Result;
                 if(entity){
-                    this.DebitAccount=entity;
-                    this.DebitAccountName=this.DebitAccount.LocalName;
                     this.JournalLinePM.DebitAccountCountryCode = this.DebitAccount.CardCountryCode;
                     this.JournalLinePM.DebitAccountCOACode = this.DebitAccount.ChartOfAccountsTypeCode;
-                    this.GetExchangeRate(this.CurrencyId);
+                    this.DebitAccount=entity;
+                    this.DebitAccountName=this.DebitAccount.LocalName;
+                    
                 }
             });
         }
@@ -1173,11 +1161,7 @@ class JournalLineModel extends BaseComponent {
            
 
         }
-        else {
-            if (this.CurrencyId !== SessionLocator.TenantPM.CurrencyId) {
-                this.GetExchangeRate(value);
-            }
-        }
+        
     }
     ClearAmounts() {
         this.LocalAmount = null;
@@ -1190,23 +1174,54 @@ class JournalLineModel extends BaseComponent {
         this.ForeignAmount = null;
     }
    
-    GetExchangeRate(value: string) {
+    GetExchangeRate(value: string, actionCode :ActionCode = null) {
+        this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+
         if (this.parent.defaultCurrencyId != value) {
             this.currencyRatesService.GetProfitCurrencyLastRate(this.parent.defaultCurrencyId, value, this.AccountingDate).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
                         if (myResponse.Result != undefined && myResponse.Result != null) {
                             this.isRateManualy = false;
-                            const glaccount = 
-                                this.ActionCode === ActionCode.Debit.toString() || 
-                                (this.ActionCode === ActionCode.DebitAndCredit.toString() && !this.CreditAccount) 
-                                    ? this.DebitAccount 
-                                    : this.CreditAccount;
-                            const exchangeRateId = !glaccount?.IsMultiCurrency ? glaccount?.ExchangeRateId : glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === value)?.ExchangeRateId ?? glaccount?.ExchangeRateId;
+                            var glaccount =null
+                            if(actionCode === null){
+                                 glaccount = this.ActionCode === ActionCode.Debit.toString() ?this.DebitAccount : this.CreditAccount;
 
+                            }
+                            else {
+                                glaccount = actionCode === ActionCode.Debit ? this.DebitAccount : this.CreditAccount;
+                            }
+                            if( glaccount == null) {
+                                glaccount =this.DebitAccount;
+                            }
+                              
+                            const exchangeRateId = !glaccount?.IsMultiCurrency ? glaccount?.ExchangeRateId : glaccount?.GLAccountCurrencies?.find(child => child.CurrencyId === value)?.ExchangeRateId ?? glaccount?.ExchangeRateId;
                             const customRate = myResponse.Result?.CurrencyRates?.find(rate => rate?.AdditionalCurrencyRateId === exchangeRateId)?.Rate ?? null;
                             var rate = customRate?? myResponse?.Result?.Rate;
-                     
+                            if (customRate && this.ActionCode === ActionCode.DebitAndCredit.toString() && this.CreditAccount && this.DebitAccount) {
+                                const oppositeAccount = actionCode == ActionCode.Credit? this.DebitAccount :this.CreditAccount 
+                                const oppositeRateId = !oppositeAccount?.IsMultiCurrency ? oppositeAccount?.ExchangeRateId : oppositeAccount?.GLAccountCurrencies?.find(child => child.CurrencyId === value)?.ExchangeRateId ?? oppositeAccount?.ExchangeRateId;
+                                const oppositeRate = myResponse.Result?.CurrencyRates?.find(rate => rate?.AdditionalCurrencyRateId === oppositeRateId)?.Rate ?? null;   
+                                      
+                                if (oppositeRate && oppositeRate !== customRate) {
+                                    
+                                    const debitAccountName = this.parent.isRTL ? this.DebitAccount?.LocalName : this.DebitAccount?.EnglishName ;
+                                    const debitExchangeRateName = this.DebitAccount?.ExchangeRateName;
+                                    const creditAccountName = this.parent.isRTL ? this.CreditAccount?.LocalName : this.CreditAccount?.EnglishName ;
+                                    const creditExchangeRateName = this.CreditAccount?.ExchangeRateName ;
+                                    var translatedSplitByDifferentExchangeRate = TextCodeTranslator.Translate("Journal.O.SplitByDifferentExchangeRate");
+                                    translatedSplitByDifferentExchangeRate =  translatedSplitByDifferentExchangeRate.replace("%debitAccountName", debitAccountName);
+                                    translatedSplitByDifferentExchangeRate =  translatedSplitByDifferentExchangeRate.replace("%debitExchangeRateName", debitExchangeRateName);
+                                    translatedSplitByDifferentExchangeRate =  translatedSplitByDifferentExchangeRate.replace("%creditAccountName", creditAccountName);
+                                    translatedSplitByDifferentExchangeRate =  translatedSplitByDifferentExchangeRate.replace("%creditExchangeRateName", creditExchangeRateName);
+                                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(translatedSplitByDifferentExchangeRate);
+                                    this.LocalAmount =null
+                                    this.ForeignAmount = null;
+                                    this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
+                                    this.UIProperties.SetEnabled("LocalAmount", this.ObjectTableName, false);
+                                    return;  
+                                } 
+                            }
                             if (this.IsAccDayChanged && (this.currencyRate !== rate)) {
                                 this.SetAmountsWhenChangingAccDay();
                                 this.currencyRate = rate;
@@ -1222,7 +1237,6 @@ class JournalLineModel extends BaseComponent {
                                 }
                             }
                             console.log(">Ex. Rate: ", this.currencyRate);
-                            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
 
                         }
                         else {
@@ -1464,6 +1478,7 @@ class JournalLineModel extends BaseComponent {
     SetForeignAmountEnabilityForSingleCurrencyAccount() {
         if (this.CurrencyId != SessionLocator.TenantPM.CurrencyId) {
             this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+            this.UIProperties.SetEnabled("LocalAmount", this.ObjectTableName, true);
             this.enableForeighAmountField = true;
         }
         else {
@@ -1611,6 +1626,7 @@ class JournalLineModel extends BaseComponent {
                     this.parent.EntityWarningsList.push(TextCodeTranslator.Translate("Journal.O.DifferenceExchangeRate"));
                 }
             })
+            this.AmountChanged('foreign', this.LocalAmount, this.ForeignAmount);
             return userExchageRate && Math.abs(this.currencyRate - userExchageRate) > 0.05;
         }
         else {

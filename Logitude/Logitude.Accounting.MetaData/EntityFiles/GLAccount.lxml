@@ -659,11 +659,11 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
-    DefaultText="&quot;Account No. / Name&quot;"
-    FullLocalDefaultText="&quot;מספר / שם כרטיס&quot;"
+    DefaultText="&quot;Account No. / Name / VAT No.&quot;"
+    FullLocalDefaultText="&quot; מספר ח.פ / מספר / שם כרטיס&quot;"
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;Account No. / Name&quot;"
-    ListLocalDefaultText="&quot;מספר / שם כרטיס&quot;"
+    ListLocalDefaultText="&quot; מספר ח.פ / מספר / שם כרטיס&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -14334,7 +14334,6 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     DisplayInRequiredFields="false"
-
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -19721,6 +19720,18 @@
       Code="&quot;GLaccount.O.IsGroupMultiAccounts&quot;"
       DefaultText="&quot;To consolidate split GLAccount&quot;"
       LocalDefaultText="&quot;לאחד כרטיסי פיצול&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccounts.O.MissingFieldInAccount&quot;"
+      DefaultText="&quot;Missing {field} in vendor account: {account} &quot;"
+      LocalDefaultText="&quot;לא נמצא {field} בכרטיס ספק: {account}&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;AgingReport.O.RunReportImmediately&quot;"
+      DefaultText="&quot;Run Immediately&quot;"
+      LocalDefaultText="&quot;הרץ מיידית&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -30,7 +30,11 @@ export class TaxDeductionReportExtendedPMService {
  
 
     DownloadTaxDeduction856FileInBatch(taxDeductionReportPM: TaxDeductionReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostDownloadTaxDeduction856FileInBatch" ,  ServiceHelper.GetHttpHeaders()).pipe(
+
+        var mappedEntity: TaxDeductionReportPM;
+        mappedEntity = this.MapJsonToEntityPM(taxDeductionReportPM, false);
+
+        return this.httpClient.post(this._apiUrl + "/PostDownloadTaxDeduction856FileInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();

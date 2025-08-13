@@ -80,11 +80,20 @@ namespace Logitude.Customs.BL.TraceEvents
             Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE LogistictFile = new Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE();
 
             bool ifCurrecyEquals = false;
-            if (myDeclaration.SupplierInvoices.Count > 0)
-            {
-                ifCurrecyEquals = myDeclaration.SupplierInvoices.TrueForAll(s => s.InvoiceCurrencyTypeCode.Equals(myDeclaration.SupplierInvoices[0].InvoiceCurrencyTypeCode));
 
+            var invoices = myDeclaration?.SupplierInvoices;
+            if (invoices != null && invoices.Count > 0)
+            {
+                var baseCode = invoices[0]?.InvoiceCurrencyTypeCode;
+                if (!string.IsNullOrEmpty(baseCode))
+                {
+                    ifCurrecyEquals = invoices.All(s =>
+                        s != null &&
+                        string.Equals(s.InvoiceCurrencyTypeCode, baseCode, StringComparison.OrdinalIgnoreCase));
+                }
             }
+
+
             LogistictFile.logitudeCustomsFile = new LogitudeCustomsFiles()
             {
                 customFileNo = myDeclaration?.CustomFileNo,

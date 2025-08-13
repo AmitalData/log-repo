@@ -148,6 +148,8 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
 
              }
              ).ToList();
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$" GetInterestTransactionListRegular  regularJournal (Id={regularJournal.Id})");
 
             var allInterestTransactions = creditLines.Concat(debitLines).ToList();
             return allInterestTransactions;
@@ -195,6 +197,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestTrans
                  JournalId = externalJournal.Id
              }
              ).ToList();
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
+$" GetInterestTransactionListExternal  externalJournal (Id={externalJournal.Id})");
 
 
 

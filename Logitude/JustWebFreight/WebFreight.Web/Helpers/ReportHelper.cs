@@ -3261,11 +3261,11 @@ namespace WebFreight.Web.Helpers
 		public void UpdateReports(int tenant)
 		{
 
-			ReportRepository reportRepository = new ReportRepository(0);
-			reportsTemplateRepository = new ReportsTemplateRepository(0);
-			reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(0);
-			documentRepository = new DocumentRepository(0);
-			ContactRepository contactRepository = new ContactRepository(0);
+			ReportRepository reportRepository = new ReportRepository(tenant);
+			reportsTemplateRepository = new ReportsTemplateRepository(tenant);
+			reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(tenant);
+			documentRepository = new DocumentRepository(tenant);
+			ContactRepository contactRepository = new ContactRepository(tenant);
 
 			List<Report> reportList = reportRepository.GetReports(0).ToList();
 			string userId = contactRepository.GetConactIdByemail("system@tenant" + tenant.ToString() + ".com", tenant);
@@ -3313,7 +3313,7 @@ namespace WebFreight.Web.Helpers
 
 				if (isChangeReport) reportRepository.SubmitChanges();
 
-                ReportGroupQuery reportGroupQuery = new ReportGroupQuery();
+                ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenant);
                 string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
 
 				isChangeReport = false;

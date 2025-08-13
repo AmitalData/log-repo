@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         }
 
 
-        public bool CheckIfsAutonomy(string city, string phone, string palestinianPrefix, string importerAddress, int tenant)
+        public bool CheckIfsAutonomy(string city, string phone, string palestinianPrefix, string importerAddress, string zipCode, int tenant)
         {
             CustomsAutonomyKeywordDetails customsAutonomyKeywordDetails = new CustomsAutonomyKeywordDetails();
             var customsAutonomyKeywords = customsAutonomyKeywordDetails.GetAllCustomsAutonomyKeywords();
@@ -38,6 +38,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[0].Code, city, tenant)) return true;
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[1].Code, phone, tenant)) return true;
             if (CheckIfsAutonomyByType(customsAutonomyKeywords[2].Code, palestinianPrefix, tenant)) return true;
+            if (CheckIfsAutonomyByType(customsAutonomyKeywords[3].Code, zipCode, tenant)) return true;
 
             if (SecurityUtility.CheckFeature("Customs.CourierMaster", "PendingByAddress", tenant)
                 && CheckIfsAutonomyByAddress(customsAutonomyKeywords[0].Code, importerAddress, tenant)) return true;

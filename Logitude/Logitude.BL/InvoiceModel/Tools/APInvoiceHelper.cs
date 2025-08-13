@@ -713,7 +713,17 @@ namespace Logitude.BL.InvoiceModel.Tools
                 User loggedUser = userRepository.GetSingleUserByEmail(loggedUserEmail, tenant, true);
 
                 #region Body Message Document
-                byte[] bytearray = body != null ? LogitudeXmlSerializer.SerializeObject<T>(body) : new byte[0];
+
+                byte[] bytearray = new byte[0];
+                try
+                {
+                    bytearray = body != null ? LogitudeXmlSerializer.SerializeObject<T>(body) : new byte[0];
+                }
+                catch (Exception ex)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Body Object Serialization Error");
+
+                }
                 Document bodyDocument = new Document()
                 {
                     CreateDate = DateTime.Now,
@@ -803,6 +813,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             }
             catch (Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "AddCommunicationLog Error");
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "API", null, null);
             }
         }

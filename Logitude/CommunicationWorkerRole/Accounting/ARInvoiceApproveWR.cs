@@ -30,6 +30,7 @@ using Logitude.Server.Tools.Models;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Logitude.Server.Tools;
 
 namespace CommunicationWorkerRole
 {
@@ -213,7 +214,6 @@ namespace CommunicationWorkerRole
         {
 
             string arinvoiceId = response.MessageValues["ARInvoiceId"].ToString();
-            bool isInvoiceApi = response.MessageValues["IsInvoiceApi"].ToString() == "true" ;
             int tenant = 0;
             int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
             string interestReportId = response.MessageValues.ContainsKey("InterestReportId") && response.MessageValues["InterestReportId"] != null
@@ -232,8 +232,15 @@ namespace CommunicationWorkerRole
             {
                 try
                 {
+                    bool isInvoiceApi = response.MessageValues.ContainsKey("IsInvoiceApi")
+                        ? response.MessageValues["IsInvoiceApi"].ToString() == "true" 
+                        : false;
+
                     aRInvoicePM.SetApproved = true;
                     aRInvoicePM.IsApprovalFailed = false;
+                    if (aRInvoicePM.StatusCode == "AC")
+                        aRInvoicePM.SetApprovedAutoCredit = true;
+
                     ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
                     invoiceService.Update(aRInvoicePM, true);
                    
@@ -295,8 +302,11 @@ namespace CommunicationWorkerRole
                             NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in UpdateInterestInvoiceStatus");
                         }
                     }
-                        
 
+                    if (aRInvoicePM.IsAutoCredit)
+                    {
+                        invoiceService.OnCreatingAutoCredit();
+                    }
 
                 }
                 catch (BusinessErrorException ex)

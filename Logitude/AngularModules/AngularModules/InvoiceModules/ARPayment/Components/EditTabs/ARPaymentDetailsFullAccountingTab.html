@@ -120,7 +120,7 @@
             <div style="width:100%;text-align:center;margin:0 auto;">
                 <div class="DisbleBox">
                     {{ 'ARPayment.O.PaymentInProcess-cantModified' | TextCodeTranslationPipe }}.
-                    <a (click)="checkLedgerCreated()" id="refresh"> {{ 'ARPayment.O.Refresh' | TextCodeTranslationPipe }}</a>
+                    <a (click)="RefreshData()" id="refresh"> {{ 'ARPayment.O.Refresh' | TextCodeTranslationPipe }}</a>
                 </div>
             </div>
         </td>
@@ -951,8 +951,8 @@
 
                     <!-- Edit Grid reconciliations -->
                    
-                    <tr *ngIf="EntityPM?.StatusCode === 'AD'">
-                        <td colspan="5" style="height: 100%;">
+                    <tr *ngIf="RECONCILIATION_STATUS_CODES.includes(EntityPM?.StatusCode)">
+                            <td colspan="5" style="height: 100%;">
 
                             <div class="GeneratedGridContainer">
                                 <logitude-grid #DataGrid GridWidth="100%" 

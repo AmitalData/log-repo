@@ -1,4 +1,5 @@
-﻿using Logitude.CargoTracking.BL.CloseTables;
+﻿using Logitude.CargoTracking.BL.CargoTrackingServices.Services.MainService;
+using Logitude.CargoTracking.BL.CloseTables;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Def.EntityPMs;
 using System;
@@ -461,8 +462,31 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 IsCurrent = false,
                 InActive = invoiced.Inactive
             });
+			if (!milestonesDictionaryByCode.ContainsKey(CargoTrackingMilestoneValues.DeliveryArrived))
+			{
+				throw new Exception("The deliveryArrived code: " + CargoTrackingMilestoneValues.DeliveryArrived + "not exist in data base");
+			}
 
-            milestones = milestones.OrderByDescending(d => d.Weight).ToList();
+
+
+			
+			var deliveryArrived = milestonesDictionaryByCode[CargoTrackingMilestoneValues.DeliveryArrived];
+            var eventMilestoneResult = CargoTrackingShipmentsService.GetDefaultEventMilstone(shipment.Tenant, shipment.EntityId, shipment.ForwardingShipmentHeaderId);
+
+			milestones.Add(new Milestone()
+			{
+				Code = CargoTrackingMilestoneValues.DeliveryArrived,
+				Name = deliveryArrived.EnglishName,
+				LocalName = deliveryArrived.LocalName,
+				Weight = (shipment.DirectionId == "I" || shipment.DirectionId == "C") ? deliveryArrived.Weight.HasValue ? deliveryArrived.Weight.Value : 0
+				: shipment.DirectionId == "E" ? deliveryArrived.ExportWeight.HasValue ? deliveryArrived.ExportWeight.Value : 0 : 0,
+				Date = eventMilestoneResult?.EventDateTime,
+				Done = eventMilestoneResult?.EventDateTime == null ? false : true,
+				Notes = eventMilestoneResult?.Notes,
+				IsCurrent = false,
+				InActive = deliveryArrived.Inactive
+			});
+			milestones = milestones.OrderByDescending(d => d.Weight).ToList();
 
 
             milestones = SetMilsetoneIsEstimation(milestones);

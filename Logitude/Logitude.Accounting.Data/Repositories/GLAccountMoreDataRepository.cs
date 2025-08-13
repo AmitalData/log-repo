@@ -18,8 +18,9 @@ namespace Logitude.Accounting.Data.Repositories
 {
    public partial class GLAccountMoreDataRepository:IRepository<GLAccountMoreData>
    {
-        
-		public List<GLAccountMoreData> GetMulti(EntityKeyFields entityKeys)
+        private const string CreditLineNotes = "החזרת שיק ללקוח";
+
+        public List<GLAccountMoreData> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
@@ -31,13 +32,15 @@ namespace Logitude.Accounting.Data.Repositories
            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             var query = (from a in context.AllARPaymentChequesViews
-                         join l in context.BankDepositLines on a.ChequeId equals l.ARPaymentChequeId into lj
-                         from l in lj.DefaultIfEmpty()
+                         join l in context.BankDepositLines on a.ChequeId equals l.ARPaymentChequeId  into lj
+                         from l in lj.Where(x => x.IsOutOfDeposit == false)
+                         .DefaultIfEmpty()
                          join b in context.BankDeposits on l.DepositId equals b.Id into bj
                          from b in bj.DefaultIfEmpty()
                          join ba in context.BankAccounts on b.DepositBankAccountId equals ba.Id into baj
                          from ba in baj.DefaultIfEmpty()
                          where a.AccountId == accountId && a.Tenant == tenant
+                         && ( a.Notes == null || a.Notes != CreditLineNotes)
             && (withoutDate || (isFuture && a.ValueDate > today) || (!isFuture && a.ValueDate <= today))
                          select new LedgerTransactionList()
                          {

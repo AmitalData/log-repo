@@ -70,9 +70,17 @@ export class HomeComponent implements OnDestroy{
     isProcessMenuVisible: boolean = false;
     currentProcessId : string = "";
     public isPinned: boolean = false;
-    countCompletedProcesses : number = 0;
+    countCompletedProcesses : number = null;
     selectedTab: string = '0';
 
+    private justOpened = false;
+    @ViewChild('processMenu') processMenuRef!: ElementRef;
+    @HostListener('document:click', ['$event'])
+    onClickOutside(event: MouseEvent) {
+        if (!this.justOpened && this.processMenuRef && !this.processMenuRef.nativeElement.contains(event.target)) {
+            this.CloseMenu();
+        }
+    }
 
     constructor(private processMenuService: ProcessMenuService) {
         this.Tenant = SessionLocator.Tenant;
@@ -173,13 +181,36 @@ export class HomeComponent implements OnDestroy{
     InitializeChargifyComponents() {
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
+
+    private previousStatuses = new Map<string, string>();
+    public NotViewedItems = new Set<string>();
+    public setCountBlink = false;
+
     InitializeProcess(){
         this.processMenuService.LoadMenuItems();
         this.processMenuService.processCount$.subscribe(count => {
+            if (this.countCompletedProcesses != null && count > this.countCompletedProcesses) {
+                this.setCountBlink = true;
+            }
             this.countCompletedProcesses  = count;
-          });
-      
+        });
+
+        this.processMenuService.relatedProcessSubject.subscribe(items => {
+            items.forEach(item => {
+                // if the report was in Progress/Waiting and now it is in Done, set it as not viewed
+                const prevStatus = this.previousStatuses.get(item.Id);
+                if ((prevStatus === "W" || prevStatus === "P") && item.StatusCode === "D") {
+                    this.NotViewedItems.add(item.Id);
+                }
+                this.previousStatuses.set(item.Id, item.StatusCode);
+            });
+        });
     }
+
+    ViewedItem(id) {
+        this.NotViewedItems.delete(id);
+    }
+
     USDLastUpdate=null;
     GetCurrencyRateLastUpdate(){
         var myService: RatesTableExtendedService = new RatesTableExtendedService();
@@ -817,7 +848,10 @@ export class HomeComponent implements OnDestroy{
         
         if(!newValue){
             this.isPinned = false;
-
+        }
+        else {
+            this.justOpened = true;
+            setTimeout(() => this.justOpened = false);
         }
     }
     get CurrentProcessId () { return this.currentProcessId ; }
@@ -840,6 +874,7 @@ export class HomeComponent implements OnDestroy{
     IsProcessMenuVisibleChanged() {
         this.IsProcessMenuVisible =!this.isProcessMenuVisible;
         this.CurrentProcessId = "";
+        this.setCountBlink = false;
     }
     TogglePinMenu(event: any) {
        

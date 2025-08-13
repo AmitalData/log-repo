@@ -100,20 +100,21 @@ export class Export2ExcelControl {
 
             this.userid = args.userid;
             this.Filters = args.Filters;
-            this.WebFreightDomainService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResult: ExportResult) => {
-                this.HandleExportResult(myResult);
+            this.WebFreightDomainService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResponse: ExportResult) => {
+                if (!myResponse.HasError) this.HandleExportResult(myResponse);
+                else this.OnError();
             }, error => { this.OnError(error) });
         }
 
     }
 
-    OnError(error) {
+    OnError(error?) {
 
         this.btnRetryVisibile = true;
         this.busyExportingVisibile = false;
         this.btnSaveToFileVisibile = false;
 
-        console.error(error);
+        if (error) console.error(error);
     }
 
     HandleExportResult(myResult: ExportResult) {
@@ -295,7 +296,7 @@ export class Export2ExcelControl {
 }
 
 interface ExportResult {
-
+    HasError: boolean;
     ExecutionLogId: string;
     FileName: string;
     IsWorkerRole: boolean;

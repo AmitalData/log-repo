@@ -130,15 +130,8 @@ export class JournalMenuButtonsHandler {
                         case "JournalPrint":
                             {
                                 button.IsDisabled = false;
-
                                 if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.SecurityLevel) && SessionLocator.LoggedUserPM.SecurityLevel <= this.EntityPM.SecurityLevel)
                                     button.IsDisabled = true;
-                                //    if (this.EntityPM.StatusCode == "2" && this.EntityPM.OriginalJournalId == null) {
-                                //    button.IsDisabled = false;
-                                //}
-                                //else {
-                                //    button.IsDisabled = true;
-                                //}
                                 break;
                             }
                         case "CopyJournal":

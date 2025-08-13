@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {AmitalGatewayUtil} from '../../Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 import { DateTool } from '../../Infrastructure/Tools';
@@ -6,7 +6,7 @@ import { Guid } from '../../Infrastructure/Utilities/Guid';
 
 @Component({
     selector: 'BusyIndicator',
-    inputs: ['Text', 'IsBusy', 'Width', 'Height', 'ImageWidth', 'ImageHeight', 'IdPrefix'],
+    inputs: ['Text', 'IsBusy', 'Width', 'Height', 'ImageWidth', 'ImageHeight', 'IdPrefix', 'LeftButtonText', 'RightButtonText'],
     ///changeDetection: ChangeDetectionStrategy.OnPush,
 
     //border: 0;height: 10px;border-radius: 5px;
@@ -26,6 +26,11 @@ import { Guid } from '../../Infrastructure/Utilities/Guid';
 
                 <div style="margin-top: 15px; height: 20px; width: 100%; text-align: center;">
                     <label>{{Text}}</label>
+                </div>
+
+                <div style="margin-top: 5px;">
+                    <button *ngIf="LeftButtonText" class="Button" (click)="notifyLeftButtonClicked()" style="bottom: 0px;width: auto;float: left;margin: 5px;">{{ LeftButtonText }}</button>
+                    <button *ngIf="RightButtonText" class="Button" (click)="notifyRightButtonClicked()" style="bottom: 0px;width: auto;float: right;margin: 5px;">{{ RightButtonText }}</button>
                 </div>
             </div>
         </div>
@@ -88,17 +93,22 @@ import { Guid } from '../../Infrastructure/Utilities/Guid';
 export class BusyIndicator implements OnInit {
     public Text: string;
     public Width: number = 200;
-    public Height: number = 120;
+    public Height: number = 140;
     public ImageWidth: number = 50;
     public ImageHeight: number = 50;
     public BusyIndicatorId: string = null;
     public IdPrefix: string = null;
     private CurrentSession = SessionLocator.SelectedSession;
+    public LeftButtonText: string;
+    public RightButtonText: string;
 
     IsAmitalVer: boolean = false;
     _StartBusyAt: Date;
     _Guid: string;
     
+    @Output() leftButtonClicked = new EventEmitter<void>();
+    @Output() rightButtonClicked = new EventEmitter<void>();
+
     constructor() {
         this.IsAmitalVer = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
         ///this.IsAmitalVer = true;//TEST !!
@@ -123,6 +133,13 @@ export class BusyIndicator implements OnInit {
         if (this.CurrentSession) {
             this.BusyIndicatorId += '_' + this.CurrentSession.SessionIndex;
         }
+    }
+
+    notifyLeftButtonClicked() {
+        this.leftButtonClicked.emit();
+    }
+    notifyRightButtonClicked() {
+        this.rightButtonClicked.emit();
     }
 
     private isBusy: boolean = false;

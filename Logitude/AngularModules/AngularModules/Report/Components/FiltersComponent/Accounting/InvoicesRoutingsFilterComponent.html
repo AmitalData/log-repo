@@ -177,7 +177,7 @@
 
 
                                         <td style="width: 80px;">
-                                            <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
+                                            <app-run-report-toggle [isRTL]="true" [IsSchedulerReport]="IsSchedulerReport" (runReport)="RunReport($event)"></app-run-report-toggle>
                                         </td>
 
                                         <td></td>

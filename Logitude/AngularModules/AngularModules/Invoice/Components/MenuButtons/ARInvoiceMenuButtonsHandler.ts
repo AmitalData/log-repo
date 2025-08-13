@@ -66,9 +66,8 @@ export class ARInvoiceMenuButtonsHandler {
 
                     switch (button.EventCode) {
                         case "SaveAsDraft": {
-                            button.IsHidden = true;
 
-                            if (this.EntityPM.ARInvoiceTypeCode == 'IT' || this.EntityPM.IsAutoCredit || this.EntityPM.StatusCode == "PR") {
+                            if (this.EntityPM.ARInvoiceTypeCode == 'IT' || this.EntityPM.IsAutoCredit || (this.EntityPM.StatusCode !== "DR"  && !AppTool.IsNullOrEmpty(this.EntityPM.StatusCode))) {
                                 myButtonIsDisabled = true;
                                 button.IsHidden = true;
                             }

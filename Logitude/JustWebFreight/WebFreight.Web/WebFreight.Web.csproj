@@ -41,9 +41,9 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
-    <NuGetPackageImportStamp>
+	  <Use64BitIISExpress>
+	  </Use64BitIISExpress>
+	 <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -1070,6 +1070,7 @@
     <Compile Include="AccountingModel\DomainServices\AccountingDomainService.GLAccountLedgerTransactionCheque.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\FullAccountingSettingDomainService.Generated.cs" />
     <Compile Include="AccountingModel\DomainServices\Generated\ReconcileExternalPageStatusDomainService.Generated.cs" />
+    <Compile Include="AccountingModel\DomainServices\PaymentChequeDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxDeductionReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\OpenFormatReportDomainService.cs" />
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
@@ -1133,6 +1134,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CustomerRoleTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\PartyRelationshipTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\TransactionNatureTypeController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\GatepassRequestController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\ObjectTableExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Generated\ListControllers\AdditionalCurrencyRateViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
@@ -4033,6 +4036,7 @@
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\DomainServices\WebFreightDomainService.QuoteChargesGruop.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.APPaymentTransferStatus.cs" />
+    <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoicesSignedStatuses.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARInvoiceStocksStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.ARPaymentTransferStatus.cs" />
     <Compile Include="InvoiceModel\DomainServices\InvoiceDomainService.BankAccountLite.cs" />

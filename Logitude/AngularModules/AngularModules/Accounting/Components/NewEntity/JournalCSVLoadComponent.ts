@@ -2,12 +2,9 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import { Validator } from '../../../Infrastructure/Validators/Validator';
-import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
 import { JournalPM } from '../../EntityPMs/JournalPM';
-import { JournalLinePM } from '../../EntityPMs/JournalLinePM';
+import { JournalAnalyseResult } from '../../EntityPMs/JournalAnalyseResult';
 import { BankAccountPM } from '../../EntityPMs/BankAccountPM';
-import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { JournalPMService } from '../../Services/StandardPMs/JournalPMService';
@@ -15,17 +12,12 @@ import { CurrencyPMService } from '../../../Common/Services/StandardPMs/Currency
 import { CurrencyListService } from '../../../Common/Services/StandardLists/CurrencyListService';
 import { JournalExtendedPMService } from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
-import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { AppTool } from '../../../Infrastructure/Tools';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
-
-
 import { Guid } from '../../../Infrastructure/Utilities/Guid';
 import { ImageParameter } from '../../../Infrastructure/DataContracts/ImageParameter';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import { AccountingOpService } from '../../Services/Others/AccountingOpService';
 declare var attachmentUploader, ResultAsArray: any;
 
 
@@ -62,8 +54,7 @@ export class JournalCSVLoadComponent extends BaseComponent {
     _CurrencyPMService: CurrencyPMService = new CurrencyPMService();
     currencyListService: CurrencyListService = new CurrencyListService();
 
-    //_AccountingOpService: AccountingOpService;
-
+    NewJournalNumber: string;
 
     public UploadFileId: string = Guid.NewRandomString();
     FileName: string;
@@ -85,6 +76,8 @@ export class JournalCSVLoadComponent extends BaseComponent {
     HasError: boolean;
     _LabelLog: string;
     public _NewJournalPM: JournalPM;
+    public _DuplicateLinesSkippedNumber: number = 0;
+
     constructor(private CD: ChangeDetectorRef, public entityListService: EntityListService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -127,15 +120,13 @@ export class JournalCSVLoadComponent extends BaseComponent {
 
 
 
-    //#region Prev Bank Page
-
-    //#endregion
+  
 
     SendJournal(): any {
-        //throw new Error("Method not implemented.");
+
         this.CurrentSession.StartBusyIndicatorCreating();
         if (this.fileUploadParamerter != null && this.fileUploadParamerter.Base64String != null) {
-            this._JournalExtendedPMService.PostJournalAsCSV(this.fileUploadParamerter)
+            this._JournalExtendedPMService.PostJournalAsCSVWithSkip(this.fileUploadParamerter)
                 .subscribe((myServiceResponse: ServiceResponse) => {
                     console.log("[Send] Response/LoadBankPages: ", myServiceResponse.Result);
                     var response = myServiceResponse.Result;
@@ -149,13 +140,13 @@ export class JournalCSVLoadComponent extends BaseComponent {
                     } else {
 
                         if (!AppTool.IsNullOrEmpty(response)) {
-                            //this.ShowMessage(JSON.stringify(response.Result));
-                            var journalPM: JournalPM;
-                            journalPM = myServiceResponse.Result;
-                            console.log(journalPM);
-                            this._NewJournalPM = journalPM;
-
-                            //this.CancelButtonClicked();
+                            var journalAnalyseResult: JournalAnalyseResult;
+                            journalAnalyseResult = myServiceResponse.Result;
+                            console.log(journalAnalyseResult);
+                            
+                            this._NewJournalPM = journalAnalyseResult.JournalPM;
+                            this._DuplicateLinesSkippedNumber = journalAnalyseResult.DuplicatesSkipped;
+                            this.NewJournalNumber = this._NewJournalPM.JournalNumber;
                         }
 
                     }
@@ -278,6 +269,9 @@ export class JournalCSVLoadComponent extends BaseComponent {
 
     }
 
+    public GetDuplicateLinesSkippedMessage() {
+        return TextCodeTranslator.Translate('Journal.O.DuplicateLinesSkipped') + " " + this._DuplicateLinesSkippedNumber;
+    }
 
     //#endregion upload
 

@@ -2,7 +2,8 @@
 <Table
   Name="InterfaceTenantDefinitions"
   Schema="Customs"
-  DBType="Main">
+  DBType="Main"
+  Module="Customs">
   <Column
     Name="Id"
     Type="varchar"
@@ -80,6 +81,18 @@
     Name="SendTime"
     Type="varchar"
     Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomsFile"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsUnifreight"
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>

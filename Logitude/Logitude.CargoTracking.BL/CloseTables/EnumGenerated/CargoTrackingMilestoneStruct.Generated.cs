@@ -31,6 +31,8 @@ namespace Logitude.CargoTracking.BL.CloseTables
         public const string DeliveryOut = "18";
         public const string Delivered = "19";
         public const string Invoiced = "20";
-    }
+		public const string DeliveryArrived = "21";
+
+	}
 }
 

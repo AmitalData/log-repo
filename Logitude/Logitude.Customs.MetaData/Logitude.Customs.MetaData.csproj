@@ -189,6 +189,7 @@
     <None Include="DBScripts\Post\202422051020_UpdateCustomsEnvironmentSettings.sxml" />
     <None Include="DBScripts\Post\20241006_UpdateTransportModeInTables.sxml" />
     <None Include="DBScripts\Post\202408150924_AddDocumentsMetaDataType.sxml" />
+    <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202410071313_UpdateAccountingTablesForCustomsModule.sxml" />
     <None Include="DBScripts\Post\202412121400_GetDataCooConnected.sxml" />
     <None Include="DBScripts\Post\202410120930_CooInvoicesIsInvoiceConnected.sxml" />
@@ -284,6 +285,8 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
+    <None Include="DBScripts\Pre\202507010_VerifyOrAddSQLRowVer.sxml" />
+    <None Include="DBScripts\Pre\20250709_AddDateTime2.sxml" />
     <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
     <None Include="DBScripts\Post\20240610_UpdateTransportmodeLocalName.sxml" />
     <None Include="DBScripts\Pre\2025062420_AlterManifetError.sxml" />

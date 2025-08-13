@@ -87,7 +87,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     using (_AmitalContext = AmitalContext.GetContext(_DeclarationPM.Tenant))
                     {
-                        //AmitalContext.SetOracleMonitor();
                         var myCCUFILEMQueryService = new CCUFILEMQueryService(_AmitalContext);
                         var myCCUPAYHANDQueryService = new CCUPAYHANDQueryService(_AmitalContext);
                         var myCCUPAYHANDUpdateService = new CCUPAYHANDUpdateService(_AmitalContext);
@@ -95,7 +94,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         int? FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO);
                         if (!FILENO.HasValue)
                         {
-                            throw new BusinessErrorException("GetFILENOByCUSTOMFILENO return null");
+                            var unifrightDeclarationUpdateService = new UnifrightDeclarationUpdateService(declarationPM, null, declarationPM.CreatedByUserId);
+                            var _CCUFILEMPM=unifrightDeclarationUpdateService.DoCustomFile();
+                            var myCCUFILEMUpdateService = new CCUFILEMUpdateService(_AmitalContext);
+
+                            using (var logger = (_AmitalContext as DbContextBase).CreateLogger())
+                            {
+                                try
+                                {
+                                    LogMessagingUtil.Instance.AppendLine("Update1: _CCUFILEMPM Update, file: " + _CCUFILEMPM.CUSTOMFILENO);
+                                    myCCUFILEMUpdateService.Update(_CCUFILEMPM, true);
+                                }
+                                catch (Exception eUpdate)
+                                {
+
+
+                                    LogMessagingUtil.Instance.Append("CCUFILEMUpdateService.Update:");
+
+                                    throw;
+                                }
+
+                            }
+                            FILENO = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO(lCUSTOMFILENO)?? _CCUFILEMPM.FILENO;
+
                         }
 
 						int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO, _DeclarationPM.Tenant);

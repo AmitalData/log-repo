@@ -75,6 +75,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EntityLockId { get; set; }
 	      
         public virtual ObjectTable EntityLock { get; set; }
+        [Column("IsCustomsFile")]
+	    public bool? IsCustomsFile { get; set; }
+        [Column("IsUnifreight")]
+	    public bool? IsUnifreight { get; set; }
     }
 }
 	 
