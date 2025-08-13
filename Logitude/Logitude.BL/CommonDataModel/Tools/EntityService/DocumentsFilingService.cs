@@ -1245,7 +1245,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (!string.IsNullOrEmpty(this.entityPM.FileExtension))
             {
                 this.entityPM.FileExtension = this.entityPM.FileExtension.ToLower();
-            }
+            } 
             
             if (isnew)
             {
@@ -1464,8 +1464,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 else
                 {
                     bool? isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant)?.IsConnectedToUniFreight;
-                    
-                    if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null)
+                    var isExport = SecurityUtility.CheckFeature("Customs.Declaration", "EXPORTDECLARATIONPSCREEN", tenant);
+
+                    if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null && !isExport)
                     {
                         if (isnew)
                         {
