@@ -33,11 +33,14 @@ import { SATInterfaceSettingPMService } from '../../../Invoice/Services/Standard
 import { DateTool } from '../../Tools';
 import { Guid } from '../../Utilities/Guid';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+declare var changeFavicon: any;
+declare var changeTitle: any;
 import { RulesValidator } from '../../Validators/RulesValidator';
 import { Environment } from '../../Locators/Environment';
 import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { ServiceLocator } from '../../Locators/ServiceLocator';
 import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
+//import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
 import { v4 as uuidv4 } from 'uuid';
@@ -90,7 +93,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
     private UserExtendedPMService: UserExtendedPMService;
     private generalDomainService: GeneralDomainService;
     private isLocalPrivateLable: boolean = false;
-
     constructor(
         private logitudeApplicationService: LogitudeApplicationService,
         private loginService: LoginService,
@@ -153,13 +155,11 @@ export class LoginComponent implements OnInit ,AfterViewInit {
         //FileLoader.LoadFroalaResources();
         sessionStorage.setItem('SessionId', uuidv4());
 
-
     }
 
     idxdb: IDBOpenDBRequest;
     public authHeader;
     ngOnInit() {
-        
         let AmitalSSOAngular = this.getParameterByName(
             'AmitalSSOAngular',
             window.location.href
@@ -202,7 +202,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
       localStorage.clear();
       sessionStorage.clear();
     }
-
+   
     async developerLogin() {
         this.Email = ''
         this.Password = '';
@@ -211,7 +211,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
        while(!this.TenantList?.length)
           await new Promise<void>(resolve => setTimeout(() => resolve(), 100))
 
-        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 0);
+        this.SelectedCompany = this.TenantList.find(d => d.Tenant == 1);
 
         this.ContinueClicked()
     }   
@@ -253,6 +253,13 @@ export class LoginComponent implements OnInit ,AfterViewInit {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
                     var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
+                    const token: string = new URLSearchParams(window.location.search).get('Token');
+                    
+                    if (menuName === 'redi' && token) {
+                        const origin: string = window.location.origin.replace('localhost:4200', 'localhost:9996');
+                        location.href = origin + '/api/ExternalLink/GetForward?Token=' + token;
+                        return;
+                    }
                     
                     if (
                         menuName == 'logbox' ||
@@ -530,7 +537,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
-                IgnoreMFA: false,
             };
 
             this.HidePendingLoading = false;
@@ -539,7 +545,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
     }
 
     ShowTenantList: boolean = false;
-    PostUserValidation(loginParameters) {    
+    PostUserValidation(loginParameters) {
         this.loginService
             .PostUserValidation(loginParameters)
             .subscribe((userData: any) => {
@@ -566,19 +572,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                         this.loginService.CurrentTenant = this.Tenant;
 
                         var f = { valid: true };
-                        if (
-                        !userData.IsTwoFactorAuthenticationRequired ||
-                        userData.IsTwoFactorAuthenticationRequired == false
-                    )
-                        {
-                            this.ChooseTenant(f, null);
-                        }
-                        else {
-                        this.LoggedUserData = userData;
-                        this.UserMobileNumber = userData.UserMobileNumber;
-                        this.ShowTwoFactorAuthenScreen = true;
-
-                          }
+                        this.ChooseTenant(f, null);
                     } else {
                         var i = 0;
                         this.TenantList.forEach((item) => {
@@ -614,7 +608,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
-                IgnoreMFA: false,
             };
 
             this.loginService.CurrentTenant = this.Tenant;
@@ -679,7 +672,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                     if (res == true) {
                         this.ShowTwoFactorAuthenScreen = false;
                         //this.StartLoading(this.LoggedUserData);
-                        this.LoginParams.IgnoreMFA=true;
                         this.PostLoginData();
                     } else {
                         this.InvalidVerificationCode = true;
@@ -1419,5 +1411,4 @@ export class LoginComponent implements OnInit ,AfterViewInit {
             );
         }
     }
-  
 }
