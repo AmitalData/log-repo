@@ -3453,7 +3453,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             if (tenantSiiRequestStatuses.Keys.Contains(siiRequestStatusDetails.Code))
             {
                 SIIRequestStatus siiRequestStatus = siiRequestStatusRepository.GetSingle(siiRequestStatusDetails.Code);
-                siiRequestStatus.LocalName = siiRequestStatusDetails.Name;
+                siiRequestStatus.LocalName = siiRequestStatusDetails.LocalName;
                 siiRequestStatus.SearchFields = (siiRequestStatusDetails.Code + "," + siiRequestStatusDetails.LocalName).ToLower();
                 siiRequestStatusRepository.Update(siiRequestStatus);
             }

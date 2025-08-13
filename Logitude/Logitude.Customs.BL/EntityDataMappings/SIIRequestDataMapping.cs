@@ -126,7 +126,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
             if (contactPM == null) return;
 
-            entityPM.ContactName = contactPM.LocalName;
+            entityPM.ContactName = contactPM.LocalName ?? contactPM.EnglishName;
             entityPM.ContactEmail = contactPM.Email;
             entityPM.ContactCellPhone = contactPM.Mobile;
             entityPM.ContactFax = contactPM.Fax;

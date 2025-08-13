@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;בקשות למכון תקנים&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;9fdf&quot;"
+  Code="&quot;7b9b&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2295,6 +2295,234 @@
       Code="&quot;Customs.SIIRequest.O.RequiredFields&quot;"
       DefaultText="&quot;Required Fields&quot;"
       LocalDefaultText="&quot;שדות חובה במסר שליחה למכון תקנים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.formApplicationId&quot;"
+      DefaultText="&quot;Form Application Id&quot;"
+      LocalDefaultText="&quot;מספר פנייה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.importerNumber&quot;"
+      DefaultText="&quot;Importer Number&quot;"
+      LocalDefaultText="&quot;מספר יבואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.importerEmail&quot;"
+      DefaultText="&quot;Importer Email&quot;"
+      LocalDefaultText="&quot;אימייל יבואן&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.applicantIdNumber&quot;"
+      DefaultText="&quot;Applicant Id Number&quot;"
+      LocalDefaultText="&quot;ת.ז של שולח הבקשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.applicantFullName&quot;"
+      DefaultText="&quot;Applicant Full Name&quot;"
+      LocalDefaultText="&quot;שם מלא של שולח הבקשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.customsAgentRegisteredNumber&quot;"
+      DefaultText="&quot;Customs Agent Registered Number&quot;"
+      LocalDefaultText="&quot;ת.ז/ח.פ של סוכן מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.customsAgentName&quot;"
+      DefaultText="&quot;Customs Agent Name&quot;"
+      LocalDefaultText="&quot;שם עמילות המכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.deliveryArrivalDate&quot;"
+      DefaultText="&quot;Delivery Arrival Date&quot;"
+      LocalDefaultText="&quot;תאריך הגעה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.billOfLadingId&quot;"
+      DefaultText="&quot;Bill Of Lading Id&quot;"
+      LocalDefaultText="&quot;מספר שטר מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.formAttachmentIndex&quot;"
+      DefaultText="&quot;Form Attachment Index&quot;"
+      LocalDefaultText="&quot;מזהה צרופת שטר מטען&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.importCountry&quot;"
+      DefaultText="&quot;Import Country&quot;"
+      LocalDefaultText="&quot;ארץ יבוא&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.destinationPort&quot;"
+      DefaultText="&quot;Destination Port&quot;"
+      LocalDefaultText="&quot;נמל יעד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.warehouseLocationName&quot;"
+      DefaultText="&quot;Warehouse Location Name&quot;"
+      LocalDefaultText="&quot;כתובת אחסון הטובין לאחר השחרור - רחוב/מיקום&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.warehouseSettlement&quot;"
+      DefaultText="&quot;Warehouse Settlement&quot;"
+      LocalDefaultText="&quot;ישוב מיקום אחסון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.contactPersonFirstName&quot;"
+      DefaultText="&quot;Contact Person First Name&quot;"
+      LocalDefaultText="&quot;שם פרטי איש קשר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.contactPersonLastName&quot;"
+      DefaultText="&quot;Contact Person Last Name&quot;"
+      LocalDefaultText="&quot;שם משפחה איש קשר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.contactPersonPhone&quot;"
+      DefaultText="&quot;Contact Person Phone&quot;"
+      LocalDefaultText="&quot;טלפון איש קשר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.contactPersonEmail&quot;"
+      DefaultText="&quot;Contact Person Email&quot;"
+      LocalDefaultText="&quot;אימייל איש קשר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.isNumericCountryCode&quot;"
+      DefaultText="&quot;Is Numeric Country Code&quot;"
+      LocalDefaultText="&quot;האם קוד נומרי לארצות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.lineSerialNumber&quot;"
+      DefaultText="&quot;Line Serial Number&quot;"
+      LocalDefaultText="&quot;מספר סידורי של השורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.customsItem&quot;"
+      DefaultText="&quot;Customs Item&quot;"
+      LocalDefaultText="&quot;פרט מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.originCountry&quot;"
+      DefaultText="&quot;Origin Country&quot;"
+      LocalDefaultText="&quot;ארץ יצור&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.modelCode&quot;"
+      DefaultText="&quot;Model Code&quot;"
+      LocalDefaultText="&quot;קוד דגם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.modelDescription&quot;"
+      DefaultText="&quot;Model Description&quot;"
+      LocalDefaultText="&quot;תאור הדגם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.supplierInvoiceNumber&quot;"
+      DefaultText="&quot;Supplier Invoice Number&quot;"
+      LocalDefaultText="&quot;מספר חשבון ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.supplierInvoiceDate&quot;"
+      DefaultText="&quot;Supplier Invoice Date&quot;"
+      LocalDefaultText="&quot;תאריך חשבון ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.formAttachmentIndexes&quot;"
+      DefaultText="&quot;Form Attachment Indexes&quot;"
+      LocalDefaultText="&quot;מזההי צרופות המקושרים לשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.isDutchGroup1Requested&quot;"
+      DefaultText="&quot;Is Dutch Group1 Requested&quot;"
+      LocalDefaultText="&quot;האם מבוקש החמרה לקבוצה 1&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.productFileNumber&quot;"
+      DefaultText="&quot;Product File Number&quot;"
+      LocalDefaultText="&quot;מספר תיק מוצר במת&quot;י&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.quantityToRelease&quot;"
+      DefaultText="&quot;Quantity To Release&quot;"
+      LocalDefaultText="&quot;כמות במשלוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.siiUnitCode&quot;"
+      DefaultText="&quot;SII Unit Code&quot;"
+      LocalDefaultText="&quot;יחידת מידה מת''י&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.productCode&quot;"
+      DefaultText="&quot;Product Code&quot;"
+      LocalDefaultText="&quot;קוד מוצר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Line&quot;"
+      DefaultText="&quot;Line&quot;"
+      LocalDefaultText="&quot;שורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.Attachment&quot;"
+      DefaultText="&quot;Attachment&quot;"
+      LocalDefaultText="&quot;צרופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.DataNotCompleted&quot;"
+      DefaultText="&quot;Request data not completed&quot;"
+      LocalDefaultText="&quot;לא הושלמו נתוני בקשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.quantityByDeclaredUnit&quot;"
+      DefaultText="&quot;quantity By Declared Unit&quot;"
+      LocalDefaultText="&quot;כמות במשלוח לפי יחידה מוצהרת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.declaredUnitCode&quot;"
+      DefaultText="&quot;declared Unit Code&quot;"
+      LocalDefaultText="&quot;יחידת מידה מוצהרת&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.FileTypeNotAllowed&quot;"
+      DefaultText="&quot;File type {0} cannot be sent to SII. Allowed: {1}.&quot;"
+      LocalDefaultText="&quot;קובץ מסוג {0} אינו מותר לשליחה למכון התקנים. סוגים מותרים: {1}.&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

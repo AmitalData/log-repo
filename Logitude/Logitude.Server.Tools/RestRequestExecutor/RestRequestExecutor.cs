@@ -22,6 +22,13 @@ namespace Logitude.Server.Tools.RestRequestExecutor
               </soap:Body>
            </soap:Envelope>";
 
+        private static readonly JsonSerializerSettings _apiJsonSettings =
+            new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Include
+            };
+
         private readonly AsyncRetryPolicy<HttpResponseMessage> _retryPolicy;
         public RestRequestExecutor()
         {
@@ -31,6 +38,7 @@ namespace Logitude.Server.Tools.RestRequestExecutor
                 .WaitAndRetryAsync(1, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt))
                 );
         }
+    
         public RestRequestExecutor(int maxRetries)
         {
             _retryPolicy = Policy<HttpResponseMessage>
@@ -40,29 +48,37 @@ namespace Logitude.Server.Tools.RestRequestExecutor
                 );
         }
 
-        public async Task<ApiResponse<TResponse>> ExecuteAsync<TRequest, TResponse>(ApiRequest<TRequest> request)
+        public async Task<ApiResponse<TResponse>> ExecuteAsync<TRequest, TResponse>(
+            ApiRequest<TRequest> request)
         {
-            //Validate input
-            ValidateRequest(request);            
-            string rawResponseContent = string.Empty;                        
+            ValidateRequest(request);
+
+            string rawResponseContent = string.Empty;
             var apiCommunicationLog = new ApiCommunicationLog();
             var responseToReturn = new ApiResponse<TResponse>();
+
+            var requestJson = JsonConvert.SerializeObject(request.Data, _apiJsonSettings);
+            _ = Task.Run(() => LogCommunicationAsync(
+                apiCommunicationLog,
+                requestJson,
+                string.Empty,
+                true,                       
+                request.Tenant,
+                request.RequestComm));
+
             try
-            {                              
-                //Send request   
+            {
                 var response = await _retryPolicy.ExecuteAsync(async () =>
                 {
-                    var httpClient = new HttpClient {Timeout = TimeSpan.FromMilliseconds(request.Header.Timeout)};
+                    var httpClient = new HttpClient { Timeout = TimeSpan.FromMilliseconds(request.Header.Timeout) };
                     var httpRequest = BuildHttpRequest(request);
                     var result = await httpClient.SendAsync(httpRequest);
-                    rawResponseContent = await result.Content.ReadAsStringAsync();                    
+                    rawResponseContent = await result.Content.ReadAsStringAsync();
                     return result;
                 });
 
                 if (request.IsSoapRequest)
-                {
                     rawResponseContent = JsonConvert.SerializeObject(rawResponseContent);
-                }
 
                 responseToReturn = HandleResponse<TResponse>(response, rawResponseContent);
             }
@@ -71,15 +87,17 @@ namespace Logitude.Server.Tools.RestRequestExecutor
                 var error = HandleException<TResponse>(ex);
                 responseToReturn.ErrorCode = error.ErrorCode;
                 responseToReturn.ErrorMessage = error.ErrorMessage;
-                rawResponseContent= error.ErrorMessage;
+                rawResponseContent = error.ErrorMessage;
             }
-            
-            _ = Task.Run(() => LogCommunicationAsync(apiCommunicationLog,
-                JsonConvert.SerializeObject(request.Data),
+
+            _ = Task.Run(() => LogCommunicationAsync(
+                apiCommunicationLog,
+                string.Empty,
                 rawResponseContent,
                 responseToReturn.Success,
                 request.Tenant,
-                request.Communications));                       
+                request.ResponseComm));
+
             return responseToReturn;
         }
 
@@ -99,7 +117,8 @@ namespace Logitude.Server.Tools.RestRequestExecutor
                 }
                 else
                 {
-                    httpRequest.Content = new StringContent(JsonConvert.SerializeObject(request.Data), Encoding.UTF8, request.Header.ContentType);
+                    var json = JsonConvert.SerializeObject(request.Data, _apiJsonSettings); 
+                    httpRequest.Content = new StringContent(json, Encoding.UTF8, request.Header.ContentType);
                 }
             }
 
@@ -170,19 +189,24 @@ namespace Logitude.Server.Tools.RestRequestExecutor
         private void ValidateRequest<TRequest>(ApiRequest<TRequest> request)
         {
             if (request == null)
-                throw new ValidationServiceException("request is null");            
-            ValidateField(request.Url, nameof(request.Url));               
+                throw new ValidationServiceException("request is null");
+
+            ValidateField(request.Url, nameof(request.Url));
+
             if (request.Header == null)
                 throw new ValidationServiceException("Header must be provided.", nameof(request.Header));
             if (request.Header.Method == null)
                 throw new ValidationServiceException("Method must be provided.", nameof(request.Header.Method));
-            if (request?.Communications == null)
-                throw new ValidationServiceException("Communications is null.", nameof(request.Communications));
 
-            ValidateField(request.Communications.EntityId, nameof(request.Communications.EntityId));
-            ValidateField(request.Communications.Subject, nameof(request.Communications.Subject));
-            ValidateField(request.Communications.ObjectTableId, nameof(request.Communications.ObjectTableId));
-        }        
+            if (request.RequestComm == null)
+                throw new ValidationServiceException("RequestComm is null.", nameof(request.RequestComm));
+            if (request.ResponseComm == null)
+                throw new ValidationServiceException("ResponseComm is null.", nameof(request.ResponseComm));
+
+            ValidateField(request.RequestComm.EntityId, nameof(request.RequestComm.EntityId));
+            ValidateField(request.RequestComm.Subject, nameof(request.RequestComm.Subject));
+            ValidateField(request.RequestComm.ObjectTableId, nameof(request.RequestComm.ObjectTableId));
+        }
         private string SerializeToXml<T>(T data)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));

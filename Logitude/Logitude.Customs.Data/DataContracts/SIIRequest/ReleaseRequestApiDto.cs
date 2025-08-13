@@ -6,86 +6,83 @@ namespace Logitude.Customs.Data.DataContracts.SIIRequest
 {
     public class ReleaseRequestApiDto
     {
-        public CredentialsDto Credentials { get; set; }
-        public ReleaseRequestFormDto ReleaseRequestForm { get; set; }
-        public List<FormAttachmentDto> FormAttachments { get; set; }
+        public CredentialsDto credentials { get; set; }
+        public ReleaseRequestFormDto releaseRequestForm { get; set; }
+        public List<FormAttachmentDto> formAttachments { get; set; }                                              
     }
 
     public class ReleaseRequestFormDto
     {
-        public string FormApplicationId { get; set; }
-        public string ImporterNumber { get; set; }
-        public string ImporterEmail { get; set; }
-        public string ImporterPhone { get; set; }
-        public string ImporterCellPhone { get; set; }
-        public string ImporterFax { get; set; }
-        public string ApplicantIdNumber { get; set; }
-        public string ApplicantFullName { get; set; }
-        public string CustomsAgentRegisteredNumber { get; set; }
-        public string CustomsAgentName { get; set; }
-        public string AgentFileId { get; set; }
-        public CountryAlphaDto ImportCountry { get; set; }
-        public IdDto DestinationPort { get; set; }
-        public DateTime DeliveryArrivalDate { get; set; }
-        public string DeliveryComment { get; set; }
-        public string ShipFlightNumber { get; set; }
-        public string BillOfLadingId { get; set; }
-        public int FormAttachmentIndex { get; set; }
-        public IdDto WarehouseSettlement { get; set; }
-        public string WarehouseLocationName { get; set; }
+        public string formApplicationId { get; set; }
 
-        // Contact person  
-        public string ContactPersonFirstName { get; set; }
-        public string ContactPersonLastName { get; set; }
-        public string ContactPersonEmail { get; set; }
-        public string ContactPersonPhone { get; set; }
-        public string ContactPersonCellPhone { get; set; }
-        public string ContactPersonFax { get; set; }
+        public long importerNumber { get; set; }
 
-        public string IsNumericCountryCode { get; set; }
-        public List<ReleaseRequestLineDto> ReleaseRequestLinesForm { get; set; }
+        public string importerEmail { get; set; }
+        public string importerPhone { get; set; }
+        public string importerCellPhone { get; set; }
+        public string importerFax { get; set; }
+        public string applicantIdNumber { get; set; }
+        public string applicantFullName { get; set; }
+        public long customsAgentRegisteredNumber { get; set; }
+        public string customsAgentName { get; set; }
+        public string agentFileId { get; set; }
+        public CountryAlphaDto importCountry { get; set; }
+        public IdDto destinationPort { get; set; }
+        public DateTime deliveryArrivalDate { get; set; }
+        public string deliveryComment { get; set; }
+        public string shipFlightNumber { get; set; }
+        public string billOfLadingId { get; set; }
+        public int formAttachmentIndex { get; set; }
+        public IdDto warehouseSettlement { get; set; }
+        public string warehouseLocationName { get; set; }
+
+        public string contactPersonFirstName { get; set; }
+        public string contactPersonLastName { get; set; }
+        public string contactPersonEmail { get; set; }
+        public string contactPersonPhone { get; set; }
+        public string contactPersonCellPhone { get; set; }
+        public string contactPersonFax { get; set; }
+
+        public bool isNumericCountryCode { get; set; }
+        public List<ReleaseRequestLineDto> releaseRequestLinesForm { get; set; }
     }
 
     public class ReleaseRequestLineDto
     {
-        public int LineSerialNumber { get; set; }
-        public string ProductFileNumber { get; set; }
-        public string ProductCode { get; set; }
-        public string ModelCode { get; set; }
-        public string ModelDescription { get; set; }
-        public CountryAlphaDto OriginCountry { get; set; }
-        public string Manufacturer { get; set; }
-        public bool IsDutchGroup1Requested { get; set; }
-        public string CustomsItem { get; set; }
-        public string Supplier { get; set; }
-        public decimal? QuantityToRelease { get; set; }
-        public string SiiUnitCode { get; set; }
-        public decimal? QuantityByDecaredUnit { get; set; }
-        public string Comment { get; set; }
-        public List<int> FormAttachmentIndexes { get; set; }
-        public string SupplierInvoiceNumber { get; set; }
-        public DateTime? SupplierInvoiceDate { get; set; }
-        public string DeclaredUnitCode { get; set; }
-        public string VendorName { get; set; }
-        public string ProductDutchGroup { get; set; }
+        public int lineSerialNumber { get; set; }
+        public string productFileNumber { get; set; }
+        public string productCode { get; set; }
+        public string modelCode { get; set; }
+        public string modelDescription { get; set; }
+        public CountryAlphaDto originCountry { get; set; }
+        public string manufacturer { get; set; }
+        public bool isDutchGroup1Requested { get; set; }
+        public string customsItem { get; set; }
+        public string supplier { get; set; }
+        public decimal? quantityToRelease { get; set; }
+        public int? siiUnitCode { get; set; }
+        public decimal? quantityByDeclaredUnit { get; set; }
+        public string comment { get; set; }
+        public List<int> formAttachmentIndexes { get; set; }
+        public string supplierInvoiceNumber { get; set; }
+        public DateTime? supplierInvoiceDate { get; set; }
+        public string declaredUnitCode { get; set; }
+        public IdProductDutchGroup productDutchGroup { get; set; }
     }
 
     public class FormAttachmentDto
     {
-        public int FormAttachmentIndex { get; set; }
-        public IdDto AttachmentType { get; set; }
-        public string AttachmentDescription { get; set; } 
-        public string FormAttachment { get; set; }        
-        public string FileExtension { get; set; }
+        public int formAttachmentIndex { get; set; }
+        public IdDto attachmentType { get; set; }
+        public string attachmentDescription { get; set; }
+        public string formAttachment { get; set; }
+        public string temporaryUrlToDownload { get; set; }
+
+        public string fileExtension { get; set; }
     }
 
-    public class CountryAlphaDto
-    {
-        public string AlphaCode { get; set; }
-    }
+    public class CountryAlphaDto{public string alphaCode { get; set; }}
 
-    public class IdDto
-    {
-        public string Id { get; set; }
-    }
+    public class IdDto { public int id { get; set; } }
+    public class IdProductDutchGroup { public int id { get; set; } }
 }

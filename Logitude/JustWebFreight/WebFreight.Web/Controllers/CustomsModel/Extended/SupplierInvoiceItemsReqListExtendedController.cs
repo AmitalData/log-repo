@@ -74,11 +74,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 var auth = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 const string interfaceName = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck;
+                const string interfaceName_Response = CustomsPartnerFtpDetails.InterfaceName_SIIProductFileCheck_Response;
                 const string partnerCode = CustomsPartnerFtpDetails.PartnerCode_SII;
 
                 var factory = new SIIRequestApiRequestFactory(auth.Tenant);
                 var credentials = factory.BuildCredentials(interfaceName, partnerCode);
-                var communicationDetails = factory.BuildCommunicationsDto(interfaceName, partnerCode, declarationId);
+
+                var commRequest = factory.BuildCommunicationsDto(interfaceName, partnerCode, declarationId);
+                var commResponse = factory.BuildCommunicationsDto(interfaceName_Response, partnerCode, declarationId);
+
 
                 var dto = new ProductFileRequestDto
                 {
@@ -88,7 +92,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     originCountry = originCountry,
                 };
 
-                var apiRequest = factory.Create(interfaceName, partnerCode, dto,communicationDetails);
+                var apiRequest = factory.Create(interfaceName, partnerCode, dto, commRequest, commResponse);
 
                 var executor = new RestRequestExecutor();
                 var apiResp =
