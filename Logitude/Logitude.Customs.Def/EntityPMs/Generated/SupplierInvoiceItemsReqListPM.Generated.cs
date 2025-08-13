@@ -122,7 +122,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string sIIRequestID ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -424,6 +426,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int dutchGroupItem ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int DutchGroupItem  
+	   {
+	    
+	     get
+		{
+		   return dutchGroupItem;
+		 }
+		 set
+		 {
+		   if(dutchGroupItem != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DutchGroupItem",OldValue=dutchGroupItem,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   dutchGroupItem=value;
+		   }
+			
+		 }
+	   }
 	  private decimal? invoiceQuantity ;
 	  	  
        
@@ -512,6 +537,167 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatisticQuantityType",OldValue=statisticQuantityType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   statisticQuantityType=value;
+		   }
+			
+		 }
+	   }
+	  private string originCountryCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginCountryCode  
+	   {
+	    
+	     get
+		{
+		   return originCountryCode;
+		 }
+		 set
+		 {
+		   if(originCountryCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCountryCode",OldValue=originCountryCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originCountryCode=value;
+		   }
+			
+		 }
+	   }
+	  private string classificationCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ClassificationCode  
+	   {
+	    
+	     get
+		{
+		   return classificationCode;
+		 }
+		 set
+		 {
+		   if(classificationCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ClassificationCode",OldValue=classificationCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   classificationCode=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceQuantityTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceQuantityTypeCode  
+	   {
+	    
+	     get
+		{
+		   return invoiceQuantityTypeCode;
+		 }
+		 set
+		 {
+		   if(invoiceQuantityTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceQuantityTypeCode",OldValue=invoiceQuantityTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceQuantityTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceNumber;
+		 }
+		 set
+		 {
+		   if(invoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceNumber",OldValue=invoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceNumber=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? issueDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? IssueDate  
+	   {
+	    
+	     get
+		{
+		   return issueDate;
+		 }
+		 set
+		 {
+		   if(issueDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IssueDate",OldValue=issueDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   issueDate=value;
+		   }
+			
+		 }
+	   }
+	  private string statisticQuantityTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string StatisticQuantityTypeCode  
+	   {
+	    
+	     get
+		{
+		   return statisticQuantityTypeCode;
+		 }
+		 set
+		 {
+		   if(statisticQuantityTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StatisticQuantityTypeCode",OldValue=statisticQuantityTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   statisticQuantityTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string vendorName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VendorName  
+	   {
+	    
+	     get
+		{
+		   return vendorName;
+		 }
+		 set
+		 {
+		   if(vendorName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorName",OldValue=vendorName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vendorName=value;
 		   }
 			
 		 }

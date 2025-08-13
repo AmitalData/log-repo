@@ -2244,7 +2244,6 @@
     <Compile Include="EntityQueryServices\MeasurmentUnitQueryService.cs" />
     <Compile Include="EntityQueryServices\ReferantExceptionQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceFreightAmountQueryService.cs" />
-    <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItemVehicleAddQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsBookQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsBranchQueryService.cs" />

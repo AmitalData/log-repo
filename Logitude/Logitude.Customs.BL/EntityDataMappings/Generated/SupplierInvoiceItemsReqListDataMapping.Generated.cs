@@ -67,10 +67,18 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestRequiredStatus, 
 	         ItemNo, 
 	         ItemName, 
+	         DutchGroupItem, 
 	         InvoiceQuantity, 
 	         InvoiceQuantityType, 
 	         StatisticQuantity, 
-	         StatisticQuantityType,
+	         StatisticQuantityType, 
+	         OriginCountryCode, 
+	         ClassificationCode, 
+	         InvoiceQuantityTypeCode, 
+	         InvoiceNumber, 
+	         IssueDate, 
+	         StatisticQuantityTypeCode, 
+	         VendorName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -87,11 +95,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
 				entityPOCO.SearchFields = entityPM.SearchFields;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SIIRequestID))
-            {
-				entityPOCO.SIIRequestID = entityPM.SIIRequestID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestType))
@@ -239,11 +242,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SearchFields))
             {
                 oldEntityPM.SearchFields = entityPM.SearchFields;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SIIRequestID))
-            {
-                oldEntityPM.SIIRequestID = entityPM.SIIRequestID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RequestType))
