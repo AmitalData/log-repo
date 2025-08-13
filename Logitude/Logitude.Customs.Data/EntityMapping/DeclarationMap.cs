@@ -160,16 +160,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsConnectedToUnifreight).HasColumnName("IsConnectedToUnifreight");
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.MainImporterEntitlemntTypeCode).HasColumnName("MainImporterEntiTypeCode").HasMaxLength(3).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.MainImporterEntitlemntTypeCode).HasColumnName("MainImporterEntitlemntTypeCode").HasMaxLength(3).IsUnicode(false);
-			}
-
+            this.Property(t => t.MainImporterEntitlemntTypeCode).HasColumnName("MainImporterEntitlemntTypeCode").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.TransImporterEntitleTypeCode).HasColumnName("TransImporterEntitleTypeCode").HasMaxLength(3).IsUnicode(false);
 
@@ -297,16 +288,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CancelRequestReasonCode).HasColumnName("CancelRequestReasonCode").HasMaxLength(3).IsUnicode(false);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExpl").HasMaxLength(512).IsUnicode(true);
-			}
-			else
-			{
-              this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExplanation").HasMaxLength(512).IsUnicode(true);
-			}
-
+            this.Property(t => t.CancelRequestReasonExplanation).HasColumnName("CancelRequestReasonExplanation").HasMaxLength(512).IsUnicode(true);
 
             this.Property(t => t.CancelRequestNumber).HasColumnName("CancelRequestNumber");
 
@@ -354,27 +336,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ClosingXml).HasColumnName("ClosingXml").IsMaxLength().IsUnicode(true);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ExportCloseAmendRequestNumber).HasColumnName("ExportCloseAmendReqNum").HasMaxLength(9).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.ExportCloseAmendRequestNumber).HasColumnName("ExportCloseAmendRequestNumber").HasMaxLength(9).IsUnicode(false);
-			}
+            this.Property(t => t.ExportCloseAmendRequestNumber).HasColumnName("ExportCloseAmendRequestNumber").HasMaxLength(9).IsUnicode(false);
 
-
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmenStatus").HasMaxLength(2).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmendmentStatus").HasMaxLength(2).IsUnicode(false);
-			}
-
+            this.Property(t => t.ExportCloseAmendmentStatus).HasColumnName("ExportCloseAmendmentStatus").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.CasualImporterCountry).HasColumnName("CasualImporterCountry").HasMaxLength(4).IsUnicode(false);
 
