@@ -141,7 +141,7 @@ END
 ) AS BalanceInLocalCurrency,
 SUM(
   CASE
-    WHEN GL.ReconcileMethodCode = 0  AND t.ExchangeRate != 0
+    WHEN GL.ReconcileMethodCode = 0 and gl.IsMultiCurrency!=1 AND t.ExchangeRate != 0
       THEN t.OpenAmount / t.ExchangeRate
     ELSE t.OpenAmount
   END
@@ -186,7 +186,9 @@ lt.CreateDate,
 lt.ForeignAmountCredit,
 lt.ForeignAmountDebit,
 lt.Tenant,
-lt.CurrencyId
+		lt.CurrencyId,
+		ten.CurrencyId as TenantCurrencyId
+
 FROM LedgerTransactions lt
 INNER JOIN
 TENANTS TEN ON lt.tenant = TEN.Id
@@ -207,7 +209,12 @@ LEFT JOIN
 C ON GL.CardsDataId = C.Id
 LEFT JOIN
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant)
-CURRENCY ON T.OpenAmountCurrencyId = CURRENCY.Id
+CURRENCY 
+ ON 
+    CASE 
+        WHEN GL.ReconcileMethodCode = 0 THEN T.TenantCurrencyId
+        ELSE T.OpenAmountCurrencyId
+    END = CURRENCY.Id
 left JOIN
 PaymentTerms PT ON PT.Id = C.PaymentTermId
 WHERE
