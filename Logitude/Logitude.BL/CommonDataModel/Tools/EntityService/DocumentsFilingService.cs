@@ -57,6 +57,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.BL.Messaging.Amital;
+using Profact.TimbraCFDI.Complementos.Ine10;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -1245,7 +1246,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (!string.IsNullOrEmpty(this.entityPM.FileExtension))
             {
                 this.entityPM.FileExtension = this.entityPM.FileExtension.ToLower();
-            }
+            } 
             
             if (isnew)
             {
@@ -1464,8 +1465,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 else
                 {
                     bool? isConnectedToUniFreight = CustomsSettingQueryService.GetLogitudeCustomsSettingsM(tenant)?.IsConnectedToUniFreight;
-                    
-                    if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null)
+                    var isExport = SecurityUtility.CheckFeature("Customs.Declaration", "EXPORTDECLARATIONPSCREEN", tenant);
+
+                    if (isConnectedToUniFreight == false && document.Folder == "docsin" && MyUniFileVerM == null && !isExport)
                     {
                         if (isnew)
                         {
