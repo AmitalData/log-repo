@@ -138,6 +138,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                 BalanceInLocalCurrency = reader["BalanceInLocalCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInLocalCurrency"] : 0,
                                 AccountingBalance = reader["BalanceInForeignCurrency"] != DBNull.Value ? (decimal?)reader["BalanceInForeignCurrency"] : 0,
                                 TotalForeign = reader["TotalForeign"] != DBNull.Value ? (decimal?)reader["TotalForeign"] : 0,
+                                TotalToCollect = reader["TotalToCollect"] != DBNull.Value ? (decimal?)Convert.ToDecimal(reader["TotalToCollect"]) : 0,
 
                             };
                             result.TotalLocal = result.BalanceInLocalCurrency;

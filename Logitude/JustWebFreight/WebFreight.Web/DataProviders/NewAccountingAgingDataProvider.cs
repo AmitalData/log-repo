@@ -35,7 +35,7 @@ namespace WebFreight.Web.DataProviders
         public decimal? InsuredCreditLimit { get; set; }
         public decimal? ExternalTransactionsTotal { get; set; }
         public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
-        public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal; } }
+        public decimal? Obligo { get { return TotalOpenShipments + BalanceInLocalCurrency+ TotalFutureOpenCheques + TotalPastOpenCheques; } }
          public decimal? CreditUsed { get { return (CreditLimit - Obligo)*-1; } }
          public decimal? TotalLocal { get; set; } 
         public decimal? TotalForeign { get; set; } 
@@ -59,7 +59,7 @@ namespace WebFreight.Web.DataProviders
         public string StandardInterestRateBaseLocalName { get; set; }
         public decimal? StandardAddInterestPercent { get; set; }
         public decimal? CreditLimit { get; set; }
-         public decimal? TotalToCollect { get { return BalanceInLocalCurrency + TotalOpenShipments; } }
+         public decimal? TotalToCollect { get; set; }
         public decimal? AccountingBalance { get; set; }
         public decimal? Minus30Days { get; set; }
         public decimal? Minus60Days { get; set; }

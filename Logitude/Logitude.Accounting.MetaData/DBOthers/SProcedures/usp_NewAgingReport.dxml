@@ -68,6 +68,7 @@ BalanceInLocalCurrency DECIMAL(30, 2),
 BalanceInForeignCurrency DECIMAL(30, 2),
 StandardInterestRateBaseLocalName NVARCHAR(256),
 StandardAddInterestPercent DECIMAL(4, 2),
+TotalToCollect DECIMAL(30, 2),
 );
 INSERT INTO #TemporaryTable
 SELECT
@@ -138,11 +139,16 @@ ELSE t.OpenAmount * t.ExchangeRate
 END
 ) AS BalanceInLocalCurrency,
 SUM(
-CASE
-WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount * t.ExchangeRate
-ELSE t.OpenAmount
-END
+  CASE
+    WHEN GL.ReconcileMethodCode = 0 and gl.IsMultiCurrency!=1 AND t.ExchangeRate != 0
+      THEN t.OpenAmount / t.ExchangeRate
+    ELSE t.OpenAmount
+  END
 ) AS BalanceInForeignCurrency,
+SUM(CASE
+WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
+ELSE 0
+END) AS TotalToCollect,
 CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardInterestRateBaseLocalName) ELSE NULL END AS StandardInterestRateBaseLocalName,
 CASE WHEN MAX(CAST(gl.ActiveForInterest AS INT)) = 1 THEN max(InterestData.StandardAddInterestPercentData) ELSE NULL END AS StandardAddInterestPercent
 FROM GLACCOUNTS GL
@@ -179,7 +185,9 @@ lt.CreateDate,
 lt.ForeignAmountCredit,
 lt.ForeignAmountDebit,
 lt.Tenant,
-lt.CurrencyId
+		lt.CurrencyId,
+		ten.CurrencyId as TenantCurrencyId
+
 FROM LedgerTransactions lt
 INNER JOIN
 TENANTS TEN ON lt.tenant = TEN.Id
@@ -200,7 +208,12 @@ LEFT JOIN
 C ON GL.CardsDataId = C.Id
 LEFT JOIN
 (SELECT Id, Code FROM Currencies WHERE InActive = 0 AND Tenant=@Tenant)
-CURRENCY ON T.OpenAmountCurrencyId = CURRENCY.Id
+CURRENCY 
+ ON 
+    CASE 
+        WHEN GL.ReconcileMethodCode = 0 THEN T.TenantCurrencyId
+        ELSE T.OpenAmountCurrencyId
+    END = CURRENCY.Id
 left JOIN
 PaymentTerms PT ON PT.Id = C.PaymentTermId
 WHERE
@@ -268,6 +281,7 @@ max(t.MinimumInterestInvoiceBilling) MinimumInterestInvoiceBilling,
 max(t.CreditAllotmentPercentage) as CreditAllotmentPercentage,
 SUM(T.BalanceInLocalCurrency) AS BalanceInLocalCurrency,
 sum(t.BalanceInForeignCurrency) as BalanceInForeignCurrency,
+sum(t.TotalToCollect) as TotalToCollect,
 sum(t.TotalForeign) as TotalForeign,
 sum(t.ExternalTransactionsTotal) as ExternalTransactionsTotal,
 MAX(t.Past) AS Past,
