@@ -84,6 +84,7 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
 
 
                     let val = r.Value;
+
                     let myInterfaceDetails: InterfaceDetails = JSON.parse(val);
                     this._InterfaceNameItems.push(new KeyValuePair(myInterfaceDetails.Code,myInterfaceDetails.Name));
                     this._InterfaceDetailsItems.push(myInterfaceDetails);
@@ -114,7 +115,7 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
                 let _mappedListsArray: Array<CustomsPartnerFtpList> = myResult.Result;
                 _mappedListsArray.forEach(row => {
                     let detail = this._InterfaceDetailsItems.filter(r => r.Code == row.InterfaceName)[0];
-                    row.InterfaceCodeName = detail?.Name;
+                    row.InterfaceCodeName = detail.Name;
                 });
                 
                 this._FetchCustomsPartnerFtpResultList.InsertCollection(_mappedListsArray);
@@ -142,9 +143,6 @@ export class CustomsPartnerFtpListComponent extends BaseComponent implements OnI
         }
         if (!AppTool.IsNullOrEmpty(this.Password)) {
             this.Password = this.Password.trim();
-        }
-        if(!AppTool.IsNullOrEmpty(this.CustomerUniqueCode)){
-            this.CustomerUniqueCode = this.CustomerUniqueCode.trim();
         }
         this.ValidateCustomsPartnerFtp();
         if (this.ValidationErrorsList != null && this.ValidationErrorsList.length > 0) {
@@ -541,5 +539,4 @@ class WebApiDefinition {
     serviceURL: string
     User: string
     Password: string
-    CustomerUniqueCode :string 
 }
