@@ -537,6 +537,7 @@ export class LoginComponent implements OnInit ,AfterViewInit {
                 GetToken: true,
                 IsAngularLogin: true,
                 ClientType: 'Web',
+                IgnoreMFA: false
             };
 
             this.HidePendingLoading = false;
