@@ -125,7 +125,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                         attachmentDescription = ptr.DocumentTypeCode == "101"
                                 ? ptr.DocumentTypeCodeName
                                 : null,
-                        formAttachment = url,
+                        temporaryUrlToDownload = url,
                         fileExtension = EnsureAllowedExtOrThrow(info.Extension, _tenant)
                     });
 

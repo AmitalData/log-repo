@@ -97,7 +97,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.originalSupplierInvoiceItemsCollection.Clear();
         this.supplierInvoiceItemsForSIIRequest.forEach((item, index) => {
             const supplierInvoiceItemLine = new SupplierInvoiceItemsForSIIRequestLine(item, this);
-            supplierInvoiceItemLine.Counter = index + 1;
+            supplierInvoiceItemLine.LineNumber = index + 1;
             this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
             this.originalSupplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
         });
@@ -492,7 +492,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
         this.supplierInvoiceItemsCollection.Clear();
         for (let idx = 0; idx < filtered.length; idx++) {
-            filtered[idx].Counter = idx + 1;
+            filtered[idx].LineNumber = idx + 1;
             this.supplierInvoiceItemsCollection.Insert(
                 new SupplierInvoiceItemsForSIIRequestLine(filtered[idx], this)
             );
@@ -513,9 +513,16 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 this.InvoicesSelectionChanged(this.currentSelectedItem);
                 return;
             }
+
             this.supplierInvoiceItemsCollection.Clear();
-            if (filtered.length > 0)
-                filtered.forEach(i => this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(i, this)));
+            if (filtered.length > 0) {
+                filtered.forEach((row, idx) => {
+                    row.LineNumber = idx + 1; // <-- reset numbering
+                    this.supplierInvoiceItemsCollection.Insert(
+                        new SupplierInvoiceItemsForSIIRequestLine(row, this)
+                    );
+                });
+            }
 
             if (!AppTool.IsNullOrEmpty(this.SearchText)) {
                 this.Search(this.SearchText);
@@ -543,7 +550,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         if (!items.length) return;
         this.supplierInvoiceItemsCollection.Clear();
         items.forEach((item, index) => {
-            item.Counter = index + 1;
+            item.LineNumber = index + 1;
             this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
         });
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
@@ -577,7 +584,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                 }
                 this.supplierInvoiceItemsCollection.Clear();
                 items.forEach((item, index) => {
-                    item.Counter = index + 1;
+                    item.LineNumber = index + 1;
                     this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
                 });
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
@@ -761,7 +768,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         return this.entityPM?.ContactFax;
     }
     public set ContactFax(newValue: string) {
-        if (this.entityPM.ContactFax != newValue){
+        if (this.entityPM.ContactFax != newValue) {
             this.entityPM.ContactFax = newValue;
         }
     }
@@ -911,12 +918,6 @@ export class SupplierInvoiceItemsForSIIRequestLine extends BaseComponent {
     }
     public set RequestRequiredStatus(newValue: string) {
         this.entityPM.RequestRequiredStatus = AppTool.IsNullOrEmpty(newValue) ? CompleteStatuses.UnCompleted : newValue;
-    }
-    public get Counter(): number {
-        return this.entityPM.Counter;
-    }
-    public set Counter(newValue: number) {
-        this.entityPM.Counter = newValue;
     }
 }
 
