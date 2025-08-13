@@ -192,7 +192,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         AutoSending, 
 	         SystemConnection, 
 	         ShipmentId, 
-	         RowVer,
 	      }
 
 
