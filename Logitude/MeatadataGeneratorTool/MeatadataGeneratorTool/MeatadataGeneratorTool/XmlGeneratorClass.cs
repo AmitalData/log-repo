@@ -1411,6 +1411,10 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("ObjectFieldDataMapping", GetStringValue(f.ObjectFieldDataMapping), fieldElement, null);
                 }
+                if (f.ObjectFieldDBOnly)
+                {
+                    SetAttribute("ObjectFieldDBOnly", "true", fieldElement, null);
+                }
 
             }
 

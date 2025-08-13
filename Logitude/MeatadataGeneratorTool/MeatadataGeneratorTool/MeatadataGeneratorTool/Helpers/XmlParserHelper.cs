@@ -460,6 +460,10 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 field.ObjectFieldDataMapping = GetAttributeStringValue(fieldNode.Attributes["ObjectFieldDataMapping"]);
             }
+            if (field.IsDBField && field.FieldDataType =="Raw" && field.NoObjectField)
+            {
+                field.ObjectFieldDBOnly = true;
+            }
 
             return field;
 

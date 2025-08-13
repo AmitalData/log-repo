@@ -225,6 +225,7 @@ namespace <#= entitymapnamespacestring #>
 		string keysstring="";
 		foreach(var field in entity["field"])  //get all classes
 	 {
+	 if (ShouldSkipMap(field)) continue;
 		if(field.IsPrimaryKey.ToString() == "true")
         {
 			dynamic fieldName = GetEntityMapPropertyName(field.FieldName);
@@ -522,6 +523,13 @@ private string GetEntityMapPropertyName(dynamic property)
 		  return result;
 
         }
+#>
+<#+
+private bool ShouldSkipMap(dynamic field)
+{
+    try { return (field.ObjectFieldDBOnly.GetType() == typeof(string) && field.ObjectFieldDBOnly == "true"); }
+    catch { return false; }
+}
 #>
 <#+
 //Create an elastic object
