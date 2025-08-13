@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIDocumentTypeUpdateClass
    {  		
-		public const string HashString = "24dd032260745846c7a910de222d438";
+		public const string HashString = "2eaeccc52b0f0308361fd24ecbc4713b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,10 +70,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "SII Document Type",
-			      				    Code =  "285c",
+			      				    Code =  "412e",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "Code",
+			      				    CloseTableName =  "EnglishName",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
@@ -269,11 +269,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultTextBack_up =  "שם םנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם אנגלית",
 					  						FullLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultTextBack_up =  "שם םנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם אנגלית",
 					  						ListLocalDefaultText =  "BS64:Itep150g15DXoNeS15zXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -405,11 +405,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive ",
-					  						FullLocalDefaultTextBack_up =  "לם פּעיל",
+					  						FullLocalDefaultTextBack_up =  "לא פּעיל",
 					  						FullLocalDefaultText =  "BS64:Itec15Ag16TWvNei15nXnCI=",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultTextBack_up =  "לם פּעיל",
+					  						ListLocalDefaultTextBack_up =  "לא פּעיל",
 					  						ListLocalDefaultText =  "BS64:Itec15Ag16TWvNei15nXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

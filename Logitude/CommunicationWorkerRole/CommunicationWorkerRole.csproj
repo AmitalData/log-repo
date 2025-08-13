@@ -665,7 +665,7 @@
     <Compile Include="OpportunityStageChangingWorkerRole.cs" />
     <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
     <Compile Include="InvoiceApiWR.cs" />
-    <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
+	  <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
     <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
     <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
     <Compile Include="Services\DelayAutomationFieldValueService.cs" />

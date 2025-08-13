@@ -913,6 +913,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClass.FillContainerizationHataraStatus(tenant);
                 updateClass.FillOcrStatusTable(tenant);
                 updateClass.FillSIIRequestStatusTable(tenant);
+                updateClass.FillSIIDocumentType(tenant);
+
 
                 updateClass.FillSIIDocumentType(tenant);
 

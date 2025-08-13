@@ -1923,6 +1923,7 @@
     <Compile Include="EntityQueryServices\RemarksClassificationQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\SIIDocumentTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\UnloadingSiteTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SIIRequestQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_PreferenceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_RuleClassificationQueryService.Generated.cs" />
@@ -2243,7 +2244,6 @@
     <Compile Include="EntityQueryServices\MeasurmentUnitQueryService.cs" />
     <Compile Include="EntityQueryServices\ReferantExceptionQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceFreightAmountQueryService.cs" />
-    <Compile Include="EntityQueryServices\SupplierInvoiceItemsReqListQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvoiceItemVehicleAddQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsBookQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomsBranchQueryService.cs" />
@@ -2569,6 +2569,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsGeneralUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsPaymentTermUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ProceduralFaultUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SIIDocumentTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\SIIRequestUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\SIIDocumentTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestHandlingAuthorityUpdateService.Generated.cs" />
