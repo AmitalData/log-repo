@@ -200,7 +200,6 @@ export class LoginComponent implements OnInit ,AfterViewInit {
      }
      ngAfterViewInit() {
       localStorage.clear();
-      sessionStorage.clear();
     }
    
     async developerLogin() {
