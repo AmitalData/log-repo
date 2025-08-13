@@ -342,7 +342,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
                     this.DateFilterSelectedValue = queryFilterItem.FieldValue;
                     break;
                 case "AgingForDate":
-                    this.AgingForDate = new Date(queryFilterItem.FieldValue);
+                    this.AgingForDate = queryFilterItem.FieldValue;
                     break;
                 case "Detailed":
                     this.CurrenciesDetailed = queryFilterItem.FieldValue;
@@ -426,7 +426,13 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
 
         var myFilterItems: QueryFilterItem[] = [];
-        myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
+        var queryFilterItem: QueryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "AgingForDate";
+        queryFilterItem.FieldDataType = 'Date';
+        queryFilterItem.FieldValue = this.AgingForDate ? this.AgingForDate : null;
+        queryFilterItem.Operator = "Equals";
+        myFilterItems.push(queryFilterItem);
+
         myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
         myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
         myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
