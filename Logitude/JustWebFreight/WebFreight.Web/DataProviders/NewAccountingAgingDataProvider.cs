@@ -29,6 +29,8 @@ namespace WebFreight.Web.DataProviders
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
         public string AccountDisplayNumber { get; set; }
+        public string AccountVatNumber { get; set; }
+
         public string AccountCurrencyCode { get; set; }
         public decimal? InsuredCreditLimit { get; set; }
         public decimal? ExternalTransactionsTotal { get; set; }
@@ -47,8 +49,9 @@ namespace WebFreight.Web.DataProviders
         public string AccountSalesmanLocalName { get; set; }
          public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
-        public string AccountBusinessPhone { get; set; }
-
+        public string ContactPhoneOrEmail { get; set; }
+        public string ContactLocalName { get; set; }
+        public string ContactEnglishName { get; set; }
         public string MinimumInterestInvoiceBilling { get; set; }
         public string CreditAllotmentPercentage { get; set; }
         public decimal? CreditLimit { get; set; }
