@@ -159,9 +159,9 @@ using Simplog.Server.Infrastructure;
     {
         if (LogitudeSettings.DatabaseManagementSystem == "oracle")
         {
-            return new Devart.Data.Oracle.OracleParameter(Name, Value) as System.Data.Common.DbParameter;
+            return new Devart.Data.Oracle.OracleParameter(Name, Value ?? DBNull.Value) as System.Data.Common.DbParameter;
         }
-        return new System.Data.SqlClient.SqlParameter(Name, Value) as System.Data.Common.DbParameter;
+        return new System.Data.SqlClient.SqlParameter(Name, Value ?? DBNull.Value) as System.Data.Common.DbParameter;
 
     }
         public static IEnumerable<T> UpdateWhereNotFast<T>(this System.Data.Entity.DbSet<T> Input, Func<T, Boolean> Objects, Action<T> UpdateAction) 
