@@ -1603,7 +1603,8 @@ namespace MeatadataGeneratorTool
         public bool IsSpellCheckedListLocalDefaultText { get; internal set; }
 
         string objectFieldDataMapping;
-       
+        bool objectFieldDBOnly;
+
         string modelName;
         public string ModelName
         {
@@ -1616,6 +1617,15 @@ namespace MeatadataGeneratorTool
             set
             {
                 objectFieldDataMapping = value; FirePropertyChanged("ObjectFieldDataMapping");
+            }
+        }
+        public bool ObjectFieldDBOnly
+        {
+
+            get { return objectFieldDBOnly; }
+            set
+            {
+                objectFieldDBOnly = value; FirePropertyChanged("ObjectFieldDBOnly");
             }
         }
 
