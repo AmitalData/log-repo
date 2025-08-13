@@ -54,6 +54,10 @@ namespace WebFreight.Web.DataProviders
         public string ContactEnglishName { get; set; }
         public string MinimumInterestInvoiceBilling { get; set; }
         public string CreditAllotmentPercentage { get; set; }
+        public string PaymentTermEnglishName { get; set; }
+        public string PaymentTermLocalName { get; set; }
+        public string StandardInterestRateBaseLocalName { get; set; }
+        public decimal? StandardAddInterestPercent { get; set; }
         public decimal? CreditLimit { get; set; }
          public decimal? TotalToCollect { get { return BalanceInLocalCurrency + TotalOpenShipments; } }
         public decimal? AccountingBalance { get; set; }
