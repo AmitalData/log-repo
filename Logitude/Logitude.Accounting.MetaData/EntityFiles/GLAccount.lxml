@@ -19736,7 +19736,7 @@
     <TextCode
       Code="&quot;GLTransactionReport.O.GLAccountsRange&quot;"
       DefaultText="&quot;GLAccount range by Display Number&quot;"
-      LocalDefaultText="&quot;טווח כרטיסים לפי מספר כרטיס&quot;"
+      LocalDefaultText="&quot;טווח כרטיסים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

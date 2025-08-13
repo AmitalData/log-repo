@@ -37,7 +37,9 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     public GLAccountFilterRadio: string;
 
 
-    public IsListGLAccounts: boolean = true;
+    public IsListGLAccounts: boolean = false;
+    public IsRangGLAccounts: boolean = false;
+    
     ObjectTableName: string = "LedgerTransaction";
     public ReportsPreview: ReportsPreviewComponent;
     public RunReportTitle: string = 'Run Report';
@@ -218,6 +220,31 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             this.FilterLines();
         }
     }
+    public filterGlAccountSelectedValue: string = 'filter_glaccount';
+
+    FilterGlAccountClicked(itemType:string){
+            this.ListGLAccounts = [];
+            this.FromGLAccountId = null;
+            this.ToGLAccountId = null;
+            this.GLAccountId = null;
+            this.filterGlAccountSelectedValue = itemType;
+            switch (itemType) {
+                case 'filter_glaccount':
+                    this.IsListGLAccounts = false;
+                    this.IsRangGLAccounts = false;
+                    break;    
+                case 'filter_glaccount_list':
+                    this.IsListGLAccounts = true;
+                    this.IsRangGLAccounts = false;
+                    break;   
+                    case 'filter_glaccounts_range':
+                    this.IsListGLAccounts = false;
+                    this.IsRangGLAccounts = true;
+                    break;
+                default:
+                    break;  
+            }           
+    }
     FilterLines() {
         switch (this.filterDateSelectedValue) {
             case 'filter_accounting':
@@ -389,6 +416,12 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         queryFilterItem.FieldValue2 = this.ToGLAccountId ? this.ToGLAccountId : null;
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
+        
+        queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "GLAccountId";
+        queryFilterItem.FieldValue = this.GLAccountId;
+        queryFilterItem.Operator = "Equals";
+        queryFilterItems.push(queryFilterItem);
 
         return queryFilterItems;
     }
@@ -489,6 +522,9 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                 case "ToGLAccountDisplayNumber":
                     this.ToGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
                     break;
+                case "GLAccountId":
+                    this.GLAccountId = queryFilterItem.FieldValue;
+                    break;
             
             }
         }
@@ -519,7 +555,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if ( !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId)) {
+        if ( !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId) && !this.GLAccountId) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFieldsForNew"));
             isValid = false;
         }
@@ -636,12 +672,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         }
         else return true;
     }
-    SettingListOrRangGlaccount() {
-        this.ListGLAccounts = [];
-        this.FromGLAccountId = null;
-        this.ToGLAccountId = null;
-        this.IsListGLAccounts = !this.IsListGLAccounts;
-    }
+   
 
 
     get GLAccount() { return this.glaccountPM; }
@@ -899,7 +930,13 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
             this.toGLAccountId = value;
         }
     }
-   
+    gLAccountId: string;
+    get GLAccountId() { return this.gLAccountId; }
+    set GLAccountId(value: string) {
+        if (this.gLAccountId != value) {
+            this.gLAccountId = value;
+        }
+    }
     private openAmountHint: string;
     get OpenAmountHint() { return this.openAmountHint; }
     set OpenAmountHint(value: string) {
