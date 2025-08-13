@@ -121,6 +121,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
         {
             if (reportExecutionLog != null)
             {
+                reportExecutionLog = GetReportExecutionLog();
                 reportExecutionLog.StatusCode = !string.IsNullOrEmpty(reportExecutionLogArgs.StatusCode) ? reportExecutionLogArgs.StatusCode : reportExecutionLog.StatusCode;
                 reportExecutionLog.RetryNumber = queueResponse != null ? queueResponse.RetryNumber : reportExecutionLog.RetryNumber;
                 reportExecutionLog.StartDate = reportExecutionLogArgs.StartDate != null ? reportExecutionLogArgs.StartDate : reportExecutionLog.StartDate;
