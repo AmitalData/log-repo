@@ -317,7 +317,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 mappedConsignments.PackingTypeName = consignmentPackage?.PackageTypeName || '';
                 mappedConsignments.MeasureTypeName = consignmentPackage?.GrossMassMeasureTypeName || '';
                 mappedConsignments.ItemDescription = mappedConsignments.ItemDescription || consignment.CargoDescription || '';
-                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6) || '';
+                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode?.substring(0, 6) || '';
                 // Initialize ContainerTypeWCO field:
                 this.getContainerTypeWCOData(consignment, mappedConsignments, unifreightItem.manifestNumber);
             }
@@ -346,7 +346,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                     mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
                 }
                 mappedConsignments.ItemDescription = consignment.CargoDescription;
-                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
+                mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode?.substring(0, 6);
 
                 // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
                 this.getContainerTypeWCOData(consignment, mappedConsignments);
