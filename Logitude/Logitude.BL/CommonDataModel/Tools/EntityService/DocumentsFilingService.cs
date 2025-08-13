@@ -57,7 +57,6 @@ using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data;
 using System.Runtime.Remoting.Contexts;
 using Logitude.Customs.BL.Messaging.Amital;
-using Profact.TimbraCFDI.Complementos.Ine10;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
