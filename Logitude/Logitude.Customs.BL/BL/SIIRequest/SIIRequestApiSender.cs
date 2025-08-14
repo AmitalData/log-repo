@@ -1,11 +1,8 @@
 ﻿using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
-using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityKeys.Extended;
 using Logitude.Server.Tools.RestRequestExecutor;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logitude.Customs.BL.BL.SIIRequest
@@ -27,7 +24,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
             _mapper = new SIIRequestApiDataMapper(tenant);
         }
 
-        public async Task<(ApiResponse<ReleaseRequestApiResponseDto> Response, ReleaseRequestApiDto Dto)> SendAsync(string siiRequestId, string declarationId, List<SupplierInvoiceItemsReqListKeys> selectedRows)
+        public async Task<(ApiResponse<ReleaseRequestApiResponseDto> Response, ReleaseRequestApiDto Dto)> SendAsync(string siiRequestId, string declarationId, List<SiiSelectedRowDto> selectedRows)
         {
             var credentials = _factory.BuildCredentials(InterfaceName, PartnerCode);
             var config = _factory.GetEndpointConfig(InterfaceName, PartnerCode);

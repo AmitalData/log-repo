@@ -378,6 +378,7 @@
     <Compile Include="EntityKeys\ExportReferenceKeys.cs" />
     <Compile Include="EntityKeys\ExportStorageKeys.cs" />
     <Compile Include="EntityKeys\ExportStorgeKeys.cs" />
+    <Compile Include="EntityKeys\Extended\SupplierInvoiceItemsReqListKeys.cs" />
     <Compile Include="EntityKeys\ExternalFieldMappingKeys.cs" />
     <Compile Include="EntityKeys\FclLclCodeKeys.cs" />
     <Compile Include="EntityKeys\FreightPaymentMethodKeys.cs" />
