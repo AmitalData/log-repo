@@ -23,6 +23,8 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
     ObjectTableName: string = "TaxDeductionReport";
     DataObjectTableName: string = "TaxDeductionReportData";
     public entityPM: TaxDeductionReportPM;
+    private CurrentSession = SessionLocator.SelectedSession;
+
     isRTL: boolean = false;
     showLocals: boolean = false;
     taxDeductionReportExtendedPMService: TaxDeductionReportExtendedPMService = new TaxDeductionReportExtendedPMService();
@@ -31,7 +33,7 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
     taxDeductionReportPMService: TaxDeductionReportPMService = new TaxDeductionReportPMService();
     firstTotalPayments?: number;
     firstTotalDeductions?: number;
-
+    TaxDeductionStatus = TaxDeductionStatus; 
     _TaxDeductionReportData: TaxDeductionReportData;
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -119,6 +121,45 @@ export class TaxDeductionReportGeneralTabCompletedComponent extends BaseComponen
         });
 
     }
-  
+
+    RunService() {
+        this.entityPM.StatusTypeCode = this.TaxDeductionStatus.InProgress;
+        this.Building=true;
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.Saving"));
+        this.taxDeductionReportPMService.update(this.entityPM).subscribe({
+            next: (response: ServiceResponse) => {
+            if (!response?.HasError) {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.download856File();
+            } else {
+                this.CurrentSession.StopBusyIndicator();
+            }
+            },
+            error: (err) => {
+                console.error('Update failed:', err);
+                this.CurrentSession.StopBusyIndicator();
+            }
+            });
+
+
+    }
+    download856File() {
+        this.taxDeductionReportExtendedPMService.DownloadTaxDeduction856FileInBatch(this.entityPM).subscribe((myResult: ServiceResponse) => {
+            if (myResult != null) {
+                if (!myResult.HasError) {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                } else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            }
+        });
+    }
 }
 
+export enum TaxDeductionStatus {
+    Completed = '3'
+    , Failed = '4'
+    , InProgress = '2'
+  }

@@ -9,6 +9,7 @@ import { Validator } from '../../../Infrastructure/Validators/Validator';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector: 'NewTaxDeductionReportComponent',
@@ -223,23 +224,14 @@ export class NewTaxDeductionReportComponent extends BaseComponent {
                         var entity = mm.Result;
 
                         this.CurrentSession.CloseCurrentWindowEmit('ok');
-
-                        SessionLocator.DynamicLoader.Load(
-                            './Infrastructure/Components/EditComponent/EditComponent',
-                            this.CurrentSession.SessionLocation.viewContainerRef
-                        ).then((cmpRef) => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({
-                                EntityId: entity.Id,
-                                ObjectTableName: this.ObjectTableName,
-                            });
-                            cmpRef.instance.BackCompleted.subscribe(
-                                ($event: any) => {
-                                    this.CancelButtonClicked();
-                                }
-                            );
-                        });
                         this.CurrentSession.StopBusyIndicator();
+                        var messageWindow= new MessageWindow()
+                        messageWindow.Show(TextCodeTranslator.Translate("TaxDeductionReport.O.ReportGenerationMessage"));
+
+                        setTimeout(() => {
+                          messageWindow.Close();  
+                        }, 2000);
+
                     } else {
                         this.ValidationErrorsList = mm.ErrorsArray;
                         this.CurrentSession.StopBusyIndicator();
