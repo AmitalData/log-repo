@@ -144,9 +144,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         declarationPM.AmendmentRemarks = "עדכון מסמך העדפה";
                     }
-                   // declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
-                    declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
-                    declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
+
+					declarationPM.IsExportClosed = isCopy
+	                 ? declarationRepository.GetAcceptDeclarationAmendmentByCustomsFile(declarationOrg.CustomFileNo, declarationOrg.Tenant)?.IsExportClosed ?? false
+	                 : declarationOrg.IsExportClosed;
+					declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);
                     declarationPM.ExportFile = declarationOrg.ExportFile;
                     declarationPM.CustomFileNo = declarationOrg.CustomFileNo;
                     declarationPM.DeclarationTypeCode = GetValueCodeType(declaration.TypeCode);
