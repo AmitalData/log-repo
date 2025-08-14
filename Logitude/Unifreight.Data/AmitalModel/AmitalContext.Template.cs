@@ -418,12 +418,12 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.DESCOFGOODS2)
                     .HasColumnName(@"DESC_OF_GOODS2")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("nvarchar2");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.DESCOFGOODS3)
                     .HasColumnName(@"DESC_OF_GOODS3")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("nvarchar2");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.CARRIERID)
                     .HasColumnName(@"CARRIER_ID")
@@ -11513,12 +11513,12 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.DESCOFGOODS2)
                     .HasColumnName(@"DESC_OF_GOODS2")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar");
+                    .HasColumnType("nvarchar");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.DESCOFGOODS3)
                     .HasColumnName(@"DESC_OF_GOODS3")
                     .HasMaxLength(30)
-                    .HasColumnType("varchar");
+                    .HasColumnType("nvarchar");
             modelBuilder.Entity<CCUMSHGR>()
                 .Property(p => p.CARRIERID)
                     .HasColumnName(@"CARRIER_ID")
