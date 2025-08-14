@@ -279,8 +279,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         eventContextTagModel.EventCode = "RDC";
                     }
                     eventContextTagModel.StatusCustomFileNo = connectedDeclarationPM.CustomFileNo;
-                   
-                    
+
+                    if (connectedDeclarationPM.Direction == "E" && eventContextTagModel.EventCode == "RDA") return;
                     SendEvent(eventContextTagModel.EventCode, eventContextTagModel, loggingUserId, connectedDeclarationPM.Id, entityPM.VerificationRemarks, entityPM.RequestedCustomsDocId);
                     
                 }
