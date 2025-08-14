@@ -590,7 +590,10 @@
                     </div>
 
 
-                    <div *ngIf="FieldName == 'Month'">
+                   <div *ngIf="FieldName == 'Month'">
+                        <div *ngIf="FieldValue" [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue | DateToMonthPipe }} </div>
+                    </div>
+                    <div *ngIf="FieldName == 'FromMonth'">
                         <div *ngIf="FieldValue" [style.text-align]="isRTL ? 'right' : 'left'">{{ FieldValue | DateToMonthPipe }} </div>
                     </div>
 
