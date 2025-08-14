@@ -20,8 +20,16 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-
-   }
+        public SupplierInvoiceItemsReqList GetRequest(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
+        {
+            return context.SupplierInvoiceItemsReqLists.FirstOrDefault(a =>
+            a.Tenant == tenant &&
+            a.SIIRequestID == siiRequestId &&
+            a.DeclarationId == declarationid &&
+            a.InvoiceCounterKey == invoicecounterkey &&
+            a.InvoiceItemLineNumber == invoiceitemlinenumber);
+        }
+    }
 
 }
    

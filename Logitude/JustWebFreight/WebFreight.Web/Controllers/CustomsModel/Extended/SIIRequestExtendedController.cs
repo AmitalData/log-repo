@@ -15,8 +15,7 @@ using WebFreight.Web.Security;
 using System.Threading.Tasks;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.Customs.BL.BL.SIIRequest;
-using Logitude.Customs.Data.EntityKeys;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.Data.EntityKeys.Extended;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -84,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
         }
 
-        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] List<SupplierInvoiceItemsReqListKeys> selectedRows)
+        public async Task<HttpResponseMessage> PostSendSIIRequest(string siiRequestId,string declarationId, int tenant, [FromBody] List<SiiSelectedRowDto> selectedRows)
         {
             try
             {

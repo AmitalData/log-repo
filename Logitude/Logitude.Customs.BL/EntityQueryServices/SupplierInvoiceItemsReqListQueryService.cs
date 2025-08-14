@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.Data;
+﻿using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
-using Simplog.Server.Infrastructure;
 using Logitude.Customs.BL.EntityDataMappings;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Core;
-using Logitude.Customs.Data.DataContracts;
-using Logitude.Customs.Data.Repsitories;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -40,6 +30,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping.CustomPOCOToPM(newPm, newPo);
             mapping.POCOToPM(newPm, newPo);
             return newPm;
+        }
+        public SupplierInvoiceItemsReqListPM GetRequest(string siiRequestId, string declarationid, int invoicecounterkey, int invoiceitemlinenumber, int tenant)
+        {
+            SupplierInvoiceItemsReqList entity = repository.GetRequest(siiRequestId, declarationid, invoicecounterkey, invoiceitemlinenumber, tenant);
+            if (entity == null)
+            {
+                return null;
+            }
+            var EntityPM = GetEntityPM(entity);
+            return EntityPM;
         }
     }
 }
