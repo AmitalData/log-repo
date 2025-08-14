@@ -15,6 +15,7 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { CustomerDebtNotificationPM } from './CustomerDebtNotificationPM';
 
 export class GLAccountPM {
 
@@ -922,6 +923,11 @@ export class GLAccountPM {
     public get MarkDate() { return this.markDate; }
     public set MarkDate(newValue: Date) { if (this.markDate != newValue) { this.markDate = newValue;  } }
      
+ 
+    private customerDebtNotification: CustomerDebtNotificationPM;
+    public get CustomerDebtNotification() { return this.customerDebtNotification; }
+    public set CustomerDebtNotification(newValue: CustomerDebtNotificationPM) { if (this.customerDebtNotification != newValue) { this.customerDebtNotification = newValue; this.MarkAsDirty("CustomerDebtNotification"); } }
+       
 	 
 
     public OldEntityPM: GLAccountPM;

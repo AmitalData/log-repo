@@ -605,10 +605,19 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (entityPM.Access == false)
                     ResetAccountBalances(entityPM);
             }
-
-           
+            if(entityPM.AccountTypeCode == "2") 
+            {
+			  entityPM.CustomerDebtNotification = GetCustomerDebtNotificationByAccountId(entityPM);
+            }
         }
-        private static void ResetAccountBalances(GLAccountPM account)
+        private CustomerDebtNotificationPM GetCustomerDebtNotificationByAccountId(GLAccountPM accountPM)
+        {
+			IAccountingContext MyContext = AccountingContext.GetContext(accountPM.Tenant);
+			CustomerDebtNotificationQueryService customerDebtNotificationQueryServiceQuery = new CustomerDebtNotificationQueryService(MyContext);
+			return customerDebtNotificationQueryServiceQuery.GetCustomerDebtNotificationByAccountId(accountPM.Tenant, accountPM.Id);
+		}
+
+		private static void ResetAccountBalances(GLAccountPM account)
         {
             account.BalanceInForeignCurrency = 0;
             account.BalanceInLocalCurrency = 0;
