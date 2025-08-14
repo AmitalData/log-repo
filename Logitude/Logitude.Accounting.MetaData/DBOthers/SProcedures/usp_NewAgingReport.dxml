@@ -67,6 +67,7 @@ TotalForeign DECIMAL(30, 2),
 BalanceInLocalCurrency DECIMAL(30, 2),
 BalanceInForeignCurrency DECIMAL(30, 2),
 TotalToCollect DECIMAL(30, 2),
+
 StandardInterestRateBaseLocalName NVARCHAR(256),
 StandardAddInterestPercent DECIMAL(4, 2),
 
