@@ -191,7 +191,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         UNFCourier, 
 	         AutoSending, 
 	         SystemConnection, 
-	         ShipmentId,
+	         ShipmentId, 
 	      }
 
 
