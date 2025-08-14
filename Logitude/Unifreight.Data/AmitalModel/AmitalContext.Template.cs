@@ -595,12 +595,12 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.IMPORTERNAME)
                     .HasColumnName(@"IMPORTER_NAME")
                     .HasMaxLength(55)
-                    .HasColumnType("nvarchar2");
+                    .HasColumnType("varchar2");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.TRANSIMPORTERNAME)
                     .HasColumnName(@"TRANS_IMPORTER_NAME")
                     .HasMaxLength(55)
-                    .HasColumnType("nvarchar2");
+                    .HasColumnType("varchar2");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.BONDEDNAME)
                     .HasColumnName(@"BONDED_NAME")
