@@ -106,7 +106,15 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 AuthenticationUtil.AuthenticatedUserEmail = GetContactEmailByContactId(reportFliter.UserId, reportFliter.tenant);
                 ReportHelper reportHelper = new ReportHelper();
                 DatabaseInitializer.RunOnSeconderyDB = true;
-                reportHelper.BuildStimulReport(reportFliter);
+                if(reportFliter.ProcessType == "ExportToExcel")
+                {
+                    reportHelper.CreateExcelOfReport(reportFliter);
+                }
+                else
+                {
+                    reportHelper.BuildStimulReport(reportFliter);
+
+                }
                 UpdateReportExecutionLog(new ReportExecutionLogArgs() { StatusCode = "D", DoneDate = DateTime.Now });
                 if (!isVersion2) queueService.Complete();
             }
