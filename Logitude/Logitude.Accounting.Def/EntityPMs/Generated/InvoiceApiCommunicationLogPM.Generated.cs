@@ -326,6 +326,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string externalInvoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ExternalInvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return externalInvoiceNumber;
+		 }
+		 set
+		 {
+		   if(externalInvoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ExternalInvoiceNumber",OldValue=externalInvoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   externalInvoiceNumber=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
