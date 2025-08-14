@@ -261,10 +261,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תםריך יצירה",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך יצירה",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -588,10 +588,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Exception",
 					  						DefaultText =  "Exception",
-					  						FullLocalDefaultText =  "שגיםה",
+					  						FullLocalDefaultText =  "שגיאה",
 					  						ListFieldLable =  "ExceptionListLable",
 					  						ListLableDefaultText =  "Exception",
-					  						ListLocalDefaultText =  "שגיםה",
+					  						ListLocalDefaultText =  "שגיאה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1005,7 +1005,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
  
 	    }
 
@@ -1042,45 +1042,44 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
-	      
 
-			  Query TodayInvoiceApiQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_0.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_0.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "Today Invoice Api",  QueryGroupCode = "e2e4", IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_0.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query TodayInvoiceApiQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_0.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_0.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "Today Invoice Api",  QueryGroupCode = "e2e4", IndexOrder = 0, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_0.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn TodayInvoiceApiQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn TodayInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.ExternalInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.ExternalInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn TodayInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn TodayInvoiceApiQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InvoiceApiCommunicationLog.Exception" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InvoiceApiCommunicationLog.Exception" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn TodayInvoiceApiQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InvoiceApiCommunicationLog.StepName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InvoiceApiCommunicationLog.StepName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn TodayInvoiceApiQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusCode" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayInvoiceApiQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusCode" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-             AdvancedQueryFilter TodayInvoiceApiQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter TodayInvoiceApiQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayInvoiceApiQuery.Id,QueryCode = TodayInvoiceApiQuery.UniqueCode, Tenant = 0}, addedQueryFilters,contextTenant);
 
   
 	      
 
-			  Query AllInvoiceApiQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_1.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_1.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "All Invoice Api",  QueryGroupCode = "e2e4", IndexOrder = 1, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_1.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllInvoiceApiQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = InvoiceApiCommunicationLogTextCode_1.Id, NameTextCodeCode = InvoiceApiCommunicationLogTextCode_1.Code, ObjectTableName = "InvoiceApiCommunicationLog", Code = "All Invoice Api",  QueryGroupCode = "e2e4", IndexOrder = 1, Tenant = 0, ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, QuerySection = "InvoiceApiCommunicationLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = InvoiceApiCommunicationLogFeature_1.Id,FeatureUniqeCode= InvoiceApiCommunicationLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries,contextTenant);
 	
-			 QueryColumn AllInvoiceApiQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllInvoiceApiQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "InvoiceApiCommunicationLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.ExternalInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllInvoiceApiQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "InvoiceApiCommunicationLog.ExternalInvoiceNumber" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllInvoiceApiQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "InvoiceApiCommunicationLog.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllInvoiceApiQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InvoiceApiCommunicationLog.Exception" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllInvoiceApiQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "InvoiceApiCommunicationLog.Exception" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllInvoiceApiQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InvoiceApiCommunicationLog.StepName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllInvoiceApiQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "InvoiceApiCommunicationLog.StepName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
 
-			 QueryColumn AllInvoiceApiQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusName" , ColumnWidth = 130 }, addedQueryColumns);
-			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
-			SqlBulkInsert.BulkInsert("Features", addedFeatures);
-			SqlBulkInsert.BulkInsert("Queries", addedQueries);
-			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
-			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+			 QueryColumn AllInvoiceApiQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllInvoiceApiQuery.Id,QueryCode = AllInvoiceApiQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "InvoiceApiCommunicationLog.StatusName" , ColumnWidth = 130 }, addedQueryColumns,contextTenant);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes,contextTenant);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures,contextTenant);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries,contextTenant);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns,contextTenant);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters,contextTenant);	 
   
 	    }
 
@@ -1116,7 +1115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature InvoiceApiCommunicationLogDetailsFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Details", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.MGGT", NameTextCodeDefaultText = "Details", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
  
                  
-			   TextCode InvoiceApiCommunicationLogEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode InvoiceApiCommunicationLogEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "InvoiceApiCommunicationLog.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature InvoiceApiCommunicationLogEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceApiCommunicationLog.Tab.Events", ObjectTableId = InvoiceApiCommunicationLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "InvoiceApiCommunicationLogFeatures.ICEV", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,InvoiceApiCommunicationLogObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
