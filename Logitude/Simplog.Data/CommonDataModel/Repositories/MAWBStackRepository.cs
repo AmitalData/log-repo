@@ -11,10 +11,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public MAWBStackRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public MAWBStackRepository(ICommonDataContext context)
         {

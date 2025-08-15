@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         RegionRepository repository;
 
-        public RegionQuery()
-        {
-            repository = new RegionRepository(); 
-        }
+
 
         public RegionQuery(RegionRepository RegionRepository)
         {

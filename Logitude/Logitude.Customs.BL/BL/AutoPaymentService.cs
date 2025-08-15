@@ -505,7 +505,7 @@ namespace Logitude.Customs.BL.BL
 					}
 				}
 			}
-			FeatureQuery featureQuery = new FeatureQuery();
+			FeatureQuery featureQuery = new FeatureQuery(_tenant);
 			var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_tenant), _tenant);
 			var featureBTPA = features.Features.FirstOrDefault(x => x.Code == "BTPA");
 			if ((_MyDeclarationPM.ImporterEntitlementTypeCode == "17" || _MyDeclarationPM.ImporterEntitlementTypeCode == "18") && featureBTPA != null)

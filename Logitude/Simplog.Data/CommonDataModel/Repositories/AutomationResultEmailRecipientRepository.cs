@@ -10,10 +10,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public AutomationResultEmailRecipientRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public AutomationResultEmailRecipientRepository(ICommonDataContext context)
         {

@@ -447,7 +447,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     SendDeclarationPrint(myDeclarationPM, requestParams);
 
-                    FeatureQuery featureQuery = new FeatureQuery();
+                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "Pending900InDetainedOrPhysicalCheck");
 

@@ -404,7 +404,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
                 //{
                 //    return false;
                 //}
-                FeatureQuery featureQuery = new FeatureQuery();
+                FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
 
 
                 //SHOULD BE - 

@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         RestrictionRepository repository;
 
-        public RestrictionQuery()
-        {
-            repository = new RestrictionRepository(); 
-        }
+
 
         public RestrictionQuery(int tenant)
         {

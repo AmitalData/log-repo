@@ -15,10 +15,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public CommunicationStatusTypeRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CommunicationStatusTypeRepository(int tenant)
         {

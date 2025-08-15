@@ -18,10 +18,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         LogitudeMessagesTransmissionLogRepository repository;
 
-        public LogitudeMessagesTransmissionLogQuery()
-        {
-            repository = new LogitudeMessagesTransmissionLogRepository(); 
-        }
+ 
 
         public LogitudeMessagesTransmissionLogQuery(int tenant)
         {

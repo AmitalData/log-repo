@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CountryRepository repository;
 
-        public CountryQuery()
-        {
-            repository = new CountryRepository(); 
-        }
+
 
         public CountryQuery(int tenant)
         {

@@ -23,10 +23,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public AirlineMessagingRuleRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+  
 
         public IQueryable<AirlineMessagingRule> GetAirlineMessagingRules(int tenant)
         {

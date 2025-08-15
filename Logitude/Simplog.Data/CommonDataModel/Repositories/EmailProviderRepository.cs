@@ -9,10 +9,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class EmailProviderRepository : IRepository<EmailProvider>
     {
         ICommonDataContext commonDataContext;
-        public EmailProviderRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public EmailProviderRepository(ICommonDataContext context)
         {

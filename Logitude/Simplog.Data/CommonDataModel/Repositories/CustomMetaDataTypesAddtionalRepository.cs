@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public CustomMetaDataTypesAddtionalRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CustomMetaDataTypesAddtionalRepository(ICommonDataContext context)
         {

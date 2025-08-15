@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeMetaDataRepository repository;
 
-        public DocumentTypeMetaDataQuery()
-        {
-            repository = new DocumentTypeMetaDataRepository();
-        }
+
 
         public DocumentTypeMetaDataQuery(int tenant)
         {

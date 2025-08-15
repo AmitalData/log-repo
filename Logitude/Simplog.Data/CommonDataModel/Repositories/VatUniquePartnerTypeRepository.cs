@@ -16,10 +16,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return Context; }
         }
 
-        public VatUniquePartnerTypeRepository()
-        {
-            this.Context = new CommonDataContext();
-        }
+
 
         public VatUniquePartnerTypeRepository(int tenant)
         {

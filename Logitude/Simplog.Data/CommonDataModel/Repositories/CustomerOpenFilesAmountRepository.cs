@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public CustomerOpenFilesAmountRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CustomerOpenFilesAmountRepository(ICommonDataContext context)
         {

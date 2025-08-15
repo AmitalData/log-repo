@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class DepartmentQuery
     {
         DepartmentRepository repository;
-        public DepartmentQuery()
-        {
-            repository = new DepartmentRepository(); 
-        }
+ 
 
         public DepartmentQuery(int tenant)
         {

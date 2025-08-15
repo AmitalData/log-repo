@@ -10,10 +10,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public AccountingSettingRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
 
         public AccountingSettingRepository(ICommonDataContext context)
         {

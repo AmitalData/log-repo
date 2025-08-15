@@ -9,10 +9,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public DigitalContactLastSettingRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public DigitalContactLastSettingRepository(ICommonDataContext context)
         {

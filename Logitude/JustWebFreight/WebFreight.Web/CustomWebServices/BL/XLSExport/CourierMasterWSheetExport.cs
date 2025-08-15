@@ -63,7 +63,7 @@ namespace WebFreight.Web.CustomWebServices.BL.XLSExport
             ;
 
             Boolean isExtendedReport = false;
-            FeatureQuery featureQuery = new FeatureQuery();
+            FeatureQuery featureQuery = new FeatureQuery(tenant);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "ExportMasterExtended");
             if (feature != null)

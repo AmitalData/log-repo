@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class CreditLimitSettingQuery
     {
         CreditLimitSettingRepository repository;
-        public CreditLimitSettingQuery()
-        {
-            repository = new CreditLimitSettingRepository();
-        }
+ 
         public CreditLimitSettingQuery(int tenant)
         {
             repository = new CreditLimitSettingRepository(tenant);

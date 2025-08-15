@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ComputingPartnerTranslationRepository repository;
 
-        public ComputingPartnerTranslationQuery()
-        {
-            repository = new ComputingPartnerTranslationRepository();
-        }
+
 
         public ComputingPartnerTranslationQuery(int tenant)
         {

@@ -21,10 +21,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public CustomerRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public int GetCustomerCount(int tenant)
         {

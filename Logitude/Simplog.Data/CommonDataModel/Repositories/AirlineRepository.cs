@@ -14,10 +14,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public AirlineRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public AirlineRepository(ICommonDataContext context)
         {

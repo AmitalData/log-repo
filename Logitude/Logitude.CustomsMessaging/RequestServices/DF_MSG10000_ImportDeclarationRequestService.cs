@@ -249,7 +249,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             if (_DeclarationPM.IsCourierDeclaration)
             {
-                FeatureQuery featureQuery = new FeatureQuery();
+                FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "SendL2UFromSendDeclaration");
                 if (feature != null)
@@ -509,7 +509,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var req = new DF_MSG10000_ImportDeclaration();
             CreateDeclarationPM(requestParams);
 
-            FeatureQuery featureQuery = new FeatureQuery();
+            FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "ISEXCLUDEMANIFEST");
             if (feature != null)

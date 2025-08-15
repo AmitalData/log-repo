@@ -14,10 +14,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentFolderRepository repository;
 
-        public DocumentFolderQuery()
-        {
-            repository = new DocumentFolderRepository(); 
-        }
 
         public DocumentFolderQuery(int tenant)
         {

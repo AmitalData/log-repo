@@ -15,10 +15,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public CardSearchRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CardSearchRepository(ICommonDataContext context)
         {

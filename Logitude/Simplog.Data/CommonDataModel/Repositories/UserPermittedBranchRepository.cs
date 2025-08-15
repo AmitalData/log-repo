@@ -18,11 +18,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public UserPermittedBranchRepository()
-        {
-            commonDataContext = new CommonDataContext();
-
-        }
 
         public UserPermittedBranchRepository(int tenant)
         {

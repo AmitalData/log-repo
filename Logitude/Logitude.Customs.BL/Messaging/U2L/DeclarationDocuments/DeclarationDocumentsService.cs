@@ -273,7 +273,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
 
                     if(_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _MyDeclarationPM.Direction=="E" && CustomsDocumentMetaDataValues!= null && CustomsDocumentMetaDataValues.Count()==0)
                     {
-                        DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository();
+                        DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository(_MyDeclarationPM.Tenant);
 
 
                         foreach (DocumentsFilingMetaDataValuePM itemPM in documentIn?.DocumentsFilingMetaDataValues)

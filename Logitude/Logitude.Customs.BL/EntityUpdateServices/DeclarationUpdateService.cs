@@ -764,7 +764,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         ImporterCode = entityPM.ImporterCode.Substring(0, 9);
                     }
                     string clientId = TranslateClient(ImporterCode);
-                    FeatureQuery featureQuery = new FeatureQuery();
+                    FeatureQuery featureQuery = new FeatureQuery(entityPM.Tenant);
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(entityPM.Tenant), entityPM.Tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "AddNewClientFromManifest");
 

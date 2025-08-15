@@ -15,10 +15,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = context;
         }
-        public TemperatureUnitRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
         public TemperatureUnitRepository(int tenant)
         {
             commonDataContext = CommonDataContext.GetContext(tenant);

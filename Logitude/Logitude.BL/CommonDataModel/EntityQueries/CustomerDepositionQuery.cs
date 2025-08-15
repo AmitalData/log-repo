@@ -21,10 +21,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerDepositionRepository repository;
 
-        public CustomerDepositionQuery()
-        {
-            repository = new CustomerDepositionRepository();
-        }
+
 
         public CustomerDepositionQuery(int tenant)
         {

@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
        HybridPartnerRepository repository;
 
-        public HybridPartnerQuery()
-        {
-            repository = new HybridPartnerRepository();
-        }
+
 
         public HybridPartnerQuery(int tenant)
         {

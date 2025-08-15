@@ -11,10 +11,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public VatTypePercentageRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public VatTypePercentageRepository(ICommonDataContext context)
         {

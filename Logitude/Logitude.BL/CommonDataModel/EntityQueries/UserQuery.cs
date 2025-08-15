@@ -20,10 +20,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UserRepository repository;
 
-        public UserQuery()
-        {
-            repository = new UserRepository();
-        }
+
 
         public UserQuery(int tenant)
         {

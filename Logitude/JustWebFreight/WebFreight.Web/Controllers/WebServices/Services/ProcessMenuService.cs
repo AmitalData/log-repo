@@ -15,7 +15,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
         public List<MenuItemClass> GetProcessesByTenantAndUserLastWeek(int tenant, string id)
         {
             var oneWeekAgo = DateTime.Now.AddDays(-7);
-            ReportExecutionLogRepository repository = new ReportExecutionLogRepository();
+            ReportExecutionLogRepository repository = new ReportExecutionLogRepository(tenant);
 
             (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
@@ -59,7 +59,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 
         public List<MenuItemClass> GetProcessesByIds(List<string> ids, int tenant)
         {
-            ReportExecutionLogRepository  repository = new ReportExecutionLogRepository();
+            ReportExecutionLogRepository  repository = new ReportExecutionLogRepository(tenant);
             (repository.context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             var reportLogs = repository.context.ReportExecutionLogs
@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             {
                 case ((int)MenuTypes.ReportExecutionLog):
                     {
-                        ReportExecutionLogRepository repository = new ReportExecutionLogRepository();
+                        ReportExecutionLogRepository repository = new ReportExecutionLogRepository(tenant);
                         var reportExecutionLog = repository.context.ReportExecutionLogs.FirstOrDefault(a => a.Id == reportId && a.Tenant == tenant);
                         if (reportExecutionLog != null)
                         {

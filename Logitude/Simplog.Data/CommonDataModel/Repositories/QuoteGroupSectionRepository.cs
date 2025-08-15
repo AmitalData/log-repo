@@ -13,10 +13,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
         
-        public QuoteGroupSectionRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+  
 
         public QuoteGroupSectionRepository(int tenant)
         {

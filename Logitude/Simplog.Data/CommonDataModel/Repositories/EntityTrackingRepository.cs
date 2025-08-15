@@ -17,10 +17,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return Context; }
         }
 
-        public SharedFollowedShipmentRepository()
-        {
-            this.Context = new CommonDataContext();
-        }
+
 
         public SharedFollowedShipmentRepository(int tenant)
         {

@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public SharedManifestsStatusRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+ 
 
         public SharedManifestsStatusRepository(ICommonDataContext context)
         {

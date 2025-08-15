@@ -11,10 +11,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public ShippingAgentRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+    
 
         public ShippingAgentRepository(ICommonDataContext context)
         {
