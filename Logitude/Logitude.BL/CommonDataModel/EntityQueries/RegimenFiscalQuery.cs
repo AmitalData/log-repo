@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         RegimenFiscalRepository repository;
 
-        public RegimenFiscalQuery()
-        {
-            repository = new RegimenFiscalRepository();
-        }
+
 
         public RegimenFiscalQuery(int tenant)
         {

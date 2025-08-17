@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeCustomFieldRepository repository;
 
-        public DocumentTypeCustomFieldQuery()
-        {
-            repository = new DocumentTypeCustomFieldRepository(); 
-        }
+
 
         public DocumentTypeCustomFieldQuery(int tenant)
         {

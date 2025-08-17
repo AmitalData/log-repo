@@ -18,10 +18,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ProductTypeModificationRepository repository;
 
-        public ProductTypeModificationQuery()
-        {
-            repository = new ProductTypeModificationRepository();             
-        }
+
 
         public ProductTypeModificationQuery(int tenant)
         {

@@ -479,7 +479,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                   //  int[] myMsgCode = { 7, 8, 9, 16, 22, 23, 24, 25, 26, 27 };
                     
-                    FeatureQuery featureQuery = new FeatureQuery();
+                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(requestParams.LoggingUserId, requestParams.Tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "Pending900InDetainedOrPhysicalCheck");
                         if (feature != null && this._MyDeclarationPM.CourierCustomStatusCode == "2")

@@ -18,10 +18,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UserLastLoginRepository repository;
 
-        public UserLastLoginQuery()
-        {
-            repository = new UserLastLoginRepository(); 
-        }
+
 
         public UserLastLoginQuery(int tenant)
         {

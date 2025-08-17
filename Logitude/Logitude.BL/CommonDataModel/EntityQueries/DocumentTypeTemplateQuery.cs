@@ -28,10 +28,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeTemplateRepository repository;
 
-        public DocumentTypeTemplateQuery()
-        {
-            repository = new DocumentTypeTemplateRepository(); 
-        }
+
 
         public DocumentTypeTemplateQuery(int tenant)
         {

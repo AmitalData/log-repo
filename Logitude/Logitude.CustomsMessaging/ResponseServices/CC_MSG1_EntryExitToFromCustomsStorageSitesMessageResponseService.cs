@@ -137,7 +137,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             try
             {
 
-                UserRepository userRepository = new UserRepository();
+                UserRepository userRepository = new UserRepository(Tanent);
                 var user = userRepository.GetSingleUserByCode("MEHES", Tanent, true);
                 string loggingUserId="";
                 if (user != null)

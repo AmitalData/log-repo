@@ -14,10 +14,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         FTPDetailRepository repository;
 
-        public FTPDetailQuery()
-        {
-            repository = new FTPDetailRepository();
-        }
+
 
         public FTPDetailQuery(int tenant)
         {

@@ -25,10 +25,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class ReportExecutionLogQuery
     {
         ReportExecutionLogRepository repository;
-        public ReportExecutionLogQuery()
-        {
-            repository = new ReportExecutionLogRepository();
-        }
+
         public ReportExecutionLogQuery(int tenant)
         {
             repository = new ReportExecutionLogRepository(tenant);

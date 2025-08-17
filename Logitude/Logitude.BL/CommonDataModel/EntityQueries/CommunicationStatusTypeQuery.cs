@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CommunicationStatusTypeRepository repository;
 
-        public CommunicationStatusTypeQuery()
-        {
-            repository = new CommunicationStatusTypeRepository(); 
-        }
+
 
         public CommunicationStatusTypeQuery(int tenant)
         {

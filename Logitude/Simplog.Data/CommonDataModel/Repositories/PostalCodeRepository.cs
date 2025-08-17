@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public PostalCodeRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public PostalCodeRepository(int tenant)
         {

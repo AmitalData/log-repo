@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class BranchQuery
     {
         BranchRepository repository;
-        public BranchQuery()
-        {
-               repository = new BranchRepository(); 
-        }
+
         public BranchQuery(int tenant)
         {
             repository = new BranchRepository(tenant);

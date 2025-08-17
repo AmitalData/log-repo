@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UserFreelancerGroupRepository repository;
 
-        public UserFreelancerGroupQuery()
-        {
-            repository = new UserFreelancerGroupRepository(); 
-        }
+
 
         public UserFreelancerGroupQuery(int tenant)
         {

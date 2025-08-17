@@ -24,10 +24,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public CustomerProductActualDataRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public IQueryable<CustomerProductActualData> GetCustomerProductActualDatas(int tenant)
         {

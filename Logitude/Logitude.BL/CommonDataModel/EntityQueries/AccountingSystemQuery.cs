@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AccountingSystemQuery
     {
         AccountingSystemRepository repository;
-        public AccountingSystemQuery()
-        {
-            repository = new AccountingSystemRepository(); 
-        }
+
 
         public AccountingSystemQuery(int tenant)
         {

@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AutomationQuery
     {
         AutomationRepository repository;
-        public AutomationQuery()
-        {
-            repository = new AutomationRepository();
-        }
+
 
         public AutomationQuery(int tenant)
         {

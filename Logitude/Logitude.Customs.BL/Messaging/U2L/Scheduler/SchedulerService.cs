@@ -270,7 +270,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
 					if (_MyDeclarationPM.ImporterId != null || _MyDeclarationPM.ImporterCode != null)
 					{
-						FeatureQuery featureQuery = new FeatureQuery();
+						FeatureQuery featureQuery = new FeatureQuery(_MyDeclarationPM.Tenant);
 						var usrid = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
 						var features = featureQuery.GetAllowedFeaturesForLoggedUser(usrid, _MyDeclarationPM.Tenant);
 						var feature = features.Features.FirstOrDefault(x => x.Code == "SendDeclaration902");
@@ -1036,7 +1036,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Scheduler
 
 				}
 				//InjectionUtil.Instance.CheckContactFeature("Customs.Declaration", "ReferantData", tenant, email);
-				FeatureQuery featureQuery = new FeatureQuery();
+				FeatureQuery featureQuery = new FeatureQuery(tenant);
 				var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 				var feature = features.Features.FirstOrDefault(x => x.Code == "UniReferantData");
 

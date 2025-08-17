@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AdditionalServiceQuery
     {
         AdditionalServiceRepository repository;
-        public AdditionalServiceQuery()
-        {
-            repository = new AdditionalServiceRepository(); 
-        }
+
 
         public AdditionalServiceQuery(int tenant)
         {

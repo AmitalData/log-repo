@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TermsofUseRepository repository;
 
-        public TermsofUseQuery()
-        {
-            repository = new TermsofUseRepository(); 
-        }
+
 
         public TermsofUseQuery(int tenant)
         {

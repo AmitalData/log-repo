@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TemplateFormatRepository repository;
 
-        public TemplateFormatQuery()
-        {
-            repository = new TemplateFormatRepository(); 
-        }
+
 
         public TemplateFormatQuery(int tenant)
         {

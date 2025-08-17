@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ReportRepository repository;
 
-        public ReportQuery()
-        {
-            repository = new ReportRepository();
-        }
+
 
         public ReportQuery(int tenant)
         {

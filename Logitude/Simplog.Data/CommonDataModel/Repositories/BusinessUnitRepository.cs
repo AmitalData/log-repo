@@ -16,10 +16,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return Context; }
         }
 
-        public BusinessUnitRepository()
-        {
-            this.Context = new CommonDataContext();
-        }
+
 
         public BusinessUnitRepository(int tenant)
         {

@@ -22,10 +22,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CarrierAreasPortRepository repository;
 
-        public CarrierAreasPortQuery()
-        {
-            repository = new CarrierAreasPortRepository();
-        }
+
 
         public CarrierAreasPortQuery(int tenant)
         {

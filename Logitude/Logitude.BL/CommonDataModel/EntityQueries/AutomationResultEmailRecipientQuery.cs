@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AutomationResultEmailRecipientQuery
     {
         AutomationResultEmailRecipientRepository repository;
-        public AutomationResultEmailRecipientQuery()
-        {
-            repository = new AutomationResultEmailRecipientRepository();
-        }
+
 
         public AutomationResultEmailRecipientQuery(int tenant)
         {

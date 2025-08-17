@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PaymentTermDateTypeRepository repository;
 
-        public PaymentTermDateTypeQuery()
-        {
-            repository = new PaymentTermDateTypeRepository(); 
-        }
+
         public PaymentTermDateTypeQuery(int tenant)
         {
             repository = new PaymentTermDateTypeRepository(tenant);

@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class PortTimeZoneQuery
     {
         PortTimeZoneRepository repository;
-        public PortTimeZoneQuery()
-        {
-            repository = new PortTimeZoneRepository();
-        }
+
         public PortTimeZoneQuery(int tenant)
         {
             repository = new PortTimeZoneRepository(tenant);

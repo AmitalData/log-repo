@@ -21,10 +21,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         LoginPolicyRepository repository;
 
-        public LoginPolicyQuery()
-        {
-            repository = new LoginPolicyRepository();
-        }
+
 
         public LoginPolicyQuery(int tenant)
         {

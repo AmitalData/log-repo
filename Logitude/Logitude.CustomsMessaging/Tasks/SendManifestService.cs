@@ -33,7 +33,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 
         private void RunPerTenant(CustomsSettingPM t)
         {
-            FeatureQuery featureQuery = new FeatureQuery();
+            FeatureQuery featureQuery = new FeatureQuery(t.Tenant);
             var usrid = AuthenticationUtil.ResolveUserId(t.Tenant);
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(usrid, t.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifest");

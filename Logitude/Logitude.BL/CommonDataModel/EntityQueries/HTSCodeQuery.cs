@@ -15,10 +15,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         HTSCodeRepository repository;
 
-        public HTSCodeQuery()
-        {
-            this.repository = new HTSCodeRepository();
-        }
 
         public HTSCodeQuery(int tenant)
         {

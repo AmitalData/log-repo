@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ChargeTypeAccountingRepository repository;
 
-        public ChargeTypeAccountingQuery()
-        {
-            repository = new ChargeTypeAccountingRepository();
-        }
+
 
         public ChargeTypeAccountingQuery(int tenant)
         {

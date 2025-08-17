@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CommunicationAttachmentRepository repository;
 
-        public CommunicationAttachmentQuery()
-        {
-            repository = new CommunicationAttachmentRepository(); 
-        }
+
 
         public CommunicationAttachmentQuery(int tenant)
         {

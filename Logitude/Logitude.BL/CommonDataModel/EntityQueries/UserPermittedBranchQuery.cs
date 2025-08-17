@@ -16,11 +16,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
          UserPermittedBranchRepository repository;
 
-        public UserPermittedBranchQuery()
-        {
-            repository = new UserPermittedBranchRepository(); 
-        }
-
         public UserPermittedBranchQuery(int tenant)
         {
             repository = new UserPermittedBranchRepository(tenant);

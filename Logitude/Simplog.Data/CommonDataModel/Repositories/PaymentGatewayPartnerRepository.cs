@@ -19,10 +19,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public PaymentGatewayPartnerRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public PaymentGatewayPartnerRepository(int tenant)
         {

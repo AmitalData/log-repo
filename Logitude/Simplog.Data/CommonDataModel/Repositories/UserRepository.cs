@@ -11,10 +11,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class UserRepository : IRepository<User>
     {
         ICommonDataContext commonDataContext;
-        public UserRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
 
         public UserRepository(ICommonDataContext context)
         {

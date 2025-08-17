@@ -12,11 +12,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public UsersReleaseNotesDisplayRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
-
         public UsersReleaseNotesDisplayRepository(ICommonDataContext context)
         {
             commonDataContext = context;

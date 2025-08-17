@@ -10,10 +10,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public CustomerFieldsUpdateSettingRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CustomerFieldsUpdateSettingRepository(ICommonDataContext context)
         {

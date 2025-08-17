@@ -23,10 +23,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomAgentRepository repository;
 
-        public CustomAgentQuery()
-        {
-            repository = new CustomAgentRepository(); 
-        }
+
 
         public CustomAgentQuery(int tenant)
         {

@@ -15,10 +15,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             get { return commonDataContext; }
         }
-        public UnassignedEntityRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
         public UnassignedEntityRepository(int tenant)
         {
             commonDataContext = CommonDataContext.GetContext(tenant);

@@ -14,10 +14,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public WeightUnitRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public WeightUnitRepository(int tenant)
         {

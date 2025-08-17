@@ -31,10 +31,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentTypeRepository repository;
         private bool isFullAccounting;
-        public DocumentTypeQuery()
-        {
-            repository = new DocumentTypeRepository();
-        }
+
 
         public DocumentTypeQuery(int tenant)
         {

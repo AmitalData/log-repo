@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public SharedLogisticsContactLastLoginRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+  
 
         public SharedLogisticsContactLastLoginRepository(int tenant)
         {

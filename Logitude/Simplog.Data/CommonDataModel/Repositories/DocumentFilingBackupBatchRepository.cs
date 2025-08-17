@@ -17,10 +17,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public DocumentFilingBackupBatchRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public IQueryable<DocumentFilingBackupBatch> GetCustomerTenantAccessCradsBatchByTenant(int tenant)
         {

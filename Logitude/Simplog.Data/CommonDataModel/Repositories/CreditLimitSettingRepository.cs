@@ -11,10 +11,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class CreditLimitSettingRepository : IRepository<CreditLimitSetting>
     {
         ICommonDataContext commonDataContext;
-        public CreditLimitSettingRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+ 
         public CreditLimitSettingRepository(ICommonDataContext context)
         {
             commonDataContext = context;

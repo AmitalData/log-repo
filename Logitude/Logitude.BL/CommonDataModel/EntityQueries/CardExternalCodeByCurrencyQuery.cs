@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CardExternalCodeByCurrencyRepository repository;
 
-        public CardExternalCodeByCurrencyQuery()
-        {
-            repository = new CardExternalCodeByCurrencyRepository();
-        }
+
 
         public CardExternalCodeByCurrencyQuery(int tenant)
         {

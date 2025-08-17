@@ -11,10 +11,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public DocumentOutRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public DocumentOutRepository(ICommonDataContext context)
         {
