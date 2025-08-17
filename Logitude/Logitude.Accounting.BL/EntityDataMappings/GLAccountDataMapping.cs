@@ -1,34 +1,35 @@
 
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Enums;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.Interfaces;
+using Logitude.BL.Resolvers;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Accounting.Data;
-using Simplog.Server.Infrastructure;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.Helpers;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.Repositories;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
 using System.Web;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.BL.CommonDataModel.EntityLists;
-using Logitude.BL.Interfaces;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
-using Logitude.BL.Resolvers;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -605,7 +606,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 if (entityPM.Access == false)
                     ResetAccountBalances(entityPM);
             }
-            if(entityPM.AccountTypeCode == "2") 
+            if(entityPM.AccountTypeCode == GLAccountTypeValues.Client) 
             {
 			  entityPM.CustomerDebtNotification = GetCustomerDebtNotificationByAccountId(entityPM);
             }
