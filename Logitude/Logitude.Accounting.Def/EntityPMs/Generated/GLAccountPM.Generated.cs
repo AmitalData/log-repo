@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using System.ServiceModel.DomainServices.Server; 
-using Logitude.Server.Tools; 
+using System.ServiceModel.DomainServices.Server;
+using Logitude.Server.Tools;
 using System.Runtime.Serialization;
-using Simplog.Server.Infrastructure.DataContracts; 
+using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Accounting.Def.Validators;
-  
+
 namespace Logitude.Accounting.Def.EntityPMs
 {
    [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
@@ -3821,7 +3821,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 
             }
         }
-    }
+
+		private CustomerDebtNotificationPM customerDebtNotification = new CustomerDebtNotificationPM();
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public CustomerDebtNotificationPM CustomerDebtNotification
+		{
+
+			get
+			{
+				return customerDebtNotification;
+			}
+			set
+			{
+				if (customerDebtNotification != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CustomerDebtNotification", OldValue = customerDebtNotification, NewValue = value, PropertyType = "CustomerDebtNotificationPM" };
+					NotifyPropertyChanged(values);
+					customerDebtNotification = value;
+				}
+
+			}
+		}
+	}
    
 }
 	 
