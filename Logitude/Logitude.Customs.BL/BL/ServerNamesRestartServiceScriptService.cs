@@ -9,7 +9,7 @@ namespace Logitude.Customs.BL.BL
 {
     public class ServerNamesRestartServiceScriptService
     {
-        public string GetScript()
+        public string GetScript(int tenant)
         {
             string template= @"
 cls 
@@ -30,7 +30,7 @@ pause
             StringBuilder stringBuilder  = new StringBuilder();
             try
             {
-                var serversNameRepository = new ServersNameRepository(0);
+                var serversNameRepository = new ServersNameRepository(tenant);
                 var list = serversNameRepository.All().ToList();//NOCACHE!!fast!!  
                 if (!list.Any())
                 {

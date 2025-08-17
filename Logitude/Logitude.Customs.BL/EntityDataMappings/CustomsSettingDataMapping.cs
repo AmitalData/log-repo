@@ -37,7 +37,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             //throw new NotImplementedException();
             var serverNamesRestartServiceScriptService = new ServerNamesRestartServiceScriptService();
 
-            string script = serverNamesRestartServiceScriptService.GetScript();
+            string script = serverNamesRestartServiceScriptService.GetScript(entityPM.Tenant);
             entityPM.ServiceScript = script;
         }
 
