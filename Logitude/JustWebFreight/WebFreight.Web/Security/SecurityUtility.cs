@@ -593,8 +593,8 @@ namespace WebFreight.Web.Security
 
                             if (contact.Tenant == 0 && tenant != 0)
                             {
-                                UserRepository userRep = new UserRepository(0);
-                                User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
+                                UserRepository userRep = new UserRepository(tenant);
+                                User zeroUser = userRep.GetSingleUserByEmail(email, tenant, true);
                                 if (zeroUser != null)
                                 {
                                     isCustomerCare = true;
