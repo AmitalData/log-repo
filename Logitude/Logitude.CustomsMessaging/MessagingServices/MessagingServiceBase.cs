@@ -438,31 +438,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 try
                 {
-					GeneralLockQueryService generalLockQueryService = new GeneralLockQueryService(requestParams.Tenant);
-
-					if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
-					{
-						if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null)
-						{
-							var generalLock = generalLockQueryService.CheckIsLocked(requestParams.Tenant, "MessageDCABatch", requestParams.LoggingUserId, requestParams.LoggingEntityId, requestParams.LoggingObjectTableId, true);
-
-							if (generalLock != null)
-							{
-								string message = $"The entity {generalLock.EntityId1} object {generalLock.ObjectTable1} is locked by {generalLock.UserName}";
-								LogMessagingUtil.Instance.AppendLine(message);
-								throw new Exception(message);
-							}
-						}
-					}
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:Start");
                     //throw new Exception("tst");
-                    var lockLoggingObjectTableId= requestParams.LoggingObjectTableId;
                     _ResponseService.Update(customsResponse, requestParams);
-					if (requestParams.LoggingEntityId != null && requestParams.LoggingObjectTableId != null)
-					{
-						string sessionId = requestParams.RequestVIA == SendRequestVIA.DCABatch? "MessageDCABatch": "MessageInteractive";
-					    generalLockQueryService.DeleteGeneralLockByEntity(requestParams.Tenant , requestParams.LoggingEntityId, lockLoggingObjectTableId, sessionId);
-					}
+				
 					stopwatch.Stop();
                     LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:Update:" + stopwatch.Elapsed.ToString());
                 }

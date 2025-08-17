@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
 using System.Web;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Global.Data.GlobalModel.Repositories;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
@@ -65,46 +67,50 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return context.ObjectTables;
         }
 
-        public ObjectTable GetObjectTableByName(string name,int tenant,bool getFromCache,int contextTenant=0)
+        public ObjectTable GetObjectTableByName(string name, int tenant, bool getFromCache, int contextTenant = 0)
         {
             var currenttenant = SettingUtil.GetCurrentTenant();
-            if (currenttenant == -1)
+            if (contextTenant != 0)
             {
                 currenttenant = contextTenant;
             }
+            var contextDB = context.GetConnection()?.Database;
+            GlobalDBRepository globaldbRep = new GlobalDBRepository();
+            List<GlobalDB> activeDbs = globaldbRep.GetGlobalDBsActive();
+            int dbId = int.TryParse(activeDbs.Where(x => !string.IsNullOrWhiteSpace(x.DBConnection) && x.DBConnection.Split(',')[0] == contextDB).Select(x => x.Id).FirstOrDefault(),
+            out var result) ? result : -1;
             ObjectTable entity;
-            if (getFromCache)
-            {
-                string entityName = $"ObjectTable{name}_{tenant}_{currenttenant}";
 
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
-                    {
-                        entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
+			string entityName = $"ObjectTable{name}_{tenant}_{currenttenant}";
+			bool isDifferentTenant = dbId != currenttenant;
+			IWebFreightContext targetContext = isDifferentTenant ? WebFreightContext.GetContext(currenttenant) : context;
+			if (getFromCache)
+			{
+				if (CacheManager.CacheWrapper.Get(entityName) == null)
+				{
+					entity = targetContext.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
 
-                        if (CacheManager.CacheWrapper.Get(entityName) == null)
-                        {
-                            if (entity != null)
-                            {
-                                CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                            }
-                        }
-                    }
+					if (CacheManager.CacheWrapper.Get(entityName) == null)
+					{
+						if (entity != null)
+						{
+							CacheManager.CacheWrapper.Insert(entityName, entity, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+						}
+					}
+				}
 
-                    else
-                    {
-                        entity = (ObjectTable)CacheManager.CacheWrapper.Get(entityName);
+				else
+				{
+					entity = (ObjectTable)CacheManager.CacheWrapper.Get(entityName);
 
-                    }
-                
+				}
 
-              
-            }
-
-            else
-            {
-                entity = context.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
-            }
-
+			}
+			else
+			{
+				entity = targetContext.ObjectTables.Where(d => d.Name == name && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
+			}
+			
             return entity;
         }
 
