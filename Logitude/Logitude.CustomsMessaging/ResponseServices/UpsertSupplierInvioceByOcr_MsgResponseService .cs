@@ -188,10 +188,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
                             CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
 
-                            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR- start 5 " + requestsSheetPM.Id);
+                            
 
                             if (requestsSheetPM != null)
                             {
+                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR- start 5 " + requestsSheetPM.Id);
                                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug("requestsSheet DCAOCR- " + requestsSheetPM.Id);
                                 MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(0.5));
                             }
