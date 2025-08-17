@@ -1331,7 +1331,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
 
             //Writing RESHIMON DATE and there is no HATARA DATE  ==> INDICATORS="G"
-            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue)
+            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue && _DirtyDeclarationPM.IsAmendment == false)
             {
                 _CCUFILEMPM.INDICATORS = "G";
             }
