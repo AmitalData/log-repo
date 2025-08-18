@@ -156,25 +156,12 @@ namespace Logitude.Server.Tools.Helpers
                         ChildObjectTableId = childObjectTable?.Id,
                     };
 
-                    if ((Transaction.Current != null && Transaction.Current.IsolationLevel == System.Transactions.IsolationLevel.Snapshot)
-                        || (Transaction.Current == null && dbms != "oracle"))
-                    {
-                        using (var scope = objectContext.GetSnapshotTransaction())
-                        {
-                            TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
-                            traceEventRepository.Add(myTraceEvent);
-                            traceEventRepository.SubmitChanges();
-                            objectContext.SaveChanges();
-                            scope.Commit();
-                        }
-                    }
-                    else
-                    {
-                        TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
-                        traceEventRepository.Add(myTraceEvent);
-                        traceEventRepository.SubmitChanges();
-                        objectContext.SaveChanges();
-                    }
+             
+                    TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+                    traceEventRepository.Add(myTraceEvent);
+                    traceEventRepository.SubmitChanges();
+                    objectContext.SaveChanges();
+                    
 
                     if (eventType.IsCustomerView)
                     {
