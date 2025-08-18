@@ -6,7 +6,7 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
     template: `
         <div *ngIf="showDropdown && dropdownOptions?.length > 0" class="dropdown-container">
             <table class="dropdown-list" [style.width]="DDLWidth">
-                <tr *ngFor="let option of dropdownOptions" (click)="optionSelected.emit(option)" class="dropdown-item">
+                <tr *ngFor="let option of getTopResults()" (click)="optionSelected.emit(option)" class="dropdown-item">
                     <ng-container *ngFor="let label of labels; let first = first;" [ngSwitch]="label.name">
                         <td *ngIf="!first && label.lengthTemp !== 0" >&nbsp;|&nbsp;</td>
                         <td><img *ngSwitchCase="'transportModeId'"  [src]="'./Images/' + (option[label.name] === 'O' ? 'Vessel' : option[label.name] === 'A' ? 'Airline' : 'Trucker') + '.png'" alt="{{ option[label.name] }}" /></td>
@@ -125,6 +125,12 @@ export class SearchListDDLComponent implements OnInit {
                 l.lengthTemp = value == undefined ? 0 : l.length || 'auto';
             });
     }    
+
+    getTopResults(): any[] {
+        if (!this.dropdownOptions || this.dropdownOptions.length === 0) return [];
+        if (this.showTopResults == null || this.showTopResults <= 0) return this.dropdownOptions;
+        return this.dropdownOptions.slice(0, this.showTopResults);
+    }
 }
 
 export interface DDLLable {
