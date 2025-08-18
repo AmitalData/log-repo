@@ -70,7 +70,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         newTransactionResult.PaymentDate = transactionItem.PaymentDate.Value.ToString("dd/MM/yyyy");
                     }
-                    newTransactionResult.PaymentID = String.Format("{0:N2}", transactionItem.PaymentID);
+                    newTransactionResult.PaymentID = transactionItem.PaymentID.ToString();
                     newTransactionResult.PaymentStatus = transactionItem.PaymentStatus;
                     newTransactionResult.RTGSBalance = String.Format("{0:N2}", transactionItem.RTGSBalance);
                     if (transactionItem.TransactionAmount != null && transactionItem.TransactionAmountSpecified == true)
