@@ -199,7 +199,14 @@ export class LoginComponent implements OnInit ,AfterViewInit {
         //     this.developerLogin();       
      }
      ngAfterViewInit() {
+        this.clearSessionCache();
+    }
+   
+    clearSessionCache(){
+        const computerId: string = SessionLocator.GetComputerIdFromStorage();
       localStorage.clear();
+        if (!AppTool.IsNullOrEmpty(computerId)) 
+            SessionLocator.StoreLogedComputerId(computerId);
     }
    
     async developerLogin() {
