@@ -60,11 +60,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
         private bool _HugeFile;
         protected UnifreightIIG.Common.TheGateway.MoreParams _IIGGatewayMoreParams;
         private Stopwatch _swMessagingServiceBase;
+		private const string FeatureCode_IsSendSFTP = "IsSendSFTP";
 
 
 
 
-        virtual protected TRequestParams CreateDefaultRequestParamsFromCustomsResponse(TCustomsResponse customsResponse)
+		virtual protected TRequestParams CreateDefaultRequestParamsFromCustomsResponse(TCustomsResponse customsResponse)
         {
             return new TRequestParams(); //DUE DUAL 
             throw new NotImplementedException("virtual partial class MessagingServiceBase:TRequestParams CreateDefaultRequestParamsFromCustomsResponse(TCustomsResponse customsResponse):" + this.GetType().FullName);
@@ -686,7 +687,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     //UnifreightQueueOutStatus  =SENT
 
                     LogMessagingUtil.Instance.AppendLine("UnifreightQueueOutStatus =" + UnifreightQueueOutStatus);
-                    if (String.IsNullOrWhiteSpace(UnifreightQueueOutStatus))
+
+					int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;
+					FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
+					var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+
+					bool isSendSFTPEnabled = features.Features.Any(x => string.Equals(x.Code, FeatureCode_IsSendSFTP, StringComparison.OrdinalIgnoreCase));
+
+					if (String.IsNullOrWhiteSpace(UnifreightQueueOutStatus)&& !isSendSFTPEnabled)
                     {
                         LogMessagingUtil.Instance.AppendLine("UnifreightQueueOutStatus==null ; error " + MessageOut);
                         throw new Exception("UnifreightQueueOutStatus==null ; error  " + MessageOut);
@@ -829,7 +837,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 int tenant = _CustomsRequestsSheetService.MyCustomsRequestsSheetPM.Tenant;				
 				FeatureQuery featureQuery = new FeatureQuery(new FeatureRepository(CommonDataContext.GetContext(tenant)));
 				var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
-				bool isSendSFTPEnabled = features.Features.Any(x => x.Code == "IsSendSFTP");
+				bool isSendSFTPEnabled = features.Features.Any(x => string.Equals(x.Code, FeatureCode_IsSendSFTP, StringComparison.OrdinalIgnoreCase));
+
 				string serverJobID = string.Empty;
 				if (isSendSFTPEnabled)
 				{
