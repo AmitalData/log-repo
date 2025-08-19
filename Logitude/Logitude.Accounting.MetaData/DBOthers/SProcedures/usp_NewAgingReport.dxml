@@ -140,7 +140,7 @@ END
 ) AS BalanceInLocalCurrency,
 SUM(
   CASE
-    WHEN GL.ReconcileMethodCode = 0 and gl.IsMultiCurrency!=1 AND t.ExchangeRate != 0
+    WHEN GL.ReconcileMethodCode = 1 AND t.ExchangeRate != 0
       THEN t.OpenAmount / t.ExchangeRate
     ELSE t.OpenAmount
   END
