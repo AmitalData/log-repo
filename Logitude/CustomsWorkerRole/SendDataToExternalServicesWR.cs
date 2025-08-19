@@ -86,9 +86,9 @@ namespace CustomsWorkerRole
                 myClass = this.GetType().Name;
 				_CustomDbQueueService = new CustomDbQueueService(SBQueueNames.SendDataToExternalServicesBQ.ToString(), SettingUtil.GetTenantDBFromConfig());
 
-
-                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
-                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+                int tenantConfig = SettingUtil.GetTenantDBFromConfig();
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
+                var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
 
                 if (CustomDbQueueService.SupportedRabbitMQList.Contains(SBQueueNames.SendDataToExternalServicesBQ.ToString()) && CustomDbQueueService.IsFeatureOnRABBITMQ_Communication() && customsEnvironmentSettingPM.UseRabbitMQ)
                 {

@@ -162,7 +162,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public bool IsHSMSign_IsOn(int tenant)
         {
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
-            var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
+            var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant);
             if (environmentSettingPM==null)
             {
                 return false;
