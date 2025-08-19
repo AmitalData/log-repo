@@ -125,11 +125,13 @@
                                                 </td>
                                                 <td></td>
                                             </tr>
+                                            <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
 
                                               <!-- Report Data -->
                                               <tr *ngIf="entityPM.StatusTypeCode === TaxDeductionStatus.Completed"  class="TabTitleRow">
-                                                <td>{{'TaxDeductionReport.O.ReportData' | TextCodeTranslationPipe}} </td>
+                                                <td [style.text-align]="isRTL ? 'right' : 'left'">{{'TaxDeductionReport.O.ReportData' | TextCodeTranslationPipe}} </td>
                                             </tr>
+                                            <tr style="height: 15px;"><td><div style="width: 15px;"></div></td></tr>
 
                                             <tr *ngIf="entityPM.StatusTypeCode === TaxDeductionStatus.Completed" class="FormFieldRow">
                                                 <td></td>
