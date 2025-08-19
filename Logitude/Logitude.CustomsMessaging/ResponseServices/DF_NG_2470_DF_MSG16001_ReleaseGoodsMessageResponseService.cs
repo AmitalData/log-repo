@@ -368,13 +368,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             LogMessagingUtil.Instance.AppendLine("הגדרת ברירת מחדל חדשה ביוניפרייט ברמת מערכת עמילות כפתור בלדרות: שליחה של מסר הודעה מוקדמת לממן עם אופציות .");
 
-            var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-            var def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_2470", "NON", "NON", false, true);
+			DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(requestParams.Tenant);
+			var objCGO_2470 = defaultValueQueryService.GetDefault("ISRAEL", "CGO_2470", "NON", "NON", requestParams.Tenant);
 
-            bool sendMaman2470 = def.DEFDATA /*DefaultValue*/ == "Y";
+			bool sendMaman2470 = objCGO_2470 == "Y";
 
 
-            LogMessagingUtil.Instance.AppendLine("default value CGO_2470 ==" + def.DEFDATA ?? "N");
+			LogMessagingUtil.Instance.AppendLine("default value CGO_2470 ==" + objCGO_2470 ?? "N");
             if (!sendMaman2470)
             {
                 return;
