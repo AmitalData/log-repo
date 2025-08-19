@@ -168,9 +168,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
 
             var interfaceTenantDefinitionQueryService = new InterfaceTenantDefinitionQueryService(queueSendModel.Tenant);
             var currInterfaceTenantDefinition = interfaceTenantDefinitionQueryService.GetInterfaceDefWithPriorityFromCacheByTenatCode(queueSendModel.Tenant, queueSendModel.InterfaceTypeCode);
-
-            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
-            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+            int tenantConfig = SettingUtil.GetTenantDBFromConfig();
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
             queueSendModel.UseRabbitMQ = customsEnvironmentSettingPM.UseRabbitMQ;//currInterfaceTenantDefinition.UseRabbitMQ;
             queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
             queueSendModel.EntityId = correlationId;

@@ -141,7 +141,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             byte[] signBytes)
         {
             var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenant);
-            var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM();
+            var environmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenant);
             var settingService = new CustomsSettingQueryService(tenant);
             var tenantSetting = settingService.GetSettingByTenantN(tenant);
 
