@@ -16,7 +16,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
     {
         public CustomsEnvironmentSettingPM GetEnvironmentSettingPM(int tenant = 0)
         {
-            string entityKeyString = "GetCustomsEnvironmentSettingPM_" + tenant.ToString(); ;
+            string entityKeyString = "GetCustomsEnvironmentSettingPM_" + tenant.ToString(); 
             CustomsEnvironmentSettingPM settingPM = CacheManager.GetOrInsertNewObject<CustomsEnvironmentSettingPM>(entityKeyString, () =>
             {
                 var poco = this.repository.GetAll().FirstOrDefault();
