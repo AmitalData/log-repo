@@ -20,7 +20,7 @@
   </Column>
   <Column
     Name="InternalCode"
-    Type="varchar"
+    Type="nvarchar"
     Size="15">
     <Constraints
       Nullable="false" />
@@ -55,7 +55,7 @@
   </Column>
   <Column
     Name="EnglishName"
-    Type="varchar"
+    Type="nvarchar"
     Size="30">
     <Constraints
       Nullable="true" />
