@@ -2,6 +2,7 @@
 using Logitude.Customs.Def.EntityPMs;
 using RabbitMQ.Client;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -149,15 +150,15 @@ namespace Logitude.CustomsMessaging.RabbitMQ
         }
         public static ConnectionFactory GetConnectionFactory(bool tryFromAppSettings=true)
         {
-            //var factory = new ConnectionFactory() { HostName = "unimq", UserName = "v5101", Password = "Aa123" };
-            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
+            int tenantConfig = SettingUtil.GetTenantDBFromConfig();
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
 
-            if (tryFromAppSettings && customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() is null)
+            if (tryFromAppSettings && customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) is null)
             {
                 return GetConnectionFactoryFromAppSettings();
             }
 
-            CustomsEnvironmentSettingPM customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM()??
+            CustomsEnvironmentSettingPM customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ??
                 throw new Exception("CustomsEnvironmentSetting is null set n DB");
             string HostName =
                 //ConfigurationManager.AppSettings["RabbitmqHost"] ?? throw new Exception("HostName is null set ConfigurationManager.AppSettings RabbitmqHost"); ;
@@ -172,8 +173,9 @@ namespace Logitude.CustomsMessaging.RabbitMQ
 
         public static bool RabbitInUse()
         {
-            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
-            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+            int tenantConfig = SettingUtil.GetTenantDBFromConfig();
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
             return customsEnvironmentSettingPM.UseRabbitMQ;
 
         }

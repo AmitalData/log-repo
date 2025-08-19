@@ -89,8 +89,9 @@ namespace CustomsWorkerRole
 		{
 			try
 			{
-				var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
-				CustomsEnvironmentSettingPM customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+                int tenantConfig = SettingUtil.GetTenantDBFromConfig();
+                var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
+				CustomsEnvironmentSettingPM customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
 
 				DocumentApiExecutionService = new DocumentApiExecutionService(customsEnvironmentSettingPM.CourierDocURL, customsEnvironmentSettingPM.CourierDocKey);
 				UnifreightFillingService = new UnifreightFillingService();

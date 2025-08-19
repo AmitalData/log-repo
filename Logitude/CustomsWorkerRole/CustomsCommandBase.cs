@@ -101,8 +101,9 @@ namespace CustomsWorkerRole
                 myClass = _QueueNameOverride;
             }
             className = myClass;
-            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
-            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+            int tenantConfig = SettingUtil.GetTenantDBFromConfig();
+            var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
+            var customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
             if (customsEnvironmentSettingPM.UseRabbitMQ)
             {
                 base.WorkerQueueType = WorkerQueueType.RabbitMQ;
