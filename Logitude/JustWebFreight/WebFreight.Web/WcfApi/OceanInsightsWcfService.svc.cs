@@ -151,15 +151,10 @@ namespace WebFreight.Web.WcfApi
                     if (OceanInsightsRequestPm == null)
                     {
                         OceanInsightsRequestPm = new OceanInsightsRequestPM();
-                        if (Type == "c_id")
-                        {
-                            Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors);//ActivateOperation("STARTMONITOR", ref Table, ref Temp, out Result, out Status, out Errors);
 
-                        }
-                        else
-                        {
-                            Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors, false);
-                        }
+                            Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors,Type);
+
+
                         if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
                         {
                             string SearchErrors;
