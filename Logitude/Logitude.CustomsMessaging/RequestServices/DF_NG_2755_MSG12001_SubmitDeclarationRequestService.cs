@@ -78,6 +78,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     case SendRequestVIA.WebServiceInteractive:
                         var myDF_MSG10000_ImportDeclarationRequestService = new DF_MSG10000_ImportDeclarationRequestService();
+                        DeclarationQueryService DeclarationQueryService = new DeclarationQueryService(this.dbContext);
+                        requestParams.DeclarationDirection = DeclarationQueryService.GetSingle(requestParams.LoggingEntityId, true, false)?.Direction;
                         myDF_MSG10000_ImportDeclarationRequestService.ManipulateRequestParams(requestParams);
                         break;
                     case SendRequestVIA.WebServiceBatch:
