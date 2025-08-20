@@ -226,9 +226,9 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
         }
 
-        public static bool IsCloudExport(int tenant)
+        public static bool IsCloudExport(int tenant, string Direction = null)
         {
-            return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight);
+            return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight && Direction != "I");
         }
     }
     public class MySignStationList

@@ -1107,7 +1107,7 @@ export class SendDeclarationService implements OnDestroy {
                     this.ValidationErrors.push(err);
                     this.FillValidationErrors("Errors");
                 });
-    
+            searchParams.DeclarationDirection = this.EntityPM.Direction;
             if (this.EntityPM.DeclarationTypeCode == '3')             
                 this.DeclarationService.PostSendTransshipmenDeclaration(searchParams).subscribe();
             else if (this.EntityPM.Direction == "E") {            
