@@ -72,6 +72,7 @@ namespace Logitude.Customs.BL.BL
 
             if(declaration == null || declaration.IsAmendment == true)
             {
+                Log("DECL:N:D0");
                 return sent;
             }
 
@@ -86,18 +87,24 @@ namespace Logitude.Customs.BL.BL
                 && declarationCourierStatusPM.CourierDeclarationStatusCode == "R"
                 && declarationCourierStatusPM.DocumentStatusCode == "V")
             {
-
+                Log("DECL:E");
                 bool hasActivePending = false;
                 if (declaration != null)
                 {
                     hasActivePending = declarationPendingRepo.HasPendingWithStatus(declaration.Id, declarationCourierStatusPM.Tenant, "A");
+                    Log($"DECL:P={(hasActivePending ? 1 : 0)}");
                 }
                 bool importerOk =(string.IsNullOrEmpty(declaration.ImporterCode) && (string.IsNullOrEmpty(declaration.ImporterId))
                     || !string.IsNullOrEmpty(declaration.ImporterId));
+                Log($"DECL:Importer={(importerOk)}");
+
 
                 if (declaration != null && !hasActivePending && importerOk )
                 {
+                    Log($" BEFORESEND ");
+
                     SendDeclaration(declarationCourierStatusPM);
+                    Log($"AFTERSEND ");
                     return sent;
                 }
             }
@@ -193,6 +200,7 @@ namespace Logitude.Customs.BL.BL
                 var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2750", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
                 if (requestInProgressList != null && requestInProgressList.Any())
                 {
+                    Log($"RIPL>0");
                     return;
                 }
                 using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
@@ -271,5 +279,6 @@ namespace Logitude.Customs.BL.BL
             var UnifreightListOnServerOnly = UnifreightListsUtil.Serialize(dic);
             return UnifreightListOnServerOnly;
         }
+        private static void Log(string m) => LogMessagingUtil.Instance.AppendLine($"Automated|{m}");
     }
 }
