@@ -30,14 +30,14 @@
     Type="varchar"
     Size="2">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="BranchCode"
     Type="varchar"
     Size="3">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="AccountNumber"
@@ -51,7 +51,7 @@
     Type="nvarchar"
     Size="30">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="EnglishName"

@@ -281,9 +281,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 return;
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.InternalCode)) //T4 find type == nText 
+            {
+                entityPM.InternalCode = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.InternalCode));
+            }
             if (!String.IsNullOrWhiteSpace(entityPM.LocalName)) //T4 find type == nText 
             {
                 entityPM.LocalName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LocalName));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.EnglishName)) //T4 find type == nText 
+            {
+                entityPM.EnglishName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.EnglishName));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.BankAddress)) //T4 find type == nText 
             {
