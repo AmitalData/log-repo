@@ -93,17 +93,9 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string SignMethodByQueue { get; set; }
         public string SignByPersonalId { get; set; }
         public string SignQueueByCompanyOrPersonal { get; set; }
-        
-
-        
-
         public string ParentId { get; set; }
-
-
         public bool ForceCompanySign { get; set; }
-
-
-
+        public string DeclarationDirection { get; set; } = null;
     }
 
     public class TestCase

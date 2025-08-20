@@ -503,7 +503,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(_RequestParams.Tenant);
             var dbSignQueueService = new SignQueueHybridDbService();
 
-            var isExport = SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant);
+            var isExport = SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant, _RequestParams.DeclarationDirection);
             var signQueueHSMService = new SignQueueHSMService();
             
             if (string.IsNullOrWhiteSpace(availableSignServer) &&
