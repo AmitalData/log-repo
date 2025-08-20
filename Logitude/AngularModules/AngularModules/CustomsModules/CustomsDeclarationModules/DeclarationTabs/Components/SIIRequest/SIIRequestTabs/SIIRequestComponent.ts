@@ -317,7 +317,9 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                         const dlg = new ConfirmWindow();
                         dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
                         dlg.ShowNoButton = false;
-
+                        dlg.Title = "Errors Found";
+                        dlg.IsMultipleMessages = true;
+                        dlg.ShowErorImage = true;
                         dlg.Show(extractMessage(err));
                     }
                 );

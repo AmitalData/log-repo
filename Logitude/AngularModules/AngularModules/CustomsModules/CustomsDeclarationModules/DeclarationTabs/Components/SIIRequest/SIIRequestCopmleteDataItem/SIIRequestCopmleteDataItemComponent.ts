@@ -192,12 +192,11 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
             this.CurrentSession.StopBusyIndicator();
 
-            const body = sr && sr.Result as any;              
-            const productFileId = body && body.productFileId; 
+            const productFileId = sr && sr.Result as any;              
 
             if (productFileId) {
                 this.ProductFileNumber = productFileId;
-                this.generalErrors = [];
+                this.generalErrors = []; 
                 this.SaveSupplierInvoiceItemsReqList();
                 return;
             }

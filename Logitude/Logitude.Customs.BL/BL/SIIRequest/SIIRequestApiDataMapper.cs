@@ -284,7 +284,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 importCountry = new CountryAlphaDto { alphaCode = sii.OriginCountryCode },
 
                 warehouseLocationName = sii.WareHouseAddress,
-                warehouseSettlement = new IdDto { id = ToInt(sii.WareHouseCity, "WareHouseCity") },
+                warehouseSettlement = string.IsNullOrEmpty(sii.WareHouseCity)? null: new IdDto { id = ToInt(sii.WareHouseCity, "WareHouseCity") },
                 destinationPort = new IdDto
                 {
                     id = ToInt(

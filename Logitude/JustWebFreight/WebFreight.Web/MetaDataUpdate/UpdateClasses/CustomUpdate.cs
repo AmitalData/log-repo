@@ -17462,7 +17462,6 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "P", EnglishName = null, LocalName = "פרט מכס", SearchFields = "פרט מכס,P" }, pointerLevelRepository);
             AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "D", EnglishName = "Declaration, הצהרה", LocalName = "הצהרה", SearchFields = "הצהרה,D" }, pointerLevelRepository);
 			AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "C", EnglishName = "Closing Export Declaration", LocalName = "סגירת הצהרת יצוא", SearchFields = "סגירת הצהרת יצוא,C" }, pointerLevelRepository);
-            AddClosedTables.AddPointerLevel(new PointerLevel() { Code = "S", EnglishName = "SIIRequest", LocalName = "מכון תקנים", SearchFields = "מכון תקנים,S" }, pointerLevelRepository);
 
 
             pointerLevelRepository.SubmitChanges();
