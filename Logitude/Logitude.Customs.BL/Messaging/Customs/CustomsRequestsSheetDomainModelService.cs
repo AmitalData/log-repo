@@ -504,6 +504,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             var dbSignQueueService = new SignQueueHybridDbService();
 
             var isExport = SignQueueHybridDbService.IsCloudExport(_RequestParams.Tenant, _RequestParams.DeclarationDirection);
+            var IsCloud = SignQueueHybridDbService.IsCloud(_RequestParams.Tenant);
             var signQueueHSMService = new SignQueueHSMService();
             
             if (string.IsNullOrWhiteSpace(availableSignServer) &&
@@ -512,7 +513,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
  
             {
                 (availableSignServer, signMethodByQueueEnum) = dbSignQueueService
-                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, isExport);
+                    .GetAvailableSignServer(_RequestParams.Tenant, SignatureBy, personId, IsCloud);
                 if (availableSignServer != null)
                 {
                     if (signMethodByQueueEnum == SignMethodByQueueEnum.HybridDbSignQueue)
