@@ -120,7 +120,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             );
             return entityLists;
         }
-        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isExport=false)
+        public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isCloud = false)
         {
 			ICommonDataContext myContextCommon = CommonDataContext.GetContext(tenant);
 			FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
@@ -191,7 +191,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
 					
 					var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
 					var featureIsExportSign = features.Features.FirstOrDefault(x => x.Code == "IsExportSign");
-					if (featureIsExportSign != null && isExport)
+					if (featureIsExportSign != null && isCloud)
 					{
 						return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
 					}
@@ -203,7 +203,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         }
                         return (null, SignMethodByQueueEnum.None); ;
                     }
-                    else if(isExport)
+                    else if(isCloud)
                     {
                         return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
                     }
@@ -229,6 +229,10 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         public static bool IsCloudExport(int tenant, string Direction = null)
         {
             return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight && Direction != "I");
+        }
+        public static bool IsCloud(int tenant)
+        {
+            return (!CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight);
         }
     }
     public class MySignStationList
