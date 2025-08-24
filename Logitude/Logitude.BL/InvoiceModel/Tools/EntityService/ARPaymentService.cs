@@ -946,17 +946,18 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         if ((invoiceAmount < 0) || (PaidAmount <= invoiceAmount))
                         {
                             invoice.IsClosed = false;
-                            if (invoice.StatusCode == "PD" || invoice.StatusCode == "PP")
+                            if (invoice.StatusCode == ARInvoiceStatusValues.Paid || invoice.StatusCode == ARInvoiceStatusValues.PartiallyPaid)
                             {
                                 if (PaidAmount != 0)
                                 {
-                                    invoice.StatusCode = "PP";
+                                    invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
                                 }
 
-                                else
+                                else if (invoice.StatusCode != ARInvoiceStatusValues.Draft)
                                 {
-                                    invoice.StatusCode = "AD";
+                                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
                                 }
+                                invoice.PaidDate = null;
                             }
 
                             double? invoiceAmountDue = MethodHelper.Round((invoiceAmount - PaidAmount), 2);
@@ -967,19 +968,35 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             if (invoiceAmountDue == 0)
                             {
                                 invoice.IsClosed = true;
-                                invoice.StatusCode = "PD";
+                                invoice.StatusCode = ARInvoiceStatusValues.Paid;
+                                if (invoice.PaidDate == null)
+                                {
+                                    invoice.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
+                                }
                             }
 
                             else if (invoiceAmountDue > 0 && invoiceAmountDue < invoiceAmount)
                             {
                                 invoice.IsClosed = false;
-                                invoice.StatusCode = "PP";
+                                invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
+                                invoice.PaidDate = null;
                             }
 
                             else if (invoiceAmountDue < 0 && invoiceAmountDue > invoiceAmount)
                             {
                                 invoice.IsClosed = false;
-                                invoice.StatusCode = "PP";
+                                invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
+                                invoice.PaidDate = null;
+                            }
+
+                            else if (invoiceAmountDue == invoiceAmount)
+                            {
+                                invoice.IsClosed = false;
+                                if (invoice.StatusCode != ARInvoiceStatusValues.Draft)
+                                {
+                                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
+                                }
+                                invoice.PaidDate = null;
                             }
 
                             else if (invoiceAmountDue < 0 && invoiceAmount > 0)
