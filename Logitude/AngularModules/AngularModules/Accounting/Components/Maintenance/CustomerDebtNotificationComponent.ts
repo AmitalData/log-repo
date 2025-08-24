@@ -178,7 +178,7 @@ export class CustomerDebtNotificationComponent extends BaseComponent implements 
             var groupList: ReportGroupList = myResponse.Result;
             reportService.GetReportListsByGroupId(groupList.Id, SessionLocator.Tenant).subscribe((myResponse: ServiceResponse) => {
               
-            var reportList = myResponse.Result.filter(x => x.Code === 'LTRP')[0];           
+            var reportList = myResponse.Result.filter(x => x.Code === 'NTRP')[0];           
             var windowArgs: any = {};
             windowArgs.ReportGroupList = groupList;
             windowArgs.ReportList = reportList;
