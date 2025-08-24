@@ -76,6 +76,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     private loggedUser: UserPM;
 
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
+    private IsDisableGlaccountId: boolean = false;
 
     constructor(private changeDetector: ChangeDetectorRef) {
         super();
@@ -223,6 +224,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     public filterGlAccountSelectedValue: string = 'filter_glaccount';
 
     FilterGlAccountClicked(itemType:string){
+            if (this.IsDisableGlaccountId) return;
             this.ListGLAccounts = [];
             this.FromGLAccountId = null;
             this.ToGLAccountId = null;
@@ -524,6 +526,9 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     break;
                 case "GLAccountId":
                     this.GLAccountId = queryFilterItem.FieldValue;
+                    break;
+                case "IsDisableGlaccountId":
+                    this.IsDisableGlaccountId = queryFilterItem.FieldValue;
                     break;
             
             }
