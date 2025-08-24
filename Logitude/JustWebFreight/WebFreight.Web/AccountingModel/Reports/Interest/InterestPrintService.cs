@@ -39,9 +39,9 @@ using WebFreight.Web.Helpers;
             List<InterestReportLinesByDateProvider> interestReportPeriods = GetInterestReportPeriods(entityId, tenant);
             interestReportDP.FutureInterestTransactions = GetFutureInterestTransactions(tenant);
 
-            ProcessInterestTransactions(interestReportDP, interestReportPeriods, tenant);
+            decimal? lastTotal = ProcessInterestTransactions(interestReportDP, interestReportPeriods, tenant);
 
-            SetInterestReportMetadata(interestReportDP, interestReportPeriods, tenant);
+            SetInterestReportMetadata(interestReportDP, interestReportPeriods, lastTotal, tenant);
 
             return interestReportDP;
         }
@@ -129,14 +129,16 @@ using WebFreight.Web.Helpers;
         }
 
 
-        private void ProcessInterestTransactions(InterestDataProvider interestReportDP, List<InterestReportLinesByDateProvider> interestReportPeriods, int tenant)
+        private decimal? ProcessInterestTransactions(InterestDataProvider interestReportDP, List<InterestReportLinesByDateProvider> interestReportPeriods, int tenant)
         {
+            decimal? lastTotal = 0m;
 
             if (interestReportPeriods.Any())
             {
-
+                decimal totalLocalAmountSum = interestReportDP.OpenBalance ?? 0m; ;
                 foreach (var period in interestReportPeriods)
                 {
+                    decimal totalLocalInPeriod = 0m;
                     List<InterestReportFlatLine> periodLineList = new List<InterestReportFlatLine>();
                     foreach (var transactionDP in period.InterestTransactionList)
                     {
@@ -144,7 +146,7 @@ using WebFreight.Web.Helpers;
                         line.LineNo = ++flatLineCounter;
                         line.LineType = InterestPeriodLineTypes.Transaction;
                         line.Date = transactionDP.InterestValueDate;
-
+                        totalLocalInPeriod += transactionDP.LocalAmount;
                         line.LocalAmount = transactionDP.LocalAmount;
                         line.Reference1 = GetReference1(transactionDP);
                         line.Notes = GetNotes(transactionDP);
@@ -161,10 +163,15 @@ using WebFreight.Web.Helpers;
 
                         // Last in a period
                         var lastLineInPeriod = periodLineList.Last();
-                        lastLineInPeriod.Date = period.ToDate;
+                        lastLineInPeriod.Date = period.FromDate;
                         lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
-                        lastLineInPeriod.TotalToDate = period.TotalLocalAmount;
+
+                        lastLineInPeriod.TotalLocalInPeriod = totalLocalInPeriod;
+
+                        totalLocalAmountSum += totalLocalInPeriod;
+                        lastLineInPeriod.TotalToDate = totalLocalAmountSum;
+                        lastTotal = lastLineInPeriod.TotalToDate;
 
                         lastLineInPeriod.CalculatedStdInterestAmount = period.CalculatedStandardInterestAmount;
                         lastLineInPeriod.StdPercentage = period.StandardInterestPercentage;
@@ -187,16 +194,17 @@ using WebFreight.Web.Helpers;
                 }
 
             }
-
+            return lastTotal;
 
         }
 
 
-        private void SetInterestReportMetadata(InterestDataProvider interestReportDP, List<InterestReportLinesByDateProvider> interestReportPeriods, int tenant)
+        private void SetInterestReportMetadata(InterestDataProvider interestReportDP, List<InterestReportLinesByDateProvider> interestReportPeriods,
+            decimal? lastTotal, int tenant)
         {
             GetGLAccountDisplayNumber(tenant, interestReportDP, _InterestReportPM);
 
-            interestReportDP.OpenBalance = _InterestReportPM.OpenBalance;
+
             interestReportDP.CustomerName = _InterestReportPM.CustomerName;
             interestReportDP.InterestCalculationDate = _InterestReportPM.InterestCalculationDate;
             interestReportDP.InvoiceNumber = _InterestReportPM.ARInvoiceNumber;
@@ -204,14 +212,14 @@ using WebFreight.Web.Helpers;
             interestReportDP.TotalAmount = _InterestReportPM.TotalAmount;
             interestReportDP.CreditAllotmentPercentage = _InterestReportPM.CreditAllotmentPercentage;
             interestReportDP.CalCreditAllotmentCommission = _InterestReportPM.CalCreditAllotmentCommission;
-            interestReportDP.CalculatedPostponedChequesCommision = _InterestReportPM.CalculatedPostponedChequesCommision??0m;
+            interestReportDP.CalculatedPostponedChequesCommision = _InterestReportPM.CalculatedPostponedChequesCommision ?? 0m;
             interestReportDP.AllotmentCommession = _InterestReportPM.CalCreditAllotmentCommission;
             interestReportDP.AllotmentCalculation = SetAllotmentCalculationEquation(interestReportDP, _InterestReportPM);
             interestReportDP.PostponedChequesCommission = !string.IsNullOrEmpty(_InterestReportPM.GLAccountId) ? GetPostponedChequesCommission(_InterestReportPM.GLAccountId, _InterestReportPM.Tenant) : null;
             interestReportDP.CountPostponedCheques = CalcCountPostponedCheques(interestReportDP.CalculatedPostponedChequesCommision, interestReportDP.PostponedChequesCommission);
             interestReportDP.TotalAmountWithPostponedCheques = _InterestReportPM?.TotalAmount + _InterestReportPM?.CalculatedPostponedChequesCommision;
 
-            interestReportDP.InterestReportFlatLineList.Add(EndFlatLine(_InterestReportPM));
+            interestReportDP.InterestReportFlatLineList.Add(EndFlatLine(_InterestReportPM, lastTotal));
 
 
         }
@@ -282,11 +290,31 @@ using WebFreight.Web.Helpers;
                 rv.Date = interestReportPM.InterestCalculationDate;
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.OpenAmount", interestReportPM.Tenant);
                 rv.LocalAmount = interestReportPM.OpenBalance ?? 0m;
+                rv.TotalToDate = rv.LocalAmount;
+                rv.TotalLocalInPeriod = rv.LocalAmount;
+
+                var openline = interestReportPM.InterestReportLinesByDates.FirstOrDefault(l => l.IsOpenBalanceLine == true);
+                if (openline != null)
+                {
+                    rv.NumberOfDays = openline.TotalInterestDays;
+                    rv.CalculatedStdInterestAmount = openline.CalculatedStandInterestAmount;
+                    rv.StdPercentage = openline.StandardInterestPercentage;
+                    rv.TotalStdInterest = openline.StandardInterestAmount;
+                    rv.CalculatedExcInterestAmount = openline.CalculatedExcepInterestAmount;
+                    rv.ExcPercentage = openline.ExceptionalInterestPercentage;
+                    rv.TotalExcInterest = openline.ExceptionalInterestAmount;
+                    rv.CalculatedCrdInterestAmount = openline.CalculatedCreditInterestAmount;
+                    rv.CrdPercentage = openline.CreditInterestPercentage;
+                    rv.TotalCrdInterest = openline.CreditInterestAmount;
+                    rv.CalculationDetails = openline.CalculationDetails;
+                    rv.Date = openline.FromDate;
+                }
+
             }
             return rv;
         }
 
-        private InterestReportFlatLine EndFlatLine(InterestReportPM interestReportPM)
+        private InterestReportFlatLine EndFlatLine(InterestReportPM interestReportPM, decimal? lastTotal)
         {
             InterestReportFlatLine rv = new InterestReportFlatLine();
             rv.LineNo = ++flatLineCounter;
@@ -295,7 +323,8 @@ using WebFreight.Web.Helpers;
             if (interestReportPM != null)
             {
                 rv.Notes = TranslateTextsClass.Translate("Accounting.General.O.ReportTotalInterest", interestReportPM.Tenant);
-                rv.AccumulatedForInterest = interestReportPM.TotalAmount ?? 0m;
+                rv.AccumulatedForInterest = _InterestReportPM.TotalAmount ?? 0m;
+                rv.TotalToDate = lastTotal ?? 0m;
             }
             return rv;
         }
