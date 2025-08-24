@@ -526,7 +526,6 @@ namespace CustomsBook
             catch (Exception sendEx)
             {
                 Console.WriteLine($"Failed to send email: {sendEx.Message}");
-                SendEmailAlert(sendEx);
             }
         }
     }
