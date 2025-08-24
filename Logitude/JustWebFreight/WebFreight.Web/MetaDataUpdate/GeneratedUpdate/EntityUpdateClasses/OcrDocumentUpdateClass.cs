@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OcrDocumentUpdateClass
    {  		
-		public const string HashString = "6a3d7689daa9b76be402a604665bcd0f";
+		public const string HashString = "0e83e3a6704164d8edd207578e2b05fa";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -37,6 +37,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTablePlural =  "Customs.OcrDocuments",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  false,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -57,13 +62,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ocr Document",
-			      				    Code =  "995e",
+			      				    Code =  "d5b7",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -71,6 +76,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
+			      				    ShowFastSearch =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
@@ -102,6 +108,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -166,6 +173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -228,6 +236,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  5,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -253,10 +262,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Process",
 					  						DefaultText =  "Process",
-					  						FullLocalDefaultText =  "תהליך",
+					  						FullLocalDefaultTextBack_up =  "תהליך",
+					  						FullLocalDefaultText =  "BS64:Iteq15TXnNeZ15oi",
 					  						ListFieldLable =  "ProcessListLable",
 					  						ListLableDefaultText =  "Process",
-					  						ListLocalDefaultText =  "תהליך",
+					  						ListLocalDefaultTextBack_up =  "תהליך",
+					  						ListLocalDefaultText =  "BS64:Iteq15TXnNeZ15oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -293,6 +304,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  500,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -317,10 +329,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "JsonUrl",
 					  						DefaultText =  "Json Url",
-					  						FullLocalDefaultText =  "כתובת מידע",
+					  						FullLocalDefaultTextBack_up =  "כתובת מידע",
+					  						FullLocalDefaultText =  "BS64:Iteb16rXldeR16og157XmdeT16Ii",
 					  						ListFieldLable =  "JsonUrlListLable",
 					  						ListLableDefaultText =  "Json Url",
-					  						ListLocalDefaultText =  "כתובת מידע",
+					  						ListLocalDefaultTextBack_up =  "כתובת מידע",
+					  						ListLocalDefaultText =  "BS64:Iteb16rXldeR16og157XmdeT16Ii",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -357,6 +371,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -383,10 +399,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Score",
 					  						DefaultText =  "Score",
-					  						FullLocalDefaultText =  "אחוז הצלחה",
+					  						FullLocalDefaultTextBack_up =  "אחוז הצלחה",
+					  						FullLocalDefaultText =  "BS64:IteQ15fXldeWINeU16bXnNeX15Qi",
 					  						ListFieldLable =  "ScoreListLable",
 					  						ListLableDefaultText =  "Score",
-					  						ListLocalDefaultText =  "אחוז הצלחה",
+					  						ListLocalDefaultTextBack_up =  "אחוז הצלחה",
+					  						ListLocalDefaultText =  "BS64:IteQ15fXldeWINeU16bXnNeX15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -423,6 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  500,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -485,6 +504,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -509,10 +529,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ErrorMsg",
 					  						DefaultText =  "Error Message",
-					  						FullLocalDefaultText =  "הודעת שגיאה",
+					  						FullLocalDefaultTextBack_up =  "הודעת שגיאה",
+					  						FullLocalDefaultText =  "BS64:IteU15XXk9ei16og16nXkteZ15DXlCI=",
 					  						ListFieldLable =  "ErrorMsgListLable",
 					  						ListLableDefaultText =  "Error Message",
-					  						ListLocalDefaultText =  "הודעת שגיאה",
+					  						ListLocalDefaultTextBack_up =  "הודעת שגיאה",
+					  						ListLocalDefaultText =  "BS64:IteU15XXk9ei16og16nXkteZ15DXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -549,6 +571,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -573,10 +596,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusName",
 					  						DefaultText =  "Status Name",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						FullLocalDefaultTextBack_up =  "סטטוס",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
 					  						ListFieldLable =  "StatusNameListLable",
 					  						ListLableDefaultText =  "Status Name",
-					  						ListLocalDefaultText =  "סטטוס",
+					  						ListLocalDefaultTextBack_up =  "סטטוס",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -614,6 +639,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -638,10 +664,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "StatusCode",
 					  						DefaultText =  "Status Code",
-					  						FullLocalDefaultText =  "קוד סטטוס",
+					  						FullLocalDefaultTextBack_up =  "קוד סטטוס",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehIg==",
 					  						ListFieldLable =  "StatusCodeListLable",
 					  						ListLableDefaultText =  "Status Code",
-					  						ListLocalDefaultText =  "קוד סטטוס",
+					  						ListLocalDefaultTextBack_up =  "קוד סטטוס",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeY15jXldehIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "OcrStatus",
 					  						NavigationPropertyName =  "OcrStatus",
@@ -680,6 +708,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -743,6 +772,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -807,6 +837,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -831,10 +862,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference",
 					  						DefaultText =  "Reference",
-					  						FullLocalDefaultText =  "מספר חשבון",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158i",
 					  						ListFieldLable =  "ReferenceListLable",
 					  						ListLableDefaultText =  "Reference",
-					  						ListLocalDefaultText =  "מספר חשבון",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -871,11 +904,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  4000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "JsonData",
 					  						ListPropertyPath =  "JsonData",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -894,10 +929,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "JsonData",
 					  						DefaultText =  "Json Data",
-					  						FullLocalDefaultText =  "מידע",
+					  						FullLocalDefaultTextBack_up =  "מידע",
+					  						FullLocalDefaultText =  "BS64:Itee15nXk9eiIg==",
 					  						ListFieldLable =  "JsonDataListLable",
 					  						ListLableDefaultText =  "Json Data",
-					  						ListLocalDefaultText =  "מידע",
+					  						ListLocalDefaultTextBack_up =  "מידע",
+					  						ListLocalDefaultText =  "BS64:Itee15nXk9eiIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
 					  						NoMetaDataField =  false,
@@ -934,6 +971,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1067,39 +1105,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable OcrDocumentObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.OcrDocument" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInvoiceUpdatedSuccessfully = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully", DefaultText = "Invoice Updated Successfully",LocalDefaultText = @"חשבון יצואן עודכן בהצלחה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInvoiceUpdatedSuccessfully = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InvoiceUpdatedSuccessfully", DefaultText = "Invoice Updated Successfully",LocalDefaultText = @"BS64:IteX16nXkdeV158g15nXpteV15DXnyDXoteV15PXm9efINeR15TXptec15fXlCI=", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInvoiceSuccessfullyOpened = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InvoiceSuccessfullyOpened", DefaultText = "Invoice Successfully Opened",LocalDefaultText = @"חשבון יצואן נפתח בהצלחה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInvoiceSuccessfullyOpened = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InvoiceSuccessfullyOpened", DefaultText = "Invoice Successfully Opened",LocalDefaultText = @"BS64:IteX16nXkdeV158g15nXpteV15DXnyDXoNek16rXlyDXkdeU16bXnNeX15Qi", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOErrorCreatingInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ErrorCreatingInvoice", DefaultText = "Error Creating Invoice",LocalDefaultText = @"שגיאה ביצירת החשבון", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOErrorCreatingInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ErrorCreatingInvoice", DefaultText = "Error Creating Invoice",LocalDefaultText = @"BS64:Itep15LXmdeQ15Qg15HXmdem15nXqNeqINeU15fXqdeR15XXnyI=", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOIsNotOcrDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.IsNotOcrDocument", DefaultText = "Is not ocr document",LocalDefaultText = @"OCR מסמך לא הוגדר כ", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOIsNotOcrDocument = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.IsNotOcrDocument", DefaultText = "Is not ocr document",LocalDefaultText = @"BS64:Ik9DUiDXnteh157XmiDXnNeQINeU15XXkteT16gg15si", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOErrorInReceivingData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ErrorInReceivingData", DefaultText = "Error in receiving data",LocalDefaultText = @"לא ניתן לפתוח חשבון ממסמך זה, שגיאה בקבלת הנתונים", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOErrorInReceivingData = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ErrorInReceivingData", DefaultText = "Error in receiving data",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXpNeq15XXlyDXl9ep15HXldefINee157Xodee15og15bXlCwg16nXkteZ15DXlCDXkden15HXnNeqINeU16DXqteV16DXmdedIg==", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOCannotOpenInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.CannotOpenInvoice", DefaultText = "Cannot Open Invoice",LocalDefaultText = @"לא ניתן לפתוח חשבון ממסמך זה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOCannotOpenInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.CannotOpenInvoice", DefaultText = "Cannot Open Invoice",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXpNeq15XXlyDXl9ep15HXldefINee157Xodee15og15bXlCI=", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOJSONFileNotReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.JSONFileNotReceived", DefaultText = "JSON file not received",LocalDefaultText = @"לא התקבל קובץ JSON", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOJSONFileNotReceived = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.JSONFileNotReceived", DefaultText = "JSON file not received",LocalDefaultText = @"BS64:Itec15Ag15TXqten15HXnCDXp9eV15HXpSBKU09OIg==", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOMissingInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.MissingInvoiceNumber", DefaultText = "Missing Invoice Number",LocalDefaultText = @"מספר חשבון יצואן חסר", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOMissingInvoiceNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.MissingInvoiceNumber", DefaultText = "Missing Invoice Number",LocalDefaultText = @"BS64:Itee16HXpNeoINeX16nXkdeV158g15nXpteV15DXnyDXl9eh16gi", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOOcrStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.OcrStatus", DefaultText = "Ocr Status",LocalDefaultText = @"סטטוס OCR", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOOcrStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.OcrStatus", DefaultText = "Ocr Status",LocalDefaultText = @"BS64:Iteh15jXmNeV16EgT0NSIg==", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOContinueAnyway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ContinueAnyway", DefaultText = "Continue Anyway",LocalDefaultText = @"האם להמשיך בכל זאת ?", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOContinueAnyway = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ContinueAnyway", DefaultText = "Continue Anyway",LocalDefaultText = @"BS64:IteU15DXnSDXnNeU157XqdeZ15og15HXm9ecINeW15DXqiA/Ig==", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentORejected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.Rejected", DefaultText = "Rejected",LocalDefaultText = @"נדחה", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentORejected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.Rejected", DefaultText = "Rejected",LocalDefaultText = @"BS64:Iteg15PXl9eUIg==", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.Cancelled", DefaultText = "Cancelled",LocalDefaultText = @"מבוטל", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOCancelled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.Cancelled", DefaultText = "Cancelled",LocalDefaultText = @"BS64:Itee15HXldeY15wi", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInPrograss = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InPrograss", DefaultText = "In Prograss",LocalDefaultText = @"בתהליך", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInPrograss = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InPrograss", DefaultText = "In Prograss",LocalDefaultText = @"BS64:IteR16rXlNec15nXmiI=", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOOpenOcrInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.OpenOcrInvoice", DefaultText = "Open SupplierInvoice - OCR",LocalDefaultText = @"פתיחת חשבון יצואן - OCR", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOOpenOcrInvoice = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.OpenOcrInvoice", DefaultText = "Open SupplierInvoice - OCR",LocalDefaultText = @"BS64:Itek16rXmdeX16og15fXqdeR15XXnyDXmdem15XXkNefIC0gT0NSIg==", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentODCAOCRInPrograss = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.DCAOCRInPrograss", DefaultText = "Open Supplierinvoice - OCR in prograss, cannot be linked",LocalDefaultText = @"פתיחת חשבון יצואן - OCR בתהליך , לא ניתן לקשר מסמכים", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentODCAOCRInPrograss = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.DCAOCRInPrograss", DefaultText = "Open Supplierinvoice - OCR in prograss, cannot be linked",LocalDefaultText = @"BS64:Itek16rXmdeX16og15fXqdeR15XXnyDXmdem15XXkNefIC0gT0NSINeR16rXlNec15nXmiAsINec15Ag16DXmdeq158g15zXp9ep16gg157Xodee15vXmdedIg==", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOConnectToDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ConnectToDec", DefaultText = "Document Connect To Another Ticket",LocalDefaultText = @"המסמך מקושר להצהרה אחרת", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOConnectToDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ConnectToDec", DefaultText = "Document Connect To Another Ticket",LocalDefaultText = @"BS64:IteU157Xodee15og157Xp9eV16nXqCDXnNeU16bXlNeo15Qg15DXl9eo16oi", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInTyping = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InTyping", DefaultText = "In Typing",LocalDefaultText = @"בטיפול קלדן", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInTyping = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InTyping", DefaultText = "In Typing",LocalDefaultText = @"BS64:IteR15jXmdek15XXnCDXp9ec15PXnyI=", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
    
 	    
