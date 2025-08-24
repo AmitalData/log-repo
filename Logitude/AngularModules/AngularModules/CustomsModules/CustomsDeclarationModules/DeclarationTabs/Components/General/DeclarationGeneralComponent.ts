@@ -440,6 +440,7 @@ export class DeclarationGeneralComponent extends BaseComponent implements OnDest
                     if (isSaveSuccess) {
                         this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                         this.BuildConsignments();
+                        this.DisplayOnlyCheck();
                         this.BuildRecipientsList()
                         this.getExportStorageData();
 
