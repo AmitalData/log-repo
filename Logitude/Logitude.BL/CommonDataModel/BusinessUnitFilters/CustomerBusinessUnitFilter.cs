@@ -170,9 +170,9 @@ namespace Logitude.BL.CommonDataModel.BusinessUnitFilters
 
         public IQueryable<CardList> RunFilter(IQueryable<CardList> iQueryableData)
         {
-            var iQueryableData_NotCustomers = iQueryableData.Where(d => d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO");
+            var iQueryableData_NotCustomers = iQueryableData.Where(d => (d.PartnerTypeId != "CS" && d.PartnerTypeId != "PO" )|| ( d.PartnerTypeId =="CS" && !d.IsCustomer));
 
-            iQueryableData = iQueryableData.Where(d => d.PartnerTypeId == "CS" || d.PartnerTypeId == "PO");
+            iQueryableData = iQueryableData.Where(d => (d.PartnerTypeId == "CS" && d.IsCustomer )|| d.PartnerTypeId == "PO");
 
             if (iQueryableData.Count() > 0)
             {
