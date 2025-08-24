@@ -172,7 +172,7 @@ using WebFreight.Web.Helpers;
                         lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
 
-                        lastLineInPeriod.TotalLocalInPeriod = totalLocalInPeriod;   
+                        lastLineInPeriod.TotalLocalInPeriod = totalLocalInPeriod;
 
                         totalLocalAmountSum += totalLocalInPeriod;
                         lastLineInPeriod.TotalToDate = totalLocalAmountSum;
@@ -204,7 +204,7 @@ using WebFreight.Web.Helpers;
         }
 
 
-        private void SetInterestReportMetadata(InterestDataProvider interestReportDP, List<InterestReportLinesByDateProvider> interestReportPeriods, 
+        private void SetInterestReportMetadata(InterestDataProvider interestReportDP, List<InterestReportLinesByDateProvider> interestReportPeriods,
             decimal? lastTotal, int tenant)
         {
             GetGLAccountDisplayNumber(tenant, interestReportDP, _InterestReportPM);
@@ -217,7 +217,7 @@ using WebFreight.Web.Helpers;
             interestReportDP.TotalAmount = _InterestReportPM.TotalAmount;
             interestReportDP.CreditAllotmentPercentage = _InterestReportPM.CreditAllotmentPercentage;
             interestReportDP.CalCreditAllotmentCommission = _InterestReportPM.CalCreditAllotmentCommission;
-            interestReportDP.CalculatedPostponedChequesCommision = _InterestReportPM.CalculatedPostponedChequesCommision??0m;
+            interestReportDP.CalculatedPostponedChequesCommision = _InterestReportPM.CalculatedPostponedChequesCommision ?? 0m;
             interestReportDP.AllotmentCommession = _InterestReportPM.CalCreditAllotmentCommission;
             interestReportDP.AllotmentCalculation = SetAllotmentCalculationEquation(interestReportDP, _InterestReportPM);
             interestReportDP.PostponedChequesCommission = !string.IsNullOrEmpty(_InterestReportPM.GLAccountId) ? GetPostponedChequesCommission(_InterestReportPM.GLAccountId, _InterestReportPM.Tenant) : null;
