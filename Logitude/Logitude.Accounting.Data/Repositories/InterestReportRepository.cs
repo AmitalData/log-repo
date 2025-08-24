@@ -109,6 +109,18 @@ namespace Logitude.Accounting.Data.Repositories
 
         private (decimal? AfterValueDate, decimal? BeforeValueDateWithoutReport) GetInterestAdjustments(string glAccountId, int tenant, DateTime beforeDate)
         {
+
+            bool hasInvalidRecords = context.InterestTransactions
+               .Any(it => it.GLAccountId == glAccountId &&
+               it.Tenant == tenant &&
+               it.AccountingDate == null &&
+               it.InterestEntityTypeCode != InterestEntities.OpenBalance
+               && it.InterestReportId  == null);
+              
+            if (hasInvalidRecords)
+            {
+                throw new Exception("Interest report cannot run - there are records with InterestEntityTypeCode different from 4 but without AccountingDate");
+            }
             var query = context.InterestTransactions
                 .Join(context.GLAccounts,
                     it => new { it.GLAccountId, it.Tenant },
