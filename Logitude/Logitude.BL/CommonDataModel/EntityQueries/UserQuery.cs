@@ -1829,6 +1829,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (HttpContext.Current != null && HttpContext.Current.User != null)
             {
                 string email = HttpContext.Current.User.Identity.Name;
+
                 User user = repository.GetSingleUserByEmail(email, 0, false);
                 if (user != null)
                 {

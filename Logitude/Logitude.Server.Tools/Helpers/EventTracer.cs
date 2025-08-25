@@ -53,7 +53,7 @@ namespace Logitude.Server.Tools.Helpers
                                 string email = !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) ? HttpContext.Current.User.Identity.Name: args.Email;
                                 if (!string.IsNullOrEmpty(email))
                                 {
-                                    UserRepository userRepository = new UserRepository(0);
+                                    UserRepository userRepository = new UserRepository(tenant);
                                     User user = userRepository.GetSingleUserByEmail(email, 0, true);
                                     if (user != null)
                                     {
@@ -211,7 +211,7 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (traceEventParams.Tenant != 0)
                 {
-                    UserRepository userRepository = new UserRepository(0);
+                    UserRepository userRepository = new UserRepository(traceEventParams.Tenant);
                     User user = userRepository.GetSingleUser(traceEventParams.UserId, 0, false);
                     if (user != null)
                     {

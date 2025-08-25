@@ -275,7 +275,7 @@ namespace Logitude.BL.Security
 
                         if (contact.Tenant == 0 && tenant != 0)
                         {
-                            UserRepository userRep = new UserRepository(0);
+                            UserRepository userRep = new UserRepository(tenant);
                             User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
                             if (zeroUser != null)
                             {
@@ -421,7 +421,7 @@ namespace Logitude.BL.Security
 
                             if (contact.Tenant == 0 && tenant != 0)
                             {
-                                UserRepository userRep = new UserRepository(0);
+                                UserRepository userRep = new UserRepository(tenant);
                                 User zeroUser = userRep.GetSingleUserByEmail(email, 0, true);
                                 if (zeroUser != null)
                                 {
