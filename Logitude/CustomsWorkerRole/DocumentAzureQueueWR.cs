@@ -212,7 +212,7 @@ namespace CustomsWorkerRole
 						}
 						else
 						{
-							logs += " dont success CheckIsDocumentPDF";
+							logs += "dont success document from  DownloadFile is not pdf type";
 							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 						}
 					}
