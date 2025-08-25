@@ -27,7 +27,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
                 Event.IsChoose = e.IsChoose;
                 Event.PartnerTypeId = e.PartnerTypeId;
 				Event.EntityType = e.EntityType;
-
+                Event.EventTypeId = e.EventTypeId;
 				Events.Add(Event);
             }
             return Events;

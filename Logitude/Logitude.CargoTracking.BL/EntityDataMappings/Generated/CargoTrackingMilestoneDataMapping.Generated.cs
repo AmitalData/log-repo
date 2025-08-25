@@ -29,6 +29,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Inactive, 
 	         Weight, 
 	         ExportWeight,
+	         Tenant, 
+	         EventTypeId,
 	      }
 
 
@@ -42,6 +44,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         Inactive, 
 	         Weight, 
 	         ExportWeight,
+	         Tenant, 
+	         EventTypeId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -78,6 +82,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportWeight))
             {
 				entityPOCO.ExportWeight = entityPM.ExportWeight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventTypeId))
+            {
+				entityPOCO.EventTypeId = entityPM.EventTypeId;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -121,6 +135,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.ExportWeight = entityPOCO.ExportWeight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EventTypeId))
+            {
+					entityPM.EventTypeId = entityPOCO.EventTypeId;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingMilestonePM entityPM, CargoTrackingMilestonePM oldEntityPM)
@@ -155,6 +179,16 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportWeight))
             {
                 oldEntityPM.ExportWeight = entityPM.ExportWeight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EventTypeId))
+            {
+                oldEntityPM.EventTypeId = entityPM.EventTypeId;
             }
 			
 		}
