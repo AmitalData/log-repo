@@ -511,14 +511,22 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     if (queryFilterItem.FieldValue) {
                         this.IsListGLAccounts = true;
                         this.ListGLAccounts = await this.FetchGLAccountDataFromServer(queryFilterItem.FieldValue);
+                        this.filterGlAccountSelectedValue = "filter_glaccount_list";
+                        this.IsListGLAccounts = true;
                     } else {
                         this.ListGLAccounts = [];
                     }
                     break;
                 }
-                case "FromGLAccountDisplayNumber":
+                case "FromGLAccountDisplayNumber":{
                     this.FromGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
+                    if (!AppTool.IsNullOrEmpty(this.FromGLAccountId)) {
+                        this.filterGlAccountSelectedValue = "filter_glaccounts_range";
+                        this.IsRangGLAccounts = true;
+                    }
                     break;
+                }
+                    
                 case "ToGLAccountDisplayNumber":
                     this.ToGLAccountId = queryFilterItem.FieldValue2 ? queryFilterItem.FieldValue2 : null;
                     break;
