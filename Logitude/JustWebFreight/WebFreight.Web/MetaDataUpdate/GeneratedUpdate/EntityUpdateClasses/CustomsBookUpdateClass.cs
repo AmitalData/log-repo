@@ -10,435 +10,497 @@ using System.Collections.Generic;
 using System.Linq;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Simplog.Data.CommonDataModel.EntityPOCOs; 
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using WebFreight.Web.MetaDataUpdate.AddClasses;
 using WebFreight.Web.MetaDataUpdate.DetailClasses;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class CustomsBookUpdateClass
-   {  		
-		public const string HashString = "a6b562fca898e5a98724f5e65de452ef";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
-        {                     
-            
+    public class CustomsBookUpdateClass
+    {
+        public const string HashString = "240f5a4d60351feadbcad9629b3adbea";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, ObjectTableRepository ObjectTableRepository, TextCodeRepository TextCodeRepository, int contextTenant = 0)
+        {
+
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
-			
-	             				    ObjectTableName =  "Customs.CustomsBook",
-			      				    IsNew =  false,
-			      				    DBTableName =  "Customs.CustomsBooks",
-			      				    ObjectTableSingular =  "CustomsBook",
-			      				    ObjectTablePlural =  "CustomsBooks",
-			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    AvailableInCustomization =  true,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
-			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Id",
-			      				    KeyPropertyPath =  "Id",
-			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  false,
-			      				    CacheOnClient =  false,
-			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  true,
-			      				    EnableAddFromLOV =  false,
-			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
-			      				    IsAutoComplete =  false,
-			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Id",
-			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
-			      				    AllowCustomFields =  false,
-			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "ספר סיווג",
-			      				    DefaultText =  "CustomsBook",
-			      				    Code =  "bbc7",
-			      				    Name =  "Customs.CustomsBook Query Group",
-			      				    GenerateDomainService =  true,
-			      				    ClientModuleName =  "Customs",
-			      				    ServerModuleName =  "Customs",
-			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    CustomFieldsCount =  0,
-			      				    DisableSearchBox =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
-			      				    HashString =  CustomsBookUpdateClass.HashString,
-			                    
-            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes,contextTenant);
-		}
-	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes,int contextTenant)
-	    {
-	         
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Id",
-					  						ObjectTableName =  "Customs.CustomsBook",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Id",
-					  						ListPropertyPath =  "Id",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomsBook",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Id",
-					  						DefaultText =  "Id",
-					  						FullLocalDefaultText =  "מזהה פנימי",
-					  						ListFieldLable =  "IdListLable",
-					  						ListLableDefaultText =  "Id",
-					  						ListLocalDefaultText =  "מזהה פנימי",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  true,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  true,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Tenant",
-					  						ObjectTableName =  "Customs.CustomsBook",
-					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Tenant",
-					  						ListPropertyPath =  "Tenant",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomsBook",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Tenant",
-					  						DefaultText =  "Tenant",
-					  						ListFieldLable =  "TenantListLable",
-					  						ListLableDefaultText =  "Tenant",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  true,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  true,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
+                ObjectTableName = "Customs.CustomsBook",
+                IsNew = false,
+                DBTableName = "Customs.CustomsBooks",
+                ObjectTableSingular = "CustomsBook",
+                ObjectTablePlural = "CustomsBooks",
+                HasCustomFilter = false,
+                HasCustomFields = false,
+                AvailableInCustomization = true,
+                SupportSubEntity = false,
+                ApplyGenericCustomFields = false,
+                AvailableInDocumentTypes = false,
+                HasHelper = false,
+                HasShortTitle = false,
+                HasFiltersMenu = false,
+                IsEditable = false,
+                IsNewWizard = false,
+                LookUp1 = "Id",
+                KeyPropertyPath = "Id",
+                AutoCompleteSearchWindow = false,
+                IsClosed = false,
+                CacheOnClient = false,
+                EditableFromAutoCompleteWindow = false,
+                HasCounter = true,
+                EnableAddFromLOV = false,
+                IsRestrictable = false,
+                IsMain = true,
+                IsAutoComplete = false,
+                EnableEditFromLOV = false,
+                SortingByObjectField = "Id",
+                InActive = false,
+                IsSaveButtonVisible = false,
+                IsComposition = false,
+                EnableSecurity = false,
+                AllowCustomFields = false,
+                HasDynamicHeader = false,
+                ObjectTableTypeCode = "MD",
+                MaxNumberOfCustomFields = 0,
+                LocalDefaultText = "ספר סיווג",
+                DefaultText = "CustomsBook",
+                Code = "bfcb",
+                Name = "Customs.CustomsBook Query Group",
+                GenerateDomainService = true,
+                ClientModuleName = "Customs",
+                ServerModuleName = "Customs",
+                NoTS = false,
+                HasMenuButtons = false,
+                AllowedForComputingPartners = false,
+                CustomFieldsCount = 0,
+                DisableSearchBox = false,
+                HasDocuments = false,
+                IsLookUp = false,
+                IsTabsHidden = false,
+                HashString = CustomsBookUpdateClass.HashString,
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "LastUpdateByUserId",
-					  						ObjectTableName =  "Customs.CustomsBook",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "User",
-					  						MinLength =  0,
-					  						MaxLength =  15,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LastUpdateByUserId",
-					  						ListPropertyPath =  "LastUpdateByUserId",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomsBook",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LastUpdateByUserId",
-					  						DefaultText =  "Last Update By User Id",
-					  						FullLocalDefaultText =  "משתמש בעדכון אחרון",
-					  						ListFieldLable =  "LastUpdateByUserIdListLable",
-					  						ListLableDefaultText =  "LastUpdateByUserId",
-					  						ListLocalDefaultText =  "משתמש בעדכון אחרון",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "User",
-					  						NavigationPropertyName =  "LastUpdateByUser",
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes, contextTenant);
+        }
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "LastUpdateDate",
-					  						ObjectTableName =  "Customs.CustomsBook",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
-					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "LastUpdateDate",
-					  						ListPropertyPath =  "LastUpdateDate",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomsBook",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LastUpdateDate",
-					  						DefaultText =  "Last Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון אחרון",
-					  						ListFieldLable =  "LastUpdateDateListLable",
-					  						ListLableDefaultText =  "Last Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון אחרון",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes,contextTenant);
- 
-	    }
+        public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, ObjectFieldRepository ObjectFieldsRepository, TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes, int contextTenant)
+        {
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups ,int contextTenant)
-	    {    
-	    }
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
 
-	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext,int contextTenant)
-	    {   
+                FieldName = "Id",
+                ObjectTableName = "Customs.CustomsBook",
+                FieldsDataType = "Text",
+                MinLength = 0,
+                MaxLength = 15,
+                IsRequired = true,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 15,
+                DisplayInList = false,
+                IsCustomFilter = false,
+                IsListFilter = false,
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "Id",
+                ListPropertyPath = "Id",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "Customs.CustomsBook",
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "Id",
+                DefaultText = "Id",
+                FullLocalDefaultText = "מזהה פנימי",
+                ListFieldLable = "IdListLable",
+                ListLableDefaultText = "Id",
+                ListLocalDefaultText = "מזהה פנימי",
+                IsForeignKey = false,
+                IsMaxLength = false,
+                NoMetaDataField = true,
+                IsFixedLength = false,
+                EnableAutoFill = true,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                HasTemplate = false,
+                IsCustom = false,
+                EnableFullscreenTextBox = false,
 
-		   ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> CustomsBookObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsBook").ToList();
-		       
-	      
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
 
-	         Screen CustomsBookCustomsCustomsBookHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsBook.HeaderScreen", Name = "Customs.CustomsBookHeaderScreen", ObjectTableId = CustomsBookObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens,contextTenant);
-      	
-		    CustomsBookObjectTable.HeaderScreenId = CustomsBookCustomsCustomsBookHeaderScreenScreen0.Id;
-		    CustomsBookObjectTable.HeaderScreenCode = CustomsBookCustomsCustomsBookHeaderScreenScreen0.Code;
 
-	   		  
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
 
-	    }
+                FieldName = "Tenant",
+                ObjectTableName = "Customs.CustomsBook",
+                FieldsDataType = "Integer",
+                MinLength = 0,
+                MaxLength = 0,
+                IsRequired = true,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 0,
+                DisplayInList = false,
+                IsCustomFilter = false,
+                IsListFilter = false,
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "Tenant",
+                ListPropertyPath = "Tenant",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "Customs.CustomsBook",
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "Tenant",
+                DefaultText = "Tenant",
+                ListFieldLable = "TenantListLable",
+                ListLableDefaultText = "Tenant",
+                IsForeignKey = false,
+                IsMaxLength = false,
+                NoMetaDataField = true,
+                IsFixedLength = false,
+                EnableAutoFill = true,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                HasTemplate = false,
+                IsCustom = false,
+                EnableFullscreenTextBox = false,
 
-	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext,int contextTenant)
-	    {      
-	    } 
-	
-	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {  
-		   ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault(); 
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
 
-		   Feature CustomsBookFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsBookObjectTable,contextTenant);
-		   Feature CustomsBookFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsBookObjectTable,contextTenant);
-		   Feature CustomsBookFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsBookObjectTable,contextTenant);
-		   Feature CustomsBookFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.PackageFeature", NameTextCodeDefaultText = "CustomsBook Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsBookObjectTable,contextTenant);    
-	    
-		}
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses,int contextTenant)
-	    {   
-			ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault(); 
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "LastUpdateByUserId",
+                ObjectTableName = "Customs.CustomsBook",
+                FieldsDataType = "LookUp",
+                LookUpTableName = "User",
+                MinLength = 0,
+                MaxLength = 15,
+                IsRequired = false,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = true,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 15,
+                DisplayInList = false,
+                IsCustomFilter = false,
+                IsListFilter = false,
+                Operator = "Equals",
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "LastUpdateByUserId",
+                ListPropertyPath = "LastUpdateByUserId",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "Customs.CustomsBook",
+                IsRestrictable = false,
+                DisplayInEntityVariables = true,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "LastUpdateByUserId",
+                DefaultText = "Last Update By User Id",
+                FullLocalDefaultText = "משתמש בעדכון אחרון",
+                ListFieldLable = "LastUpdateByUserIdListLable",
+                ListLableDefaultText = "LastUpdateByUserId",
+                ListLocalDefaultText = "משתמש בעדכון אחרון",
+                IsForeignKey = true,
+                ForeignEntity = "User",
+                NavigationPropertyName = "LastUpdateByUser",
+                IsMaxLength = false,
+                NoMetaDataField = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                HasTemplate = false,
+                IsCustom = false,
+                EnableFullscreenTextBox = false,
+
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
+
+
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
+
+                FieldName = "LastUpdateDate",
+                ObjectTableName = "Customs.CustomsBook",
+                FieldsDataType = "DateTime",
+                MinLength = 0,
+                MaxLength = 0,
+                IsRequired = false,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = true,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 0,
+                DisplayInList = true,
+                ConverterName = "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
+                IsCustomFilter = false,
+                IsListFilter = false,
+                Operator = "Equals",
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "LastUpdateDate",
+                ListPropertyPath = "LastUpdateDate",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "Customs.CustomsBook",
+                IsRestrictable = false,
+                DisplayInEntityVariables = false,
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "LastUpdateDate",
+                DefaultText = "Last Update Date",
+                FullLocalDefaultText = "תאריך עדכון אחרון",
+                ListFieldLable = "LastUpdateDateListLable",
+                ListLableDefaultText = "Last Update Date",
+                ListLocalDefaultText = "תאריך עדכון אחרון",
+                IsForeignKey = false,
+                IsMaxLength = false,
+                NoMetaDataField = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                HasTemplate = false,
+                IsCustom = false,
+                EnableFullscreenTextBox = false,
+
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes, contextTenant);
+
+        }
+
+        public void AddTableQueries(Dictionary<string, Query> tenantQueries, Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository, TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, AdvancedQueryFilterRepository advancedQueryFiltersRepository, Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters, Dictionary<string, QueryGroup> tenantQueryGroups, int contextTenant)
+        {
+        }
+
+        public void AddTableScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository, IWebFreightContext ObjectContext, int contextTenant)
+        {
+
+            ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault();
+            //List<ObjectField> CustomsBookObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CustomsBook").ToList();
+
+
+
+            Screen CustomsBookCustomsCustomsBookHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CustomsBook.HeaderScreen", Name = "Customs.CustomsBookHeaderScreen", ObjectTableId = CustomsBookObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens, contextTenant);
+
+            CustomsBookObjectTable.HeaderScreenId = CustomsBookCustomsCustomsBookHeaderScreenScreen0.Id;
+            CustomsBookObjectTable.HeaderScreenCode = CustomsBookCustomsCustomsBookHeaderScreenScreen0.Code;
+
+
+
+        }
+
+        public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes, ObjectTableTabRepository objectTableTabsRepository, TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, IWebFreightContext ObjectContext, int contextTenant)
+        {
+        }
+
+        public void AddTableFeatures(TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, Dictionary<string, TextCode> TextCodes, IWebFreightContext ObjectContext, int contextTenant)
+        {
+            ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault();
+
+            Feature CustomsBookFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, CustomsBookObjectTable, contextTenant);
+            Feature CustomsBookFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, CustomsBookObjectTable, contextTenant);
+            Feature CustomsBookFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, CustomsBookObjectTable, contextTenant);
+            Feature CustomsBookFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsBook.Features.PackageFeature", NameTextCodeDefaultText = "CustomsBook Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, CustomsBookObjectTable, contextTenant);
+
+        }
+
+        public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes, EventTypeRepository EventTypeRepository, IWebFreightContext ObjectContext, List<EntityStatus> AllEntityStatuses, int contextTenant)
+        {
+            ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault();
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "CREV",
-                EnglishName =  "Created",
-                LocalName =  "Created",
-                IsManualEntry =  false,
-                ShortView =  true,
-                EventTypeCategoryCode =  "OPE",
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
+                Code = "CREV",
+                EnglishName = "Created",
+                LocalName = "Created",
+                IsManualEntry = false,
+                ShortView = true,
+                EventTypeCategoryCode = "OPE",
+                IsAgentView = false,
+                IsCustomerView = false,
+                IsSharedLogisticsEnabled = false,
+                AllowedInAutomation = false,
+                ManualActivatedFollowUp = false,
+                IsFollowUp = false,
                 ObjectTableId = CustomsBookObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes,contextTenant);
+
+            }, EventTypeRepository, tenantEventTypes, contextTenant);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "UPEV",
-                EnglishName =  "Updated",
-                LocalName =  "Updated",
-                IsManualEntry =  false,
-                ShortView =  false,
-                EventTypeCategoryCode =  "OPE",
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
+                Code = "UPEV",
+                EnglishName = "Updated",
+                LocalName = "Updated",
+                IsManualEntry = false,
+                ShortView = false,
+                EventTypeCategoryCode = "OPE",
+                IsAgentView = false,
+                IsCustomerView = false,
+                IsSharedLogisticsEnabled = false,
+                AllowedInAutomation = false,
+                ManualActivatedFollowUp = false,
+                IsFollowUp = false,
                 ObjectTableId = CustomsBookObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes,contextTenant);
+
+            }, EventTypeRepository, tenantEventTypes, contextTenant);
 
 
-	    }
-	
-	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext,int contextTenant)
-	    {  
-	    }
+        }
 
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {     
-	    
+        public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons, Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes, TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository, Dictionary<string, Feature> TenantFeatures, MenuButtonGroupRepository menuButtonGroupRepository, IWebFreightContext ObjectContext, int contextTenant)
+        {
+        }
+
+        public void AddTableTextCodes(TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, Dictionary<string, TextCode> TextCodes, IWebFreightContext ObjectContext, int contextTenant)
+        {
+
+            //--------------> Additional TextCodes <--------------\\
+
+            ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault();
+
+            TextCode CustomsBookTextCode_GeneralOEnterEmailAndSubmit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.EnterEmailAndSubmit", DefaultText = "Please enter your Email and  press submit", LocalDefaultText = @"הכנס אימייל והמשך", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOTroubleLogin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.TroubleLogin", DefaultText = "Having trouble logging in?", LocalDefaultText = @"מתקשה להתחבר?", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOGoodSubmit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GoodSubmit", DefaultText = "Submiting completed successfully", LocalDefaultText = @"רישום מוצלח", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOResetLinkSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ResetLinkSent", DefaultText = "A reset link has been sent to your Email", LocalDefaultText = @"קישור נשלח במייל", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOResetLinkSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ResetLinkSent", DefaultText = "Back to login page", LocalDefaultText = @"חזרה למסך התחברות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOAddNewCommentTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.AddNewCommentTo", DefaultText = "Write new comment to:", LocalDefaultText = @"כתיבת הערה חדשה ל:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOSaveComment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SaveComment", DefaultText = "Save comment", LocalDefaultText = @"שמירת הערה", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOBackToPanel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.BackToPanel ", DefaultText = "Back to panel start", LocalDefaultText = @"חזור לתחילת הפאנל", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOGuideDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuideDetails", DefaultText = "Guide details", LocalDefaultText = @"פרטי הנחיה", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOGuidanceNO = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceNO", DefaultText = "Guidance No.:", LocalDefaultText = @"מספר הנחיה:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOGuidanceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceType", DefaultText = "Guidance type:", LocalDefaultText = @"סוג הנחיה:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOGuidanceName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceName", DefaultText = "Guidance Name:", LocalDefaultText = @"שם הנחיה:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOGuidanceDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceDetails", DefaultText = "Part/Chapter/Item:", LocalDefaultText = @"חלק/פרק/פרט מכס:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOPublishDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.PublishDate", DefaultText = "Publish Date:", LocalDefaultText = @"תאריך פרסום:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOGuidanceFor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceFor", DefaultText = "Guidance for the following ", LocalDefaultText = @"הנחיה זו מתייחסת גם לפרטים הבאים", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOPart = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Part", DefaultText = "Part", LocalDefaultText = @"חלק", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOChapter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Chapter", DefaultText = "Chapter", LocalDefaultText = @"חלק", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Item", DefaultText = "Item", LocalDefaultText = @"פריט", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOSection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Section", DefaultText = "Section", LocalDefaultText = @"סעיף", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOCustomsDetail = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.CustomsDetail", DefaultText = "Customs Detail", LocalDefaultText = @"פרט מכס", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralORule = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Rule", DefaultText = "Rules", LocalDefaultText = @"כללים", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralORemark = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Remark", DefaultText = "Remarks", LocalDefaultText = @"הערות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralONoResFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.NoResFound", DefaultText = "No results found", LocalDefaultText = @"לא נמצאות תוצאות לחיפוש", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOOpenAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.OpenAll", DefaultText = "Open All", LocalDefaultText = @"פתח הכל", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOClearResults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ClearResults", DefaultText = "Clear results", LocalDefaultText = @"ניקוי תוצאות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralGAutonomy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.Autonomy", DefaultText = "Autonomy", LocalDefaultText = @"אוטונומיה", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+            TextCode CustomsBookTextCode_GeneralOLogin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Login", DefaultText = "Log In", LocalDefaultText = @"התחבר", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+
+
+
+        }
+
+
+
+    }
+
 }
-
-    
-
-   }
-    
-}
-	 

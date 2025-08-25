@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;ספר סיווג&quot;"
   DefaultText="&quot;CustomsBook&quot;"
-  Code="&quot;bbc7&quot;"
+  Code="&quot;bfcb&quot;"
   Name="&quot;Customs.CustomsBook Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Customs&quot;"
@@ -55,6 +58,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;01bb&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -409,6 +413,169 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;General.O.EnterEmailAndSubmit&quot;"
+      DefaultText="&quot;Please enter your Email and  press submit&quot;"
+      LocalDefaultText="&quot;הכנס אימייל והמשך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.TroubleLogin&quot;"
+      DefaultText="&quot;Having trouble logging in?&quot;"
+      LocalDefaultText="&quot;מתקשה להתחבר?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.GoodSubmit&quot;"
+      DefaultText="&quot;Submiting completed successfully&quot;"
+      LocalDefaultText="&quot;רישום מוצלח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.ResetLinkSent&quot;"
+      DefaultText="&quot;A reset link has been sent to your Email&quot;"
+      LocalDefaultText="&quot;קישור נשלח במייל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.ResetLinkSent&quot;"
+      DefaultText="&quot;Back to login page&quot;"
+      LocalDefaultText="&quot;חזרה למסך התחברות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.AddNewCommentTo&quot;"
+      DefaultText="&quot;Write new comment to:&quot;"
+      LocalDefaultText="&quot;כתיבת הערה חדשה ל:&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.SaveComment&quot;"
+      DefaultText="&quot;Save comment&quot;"
+      LocalDefaultText="&quot;שמירת הערה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.BackToPanel &quot;"
+      DefaultText="&quot;Back to panel start&quot;"
+      LocalDefaultText="&quot;חזור לתחילת הפאנל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.GuideDetails&quot;"
+      DefaultText="&quot;Guide details&quot;"
+      LocalDefaultText="&quot;פרטי הנחיה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.GuidanceNO&quot;"
+      DefaultText="&quot;Guidance No.:&quot;"
+      LocalDefaultText="&quot;מספר הנחיה:&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.GuidanceType&quot;"
+      DefaultText="&quot;Guidance type:&quot;"
+      LocalDefaultText="&quot;סוג הנחיה:&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.GuidanceName&quot;"
+      DefaultText="&quot;Guidance Name:&quot;"
+      LocalDefaultText="&quot;שם הנחיה:&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.GuidanceDetails&quot;"
+      DefaultText="&quot;Part/Chapter/Item:&quot;"
+      LocalDefaultText="&quot;חלק/פרק/פרט מכס:&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.PublishDate&quot;"
+      DefaultText="&quot;Publish Date:&quot;"
+      LocalDefaultText="&quot;תאריך פרסום:&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.GuidanceFor&quot;"
+      DefaultText="&quot;Guidance for the following &quot;"
+      LocalDefaultText="&quot;הנחיה זו מתייחסת גם לפרטים הבאים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Part&quot;"
+      DefaultText="&quot;Part&quot;"
+      LocalDefaultText="&quot;חלק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Chapter&quot;"
+      DefaultText="&quot;Chapter&quot;"
+      LocalDefaultText="&quot;חלק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Item&quot;"
+      DefaultText="&quot;Item&quot;"
+      LocalDefaultText="&quot;פריט&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Section&quot;"
+      DefaultText="&quot;Section&quot;"
+      LocalDefaultText="&quot;סעיף&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.CustomsDetail&quot;"
+      DefaultText="&quot;Customs Detail&quot;"
+      LocalDefaultText="&quot;פרט מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Rule&quot;"
+      DefaultText="&quot;Rules&quot;"
+      LocalDefaultText="&quot;כללים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Remark&quot;"
+      DefaultText="&quot;Remarks&quot;"
+      LocalDefaultText="&quot;הערות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.NoResFound&quot;"
+      DefaultText="&quot;No results found&quot;"
+      LocalDefaultText="&quot;לא נמצאות תוצאות לחיפוש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.OpenAll&quot;"
+      DefaultText="&quot;Open All&quot;"
+      LocalDefaultText="&quot;פתח הכל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.ClearResults&quot;"
+      DefaultText="&quot;Clear results&quot;"
+      LocalDefaultText="&quot;ניקוי תוצאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.Autonomy&quot;"
+      DefaultText="&quot;Autonomy&quot;"
+      LocalDefaultText="&quot;אוטונומיה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Login&quot;"
+      DefaultText="&quot;Log In&quot;"
+      LocalDefaultText="&quot;התחבר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
