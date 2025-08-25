@@ -352,6 +352,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
             {
                this.ReportFliter.ProcessType = "ExportToExcel";
                this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
+               this.IsUsedExportToExel = false;
                return
             }
             if (!this.IsHaveRunReportViewWorkerRoleToggleFeature || (this.IsHaveRunReportViewWorkerRoleToggleFeature && this.ReportFliter.ProcessType != "GenerateReport")) {

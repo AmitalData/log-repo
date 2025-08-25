@@ -1407,6 +1407,5 @@ ResetEditableField(field: EditableFieldPosition){
         if (this.StimulsoftArgData.ReportFilterConmponent) {
             this.RunReport();
         }
-        this.StimulsoftArgData.ReportsPreviewComponent.IsUsedExportToExel = false;
     }
 }
