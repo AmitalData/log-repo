@@ -449,7 +449,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             TextCode CustomsBookTextCode_GeneralOResetLinkSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ResetLinkSent", DefaultText = "A reset link has been sent to your Email", LocalDefaultText = @"קישור נשלח במייל", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
 
-            TextCode CustomsBookTextCode_GeneralOResetLinkSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ResetLinkSent", DefaultText = "Back to login page", LocalDefaultText = @"חזרה למסך התחברות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+            TextCode CustomsBookTextCode_GeneralOBackToLogin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.BackToLogin", DefaultText = "Back to login page", LocalDefaultText = @"חזרה למסך התחברות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
 
             TextCode CustomsBookTextCode_GeneralOAddNewCommentTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.AddNewCommentTo", DefaultText = "Write new comment to:", LocalDefaultText = @"כתיבת הערה חדשה ל:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
 
