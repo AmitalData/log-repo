@@ -131,7 +131,7 @@
                     <td text-start></td>
 
                     <!-- 2 -->
-                    <td>
+                    <td  [class.disabled]="IsDisableGlaccountId">
                         <ul
                             class="FiltersMenu"
                             [class.aboodRTLFilterMenu]="isRTL"
@@ -228,6 +228,7 @@
                             [StartSearchFromChar]="3"
                             [StartSearchFromNumber]="5"
                             [PlaceHolder]="'Accounting.General.O.GLAccount' | TextCodeTranslationPipe"
+                            [ForceDisabled]="IsDisableGlaccountId"
                         >
                         </LogLov>
                     </td>
