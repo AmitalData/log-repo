@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsBookUpdateClass
    {  		
-		public const string HashString = "a6b562fca898e5a98724f5e65de452ef";
+		public const string HashString = "240f5a4d60351feadbcad9629b3adbea";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -38,6 +38,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -66,7 +69,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "ספר סיווג",
 			      				    DefaultText =  "CustomsBook",
-			      				    Code =  "bbc7",
+			      				    Code =  "bfcb",
 			      				    Name =  "Customs.CustomsBook Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Customs",
@@ -432,7 +435,67 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext,int contextTenant)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CustomsBookObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsBook" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CustomsBookTextCode_GeneralOEnterEmailAndSubmit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.EnterEmailAndSubmit", DefaultText = "Please enter your Email and  press submit",LocalDefaultText = @"הכנס אימייל והמשך", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOTroubleLogin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.TroubleLogin", DefaultText = "Having trouble logging in?",LocalDefaultText = @"מתקשה להתחבר?", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOGoodSubmit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GoodSubmit", DefaultText = "Submiting completed successfully",LocalDefaultText = @"רישום מוצלח", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOResetLinkSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ResetLinkSent", DefaultText = "A reset link has been sent to your Email",LocalDefaultText = @"קישור נשלח במייל", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOResetLinkSent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ResetLinkSent", DefaultText = "Back to login page",LocalDefaultText = @"חזרה למסך התחברות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOAddNewCommentTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.AddNewCommentTo", DefaultText = "Write new comment to:",LocalDefaultText = @"כתיבת הערה חדשה ל:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOSaveComment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.SaveComment", DefaultText = "Save comment",LocalDefaultText = @"שמירת הערה", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOBackToPanel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.BackToPanel ", DefaultText = "Back to panel start",LocalDefaultText = @"חזור לתחילת הפאנל", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOGuideDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuideDetails", DefaultText = "Guide details",LocalDefaultText = @"פרטי הנחיה", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOGuidanceNO = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceNO", DefaultText = "Guidance No.:",LocalDefaultText = @"מספר הנחיה:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOGuidanceType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceType", DefaultText = "Guidance type:",LocalDefaultText = @"סוג הנחיה:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOGuidanceName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceName", DefaultText = "Guidance Name:",LocalDefaultText = @"שם הנחיה:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOGuidanceDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceDetails", DefaultText = "Part/Chapter/Item:",LocalDefaultText = @"חלק/פרק/פרט מכס:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOPublishDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.PublishDate", DefaultText = "Publish Date:",LocalDefaultText = @"תאריך פרסום:", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOGuidanceFor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.GuidanceFor", DefaultText = "Guidance for the following ",LocalDefaultText = @"הנחיה זו מתייחסת גם לפרטים הבאים", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOPart = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Part", DefaultText = "Part",LocalDefaultText = @"חלק", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOChapter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Chapter", DefaultText = "Chapter",LocalDefaultText = @"חלק", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Item", DefaultText = "Item",LocalDefaultText = @"פריט", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOSection = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Section", DefaultText = "Section",LocalDefaultText = @"סעיף", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOCustomsDetail = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.CustomsDetail", DefaultText = "Customs Detail",LocalDefaultText = @"פרט מכס", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralORule = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Rule", DefaultText = "Rules",LocalDefaultText = @"כללים", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralORemark = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Remark", DefaultText = "Remarks",LocalDefaultText = @"הערות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralONoResFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.NoResFound", DefaultText = "No results found",LocalDefaultText = @"לא נמצאות תוצאות לחיפוש", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOOpenAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.OpenAll", DefaultText = "Open All",LocalDefaultText = @"פתח הכל", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOClearResults = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ClearResults", DefaultText = "Clear results",LocalDefaultText = @"ניקוי תוצאות", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralGAutonomy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.G.Autonomy", DefaultText = "Autonomy",LocalDefaultText = @"אוטונומיה", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+ 		   TextCode CustomsBookTextCode_GeneralOLogin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Login", DefaultText = "Log In",LocalDefaultText = @"התחבר", ObjectTableId = CustomsBookObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
+   
 	    
 }
 
