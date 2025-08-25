@@ -1873,10 +1873,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                             {
-                                if (DateTime.Now < new DateTime(2050, 06, 01))
-                                {
-                                    CreateBatchAccountingIntegrityCheck();
-                                }
+                             
                                 _NextDueDoneAt = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
                                 myDueLocalBalanceService.RunAllTenants();
@@ -2048,11 +2045,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
 
-                            if (DateTime.Now < new DateTime(2050, 06, 01))
-                            {
-                                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateBatchAccountingIntegrityCheck");
-                                CreateBatchAccountingIntegrityCheck();
-                            }
+                           
                             _NextDueDoneAt = DateTime.UtcNow.Date;
                             var myDueLocalBalanceService = new DueLocalBalanceService();
                             myDueLocalBalanceService.RunAllTenants();
@@ -2069,71 +2062,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
 
                 }
-                public void CreateBatchAccountingIntegrityCheck()
-                {
-                    try
-                    {
-
-                        int year = DateTime.Now.Year;
-                        var repo = new GLAccountTotalByMonthRepository(0);
-                        var activeTenants = repo.GetActiveTenantPerYear(year);
-                        var myTenantRepository = new TenantRepository(0);
-                        var prodTenant = myTenantRepository.GetTenants().Where(r => r.IsTestTenant == false).ToList();
-                        int iCount = 0;
-                        foreach (int tenant in activeTenants)
-                        {
-                            if (prodTenant.FirstOrDefault(r => r.Id == tenant) == null)
-                            {
-                                continue;//IsTestTenant
-                            }
-                            using (var scope = TransactionFactory.GetNewTransaction())
-                            {
-                                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                                AccountingIntegrityCheckUpdateService service = new AccountingIntegrityCheckUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-
-                                var paramsObj = new AccountingIntegrityInParam()
-                                {
-                                    Tenant = tenant,
-                                    FromMonthInclusive = new DateTime(year, 1, 1),
-                                    ToMonthInclusive = DateTime.Now,
-                                };
-
-                                // serialize
-                                string xmlString = LogitudeXmlSerializer.SerializeObjectToXmlElementString<AccountingIntegrityInParam>(paramsObj);
-
-                                service.DelayQueueInMinutes = iCount * 10;
-                                service.Update(new AccountingIntegrityCheckPM()
-                                {
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-                                    Tenant = tenant,
-                                    CreateDateTimeUTC = DateTime.UtcNow,
-                                    FromMonthInclusive = new DateTime(year, 1, 1),
-                                    ToMonthInclusive = DateTime.Now,
-                                    StatusCode = "1",
-                                    SendEmailWhileError = true,
-                                    ParametersXML = xmlString,
-
-                                }
-                                , true);
-                                scope.Complete();
-                                iCount++;//more 10 min
-                            }
-
-                        }
-
-
-
-
-
-
-                    }
-                    catch (Exception ee)
-                    {
-
-                        ExceptionHandler.HandleException(ee, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
-                        //throw;
-                    }
-                }
+               
             }
         }
 
