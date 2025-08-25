@@ -1035,8 +1035,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.TraceEvents
 
                                     if (tenant != 0)
                                     {
-                                        UserRepository userRepository = new UserRepository(0);
-                                        User user = userRepository.GetSingleUser(myUserId, tenant, true);
+                                        UserRepository userRepository = new UserRepository(tenant);
+                                        User user = userRepository.GetSingleUser(myUserId, 0, true);
                                         if (user != null)
                                         {
                                             User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
