@@ -41,7 +41,7 @@ namespace WebFreight.Web.WebPages
 
         public bool CheckAvailablityTenantsForEmail(string email, int tenant)
         {
-            UserRepository userRep = new UserRepository(tenant);
+            UserRepository userRep = new UserRepository(0);
             Simplog.Data.CommonDataModel.EntityPOCOs.User user = userRep.GetSingleUserByEmail(email, tenant, false);
 
             bool available = true;
