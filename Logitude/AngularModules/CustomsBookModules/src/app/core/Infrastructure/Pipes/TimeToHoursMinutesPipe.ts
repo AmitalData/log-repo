@@ -1,5 +1,5 @@
 ﻿import {Pipe} from '@angular/core';
-import {AppTool, FormatTool} from '../Tools';
+import {AppTool} from '../Tools';
 
 @Pipe({ name: 'TimeToHoursMinutesPipe', standalone: true })
 

@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
-   
+
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
         const isCustomsBookSite = true;
@@ -251,22 +251,22 @@ export class LoginComponent implements OnInit {
         window.TextCodes = [];
         window.TextCodesCache = [];
 
-      
 
-        
-                this.loginService
-                    .GetTenantTextCode()
-                    .subscribe((myResult: any) => {
-                        if (myResult) {
-                            window.TextCodes =
-                            window.TextCodes.concat(myResult);
-                            window.TextCodesTranslations.push(myResult)
-                            window.TranslationsCache.push(myResult);
-                            window.TextCodesCache.push(myResult);
 
-                        }
-                    });
 
-        }
+        this.loginService
+            .GetTenantTextCode()
+            .subscribe((myResult: any) => {
+                if (myResult) {
+                    window.TextCodes =
+                        window.TextCodes.concat(myResult);
+                    window.TextCodesTranslations.push(myResult)
+                    window.TranslationsCache.push(myResult);
+                    window.TextCodesCache.push(myResult);
+
+                }
+            });
+
+    }
 
 }

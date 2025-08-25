@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableTopService } from './service/table-top.service';
 import { NgClass, NgFor, NgIf, NgStyle, } from '@angular/common';
 import { FilterPopupComponent } from '../filter-popup/filter-popup.component';
