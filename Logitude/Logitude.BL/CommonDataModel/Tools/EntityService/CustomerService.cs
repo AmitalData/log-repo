@@ -1271,9 +1271,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         repository.Update(entity);
                     }
                 }
-
-                if (entityPM.ContactForAccounting == DONT_CARE) entityPM.ContactForAccounting = String.Empty;
             }
+            if (entityPM.ContactForAccounting == DONT_CARE) entityPM.ContactForAccounting = String.Empty;
+
             repository.SubmitChanges();
             if (string.IsNullOrEmpty(entityPM.Card.GLAccountId))
                 entityPM.Card.GLAccountId = cardRepository.GetSingleCard(entityPM.Card.Id, tenant)?.GLAccountId;
