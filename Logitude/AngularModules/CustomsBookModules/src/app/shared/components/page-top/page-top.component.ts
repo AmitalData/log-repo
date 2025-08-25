@@ -6,12 +6,13 @@ import { FilterPopupService } from '../filter-popup/service/filter-popup.service
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RomanToolService } from '../../services/roman-tool.service';
 import { SearchCustomsItemAutocomplateComponent } from './search-customs-item-autocomplate/search-customs-item-autocomplate.component';
+import { Pipes } from '../../../core/Infrastructure/ModuleDeclarations';
 
 
 @Component({
 	selector: 'app-page-top',
 	standalone: true,
-	imports: [FormsModule, MatAutocompleteModule, SearchCustomsItemAutocomplateComponent],
+	imports: [FormsModule, MatAutocompleteModule, SearchCustomsItemAutocomplateComponent, Pipes],
 	templateUrl: './page-top.component.html',
 	styleUrl: './page-top.component.css',
 })

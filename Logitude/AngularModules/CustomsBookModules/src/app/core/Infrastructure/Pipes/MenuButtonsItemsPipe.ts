@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {MenuButtonPM} from '../EntityPMs/MenuButtonPM'
 
-@Pipe({ name: 'MenuButtonsItemsPipe' })
+@Pipe({ name: 'MenuButtonsItemsPipe', standalone: true })
 
 export class MenuButtonsItemsPipe {
 

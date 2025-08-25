@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {DateTool} from '../Tools';
 
-@Pipe({ name: 'DateTimeToTimePipe' })
+@Pipe({ name: 'DateTimeToTimePipe', standalone: true })
 
 export class DateTimeToTimePipe {
     transform(value: Date, myFormat: string = null): string {

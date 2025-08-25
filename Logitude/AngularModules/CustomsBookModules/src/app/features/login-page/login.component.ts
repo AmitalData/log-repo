@@ -9,13 +9,18 @@ import { FormsModule } from '@angular/forms';
 import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocator';
 import { LoginService } from '../../core/Infrastructure/Services/LoginService';
 import { InfrastructureDomainService } from '../../core/Infrastructure/Services/InfrastructureDomainService';
+import { Pipes } from '../../core/Infrastructure/ModuleDeclarations';
+import { SessionLocator } from '../../core/Infrastructure/Utilities/SessionLocator';
+import { QueriesPMService } from '../../core/Infrastructure/Services/StandardPMs/QueriesPMService';
+import { TextCodePMService } from '../../core/Infrastructure/Services/StandardPMs/TextCodePMService';
+
 
 @Component({
     selector: 'app-login',
     standalone: true,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    imports: [FormsModule, CommonModule],
+    imports: [FormsModule, CommonModule, Pipes],
 })
 
 export class LoginComponent implements OnInit {
@@ -59,6 +64,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getTranslation();
         this.initComponent();
     }
 
@@ -78,6 +84,7 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
+   
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
         const isCustomsBookSite = true;
@@ -235,4 +242,31 @@ export class LoginComponent implements OnInit {
         if (this.Tenant) this.router.navigate(["resetpassword"]);//,{ queryParams: {tenant: this.Tenant}}
         else this.router.navigate(["resetpassword"]);
     }
+
+    public getTranslation(): void {
+        window.TenantTranslations = [];
+        window.TenantLanguageTranslations = [];
+        window.TextCodesTranslations = [];
+        window.TranslationsCache = [];
+        window.TextCodes = [];
+        window.TextCodesCache = [];
+
+      
+
+        
+                this.loginService
+                    .GetTenantTextCode()
+                    .subscribe((myResult: any) => {
+                        if (myResult) {
+                            window.TextCodes =
+                            window.TextCodes.concat(myResult);
+                            window.TextCodesTranslations.push(myResult)
+                            window.TranslationsCache.push(myResult);
+                            window.TextCodesCache.push(myResult);
+
+                        }
+                    });
+
+        }
+
 }

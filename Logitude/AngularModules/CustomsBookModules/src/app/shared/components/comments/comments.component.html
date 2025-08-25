@@ -1,7 +1,7 @@
 <div class="detailsSlide_box" id="comments" *ngIf="showComments && allComments?.length > 0">
     <div class="detailsSlide_toggle" (click)="expandedArea = !expandedArea">
         <div>
-            <h3>הערות</h3>
+            <h3>{{'Customs.SpecialActivityRequest.F.CurrentPresentPackingStateContent' | TextCodeTranslationPipe}}</h3>
         </div>
         <div class="toggle" [class.active]="expandedArea">
             <fa-icon [size]="'xl'" class="toggle-close" [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>

@@ -2,8 +2,9 @@ declare var window: any;
 import { SessionLocator } from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
 // Replace deprecated import with recommended check
-const isNullOrUndefined = (value: any) => value === undefined || value === null;
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
+
+const isNullOrUndefined = (value: any) => value === undefined || value === null;
 
 export class TextCodeTranslator {
 	static BIReportTranslate(value: string) {
@@ -29,6 +30,7 @@ export class TextCodeTranslator {
 		//console.log('88888888888888:', value);
 
 		var translation: string = '';
+
 		var cachedTranslationObject = window.TranslationsCache.filter((d: any) => d.Code === value)[0];
 
 		if (cachedTranslationObject) {
@@ -55,7 +57,7 @@ export class TextCodeTranslator {
 		//console.log('88888888888888:', value);
 
 		var translation: string = '';
-		var cachedTranslationObject = window.TextCodesCache.filter((d: any) => d.Code === value)[0];
+		var cachedTranslationObject = window.TextCodesCache?.filter((d: any) => d.Code === value)[0];
 
 		if (cachedTranslationObject) {
 			if (SessionLocator.LoggedUserPM.DontShowLocal) {
@@ -84,7 +86,7 @@ export class TextCodeTranslator {
 				}
 			}
 		} else {
-			var translationObject = window.TextCodes.filter((d) => d.Code == value)[0];
+			var translationObject = window.TextCodes?.filter((d) => d.Code == value)[0];
 			if (translationObject) {
 				if (SessionLocator.LoggedUserPM.DontShowLocal) {
 					translation = translationObject.DefaultText;
@@ -111,17 +113,12 @@ export class TextCodeTranslator {
 					}
 				}
 
-				window.TextCodesCache.push(translationObject);
-			} else {
-				if (this.ShowAlertMessage(value)) {
-					if (SessionLocator.LoggedUserPM.Email.includes('logitudeworld.com')) {
-						alert("This Code '" + value + "' Not Found!");
-					}
-				}
-			}
+				window.TextCodesCache?.push(translationObject);
+			} 
+			
 		}
 
-		if (window.TextCodesCache.length > 200) {
+		if (window.TextCodesCache?.length > 200) {
 			window.TextCodesCache.splice(0, 50);
 		}
 

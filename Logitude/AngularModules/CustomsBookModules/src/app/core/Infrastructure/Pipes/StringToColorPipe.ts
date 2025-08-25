@@ -1,7 +1,7 @@
 import {Pipe} from '@angular/core';
 import {AppTool, FormatTool, FontTool, DateTool} from '../Tools';
 
-@Pipe({ name: 'StringToColorPipe' })
+@Pipe({ name: 'StringToColorPipe', standalone: true })
 
 export class StringToColorPipe {
 

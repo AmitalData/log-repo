@@ -1,7 +1,7 @@
 ﻿import {Pipe} from '@angular/core';
 import {AppTool, DateTool, FontTool} from '../Tools';
 
-@Pipe({ name: 'InvoiceDueDateForegroundPipe' })
+@Pipe({ name: 'InvoiceDueDateForegroundPipe', standalone: true })
 
 export class InvoiceDueDateForegroundPipe {
     transform(dateField: Date, isClosed: boolean): string {

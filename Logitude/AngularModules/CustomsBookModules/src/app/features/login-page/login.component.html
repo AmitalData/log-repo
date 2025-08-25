@@ -1,12 +1,13 @@
 <div class="limiter">
-    <div class="container-login" style="background-size: cover;background-repeat: no-repeat;" [ngStyle]="{ 'background-image': BackGroundImg}">
-        <div class="container-login-child" >
+    <div class="container-login" style="background-size: cover;background-repeat: no-repeat;"
+        [ngStyle]="{ 'background-image': BackGroundImg}">
+        <div class="container-login-child">
             <div class="wrap-login">
                 <div class="login-form">
                     <div>
                         <img alt="" class="logo-img" src="{{LogoImgSrc}}">
                     </div>
-                     
+
                     <div class="wrap-input">
                         <input #input class="input" placeholder="Email" [(ngModel)]="Email" type="text" name="email">
                     </div>
@@ -32,15 +33,17 @@
                     <div class="container-login-form-btn">
                         <div class="wrap-login-form-btn">
                             <div class="login-form-bgbtn"></div>
-                            <button (click)="LogInClicked()" class="login-form-btn" [ngStyle]="SecondaryColor != null ? {'background': SecondaryColor} : {}">
-                                Log In
+                            <button (click)="LogInClicked()" class="login-form-btn"
+                                [ngStyle]="SecondaryColor != null ? {'background': SecondaryColor} : {}">
+                                {{'General.G.LoginBtn' | TextCodeTranslationPipe}}
                             </button>
                         </div>
                     </div>
 
                     <div class="text-center" style="margin:20px;margin-bottom:10px;">
-                        <a class="txt1" [ngStyle]="MainColor != null ? {'color': MainColor} : {}" (click)="ForgotPasswordClicked()" style="cursor: pointer;">
-                            Forgot Password?
+                        <a class="txt1" [ngStyle]="MainColor != null ? {'color': MainColor} : {}"
+                            (click)="ForgotPasswordClicked()" style="cursor: pointer;">
+                            {{'General.G.ForgotPasswordMsg' | TextCodeTranslationPipe}}
                         </a>
                     </div>
 
