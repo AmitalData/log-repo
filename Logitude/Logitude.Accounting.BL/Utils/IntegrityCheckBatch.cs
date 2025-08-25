@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.Utils
                         };
                         string xmlString = LogitudeXmlSerializer.SerializeObjectToXmlElementString<AccountingIntegrityInParam>(paramsObj);
 
-                        service.DelayQueueInMinutes = iCount * 10;
+                        service.DelayQueueInMinutes = iCount * 2;
                         service.Update(new AccountingIntegrityCheckPM()
                         {
                             ChangeSetOp = ChangeSetOperation.Insert,
