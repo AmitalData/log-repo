@@ -132,6 +132,8 @@ namespace CommunicationWorkerRole
 
                         if (response?.MessageValues?.ContainsKey("InvoiceApiId") == true)
                         {
+
+                            invoiceXml = null;
                             string InvoiceApiId = response.MessageValues["InvoiceApiId"].ToString();
                             GeInvoiceApiLog(InvoiceApiId);
                             tenant = invoiceApiCommunicationLog.Tenant;
@@ -731,7 +733,7 @@ namespace CommunicationWorkerRole
             var filePath = $"tenant{tenant}/{StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder)}";
 
 
-            var fileInfo = new BlobFileInfo
+            var fileInfo = new BlobFileInfo()
             {
                 FileName = document.Id,
                 FolderName = document.Folder,
@@ -763,8 +765,9 @@ namespace CommunicationWorkerRole
             {
                 Tenant = document.Tenant,
                 FileName = document.Id,
-                FolderName = "others",
-                Extension = "xml",
+                FolderName = document.Folder,
+                Extension = document.Extension,
+                FileSize = document.FileSize
 
             };
 
