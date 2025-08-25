@@ -261,7 +261,7 @@
                     </td>
                 </tr>
 
-                <tr class="FormFieldRow" style="height:70px">
+                <tr class="FormFieldRow" style="height:40px">
                     <td colspan="2">
                         <div float-start>
                             <div float-start style="width:10px;height:14px"></div>
@@ -278,9 +278,16 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="3">
-                        <div></div>
+                <!-- CopyVatType -->
+                <tr class="FormFieldRow" style="height:40px">
+                    <td colspan="2">
+                        <div float-start>
+                            <div float-start style="width:10px;height:14px"></div>
+                            <div float-start text-start style="width: 130px;">{{'APInvoice.O.CopyVatType' | TextCodeTranslationPipe}}</div>
+                            <div float-start style="width: 20px;">
+                                <CheckBox [IsChecked]="IsCopyVatTypeChecked" (Checked)="IsCopyVatTypeChecked = $event" [IsEnabled]="!disableCopyAmounts"></CheckBox>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </table>
