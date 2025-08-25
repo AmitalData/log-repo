@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         
            ICommonDataContext commonDataContext;
 
-        public TwoFactorAuthenticationDeviceRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public TwoFactorAuthenticationDeviceRepository(ICommonDataContext context)
         {

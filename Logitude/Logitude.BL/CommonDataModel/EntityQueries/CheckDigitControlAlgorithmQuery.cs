@@ -14,10 +14,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CheckDigitControlAlgorithmRepository repository;
 
-        public CheckDigitControlAlgorithmQuery()
-        {
-            repository = new CheckDigitControlAlgorithmRepository();
-        }
+
 
         public CheckDigitControlAlgorithmQuery(int tenant)
         {

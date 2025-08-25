@@ -63,7 +63,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                             where crs.EntityId1 == courierMasterId
                             select crs);
 
-            var communicationLogRepository = new CommunicationLogRepository();
+            var communicationLogRepository = new CommunicationLogRepository(tenant);
 
             var b = communicationLogRepository.CommunicationOutGoingLogInProgress(courierMasterId, ObjectTableIdCourierMaster, tenant);
             return qCMaster.Any() || qDec.Any() || b;

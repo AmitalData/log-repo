@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AccountingSettingQuery
     {
         AccountingSettingRepository repository;
-        public AccountingSettingQuery()
-        {
-            repository = new AccountingSettingRepository(); 
-        }
+
         public AccountingSettingQuery(int tenant)
         {
             repository = new AccountingSettingRepository(tenant);

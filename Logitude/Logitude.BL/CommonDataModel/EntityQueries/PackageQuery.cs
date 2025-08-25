@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PackageRepository repository;
 
-        public PackageQuery()
-        {
-            repository = new PackageRepository(); 
-        }
+
 
         public PackageQuery(int tenant)
         {

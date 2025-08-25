@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PaymentTermRepository repository;
 
-        public PaymentTermQuery()
-        {
-            repository = new PaymentTermRepository(); 
-        }
+
         public PaymentTermQuery(int tenant)
         {
             repository = new PaymentTermRepository(tenant);

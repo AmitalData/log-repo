@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DueTypeRepository repository;
 
-        public DueTypeQuery()
-        {
-            repository = new DueTypeRepository(); 
-        }
+   
 
         public DueTypeQuery(int tenant)
         {

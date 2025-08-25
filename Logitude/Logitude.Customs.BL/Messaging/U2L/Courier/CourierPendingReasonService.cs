@@ -127,7 +127,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.Courier
                         {
                             declarationPendingPM.ChangeSetOp = ChangeSetOperation.Update;
                             declarationPendingPM.Status = "S";
-                            FeatureQuery featureQuery = new FeatureQuery();
+                            FeatureQuery featureQuery = new FeatureQuery(ResolvedTenant());
                             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(ResolvedTenant()), ResolvedTenant());
                             var featureSendPayment = features.Features.Any(x => x.Code == "SendPaymentOn900Close");
                             if (featureSendPayment)

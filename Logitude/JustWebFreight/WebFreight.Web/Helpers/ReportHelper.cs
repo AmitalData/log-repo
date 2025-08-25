@@ -3208,7 +3208,7 @@ namespace WebFreight.Web.Helpers
             ContactRepository contactRepository = new ContactRepository(commonDataContext);
             string userId = contactRepository.GetConactIdByemail("system@tenant" + tenantToCopy.ToString() + ".com", tenantToCopy);
 
-            ReportGroupQuery reportGroupQuery = new ReportGroupQuery();
+            ReportGroupQuery reportGroupQuery = new ReportGroupQuery(tenantToCopy);
             string accountingReportGroupId = reportGroupQuery.GetReportGroupPMsByTenant(0).Where(a => a.Code == "RACC").Select(a => a.Id).FirstOrDefault();
             tenantZeroReportsTemplate = reportsTemplateRepository.GetReportsTemplates(0)
                 .Where(d => d.IsCopiedAtSignup && d.Report.ReportGroupId == accountingReportGroupId).ToList();

@@ -165,7 +165,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 string response = "";
                  using (var scope = TransactionFactory.GetNewTransaction())
                 {
-                    FeatureQuery featureQuery = new FeatureQuery();
+                    FeatureQuery featureQuery = new FeatureQuery(requestParams.Tenant);
                     var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
                     var feature = features.Features.FirstOrDefault(x => x.Code == "CancelOldCommunication");
                     if (feature != null)

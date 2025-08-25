@@ -15,13 +15,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class TenantAdditionalDataQuery
     {
         private TenantAdditionalDataRepository repository;
-        public TenantAdditionalDataQuery()
-        {
-            repository = new TenantAdditionalDataRepository();
-        }
+
         public TenantAdditionalDataQuery(int tenant)
         {
-            repository = new TenantAdditionalDataRepository();
+            repository = new TenantAdditionalDataRepository(tenant);
         }
         public TenantAdditionalDataQuery(TenantAdditionalDataRepository repository)
         {

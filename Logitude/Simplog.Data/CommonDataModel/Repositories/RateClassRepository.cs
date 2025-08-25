@@ -14,10 +14,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public RateClassRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+ 
 
         public RateClassRepository(int tenant)
         {

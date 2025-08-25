@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         MeasurementRepository repository;
 
-        public MeasurementQuery()
-        {
-            repository = new MeasurementRepository(); 
-        }
+
 
         public MeasurementQuery(int tenant)
         {

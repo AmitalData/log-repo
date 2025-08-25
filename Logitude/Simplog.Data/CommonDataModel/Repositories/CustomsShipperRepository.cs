@@ -14,10 +14,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public CustomsShipperRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CustomsShipperRepository(ICommonDataContext context)
         {

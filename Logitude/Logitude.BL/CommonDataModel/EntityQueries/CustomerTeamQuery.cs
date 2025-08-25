@@ -35,10 +35,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class CustomerTeamQuery
     {
         CustomerTeamRepository repository;
-        public CustomerTeamQuery()
-        {
-            repository = new CustomerTeamRepository();
-        }
+
         public CustomerTeamQuery(int tenant)
         {
             repository = new CustomerTeamRepository(tenant);

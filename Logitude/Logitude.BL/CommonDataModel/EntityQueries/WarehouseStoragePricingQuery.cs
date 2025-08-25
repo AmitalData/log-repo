@@ -12,10 +12,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         WarehouseStoragePricingRepository repository;
 
-        public WarehouseStoragePricingQuery()
-        {
-            repository = new WarehouseStoragePricingRepository();
-        }
+
 
         public WarehouseStoragePricingQuery(int tenant)
         {

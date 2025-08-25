@@ -15,10 +15,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public GlobalZoneRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public GlobalZoneRepository(int tenant)
         {

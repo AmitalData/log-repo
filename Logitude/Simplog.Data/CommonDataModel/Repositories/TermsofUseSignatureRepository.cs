@@ -10,10 +10,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 	{
 		ICommonDataContext commonDataContext;
 
-		public TermsofUseSignatureRepository()
-		{
-			commonDataContext = new CommonDataContext();
-		}
+
 
 		public TermsofUseSignatureRepository(ICommonDataContext context)
 		{

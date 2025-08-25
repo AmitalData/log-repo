@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public IncotermRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public IncotermRepository(ICommonDataContext context)
         {
@@ -47,7 +44,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             if(entity == null)
             {
                 ICommonDataContext context = CommonDataContext.GetContext(tenant);
-                entity = new IncotermRepository().GetSingleIncoterm(id, tenant);
+                entity = new IncotermRepository(tenant).GetSingleIncoterm(id, tenant);
 
 
                 if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)

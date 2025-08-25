@@ -23,10 +23,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VendorRepository repository;
 
-        public VendorQuery()
-        {
-            repository = new VendorRepository(); 
-        }
+
 
         public VendorQuery(int tenant)
         {

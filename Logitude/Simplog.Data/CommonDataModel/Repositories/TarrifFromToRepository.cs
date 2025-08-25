@@ -11,11 +11,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public TarrifFromToRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
-
         public TarrifFromToRepository(ICommonDataContext context)
         {
             commonDataContext = context;

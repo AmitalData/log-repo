@@ -101,7 +101,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.CourierStatus
             if(newDeclarationCourierStatusPM != null)
             {
 
-                FeatureQuery featureQuery = new FeatureQuery();
+                FeatureQuery featureQuery = new FeatureQuery(_MyDeclarationPM.Tenant);
                 var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant), _MyDeclarationPM.Tenant);
                 var feature = features.Features.FirstOrDefault(x => x.Code == "UpdateDistributionStatus");
          

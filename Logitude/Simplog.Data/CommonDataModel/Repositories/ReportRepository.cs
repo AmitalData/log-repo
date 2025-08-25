@@ -14,10 +14,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
        ICommonDataContext commonDataContext;
 
-        public ReportRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public ReportRepository(ICommonDataContext context)
         {

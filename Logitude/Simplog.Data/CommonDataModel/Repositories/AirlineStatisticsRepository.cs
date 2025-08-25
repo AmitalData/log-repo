@@ -18,10 +18,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public AirlineStatisticsRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public AirlineStatisticsRepository(int tenant)
         {

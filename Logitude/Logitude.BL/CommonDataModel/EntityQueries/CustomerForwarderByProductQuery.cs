@@ -16,11 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
           CustomerForwarderByProductRepository repository;
 
-        public CustomerForwarderByProductQuery()
-        {
-            repository = new CustomerForwarderByProductRepository(); 
-            
-        }
+
 
         public CustomerForwarderByProductQuery(int tenant)
         {

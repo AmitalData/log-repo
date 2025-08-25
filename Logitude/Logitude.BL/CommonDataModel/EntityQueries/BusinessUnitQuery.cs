@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         BusinessUnitRepository repository;
 
-        public BusinessUnitQuery()
-        {
-            repository = new BusinessUnitRepository(); 
-        }
+
 
         public BusinessUnitQuery(int tenant)
         {

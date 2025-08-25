@@ -16,11 +16,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TarrifTypeRepository repository;
 
-        public TarrifTypeQuery()
-        {
-            repository = new TarrifTypeRepository(); 
-        }
-
         public TarrifTypeQuery(int tenant)
         {
             repository = new TarrifTypeRepository(tenant);

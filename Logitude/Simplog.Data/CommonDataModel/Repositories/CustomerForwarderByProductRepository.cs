@@ -19,10 +19,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public CustomerForwarderByProductRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CustomerForwarderByProductRepository(int tenant)
         {

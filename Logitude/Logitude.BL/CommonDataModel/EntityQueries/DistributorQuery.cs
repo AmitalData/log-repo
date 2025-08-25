@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DistributorRepository repository;
 
-        public DistributorQuery()
-        {
-            repository = new DistributorRepository();
-        }
+
 
         public DistributorQuery(int tenant)
         {

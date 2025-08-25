@@ -17,10 +17,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public CustomerTenantAccessCardsBatchRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public IQueryable<CustomerTenantAccessCardsBatch> GetCustomerTenantAccessCradsBatchByTenant(int tenant)
         {

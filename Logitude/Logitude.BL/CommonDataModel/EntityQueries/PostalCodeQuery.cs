@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         PostalCodeRepository repository;
 
-        public PostalCodeQuery()
-        {
-            repository = new PostalCodeRepository();
-        }
+ 
 
         public PostalCodeQuery(int tenant)
         {

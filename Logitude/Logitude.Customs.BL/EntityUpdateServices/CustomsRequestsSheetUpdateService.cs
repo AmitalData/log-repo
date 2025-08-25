@@ -145,7 +145,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public static bool Isinteractive(int tenant, string RequestComminicationId)
         {
             SendRequestVIA? curSendRequestVIA = null;
-            var communicationLogStepQuery = new CommunicationLogStepQuery();
+            var communicationLogStepQuery = new CommunicationLogStepQuery(tenant);
             var requestParamXml = communicationLogStepQuery.GetStartRequestParams(tenant, RequestComminicationId);
             if (!string.IsNullOrWhiteSpace(requestParamXml))
             {

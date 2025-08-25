@@ -18,10 +18,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = context;
         }
 
-        public CustomerTenantAccessCardRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CustomerTenantAccessCard GetSingleCustomerTenantAccessCard(string CustomerTenantAccessId,string CustomerId , int Tenant)
         {

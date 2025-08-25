@@ -97,7 +97,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
         public List<ContactTenantRolePM> GetContactTenantRolesForContactTenant(string contactTenantId, int tenant)
         {
-            ContactTenantRoleQuery contactTenantRoleQuery = new ContactTenantRoleQuery();
+            ContactTenantRoleQuery contactTenantRoleQuery = new ContactTenantRoleQuery(tenant);
             List<ContactTenantRolePM> roles = contactTenantRoleQuery.GetContactTenantRolesForContactTenant(contactTenantId, tenant);
             return roles;
         }
