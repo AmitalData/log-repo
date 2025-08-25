@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
 			{
 				string data = "Tenant: " + Tenant.ToString() + "ScacCode: " + ScacCode?.ToString() + "ReferenceNo: " + ReferenceNo?.ToString() + "Type: " + Type?.ToString();
 				WriteLogMe("Insert: " + data,null , "UpsertTrackedShipments");
-				return UnitedRequest(Tenant, ScacCode, ReferenceNo, Type)?.Result;
+				return UnitedRequest(Tenant, ScacCode, ReferenceNo, Type,System)?.Result;
 			}
 			catch(Exception ex) 
 			{
