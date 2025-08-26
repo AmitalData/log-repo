@@ -3366,6 +3366,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
             filters.pushAdditionalFilter(filterParams);
 
             if (this.LookUpTableName == "Card") {
+                filters.PageSize = 15;
                 loadPromise = this.cardExtendedPMService.getByCompactFilters(this.LookUpTableName, filters);
 
             }
