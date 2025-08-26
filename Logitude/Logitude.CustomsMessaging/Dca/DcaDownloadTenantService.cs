@@ -323,10 +323,8 @@ namespace Logitude.CustomsMessaging.Dca
 
             try
             {
-                // force this pass to use the given shim
                 _currentShimForPass = shim;
 
-                // fresh state so CanIStartWork compares *this shim’s* directory listing
                 _MyDCAIncomeDirStateM = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant);
 
                 if (!CanIStartWork())
@@ -767,7 +765,21 @@ out myMessageOut);
                 if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch == null)
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = new List<string>();
 
-                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch))
+                if (_currentShimForPass is SftpDcaManagerShim)
+                {
+                    if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.Count == 0
+                        && CurrentAllXmlFileInMyBranch.Count > 0)
+                    {
+                        _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
+                        _MyDCAIncomeDirStateM.Dir1stChangedAt = null;
+                        _MyDCAIncomeDirStateM.NothingChangeCount = 0;
+
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                            "SFTP: first listing contains files → starting immediately (no warm-up wait).");
+                        return true;
+                    }
+                }
+                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch, StringComparer.OrdinalIgnoreCase))
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir unchanged");
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
@@ -1167,6 +1179,7 @@ out myMessageOut);
             ObjectCreatedAt = DateTime.Now;
             LastAllXmlFileInMyBranch = new List<string>();
             FileMessagesNotBelong2OurEnvironment = new HashSet<string>();
+            LastSftpPurgeUtc = DateTime.UtcNow;
         }
         public int Tenant { get; private set; }
         public DateTime ObjectCreatedAt { get; private set; }
