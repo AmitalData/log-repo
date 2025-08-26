@@ -1,16 +1,17 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using System;
@@ -45,6 +46,8 @@ using WebFreight.Web.Helpers;
 
             return interestReportDP;
         }
+
+
         private InterestDataProvider InitializeInterestDataProvider(string entityId, int tenant)
         {
             InterestDataProvider interestReportDP = new InterestDataProvider
@@ -57,7 +60,7 @@ using WebFreight.Web.Helpers;
             _InterestReportPM = interestReportQuery.GetSingle(entityId, true, false);
 
             interestReportDP.InterestReportFlatLineList.Add(FirstFlatLine(_InterestReportPM));
-
+            interestReportDP.OpenBalance = _InterestReportPM.OpenBalance;
             return interestReportDP;
         }
 
@@ -66,9 +69,11 @@ using WebFreight.Web.Helpers;
             InterestReportService interestReportService = new InterestReportService();
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
-            HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
-            {
-                FromDate = d.FromDate,
+            HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates
+                .Where(l => l.IsOpenBalanceLine != true)
+                .Select(d => new InterestReportLinesByDateProvider
+                {
+                    FromDate = d.FromDate,
                 ToDate = d.ToDate,
                 AccumulatedAmount = d.AccumulatedAmount,
                 TotalAmount = d.TotalAmount,
