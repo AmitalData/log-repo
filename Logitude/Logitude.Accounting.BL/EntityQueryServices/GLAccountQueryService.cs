@@ -130,6 +130,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 }).FirstOrDefault();
             return glAccountPM;
         }
+
+        public GLAccount GetAccountControlAndRecoMethods(string accountId, int tenant)
+        {
+            return (from a in context.GLAccounts
+                    where a.Tenant == tenant && a.Id == accountId
+                    select a).FirstOrDefault();
+        }
+
+
+
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
             IQueryable<string> q = (
