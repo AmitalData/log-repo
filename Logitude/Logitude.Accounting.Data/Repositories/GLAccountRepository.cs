@@ -514,8 +514,10 @@ namespace Logitude.Accounting.Data.Repositories
             }
             if (!string.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
             {
-                q = q.Where(r => r.ChartOfAccountsTypeCode == ChartOfAccountsTypeCode);
-            }
+                var codes = ChartOfAccountsTypeCode.Split(',').ToList();
+                q = q.Where(r => codes.Contains(r.ChartOfAccountsTypeCode));
+            }           
+
             if (!string.IsNullOrWhiteSpace(collectorId))
             {
                 q = q.Where(r => r.CollectorId == collectorId);
