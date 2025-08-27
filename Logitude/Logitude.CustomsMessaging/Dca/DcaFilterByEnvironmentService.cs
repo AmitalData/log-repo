@@ -97,8 +97,8 @@ namespace Logitude.CustomsMessaging.Dca
                     break;
                 case DcaFilterByEnvironment.Import:
                     sbLocal.Append(";FilterBy:!!NOT!!!Contains(_EX_)");
-                    outgoingMessage = outgoingMessage.Where(r => !r.Filename.Contains("_EX_") && !r.Filename.Contains("2281")).ToList();
-
+                    string[] blockedParts = { "_EX_", "2281", "2791" };
+                    outgoingMessage = outgoingMessage.Where(r => !blockedParts.Any(b => r.Filename.Contains(b))).ToList();
                     break;
                 default:
                     break;
