@@ -77,7 +77,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
     private loggedUser: UserPM;
 
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
-    private IsDisableGlaccountId: boolean = false;
+    public IsDisableGlaccountId: boolean = false;
 
     constructor(private changeDetector: ChangeDetectorRef) {
         super();
