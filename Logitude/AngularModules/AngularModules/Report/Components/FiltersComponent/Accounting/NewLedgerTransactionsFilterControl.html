@@ -319,20 +319,13 @@
 
                     <!-- 4 -->
                     <td style="width: 200px">
-                        <LogLov
-                            [ShowInActive]="true"
-                            style="display: block; width: 150px"
-                            float-start
-                            [ObjectFieldName]="'ChartOfAccountsTypeCode'"
-                            [ObjectTableName]="'GLAccount0'"
-                            [DataContext]="DataContext"
-                            [QueryFilterItems]="ChartOfAccountTypeFilterItems"
-                            [LookUpTableName]="'ChartOfAccountsType'"
-                            [ForceShowAddLink]="true"
-                            [HideAddLink]="true"
-                            [HideColumns]="true"
-                        >
-                        </LogLov>
+                        <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
+
+                             <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150"  
+                                [SelectedItem]="ChartOfAccountsTypeComboboxValue"  [ItemsSource]="chartOfAccountsTypes" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
+                                [SelectionType]="isRTL?'קבוצה':'Product'"
+                                (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                        </div>
                     </td>
 
                     <!-- 5 -->

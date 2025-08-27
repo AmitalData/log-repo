@@ -23,6 +23,7 @@ import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/Fu
 import { Operators } from 'Accounting/DataContracts/Operators';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
+import { ChartOfAccountsTypeListService } from 'Accounting/Services/StandardLists/ChartOfAccountsTypeListService';
 
 
 @Component({
@@ -96,6 +97,8 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         this.LoadResources();
         this.LoadAccountingSettings();
         this.InitializeSalesmanFeature();
+        this.getChartOfAccountsTypes();
+
     }
 
     private SetLayoutDirection(): void {
@@ -326,12 +329,8 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ChartOfAccountId);
         queryFilterItem.Operator = "Equals";
         queryFilterItems.push(queryFilterItem);
-
-        queryFilterItem = new QueryFilterItem();
-        queryFilterItem.FieldName = "ChartOfAccountsTypeCode";
-        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ChartOfAccountsTypeCode);
-        queryFilterItem.Operator = "Equals";
-        queryFilterItems.push(queryFilterItem);
+        if(this.selectedChartOfAccountsTypes)
+            queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode",  this.selectedChartOfAccountsTypes.map(item=>item.Code).join(','), "String"));
 
         queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "CurrencyId";
@@ -438,6 +437,8 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
     SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>, isSchedulerReport: boolean = true) { //For Scheduler Report
         this.IsSchedulerReport = isSchedulerReport;
+        this.getChartOfAccountsTypes();
+
         if (queryFilterItems) {
             queryFilterItems.forEach(async queryFilterItem => {
                await this.SetFilterItem(queryFilterItem);
@@ -495,8 +496,14 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
                     //CategoryValue
                     break;
                 case "ChartOfAccountsTypeCode":
-                    this.ChartOfAccountsTypeCode = queryFilterItem.FieldValue;
-                    break;
+                   {               
+                        this.ChartOfAccountsTypeSelectedValue = queryFilterItem.FieldValue;
+                        if(this.ChartOfAccountsTypeSelectedValue?.split(',').length>0 )
+                            this.chartOfAccountsTypeComboboxValue="NotAll";
+                        else
+                            this.chartOfAccountsTypeComboboxValue="All"
+                        break;
+                    }
                 case "BalanceInLocalCurrency":
                     this.BalanceInLocalCurrency = queryFilterItem.FieldValue;//ayed
                     if (this.operatorsList.filter(x => x.Code == queryFilterItem.Operator).length > 0) {
@@ -568,7 +575,7 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
 
         var isValid: boolean = true;
         isValid = this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
-        if ( !this.ChartOfAccountId && !this.ChartOfAccountsTypeCode && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId) && !this.GLAccountId) {
+        if ( !this.ChartOfAccountId && !this.selectedChartOfAccountsTypes && !this.SelectedCategoryValue && !this.Salesman && this.ListGLAccounts.length < 1 && (!this.FromGLAccountId || !this.ToGLAccountId) && !this.GLAccountId) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("GLTransactionReport.O.RequiredFieldsForNew"));
             isValid = false;
         }
@@ -685,9 +692,44 @@ export class NewLedgerTransactionsFilterControl extends BaseComponent implements
         }
         else return true;
     }
-   
+    private getChartOfAccountsTypes()
+    {
+        let apiQueryFilters = new ApiQueryFilters(true);
+
+        this.chartOfAccountsTypeListService.getByFilters(apiQueryFilters)
+            .subscribe((arg: any) =>
+            {
+                this.chartOfAccountsTypes = arg.Result;
+                this.chartOfAccountsTypes = this.chartOfAccountsTypes.map(item=>{return{...item,
+                    Name: item.LocalName||item.EnglishName,
+                    Checked: this.ChartOfAccountsTypeSelectedValue?.split(',').some(selectedItem =>this.ChartOfAccountsTypeComboboxValue=="NotAll" && (selectedItem === item.Id || selectedItem === item.Code))
+
+                }});
+            });
+    }
+    OnChartOfAccountsTypeItemClicked(items){
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item=>item.Checked == true);
 
 
+    }
+    selectedChartOfAccountsTypes: any[] = [];
+
+    chartOfAccountsTypes: any[] = [];
+    chartOfAccountsTypeListService: ChartOfAccountsTypeListService = new ChartOfAccountsTypeListService();
+    ChartOfAccountsTypeSelectedValue: string;
+
+    private chartOfAccountsTypeComboboxValue: string;
+
+
+    public get ChartOfAccountsTypeComboboxValue(): string
+    {
+        return this.chartOfAccountsTypeComboboxValue;
+    }
+    public set ChartOfAccountsTypeComboboxValue(v: string)
+    {
+        this.chartOfAccountsTypeComboboxValue = v;
+        // this.SetChartOfAccountsFilterProperties();
+    }
     get GLAccount() { return this.glaccountPM; }
     set GLAccount(value: any) {
         if (this.glaccountPM != value) {
