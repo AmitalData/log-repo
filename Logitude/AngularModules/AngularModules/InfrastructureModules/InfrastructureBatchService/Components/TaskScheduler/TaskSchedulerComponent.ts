@@ -124,6 +124,10 @@ export class TaskSchedulerComponent implements OnInit {
         this.SelectedRow = item.rowData;//new TaskSchedulerItemClass(item.rowData, this, true);//item;
         this.SelectedRowChanged.emit(this.SelectedRow);
     }
+    onFirstRowSelected(item: any) {
+        this.SelectedRow = item.SelectedRow;
+        this.SelectedRowChanged.emit(this.SelectedRow);
+    }
 
     NewTaskClicked() {
         var newItem: TasksSchedulerPM = new TasksSchedulerPM();
