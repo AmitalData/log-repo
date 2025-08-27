@@ -169,7 +169,6 @@ export class OpenFormatReportMenuButtonsHandler {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
                         this.INIDocFilingPM = mm.Result;
-                        this.GetDocumentType("INI");
                         var securityIds = this.BMKDocFilingPM.SecurityId + "," + this.INIDocFilingPM.SecurityId;
                         if (this.try) {
                             DownloadManager.DownloadPage(null, securityIds);
