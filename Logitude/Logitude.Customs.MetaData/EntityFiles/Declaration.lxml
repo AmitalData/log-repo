@@ -3724,7 +3724,7 @@
     DisplayInAutomationAsEnitity="false"
     AdditionalQuerySections="&quot;Customs.ExportDeclaration&quot;"
     DisplayInRequiredFields="false"
-    HasTemplate="false"
+    HasTemplate="true"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
