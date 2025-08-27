@@ -35,7 +35,7 @@ export class UnifreightController {
         var declarationId = this._DeclarationPM.Id;
         var declarationNumber = this._DeclarationPM.DeclarationNumber;
         var customFileNo = this._DeclarationPM.CustomFileNo;
-        if(this._DeclarationPM.Direction != "E"){
+        if(this._DeclarationPM.Direction == "E"){
             return;
         }
         AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseInstructionReturnCanIContinue
