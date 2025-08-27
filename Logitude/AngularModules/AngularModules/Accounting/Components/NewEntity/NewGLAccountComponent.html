@@ -218,6 +218,43 @@
                                 <td><div></div></td>
                             </tr>
 
+                            <!-- ExchangeRate -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ExchangeRateId'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                    </LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'ExchangeRateId'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                        [LookUpTableName]="'AdditionalCurrencyRate'"
+                                        [SelectedValue]="ExchangeRateId"
+                                        [DisplayMemberPath]="'Name'" [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- AllowEditChequePayToName -->
+                            <tr *ngIf="IsVendor" class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'AllowEditChequePayToName'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'AllowEditChequePayToName'" [Checked]="AllowEditChequePayToName"
+                                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
                             <tr><td><div></div></td></tr>
                         </table>
 
@@ -362,6 +399,30 @@
                                 <td><div></div></td>
                             </tr>
 
+                            <!-- IsEquipmentVendor -->
+                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'IsEquipmentVendor'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="IsEquipmentVendor" (Checked)="IsEquipmentVendor = $event"></CheckBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
+                            <!-- IsPartOfDeductionReport -->
+                            <tr class="FormFieldRow" *ngIf="IsVendor">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'ExcludeFromDeductionReport'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="ExcludeFromDeductionReport" (Checked)="ExcludeFromDeductionReport = $event"></CheckBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
                             <!-- Smallcashbook -->
                             <tr *ngIf="ChartOfAccountsTypeCode=='4'" class="FormFieldRow">
                                 <td style="width: 220px;">
@@ -384,6 +445,54 @@
                                 </td>
                                 <td><div></div></td>
                             </tr>
+
+                            <tr *ngIf="IsVendor">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:150px">
+                                    <LogDatePicker [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <tr *ngIf="IsVendor">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'FollowupNotes'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'FollowupNotes'"
+                                            [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                            [DataContext]="DataContext"></LogTextBox>
+
+                                </td>
+                                <td></td>
+                            </tr>
+
+                            <!-- PaymentTerms -->
+                            <tr *ngIf="ChartOfAccountsTypeCode == '4'" class="FormFieldRow" style="height:5px">
+                                <td style="width: 150px;">
+                                    <LogLabel [ObjectFieldName]="'PaymentTerms'"
+                                        [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                    
+                                <td style="width:240px;">
+                                    <LogLov [ObjectFieldName]="'PaymentTerms'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                        [LookUpTableName]="'PaymentTerm'"
+                                        [AutoCompleteSearchWindow]="false"
+                                        [DisplayMemberPath]="GetDisplayMemberPath()"
+                                        [HideColumns]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr style="height:18px"></tr>
+                            
                             <tr><td><div></div></td></tr>
                         </table>
                     </td>
