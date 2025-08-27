@@ -1326,6 +1326,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         _CCUFILEMPM.INDICATORS = "";
                     }
+                    if (_DirtyDeclarationPM.PaymentDate.HasValue && (_CCUFILEMPM.RESHIMONNO == null || _CCUFILEMPM.RESHIMONNON == null))
+                    {
+                        if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPM.DeclarationNumber))
+                        {
+                            var DeclarationNumber = _DirtyDeclarationPM.DeclarationNumber.Remove(_DirtyDeclarationPM.DeclarationNumber.Length - 1, 1);
+                            _CCUFILEMPM.RESHIMONNO = DeclarationNumber.GetLast(9);
+                        }
+                        _CCUFILEMPM.RESHIMONNON = _DirtyDeclarationPM.DeclarationNumber;
+                    }
+
                     return _CCUFILEMPM;
                 }
             }

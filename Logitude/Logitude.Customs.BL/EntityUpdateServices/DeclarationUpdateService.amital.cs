@@ -87,9 +87,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             OurVersionToUpdateDeclarationPlatformFeeAndPrimaryInvoice(dirtyDeclarationPM);
 
-            if (dirtyDeclarationPM.IsAmendment==true)
+
+            bool isFrom2470 =dirtyDeclarationPM.CurrentContextTag is EventContextTagModel ectm && 
+                ectm.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate;
+
+            if (dirtyDeclarationPM.IsAmendment==true && !isFrom2470)
             {
                 LogitudeSettings.HandleLogMe("IsAmendment", false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
+
                 return;
             }
 
