@@ -2331,7 +2331,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -2412,7 +2412,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="0"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -6673,6 +6673,105 @@
         IndexOrder="0"
         CustomPredefined="false" />
     </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;LedgerTransactionsTab&quot;"
+    TextCode="&quot;Ledger Transactions Tab&quot;"
+    LocalTextCodeBack_up="&quot;טאב תנועות&quot;"
+    LocalTextCode="&quot;BS64:IteY15DXkSDXqteg15XXoteV16oi&quot;"
+    QueryGroupCode="&quot;20b2&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;LedgerTransaction&quot;"
+    QuerySection="&quot;LedgerTransaction&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="false"
+    DefaultSortName="&quot;AccountingDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;AccountingDate&quot;"
+        ColumnWidth="85" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;DocumentDate&quot;"
+        ColumnWidth="85" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;DueDate&quot;"
+        ColumnWidth="75" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Source&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;LocalAmountCredit&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;CumulativeLocalAmount&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;ForeignAmountCredit&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;CumulativeForeignAmount&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;Reference1&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;Reference2&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;Reference3&quot;"
+        ColumnWidth="90" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;OppositeAccountDisplayNumber&quot;"
+        ColumnWidth="120" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;JournalNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;AccountDisplayNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;Notes&quot;"
+        ColumnWidth="200" />
+      <QueryColumn
+        QueryCode="&quot;LedgerTransactionsTab&quot;"
+        IndexOrder="15"
+        ObjectFieldName="&quot;InternalNote&quot;"
+        ColumnWidth="200" />
+    </QueryColumns>
+    <QueryFilters />
   </Query>
   <Screen
     Name="&quot;LedgerTransactionHeaderScreen&quot;"
