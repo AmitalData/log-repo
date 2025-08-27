@@ -103,10 +103,13 @@ namespace Logitude.Accounting.Data.Repositories
         private decimal? GetLedgerOpenBalance(string glAccountId, int tenant, DateTime beforeDate)
         {
             var relevantGLAccountIds =new List<string>();
-            relevantGLAccountIds = context.GLAccountCurrencies
-                     .Where(c => c.Tenant == tenant && c.MainGLAccountId == glAccountId)
-                     .Select(c => c.GLAccountId)
-                     .ToList();
+          
+             relevantGLAccountIds = (from c in context.GLAccountCurrencies
+                                        join gl in context.GLAccounts on c.GLAccountId equals gl.Id
+                                        where c.Tenant == tenant
+                                              && c.MainGLAccountId == glAccountId
+                                              && gl.ActiveForInterest
+                                        select c.GLAccountId).ToList();
 
             relevantGLAccountIds.Add(glAccountId);
 
@@ -119,10 +122,12 @@ namespace Logitude.Accounting.Data.Repositories
         private (decimal? AfterValueDate, decimal? BeforeValueDateWithoutReport) GetInterestAdjustments(string glAccountId, int tenant, DateTime beforeDate)
         {
             var relevantGLAccountIds = new List<string>();
-            relevantGLAccountIds = context.GLAccountCurrencies
-                                       .Where(c => c.Tenant == tenant && c.MainGLAccountId == glAccountId)
-                                       .Select(c => c.GLAccountId)
-                                       .ToList();
+            relevantGLAccountIds = (from c in context.GLAccountCurrencies
+                                    join gl in context.GLAccounts on c.GLAccountId equals gl.Id
+                                    where c.Tenant == tenant
+                                          && c.MainGLAccountId == glAccountId
+                                          && gl.ActiveForInterest
+                                    select c.GLAccountId).ToList();
 
             relevantGLAccountIds.Add(glAccountId);
             var query = context.InterestTransactions
