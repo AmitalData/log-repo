@@ -28,6 +28,7 @@ namespace Logitude.Customs.BL.BL
         private readonly bool _featureSendManifest;
         private readonly bool _featureSendDeclaration;
         private readonly bool _featureSendPayment;
+        private readonly bool _featureSendPaymentOn902Close;
         private string declarationObjectTableId;
         private string objectTableIdCourierMaster;
         private readonly string userId;
@@ -42,14 +43,14 @@ namespace Logitude.Customs.BL.BL
             _featureSendManifest = features.Features.Any(x => x.Code == "AutomatedSendManifest");
             _featureSendDeclaration = features.Features.Any(x => x.Code == "AutomatedSendDeclaration");
             _featureSendPayment = features.Features.Any(x => x.Code == "SendPaymentOn900Close");
-
+            _featureSendPaymentOn902Close = features.Features.Any(x => x.Code == "SendPaymentOn902Close");
 
         }
         public bool CheckAndSendMessageis(DeclarationCourierStatusPM declarationCourierStatusPM)
         {
              sent = false;
 
-            if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment)
+            if (!_featureSendManifest && !_featureSendDeclaration && !_featureSendPayment && !_featureSendPaymentOn902Close)
             {
                 return sent;
             }
@@ -135,6 +136,42 @@ namespace Logitude.Customs.BL.BL
                     if (!hasActivePending && pending900 != null)
                     {
                         SendPayment(declarationCourierStatusPM);
+                    }
+                }
+            }
+            if (_featureSendPaymentOn902Close)
+            {
+                Log("902:E"); // enter
+
+                var courierMaster = courierMasterRepo.GetCourierMasterByDeclarationId(
+                    declarationCourierStatusPM.DeclarationId,
+                    declarationCourierStatusPM.Tenant);
+
+                if (courierMaster == null) { Log("902:N:CM0"); }
+                else if (courierMaster.CourierMasterPaymentStatusCd != "1") { Log("902:N:PAY"); }
+                else if (declarationCourierStatusPM.CourierDeclarationStatusCode != "V") { Log("902:N:DECL"); }
+                else
+                {
+                    var pendings = declarationPendingRepo
+                        .GetDeclarationPendingsByDeclarationId(declaration.Id, declarationCourierStatusPM.Tenant);
+
+                    bool hasActivePending = pendings.Any(x => x.Status == "A");
+                    var pending902 = pendings.FirstOrDefault(x =>
+                        x.CourierPendingReasonCode == "902" &&
+                        x.Status == "S");
+
+                    Log($"902:P={(hasActivePending ? 1 : 0)};S={(pending902 != null ? 1 : 0)}");
+
+                    if (!hasActivePending && pending902 != null)
+                    {
+                        Log("902:SEND");
+                        SendPayment(declarationCourierStatusPM);
+                        Log($"902:RES={(sent ? "OK" : "NO")}");
+                    }
+                    else
+                    {
+                        if (hasActivePending) Log("902:N:PA");   // blocked by active pending
+                        if (pending902 == null) Log("902:N:S0"); // no solved 902
                     }
                 }
             }
@@ -238,7 +275,7 @@ namespace Logitude.Customs.BL.BL
             {
                 LogMessagingUtil.Instance.AppendLine($" Automated SendManifest({declarationCourierStatusPM.DeclarationId})");
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
-                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, false, null);
+                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
                 if (requestInProgressList != null && requestInProgressList.Any())
                 {
                     return;
