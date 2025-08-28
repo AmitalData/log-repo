@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.Storage.Blob.Protocol;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -86,7 +87,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
     {
         public int LineNo { get; set; }
         public string LineType { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
         public int? NumberOfDays { get; set; }
         public string Reference1 { get; set; }
         public string Notes { get; set; }
@@ -115,6 +116,7 @@ namespace WebFreight.Web.AccountingModel.Reports.Interest
         public decimal? TotalCrdInterest { get; set; }
         
         public string CalculationDetails { get; set; }
+        public bool IsOpenBalanceLine { get; set; }
      }
 
     public class FutureInterestTransactionProvider 
