@@ -1954,5 +1954,6 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
     public struct JournalStatuses
     {
         public const string Voided = "3";
+        public const string Cancelled = "5";
     }
 }
