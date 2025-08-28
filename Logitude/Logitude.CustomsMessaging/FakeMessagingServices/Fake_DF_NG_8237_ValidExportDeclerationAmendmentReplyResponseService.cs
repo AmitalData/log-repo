@@ -47,6 +47,21 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             AdditionalInformation[2].Content = new AdditionalDocumentTypeTextType() { Value = "1" };
             response.Response.AdditionalInformation = AdditionalInformation;
 
+            ResponseError[] Errors = new ResponseError[2];
+          
+            Errors[0] = new ResponseError();
+            Errors[0].ValidationCode = new ErrorValidationCodeType() { 
+                name = "תאריך טעינה בהצהרה 01/03/2025 שונה מתאריך יציאה אחרונה מפיקוח המכס מכלל המטענים בהצהרה 10/03/2025" ,
+                Value = "140181",
+                listVersionID = "1"
+            };
+           
+            Errors[1] = new ResponseError();
+            Errors[1].ValidationCode = new ErrorValidationCodeType() { 
+                name = "מזהה שטר מטען לאחר טעינה בהצהרה 724-75285674 שונה מ- מזהה שטר מטען לאחר טעינה בנתונים הלוגיסטיים 724-75285840",
+                Value = "140189",
+                listVersionID = "1"
+            };
 
             //amendment
             response.Response.Amendment = new ResponseAmendment[1]; // reason to change?

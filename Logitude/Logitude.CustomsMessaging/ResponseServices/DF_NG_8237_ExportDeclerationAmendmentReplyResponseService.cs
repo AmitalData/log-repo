@@ -887,6 +887,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
+
+                AutoFixDeclarationDiamondByErrors(customResponse, _MyDeclarationPM, context);
+
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
@@ -933,6 +936,50 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                                           //}
         }
 
+
+        public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context)
+        {
+            if (customResponse?.Response?.Error == null) return;
+
+            foreach (var errorItem in customResponse.Response.Error)
+            {
+                ICustomContext MyContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+                ExportDeclarationClosingDataQueryService exportDeclarationClosingDataQuery = new ExportDeclarationClosingDataQueryService(MyContext);
+                exportDeclarationClosingDataQuery.InitializeSettings();
+                ExportDeclarationClosingDataPM exportDeclarationClosingDataPM = exportDeclarationClosingDataQuery.GetSingle(declaration?.Id, true, false);
+
+                string valueText = errorItem?.ValidationCode?.name ?? string.Empty;                
+                if (valueText.Contains("תאריך טעינה"))
+                {
+                    string marker = "שונה מתאריך יציאה";
+                    if (valueText.Contains(marker))
+                    {
+                        string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
+                        string[] parts = afterMarker.Split(' ');
+                        string loadingDateTime = parts.FirstOrDefault(p => DateTime.TryParse(p, out _));
+                        if (DateTime.TryParse(loadingDateTime, out DateTime actualLoadingDate))
+                        {
+                            // convert to datetime and update on ExportDeclarationClosingData
+                        }
+                    }
+                }
+                else if (valueText.Contains("שטר מטען"))
+                {
+                    string marker = "שונה מ- מזהה שטר מטען לאחר טעינה";
+                    if (valueText.Contains(marker))
+                    {
+                        string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
+                        string[] parts = afterMarker.Split(' ');
+                        string FinalManifestNumber = parts.FirstOrDefault(p => p.Contains("-"));
+
+                        if (!string.IsNullOrWhiteSpace(FinalManifestNumber))
+                        {
+                            // update on ExportDeclarationClosingData:
+                        }
+                    }
+                }
+            }
+        }
 
 
         private void disconnectExportStorages(string status, DeclarationQueryService myDeclarationQueryService)
