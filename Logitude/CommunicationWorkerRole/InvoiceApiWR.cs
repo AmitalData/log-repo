@@ -469,10 +469,15 @@ namespace CommunicationWorkerRole
                     aRInvoicePM.VatNumber = card?.VatNumber;
                     aRInvoicePM.PaymentTermId = card?.PaymentTermId;
                     aRInvoicePM.BillToAddressId = card?.BillingAddressId;
+                    aRInvoicePM.BillToDisplayNumber = card?.Code;
                     if (!string.IsNullOrWhiteSpace(card?.MainAddressId))
                     {
                         aRInvoicePM.BillToAddressId = card?.MainAddressId;
                     }
+                }
+                else
+                {
+                     exception += $"EntityID element not found in XML\n";
                 }
                 var invoiceNumber = invoice.Element(ns + "Number")?.Value;
                 aRInvoicePM.DraftNumber = invoiceNumber;

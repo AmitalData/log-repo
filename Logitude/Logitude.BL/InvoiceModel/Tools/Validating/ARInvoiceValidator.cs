@@ -97,7 +97,10 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         if (string.IsNullOrEmpty(entityPM.VatNumber))
                         {
                             string fieldLabel = TranslateTextsClass.Translate("ARInvoice.F.VatNumber", entityPM.Tenant, useLocal);
-                            throw new ApplicationException(msgRequired.Replace("%FieldName", fieldLabel));
+                            string billToNameLable = TranslateTextsClass.Translate("Card.F.GLAccountDisplayNumber", entityPM.Tenant, useLocal);
+                            string errorMessage = $"{msgRequired.Replace("%FieldName", fieldLabel)} , {billToNameLable} : {entityPM.BillToDisplayNumber}";
+
+                            throw new ApplicationException(errorMessage);
                         }
                     }
                 }
