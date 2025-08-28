@@ -238,7 +238,7 @@ namespace Logitude.Customs.BL.BL
             {
                 LogMessagingUtil.Instance.AppendLine($" Automated SendManifest({declarationCourierStatusPM.DeclarationId})");
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
-                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, false, null);
+                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "1170", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
                 if (requestInProgressList != null && requestInProgressList.Any())
                 {
                     return;
