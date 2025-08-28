@@ -20363,12 +20363,6 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;GLaccount.O.BalanceDiffersFrom&quot;"
-      DefaultText="&quot;Balance differs from&quot;"
-      LocalDefaultText="&quot;יתרה שונה מ&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
       Code="&quot;GLaccount.O.IsGroupMultiAccounts&quot;"
       DefaultText="&quot;To consolidate split GLAccount&quot;"
       LocalDefaultTextBack_up="&quot;לאחד כרטיסי פיצול&quot;"
