@@ -939,46 +939,54 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context)
         {
-            if (customResponse?.Response?.Error == null) return;
-
-            foreach (var errorItem in customResponse.Response.Error)
+            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration)
             {
-                ICustomContext MyContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
-                ExportDeclarationClosingDataQueryService exportDeclarationClosingDataQuery = new ExportDeclarationClosingDataQueryService(MyContext);
-                exportDeclarationClosingDataQuery.InitializeSettings();
-                ExportDeclarationClosingDataPM exportDeclarationClosingDataPM = exportDeclarationClosingDataQuery.GetSingle(declaration?.Id, true, false);
 
-                string valueText = errorItem?.ValidationCode?.name ?? string.Empty;                
-                if (valueText.Contains("תאריך טעינה"))
+                if (customResponse?.Response?.Error == null) return;
+
+                foreach (var errorItem in customResponse.Response.Error)
                 {
-                    string marker = "שונה מתאריך יציאה";
-                    if (valueText.Contains(marker))
+                    ICustomContext MyContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+                    ExportDeclarationClosingDataQueryService exportDeclarationClosingDataQuery = new ExportDeclarationClosingDataQueryService(MyContext);
+                    exportDeclarationClosingDataQuery.InitializeSettings();
+                    ExportDeclarationClosingDataPM exportDeclarationClosingDataPM = exportDeclarationClosingDataQuery.GetSingle(declaration?.Id, true, false);
+
+                    string valueText = errorItem?.ValidationCode?.name ?? string.Empty;                
+                    if (valueText.Contains("תאריך טעינה"))
                     {
-                        string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
-                        string[] parts = afterMarker.Split(' ');
-                        string loadingDateTime = parts.FirstOrDefault(p => DateTime.TryParse(p, out _));
-                        if (DateTime.TryParse(loadingDateTime, out DateTime actualLoadingDate))
+                        string marker = "שונה מתאריך יציאה";
+                        if (valueText.Contains(marker))
                         {
-                            // convert to datetime and update on ExportDeclarationClosingData
+                            string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
+                            string[] parts = afterMarker.Split(' ');
+                            string loadingDateTime = parts.FirstOrDefault(p => DateTime.TryParse(p, out _));
+                            if (DateTime.TryParse(loadingDateTime, out DateTime actualLoadingDate))
+                            {
+                                exportDeclarationClosingDataPM.LoadingDateTime = actualLoadingDate;
+                                // exportDeclarationClosingDataQuery.update
+
+                            }
+                        }
+                    }
+                    else if (valueText.Contains("שטר מטען"))
+                    {
+                        string marker = "שונה מ- מזהה שטר מטען לאחר טעינה";
+                        if (valueText.Contains(marker))
+                        {
+                            string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
+                            string[] parts = afterMarker.Split(' ');
+                            string finalManifestNumber = parts.FirstOrDefault(p => p.Contains("-"));
+                            if (!string.IsNullOrWhiteSpace(finalManifestNumber))
+                            {
+                                exportDeclarationClosingDataPM.FinalManifestNumber = finalManifestNumber;
+                                // exportDeclarationClosingDataQuery.update
+                            }
                         }
                     }
                 }
-                else if (valueText.Contains("שטר מטען"))
-                {
-                    string marker = "שונה מ- מזהה שטר מטען לאחר טעינה";
-                    if (valueText.Contains(marker))
-                    {
-                        string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
-                        string[] parts = afterMarker.Split(' ');
-                        string FinalManifestNumber = parts.FirstOrDefault(p => p.Contains("-"));
-
-                        if (!string.IsNullOrWhiteSpace(FinalManifestNumber))
-                        {
-                            // update on ExportDeclarationClosingData:
-                        }
-                    }
-                }
+                // send auto close declaration:
             }
+
         }
 
 
