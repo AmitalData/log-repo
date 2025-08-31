@@ -7,14 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebFreight.Web.DataProviders;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 
 namespace WebFreight.Web.Helpers
 {
     public static class BaseDataProviderService
     {
-
-        public static void FillBaseVariableFields(BaseDataProvider dataProvider ,int tenant)
+        public static void FillBaseVariableFields(dynamic dataProvider ,int tenant)
         {
             dataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             dataProvider.Logo = DataProviders.General.GetLogo(tenant);
