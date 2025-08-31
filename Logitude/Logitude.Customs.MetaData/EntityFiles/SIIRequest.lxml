@@ -44,7 +44,7 @@
   LocalDefaultTextBack_up="&quot;בקשות למכון תקנים&quot;"
   LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;0fa4&quot;"
+  Code="&quot;f7cf&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2368,8 +2368,8 @@
     <TextCode
       Code="&quot;Customs.SIIRequest.O.RequiredFields&quot;"
       DefaultText="&quot;Required Fields&quot;"
-      LocalDefaultTextBack_up="&quot;שדות חובה במסר שליחה למכון תקנים&quot;"
-      LocalDefaultText="&quot;BS64:Itep15PXldeqINeX15XXkdeUINeR157XodeoINep15zXmdeX15Qg15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
+      LocalDefaultTextBack_up="&quot;חסר שדות חובה במסר שליחה למכון תקנים&quot;"
+      LocalDefaultText="&quot;BS64:IteX16HXqCDXqdeT15XXqiDXl9eV15HXlCDXkdee16HXqCDXqdec15nXl9eUINec157Xm9eV158g16rXp9eg15nXnSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
