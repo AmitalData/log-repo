@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "80550599d445dae0b022b8994912c03d";
+		public const string HashString = "0b5265cc48b0c5b27978904754a9e96b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -1552,7 +1552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -1584,8 +1584,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Itep15nXmNeqINeU16rXkNee15Qi",
 					  						ListFieldLable =  "ReconcileMethodCodeListLable",
 					  						ListLableDefaultText =  "Reconcile Method ",
-					  						ListLocalDefaultTextBack_up =  "קוד שיטת התאמה",
-					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXqdeZ15jXqiDXlNeq15DXnteUIg==",
+					  						ListLocalDefaultTextBack_up =  "שיטת התאמה",
+					  						ListLocalDefaultText =  "BS64:Itep15nXmNeqINeU16rXkNee15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ReconcileMethod",
 					  						NavigationPropertyName =  "ReconcileMethod",
@@ -1618,7 +1618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
@@ -10218,7 +10218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  40,
@@ -12252,7 +12252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -12284,6 +12284,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						ListFieldLable =  "PaymentTermsListLable",
 					  						ListLableDefaultText =  "PaymentTerms",
+					  						ListLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PaymentTerm",
 					  						NavigationPropertyName =  "PaymentTerm",
