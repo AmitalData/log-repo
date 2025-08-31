@@ -1,16 +1,19 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Enums;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Microsoft.TeamFoundation.Work.WebApi;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using System;
@@ -45,6 +48,8 @@ using WebFreight.Web.Helpers;
 
             return interestReportDP;
         }
+
+
         private InterestDataProvider InitializeInterestDataProvider(string entityId, int tenant)
         {
             InterestDataProvider interestReportDP = new InterestDataProvider
@@ -57,7 +62,7 @@ using WebFreight.Web.Helpers;
             _InterestReportPM = interestReportQuery.GetSingle(entityId, true, false);
 
             interestReportDP.InterestReportFlatLineList.Add(FirstFlatLine(_InterestReportPM));
-
+            interestReportDP.OpenBalance = _InterestReportPM.OpenBalance;
             return interestReportDP;
         }
 
@@ -66,9 +71,11 @@ using WebFreight.Web.Helpers;
             InterestReportService interestReportService = new InterestReportService();
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
-            HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates.Select(d => new InterestReportLinesByDateProvider
-            {
-                FromDate = d.FromDate,
+            HashSet<InterestReportLinesByDateProvider> InterestReportPeriods = _InterestReportPM.InterestReportLinesByDates
+                .Where(l => l.IsOpenBalanceLine != true)
+                .Select(d => new InterestReportLinesByDateProvider
+                {
+                    FromDate = d.FromDate,
                 ToDate = d.ToDate,
                 AccumulatedAmount = d.AccumulatedAmount,
                 TotalAmount = d.TotalAmount,
@@ -145,11 +152,12 @@ using WebFreight.Web.Helpers;
                         InterestReportFlatLine line = new InterestReportFlatLine();
                         line.LineNo = ++flatLineCounter;
                         line.LineType = InterestPeriodLineTypes.Transaction;
-                        line.Date = transactionDP.InterestValueDate;
+                        line.Date = transactionDP.InterestValueDate.Value.Date;
                         totalLocalInPeriod += transactionDP.LocalAmount;
                         line.LocalAmount = transactionDP.LocalAmount;
                         line.Reference1 = GetReference1(transactionDP);
                         line.Notes = GetNotes(transactionDP);
+                        line.IsOpenBalanceLine = false;
 
                         periodLineList.Add(line);
                     }
@@ -157,13 +165,14 @@ using WebFreight.Web.Helpers;
                     {
                         // First in a period
                         var firstLineInPeriod = periodLineList[0];
-                        firstLineInPeriod.Date = period.FromDate;
+                        firstLineInPeriod.Date = period.FromDate.Value.Date;
                         firstLineInPeriod.NumberOfDays = period.TotalInterestDays;
                         firstLineInPeriod.LineType = InterestPeriodLineTypes.FirstInPeriod;
+                        
 
                         // Last in a period
                         var lastLineInPeriod = periodLineList.Last();
-                        lastLineInPeriod.Date = period.FromDate;
+                        lastLineInPeriod.Date = period.FromDate.Value.Date;
                         lastLineInPeriod.Notes = TranslateTextsClass.Translate("Accounting.General.O.TotalInterest", tenant);
                         lastLineInPeriod.LineType = InterestPeriodLineTypes.LastInPeriod;
 
@@ -221,9 +230,69 @@ using WebFreight.Web.Helpers;
 
             interestReportDP.InterestReportFlatLineList.Add(EndFlatLine(_InterestReportPM, lastTotal));
 
+            Reorder(interestReportDP);
+
+
 
         }
 
+        private void Reorder(InterestDataProvider interestReportDP)
+        {
+            // Find the open balance line
+            var openBalanceLine = interestReportDP.InterestReportFlatLineList
+                .FirstOrDefault(ln => ln.IsOpenBalanceLine);
+
+            if (openBalanceLine != null)
+            {
+                DateTime openBalanceLineDate = openBalanceLine.Date;
+
+                // Partition lines into Group A and Others
+                var groupA = interestReportDP.InterestReportFlatLineList
+                    .Where(ln => !ln.IsOpenBalanceLine && ln.Date.Date < openBalanceLineDate)
+                    .ToList();
+
+                var others = interestReportDP.InterestReportFlatLineList
+                    .Where(ln => !(!ln.IsOpenBalanceLine && ln.Date.Date < openBalanceLineDate))
+                    .ToList();
+
+                // Rebuild list: everything before openBalanceLine (except Group A), then Group A, then openBalanceLine, then rest
+                var reordered = new List<InterestReportFlatLine>();
+
+                foreach (var ln in others)
+                {
+                    if (ln == openBalanceLine)
+                    {
+                        // insert Group A right before the openBalanceLine
+                        reordered.AddRange(groupA);
+                        reordered.Add(openBalanceLine);
+                    }
+                    else
+                    {
+                        reordered.Add(ln);
+                    }
+
+
+                }
+
+                int count = 1;
+                decimal runningTotal = 0m;
+                foreach (var line in reordered)
+                {
+                    if (line.TotalLocalInPeriod.HasValue)
+                    {
+                        runningTotal += line.TotalLocalInPeriod.Value;
+                        line.TotalToDate = runningTotal;
+                    }
+                    else
+                        line.TotalToDate = null;
+
+                    line.LineNo = count++;
+                }
+                // Replace original list
+                interestReportDP.InterestReportFlatLineList = reordered;
+            }
+
+        }
 
         private List<FutureInterestTransactionProvider> GetFutureInterestTransactions(int tenant)
         {
@@ -308,6 +377,7 @@ using WebFreight.Web.Helpers;
                     rv.TotalCrdInterest = openline.CreditInterestAmount;
                     rv.CalculationDetails = openline.CalculationDetails;
                     rv.Date = openline.FromDate;
+                    rv.IsOpenBalanceLine = true;
                 }
 
             }
