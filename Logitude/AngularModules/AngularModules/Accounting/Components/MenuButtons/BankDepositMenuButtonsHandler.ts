@@ -23,6 +23,7 @@ import { DocumentOutPM } from '../../../Common/EntityPMs/DocumentOutPM';
 import { DocumentsPrintHelper } from '../../Utilities/DocumentsPrintHelper';
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 
 export class BankDepositMenuButtonsHandler {
     public EntityPM: BankDepositPM;
@@ -146,42 +147,55 @@ export class BankDepositMenuButtonsHandler {
             case "BankDepositApprove":
                 {
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
-
-
-                    if (this.EntityPM.IsCashDeposit)
-                    {
-                        if (this.EntityPM.LocalDepositAmount == 0)
-                        {
-                            var msg = TextCodeTranslator.Translate("Accounting.General.O.ZeroDeposit");
-                            this.entityArgs.EditComponent.ValidationErrorsList = [];
-                            this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
-                            return;
+                
+                    if (this.EntityPM.IsCashDeposit) {
+                        if (this.EntityPM.LocalDepositAmount == 0) {
+                            this.entityArgs.EditComponent.ValidationErrorsList.push(
+                                TextCodeTranslator.Translate("Accounting.General.O.ZeroDeposit")
+                            );
                         }
-                        else if (this.EntityPM.LocalDepositAmount < 0)
-                        {
-                            var msg = TextCodeTranslator.Translate("Accounting.O.minusDepositNotAllowed");
-                            this.entityArgs.EditComponent.ValidationErrorsList = [];
-                            this.entityArgs.EditComponent.ValidationErrorsList.push(msg);
-                            return;
+                        else if (this.EntityPM.LocalDepositAmount < 0) {
+                            this.entityArgs.EditComponent.ValidationErrorsList.push(
+                                TextCodeTranslator.Translate("Accounting.O.minusDepositNotAllowed")
+                            );
+                        }
+                    } else {
+                        if (AppTool.IsNullOrEmpty(this.EntityPM.BankDepositLines) ||
+                            this.EntityPM.BankDepositLines.length === 0) {
+                            this.entityArgs.EditComponent.ValidationErrorsList.push(
+                                TextCodeTranslator.Translate("Accounting.General.O.selectAtLeast1Linetodeposit")
+                            );
                         }
                     }
-                    else
-                    {
-                        if (AppTool.IsNullOrEmpty(this.EntityPM.BankDepositLines)) {
-                            this.entityArgs.EditComponent.ValidationErrorsList = [];
-                            this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.selectAtLeast1Linetodeposit"));
-                            return;
-                        } else {
-                            if (this.EntityPM.BankDepositLines.length == 0) {
-                                this.entityArgs.EditComponent.ValidationErrorsList = [];
-                                this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.selectAtLeast1Linetodeposit"));
-                                return;
+                
+                    if (this.entityArgs.EditComponent.ValidationErrorsList.length > 0) {
+                        return;
+                    }
+                
+                    if (!this.CurrentSession.CurrentEditComponent.EditComponentArgument.ChequePairsValid) {
+                        const confirmWindow = new ConfirmWindow();
+                        confirmWindow.Width = 450;
+                        confirmWindow.Height = 190;
+                        confirmWindow.ShowCancelButton = true;
+                        confirmWindow.ShowNoButton = false;
+                        confirmWindow.YesButtonText =TextCodeTranslator.Translate("BankDeposit.O.SelectAll");
+                        confirmWindow.Show(TextCodeTranslator.Translate("BankDeposit.O.AllChequePairsSelected"));
+                
+                        confirmWindow.WindowClosed.subscribe((event: any) => {
+                            if (confirmWindow.Yes) {
+                                this.CurrentSession.CurrentEditComponent.EditComponentArgument.ChequePairsValid = true;
+                                this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(false);
+                
                             }
-                        }
-
+                        });
+                
+                        return; 
                     }
+                
+                    this.entityArgs.EditComponent.SaveChanges();
                     break;
                 }
+                
             case "CancelDeposit":
                 {
                     ///// save in server
@@ -199,17 +213,7 @@ export class BankDepositMenuButtonsHandler {
                         }
                     });
 
-                    ///// old save pattern: update in client then submitchanges
-                    // this.EntityPM.IsCanceled = true;
-                    // this.entityArgs.EditComponent.SaveChanges();
-                    // this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    //     if (isSaveSuccess) {
-
-                    //     } else {
-                    //         this.EntityPM.IsCanceled = false;
-                    //     }
-                    // });
-
+                  
                     return;
                 }
 

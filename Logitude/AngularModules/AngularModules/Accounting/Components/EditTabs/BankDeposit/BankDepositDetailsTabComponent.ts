@@ -6,7 +6,7 @@ import { CashBookListService } from './../../../Services/StandardLists/CashBookL
 import { ObservableCollection } from './../../../../Infrastructure/Utilities/ObservableCollection';
 import { ARPaymentChequeList } from './../../../EntityLists/ARPaymentChequeList';
 import { ARPaymentChequeListService } from './../../../Services/StandardLists/ARPaymentChequeListService';
-import {Component}  from '@angular/core';
+import {ChangeDetectorRef, Component}  from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {BankDepositPM} from '../../../EntityPMs/BankDepositPM';
 import {BankDepositLinePM} from '../../../EntityPMs/BankDepositLinePM';
@@ -84,7 +84,7 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     arPaymentChequeListService: ARPaymentChequeListService = new ARPaymentChequeListService();
     cashBookExtendedPMService: CashBookExtendedPMService = new CashBookExtendedPMService();
 
-    constructor(private entityArgs: EntityArgs) {
+    constructor(private entityArgs: EntityArgs,private cdr: ChangeDetectorRef) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
@@ -175,13 +175,42 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
         this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
             if (isLoadSuccess) {
                 this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                console.log("Entity Reloaded");
-                console.log("Deposited Success", this.EntityPM);
-                this.RedrawScreen(false);
+                 console.log("Entity Reloaded");
+                 console.log("Deposited Success", this.EntityPM);
+                 this.RedrawScreen(false);
+            }
+            else{
+                this.MarkRelatedCheques();              
+                
+
             }
         });
     }
-
+    MarkRelatedCheques() {
+        const SIX_MONTHS_MS = 183 * 24 * 60 * 60 * 1000;
+        const depositDate = new Date(this.EntityPM.DepositDate).getTime();
+    
+        const selectedLines = this.CashbookLines.Collection.filter(line => line.IsSelected);
+    
+        for (const selected of selectedLines) {
+            const { Bank, Branch, AccountNumber, ChequeNumber } = selected;
+    
+            const relatedLines = this.CashbookLines.Collection.filter(line =>
+                !line.IsSelected &&
+                line.Bank === Bank &&
+                line.Branch === Branch &&
+                line.AccountNumber === AccountNumber &&
+                line.ChequeNumber === ChequeNumber &&
+                Math.abs(new Date(line.DueDate).getTime() - depositDate) <= SIX_MONTHS_MS
+            );
+    
+            for (const line of relatedLines) {
+                this.LineSelection(line, true, false);
+            }
+        }
+    
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
+    }    
     RefreshEntity(){
         this.CurrentSession.CurrentEditComponent.EntityId = this.EntityPM.Id; // Set entity id in edit component to reload
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM(); // reloading
@@ -815,22 +844,50 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
         this.CalculateTotals();
     }
-
-    LineSelection(cashbookLine, event) {
+    
+    LineSelection(cashbookLine, event, validatePairs = true) {
         this.CashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
         this.OriginalCashbookLines.Collection.filter(a => a.CashBookId == cashbookLine.CashBookId && a.ARPChequeId == cashbookLine.ARPChequeId)[0].IsSelected = event;
 
-        if (event == true) {
+        if (event) {
             this.PushBankDeposit(cashbookLine);
             this.SelectedCashbookLines.Collection.push(cashbookLine);
-        } else if (event == false) {
+        } else {
             this.DeleteUnSelectedLine(cashbookLine);
             this.PopBankDeposit(cashbookLine);
             this.IsAllSelected = false;
         }
         this.CalculateTotals();
+        if (validatePairs) {
+            this.CurrentSession.CurrentEditComponent.EditComponentArgument = this.CurrentSession.CurrentEditComponent.EditComponentArgument || {};
+            this.CurrentSession.CurrentEditComponent.EditComponentArgument.ChequePairsValid = this.CheckAllSelectedChequesHaveTheirPairs();
+        }
     }
+    CheckAllSelectedChequesHaveTheirPairs() {
+        const SIX_MONTHS_MS = 183 * 24 * 60 * 60 * 1000;
+        const depositDate = new Date(this.EntityPM.DepositDate).getTime();
 
+        const selectedLines = this.CashbookLines.Collection.filter(line => line.IsSelected);
+    
+        for (const selected of selectedLines) {
+            const { BankNumber, BranchNumber, AccountNumber, ChequeNumber } = selected;
+    
+            const matchingGroup = this.CashbookLines.Collection.filter(line => 
+                line.BankNumber === BankNumber &&
+                line.BranchNumber === BranchNumber &&
+                line.AccountNumber === AccountNumber &&
+                line.ChequeNumber === ChequeNumber &&
+                Math.abs(new Date(line.DueDate).getTime() - depositDate) <= SIX_MONTHS_MS
+            );
+           
+            const allGroupSelected = matchingGroup.every(line => line.IsSelected);
+            if (!allGroupSelected) {
+                return false;
+            }
+        }  
+        return true;
+    }
+      
     private DeleteUnSelectedLine(line: any) {
         var index = this.SelectedCashbookLines.Collection.findIndex(d => d.ChequeNumber === line.ChequeNumber);
         this.SelectedCashbookLines.Collection.splice(index, 1);
