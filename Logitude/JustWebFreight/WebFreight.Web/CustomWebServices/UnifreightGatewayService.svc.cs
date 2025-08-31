@@ -452,18 +452,6 @@ SUCCESS={4}"
                 {
                     HttpContext.Current.Items.Add("Tenant", iTenanat);
                 }
-                var customsSettings = CustomsSettingQueryService.GetSettingByTenant(iTenanat);
-                if (customsSettings == null)
-                {
-                
-                
-                    _sbGatewayLog.AppendLine("CustomsSettingQueryService.GetSettingByTenant(iTenanat) is null");
-                    throw new BusinessErrorException("CustomsSettingQueryService.GetSettingByTenant(iTenanat) is null");
-                }
-                if (!customsSettings.IsConnectedToUniFreight)
-                {
-                    var authToken = TokenGuard.Validate(iTenanat);
-                }
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))//new TransactionScope(TransactionScopeOption.RequiresNew, TimeSpan.FromMinutes(10)))
                 {
