@@ -194,14 +194,18 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     
         for (const selected of selectedLines) {
             const { Bank, Branch, AccountNumber, ChequeNumber } = selected;
-    
+            const selectedDueDate = new Date(selected.DueDate).getTime();
+            const startRange = selectedDueDate - SIX_MONTHS_MS;
+            const endRange = selectedDueDate + SIX_MONTHS_MS;
+        
             const relatedLines = this.CashbookLines.Collection.filter(line =>
                 !line.IsSelected &&
                 line.Bank === Bank &&
                 line.Branch === Branch &&
                 line.AccountNumber === AccountNumber &&
                 line.ChequeNumber === ChequeNumber &&
-                Math.abs(new Date(line.DueDate).getTime() - depositDate) <= SIX_MONTHS_MS
+                new Date(line.DueDate).getTime() >= startRange &&
+                new Date(line.DueDate).getTime() <= endRange
             );
     
             for (const line of relatedLines) {
@@ -871,13 +875,18 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
     
         for (const selected of selectedLines) {
             const { BankNumber, BranchNumber, AccountNumber, ChequeNumber } = selected;
-    
+            const selectedDueDate = new Date(selected.DueDate).getTime();
+
+            const startRange = selectedDueDate - SIX_MONTHS_MS;
+            const endRange = selectedDueDate + SIX_MONTHS_MS;
+        
             const matchingGroup = this.CashbookLines.Collection.filter(line => 
                 line.BankNumber === BankNumber &&
                 line.BranchNumber === BranchNumber &&
                 line.AccountNumber === AccountNumber &&
                 line.ChequeNumber === ChequeNumber &&
-                Math.abs(new Date(line.DueDate).getTime() - depositDate) <= SIX_MONTHS_MS
+                new Date(line.DueDate).getTime() >= startRange &&
+                new Date(line.DueDate).getTime() <= endRange
             );
            
             const allGroupSelected = matchingGroup.every(line => line.IsSelected);
