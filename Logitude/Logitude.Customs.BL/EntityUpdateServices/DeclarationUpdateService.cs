@@ -441,24 +441,29 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 var eventContextTagModel = entityPM.CurrentContextTag as EventContextTagModel;
 
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                DeclarationPM entityPMOrg = null;
 
                 if (entityPM.IsAmendment == true && eventContextTagModel != null && eventContextTagModel.CallProccessID == EventContextTagModel.ProccessEnum.DF_NG_2470_DF_MSG16001_ReleaseGoodsMessageResponseServiceUpdate)
                 {
 
-                    var entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
+                    entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
                     entityPMOrg.CurrentContextTag = eventContextTagModel;
-                    entityPMOrg.HatraDate = entityPM.HatraDate;
- 
+                    if (entityPM.HatraDate.HasValue)
+                        entityPMOrg.HatraDate = entityPM.HatraDate;
+
                     UpdateUnifreight(entityPMOrg);
-
-
                 }
-
-
-                // var entityAmend = declarationQueryService.GetAcceptDeclarationAmendment(entityPM.Id, entityPM.Tenant);
 
                 if (entityPM.Direction!="E" &&!(entityPM.PaymentDate.HasValue && string.IsNullOrEmpty(entityPM.DeclarationNumber)))
                 {
+                    if (entityPMOrg == null)
+                    {
+                        entityPMOrg = declarationQueryService.GetSingle(entityPM.AmendmentOriginalDeclartation, true, false);
+                    }
+                    if (!entityPM.HatraDate.HasValue&& entityPMOrg != null && entityPMOrg.HatraDate.HasValue)
+                    {
+                        entityPM.HatraDate = entityPMOrg.HatraDate;
+                    }
                     UpdateUnifreight(entityPM);
                 }
 
