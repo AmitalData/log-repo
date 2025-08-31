@@ -26,6 +26,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.Type = itemPM.Type;
             itemPoco.BLNumber = itemPM.BLNumber;
             itemPoco.FromPushPage = itemPM.FromPushPage;
+			itemPoco.System = itemPM.System;
+            itemPoco.IsClosed = itemPM.IsClosed;
+
+
         }
     }
 }

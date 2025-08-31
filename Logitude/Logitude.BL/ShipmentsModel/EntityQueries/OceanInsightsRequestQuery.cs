@@ -36,8 +36,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          UpdateDate = a.UpdateDate,
                                                          Type = a.Type,
                                                          BLNumber = a.BLNumber,
-                                                         FromPushPage = a.FromPushPage
-                                                     }).FirstOrDefault();
+                                                         FromPushPage = a.FromPushPage,
+														 System = a.System,
+                                                         IsClosed = a.IsClosed
+											   }).FirstOrDefault();
 
               
             return myResult;
@@ -58,7 +60,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System,
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -80,7 +84,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System,
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -102,17 +108,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System,
+                                                   IsClosed = a.IsClosed
                                                }).ToList();
 
 
             return myResult;
         }
 
-        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(string ScacCode, string ContainerNo, int Tenant)
+        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(string ScacCode, string ContainerNo, int Tenant,string System="")
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant
+                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant && a.System== System && !a.IsClosed
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,
@@ -124,17 +132,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
+                                                   FromPushPage = a.FromPushPage,
+												   System = a.System,
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
             return myResult;
         }
 
-        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNoTenant(string CarrierScac, string BLNumber, int Tenant)
+        public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNoTenant(string CarrierScac, string BLNumber, int Tenant,string System="")
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant
+                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant && a.System == System && !a.IsClosed
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,
@@ -146,7 +156,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    UpdateDate = a.UpdateDate,
                                                    Type = a.Type,
                                                    BLNumber = a.BLNumber,
-                                                   FromPushPage = a.FromPushPage
+                                                   FromPushPage = a.FromPushPage,
+                                                   IsClosed = a.IsClosed
                                                }).FirstOrDefault();
 
 
@@ -169,8 +180,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   UpdateDate = a.UpdateDate,
 												   Type = a.Type,
 												   BLNumber = a.BLNumber,
-												   FromPushPage = a.FromPushPage
-											   }).FirstOrDefault();
+												   FromPushPage = a.FromPushPage,
+												   System = a.System,
+                                                   IsClosed = a.IsClosed
+                                               }).FirstOrDefault();
 
 
 			return myResult;
@@ -191,8 +204,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 												   UpdateDate = a.UpdateDate,
 												   Type = a.Type,
 												   BLNumber = a.BLNumber,
-												   FromPushPage = a.FromPushPage
-											   }).FirstOrDefault();
+												   FromPushPage = a.FromPushPage,
+												   System = a.System,
+                                                   IsClosed = a.IsClosed
+                                               }).FirstOrDefault();
 
 
 			return myResult;
@@ -213,7 +228,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                          UpdateDate = a.UpdateDate,
                                                          Type = a.Type,
                                                          BLNumber = a.BLNumber,
-                                                         FromPushPage = a.FromPushPage
+                                                         FromPushPage = a.FromPushPage,
+														 System = a.System,
+                                                         IsClosed = a.IsClosed
                                                      }).ToList(); 
             return myResult;
         }

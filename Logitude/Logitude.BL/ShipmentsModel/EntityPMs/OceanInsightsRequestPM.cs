@@ -20,5 +20,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string Type { get; set; }
         public string BLNumber { get; set; }
         public bool FromPushPage { get; set; }
+		public string System { get; set; }
+        public bool IsClosed { get; set; }
+
+
+    }
+
+    public static class SystemType
+    {
+        public const string Export = "Export";
+        public const string Import = "Import";
     }
 }

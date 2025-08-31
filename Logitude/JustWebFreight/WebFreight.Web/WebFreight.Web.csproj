@@ -6459,6 +6459,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\OceanInsightsWcfService.svc" />
     <Content Include="WcfApi\ShaamWcfService.svc" />
     <Content Include="WcfApi\OceanInsightsTestWcfService.svc" />
     <Content Include="WcfApi\FreelancerGroupTypeWcfService.svc" />
@@ -6482,7 +6483,7 @@
     <Content Include="WcfApi\IncotermWcfService.svc" />
     <Content Include="WcfApi\InsertCommTaskWcfService.svc" />
     <Content Include="WcfApi\LoginWcfService.svc" />
-    <Content Include="WcfApi\OceanInsightsWcfService.svc" />
+    <Content Include="WcfApi\OceanInsightsV2WcfService.svc" />
     <Content Include="WcfApi\OpportunityDWWcfService.svc" />
     <Content Include="WcfApi\OpportunityWcfService.svc" />
     <Content Include="WcfApi\PackageTypeWcfService.svc" />
@@ -7811,6 +7812,7 @@
     <Compile Include="WcfApi\IDeclarationStatusWcfService.cs" />
     <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
     <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />
+    <Compile Include="WcfApi\IOceanInsightsWcfService.cs" />
     <Compile Include="WcfApi\IShaamWcfService.cs" />
     <Compile Include="WcfApi\IOcrDocumentWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
@@ -7818,6 +7820,9 @@
     <Compile Include="WcfApi\IFreelancerGroupTypeWcfService.cs" />
     <Compile Include="WcfApi\IStatusCodeWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
+    <Compile Include="WcfApi\OceanInsightsWcfService.svc.cs">
+      <DependentUpon>OceanInsightsWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\ShaamWcfService.svc.cs">
       <DependentUpon>ShaamWcfService.svc</DependentUpon>
     </Compile>
@@ -7918,7 +7923,7 @@
     <Compile Include="WcfApi\InsertCommTaskWcfService.svc.cs">
       <DependentUpon>InsertCommTaskWcfService.svc</DependentUpon>
     </Compile>
-    <Compile Include="WcfApi\IOceanInsightsWcfService.cs" />
+    <Compile Include="WcfApi\IOceanInsightsV2WcfService.cs" />
     <Compile Include="WcfApi\IOpportunityDWWcfService.cs" />
     <Compile Include="WcfApi\IOpportunityWcfService.cs" />
     <Compile Include="WcfApi\IPackageTypeWcfService.cs" />
@@ -7941,8 +7946,8 @@
     <Compile Include="WcfApi\LoginWcfService.svc.cs">
       <DependentUpon>LoginWcfService.svc</DependentUpon>
     </Compile>
-    <Compile Include="WcfApi\OceanInsightsWcfService.svc.cs">
-      <DependentUpon>OceanInsightsWcfService.svc</DependentUpon>
+    <Compile Include="WcfApi\OceanInsightsV2WcfService.svc.cs">
+      <DependentUpon>OceanInsightsV2WcfService.svc</DependentUpon>
     </Compile>
     <Compile Include="WcfApi\OpportunityDWWcfService.svc.cs">
       <DependentUpon>OpportunityDWWcfService.svc</DependentUpon>

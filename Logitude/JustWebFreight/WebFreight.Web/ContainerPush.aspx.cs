@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Xml;
 using Newtonsoft.Json;
 using Logitude.BL.ShipmentsModel.EntityQueries;
@@ -15,14 +12,12 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.InfrastructureModel.EntityQueries;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;  
+using Simplog.Data.CommonDataModel.EntityPOCOs;  
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Azure;
@@ -84,7 +79,7 @@ namespace WebFreight.Web
                 }
                 AzureLog.SaveLogsInStorage("Container Push error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorMessage, errorMessage, 0, null, null, null);
                 Communications.UpdateCommunicationLogStatus(ComId, tenant, null, ComStatusCode, "Exception occured while adding adding status " + DateTime.Now.ToString(), errorMessage);
-                //throw (ex);
+               
             }
 
         }
@@ -98,15 +93,9 @@ namespace WebFreight.Web
 			
 				if (!string.IsNullOrEmpty(data))
 				{
-					//request_type
-					XmlDocument xmldoc = new XmlDocument();
+ 					XmlDocument xmldoc = new XmlDocument();
 					xmldoc.LoadXml(data);
-					//string ReqType = "c_id";
-					//XmlNodeList Type = xmldoc.GetElementsByTagName("request_type");
-					//foreach (XmlNode item in Type)
-					//{
-					//    ReqType = item.InnerText;
-					//}
+				 
 					XmlNodeList eventList = xmldoc.GetElementsByTagName("event");
 					foreach (XmlNode item in eventList)
 					{
@@ -119,18 +108,15 @@ namespace WebFreight.Web
 						}
 					}
 
-					//////////////////////// Old Logic ///////////////////////////////////////////
-
+ 
 					XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
 					string Id = string.Empty;
-					//foreach (XmlNode item in nodeList)
-					//{
-					if (nodeList[0] != null)
+ 					if (nodeList[0] != null)
 					{
 						Id = nodeList[0].InnerText;
 					}
 
-					//} 
+					 
 					OceanInsightsRequestQuery query = new OceanInsightsRequestQuery(0);
 					var TempRecs = query.GetAllByOceanInsightsId(Id);
 					if (TempRecs == null || TempRecs.Count == 0)
@@ -140,8 +126,7 @@ namespace WebFreight.Web
 					}
 					try
 					{
-						//////////////////////// New Logic ///////////////////////////////////////////
-						int MyTenant = 0;
+ 						int MyTenant = 0;
 						if (TempRecs != null && TempRecs.Count > 0)
 						{
 							MyTenant = TempRecs.FirstOrDefault().Tenant;
@@ -167,13 +152,8 @@ namespace WebFreight.Web
 						if (OIRCount == null)
 						{
 
-							//string ScacCode = "";
-							string BLNumber = "";
-							//XmlNodeList requestkeynodeList = xmldoc.GetElementsByTagName("container_number");
-							//foreach (XmlNode item in requestkeynodeList)
-							//{
-							//    ContainerNo = item.InnerText;
-							//}
+ 							string BLNumber = "";
+						 
 							XmlNodeList blnumbernodeList = xmldoc.GetElementsByTagName("bl_number");
 							if (blnumbernodeList != null)
 							{
@@ -182,11 +162,7 @@ namespace WebFreight.Web
 									BLNumber = item.InnerText;
 								}
 							}
-							//XmlNodeList carrierscacnodeList = xmldoc.GetElementsByTagName("carrier_scac");
-							//foreach (XmlNode item in carrierscacnodeList)
-							//{
-							//    ScacCode = item.InnerText;
-							//}
+						 
 							var TempRequestsCount = new OceanInsightsRequestsCountPM();
 							IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
 							OceanInsightsRequestsCountService service = new OceanInsightsRequestsCountService(objectContext, 0);
@@ -198,15 +174,13 @@ namespace WebFreight.Web
 							TempRequestsCount.CreateDate = DateTime.Now;
 							service.Create(TempRequestsCount);
 							OIRCount = TempRequestsCount;
-							//TempRecs.Add(TempRec);
-						}
+ 						}
 					}
 					catch (Exception ex)
 					{
 
 					}
-					/////////////////////////////////////////////////////////////
-					foreach (var TempRec in TempRecs)
+ 					foreach (var TempRec in TempRecs)
 					{
 						if (TempRec.Type == "m_bl")
 						{
@@ -217,7 +191,8 @@ namespace WebFreight.Web
 								string newcontainernumber = "";
 								string newblnumber = "";
 								string newcarrierscac = "";
-								foreach (XmlNode item1 in item.ChildNodes)
+                                string mpty_return_actual = "";
+                                foreach (XmlNode item1 in item.ChildNodes)
 								{
 									if (item1.Name == "shipmentsubscription_id")
 									{
@@ -235,29 +210,35 @@ namespace WebFreight.Web
 									{
 										newcarrierscac = item1.InnerText;
 									}
+                                    else if (item1.Name == "mpty_return_actual")
+                                    {
+                                        mpty_return_actual = item1.InnerText;
+                                    }
 
-								}
-								//if (!string.IsNullOrEmpty(newId))
-								//{
+                                }
+						 
 								var TempReq = query.GetSinglePMByOceanInsightsId(Id);
-								if (TempReq != null)
-								{
-									UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
+                                IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
+                                OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, tenant);
+
+                                if (TempReq != null)
+                                {
+                                    TempReq.IsClosed = TempReq.System == SystemType.Export && !string.IsNullOrEmpty(mpty_return_actual);
+                                    service.Create(TempReq);
+                                    UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
 								}
 								else
 								{
 									TempReq = new OceanInsightsRequestPM();
-									IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
-									OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, 0);
 									TempReq.ContainerNumber = newcontainernumber;
-									//TempReq.ContainerNumber = newblnumber;
 									TempReq.SCACCode = newcarrierscac;
 									TempReq.Tenant = TempRec.Tenant;
 									TempReq.OceanInsigntId = Id;
 									TempReq.Type = "BLS";
 									TempReq.BLNumber = newblnumber;
 									TempReq.FromPushPage = true;
-									service.Create(TempReq);
+                                 
+                                    service.Create(TempReq);
 									UpdateStatus(TempReq, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
 								}
 								//}
@@ -307,7 +288,7 @@ namespace WebFreight.Web
 					XML = data
 
 				};
-                //-------------------------------------------------------------------------
+                
 
                 int tenant = OceanInsightsRequest.Tenant;
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -317,9 +298,7 @@ namespace WebFreight.Web
                 ObjectTable objectTable = null;
 
                 objectTable = objecttableRep.GetObjectTableByName("OceanInsightsStatuses", 0, true);
-                //byte[] DataToWrite = ReadFully(Request.InputStream);
                 byte[] DataToWrite = GetBytes(data);// new byte[Request.InputStream.Length];
-                //Request.InputStream.Read(DataToWrite, 0, (int)DataToWrite.Length);
                 List<QueueTask> tasks = new List<QueueTask>();
                 tasks.Add(new QueueTask() { Action = "OceanInsights.PushUpdate", Parameters = new List<Logitude.Server.Tools.Parameter>() { new Logitude.Server.Tools.Parameter { Order = 1, Value = data } } });
                 var ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
@@ -403,7 +382,6 @@ namespace WebFreight.Web
 
                         Communications.UpdateCommunicationLogStatus(commLog.Id, tenant, null, commLog.CommunicationStatusTypeCode, "Exception occured while adding message to queue " + DateTime.Now.ToString(), errorMessage);
 
-                        //throw ex;
                     }
                 }
                 scope.Complete();
@@ -443,8 +421,6 @@ namespace WebFreight.Web
 
 						XmlNodeList nodeList = xmldoc.GetElementsByTagName("shipmentsubscription_id");
 						string id = string.Empty;
-						//foreach (XmlNode item in nodeList)
-						//{
 						if (nodeList[0] != null)
 						{
 							id = nodeList[0].InnerText;
@@ -480,7 +456,6 @@ namespace WebFreight.Web
 			catch (Exception ex)
 			{
 
-				//throw;
 			}
 		}
 		private byte[] ReadFully(Stream input)
@@ -557,16 +532,7 @@ namespace WebFreight.Web
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue(queueName, 0);
                 queueservice.Send(new Dictionary<string, string>() { { "Tenant", tenant.ToString() }, { "CommunicationLogId", communicationLogId } }, tenant);
-                //BrokeredMessage message = new BrokeredMessage();
 
-                //message.Properties["CommunicationLogId"] = communicationLogId;
-                //message.Properties["Tenant"] = tenant;
-                //QueueClient client = GetQueueClient(queueName);// StorageAcountDetails.CreateServiceBusQueueClient(emailqueueName);
-                //using (TransactionScope scope = TransactionFactory.GetNewSerializableTransaction())//TransactionFactory.GetNewTransaction())
-                //{
-                //    client.Send(message);
-                //    scope.Complete();
-                //}
             }
             catch (Exception ex)
             {
@@ -585,8 +551,6 @@ namespace WebFreight.Web
                 queueDescription.MaxDeliveryCount = 99999;
                 queueDescription.LockDuration = new TimeSpan(0, 5, 0);
 
-                //queueDescription.LockDuration
-                //queueDescription.DefaultMessageTimeToLive = new TimeSpan(3, 1, 0);
 
                 StorageAcountDetails.NameSpaceManager.CreateQueue(queueDescription);
             }
@@ -597,4 +561,6 @@ namespace WebFreight.Web
         }
 
     }
+
+   
 }
