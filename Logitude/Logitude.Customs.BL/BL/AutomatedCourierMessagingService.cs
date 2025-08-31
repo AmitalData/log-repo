@@ -248,7 +248,7 @@ namespace Logitude.Customs.BL.BL
             try
             {
                 var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(declarationCourierStatusPM.Tenant);
-                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2755", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, false, null);
+                var requestInProgressList = customsRequestsSheetQS.GetRequestInProgress(declarationCourierStatusPM.Tenant, "2755", declarationObjectTableId, declarationCourierStatusPM.DeclarationId, null, null, null, true, null);
                 if (requestInProgressList?.Exists(x => x.InterfaceTypeCode == "2755") == true)
                 {
                     return;
