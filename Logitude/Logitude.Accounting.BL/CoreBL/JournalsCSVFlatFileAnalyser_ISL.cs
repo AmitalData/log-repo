@@ -392,8 +392,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.DebitGLAccountId = debitPM.Id;
                     }
+                    totalDebit += Math.Round(jLine.LocalAmount, 2);
 
-				}
+                }
 
                 count++;
             }
