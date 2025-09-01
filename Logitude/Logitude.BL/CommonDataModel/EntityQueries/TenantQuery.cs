@@ -1584,6 +1584,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UseNewTermsOfUse = myPOCO.UseNewTermsOfUse,
                     ShipmentATADateIndicator = myPOCO.ShipmentATADateIndicator,
                     ApproveUploadedDocuments = myPOCO.ApproveUploadedDocuments,
+                    InvoicePrintNotes = myPOCO.InvoicePrintNotes,
+                    InvoicePrintNotesLocal = myPOCO.InvoicePrintNotesLocal,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
