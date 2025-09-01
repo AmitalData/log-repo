@@ -1538,26 +1538,37 @@ namespace WebFreight.Web.Helpers
 				foreach (var arrayProp in arrays)
 				{
 					var childArray = (JArray)arrayProp.Value;
-					
+
 					if (childArray.Any())
-					{ 
-					    foreach (var child in childArray.Children<JObject>())
+					{
+						foreach (var child in childArray.Children<JObject>())
 						{
 							var newRowData = new Dictionary<string, dynamic>(currentRow);
 							var prefix = arrayProp.Name + "_";
-						    foreach (var cp in child.Properties().Where(p => !(p.Value is JArray) && !(p.Value is JObject)))
-						    {
-								
+							foreach (var cp in child.Properties().Where(p => !(p.Value is JArray) && !(p.Value is JObject)))
+							{
+
 
 								newRowData[prefix + cp.Name] = cp.Value.Type == JTokenType.Null
-						    								   ? null
-						    								   : cp.Value;
-								
+															   ? null
+															   : cp.Value;
+
 							}
 							RecurseFlatten(child, table, newRowData, prefix);
 
-							
-							
+
+
+						}
+						foreach (var child in childArray.Children())
+						{
+							var newRowData = new Dictionary<string, dynamic>(currentRow);
+							var prefix = arrayProp.Name + "_";
+
+							if (child is JValue val)
+							{
+								newRowData[prefix + "Value"] = val.Type == JTokenType.Null ? null : val.Value;
+								AddRow(table, newRowData);
+							}
 						}
 					}
 				}
@@ -1661,6 +1672,11 @@ namespace WebFreight.Web.Helpers
 		{
 			NPOI.SS.UserModel.IWorkbook workbook = new XSSFWorkbook();
 
+			if (sheetName.Length > 31)
+			{
+				sheetName = sheetName.Substring(0, 31);
+			}
+            
 			ISheet sheet = workbook.CreateSheet(sheetName);
 
 			// Create header cell style
@@ -1776,7 +1792,11 @@ namespace WebFreight.Web.Helpers
 			{
 				sheet.AutoSizeColumn(i);
 			}
-			sheet.SetAutoFilter(new NPOI.SS.Util.CellRangeAddress(0, dataTable.Rows.Count - 1, 0, dataTable.Columns.Count - 1));
+
+			if (dataTable.Rows.Count > 0 && dataTable.Columns.Count > 0)
+			{
+				sheet.SetAutoFilter(new NPOI.SS.Util.CellRangeAddress(0, dataTable.Rows.Count - 1, 0, dataTable.Columns.Count - 1));
+			}
 
 			return workbook;
 		}
