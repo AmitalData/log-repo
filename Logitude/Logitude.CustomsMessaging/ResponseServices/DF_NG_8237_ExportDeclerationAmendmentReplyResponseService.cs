@@ -935,6 +935,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context)
         {
+            try
+            {
             if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration)
             {
                 logger.Debug("Starting To Handle Customs Errors.");
@@ -1012,6 +1014,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 logger.Debug("After Send8235.");
             }
         }
+            catch(System.Exception ex)
+            {
+                logger.Debug("AutoFixDeclarationDiamondByErrors Exception: " + ex.Message);
+                throw ex;
+            }
+        }
+
 
 
         private void disconnectExportStorages(string status, DeclarationQueryService myDeclarationQueryService)
