@@ -960,7 +960,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     string valueText = errorItem?.ValidationCode?.name ?? string.Empty;                
                         string valueCode = errorItem?.ValidationCode?.Value ?? string.Empty;
-                        if (valueCode == "140181" || valueText.Contains("תאריך טעינה"))
+                    if (valueCode == "140181" || valueText.Contains("תאריך טעינה"))
                     {
                         logger.Debug("Founded LoadingDateTime on customs error.");
 
