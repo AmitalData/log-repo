@@ -154,6 +154,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     $fastSearchEnable: BehaviorSubject<boolean> = null;
     fastSearchAllow: boolean = false;
     intialAdditionalFilters: string[] = [];
+    searchRun = false;
 
     onOpenFilterAreaClick() {
         this.IsAdvancedSearchOpened = true;
@@ -203,7 +204,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         
         if (this.fastSearchService.$fastSearchEnable.value) {
             try {
+                this.searchRun = true;
+                this.CD.detectChanges();
                 this.searchDropdownOptions = await this.fastSearchService.search(this.CurrentQueryFilters, this.searchFields)
+                this.searchRun = false;
                 if (this.searchDropdownOptions) {
                     this.CD.detectChanges();
                     return;
@@ -211,6 +215,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             } catch (error) {
                 if(error instanceof HttpErrorResponse && error.error.ErrorType === "FieldsNotExistsInIndexException")
                     this.fastSearchCheckbox(false);
+            } finally {
+                this.searchRun = false;
             }
         }
             

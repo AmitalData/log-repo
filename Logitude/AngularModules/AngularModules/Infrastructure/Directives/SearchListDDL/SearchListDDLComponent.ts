@@ -20,6 +20,9 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
                 <a href="#" (click)="optionSelected.emit(showAll);$event.preventDefault()">{{ 'General.O.ViewAll' | TextCodeTranslationPipe }}</a>
             </div>
         </div>
+        <div *ngIf="showDropdown && dropdownOptions?.length === 0" class="dropdown-container">
+            <div>{{ 'General.O.NoDataFound' | TextCodeTranslationPipe }}</div>
+        </div>
     `,
     styles: [`
         .dropdown-container {
@@ -29,6 +32,7 @@ import { FastSearchSettings } from 'Customs/Services/WebServices/AzureSearchWebS
             border: 1px solid #ccc;
             background: #fff;
             padding: 2px 4px;
+            min-width: 162px;
         }
 
         .dropdown-list {
@@ -82,7 +86,7 @@ export class SearchListDDLComponent implements OnInit {
         this._dropdownOptions = [...options];
         this.initLabelLength();
     }
-    @Input() showDropdown: boolean = true;
+    @Input() showDropdown: boolean = false;
     @Input() showTopResults: number = null;
     labels: DDLLable[] = [];
     DDLWidth: string = '250px';
