@@ -12,7 +12,7 @@ namespace Logitude.Accounting.BL.DataContract
         public byte[] Logo { get; set; }
         public string GeneralAddress { get; set; }
         public string CompanyName { get; set; }
-        public string PrintNotes { get; set; }
-        public string LocalPrintNotes { get; set; }
+        public string InvoicePrintNotes { get; set; }
+        public string InvoicePrintNotesLocal { get; set; }
     }
 }

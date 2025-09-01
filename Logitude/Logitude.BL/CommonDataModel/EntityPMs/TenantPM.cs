@@ -435,5 +435,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public int? DPArchiveShipmentCreateFilter { get; set; }
         public int? DPArchiveShipmentArrivalFilter { get; set; }
         public int? DPArchiveShipmentDepartFilter { get; set; }
+        public string InvoicePrintNotes { get; set; }
+        public string InvoicePrintNotesLocal { get; set; }
     }
 }

@@ -17,8 +17,15 @@ namespace WebFreight.Web.Helpers
         {
             dataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             dataProvider.Logo = DataProviders.General.GetLogo(tenant);
-            dataProvider.CompanyName = DataProviders.General.GetCompanyName(tenant);
             dataProvider.GeneralAddress= GetGeneralAddress( tenant);
+
+            TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
+            if (tenantPM != null)
+            {
+                dataProvider.CompanyName = tenantPM.Company;
+                dataProvider.InvoicePrintNotes = tenantPM.InvoicePrintNotes;
+                dataProvider.InvoicePrintNotesLocal = tenantPM.InvoicePrintNotesLocal;
+            }
         }
 
         private static string GetGeneralAddress(int tenant)
