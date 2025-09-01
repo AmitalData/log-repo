@@ -76,6 +76,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ProductItemRepository productItemRepository;
         private HTSCodeRepository hTSCodeRepository;
         private CardService cardService;
+        public const string DONT_CARE = "[DONT_CARE]"; // Used for Hybrid Customers to avoid clearing the ContactForAccounting of a contact when updating the customer    
         ContactService contactService;
         HybridPartnerPM CurrentHybridPartner;
         CustomerTenantAccessCardRepository customerTenantAccessCardRepository;
@@ -1248,7 +1249,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             string oldContactForAccounting = null;
             foreach (var item in myResult)
             {
-                if (item.ContactForAccounting == true && item.Id != entityPM.ContactForAccounting)
+                if (entityPM.ContactForAccounting != DONT_CARE && item.ContactForAccounting == true && item.Id != entityPM.ContactForAccounting)
                 {
                     var entity = repository.GetSingleContact(item.Id, entityPM.Tenant);
 
@@ -1271,6 +1272,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
+            if (entityPM.ContactForAccounting == DONT_CARE) entityPM.ContactForAccounting = String.Empty;
+
             repository.SubmitChanges();
             if (string.IsNullOrEmpty(entityPM.Card.GLAccountId))
                 entityPM.Card.GLAccountId = cardRepository.GetSingleCard(entityPM.Card.Id, tenant)?.GLAccountId;
