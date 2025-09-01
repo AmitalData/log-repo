@@ -1,27 +1,37 @@
 ﻿using Atp.Pdf;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools.Utils;
+using Microsoft.Azure.Pipelines.WebApi;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Enums;
 using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Transactions;
 using WebFreight.Web.WebServices;
 
 
@@ -130,6 +140,10 @@ namespace Logitude.Accounting.BL.InterestService
         {
             try
             {
+
+                ARInvoiceRepository repository = new ARInvoiceRepository();
+                ARInvoice invoice = repository.GetSingleARInvoice(invoiceId, tenant);
+
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(documentCode, tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
@@ -142,10 +156,26 @@ namespace Logitude.Accounting.BL.InterestService
                 if (documentOut == null)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError("No document found for printing.");
-                    return false;
+                    //   return false;
+
+                        PrintInterestInvoice(tenant, invoice, invoiceContext);
                 }
 
-                return UpdateAndPrintDocument(documentOut, documentCode, invoiceId, tenant, email, commonContext, invoiceContext);
+                else if (invoice.IsSigned == ARInvoiceSignedStatusValues.NotSigned || invoice.IsSigned == ARInvoiceSignedStatusValues.SigningFailed)
+                {
+                    SignInterestInvoice(tenant, invoice, invoiceContext);
+                }
+                else if (invoice.IsSigned == ARInvoiceSignedStatusValues.SignedButNotYetSent || invoice.IsSigned == ARInvoiceSignedStatusValues.SignedButSendingByEmailFailed)
+                {
+                    DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invoice?.Id, tenant).FirstOrDefault();
+                    DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings?.Id, tenant, "999G");
+                    Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
+                    string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice?.BillToId, tenant);
+                    if (!string.IsNullOrEmpty(contactEmail))
+                        this.SendToEmailContact(contactEmail, invoice, document, myDocumentFilings?.Id, repository, tenant, accountingSettings);
+                }
+
+                    return UpdateAndPrintDocument(documentOut, documentCode, invoiceId, tenant, email, commonContext, invoiceContext);
             }
             catch (Exception ex)
             {
@@ -153,6 +183,59 @@ namespace Logitude.Accounting.BL.InterestService
                 return false;
             }
         }
+
+        public void PrintInterestInvoice(int tenant, ARInvoice aRInvoice, IInvoiceContext invoiceContext)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                try
+                {
+                    ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+                    InterestReport interestReport = aRInvoiceQuery.GetInterestReport(aRInvoice);
+                    ARInvoicePM aRInvoicePM = aRInvoiceQuery.GetSinglePM(aRInvoice.Id, tenant);
+                    if (aRInvoicePM == null || interestReport == null) throw new ArgumentNullException("There is no ARInvoice or InterestReport");
+
+                    ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
+                    invoiceService.BuildDocumentsForNewInvoiceLite(aRInvoicePM, interestReport);
+                    invoiceService.SignInvoice(aRInvoicePM, tenant);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("PrintInterestInvoice aRInvoicePM.Id=" + aRInvoicePM.Id);
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in PrintInterestInvoice aRInvoice.Id=" + aRInvoice.Id);
+                }
+
+            }
+        }
+
+
+        public void SignInterestInvoice(int tenant, ARInvoice aRInvoice, IInvoiceContext invoiceContext)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                try
+                {
+                    ARInvoiceQuery aRInvoiceQuery = new ARInvoiceQuery(tenant);
+                    ARInvoicePM aRInvoicePM = aRInvoiceQuery.GetSinglePM(aRInvoice.Id, tenant);
+                    if (aRInvoicePM == null) throw new ArgumentNullException("There is no ARInvoice");
+
+                    ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, tenant);
+                    invoiceService.SignInvoice(aRInvoicePM, tenant);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteTrace("PrintInterestInvoice aRInvoicePM.Id=" + aRInvoicePM.Id);
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "Error in PrintInterestInvoice aRInvoice.Id=" + aRInvoice.Id);
+                }
+
+            }
+        }
+
+
         private bool UpdateAndPrintDocument(DocumentOut documentOut, string documentCode,string invoiceId, int tenant, string email, ICommonDataContext commonContext, IInvoiceContext invoiceContext)
         {
             string userId = "";

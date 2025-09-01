@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InvoiceModel.CustomFilters;
 using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Simplog.Data.CommonDataModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Enums;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Server.Infrastructure.Helpers;
-using Logitude.Accounting.Data.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.CommonDataModel;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts.Models;
-using Logitude.BL.InvoiceModel.CustomFilters;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; using Simplog.Global.Data.GlobalModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -2386,7 +2389,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             var result = (from a in repository.context.ARInvoices where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" && a.InvoiceDate >= fromDate && a.InvoiceDate <= toDate select a);
             if (!ShowPrintedInvoice)
             {
-                result = result.Where(s => s.IsPrinted == false);
+                result = result.Where(s => s.IsSigned != ARInvoiceSignedStatusValues.SignedAndSentByEmail);
             }
             return result;
         }
