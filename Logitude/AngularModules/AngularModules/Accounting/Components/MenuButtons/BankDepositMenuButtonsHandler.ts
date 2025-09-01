@@ -172,7 +172,7 @@ export class BankDepositMenuButtonsHandler {
                         return;
                     }
                 
-                    if (!this.CurrentSession.CurrentEditComponent.EditComponentArgument.ChequePairsValid) {
+                    if (!this.EntityPM.IsCashDeposit && !this.CurrentSession.CurrentEditComponent.EditComponentArgument?.ChequePairsValid) {
                         const confirmWindow = new ConfirmWindow();
                         confirmWindow.Width = 450;
                         confirmWindow.Height = 190;
