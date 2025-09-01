@@ -474,7 +474,7 @@ namespace Logitude.Accounting.Data.Repositories
                                      .Split(new[] { '\\', '/' })[0];
                                  if (int.TryParse(numericPart, out int num))
                                  {
-                                     return num > fromNum && num < toNum;
+                                     return num >= fromNum && num <= toNum;
                                  }
                                  return false;
                              }).AsQueryable();

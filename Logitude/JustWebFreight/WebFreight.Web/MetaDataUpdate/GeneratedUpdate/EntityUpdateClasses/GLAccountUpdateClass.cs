@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "0b5265cc48b0c5b27978904754a9e96b";
+		public const string HashString = "df9f5a65a52df7795d6d4b05f8ccvx0bf";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -15157,6 +15157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"BS64:IteU16jXpSDXnteZ15nXk9eZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
 
    
 	    
