@@ -41,8 +41,8 @@ namespace Logitude.Customs.BL.AzureSearch
         protected override string GetSettingsName(List<QueryFilterItem> additionalFilters, string filters, int tenant) =>
             filters.Contains("(direction eq 'E')") ? "exportDeclarations" : "declarations";
 
-        private static readonly Dictionary<string, string> FieldNameMappings = new Dictionary<string, string>() { 
-            { "TransportModeForExport", "TransportModeId" } 
+        private static readonly Dictionary<string, string> FieldNameMappings = new Dictionary<string, string>() {
+            { "TransportModeForExport", "TransportModeId" }
         };
     }
 }

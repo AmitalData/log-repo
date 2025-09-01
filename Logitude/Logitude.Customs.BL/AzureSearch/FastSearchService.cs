@@ -15,10 +15,12 @@ namespace Logitude.Customs.BL.AzureSearch
     public class FastSearchService
     {
         private const string AzureSearchAISetKey = "AzureSearchAI";
+        private const string AzureSearchAISettingsSetKey = "AzureSearchAISettings";
         private static DefaultAndConfiguration_Ext ConnectionDetails => DefaultService.Instance.Get(0, AzureSearchAISetKey, "Customs");
-        private static string serviceName => ConnectionDetails.Value1;
-        private static string apiKey => ConnectionDetails.Value2;
-
+        private static string serviceName => ConnectionDetails?.Value1;
+        private static string apiKey => ConnectionDetails?.Value2;
+        private static DefaultAndConfiguration_Ext settings => DefaultService.Instance.Get(0, AzureSearchAISettingsSetKey, "Customs");
+        private static bool perfixSearch => settings != null && (bool)settings.ObjVal1;
         private static readonly DevLog logger = DevLog.Instance;
 
         private static readonly Dictionary<string, Func<FastSearchService>> _indexRegistry = new Dictionary<string, Func<FastSearchService>>()
@@ -73,7 +75,7 @@ namespace Logitude.Customs.BL.AzureSearch
             FastSearchSettings settings = await GetIndexSettingsAsync(tenant, indexSettingsName);
             List<string> selectedFields = GetSelectedFields(settings);
 
-            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields);
+            return await fastSearchAzureSearchRepo.SearchAsync(filters, searchText, settings.maxResults, selectedFields, perfixSearch);
         }
 
         protected virtual void ManipulateAdditionalFilters(List<QueryFilterItem> additionalFilters, int tenant) { }

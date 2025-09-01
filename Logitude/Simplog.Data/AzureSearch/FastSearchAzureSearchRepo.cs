@@ -21,9 +21,10 @@ namespace Simplog.Data.AzureSearch.Repo
             )
         { }
 
-        public async Task<List<dynamic>> SearchAsync(string filter, string searchText, int maxResult, List<string> selectedFields)
+        public async Task<List<dynamic>> SearchAsync(string filter, string searchText, int maxResult, List<string> selectedFields, bool perfixSearch)
         {
-            searchText += "*";
+            if (perfixSearch)
+                searchText += "*";
 
             SearchOptions searchOptions = new SearchOptions
             {
@@ -59,9 +60,9 @@ namespace Simplog.Data.AzureSearch.Repo
         public async Task<AzureSerchResponse> DeleteAsync(string filter, int size, CancellationToken cancellationToken = default)
         {
             string keyFieldName = await GetKeyFieldNameAsync().ConfigureAwait(false);
-            if(string.IsNullOrEmpty(keyFieldName))
+            if (string.IsNullOrEmpty(keyFieldName))
                 throw new System.Exception($"Could not determine key field for index '{indexName}'.");
-                
+
             SearchOptions searchOptions = new SearchOptions
             {
                 Size = size,

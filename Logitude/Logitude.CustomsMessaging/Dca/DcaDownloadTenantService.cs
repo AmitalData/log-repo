@@ -42,12 +42,11 @@ namespace Logitude.CustomsMessaging.Dca
         private PartnerSftpConfig _downloadCfg;     
         private PartnerSftpConfig _uploadCfg;
 
-        private DcaManager _legacyDcaManager;
         private LegacyDcaManagerShim _legacyShim;
         private SftpDcaManagerShim _downloadShim;
-        private IDcaManagerShim Shim => (IDcaManagerShim)_downloadShim ?? _legacyShim;
+        private IDcaManagerShim Shim => _currentShimForPass ?? (IDcaManagerShim)_downloadShim ?? _legacyShim;
 
-        private DateTime _lastSftpPurge = DateTime.MinValue;   
+        private IDcaManagerShim _currentShimForPass;
 
 
         static List<DCAIncomeDirStateM> _LastAccessFileInDCADirList = new List<DCAIncomeDirStateM>();
@@ -294,37 +293,65 @@ namespace Logitude.CustomsMessaging.Dca
                 this.Send9200(debugIIGMessageId, dedicatedCourierDCAModel);
             }
 
-            var nowUtc = DateTime.UtcNow;
-            if (_downloadShim != null && nowUtc - _lastSftpPurge > TimeSpan.FromHours(24))
+            if (sftpFeature)
             {
-                _downloadShim.PurgeOldFiles();     
-                _lastSftpPurge = nowUtc;
+                var nowUtc = DateTime.UtcNow;
+                if (nowUtc - _MyDCAIncomeDirStateM.LastSftpPurgeUtc > TimeSpan.FromHours(24))
+                {
+                    try
+                    {
+                        _downloadShim.PurgeOldFiles();
+                        _MyDCAIncomeDirStateM.LastSftpPurgeUtc = nowUtc;
+                    }
+                    catch (Exception ex)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"SFTP purge failed: {ex.Message}");
+                    }
+                }
+
+                RunIntakeOnceWithShim(_downloadShim, debugIIGMessageId);
+
             }
 
-            if (!CanIStartWork())
-            {
-                return;
-            }
+            RunIntakeOnceWithShim(_legacyShim, debugIIGMessageId);
+        }
+        private void RunIntakeOnceWithShim(IDcaManagerShim shim, string debugIIGMessageId)
+        {
+            // save current context
+            var savedShim = _currentShimForPass;
+            var savedState = _MyDCAIncomeDirStateM;
 
+            try
+            {
+                _currentShimForPass = shim;
 
-            _swDownAll = Stopwatch.StartNew();
-            bool multi = true;
-            if (multi)
-            {
-                Take50_MultiThread(debugIIGMessageId);
-            }
-            else
-            {
-                Take50OneByOne(debugIIGMessageId);
-            }
+                _MyDCAIncomeDirStateM = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant);
 
-            _swDownAll.Stop();
-            if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
+                if (!CanIStartWork())
+                    return;
+
+                _swDownAll = Stopwatch.StartNew();
+
+                bool multi = true;   // keep your current behavior
+                if (multi)
+                    Take50_MultiThread(debugIIGMessageId);
+                else
+                    Take50OneByOne(debugIIGMessageId);
+
+                _swDownAll.Stop();
+
+                if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("MoveUnUseDCAFilesToDIr")))
+                {
+                    MoveUnUseDCAFilesToDIr();
+                }
+            }
+            finally
             {
-                MoveUnUseDCAFilesToDIr();
+                // restore previous context
+                _currentShimForPass = savedShim;
+                _MyDCAIncomeDirStateM = savedState;
             }
         }
-
         private void Send9200(string debugIIGMessageId, DedicatedCourierDCAModel dedicatedCourierDCAModel)
         {
             var sb = new StringBuilder();
@@ -735,9 +762,26 @@ out myMessageOut);
 
                 var CurrentAllXmlFileInMyBranch = GetVaultFileListInCustomDeployStage();
 
-                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch))
+                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch == null)
+                    _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = new List<string>();
+
+                if (_currentShimForPass is SftpDcaManagerShim)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir unchanged");
+                    if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.Count == 0
+                        && CurrentAllXmlFileInMyBranch.Count > 0)
+                    {
+                        _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
+                        _MyDCAIncomeDirStateM.Dir1stChangedAt = null;
+                        _MyDCAIncomeDirStateM.NothingChangeCount = 0;
+
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(
+                            "SFTP: first listing contains files → starting immediately (no warm-up wait).");
+                        return true;
+                    }
+                }
+                if (_MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch.SequenceEqual(CurrentAllXmlFileInMyBranch, StringComparer.OrdinalIgnoreCase))
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("DCADir unchanged");
                     _MyDCAIncomeDirStateM.LastAllXmlFileInMyBranch = CurrentAllXmlFileInMyBranch;
                     if (_MyDCAIncomeDirStateM.Dir1stChangedAt.HasValue)
                     {
@@ -830,7 +874,12 @@ out myMessageOut);
                 Thread.Sleep(TimeSpan.FromSeconds(1));
 
             }
-            myFileListing = myFileListing ?? new List<string>();
+            myFileListing = (myFileListing ?? new List<string>())
+                   .Where(n => !string.IsNullOrWhiteSpace(n))
+                   .Select(n => n.Trim())
+                   .Distinct(StringComparer.OrdinalIgnoreCase)
+                   .OrderBy(n => n, StringComparer.OrdinalIgnoreCase)
+                   .ToList();
             return myFileListing;
         }
 
@@ -1130,6 +1179,7 @@ out myMessageOut);
             ObjectCreatedAt = DateTime.Now;
             LastAllXmlFileInMyBranch = new List<string>();
             FileMessagesNotBelong2OurEnvironment = new HashSet<string>();
+            LastSftpPurgeUtc = DateTime.UtcNow;
         }
         public int Tenant { get; private set; }
         public DateTime ObjectCreatedAt { get; private set; }
@@ -1156,6 +1206,8 @@ out myMessageOut);
         public int NothingChangeCount { get; set; }
 
         public HashSet<string> FileMessagesNotBelong2OurEnvironment { get; set; }
+        public DateTime LastSftpPurgeUtc { get; set; }
+
     }
 
 }
