@@ -959,7 +959,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 foreach (var errorItem in customResponse.Response.Error)
                 {
                     string valueText = errorItem?.ValidationCode?.name ?? string.Empty;                
-                    if (valueText.Contains("תאריך טעינה"))
+                        string valueCode = errorItem?.ValidationCode?.Value ?? string.Empty;
+                        if (valueCode == "140181" || valueText.Contains("תאריך טעינה"))
                     {
                         logger.Debug("Founded LoadingDateTime on customs error.");
 
@@ -977,7 +978,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                         }
                     }
-                    else if (valueText.Contains("שטר מטען"))
+                        else if (valueCode == "140189" || valueText.Contains("שטר מטען"))
                     {
                         logger.Debug("Founded FinalManifestNumber on customs error.");
 
