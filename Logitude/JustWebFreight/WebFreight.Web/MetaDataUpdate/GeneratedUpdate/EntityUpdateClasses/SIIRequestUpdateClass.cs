@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SIIRequestUpdateClass
    {  		
-		public const string HashString = "797d77f9e8f185bbccecc8c4c57a977d";
+		public const string HashString = "9bd6ad887a3085368bc27a48782d0b77";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -70,7 +70,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LocalDefaultTextBack_up =  "בקשות למכון תקנים",
 			      				    LocalDefaultText =  "BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==",
 			      				    DefaultText =  "SIIRequest",
-			      				    Code =  "0fa4",
+			      				    Code =  "f7cf",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1967,7 +1967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestORequest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.Request", DefaultText = "Request",LocalDefaultText = @"BS64:IteR16fXqdeUIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode SIIRequestTextCode_CustomsSIIRequestORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.RequiredFields", DefaultText = "Required Fields",LocalDefaultText = @"BS64:Itep15PXldeqINeX15XXkdeUINeR157XodeoINep15zXmdeX15Qg15zXnteb15XXnyDXqten16DXmdedIg==", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode SIIRequestTextCode_CustomsSIIRequestORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.RequiredFields", DefaultText = "Required Fields",LocalDefaultText = @"BS64:IteX16HXqCDXqdeT15XXqiDXl9eV15HXlCDXkdee16HXqCDXqdec15nXl9eUINec157Xm9eV158g16rXp9eg15nXnSI=", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode SIIRequestTextCode_CustomsSIIRequestOformApplicationId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SIIRequest.O.formApplicationId", DefaultText = "Form Application Id",LocalDefaultText = @"BS64:Itee16HXpNeoINek16DXmdeZ15Qi", ObjectTableId = SIIRequestObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
