@@ -1006,13 +1006,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     ExportDeclarationClosingDataUpdateService exportDeclarationClosingDataUpdateservice = new ExportDeclarationClosingDataUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
                     exportDeclarationClosingDataUpdateservice.Update(exportDeclarationClosingDataPM, true);
                     logger.Debug("Finish to updating exportDeclarationClosingData");
-                }
 
-                // send auto close declaration:
-                logger.Debug("Before Send8235.");
-                ICustomsAutoDecClosing CustomsAutoDecClosing = Server.Tools.ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new Microsoft.Practices.Unity.ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-                CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
-                logger.Debug("After Send8235.");
+                    // send auto close declaration:
+                    logger.Debug("Before Send8235.");
+                    ICustomsAutoDecClosing CustomsAutoDecClosing = Server.Tools.ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new Microsoft.Practices.Unity.ParameterOverride("", 1)) as ICustomsAutoDecClosing;
+                    CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+                    logger.Debug("After Send8235.");
+                }
             }
         }
             catch(System.Exception ex)
