@@ -26,6 +26,7 @@ import { CertificateOfOriginConnectionList } from 'Customs/EntityLists/Certifica
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { tap } from 'rxjs/operators';
+import { CertificateOfOriginItemPM } from 'Customs/EntityPMs/CertificateOfOriginItemPM';
 
 
 @Component({
@@ -248,28 +249,42 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
 
     checkRequestReasonCode() {
+        const numberText = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number");
         if (this.EntityPM.RequestReasonCode != "10" && this.EntityPM.RequestReasonCode != "13" && this.EntityPM.RequestReasonCode != "14") {
             let counterLine = 1;
             this.EntityPM.CertificateOriginItemItems.forEach(item => {
-                if (AppTool.IsNullOrEmpty(item.MarksAndNumbers)) {
-                    this.ValidationErrors.push(`${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarkIsReq")}`);
-                }
+                this.validateCertificateOriginItemItems(item, numberText, counterLine);
                 if ((item.PackingTypeName == "CONTAINER" || item.PackageType == "D5") && AppTool.IsNullOrEmpty(item.ContainerIsoCode)) {
-                    this.ValidationErrors.push(`${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq")}`);
+                    this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ContainerTypeReq")}`);
                 }
                 counterLine++;
             });
-
             counterLine = 1;
             this.EntityPM.CertificateOriginInvoiceItems.forEach(item => {
                 if (AppTool.IsNullOrEmpty(item.DescriptionOfInvoice)) {
-                    this.ValidationErrors.push(`${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.number")} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DescIsReq")}`);
+                    this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DescIsReq")}`);
                 }
-
                 counterLine++;
             });
         }
     }
+
+    validateCertificateOriginItemItems(item: CertificateOfOriginItemPM, numberText: string = "", counterLine: number) {
+        const isReqFieldTextCode = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.IsReqField");
+        if (AppTool.IsNullOrEmpty(item.MarksAndNumbers))
+            this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MarksAndNumbers")} ${isReqFieldTextCode}`);
+        if (AppTool.IsNullOrEmpty(item.ItemDescription))
+            this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.ItemDescription")} ${isReqFieldTextCode}`);
+        if (AppTool.IsNullOrEmpty(item.PackageQuantity))
+            this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.PackageQuantity")} ${isReqFieldTextCode}`);
+        if (AppTool.IsNullOrEmpty(item.PackageType))
+            this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.PackageType")} ${isReqFieldTextCode}`);
+        if (AppTool.IsNullOrEmpty(item.Weight))
+            this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.Weight")} ${isReqFieldTextCode}`);
+        if (AppTool.IsNullOrEmpty(item.MeasureType))
+            this.ValidationErrors.push(`${numberText} ${counterLine}- ${TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.MeasureType")} ${isReqFieldTextCode}`);
+    }
+
 
     // Init data from MOREDATA page:
     InitMoreDataScreenValues() {
@@ -292,7 +307,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     checkDeclarationStatusBeforeSend() {
         const warningStatuses: string[] = ["8", "20", "36", "37"];
-        if (this.EntityPM.RequestReasonCode == "1" && warningStatuses.includes(this.DecalarationData?.DeclarationStatusTypeCode)){
+        if (this.EntityPM.RequestReasonCode == "1" && warningStatuses.includes(this.DecalarationData?.DeclarationStatusTypeCode)) {
             this.ValidationErrors.push(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.AttentionStatusCert"));
         }
     }
