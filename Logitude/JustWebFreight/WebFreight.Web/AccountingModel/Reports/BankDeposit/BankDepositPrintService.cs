@@ -25,6 +25,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 {
     class BankDepositPrintService
     {
+        private readonly int ChequePairValidationDays = 183;
         public BankDepositPM bankDepositPM;
         public void BuildBankDepositReport(string entityId, int tenant, string documentOutId)
         {
@@ -116,7 +117,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
                        .Select(d => new
                        {
                            Line = d,
-                           TimeGroupKey = (int)(d.DueDate.Ticks / TimeSpan.FromDays(183).Ticks)
+                           TimeGroupKey = (int)(d.DueDate.Ticks / TimeSpan.FromDays(this.ChequePairValidationDays).Ticks)
                        })
                        .GroupBy(x => new
                        {
