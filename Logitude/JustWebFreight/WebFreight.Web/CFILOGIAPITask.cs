@@ -187,6 +187,18 @@ namespace WebFreight.Web
     {
         static public string DB = @"<root>
 <OCC>
+<DAT name=""CODE"">A114</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>CFIUDIAMONDS</DAT>
+<DAT name=""REFERENCE"">DECLARATIONS</DAT>
+<DAT name=""PARAMETERS"">ID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT>
+<DAT name=""HAS_TENANT"">true</DAT>
+<DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+</OCC>
+<OCC>
 <DAT name=""CODE"">A113</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>CFIRPNDCOU</DAT>
 <DAT name=""REFERENCE"">CourierPendingReasons</DAT>
