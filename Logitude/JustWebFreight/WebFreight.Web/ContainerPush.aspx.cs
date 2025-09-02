@@ -222,9 +222,12 @@ namespace WebFreight.Web
                                 OceanInsightsRequestService service = new OceanInsightsRequestService(objectContext, tenant);
 
                                 if (TempReq != null)
-                                {
-                                    TempReq.IsClosed = TempReq.System == SystemType.Export && !string.IsNullOrEmpty(mpty_return_actual);
-                                    ///service.Create(TempReq);
+                                {   if(TempReq.System == SystemType.Export)
+                                    {
+                                        TempReq.IsClosed = TempReq.System == SystemType.Export && !string.IsNullOrEmpty(mpty_return_actual);
+                                         service.Update(TempReq);
+                                    }
+
                                     UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
 								}
 								else
