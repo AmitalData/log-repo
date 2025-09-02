@@ -107,10 +107,13 @@ namespace Logitude.Customs.BL.BL
             Log($"DECL:P={(hasActivePending ? 1 : 0)}");
             if (hasActivePending) { Log("DECL:N:P"); return false; }
 
-            // ImporterCode must be empty; ImporterId may be null or not
-            bool importerOk = string.IsNullOrEmpty(declaration.ImporterCode);
-            Log($"DECL:Importer={importerOk}");
-            if (!importerOk) { Log("DECL:N:IC!"); return false; }
+            var idHas = !string.IsNullOrEmpty(declaration.ImporterId);
+            var codeHas = !string.IsNullOrEmpty(declaration.ImporterCode);
+            bool importerOk = idHas || (!idHas && !codeHas);
+
+            Log($"DECL:ImpOK={(importerOk ? 1 : 0)};ID={(idHas ? 1 : 0)};CODE={(codeHas ? 1 : 0)}");
+            if (!importerOk) { Log("DECL:N:IMP"); return false; }
+
 
             Log("DECL:SEND");
             SendDeclaration(pm);           // sets 'sent' inside on success
