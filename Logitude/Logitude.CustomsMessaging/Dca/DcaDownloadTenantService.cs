@@ -52,6 +52,10 @@ namespace Logitude.CustomsMessaging.Dca
         static List<DCAIncomeDirStateM> _LastAccessFileInDCADirList = new List<DCAIncomeDirStateM>();
 
         private DCAIncomeDirStateM _MyDCAIncomeDirStateM;
+
+        private DCAIncomeDirStateM _LegacyDirState;
+        private DCAIncomeDirStateM _SftpDirState;
+
         private List<InterfaceTenantDefinitionManagementPM> _InterfaceListDCA;
 
         public const string InterfaceName_DownloadCustomsFilesFromSftp = "DWN_CUSTOMS_SFTP";
@@ -75,6 +79,10 @@ namespace Logitude.CustomsMessaging.Dca
                     _LastAccessFileInDCADirList.Add(_MyDCAIncomeDirStateM);
                 }
             }
+
+            _LegacyDirState = _MyDCAIncomeDirStateM;
+            _SftpDirState = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant);
+
             _EnableLog = true;
             var interfaceTypeQueryService = new InterfaceTenantDefinitionQueryService(_CustomsSettingPM.Tenant);
 
@@ -296,12 +304,12 @@ namespace Logitude.CustomsMessaging.Dca
             if (sftpFeature)
             {
                 var nowUtc = DateTime.UtcNow;
-                if (nowUtc - _MyDCAIncomeDirStateM.LastSftpPurgeUtc > TimeSpan.FromHours(24))
+                if (nowUtc - _SftpDirState.LastSftpPurgeUtc > TimeSpan.FromHours(24))
                 {
                     try
                     {
                         _downloadShim.PurgeOldFiles();
-                        _MyDCAIncomeDirStateM.LastSftpPurgeUtc = nowUtc;
+                        _SftpDirState.LastSftpPurgeUtc = nowUtc;
                     }
                     catch (Exception ex)
                     {
@@ -325,7 +333,9 @@ namespace Logitude.CustomsMessaging.Dca
             {
                 _currentShimForPass = shim;
 
-                _MyDCAIncomeDirStateM = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant);
+                _MyDCAIncomeDirStateM = (shim is SftpDcaManagerShim)
+                            ? (_SftpDirState ?? (_SftpDirState = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant)))
+                            : (_LegacyDirState ?? (_LegacyDirState = new DCAIncomeDirStateM(_CustomsSettingPM.Tenant)));
 
                 if (!CanIStartWork())
                     return;
