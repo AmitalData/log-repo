@@ -36,7 +36,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
             messageProperties.Add("InterfaceTypeCode", requestParams.InterfaceTypeCode);
             messageProperties.Add("Tenant", requestParams.Tenant.ToString());
             messageProperties.Add("CorrelationId", requestParams.CustomsRequestsSheetId);
-            var queueService = new Server.Tools.QueueService.CustomDbQueueService(queueName, 0);
+            var queueService = new Server.Tools.QueueService.CustomDbQueueService(queueName, requestParams.Tenant);
             var queueSendModel = new Server.Tools.QueueService.QueueSendModel();
             queueSendModel.EntityCode = "CustomsRequestsSheet".ToLower();//"CustomsRequestsSheet";
             queueSendModel.EntityId = requestParams.CustomsRequestsSheetId;// MyCustomsRequestsSheetPM?.Id;
