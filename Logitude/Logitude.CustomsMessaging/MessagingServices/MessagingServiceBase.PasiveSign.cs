@@ -261,10 +261,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool IsInteractiveHSM()
         {
-            if (this.MyOverrideControllerModel?.IsCustomsMessagingSheetWR == true)
-            {
-                return true;
-            }
+            //if (this.MyOverrideControllerModel?.IsCustomsMessagingSheetWR == true)
+            //{
+            //    return true;
+            //}
             if (RequestParams.SignMethodByQueue != SignMethodByQueueEnum.HSMSignQueue.ToString())
             {
                 return false;
