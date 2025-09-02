@@ -224,7 +224,7 @@ namespace WebFreight.Web
                                 if (TempReq != null)
                                 {
                                     TempReq.IsClosed = TempReq.System == SystemType.Export && !string.IsNullOrEmpty(mpty_return_actual);
-                                    service.Create(TempReq);
+                                    ///service.Create(TempReq);
                                     UpdateStatus(TempRec, data, (!string.IsNullOrEmpty(TempReq.ContainerNumber) ? TempReq.ContainerNumber : TempReq.BLNumber));
 								}
 								else
