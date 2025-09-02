@@ -494,6 +494,32 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (!pm.EdgeDeclaration && manifestNowV && declNowR && docNowV)
             {
+                var prevActiveList = string.IsNullOrWhiteSpace(poco.CourierPendingReasonList)
+                    ? new List<string>()
+                    : poco.CourierPendingReasonList.Split(',').Select(s => s.Trim()).Where(s => s != "").ToList();
+
+                var nowActiveList = string.IsNullOrWhiteSpace(pm.CourierPendingReasonList)
+                    ? new List<string>()
+                    : pm.CourierPendingReasonList.Split(',').Select(s => s.Trim()).Where(s => s != "").ToList();
+
+                var closedNow = prevActiveList.Where(code => !nowActiveList.Contains(code)).ToList();
+
+                bool anyClosedSolved = pm.DeclarationPendings != null &&
+                    closedNow.Count > 0 &&
+                    pm.DeclarationPendings.Any(p =>
+                        p.ChangeSetOp != ChangeSetOperation.Delete &&
+                        p.Status == "S" &&
+                        closedNow.Contains(p.CourierPendingReasonCode));
+
+                if (anyClosedSolved)
+                {
+                    pm.EdgeDeclaration = true; 
+                    LogMessagingUtil.Instance.AppendLine($"[EdgeDecl-Unblock] closed={string.Join(",", closedNow)}");
+                }
+            }
+
+            if (!pm.EdgeDeclaration && manifestNowV && declNowR && docNowV)
+            {
                 string blocker =
                     beforeDifferent
                         ? "‹should-have-been-true but unknown blocker›"
