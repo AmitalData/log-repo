@@ -915,14 +915,16 @@ namespace Logitude.CustomsMessaging.MessagingServices
 				
 					string ftpHostIP = pmCustomsPartnerFtp.MyFtpDetail.Host;
 					string ftpUserName = pmCustomsPartnerFtp.MyFtpDetail.UserName;
-					string ftpPrivateKeyPath = pmCustomsPartnerFtp.MyFtpDetail.Password ?? Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PRK.PPK");
+					string ftpPassword = pmCustomsPartnerFtp.MyFtpDetail.Password;
+					string ftpPrivateKeyPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "PRK.PPK");
 					string ftpFolderName = pmCustomsPartnerFtp.MyFtpDetail.Folder;
+                    string ftpPort = string.IsNullOrWhiteSpace(ftpPassword)? "2023": "20022";
 					string p_message = "";
 					string p_status = "";
 
-					var sFTPDeleteTempFilesService = new SFTPDeleteTempFilesService(tenant, ftpHost: $"{ftpHostIP}@{ftpUserName}:2023/{ftpFolderName}");
+					var sFTPDeleteTempFilesService = new SFTPDeleteTempFilesService(tenant, ftpHost: $"{ftpHostIP}@{ftpUserName}:{ftpPort}/{ftpFolderName}");
 					SFTPService sftpService = new SFTPService(sFTPDeleteTempFilesService);
-					sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, "2023", ftpFolderName, out p_status, out p_message);
+					sftpService.LogonWithKey(ftpHostIP, ftpUserName, ftpPrivateKeyPath, ftpPort, ftpFolderName, out p_status, out p_message);
 
 					if (p_status == "0")
 					{
