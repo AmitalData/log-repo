@@ -813,7 +813,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         const myViewModelName = 'Logitude.Accounting.Components.EditTabs.GLAccount.MyEnterViewUnifreightController';
 
 
-        SessionLocator.SelectedSession.StopBusyIndicator();
+        SessionLocator.SelectedSession.StartBusyIndicatorLoading();
         const sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
                 (mess: UnifreightMessageM) => {
@@ -823,9 +823,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
                         mess.LogitudeViewModel === myViewModelName);
                     if (isMatchUnifreightCallbackCommand) {
                         sub.unsubscribe();
-                        SessionLocator.SelectedSession.StopBusyIndicator();
                         SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                     }
+                    SessionLocator.SelectedSession.StopBusyIndicator();
                 }
             );
 
