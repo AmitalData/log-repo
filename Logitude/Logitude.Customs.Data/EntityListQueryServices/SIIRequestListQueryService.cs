@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<SIIRequestList> GetIqueryableList(IQueryable<SIIRequest> iQueryable)
         {
-		IQueryable<SIIRequestList> query = (from a in iQueryable
+		IQueryable<SIIRequestList> query = (from a in iQueryable.Include("SIIRequestStatus")
                                             select new SIIRequestList()
 											{
                      
@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          SearchFields = a.SearchFields,
 					
-					                          Status = a.Status,
+					                          Status = a.SIIRequestStatus.LocalName,
 					
 					                          WareHouseAddress = a.WareHouseAddress,
 					

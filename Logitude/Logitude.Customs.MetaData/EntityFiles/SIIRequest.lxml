@@ -44,7 +44,7 @@
   LocalDefaultTextBack_up="&quot;בקשות למכון תקנים&quot;"
   LocalDefaultText="&quot;BS64:IteR16fXqdeV16og15zXnteb15XXnyDXqten16DXmdedIg==&quot;"
   DefaultText="&quot;SIIRequest&quot;"
-  Code="&quot;f7cf&quot;"
+  Code="&quot;a014&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -2636,6 +2636,13 @@
       DefaultText="&quot;File type {0} cannot be sent to SII. Allowed: {1}.&quot;"
       LocalDefaultTextBack_up="&quot;קובץ מסוג {0} אינו מותר לשליחה למכון התקנים. סוגים מותרים: {1}.&quot;"
       LocalDefaultText="&quot;BS64:Iten15XXkdelINee16HXldeSIHswfSDXkNeZ16DXlSDXnteV16rXqCDXnNep15zXmdeX15Qg15zXnteb15XXnyDXlNeq16fXoNeZ150uINeh15XXkteZ150g157Xldeq16jXmdedOiB7MX0uIg==&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.SIIRequest.O.SendSuccessWithRequestNumber&quot;"
+      DefaultText="&quot;SII request succeeded. Request number: {0}&quot;"
+      LocalDefaultTextBack_up="&quot;התקבל משוב תקין ממכון תקנים עם מספר בקשה- {0}&quot;"
+      LocalDefaultText="&quot;BS64:IteU16rXp9eR15wg157XqdeV15Eg16rXp9eZ158g157Xnteb15XXnyDXqten16DXmdedINei150g157Xodek16gg15HXp9ep15QtIHswfSI=&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

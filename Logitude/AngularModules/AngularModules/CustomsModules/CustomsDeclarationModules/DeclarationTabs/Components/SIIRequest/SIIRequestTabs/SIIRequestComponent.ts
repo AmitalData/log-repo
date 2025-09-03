@@ -24,7 +24,7 @@ import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { ContactPMService } from 'Common/Services/StandardPMs/ContactPMService';
 import { ContactPM } from 'Common/EntityPMs/ContactPM';
 import { HttpErrorResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 @Component({
     selector: 'SIIRequestComponent',
@@ -97,7 +97,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         this.originalSupplierInvoiceItemsCollection.Clear();
         this.supplierInvoiceItemsForSIIRequest.forEach((item, index) => {
             const supplierInvoiceItemLine = new SupplierInvoiceItemsForSIIRequestLine(item, this);
-            supplierInvoiceItemLine.Counter  = index + 1;
+            supplierInvoiceItemLine.Counter = index + 1;
             this.supplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
             this.originalSupplierInvoiceItemsCollection.Insert(supplierInvoiceItemLine);
         });
@@ -286,7 +286,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
         const selectedRows = selectedItems.map(item => ({
             DeclarationId: this.DeclarationId,
-            UiIndex: item.Counter ,
+            UiIndex: item.Counter,
             SIIRequestID: this.entityPM.Id,
             InvoiceCounterKey: item.InvoiceCounterKey,
             InvoiceItemLineNumber: item.InvoiceLineNumber,
@@ -301,29 +301,63 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     selectedRows
                 )
                 .pipe(
-                    map(
-                        (resp: ServiceResponse) => resp.Result as ReleaseRequestApiResponseDto
-                    )
+                    map((resp: any) => normalizeReleasePayload(resp)),
+                    finalize(() => this.CurrentSession.StopBusyIndicator())
                 )
                 .subscribe(
                     (payload: ReleaseRequestApiResponseDto) => {
-                        this.CurrentSession.StopBusyIndicator();
+                        const code = toNumber(payload?.ResponseCode);
+
+                        if (code === 0) {
+                            this.entityPM.IsDirty = false;
+
+                            const reqNo = payload?.RequestNumber;
+                            const reqNoStr = reqNo == null ? '' : String(reqNo);
+
+                            const successMsg = reqNoStr !== ''
+                                ? (TextCodeTranslator.Translate('Customs.SIIRequest.O.SendSuccessWithRequestNumber') || 'Request succeeded. Request number: {0}')
+                                    .replace(/\{0\}/g, reqNoStr)
+                                : ('Request sent successfully.');
+
+                            const dlg = new ConfirmWindow();
+                            dlg.Title = TextCodeTranslator.Translate('General.B.Success') || 'Success';
+                            dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Ok') || 'OK';
+                            dlg.ShowNoButton = true;
+                            dlg.Show(successMsg);
+
+                            dlg.WindowClosed.subscribe(() => {
+                                if (dlg.Yes) {
+                                    this.CurrentSession.CloseCurrentWindow();
+                                } else {
+                                    this.RefreshEntity();
+                                }
+                            });
+                            return;
+                        }
+
+                        const errDlg = new ConfirmWindow();
+                        errDlg.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
+                        errDlg.ShowNoButton = false;
+                        errDlg.Title = 'Errors Found';
+                        errDlg.IsMultipleMessages = true;
+                        errDlg.ShowErorImage = true;
+                        errDlg.Show(
+                            (payload && (payload as any).ValidationMessages) ||
+                            TextCodeTranslator.Translate('General.B.Error')
+                        );
                     },
-
                     (err: HttpErrorResponse) => {
-                        debugger;
-                        this.CurrentSession.StopBusyIndicator();
-
                         const dlg = new ConfirmWindow();
                         dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
                         dlg.ShowNoButton = false;
-                        dlg.Title = "Errors Found";
+                        dlg.Title = 'Errors Found';
                         dlg.IsMultipleMessages = true;
                         dlg.ShowErorImage = true;
                         dlg.Show(extractMessage(err));
                     }
                 );
         };
+
 
         if (this.entityPM.IsDirty || this.entityPM.Id == null) {
             const confirm = new ConfirmWindow();
@@ -494,7 +528,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
 
         this.supplierInvoiceItemsCollection.Clear();
         for (let idx = 0; idx < filtered.length; idx++) {
-            filtered[idx].Counter  = idx + 1;
+            filtered[idx].Counter = idx + 1;
             this.supplierInvoiceItemsCollection.Insert(
                 new SupplierInvoiceItemsForSIIRequestLine(filtered[idx], this)
             );
@@ -519,7 +553,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
             this.supplierInvoiceItemsCollection.Clear();
             if (filtered.length > 0) {
                 filtered.forEach((row, idx) => {
-                    row.Counter  = idx + 1; // <-- reset numbering
+                    row.Counter = idx + 1; // <-- reset numbering
                     this.supplierInvoiceItemsCollection.Insert(
                         new SupplierInvoiceItemsForSIIRequestLine(row, this)
                     );
@@ -552,7 +586,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
         if (!items.length) return;
         this.supplierInvoiceItemsCollection.Clear();
         items.forEach((item, index) => {
-            item.Counter  = index + 1;
+            item.Counter = index + 1;
             this.supplierInvoiceItemsCollection.Insert(new SupplierInvoiceItemsForSIIRequestLine(item, this));
         });
         if (!AppTool.IsNullOrEmpty(this.SearchText)) {
@@ -959,4 +993,12 @@ function extractMessage(err: HttpErrorResponse): string {
         err.message ||
         TextCodeTranslator.Translate('General.B.Error')
     );
+}
+function normalizeReleasePayload(resp: any): ReleaseRequestApiResponseDto {
+    const p = (resp && resp.Result) ? resp.Result : resp;
+    return p as ReleaseRequestApiResponseDto;
+}
+function toNumber(x: any): number {
+    const n = Number(x);
+    return isNaN(n) ? -1 : n;
 }
