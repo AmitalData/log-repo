@@ -400,6 +400,10 @@ namespace WebFreight.Web.WcfApi
                 {
                     sqlQuery = sqlQuery.Replace("@CLOSE_TABLE", queryParams["CLOSE_TABLE"]);
                 }
+                if (!string.IsNullOrEmpty( sql_logi.HAS_IN_OPER))
+                {
+                    sqlQuery = sqlQuery.Replace(sql_logi.HAS_IN_OPER, queryParams[sql_logi.HAS_IN_OPER.Substring(1)]);
+                }
                 using (SqlConnection connection = new SqlConnection())
                 {
                     if (from_global)
