@@ -200,8 +200,10 @@ namespace WebFreight.Web
 <DAT name=""NAME_ENG"" xml:space='preserve'>CFIUDIAMONDS</DAT>
 <DAT name=""REFERENCE"">DECLARATIONS</DAT>
 <DAT name=""PARAMETERS"">ID=True</DAT>
-<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond frjuom CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID, ISSIGNEDVERSION, IsValidTicketsDiamond, IsMissMandatoryDiamond
+FROM CUSTOMS.DECLARATIONS
+WHERE ID IN (SELECT value FROM @ID) AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT>
 <DAT name=""HAS_TENANT"">true</DAT>
