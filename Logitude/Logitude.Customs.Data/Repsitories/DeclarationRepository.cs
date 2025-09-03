@@ -1244,6 +1244,14 @@ namespace Logitude.Customs.Data.Repsitories
             return HatraDateQuery.FirstOrDefault().ToString();
         }
 
+        public bool HasHataraByCustomFile(string customFileNo, int tenant)
+        {
+            return context.Declarations
+                    .Any(a => a.CustomFileNo == customFileNo
+                       && a.Tenant == tenant
+                       && a.HatraDate != null);
+        }
+
         public List<string> GetDeclarationsByCourierHAWBsExpectDecWithHatraDate(List<string> courierHAWBs, int tenant)
         {
 
