@@ -34,6 +34,7 @@ namespace WebFreight.Web
                 XmlNode occ_root = doc.DocumentElement;
                 occNodeList = occ_root.SelectNodes("descendant::DAT");
                 bool IS_INSERT = false;
+                string HAS_IN_OPER = "";
                 string PARAMETERS_TYPE = string.Empty;
                 try
                 {
@@ -43,6 +44,11 @@ namespace WebFreight.Web
                 try
                 {
                     PARAMETERS_TYPE = occ_root.SelectNodes("descendant::DAT[@name='PARAMETERS_TYPE']").Item(0).InnerText.ToString();
+                }
+                catch { }
+                try
+                {
+                    HAS_IN_OPER = occ_root.SelectNodes("descendant::DAT[@name='HAS_IN_OPER']").Item(0).InnerText.ToString();
                 }
                 catch { }
                 logi_list.Add(new CFILOGIAPI
@@ -57,7 +63,8 @@ namespace WebFreight.Web
                     LINQ = occ_root.SelectNodes("descendant::DAT[@name='LINQ']").Item(0).InnerText.ToBoolAmitalFormart(),
                     HAS_TENANT = occ_root.SelectNodes("descendant::DAT[@name='HAS_TENANT']").Item(0).InnerText.ToBoolAmitalFormart(),
                     IS_INSERT = IS_INSERT,
-                    PARAMETERS_TYPE = PARAMETERS_TYPE
+                    PARAMETERS_TYPE = PARAMETERS_TYPE,
+                    HAS_IN_OPER = HAS_IN_OPER
                 });
             }
             return (logi_list);
@@ -97,6 +104,8 @@ namespace WebFreight.Web
         public bool LINQ = false;
         public bool HAS_TENANT = true;
         public bool IS_INSERT = false;
+        public string HAS_IN_OPER = "";
+        
         public SqlParameter get_SqlParameter(string name, string val)
         {
             SqlParameter ret = null;
@@ -191,12 +200,15 @@ namespace WebFreight.Web
 <DAT name=""NAME_ENG"" xml:space='preserve'>CFIUDIAMONDS</DAT>
 <DAT name=""REFERENCE"">DECLARATIONS</DAT>
 <DAT name=""PARAMETERS"">ID=True</DAT>
-<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond from CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>Select ID,ISSIGNEDVERSION,IsValidTicketsDiamond,IsMissMandatoryDiamond frjuom CUSTOMS.DECLARATIONS where ID in (@ID) AND TENANT=@Tenant</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID, ISSIGNEDVERSION, IsValidTicketsDiamond, IsMissMandatoryDiamond
+FROM CUSTOMS.DECLARATIONS
+WHERE ID IN (SELECT value FROM @ID) AND TENANT=@Tenant</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT>
 <DAT name=""HAS_TENANT"">true</DAT>
 <DAT name=""PARAMETERS_TYPE"">DOCUMENTSFILINGID=varchar,40&uSEP;ID=varchar,15&uSEP;CUSTOMFILENO=varchar,12&uSEP;EXTERNALDECLARATIONNUMBER=varchar,35</DAT>
+<DAT name=""HAS_IN_OPER"">@ID</DAT>
 </OCC>
 <OCC>
 <DAT name=""CODE"">A113</DAT>
@@ -1155,6 +1167,7 @@ Customs.CUSTOMSCOLLATERALSANSWERS WHERE CUSTOMSCOLLATERALID IN (@CUSTOMSCOLLATER
 <DAT name=""LINQ"">true</DAT>
 <DAT name=""HAS_TENANT"">true</DAT>
 <DAT name=""PARAMETERS_TYPE"">CUSTOMSCOLLATERALID=varchar,15</DAT>
+<DAT name=""HAS_IN_OPER"">@CUSTOMSCOLLATERALID</DAT>
 </OCC>
 <OCC>
 <DAT name=""CODE"">A35</DAT>
@@ -1169,6 +1182,7 @@ WHERE CUSTOMSCOLLATERALID IN (@CUSTOMSCOLLATERALID) AND CUSTOMSCOLLATERALSANSWER
 <DAT name=""LINQ"">true</DAT>
 <DAT name=""HAS_TENANT"">true</DAT>
 <DAT name=""PARAMETERS_TYPE"">CUSTOMSCOLLATERALID=varchar,15</DAT>
+<DAT name=""HAS_IN_OPER"">@CUSTOMSCOLLATERALID</DAT>
 </OCC>
 <OCC>
 <DAT name=""CODE"">A36</DAT>
@@ -1442,6 +1456,7 @@ WHERE D.ID = DT.DECLARATIONID AND DT.TAXTYPECODE = PT.CODE AND D.ID=@ID AND D.TE
 <DAT name=""LINQ"">true</DAT>
 <DAT name=""HAS_TENANT"">true</DAT>
 <DAT name=""PARAMETERS_TYPE"">CUSTOMSDOCUMENTSTICKETID=varchar,15</DAT>
+<DAT name=""HAS_IN_OPER"">@CUSTOMSDOCUMENTSTICKETID</DAT>
 </OCC>
 <OCC>
 <DAT name=""CODE"">A56</DAT>
