@@ -1457,16 +1457,39 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             if (message == null || message.RetryNumber > 6)
             {
-                var journalFailedService = new JournalFailedService(tenant, seedJournalId);
-                journalFailedService.MarkAsFailed(ex );
-                if (myDbQueueService != null)
-                {
-                    myDbQueueService.Complete();
-                }
                 var accountingContext = AccountingContext.GetContext(tenant);
-               var journalQueryService = new JournalQueryService(accountingContext);
-                journalQueryService.FixFailedReconcileJournals(tenant);
+                var repo = new JournalRepository(accountingContext);
+                var originalPoco = repo.GetSingle(seedJournalId, tenant);
+                bool markAsFailed = !(originalPoco.IsLedgerCreated && originalPoco.StatusCode == ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Approved).ToString());
 
+                try
+                {
+                    if (markAsFailed)
+                    {
+                        var journalFailedService = new JournalFailedService(tenant, seedJournalId);
+                        journalFailedService.MarkAsFailed(ex);
+                    }
+
+                    if (myDbQueueService != null)
+                    {
+                        myDbQueueService.Complete();
+                    }
+                }
+                catch (Exception ex2)
+                {
+                    LogMessagingUtil.Instance.AppendLine($"Failed to mark journal as failed: {seedJournalId} | Exception: {ex2.Message}");
+
+                    if (myDbQueueService != null)
+                    {
+                        myDbQueueService.CompleteAsFailed();
+                    }
+                }
+
+                if (markAsFailed)
+                {
+                    var journalQueryService = new JournalQueryService(accountingContext);
+                    journalQueryService.FixFailedReconcileJournals(tenant);
+                }
             }
         }
         /// <summary>
