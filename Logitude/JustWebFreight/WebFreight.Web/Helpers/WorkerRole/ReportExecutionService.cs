@@ -130,7 +130,7 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
             if (reportExecutionLog != null)
             {
                 reportExecutionLog = GetReportExecutionLog();
-                reportExecutionLog.StatusCode = !string.IsNullOrEmpty(reportExecutionLogArgs.StatusCode) ? reportExecutionLogArgs.StatusCode : reportExecutionLog.StatusCode;
+                reportExecutionLog.StatusCode = !string.IsNullOrEmpty(reportExecutionLogArgs.StatusCode) && (reportExecutionLog.ExceptionMessage == null || reportExecutionLog.ExceptionMessage?.ToLower()?.Contains("stopped manually") == false) ? reportExecutionLogArgs.StatusCode : reportExecutionLog.StatusCode;
                 reportExecutionLog.RetryNumber = queueResponse != null ? queueResponse.RetryNumber : reportExecutionLog.RetryNumber;
                 reportExecutionLog.StartDate = reportExecutionLogArgs.StartDate != null ? reportExecutionLogArgs.StartDate : reportExecutionLog.StartDate;
                 reportExecutionLog.ExecutedByServerName = reportExecutionLogArgs.ExecutedByServerName != null ? reportExecutionLogArgs.ExecutedByServerName : reportExecutionLog.ExecutedByServerName;
