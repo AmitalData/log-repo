@@ -138,7 +138,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
                 rec.NotificationDefinitionCode == "5101R" ||
                 rec.NotificationDefinitionCode == "5101A"
                 )
-                && rec.ResponseToMessage != null && rec.ResponseToMessage.Trim() != ""
+                || rec.ResponseToMessage != null && rec.ResponseToMessage.Trim() != ""
                 ))).ToList();
                 var result = allNotifications.ToList().Select(rec => this.GetEntityPM(rec,true , new NotificationKeys() { Id = rec.Id })).ToList();
                 return result;
