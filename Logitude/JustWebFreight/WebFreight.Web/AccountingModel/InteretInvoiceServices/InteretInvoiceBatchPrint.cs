@@ -5,10 +5,13 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.InvoiceModel.Tools;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools.Utils;
 using Microsoft.Azure.Pipelines.WebApi;
@@ -17,6 +20,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs; 
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Enums;
@@ -31,6 +35,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
 using System.Transactions;
 using WebFreight.Web.WebServices;
 
@@ -42,7 +47,7 @@ namespace Logitude.Accounting.BL.InterestService
         public Stream _Stream;
         byte[] datainByte;
 
-
+        const string INTEREST_REPORT = "ITDT";
         public PdfDocument CheckValidCopiesForInvoicesAndPrint(InterestReportArguments interestReportArgs,int tenant,string email)
         {
            
@@ -79,7 +84,7 @@ namespace Logitude.Accounting.BL.InterestService
                     bool IsPrintARInvoice = PrintInvoicesPDF(email, tenant, ARInvoieId, pdfDoc, "999G",false, commonContext, invoiceContext);
                     if (IsPrintARInvoice && interestReportArgs.AttachReportWithEachInvoice)
                     {
-                        bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, "ITDT", false, commonContext, invoiceContext);
+                        bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, INTEREST_REPORT, false, commonContext, invoiceContext);
                     }
 
                 }
@@ -122,13 +127,13 @@ namespace Logitude.Accounting.BL.InterestService
                 string[] EntitiesId = invoiceId.Split(',');
                 string InterestReportId = EntitiesId[0];
                 string ARInvoieId = EntitiesId[1];
-                if (!PrintSingleDocument(email, tenant, ARInvoieId, "999G", commonContext, invoiceContext))
+                if (!PrintSingleDocumentInv(email, tenant, ARInvoieId, "999G", commonContext, invoiceContext))
                 {
                     return false;
                 }
                 if (args.AttachReportWithEachInvoice)
                 {
-                    if (!PrintSingleDocument(email, tenant, InterestReportId, "ITDT", commonContext, invoiceContext))
+                    if (!PrintSingleDocumentITDT(email, tenant, InterestReportId, INTEREST_REPORT, commonContext, invoiceContext))
                     {
                         return false;
                     }
@@ -136,14 +141,11 @@ namespace Logitude.Accounting.BL.InterestService
             }
             return true;
         }
-        private bool PrintSingleDocument(string email, int tenant, string invoiceId, string documentCode, ICommonDataContext commonContext, IInvoiceContext invoiceContext)
+
+        private bool PrintSingleDocumentITDT(string email, int tenant, string invoiceId, string documentCode, ICommonDataContext commonContext, IInvoiceContext invoiceContext)
         {
             try
             {
-
-                ARInvoiceRepository repository = new ARInvoiceRepository();
-                ARInvoice invoice = repository.GetSingleARInvoice(invoiceId, tenant);
-
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(documentCode, tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
@@ -156,9 +158,62 @@ namespace Logitude.Accounting.BL.InterestService
                 if (documentOut == null)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteError("No document found for printing.");
-                    //   return false;
+                    return false;
+                }
 
-                        PrintInterestInvoice(tenant, invoice, invoiceContext);
+                return UpdateAndPrintDocument(documentOut, documentCode, invoiceId, tenant, email, commonContext, invoiceContext);
+            }
+            catch (Exception ex)
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteError($"Failed to print document {invoiceId}: {ex.Message}");
+                return false;
+            }
+        }
+
+
+        private bool PrintSingleDocumentInv(string email, int tenant, string invoiceId, string documentCode, ICommonDataContext commonContext, IInvoiceContext invoiceContext)
+        {
+            try
+            {
+
+                ARInvoiceRepository repository = new ARInvoiceRepository();
+                ARInvoice invoice = repository.GetSingleARInvoice(invoiceId, tenant);
+
+                ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+                DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+                DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+                DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+                DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(tenant);
+
+                DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+                string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant(documentCode, tenant);
+                DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+                bool isPrinted = invoice.IsPrinted;
+                if (invoice.IsPrinted)
+                {
+                    DocumentHelper documentHelper = new DocumentHelper();
+                    bool isPDFExist = documentHelper.CheckPDFInvoiceInStorage_Outer(invoice, tenant, repository);
+                    if (!isPDFExist)
+                    {
+                        isPrinted = false;
+                    }
+                }
+                if (invoice.IsPrinted)
+                {
+                    var documentOut = commonContext.DocumentOuts
+                    .Include("DocumentsFiling")
+                    .Include("DocumentsFiling.DocumentType")
+                    .FirstOrDefault(doc => doc.DocumentsFiling.EntityId == invoiceId && doc.DocumentsFiling.DocumentTypeId == documentTypeId && doc.Tenant == tenant);
+
+                    if (documentOut == null)
+                    {
+                        isPrinted = false;
+                    }
+                }
+
+                if (!isPrinted)
+                {
+                    PrintInterestInvoice(tenant, invoice, invoiceContext);
                 }
 
                 else if (invoice.IsSigned == ARInvoiceSignedStatusValues.NotSigned || invoice.IsSigned == ARInvoiceSignedStatusValues.SigningFailed)
@@ -168,14 +223,19 @@ namespace Logitude.Accounting.BL.InterestService
                 else if (invoice.IsSigned == ARInvoiceSignedStatusValues.SignedButNotYetSent || invoice.IsSigned == ARInvoiceSignedStatusValues.SignedButSendingByEmailFailed)
                 {
                     DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invoice?.Id, tenant).FirstOrDefault();
-                    DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings?.Id, tenant, "999G");
+                    DocumentOutCopyPM documentOutCopyPM = documentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings?.Id, tenant, "999G");
                     Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
-                    string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice?.BillToId, tenant);
+                    string contactEmail = String.Empty;
+                    bool isInterestReport = false;
+                    (contactEmail, isInterestReport) = this.IsSignatureHtmlPresentByBillToId(invoice?.BillToId, tenant);
                     if (!string.IsNullOrEmpty(contactEmail))
-                        this.SendToEmailContact(contactEmail, invoice, document, myDocumentFilings?.Id, repository, tenant, accountingSettings);
+                    {
+                        DocumentHelper documentHelper = new DocumentHelper();
+                        documentHelper.SendToEmailContactOuter(contactEmail, invoice, document, myDocumentFilings?.Id, repository, tenant, isInterestReport);
+                    }
                 }
 
-                    return UpdateAndPrintDocument(documentOut, documentCode, invoiceId, tenant, email, commonContext, invoiceContext);
+                return true; // UpdateAndPrintDocument(documentOut, documentCode, invoiceId, tenant, email, commonContext, invoiceContext);
             }
             catch (Exception ex)
             {
@@ -183,6 +243,33 @@ namespace Logitude.Accounting.BL.InterestService
                 return false;
             }
         }
+
+
+        private (string email, bool isInterestReport) IsSignatureHtmlPresentByBillToId(string Billto, int tenant)
+        {
+            string email = String.Empty;
+            bool isInterestReport = false;    
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+            if (string.IsNullOrEmpty(Billto)) return (email, isInterestReport);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Card myCard = (from card in objectContext.Cards
+                                                                    where card.Id == Billto
+                                                                    select card).FirstOrDefault();
+
+            if (myCard != null && !string.IsNullOrEmpty(myCard.EmailForSendingSingArinvoice))
+            {
+                email = objectContext.Contacts.Where(contact => contact.Id == myCard.EmailForSendingSingArinvoice).FirstOrDefault().Email;
+                if (!string.IsNullOrEmpty(email))
+                {
+                    isInterestReport = myCard.SendingInterestReport ? true : false;
+                    return (email, isInterestReport);
+                }
+
+            }
+            return (email, isInterestReport);
+        }
+
+
 
         public void PrintInterestInvoice(int tenant, ARInvoice aRInvoice, IInvoiceContext invoiceContext)
         {
@@ -348,7 +435,7 @@ namespace Logitude.Accounting.BL.InterestService
                 }
                 if (interestReportArgs.AttachReportWithEachInvoice)
                 {
-                    bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, "ITDT", true);
+                    bool IsPrintInterestReport = PrintInvoicesPDF(email, tenant, InterestReportId, pdfDoc, INTEREST_REPORT, true);
                     if (!IsPrintInterestReport)
                     {
                         InterestReportIdsNotPrinted.Add(InterestReportId);

@@ -344,12 +344,12 @@ namespace Logitude.BL.Helpers
                 DocumentRepository documentRepository = new DocumentRepository(commoncontext);
                 DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
                 DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
-                DocumentOutCopyQuery DocumentOutCopyQuery = new DocumentOutCopyQuery(tenant);
+                DocumentOutCopyQuery documentOutCopyQuery = new DocumentOutCopyQuery(tenant);
 
 
                TenantRepository tenantRepository = new TenantRepository(tenant);
                 DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invoice.Id, tenant).FirstOrDefault();
-                DocumentOutCopyPM documentOutCopyPM = DocumentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings.Id, tenant, "999G");
+                DocumentOutCopyPM documentOutCopyPM = documentOutCopyQuery.GetDocumentOutCopiesForDocumentOutAndType(myDocumentFilings.Id, tenant, "999G");
                 Document document = documentRepository.GetSingleDocument(tenant, documentOutCopyPM?.DocumentId);
                 ContactPM loggedcontact = LoggedContactResolver.GetLoggedContact(tenant);
                   var vatNumber = tenantRepository.GetSingleByTenant(tenant).VatNumber;
@@ -662,6 +662,14 @@ namespace Logitude.BL.Helpers
                 if (contactEmail == null && tenant != 0) contactEmail = contactQuery.GetContactEmailById(loggedContactId, 0);
             }
             return contactEmail;
+        }
+
+        public void SendToEmailContactOuter(string email, ARInvoice arinvoice, Document document, string DocumentFilingId, ARInvoiceRepository repository, int tenant, bool isInterestReport)
+        {
+            this.isInterestReport = isInterestReport;
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+            this.SendToEmailContact(email, arinvoice, document, DocumentFilingId, repository, tenant, accountingSettings);
         }
 
         private void SendToEmailContact(string email, ARInvoice arinvoice,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant,FullAccountingSettingPM accountingSettings)
@@ -994,6 +1002,13 @@ namespace Logitude.BL.Helpers
 
         }
 
+        public bool CheckPDFInvoiceInStorage_Outer(ARInvoice invoice, int tenant, ARInvoiceRepository repository)
+        {
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+            string contactEmail = this.IsSignatureHtmlPresentByBillToId(invoice.BillToId, tenant);
+            return this.CheckPDFInvoiceInStorage_Inner(invoice, tenant, repository, contactEmail, accountingSettings);
+        }
 
         public bool CheckPDFInvoiceInStorage(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings , string loggedContactId)
         {
@@ -1020,7 +1035,7 @@ namespace Logitude.BL.Helpers
                         this.CreatePdfDoc(documentsFiling, invoice.Id, invoice.Tenant, "ARInvoice", true);
                         if (this.isInterestReport && invoice.ARInvoiceTypeCode == "IT")
                         {
-                        this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id, loggedContactId);
+                            this.CreateDocumentInterestReport(invoice.Tenant, invoice.Id, loggedContactId);
                         }
                         rv = this.CheckPDFInvoiceInStorage_Inner(invoice, invoice.Tenant, repository, contactEmail, accountingSettings);
                     }
