@@ -116,6 +116,7 @@ namespace CustomsBook
                 {
                     // File is not a valid ZIP file
                     logger.Debug("The file is not a valid ZIP file.");
+                    SendEmailAlert(new Exception("The file is not a valid ZIP file."));
                 }
 
             }
