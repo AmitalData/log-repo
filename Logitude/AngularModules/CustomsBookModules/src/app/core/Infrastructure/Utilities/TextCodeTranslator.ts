@@ -31,9 +31,9 @@ export class TextCodeTranslator {
 	static Translate(value: string, Fix: boolean = true): string {
 			if (isNullOrUndefined(window.TextCodes)) { 
 			let texts = lzString.decompress(LocalStorageManager.GetItem("TextCodes"));
-			texts = JSON.parse(texts);
-			console.log(texts)
+		
 			if (texts) {
+					texts = JSON.parse(texts);
 				window.TenantTranslations = texts;
 				window.TenantLanguageTranslations = texts;
 				window.TextCodesTranslations = texts;
@@ -50,12 +50,12 @@ export class TextCodeTranslator {
 	
 		var translation: string = '';
 
-		var cachedTranslationObject = window.TranslationsCache.filter((d: any) => d.Code === value)[0];
+		var cachedTranslationObject = window.TranslationsCache?.filter((d: any) => d.Code === value)[0];
 
 		if (cachedTranslationObject) {
 			translation = cachedTranslationObject.TranslatedText;
 		} else {
-			var translationObject = window.TextCodesTranslations.filter((d: any) => d.Code == value)[0];
+			var translationObject = window.TextCodesTranslations?.filter((d: any) => d.Code == value)[0];
 			if (translationObject) {
 				translation = translationObject.TranslatedText;
 				window.TranslationsCache.push(translationObject);

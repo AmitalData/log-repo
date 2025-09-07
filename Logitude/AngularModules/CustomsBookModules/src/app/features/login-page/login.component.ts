@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
     public BackGroundImg: string = "url('assets/images/map-bg.svg')";
 
     public text: BehaviorSubject<string> = new BehaviorSubject<string>("");
+    public text1: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
 
     constructor(private router: Router,
@@ -90,7 +91,6 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
-
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
         const isCustomsBookSite = true;
@@ -120,6 +120,7 @@ export class LoginComponent implements OnInit {
             }
             else this.Login(LoginParams, userData);
         });
+
     }
 
     private IsCustomsBookDomain() {
@@ -179,7 +180,7 @@ export class LoginComponent implements OnInit {
             SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
             sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
             this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
-                this.ShowbusyIndicator = false;
+              
                 SessionInfo.IsAdmin = userData.IsAdmin;
                 if (userData) {
                     SessionInfo.LoggedUserTenant = userData.Tenant;
@@ -194,6 +195,7 @@ export class LoginComponent implements OnInit {
                                     .subscribe((myResponse: any) => {
                                         if (!FeatureLocator.HasFeaturePermession("Customs.CB_CustomsItemComputedData", "CustomsBookFeature")) {
                                             this.errorMessage = "You have no permission to access this feature";
+                                            this.ShowbusyIndicator = false;
                                             return;
                                         }
                                         else {
@@ -208,6 +210,7 @@ export class LoginComponent implements OnInit {
                         this.RouteToMainPage();
                     }
                 }
+                  
             });
             this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
         }
@@ -232,16 +235,30 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
+        this.getTranslation();
     }
 
     private RouteToMainPage() {
-        if (this.authService.redirectUrl) {
+        const navigateToMainPage = () => {
+            if (this.authService.redirectUrl) {
             this.router.navigate([this.authService.redirectUrl]);
             this.authService.redirectUrl = null;
-        }
-        else if (sessionStorage.getItem("Token")) {
-            this.router.navigate([this.authService.DefaultPageCustomsBook])
-        }
+            }
+            else if (sessionStorage.getItem("Token")) {
+            this.router.navigate([this.authService.DefaultPageCustomsBook]);
+            }
+            this.ShowbusyIndicator = false;
+        };
+
+        const waitForTextCodes = () => {
+            if (window.TextCodes) {
+            navigateToMainPage();
+            } else {
+            setTimeout(waitForTextCodes, 5);
+            }
+        };
+
+        waitForTextCodes();
     }
 
     public ForgotPasswordClicked() {
@@ -250,33 +267,54 @@ export class LoginComponent implements OnInit {
     }
 
     public getTranslation(): void {
-        let texts = lzString.decompress(LocalStorageManager.GetItem("TextCodes"));
-        texts = JSON.parse(texts);
-        console.log(JSON.parse(texts))
-        if (texts === null || texts.length === 0) {
-            this.loginService
-                .GetTenantTextCode()
-                .toPromise().then((myResult: any) => {
-                    if (myResult) {
-                        window.TextCodesCache = myResult;
-                        window.TenantTranslations = myResult;
-                        window.TenantLanguageTranslations = myResult;
-                        window.TextCodesTranslations = myResult;
-                        window.TranslationsCache = myResult;
-                        window.TextCodes = myResult;
-                        LocalStorageManager.SetItem("TextCodes", lzString.compress(JSON.stringify(myResult)));
-                    }
+        const setDefaultTexts = () => {
+            if (!this.text1.getValue()) {
+                this.text1.next("Login");
+            }
+            if (!this.text.getValue()) {
+                this.text.next("If you have forgotten your password, please click here");
+            }
+        };
 
-                }).then(() => {
-                    console.log(this.text.getValue())
-                    this.text.next(TextCodeTranslator.Translate('General.G.ForgotPasswordMsg',false));
-                });
-
-
-
+        if (!SessionInfo.Token) {
+            setDefaultTexts();
+            return;
         }
-       
 
+        let texts: any = null;
+        const textCodes = LocalStorageManager.GetItem("TextCodes");
+        if (textCodes) {
+            texts = lzString.decompress(textCodes);
+        }
+
+        const setTranslatedTexts = () => {
+            try {
+                this.text.next(TextCodeTranslator.Translate('General.G.ForgotPasswordMsg', false));
+                this.text1.next(TextCodeTranslator.Translate('General.O.Login', false));
+            } catch (error) {
+                console.error(error);
+                setDefaultTexts();
+            }
+        };
+
+        if (!texts) {
+            this.loginService.GetTenantTextCode().toPromise().then((myResult: any) => {
+                if (myResult) {
+                    texts = myResult;
+                    window.TextCodesCache = myResult;
+                    window.TenantTranslations = myResult;
+                    window.TenantLanguageTranslations = myResult;
+                    window.TextCodesTranslations = myResult;
+                    window.TranslationsCache = myResult;
+                    window.TextCodes = myResult;
+                    LocalStorageManager.SetItem("TextCodes", lzString.compress(JSON.stringify(myResult)));
+                }
+            }).then(setTranslatedTexts)
+              .catch(() => setDefaultTexts());
+        } else {
+            setTranslatedTexts();
+        }
     }
+
 }
 
