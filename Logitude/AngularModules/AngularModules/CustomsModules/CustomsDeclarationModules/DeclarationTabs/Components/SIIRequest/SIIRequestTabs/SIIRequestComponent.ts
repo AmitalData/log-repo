@@ -320,9 +320,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                                 : ('Request sent successfully.');
 
                             const dlg = new ConfirmWindow();
-                            dlg.Title = TextCodeTranslator.Translate('General.B.Success') || 'Success';
-                            dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Ok') || 'OK';
-                            dlg.ShowNoButton = true;
+                            dlg.Title = TextCodeTranslator.Translate('Customs.General.B.OK') || 'Success';
+                            dlg.YesButtonText = TextCodeTranslator.Translate('Customs.General.B.OK') || 'OK';
+                            dlg.ShowNoButton = false;
+                            dlg.ShowInfoImage = true;
                             dlg.Show(successMsg);
 
                             dlg.WindowClosed.subscribe(() => {
@@ -338,7 +339,7 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                         const errDlg = new ConfirmWindow();
                         errDlg.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
                         errDlg.ShowNoButton = false;
-                        errDlg.Title = 'Errors Found';
+                        errDlg.Title = TextCodeTranslator.Translate('Customs.General.B.OK');
                         errDlg.IsMultipleMessages = true;
                         errDlg.ShowErorImage = true;
                         errDlg.Show(
@@ -349,8 +350,8 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                     (err: HttpErrorResponse) => {
                         const dlg = new ConfirmWindow();
                         dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Close');
+                        dlg.Title = TextCodeTranslator.Translate('Customs.General.B.OK');
                         dlg.ShowNoButton = false;
-                        dlg.Title = 'Errors Found';
                         dlg.IsMultipleMessages = true;
                         dlg.ShowErorImage = true;
                         dlg.Show(extractMessage(err));

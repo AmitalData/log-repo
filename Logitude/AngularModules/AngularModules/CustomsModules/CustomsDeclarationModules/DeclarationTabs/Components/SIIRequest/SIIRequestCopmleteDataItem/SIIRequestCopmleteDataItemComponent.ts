@@ -196,6 +196,12 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
             if (productFileId) {
                 this.ProductFileNumber = productFileId;
+                this.checkMandatoryFields();
+                
+                if (this.errorsList.length === 0 && !AppTool.IsNullOrEmpty(this.ProductFileNumber)) {
+                    this.RequestRequiredStatus = CompleteStatuses.FullyCompleted;
+                }
+
                 this.generalErrors = []; 
                 this.SaveSupplierInvoiceItemsReqList();
                 return;
