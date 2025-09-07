@@ -293,6 +293,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIDataContract\AccountingEntity.Generated.cs" />
+    <Compile Include="APIDataContract\ARPaymentCheque.Generated.cs" />
     <Compile Include="APIDataContract\AutomaticReconcile.Generated.cs" />
     <Compile Include="APIDataContract\AutomaticReconcileMethod.Generated.cs" />
     <Compile Include="APIDataContract\Category1.Generated.cs" />
@@ -319,7 +320,9 @@
     <Compile Include="APIDataContract\JournalType.Generated.cs" />
     <Compile Include="APIDataContract\LedgerTransaction.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\AccountingEntityQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\ARPaymentChequeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\AutomaticReconcileMethodQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\AutomaticReconcileQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\AutomaticReconcileQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\Category1QueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\Category2QueryService.Generated.cs" />
@@ -328,6 +331,7 @@
     <Compile Include="APIDataContract\QueryService\Category5QueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\ChartOfAccountQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\ChartOfAccountsTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\ChequeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountChequeDetailsQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountMoreDataQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\GLAccountMoreDataQueryService.Generated.cs" />
@@ -336,12 +340,14 @@
     <Compile Include="APIDataContract\QueryService\GLAccountTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalActionTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalLineQueryService.cs" />
+    <Compile Include="APIDataContract\QueryService\JournalLineQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalStatusTypeQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalStatusTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\JournalTypeQueryService.cs" />
     <Compile Include="APIDataContract\QueryService\JournalTypeQueryService.Generated.cs" />
+    <Compile Include="APIDataContract\QueryService\LedgerTransactionQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\ReconcileMethodQueryService.Generated.cs" />
     <Compile Include="APIDataContract\QueryService\RevenueExpenseTypeQueryService.Generated.cs" />
     <Compile Include="APIDataContract\ReconcileMethod.Generated.cs" />
@@ -843,6 +849,10 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\Generated\ARPChequeLineQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\BankChequeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DepositQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\ReconcileCurrencyTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GLAccountRecocileDataQueryService.cs" />
     <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingIntegrityCheckQueryService.cs" />
@@ -942,7 +952,6 @@
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
-    <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestBasesPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestLastBatchServiceQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportLineQueryService.cs" />
@@ -1122,7 +1131,6 @@
     <Compile Include="Utils\APInvoiceStatusUpdateBatch.cs" />
     <Compile Include="Utils\BanksCCExternalRecoBatch.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
-    <Compile Include="Utils\IntegrityCheckBatch.cs" />
     <Compile Include="Utils\InvoiceApiQueryBatch.cs" />
     <Compile Include="Utils\ReconcileInProgressCleanupBatch.cs" />
     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
