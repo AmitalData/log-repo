@@ -440,7 +440,7 @@
                     </log-column>
 
                      <!-- InternalNote -->
-                      <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'Internal Notes'">
+                      <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe">
                         <ng-template let-item>
                         <log-cell-template   #logcelltemplate>
                             <table>
