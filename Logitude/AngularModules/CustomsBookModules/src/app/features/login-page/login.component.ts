@@ -10,9 +10,6 @@ import { FeatureLocator } from '../../core/Infrastructure/Utilities/FeatureLocat
 import { LoginService } from '../../core/Infrastructure/Services/LoginService';
 import { InfrastructureDomainService } from '../../core/Infrastructure/Services/InfrastructureDomainService';
 import { Pipes } from '../../core/Infrastructure/ModuleDeclarations';
-import { SessionLocator } from '../../core/Infrastructure/Utilities/SessionLocator';
-import { QueriesPMService } from '../../core/Infrastructure/Services/StandardPMs/QueriesPMService';
-import { TextCodePMService } from '../../core/Infrastructure/Services/StandardPMs/TextCodePMService';
 import { LocalStorageManager } from '../../core/Infrastructure/Utilities/LocalStorageManager';
 import lzString from 'lz-string';
 import { BehaviorSubject } from 'rxjs';

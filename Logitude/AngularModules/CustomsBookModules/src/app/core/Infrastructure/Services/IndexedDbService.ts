@@ -143,7 +143,6 @@ export class IndexedDbService {
         //request.onerror = function (event) {
         //    //alert("Unable to add data\r\nKenny is aready exist in your database! ");
         //}
-        console.log(request)
         return request;
 
     }
