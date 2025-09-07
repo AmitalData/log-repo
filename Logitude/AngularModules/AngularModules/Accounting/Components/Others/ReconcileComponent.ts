@@ -1677,11 +1677,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             let rate: number = +line.ledgerTransaction.ExchangeRate;;
             let lineCurrAmountToReconcile: number = 0;  // if GLAccountPM.CurrencyId != TenantPM.CurrencyId  => lineCurrAmountToReconcile is in GLAccountPM.CurrencyId 
             if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "0" // NIS
-                && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
+                && ((!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) || this.GLAccountPM.IsMultiCurrency)) {     // GLAcc is not multi, not NIS (say, USD)
                 lineCurrAmountToReconcile = +line.AmountToReconcile / rate;  // lineCurrAmountToReconcile in USD, because GLAcc is USD, so all lines are
             }
             else if (rate != 0 && !AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "1" // let's say, USD
-                && !AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) {     // GLAcc is not multi, not NIS (say, USD)
+                && ((!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId) && this.GLAccountPM.CurrencyId != this.TenantPM.CurrencyId) || this.GLAccountPM.IsMultiCurrency)) {     // GLAcc is not multi, not NIS (say, USD)
                 lineCurrAmountToReconcile = line.AmountToReconcile;  // lineCurrAmountToReconcile is already in USD 
             }
             else
@@ -2272,11 +2272,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         var newApPaymentPM: APPaymentPM = new APPaymentPM();
         let paymcurr: string = this.CurrencyId != null ? this.CurrencyId : this.TenantPM.CurrencyId;
 
-        // let recocurr: string = this.TenantPM.CurrencyId;
-        // if (!AppTool.IsNullOrEmpty(this.GLAccountPM.ReconcileMethodCode) && this.GLAccountPM.ReconcileMethodCode == "1")
-        //     recocurr = this.GLAccountPM.CurrencyId;  
-
+        
         newApPaymentPM.ReconcileInternalTrans = this.GetSelectedPageLines();
+        if(this.GLAccountPM.IsMultiCurrency && this.allLinesSameCurrency(newApPaymentPM.ReconcileInternalTrans))
+            paymcurr = newApPaymentPM.ReconcileInternalTrans[0]?.CurrencyId;
         newApPaymentPM.StatusCode = "DR";
         newApPaymentPM.StatusName = "Draft";
         console.log('this.GLAccountPM', this.GLAccountPM);
@@ -2289,7 +2288,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newApPaymentPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         newApPaymentPM.CreateDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.UpdateDate = DateTool.GetCurrentDateAsUtc();
-
         newApPaymentPM.LocalCurrencyId = this.TenantPM.CurrencyId;
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
@@ -2301,6 +2299,12 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             newApPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
         }
         this.showAPPaymentEditcomponent(newApPaymentPM);
+    }
+
+    private allLinesSameCurrency(lines: LedgerTransactionPM[]): boolean {
+        if (lines.length === 0) return true;
+        const firstCurrency = lines[0].CurrencyId;
+        return lines.every(line => line.CurrencyId === firstCurrency);
     }
 
     private showAPPaymentEditcomponent(newApPaymentPM: any) {
