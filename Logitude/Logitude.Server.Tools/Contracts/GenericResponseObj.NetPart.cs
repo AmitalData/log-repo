@@ -40,7 +40,7 @@ namespace Logitude.AmitalMessaging.Infrastructure
 
             }
         }
-
+        public string ExtStatus { get; set; }
 
     }
 }
