@@ -320,9 +320,10 @@ export class SIIRequestComponent extends BaseComponent implements OnInit {
                                 : ('Request sent successfully.');
 
                             const dlg = new ConfirmWindow();
-                            dlg.Title = TextCodeTranslator.Translate('General.B.Success') || 'Success';
-                            dlg.YesButtonText = TextCodeTranslator.Translate('General.B.Ok') || 'OK';
-                            dlg.ShowNoButton = true;
+                            dlg.Title = TextCodeTranslator.Translate('Customs.General.B.OK') || 'Success';
+                            dlg.YesButtonText = TextCodeTranslator.Translate('Customs.General.B.OK') || 'OK';
+                            dlg.ShowNoButton = false;
+                            dlg.ShowInfoImage = true;
                             dlg.Show(successMsg);
 
                             dlg.WindowClosed.subscribe(() => {
