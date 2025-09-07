@@ -473,7 +473,9 @@ namespace Logitude.Accounting.Data.Repositories
                                      return num >= fromNum && num <= toNum;
                                  }
                                  return false;
-                             }).AsQueryable();
+                             })
+                             .OrderBy(r => r.DisplayNumber)
+                             .AsQueryable();
                 }
             }
             if (!includeControlAccount)
