@@ -402,7 +402,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private TenantPM GetTenantPM(int tenant)
         {
-            TenantQuery tenantQuery = new TenantQuery();
+            TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant);
             return tenantPM;
         }

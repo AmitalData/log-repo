@@ -326,6 +326,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             var repoPriv = GetJournalRepositoryPriv();
             var poco = repoPriv.GetSingle(seedJournalId, tenant);
+            if (poco.IsLedgerCreated && poco.StatusCode == ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Approved).ToString())
+            {
+                throw new ValidationException("Cannot set to failed a journal that is already posted to ledger.");
+            }
             poco.StatusCode = ((int)Def.EntityPMs.JournalStatusTypePM.StatusCodeEnum.Failed).ToString();
             repoPriv.Update(poco);
             return poco;

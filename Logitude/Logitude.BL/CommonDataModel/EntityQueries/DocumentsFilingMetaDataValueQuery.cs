@@ -19,10 +19,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentsFilingMetaDataValueRepository repository;
 
-        public DocumentsFilingMetaDataValueQuery()
-        {
-            repository = new DocumentsFilingMetaDataValueRepository();
-        }
+
 
         public DocumentsFilingMetaDataValueQuery(ICommonDataContext context)
         {

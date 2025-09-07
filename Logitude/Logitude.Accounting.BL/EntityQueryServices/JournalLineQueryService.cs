@@ -409,19 +409,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
         }
 
-        //public IQueryable<JournalLineLedgerDTO> GetJournalLineAsLedgerTransactionByAccId(string glAccountId, int tenant)
-        //{
-        //    var journalRepository = new JournalRepository(this.MainContext as IAccountingContext);
-            
-        //    var qJournal = journalRepository.GetQueryablesApprovedStreamed(tenant);
-        //    var qLines = repository.GetQueryContainsAccId(new List<string>() { glAccountId }, tenant);
-        //    var qq = (from j in qJournal
-        //              join jl in qLines
-        //              on j.Id equals jl.JournalId
-        //              select jl
-        //              );
-        //    return GetJournalLineLedgerDTO(null,null,qq);
-        //}
+        public bool ExistsJournalLineByReferenceCreditAccountId(string reference1, string gLAccountId, int tenant)
+        {
+            return repository.ExistsJournalLineByReferenceCreditAccountId(reference1, gLAccountId, tenant);
+        }
+
 
 
         public List<JournalLinePM> GetJournalLinesByJournalId(string JournalId, int tenant)

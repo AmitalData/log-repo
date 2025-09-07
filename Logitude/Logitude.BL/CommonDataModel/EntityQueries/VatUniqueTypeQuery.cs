@@ -13,10 +13,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         VatUniqueTypeRepository repository;
 
-        public VatUniqueTypeQuery()
-        {
-            repository = new VatUniqueTypeRepository();
-        }
         public VatUniqueTypeQuery(int tenant)
         {
             repository = new VatUniqueTypeRepository(tenant);

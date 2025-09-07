@@ -3849,19 +3849,21 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
 
         private void UpdateInvoiceAmountDue()
         {
-            if (this.invoicePaymentsChangeSet != null)
+            if (this.invoicePaymentsChangeSet != null && entityPM.StatusCode != ARInvoiceStatusValues.Void)
             {
                 List<ARInvoicePaymentPM> invoicepayments = (from a in this.invoicePaymentsChangeSet where a.ChangeSetOp != ChangeSetOperation.Delete select a).ToList();
 
                 if (invoicepayments == null || invoicepayments.Count == 0)
                 {
                     entityPM.IsClosed = false;
-                    if (entityPM.StatusCode != "VD")
+                    if (entityPM.StatusCode != ARInvoiceStatusValues.Void)
                     {
-                        if (entityPM.StatusCode != "DR")
+                        if (entityPM.StatusCode != ARInvoiceStatusValues.Draft)
                         {
                             entityPM.AmountDue = entityPM.AmountInInvoiceCurrency.Value;
-                            entityPM.StatusCode = "AD";
+                            entityPM.StatusCode = ARInvoiceStatusValues.Unpaid;
+                            entityPM.PaidDate = null;
+                            entityPM.IsClosed = false;
                         }
                     }
                 }
@@ -3881,14 +3883,19 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
 
                         if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
                         {
-                            entityPM.StatusCode = "PP";
+                            entityPM.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
                             entityPM.IsClosed = false;
+                            entityPM.PaidDate = null;
                         }
 
                         else
                         {
-                            entityPM.StatusCode = "PD";
+                            entityPM.StatusCode = ARInvoiceStatusValues.Paid;
                             entityPM.IsClosed = true;
+                            if (entityPM.PaidDate == null)
+                            {
+                                entityPM.PaidDate = TenantServerConfigration.GetCurrentDateTime(invoice.Tenant).Date;
+                            }
                         }
                     }
 
@@ -3912,6 +3919,7 @@ $"[InterestTransactionPM] CreateInterestTransactionLineForInvoiceLine  ARInvoice
                 invoice.AmountDue = entityPM.AmountDue;
                 invoice.StatusCode = entityPM.StatusCode;
                 invoice.IsClosed = entityPM.IsClosed;
+                invoice.PaidDate = entityPM.PaidDate;
             }
         }
 

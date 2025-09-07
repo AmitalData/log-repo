@@ -322,7 +322,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 string email = HttpContext.Current.User.Identity.Name;
                 if (!string.IsNullOrEmpty(email))
                 {
-                    UserRepository userRepository = new UserRepository(0);
+                    UserRepository userRepository = new UserRepository(tenant);
                     User user = userRepository.GetSingleUserByEmail(email, 0, false);
                     if (user != null)
                     {

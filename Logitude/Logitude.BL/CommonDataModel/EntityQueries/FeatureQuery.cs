@@ -22,10 +22,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         FeatureRepository repository;
 
-        public FeatureQuery()
-        {
-            repository = new FeatureRepository();
-        }
+  
 
         public FeatureQuery(int tenant)
         {

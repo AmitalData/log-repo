@@ -31,7 +31,7 @@ export function FillCurrencyRatesDetails(CurrencyRateRunInBatchDetails: Currency
 }
 
 export function FillRequestSheets(currencyRateRunInBatchDetails: CurrencyRateRunInBatchDetails) {
-    cy.wait(10000);
+    cy.wait(60000);
     cy.FillLogLov(CurrencyRateRunInBatchSelectors.ManageCustomsRequests, currencyRateRunInBatchDetails.ManageCustomsRequests, true);
     cy.get(CurrencyRateRunInBatchSelectors.RequestStatus).then($status => {
         if ($status.length) {

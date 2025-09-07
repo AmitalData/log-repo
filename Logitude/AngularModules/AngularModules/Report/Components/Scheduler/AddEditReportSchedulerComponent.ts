@@ -263,22 +263,31 @@ export class AddEditReportSchedulerComponent implements OnInit {
         let messageTemplateId = this.PageChild_RETASK.GetMessageTemplateId();
         if (this.IsCustomerDebNotification)
         {
-            if(!AppTool.IsNullOrEmpty(this.GLAccountId)){
-               var queryFilterItems = new Array<QueryFilterItem>();
-               var queryFilterItem = new QueryFilterItem();
+           var queryFilterItems = new Array<QueryFilterItem>();
+            var queryFilterItem = new QueryFilterItem();
+
+            if(!AppTool.IsNullOrEmpty(this.GLAccountId))
+            {
                queryFilterItem.FieldName = "GLAccountId";
                queryFilterItem.FieldValue = this.GLAccountId;
                queryFilterItem.Operator = "Equals";
                queryFilterItems.push(queryFilterItem);
-               this.PageChild_PRREP.SetReportFilterItems(queryFilterItems);
             }
-            else{
-               var queryFilterItem = new QueryFilterItem();
+            else
+            {
                queryFilterItem.FieldName = "IsDisableGlaccountId";
                queryFilterItem.FieldValue = true;
                queryFilterItem.Operator = "Equals";
-               queryFilterItem.IsCustom = true;
-               reportFilterItems.push(queryFilterItem);
+               queryFilterItem.IsCustom = true;                       
+            }
+            if(reportFilterItems == null)
+            {
+               queryFilterItems.push(queryFilterItem);
+               this.PageChild_PRREP.SetReportFilterItems(queryFilterItems);
+            }
+            else
+            {
+              reportFilterItems.push(queryFilterItem);
             }
          }
 

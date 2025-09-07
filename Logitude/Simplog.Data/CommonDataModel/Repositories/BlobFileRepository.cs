@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public BlobFileRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public BlobFileRepository(ICommonDataContext context)
         {

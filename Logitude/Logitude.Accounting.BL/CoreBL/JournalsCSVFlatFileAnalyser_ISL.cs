@@ -352,6 +352,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (jLine.DuplCheck)
                     {
                         jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.CreditGLAccountId, tenant, jLine.CreditGLAccount);
+                        if (jLine.SkipLine)
+                            _JournalSrcLinesDTO.ForEach(jl => { if (jl != jLine && jl.Reference1 == jLine.Reference1) jl.SkipLine = true; });
+
                     }
                     if (!jLine.SkipLine) totalCredit += Math.Round(jLine.LocalAmount, 2);
 
@@ -389,13 +392,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.DebitGLAccountId = debitPM.Id;
                     }
-                    if (jLine.DuplCheck)
-                    {
-                        jLine.SkipLine = CheckDuplicateRef(jLine.Reference1, jLine.DebitGLAccountId, tenant, jLine.DebitGLAccount);
-                    }
-                    if (!jLine.SkipLine) totalDebit += Math.Round(jLine.LocalAmount, 2);
+                    totalDebit += Math.Round(jLine.LocalAmount, 2);
 
-				}
+                }
 
                 count++;
             }
@@ -410,8 +409,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
         private bool CheckDuplicateRef(string reference1, string gLAccountId, int tenant, string account)
         {
-            LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(accountingContext);
-            if (ledgerTransactionQueryService.ExistsLedgerTransactionByReferenceGLAccountId(reference1,gLAccountId, tenant))
+            JournalLineQueryService journalLineQueryService = new JournalLineQueryService(accountingContext);
+            if (journalLineQueryService.ExistsJournalLineByReferenceCreditAccountId(reference1, gLAccountId, tenant))
             {
                 string text = "Reference " + reference1 + " exists already in G.L.Account " + account;
                 this.AddAccountLineRow(text);

@@ -13,10 +13,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         WarehouseWeightRoundingRepository repository;
 
-        public WarehouseWeightRoundingQuery()
-        {
-            repository = new WarehouseWeightRoundingRepository();
-        }
+
 
         public WarehouseWeightRoundingQuery(int tenant)
         {

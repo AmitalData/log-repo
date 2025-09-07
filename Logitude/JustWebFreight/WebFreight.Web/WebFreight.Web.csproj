@@ -41,9 +41,8 @@
     <RestorePackages>true</RestorePackages>
     <UseGlobalApplicationHostFile />
     <TypeScriptToolsVersion>2.0</TypeScriptToolsVersion>
-	  <Use64BitIISExpress>
-	  </Use64BitIISExpress>
-	 <NuGetPackageImportStamp>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -1136,7 +1135,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InvoiceApiStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\InvoiceApiStepViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
-     <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
+    <Compile Include="Controllers\CommonDataModel\Extended\TruckerSettingExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\DocumentsMetaDataTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\ResponsibilityViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\TruckerSettingViewsController.Generated.cs" />
@@ -1158,8 +1157,8 @@
     <Compile Include="Controllers\CustomsModel\Extended\SIIRequestExtendedController.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\ListControllers\SearchIndexEditHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CommonDataModel\Generated\PMControllers\SearchIndexEditHistoryController.Generated.cs" />
-     <Compile Include="Controllers\AccountingModel\CustomerDebtNotificationExtendedController.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
+    <Compile Include="Controllers\AccountingModel\CustomerDebtNotificationExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PreferenceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginConnectionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestHandlingAuthorityViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SIIDocumentTypeViewsController.Generated.cs" />
@@ -1246,12 +1245,12 @@
     <Compile Include="Controllers\CustomsModel\Extended\CB_RuleClassificationExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleClassificationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleClassificationController.Generated.cs" />
-     <Compile Include="Controllers\InfrastructureModel\Extended\TasksSchedulerExtendedController.cs" />
-   <Compile Include="Controllers\GlobalModel\Generated\ListControllers\DefaultAndConfigurationKeyViewsController.Generated.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\TasksSchedulerExtendedController.cs" />
+    <Compile Include="Controllers\GlobalModel\Generated\ListControllers\DefaultAndConfigurationKeyViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\ListControllers\DefaultAndConfigurationViewsController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\DefaultAndConfigurationController.Generated.cs" />
     <Compile Include="Controllers\GlobalModel\Generated\PMControllers\DefaultAndConfigurationKeyController.Generated.cs" />
-     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
+    <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountRecalculateController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <Compile Include="Controllers\AccountingModel\Redempt_a_ChequeController.cs" />
@@ -7104,7 +7103,6 @@
     <Compile Include="Security\CargoTrackingSecurityService.cs" />
     <Compile Include="Security\SecurityUtility.cs" />
     <Compile Include="Security\SessionContextInterceptor.cs" />
-    <Compile Include="Security\TokenGuard.cs" />
     <Compile Include="SendGridWebPage.aspx.cs">
       <DependentUpon>SendGridWebPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

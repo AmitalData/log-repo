@@ -834,7 +834,7 @@ namespace Logitude.Server.Tools.FTP
             }
         }
 		#endregion
-		public void LogonWithKey(string p_host, string p_user, string p_privateKeyPath, string p_port, string p_directory, out string p_status, out string p_message)
+		public void LogonWithKey(string p_host, string p_user, string p_privateKeyPath, string p_port, string p_directory,out string p_status, out string p_message, string p_password = null)
 		{
 			MyStart();
 			if (string.IsNullOrEmpty(p_port))
@@ -870,13 +870,29 @@ namespace Logitude.Server.Tools.FTP
 				sftp = new nsoftware.IPWorksSSH.Sftp()
 				{
 					Firewall = { Port = v_port },
-					SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPublicKey,
 					SSHHost = p_host,
 					SSHUser = p_user,
-					SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*"),
 					RemotePath = p_directory,
 					RuntimeLicense = "31484E42414431535542323031393130323552413153554241544A353234353800000000000000003135554732304250000058415852315432434D5233410000"
 				};
+
+				if (!string.IsNullOrWhiteSpace(p_password) && !string.IsNullOrWhiteSpace(p_privateKeyPath))
+				{
+					sftp.SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amKeyboardInteractive; // או amMultiFactor אם עובד אצלך
+					sftp.SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*");
+					sftp.SSHPassword = p_password;
+				}
+				else if (!string.IsNullOrWhiteSpace(p_password))
+				{
+					sftp.SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPassword;
+					sftp.SSHPassword = p_password;
+				}
+				else
+				{
+					sftp.SSHAuthMode = nsoftware.IPWorksSSH.SftpSSHAuthModes.amPublicKey;
+					sftp.SSHCert = new Certificate(CertStoreTypes.cstPPKFile, p_privateKeyPath, "", "*");
+				}
+
 				sftp.OnSSHServerAuthentication += new nsoftware.IPWorksSSH.Sftp.OnSSHServerAuthenticationHandler(sftp_OnSSHServerAuthentication);
 				sftp.OnSSHStatus += new nsoftware.IPWorksSSH.Sftp.OnSSHStatusHandler(sftp_OnSSHStatus);
 

@@ -54,7 +54,7 @@ namespace Logitude.Server.Tools.Helpers
                                 if (!string.IsNullOrEmpty(email))
                                 {
                                     UserRepository userRepository = new UserRepository(tenant);
-                                    User user = userRepository.GetSingleUserByEmail(email, tenant, true);
+                                    User user = userRepository.GetSingleUserByEmail(email, 0, true);
                                     if (user != null)
                                     {
                                         User systemUser = userRepository.GetSingleUserByEmail("system@tenant" + tenant + ".com", tenant, true);
@@ -156,25 +156,13 @@ namespace Logitude.Server.Tools.Helpers
                         ChildObjectTableId = childObjectTable?.Id,
                     };
 
-                    if ((Transaction.Current != null && Transaction.Current.IsolationLevel == System.Transactions.IsolationLevel.Snapshot)
-                        || (Transaction.Current == null && dbms != "oracle"))
-                    {
-                        using (var scope = objectContext.GetSnapshotTransaction())
-                        {
-                            TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
-                            traceEventRepository.Add(myTraceEvent);
-                            traceEventRepository.SubmitChanges();
-                            objectContext.SaveChanges();
-                            scope.Commit();
-                        }
-					}
-                    else
-                    {
-                        TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
-                        traceEventRepository.Add(myTraceEvent);
-                        traceEventRepository.SubmitChanges();
-                        objectContext.SaveChanges();
-                    }
+             
+                    TraceEventRepository traceEventRepository = new TraceEventRepository(objectContext);
+                    traceEventRepository.Add(myTraceEvent);
+                    traceEventRepository.SubmitChanges();
+                    objectContext.SaveChanges();
+
+                    
 
                     if (eventType.IsCustomerView)
                     {
@@ -224,8 +212,9 @@ namespace Logitude.Server.Tools.Helpers
 
                 if (traceEventParams.Tenant != 0)
                 {
-                    UserRepository userRepository = new UserRepository(tenant);
-                    User user = userRepository.GetSingleUser(traceEventParams.UserId, tenant, false);
+
+                    UserRepository userRepository = new UserRepository(traceEventParams.Tenant);
+                    User user = userRepository.GetSingleUser(traceEventParams.UserId, 0, false);
                     if (user != null)
                     {
 

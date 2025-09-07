@@ -11,10 +11,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public AgentSharedDocumentRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
 
         public AgentSharedDocumentRepository(ICommonDataContext context)
         {

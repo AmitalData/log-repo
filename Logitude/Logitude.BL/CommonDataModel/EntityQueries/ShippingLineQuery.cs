@@ -21,10 +21,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class ShippingLineQuery
     {
         ShippingLineRepository repository;
-        public ShippingLineQuery()
-        {
-            repository = new ShippingLineRepository(); 
-        }
+
         public ShippingLineQuery(int tenant)
         {
             repository = new ShippingLineRepository(tenant);

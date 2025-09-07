@@ -120,7 +120,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNoTenant(string ScacCode, string ContainerNo, int Tenant,string System="")
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant && a.System== System && !a.IsClosed
+                                               where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode && a.Tenant == Tenant && ((string.IsNullOrEmpty(System) && string.IsNullOrEmpty(a.System)) || a.System== System) && !a.IsClosed
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,
@@ -144,7 +144,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNoTenant(string CarrierScac, string BLNumber, int Tenant,string System="")
         {
             OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
-                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant && a.System == System && !a.IsClosed
+                                               where a.BLNumber == BLNumber && a.SCACCode == CarrierScac && a.Tenant == Tenant && ((string.IsNullOrEmpty(System) && string.IsNullOrEmpty(a.System)) || a.System == System) && !a.IsClosed
                                                select new OceanInsightsRequestPM()
                                                {
                                                    Id = a.Id,

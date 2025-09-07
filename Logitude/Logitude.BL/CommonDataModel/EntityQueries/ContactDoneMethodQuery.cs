@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         ContactDoneMethodRepository repository;
 
-        public ContactDoneMethodQuery()
-        {
-            repository = new ContactDoneMethodRepository(); 
-        }
+
 
         public ContactDoneMethodQuery(int tenant)
         {

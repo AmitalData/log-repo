@@ -41,7 +41,7 @@ internal static class SIIRequestValidator
         foreach (var (line, i) in dto.releaseRequestForm.releaseRequestLinesForm
                                          .Select((l, idx) => (l, idx + 1)))
         {
-            string p = $"line[{i}]";
+            string p = $"line[{line.UiLineNumber}]";
 
             Check(line.lineSerialNumber, $"{p}.lineSerialNumber", errors);
             Check(line.customsItem, $"{p}.customsItem", errors);

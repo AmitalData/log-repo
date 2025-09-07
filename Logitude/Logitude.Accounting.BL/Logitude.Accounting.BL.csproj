@@ -599,6 +599,7 @@
     <Compile Include="CoreBL\YearTransferService.cs" />
     <Compile Include="DataContract\ARinvoiceSequencesReportParameters.cs" />
     <Compile Include="DataContract\ARPaymentChequeFutureData.cs" />
+    <Compile Include="DataContract\BaseDataProvider.cs" />
     <Compile Include="DataContract\CashbookChequesCounter.cs" />
     <Compile Include="DataContract\InterestReportCustomerPM.cs" />
     <Compile Include="DataContract\InterestTransactionUniqueConstraintFields.cs" />
@@ -842,6 +843,7 @@
     <Compile Include="EntityQueryServiceExt\GLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\JournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServiceExt\PaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServices\GLAccountRecocileDataQueryService.cs" />
     <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingIntegrityCheckQueryService.cs" />
     <Compile Include="EntityQueryServices\AccountingCompanyTypeQueryService.cs" />
@@ -940,6 +942,7 @@
     <Compile Include="EntityQueryServices\GLAccountMoreDataQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\GLAccountWithholdingTaxQueryService.cs" />
+    <Compile Include="EntityQueryServices\InvoiceApiCommunicationLogQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestBasesPeriodQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestLastBatchServiceQueryService.cs" />
     <Compile Include="EntityQueryServices\InterestReportLineQueryService.cs" />
@@ -1119,9 +1122,10 @@
     <Compile Include="Utils\APInvoiceStatusUpdateBatch.cs" />
     <Compile Include="Utils\BanksCCExternalRecoBatch.cs" />
     <Compile Include="Utils\CardGLAccountConnectBatch.cs" />
+    <Compile Include="Utils\IntegrityCheckBatch.cs" />
     <Compile Include="Utils\InvoiceApiQueryBatch.cs" />
     <Compile Include="Utils\ReconcileInProgressCleanupBatch.cs" />
-     <Compile Include="Utils\FutureOpenChequesBatch.cs" />
+    <Compile Include="Utils\FutureOpenChequesBatch.cs" />
     <Compile Include="Utils\GLAccountInterestActivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountInterestDeactivationBalanceBatch.cs" />
     <Compile Include="Utils\GLAccountMultiToCurrencyBatch.cs" />

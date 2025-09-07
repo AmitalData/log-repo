@@ -119,8 +119,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return authenticationToken;
         }
 
-        public AuthenticationToken GetSingleToken(int tenant, string linkId, string clientType) =>
-           context.AuthenticationTokens.FirstOrDefault(x => x.Tenant == tenant && x.LinkId == linkId && x.ClientType == clientType);
+        public AuthenticationToken GetSingleToken(int tenant, string linkId, string clientType, string _params) =>
+           context.AuthenticationTokens.FirstOrDefault(x => x.Tenant == tenant && x.LinkId == linkId && x.ClientType == clientType && x.Params == _params);
 
         public class AutenticationException : Exception
         {

@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DimensionsUnitRepository repository;
 
-        public DimensionsUnitQuery()
-        {
-            repository = new DimensionsUnitRepository(); 
-        }
+
 
         public DimensionsUnitQuery(int tenant)
         {

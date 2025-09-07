@@ -11,10 +11,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class SharedManifestTranslationQuery
     {
         SharedManifestTranslationRepository repository;
-        public SharedManifestTranslationQuery()
-        {
-            repository = new SharedManifestTranslationRepository();
-        }
+
 
         public SharedManifestTranslationQuery(int tenant)
         {

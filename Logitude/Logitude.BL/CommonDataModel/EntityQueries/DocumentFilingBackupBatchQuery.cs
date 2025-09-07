@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         DocumentFilingBackupBatchRepository repository;
 
-        public DocumentFilingBackupBatchQuery()
-        {
-            repository = new DocumentFilingBackupBatchRepository();
-        }
+
 
         public DocumentFilingBackupBatchQuery(int tenant)
         {

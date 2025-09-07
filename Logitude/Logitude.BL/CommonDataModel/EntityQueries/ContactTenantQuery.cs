@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class ContactTenantQuery
     {
         ContactTenantRepository repository;
-        public ContactTenantQuery()
-        {
-            repository = new ContactTenantRepository(); 
-        }
+
 
         public ContactTenantQuery(int tenant)
         {

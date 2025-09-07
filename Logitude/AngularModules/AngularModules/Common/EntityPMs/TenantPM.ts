@@ -796,6 +796,14 @@ export class TenantPM {
     public get DPArchiveShipmentDepartFilter() { return this.dPArchiveShipmentDepartFilter; }
     public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
 
+    private invoicePrintNotes: string;
+    public get InvoicePrintNotes() { return this.invoicePrintNotes; }
+    public set InvoicePrintNotes(newValue: string) { if (this.invoicePrintNotes != newValue) { this.invoicePrintNotes = newValue; this.MarkAsDirty("InvoicePrintNotes"); } }
+
+    private invoicePrintNotesLocal: string;
+    public get InvoicePrintNotesLocal() { return this.invoicePrintNotesLocal; }
+    public set InvoicePrintNotesLocal(newValue: string) { if (this.invoicePrintNotesLocal != newValue) { this.invoicePrintNotesLocal = newValue; this.MarkAsDirty("InvoicePrintNotesLocal"); } }
+
     public OldEntityPM: TenantPM;
 		
     public IsDirty: boolean;

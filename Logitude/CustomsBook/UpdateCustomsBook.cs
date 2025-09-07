@@ -28,6 +28,8 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools.TreeFilterQuery;
 using System.Web.Caching;
 using System.Web;
+using System.Net.Mail;
+using System.Collections.Specialized;
 
 namespace CustomsBook
 {
@@ -40,7 +42,7 @@ namespace CustomsBook
         static string sqlConnectionString = ConfigurationManager.ConnectionStrings["LogitudeStr"].ConnectionString;
 
         public static async Task Run()
-        {
+        {            
             await DownloadFile();
         }
         static async Task DownloadFile()
@@ -114,12 +116,14 @@ namespace CustomsBook
                 {
                     // File is not a valid ZIP file
                     logger.Debug("The file is not a valid ZIP file.");
+                    SendEmailAlert(new Exception("The file is not a valid ZIP file."));
                 }
 
             }
             catch (Exception ex)
             {
                 logger.Debug("Error: " + ex.Message);
+                SendEmailAlert(ex);
             }
             finally
             {
@@ -239,6 +243,7 @@ namespace CustomsBook
                 {
                     logger.Debug($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
                     Console.WriteLine($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
+                    SendEmailAlert(ex);
                     throw ex;
                 }
             }
@@ -479,5 +484,50 @@ namespace CustomsBook
 
         }
 
+
+        public static void SendEmailAlert(Exception ex)
+        {
+            try
+            {
+                string config = System.Configuration.ConfigurationManager.AppSettings.Get("Settings");
+
+                var emailSection = (NameValueCollection)ConfigurationManager.GetSection("emailSettings");
+
+                string smtpServer = emailSection["smtp"];
+                string smtpUser = emailSection["userName"];
+                string smtpPass = emailSection["password"];
+                string subject = emailSection["subject"];
+                string[] recipients = emailSection["recipients"].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                using (var client = new SmtpClient(smtpServer))
+                {
+                    client.Port = 587;
+                    client.Credentials = new NetworkCredential(smtpUser, smtpPass);
+                    client.EnableSsl = true;
+
+                    using (var message = new MailMessage())
+                    {
+                        message.From = new MailAddress(smtpUser);
+
+                        foreach (var r in recipients)
+                        {
+                            if (!string.IsNullOrWhiteSpace(r))
+                                message.To.Add(r.Trim());
+                        }
+
+                        message.Subject = subject;
+                        message.Body = $"An error occurred:\n\n{ex}";
+
+                        client.Send(message);
+                    }
+                }
+
+                Console.WriteLine($"Email sent successfully to: {string.Join(", ", recipients)}");
+            }
+            catch (Exception sendEx)
+            {
+                Console.WriteLine($"Failed to send email: {sendEx.Message}");
+            }
+        }
     }
 }

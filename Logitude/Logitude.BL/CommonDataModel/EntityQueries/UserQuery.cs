@@ -20,10 +20,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         UserRepository repository;
 
-        public UserQuery()
-        {
-            repository = new UserRepository();
-        }
+
 
         public UserQuery(int tenant)
         {
@@ -1833,6 +1830,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             if (HttpContext.Current != null && HttpContext.Current.User != null)
             {
                 string email = HttpContext.Current.User.Identity.Name;
+
                 User user = repository.GetSingleUserByEmail(email, 0, false);
                 if (user != null)
                 {

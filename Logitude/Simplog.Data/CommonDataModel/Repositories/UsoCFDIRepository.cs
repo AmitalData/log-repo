@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public UsoCFDIRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public UsoCFDIRepository(int tenant)
         {

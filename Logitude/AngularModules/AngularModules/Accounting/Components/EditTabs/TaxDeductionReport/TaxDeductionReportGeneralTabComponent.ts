@@ -34,12 +34,8 @@ export class TaxDeductionReportGeneralTabComponent implements AfterViewInit {
       Completed = '3'
     }
 
-    if (this.EntityPM.StatusTypeCode === TaxDeductionStatus.Completed){
-        SessionLocator.DynamicLoader.Load("./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabCompletedComponent", this.Child.Location);
-    }
-    else {
-        SessionLocator.DynamicLoader.Load("./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabNotCompletedComponent", this.Child.Location);
-    }
+    SessionLocator.DynamicLoader.Load("./Accounting/Components/EditTabs/TaxDeductionReport/TaxDeductionReportGeneralTabCompletedComponent", this.Child.Location);
+   
   }
 }
 

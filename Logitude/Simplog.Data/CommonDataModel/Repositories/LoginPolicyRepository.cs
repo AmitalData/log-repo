@@ -13,10 +13,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public LoginPolicyRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public LoginPolicyRepository(ICommonDataContext context)
         {

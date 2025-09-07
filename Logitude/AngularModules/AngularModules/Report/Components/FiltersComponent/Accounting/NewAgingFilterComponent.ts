@@ -342,7 +342,7 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
                     this.DateFilterSelectedValue = queryFilterItem.FieldValue;
                     break;
                 case "AgingForDate":
-                    this.AgingForDate = new Date(queryFilterItem.FieldValue);
+                    this.AgingForDate = queryFilterItem.FieldValue;
                     break;
                 case "Detailed":
                     this.CurrenciesDetailed = queryFilterItem.FieldValue;
@@ -426,30 +426,37 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
 
         var myFilterItems: QueryFilterItem[] = [];
-        myFilterItems.push(new QueryFilterItem("AgingForDate", this.AgingForDate, "Date"));
-        myFilterItems.push(new QueryFilterItem("GLAccountType", this.AccountTypeCode));
-        myFilterItems.push(new QueryFilterItem("CustomerId", this.Customer ? this.Customer : null));
-        myFilterItems.push(new QueryFilterItem("CollectorId", this.Collector));
-        myFilterItems.push(new QueryFilterItem("CurrencyId", this.CurrencyId, "string"));
-        myFilterItems.push(new QueryFilterItem("Obligo",this.SelectedObligo?.Code, "string"));
-        myFilterItems.push(new QueryFilterItem("SalesmanId", this.Salesman));
-        myFilterItems.push(new QueryFilterItem("Detailed", this.CurrenciesDetailed));
-        myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex));
-        myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
-        myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
-        myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
-        myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
-        myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
-        myFilterItems.push(new QueryFilterItem("IsGroupMultiAccounts", this.IsGroupMultiAccounts));
+        var queryFilterItem: QueryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "AgingForDate";
+        queryFilterItem.FieldDataType = 'Date';
+        queryFilterItem.FieldValue = this.AgingForDate ? this.AgingForDate : null;
+        queryFilterItem.Operator = "Equals";
+        myFilterItems.push(queryFilterItem);
 
-        if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
-            myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
-            myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
+        myFilterItems.push(new QueryFilterItem("GLAccountType", this.safeValue(this.AccountTypeCode)));
+        myFilterItems.push(new QueryFilterItem("CustomerId", this.safeValue(this.Customer)));
+        myFilterItems.push(new QueryFilterItem("CollectorId", this.safeValue(this.Collector)));
+        myFilterItems.push(new QueryFilterItem("CurrencyId", this.safeValue(this.CurrencyId), "string"));
+        myFilterItems.push(new QueryFilterItem("Obligo", this.safeValue(this.SelectedObligo && this.SelectedObligo.Code), "string"));
+        myFilterItems.push(new QueryFilterItem("SalesmanId", this.safeValue(this.Salesman)));
+        myFilterItems.push(new QueryFilterItem("Detailed", this.safeValue(this.CurrenciesDetailed)));
+        myFilterItems.push(new QueryFilterItem("CategoryIndex", this.safeValue(categoryIndex)));
+        myFilterItems.push(new QueryFilterItem("CategoryValue", this.safeValue(categoryValue)));
+        myFilterItems.push(new QueryFilterItem("GroupByDate", this.safeValue(this.DateFilterSelectedValue)));
+        myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.safeValue(this.currencyFilterSelectedValue)));
+        myFilterItems.push(new QueryFilterItem("BalanceFilter", this.safeValue(this.balanceFilterSelectedValue ? this.balanceFilterSelectedValue.replace("filter_", "") : null)));
+        myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.safeValue(this.balance != null ? this.balance : 0), "decimal"));
+        myFilterItems.push(new QueryFilterItem("IsGroupMultiAccounts", this.safeValue(this.IsGroupMultiAccounts)));
+
+        if (this.balanceFilterSelectedValue === "filter_DebtBetween") {
+            myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.safeValue(this.fromBalance), "decimal"));
+            myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.safeValue(this.toBalance), "decimal"));
         }
-        myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
-        myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
-        myFilterItems.push(new QueryFilterItem("SortField", this.SelectedSortTypeItem.Code));
-        myFilterItems.push(new QueryFilterItem("SortDirection", this.SelectedSortDirectionCode));
+
+        myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.safeValue(this.ChartOfAccountsTypeCode)));
+        myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.safeValue(this.ChartOfAccountsId_Dummy)));
+        myFilterItems.push(new QueryFilterItem("SortField", this.safeValue(this.SelectedSortTypeItem && this.SelectedSortTypeItem.Code)));
+        myFilterItems.push(new QueryFilterItem("SortDirection", this.safeValue(this.SelectedSortDirectionCode)));
 
         return myFilterItems
 
@@ -508,6 +515,20 @@ export class NewAgingFilterComponent extends BaseComponent implements OnInit {
         }
         else return true;
     }
+
+
+    safeValue(value: any): string | number | boolean | null {
+        if (value === undefined || value === null) {
+            return null;
+        }
+        if (typeof value === "object") {
+            if ("Id" in value) return value.Id;
+            if ("Code" in value) return value.Code;
+            return null;
+        }
+        return value;
+    }
+
 
     SortTypeChanged(dir) {
         this.SelectedSortTypeCode = dir.Code;

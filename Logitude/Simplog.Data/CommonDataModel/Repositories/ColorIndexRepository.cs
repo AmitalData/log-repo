@@ -12,15 +12,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public ColorIndexRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
 
-        public ColorIndexRepository(ICommonDataContext context)
-        {
-            commonDataContext = context;
-        }
+
+
 
         public ColorIndexRepository(int tenant)
         {

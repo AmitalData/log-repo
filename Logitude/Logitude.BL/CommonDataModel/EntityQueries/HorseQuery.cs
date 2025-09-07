@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         HorseRepository repository;
 
-        public HorseQuery()
-        {
-            repository = new HorseRepository();
-        }
+
 
         public HorseQuery(int tenant)
         {

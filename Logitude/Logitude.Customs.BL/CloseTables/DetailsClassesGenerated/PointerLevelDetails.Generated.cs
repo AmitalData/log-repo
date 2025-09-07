@@ -50,14 +50,6 @@ namespace Logitude.Customs.BL
                 SearchFields = "D,הצהרה", 
                 EnglishName = "Declaration", 
 			});
-			 
-            all.Add(new PointerLevelDetails()
-            {    
-                Code = "S", 
-                LocalName = "מכון תקנים", 
-                SearchFields = "מכון תקנים,S", 
-                EnglishName = "SIIRequest", 
-			});
 			
             return all;
        }

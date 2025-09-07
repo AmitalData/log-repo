@@ -11,10 +11,6 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public AutomationHistoryRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
 
         public AutomationHistoryRepository(ICommonDataContext context)
         {

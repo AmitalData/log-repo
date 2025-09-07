@@ -28,12 +28,12 @@ using Simplog.Data.InfrastructureModel;
 using WebFreight.Web.Security;
 using System.Transactions;
 using Logitude.Server.Tools.Utils;
-using Simplog.Data.InfrastructureModel.EntityPOCOs; 
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
- using Simplog.Data.CommonDataModel.EntityPOCOs;
- using Microsoft.WindowsAzure.Storage.Queue.Protocol;
- 
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Microsoft.WindowsAzure.Storage.Queue.Protocol;
+
 
 namespace CustomsWorkerRole
 {
@@ -89,8 +89,9 @@ namespace CustomsWorkerRole
 		{
 			try
 			{
-				var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(1);
-				CustomsEnvironmentSettingPM customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM() ?? new CustomsEnvironmentSettingPM();
+				int tenantConfig = SettingUtil.GetTenantDBFromConfig();
+				var customsEnvironmentSettingQueryService = new CustomsEnvironmentSettingQueryService(tenantConfig);
+				CustomsEnvironmentSettingPM customsEnvironmentSettingPM = customsEnvironmentSettingQueryService.GetEnvironmentSettingPM(tenantConfig) ?? new CustomsEnvironmentSettingPM();
 
 				DocumentApiExecutionService = new DocumentApiExecutionService(customsEnvironmentSettingPM.CourierDocURL, customsEnvironmentSettingPM.CourierDocKey);
 				UnifreightFillingService = new UnifreightFillingService();
@@ -155,53 +156,63 @@ namespace CustomsWorkerRole
 					#endregion
 					if (res.Result.success)
 					{
-
-						#region Filing the document in the filing system by CreateNewFiling
 						string filePath = res.Result.filepath;
-						Dictionary<string, string> outParams = new Dictionary<string, string>();
-						outParams.Add("COM_ID", string.Empty);
+						byte[] filedataByte = File.ReadAllBytes(filePath);
 
-						bool fatal_error = false;
-						string message = string.Empty;
+						if (CheckIsDocumentPDF(filedataByte))
+						{
 
-						Dictionary<string, string> inParams = new Dictionary<string, string>();
-						inParams.Add("REMARKS", "document from api");
-						inParams.Add("base64data", "true");
-						byte[] filedataByte  = File.ReadAllBytes(filePath);
-						string filedata = Convert.ToBase64String(filedataByte);
-						if (CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
-						{
-							logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						    UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message,isFromCloud: true);
-						    logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-						}
-					    #endregion
-						if (!fatal_error)
-						{
-							#region Save document and metadata
-							logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-							response = SaveDocument(filePath, outParams["COM_ID"], filedataByte);
-							logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-							#endregion
-							if (!response.HasError)
+						    #region Filing the document in the filing system by CreateNewFiling
+						     Dictionary<string, string> outParams = new Dictionary<string, string>();
+						     outParams.Add("COM_ID", string.Empty);
+						     
+						     bool fatal_error = false;
+						     string message = string.Empty;
+						     
+						     Dictionary<string, string> inParams = new Dictionary<string, string>();
+						     inParams.Add("REMARKS", "document from api");
+						     inParams.Add("base64data", "true");
+						
+							string filedata = Convert.ToBase64String(filedataByte);
+							if (CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight)
 							{
-								#region Update on the receipt and filing of the document
-								logs += "before UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
-								var r = DocumentApiExecutionService.UpdateParcelStatus(AzureQueueMessageApi, res.Result.success, res.Result.message);
-								logs += "after UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+								logs += "before CreateNewFiling " + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+								UnifreightFillingService.CreateNewFiling(inParams, filedata, tenant, out outParams, out fatal_error, out message,isFromCloud: true);
+								logs += "after CreateNewFiling  fatal_error: " + fatal_error.ToString() + " message: " + message + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+							}
+							#endregion
+							if (!fatal_error)
+							{
+								#region Save document and metadata
+								logs += "before SaveDocument" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+								response = SaveDocument(filePath, outParams["COM_ID"], filedataByte);
+								logs += "after SaveDocument HasError: " + response?.HasError + "ErrorMessage: " + response.ErrorMessage + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
 								#endregion
-								DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
-								await args.CompleteMessageAsync(args.Message);
+								if (!response.HasError)
+								{
+									#region Update on the receipt and filing of the document
+									logs += "before UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+									var r = DocumentApiExecutionService.UpdateParcelStatus(AzureQueueMessageApi, res.Result.success, res.Result.message);
+									logs += "after UpdateParcelStatus" + "take time: " + DocumentApiExecutionService.GetFormatedElapsedTime(stopwatch.Elapsed) + "date: " + DateTime.Now.ToString();
+									#endregion
+									DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "D");
+									await args.CompleteMessageAsync(args.Message);
+								}
+								else
+								{
+									logs += " dont success SaveDocument";
+									DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
+								}
 							}
 							else
 							{
-								logs += " dont success SaveDocument";
+								logs += " dont success CreateNewFiling";
 								DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 							}
 						}
 						else
 						{
-							logs += " dont success CreateNewFiling";
+							logs += "dont success document from  DownloadFile is not pdf type";
 							DocumentApiExecutionService.UpdateCommunicationLog(communicationLogId, tenant, logs, response?.Result, "F");
 						}
 					}
@@ -232,6 +243,29 @@ namespace CustomsWorkerRole
 			processor.StartProcessingAsync().GetAwaiter().GetResult();
 
 			return processor;
+		}
+		private bool CheckIsDocumentPDF(byte[] fileBytes)
+		{
+			try
+			{
+				if (fileBytes.Length >= 5 &&
+					fileBytes[0] == 0x25 && // %
+					fileBytes[1] == 0x50 && // P
+					fileBytes[2] == 0x44 && // D
+					fileBytes[3] == 0x46 && // F
+					fileBytes[4] == 0x2D)   // -
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			catch (FormatException)
+			{
+				return false;
+			}
 		}
 
 		public void DebugStep()
@@ -366,7 +400,7 @@ namespace CustomsWorkerRole
 				CheckLock(entityPM.Id);
 				using (scope = new TransactionScope(TransactionScopeOption.Required,
 							new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted }))
-			    {				
+				{
 
 					ICommonDataContext commonContext = CommonDataContext.GetContext(entityPM.Tenant);
 					IWebFreightContext webFreightContext = WebFreightContext.GetContext(entityPM.Tenant);
@@ -408,7 +442,7 @@ namespace CustomsWorkerRole
 					scope.Complete();
 
 					return response;
-			    }
+				}
 			}
 			catch (System.Data.Entity.Validation.DbEntityValidationException e)
 			{

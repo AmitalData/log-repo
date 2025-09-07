@@ -94,59 +94,6 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     }
     // #endregion initialization data
 
-    //#region search product file number by API request:
-    SearchProductFileNumber(productFileNumber: string = '') {
-        this.validationErrors = [];
-        this.checkMandatoryFields();
-        if (this.errorsList.length > 0) {
-            this.isCheckedProductFile = false;
-            this.displayErrorsMsg();
-            return;
-        }
-        this.errorsList = [];
-        !AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isCheckedProductFile ?
-            this.checkProductFileNumber(productFileNumber) : this.SaveSupplierInvoiceItemsReqList();
-    }
-
-    isExistProductFile: boolean = false;
-    isCheckedProductFile: boolean = false;
-    checkProductFileNumber(productFileNumber: string) {
-        this.isCheckedProductFile = true;
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.SendingRequest"));
-        this.supplierInvoiceItemsReqListWebService.GetProductFileExists(productFileNumber, this.currentSiiRequest.ImporterId, this.entityPM.OriginCountryCode, this.entityPM.DeclarationId).subscribe(myResult => {
-            let myResponse: ServiceResponse = myResult;
-            this.CurrentSession.StopBusyIndicator();
-            if (!myResponse?.HasError)
-                this.saveByProductFileNumberResult(myResponse?.Result, productFileNumber);
-            else {
-                console.error('Error checking product file number:', myResponse?.ErrorsArray);
-                let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.`;
-                this.errorsList?.push(errorMsg);
-                this.ProductFileNumber = null;
-                this.openErrorsMsgWindow();
-            }
-        }, error => {
-            this.CurrentSession.StopBusyIndicator();
-            const errorMsg = error?.error?.ErrorMessage || error?.message || JSON.stringify(error);
-            this.generalErrors = [errorMsg];
-            console.error('Error checking product file number:', error);
-        });
-    }
-
-    saveByProductFileNumberResult(productFileExists: boolean = false, productFileNumber: string = '') {
-        this.isExistProductFile = productFileExists;
-        if (productFileExists) {
-            this.ProductFileNumber = productFileNumber;
-            this.validationErrors = [];
-            this.SaveSupplierInvoiceItemsReqList();
-        }
-        else {
-            this.ProductFileNumber = null;
-            let errorMsg = `${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound")}.\n ${TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave")}?`;
-            this.validationErrors = [errorMsg];
-            this.displayErrorsMsg();
-        }
-    }
 
     //region mandatory fields check:
     errorsList: string[] = [];
@@ -167,17 +114,13 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
 
 
     displayErrorsMsg() {
-        if (!AppTool.IsNullOrEmpty(this.ProductFileNumber) && !this.isCheckedProductFile)
-            this.checkProductFileNumber(this.ProductFileNumber);
-        else
-            this.openErrorsMsgWindow();
+        this.openErrorsMsgWindow();
     }
 
     openErrorsMsgWindow() {
         if (this.errorsList?.length > 0) {
             this.errorsList.push(TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave") + "?");
         }
-        this.isCheckedProductFile = false;
         let windowArgs: any = {};
         windowArgs.Errors = this.errorsList;
         windowArgs.Warning = this.validationErrors;
@@ -216,8 +159,95 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
     //#endregion mandatory fields check
 
     //#region acations methods:
-    SaveAndSearchSupplierInvoiceItemsReqList(ProductFileNumber: string = '') {
-        this.SearchProductFileNumber(ProductFileNumber);
+    async SaveAndSearchSupplierInvoiceItemsReqList(): Promise<void> {
+        this.validationErrors = [];
+        this.checkMandatoryFields();
+        if (this.errorsList.length > 0) {
+            this.displayErrorsMsg();
+            return;
+        }
+
+        const modelCode = this.ItemNo;
+        const importerNumber = this.currentSiiRequest?.ImporterId || '';
+        const originCountry = this.entityPM?.OriginCountryCode || '';
+        const declarationId = this.entityPM?.DeclarationId || this.DecalarationData?.Id || '';
+
+        if (!modelCode) {
+            this.generalErrors = [
+                TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ValueMustBeEntered") + " " +
+                TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.F.ItemNo")
+            ];
+            this.openErrorsMsgWindow();
+            return;
+        }
+
+        try {
+            this.CurrentSession.StartBusyIndicator(
+                TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.SendingRequest")
+            );
+
+            const sr = await this.supplierInvoiceItemsReqListWebService
+                .LookupProductFileByModel(modelCode, importerNumber, originCountry, declarationId)
+                .toPromise();
+
+            this.CurrentSession.StopBusyIndicator();
+
+            const productFileId = sr && sr.Result as any;              
+
+            if (productFileId) {
+                this.ProductFileNumber = productFileId;
+                this.generalErrors = []; 
+                this.SaveSupplierInvoiceItemsReqList();
+                return;
+            }
+
+            this.validationErrors = [
+                TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound") + ".\n " +
+                TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave") + "?"
+            ];
+            this.displayErrorsMsg();
+
+        } catch (error) { 
+            this.CurrentSession.StopBusyIndicator();
+            const errorBody =
+                (error && error.error && (error.error.error || error.error.ErrorMessage))
+                || (error && error.message)
+                || JSON.stringify(error);
+
+            console.error('Product file lookup error:', errorBody);
+
+            this.validationErrors = [
+                TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ProductNotFound") + ".\n " +
+                TextCodeTranslator.Translate("Customs.SupplierInvoiceItemsReqList.O.ContinueSave") + "?"
+            ];
+            this.displayErrorsMsg();
+        }
+    }
+
+    private async handleProductFileNotFound(modelCode: string, errorBody: string | null): Promise<void> {
+        if (errorBody) {
+            console.error('Product file lookup error:', { modelCode, errorBody });
+            this.generalErrors = [errorBody];
+        }
+
+        const confirm = new ConfirmWindow();
+        confirm.YesButtonText = TextCodeTranslator.Translate("General.B.Yes");
+        confirm.NoButtonText = TextCodeTranslator.Translate("General.B.No");
+        confirm.Show(
+            TextCodeTranslator.Translate("Customs.ProductFile.NotFound")
+            || "Product File not found in the Standards Institute. Do you still want to save the entered data?"
+        );
+
+        await new Promise<void>(resolve => {
+            confirm.WindowClosed.subscribe(() => {
+                const proceed = confirm.Yes === true;
+                console.warn('ProductFile not found – user decision:', { modelCode, proceed });
+                if (proceed) {
+                    this.SaveSupplierInvoiceItemsReqList();
+                }
+                resolve();
+            });
+        });
     }
 
     generalErrors: string[] = [];
@@ -292,7 +322,7 @@ export class SIIRequestCopmleteDataItemComponent extends BaseComponent implement
             confirm.WindowClosed.subscribe((event: any) => {
                 if (confirm.Yes) {
                     confirm.Close();
-                    this.SaveAndSearchSupplierInvoiceItemsReqList(this.ProductFileNumber);
+                    this.SaveAndSearchSupplierInvoiceItemsReqList();
                 }
                 else {
                     this.entityPM = this.oldEntityPM;

@@ -45,7 +45,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 		{
 			ICustomContext context = MainContext as CustomContext;
 
-			DocumentsFilingQuery documentsFilingQueryService = new DocumentsFilingQuery();
+			DocumentsFilingQuery documentsFilingQueryService = new DocumentsFilingQuery(tenant);
 			var decId = string.IsNullOrEmpty(amendmentOriginalDeclartation) ? declarationId : amendmentOriginalDeclartation;
 
 

@@ -14,10 +14,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
        CustomerTenantAccessStatusTypeRepository repository;
 
-        public CustomerTenantAccessStatusTypeQuery()
-        {
-            repository = new CustomerTenantAccessStatusTypeRepository(); 
-        }
+  
 
         public CustomerTenantAccessStatusTypeQuery(int tenant)
         {

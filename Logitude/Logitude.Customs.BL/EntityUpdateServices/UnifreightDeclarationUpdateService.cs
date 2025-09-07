@@ -1326,14 +1326,28 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         _CCUFILEMPM.INDICATORS = "";
                     }
+                    if (_DirtyDeclarationPM.PaymentDate.HasValue && (_CCUFILEMPM.RESHIMONNO == null || _CCUFILEMPM.RESHIMONNON == null))
+                    {
+                        if (!String.IsNullOrWhiteSpace(_DirtyDeclarationPM.DeclarationNumber))
+                        {
+                            var DeclarationNumber = _DirtyDeclarationPM.DeclarationNumber.Remove(_DirtyDeclarationPM.DeclarationNumber.Length - 1, 1);
+                            _CCUFILEMPM.RESHIMONNO = DeclarationNumber.GetLast(9);
+                        }
+                        _CCUFILEMPM.RESHIMONNON = _DirtyDeclarationPM.DeclarationNumber;
+                    }
+
                     return _CCUFILEMPM;
                 }
             }
 
             //Writing RESHIMON DATE and there is no HATARA DATE  ==> INDICATORS="G"
-            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue)
+            
+            if (_DirtyDeclarationPM.PaymentDate.HasValue && !_DirtyDeclarationPM.HatraDate.HasValue && _DirtyDeclarationPM.IsAmendment == false)
             {
-                _CCUFILEMPM.INDICATORS = "G";
+                DeclarationRepository dr = new DeclarationRepository(_DirtyDeclarationPM.Tenant);
+                var hasHatara = dr.HasHataraByCustomFile(_DirtyDeclarationPM.CustomFileNo, _DirtyDeclarationPM.Tenant);
+                if(!hasHatara)
+                    _CCUFILEMPM.INDICATORS = "G";
             }
             //Deleting RESHIMON DATE ==> INDICATORS=""
             if (!_DirtyDeclarationPM.PaymentDate.HasValue && _CCUFILEMPM.RESHMDATE.HasValue)

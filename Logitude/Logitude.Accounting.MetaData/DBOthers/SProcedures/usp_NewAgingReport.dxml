@@ -67,6 +67,7 @@ TotalForeign DECIMAL(30, 2),
 BalanceInLocalCurrency DECIMAL(30, 2),
 BalanceInForeignCurrency DECIMAL(30, 2),
 TotalToCollect DECIMAL(30, 2),
+
 StandardInterestRateBaseLocalName NVARCHAR(256),
 StandardAddInterestPercent DECIMAL(4, 2),
 
@@ -139,13 +140,7 @@ WHEN GL.ReconcileMethodCode = 0 THEN t.OpenAmount
 ELSE t.OpenAmount * t.ExchangeRate
 END
 ) AS BalanceInLocalCurrency,
-SUM(
-  CASE
-    WHEN GL.ReconcileMethodCode = 0 and gl.IsMultiCurrency!=1 AND t.ExchangeRate != 0
-      THEN t.OpenAmount / t.ExchangeRate
-    ELSE t.OpenAmount
-  END
-) AS BalanceInForeignCurrency,
+SUM(t.OpenAmount) AS BalanceInForeignCurrency,
 SUM(CASE
 WHEN T.AdjustedOpenAmount < 0 THEN (t.AdjustedOpenAmount)
 ELSE 0

@@ -13,10 +13,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public DocumentsMetaDataTypeRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public DocumentsMetaDataTypeRepository(int tenant)
         {

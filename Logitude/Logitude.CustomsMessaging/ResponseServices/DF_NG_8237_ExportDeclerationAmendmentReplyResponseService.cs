@@ -14,10 +14,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnifreightIIG.Common.MessageLib.Fault;
 using UnifreightIIG.Common.MessageLib.Collateral;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
@@ -35,14 +32,13 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Microsoft.Practices.ObjectBuilder2;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
-using Logitude.Customs.Data.Repsitories;
-using System.Data.Entity;
-using Logitude.CustomsMessaging.Helpers;
+using NLog;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class DF_NG_8237_ExportDeclerationAmendmentReplyResponseService : ResponseServiceBase<ExportDeclarationAmendmentResponseData, DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg, AmendmentRequestParams>
     {
+        public static readonly Logger logger = LogManager.GetCurrentClassLogger();
         DeclarationPM _MyDeclarationPM;
         DeclarationPM _MyDeclarationPMOrg;
 
@@ -887,6 +883,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
+
+                AutoFixDeclarationDiamondByErrors(customResponse, _MyDeclarationPM, context);
+
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
@@ -931,6 +930,96 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }                                             //{
                                                           //     requestParams.AppicationId = myDeclarationQueryService.GetIdByExternalDeclarationNumber(customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, requestParams.Tenant);
                                                           //}
+        }
+
+
+        public void AutoFixDeclarationDiamondByErrors(DF_NG_8237_MSG14003_ExportDeclarationAmendmentReplyMsg customResponse, DeclarationPM declaration, ICustomContext context)
+        {
+            try
+            {
+            if (declaration.Direction == "E" && declaration.AutoSending && declaration.IsDiamondDeclaration)
+            {
+                logger.Debug("Starting To Handle Customs Errors.");
+                if (customResponse?.Response?.Error == null) return;
+
+                ICustomContext MyContext = CustomContext.GetContext(_MyDeclarationPM.Tenant);
+                ExportDeclarationClosingDataQueryService exportDeclarationClosingDataQuery = new ExportDeclarationClosingDataQueryService(MyContext);
+                exportDeclarationClosingDataQuery.InitializeSettings();
+                ExportDeclarationClosingDataPM exportDeclarationClosingDataPM = exportDeclarationClosingDataQuery.GetSingle(declaration?.Id, true, false);
+                bool errorsFound = false;
+
+                if (exportDeclarationClosingDataPM == null)
+                {
+                    logger.Debug("exportDeclarationClosingDataPM is null, creating new ExportDeclarationClosingDataPM.");
+                    exportDeclarationClosingDataPM = new ExportDeclarationClosingDataPM();
+                    exportDeclarationClosingDataPM.DeclarationId = declaration?.Id; 
+                    exportDeclarationClosingDataPM.ChangeSetOp = ChangeSetOperation.Insert;
+                }
+
+                foreach (var errorItem in customResponse.Response.Error)
+                {
+                    string valueText = errorItem?.ValidationCode?.name ?? string.Empty;                
+                        string valueCode = errorItem?.ValidationCode?.Value ?? string.Empty;
+                    if (valueCode == "140181" || valueText.Contains("תאריך טעינה"))
+                    {
+                        logger.Debug("Founded LoadingDateTime on customs error.");
+
+                        string marker = "שונה מתאריך יציאה";
+                        if (valueText.Contains(marker))
+                        {
+                            string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
+                            string[] parts = afterMarker.Split(' ');
+                            string loadingDateTime = parts.FirstOrDefault(p => DateTime.TryParse(p, out _));
+                            if (DateTime.TryParse(loadingDateTime, out DateTime actualLoadingDate))
+                            {
+                                logger.Debug("update LoadingDateTime to exportDeclarationClosingData table.");
+                                exportDeclarationClosingDataPM.LoadingDateTime = actualLoadingDate;
+                                errorsFound = true;
+                            }
+                        }
+                    }
+                        else if (valueCode == "140189" || valueText.Contains("שטר מטען"))
+                    {
+                        logger.Debug("Founded FinalManifestNumber on customs error.");
+
+                        string marker = "שונה מ- מזהה שטר מטען לאחר טעינה";
+                        if (valueText.Contains(marker))
+                        {
+                            string afterMarker = valueText.Substring(valueText.IndexOf(marker) + marker.Length).Trim();
+                            string[] parts = afterMarker.Split(' ');
+                            string finalManifestNumber = parts.FirstOrDefault(p => p.Contains("-"));
+                            if (!string.IsNullOrWhiteSpace(finalManifestNumber))
+                            {
+                                logger.Debug("update FinalManifestNumber to exportDeclarationClosingData table.");
+                                exportDeclarationClosingDataPM.FinalManifestNumber = finalManifestNumber;
+                                errorsFound = true;
+                            }
+                        }
+                    }
+                }
+                logger.Debug("Finish To Handle Customs Errors. errorsFound= " + errorsFound);
+
+                if (errorsFound)
+                {
+                    exportDeclarationClosingDataPM.ChangeSetOp = ChangeSetOperation.Update;
+                    logger.Debug("Start to updating exportDeclarationClosingData");
+                    ExportDeclarationClosingDataUpdateService exportDeclarationClosingDataUpdateservice = new ExportDeclarationClosingDataUpdateService(context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+                    exportDeclarationClosingDataUpdateservice.Update(exportDeclarationClosingDataPM, true);
+                    logger.Debug("Finish to updating exportDeclarationClosingData");
+
+                    // send auto close declaration:
+                    logger.Debug("Before Send8235.");
+                    ICustomsAutoDecClosing CustomsAutoDecClosing = Server.Tools.ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new Microsoft.Practices.Unity.ParameterOverride("", 1)) as ICustomsAutoDecClosing;
+                    CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+                    logger.Debug("After Send8235.");
+                }
+            }
+        }
+            catch(System.Exception ex)
+            {
+                logger.Debug("AutoFixDeclarationDiamondByErrors Exception: " + ex.Message);
+                throw ex;
+            }
         }
 
 

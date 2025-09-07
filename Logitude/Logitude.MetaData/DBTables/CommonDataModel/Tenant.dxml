@@ -179,7 +179,6 @@
   <Column
     Name="MasterExportFreightPrepaidCollectId"
     ShortName="MasterExportFreightPCId"
-
     Type="varchar"
     Size="1">
     <Constraints
@@ -188,7 +187,6 @@
   <Column
     Name="MasterImportFreightPrepaidCollectId"
     ShortName="MasterImportFreightPCId"
-
     Type="varchar"
     Size="1">
     <Constraints
@@ -197,7 +195,6 @@
   <Column
     Name="MasterExportOtherPrepaidCollectId"
     ShortName="MasterExportOtherPCId"
-
     Type="varchar"
     Size="1">
     <Constraints
@@ -206,7 +203,6 @@
   <Column
     Name="MasterImportOtherPrepaidCollectId"
     ShortName="MasterImportOtherPCId"
-
     Type="varchar"
     Size="1">
     <Constraints
@@ -401,7 +397,6 @@
   <Column
     Name="VatMandatoryForPotentialCustomers"
     ShortName="VaTMandatoryPotentialCustomers"
-
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -504,7 +499,6 @@
   <Column
     Name="ExportQuotationsToIntegratedSystem"
     ShortName="ExportQuotationsToIntegrated"
-
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -577,7 +571,6 @@
   <Column
     Name="IsCorrespondenceRightToLeftEnabled"
     ShortName="IsCorrespondenceRTLEnabled"
-
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -710,7 +703,6 @@
   <Column
     Name="TransferQuotationsToUnifreightTrigger"
     ShortName="TransferQuotationsToUNFTrigger"
-
     Type="varchar"
     Size="10"
     DefaultValue="'OnSend'">
@@ -828,6 +820,20 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="InvoicePrintNotes"
+    Type="varchar"
+    Size="5000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoicePrintNotesLocal"
+    Type="nvarchar"
+    Size="5000">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="AddressId"

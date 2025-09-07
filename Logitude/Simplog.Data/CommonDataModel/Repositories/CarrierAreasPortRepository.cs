@@ -14,10 +14,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public CarrierAreasPortRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public CarrierAreasPortRepository(ICommonDataContext context)
         {

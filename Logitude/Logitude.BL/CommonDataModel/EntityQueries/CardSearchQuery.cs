@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CardSearchRepository repository;
 
-        public CardSearchQuery()
-        {
-            repository = new CardSearchRepository();
-        }
+
 
         public CardSearchQuery(int tenant)
         {

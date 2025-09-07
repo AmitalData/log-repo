@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         HybridTenantThresholdRepository repository;
 
-        public  HybridTenantThresholdQuery()
-        {
-               repository = new  HybridTenantThresholdRepository(); 
-        }
+ 
 
         public  HybridTenantThresholdQuery(int tenant)
         {

@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         RankRepository repository;
 
-        public RankQuery()
-        {
-            repository = new RankRepository(); 
-        }
+
 
         public RankQuery(int tenant)
         {

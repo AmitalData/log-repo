@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         EmailProviderRepository repository;
 
-        public EmailProviderQuery()
-        {
-            repository = new EmailProviderRepository();
-        }
+
 
         public EmailProviderQuery(int tenant)
         {

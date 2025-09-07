@@ -74,13 +74,8 @@ export class ApplicationTimersManager {
         }));
 
         SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
-            this.CheckApplicationLocalStorage();
-        }));
-
-        SessionLocator.TimersSubscribtions.push(this.getTimer(30000).subscribe((res:any) => {
             this.CheckUserLastLogin();
         }));
-
 
         SessionLocator.TimersSubscribtions.push(this.getTimer(120000).subscribe((res:any) => {
             this.CheckUserValidity();
@@ -136,32 +131,6 @@ export class ApplicationTimersManager {
         return interval(period).pipe(timeInterval());
     }
 
-
-
-
-
-    private CheckApplicationLocalStorage() {
-        try {
-            const isCypress = window.sessionStorage.getItem('ControlledByCypress');
-            var isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;//MAC//WIN32
-            if (window.localStorage.length === 0 && !isMac && !isCypress) {
-                var messageWindow: MessageWindow = new MessageWindow();
-
-                messageWindow.Width = 450;
-                messageWindow.Title = "Application Storage Deleted";
-                messageWindow.Height = 190;
-                messageWindow.Show("Your application storage has been deleted. Please login again.");
-                messageWindow.WindowClosed.subscribe(($event: any) => {
-                    this.OnSignoutClicked();
-                });
-
-
-            }
-
-
-        }
-        catch (e) { console.error(e); }
-    }
 
     IsUserUnlock: boolean = false;
 

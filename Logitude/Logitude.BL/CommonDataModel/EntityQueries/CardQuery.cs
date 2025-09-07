@@ -41,10 +41,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CardRepository repository;
 
-        public CardQuery()
-        {
-            repository = new CardRepository();
-        }
+    
 
         public CardQuery(int tenant)
         {
@@ -139,6 +136,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
                                                  SendingInterestReport = card.SendingInterestReport,
                                                  ExternalSystem = card.ExternalSystem,
+                                                 IsCustomer = card.IsCustomer,
                                              });
 
 
@@ -1501,7 +1499,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 EmailForSendingSingArinvoice = card.EmailForSendingSingArinvoice,
                                                 SendingInterestReport = card.SendingInterestReport,
                                                 ExternalSystem = card.ExternalSystem,
-
+                                                IsCustomer = card.IsCustomer,
                                             };
 
             if (myResult.Count() > 0)
@@ -1544,7 +1542,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                                 GLAccountDisplayNumber = card.GLAccountDisplayNumber,
                                                 GLAccountId = card.GLAccountId,
-                                                SearchFields = card.SearchFields
+                                                SearchFields = card.SearchFields,
+                                                IsCustomer = card.IsCustomer,
+
 
                                             };
 

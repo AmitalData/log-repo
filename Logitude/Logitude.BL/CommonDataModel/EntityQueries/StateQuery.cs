@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         StateRepository repository;
 
-        public StateQuery()
-        {
-            repository = new StateRepository(); 
-        }
+
 
         public StateQuery(int tenant)
         {

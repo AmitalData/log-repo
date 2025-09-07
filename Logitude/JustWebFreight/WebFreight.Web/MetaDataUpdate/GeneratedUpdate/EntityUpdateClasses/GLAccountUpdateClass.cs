@@ -26,7 +26,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "0ef5ae5dbdf1371a21e6b8a5468c8486";
+		public const string HashString = "f591141441fbfb36e7f5c1dcabc926ac";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository,int contextTenant=0)
         {                     
             
@@ -44,6 +44,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
 			      				    AvailableInDocumentTypes =  true,
+			      				    IsLock =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -74,7 +75,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    NewWizardControlName =  "Logitude.Accounting.Views.Tabs.ACC.NewGLAccountControlCommand",
-			      				    LocalDefaultText =  "חשבון",
+			      				    LocalDefaultTextBack_up =  "חשבון",
+			      				    LocalDefaultText =  "BS64:IteX16nXkdeV158i",
 			      				    DefaultText =  "GL Account",
 			      				    Code =  "GLAC",
 			      				    Name =  "GLAccount",
@@ -271,10 +273,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InternalNumber",
 					  						DefaultText =  "Internal Counter",
-					  						FullLocalDefaultText =  "מספר מערכת",
+					  						FullLocalDefaultTextBack_up =  "מספר מערכת",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINee16LXqNeb16oi",
 					  						ListFieldLable =  "InternalNumberListLable",
 					  						ListLableDefaultText =  "Internal Counter",
-					  						ListLocalDefaultText =  "מספר מערכת",
+					  						ListLocalDefaultTextBack_up =  "מספר מערכת",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINee16LXqNeb16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -338,10 +342,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountTypeCode",
 					  						DefaultText =  "Account Type Code",
-					  						FullLocalDefaultText =  "סוג כרטיס",
+					  						FullLocalDefaultTextBack_up =  "סוג כרטיס",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXm9eo15jXmdehIg==",
 					  						ListFieldLable =  "AccountTypeCodeListLable",
 					  						ListLableDefaultText =  "Account Type Code",
-					  						ListLocalDefaultText =  "סוג כרטיס",
+					  						ListLocalDefaultTextBack_up =  "סוג כרטיס",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXm9eo15jXmdehIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "GLAccountType",
 					  						NavigationPropertyName =  "GLAccountType",
@@ -406,10 +412,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DisplayNumber",
 					  						DefaultText =  "Account No.",
-					  						FullLocalDefaultText =  "מספר כרטיס",
+					  						FullLocalDefaultTextBack_up =  "מספר כרטיס",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeb16jXmNeZ16Ei",
 					  						ListFieldLable =  "DisplayNumberListLable",
 					  						ListLableDefaultText =  "Account No.",
-					  						ListLocalDefaultText =  "מספר כרטיס",
+					  						ListLocalDefaultTextBack_up =  "מספר כרטיס",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeb16jXmNeZ16Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -472,10 +480,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
+					  						FullLocalDefaultTextBack_up =  "שם מקומי",
+					  						FullLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם מקומי",
+					  						ListLocalDefaultTextBack_up =  "שם מקומי",
+					  						ListLocalDefaultText =  "BS64:Itep150g157Xp9eV157XmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -538,10 +548,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם באנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם באנגלית",
+					  						FullLocalDefaultText =  "BS64:Itep150g15HXkNeg15LXnNeZ16oi",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם באנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם באנגלית",
+					  						ListLocalDefaultText =  "BS64:Itep150g15HXkNeg15LXnNeZ16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -603,10 +615,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Account No. / Name / VAT No.",
-					  						FullLocalDefaultText =  " מספר ח.פ / מספר / שם כרטיס",
+					  						FullLocalDefaultTextBack_up =  " מספר ח.פ / מספר / שם כרטיס",
+					  						FullLocalDefaultText =  "BS64:IiDXnteh16TXqCDXly7XpCAvINee16HXpNeoIC8g16nXnSDXm9eo15jXmdehIg==",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Account No. / Name",
-					  						ListLocalDefaultText =  " מספר ח.פ / מספר / שם כרטיס",
+					  						ListLocalDefaultTextBack_up =  " מספר ח.פ / מספר / שם כרטיס",
+					  						ListLocalDefaultText =  "BS64:IiDXnteh16TXqCDXly7XpCAvINee16HXpNeoIC8g16nXnSDXm9eo15jXmdehIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -669,10 +683,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMultiCurrency",
 					  						DefaultText =  "Multi Currency",
-					  						FullLocalDefaultText =  "רב מטבעי",
+					  						FullLocalDefaultTextBack_up =  "רב מטבעי",
+					  						FullLocalDefaultText =  "BS64:Iteo15Eg157XmNeR16LXmSI=",
 					  						ListFieldLable =  "IsMultiCurrencyListLable",
 					  						ListLableDefaultText =  "Multi Currency",
-					  						ListLocalDefaultText =  "רב מטבעי",
+					  						ListLocalDefaultTextBack_up =  "רב מטבעי",
+					  						ListLocalDefaultText =  "BS64:Iteo15Eg157XmNeR16LXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -736,10 +752,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyId",
 					  						DefaultText =  "Currency ",
-					  						FullLocalDefaultText =  "מטבע",
+					  						FullLocalDefaultTextBack_up =  "מטבע",
+					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						ListFieldLable =  "CurrencyIdListLable",
 					  						ListLableDefaultText =  "Currency ",
-					  						ListLocalDefaultText =  "מטבע",
+					  						ListLocalDefaultTextBack_up =  "מטבע",
+					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Currency",
 					  						NavigationPropertyName =  "Currency",
@@ -805,10 +823,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevenueExpenseType",
 					  						DefaultText =  "Revenue/Expense ",
-					  						FullLocalDefaultText =  "האם מתאפס בהעברת שנה?",
+					  						FullLocalDefaultTextBack_up =  "האם מתאפס בהעברת שנה?",
+					  						FullLocalDefaultText =  "BS64:IteU15DXnSDXnteq15DXpNehINeR15TXoteR16jXqiDXqdeg15Q/Ig==",
 					  						ListFieldLable =  "RevenueExpenseTypeListLable",
 					  						ListLableDefaultText =  "Revenue/Expense ",
-					  						ListLocalDefaultText =  "האם מתאפס בהעברת שנה?",
+					  						ListLocalDefaultTextBack_up =  "האם מתאפס בהעברת שנה?",
+					  						ListLocalDefaultText =  "BS64:IteU15DXnSDXnteq15DXpNehINeR15TXoteR16jXqiDXqdeg15Q/Ig==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "RevenueExpenseType",
 					  						NavigationPropertyName =  "RevenueExpense",
@@ -873,10 +893,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsControlAccount",
 					  						DefaultText =  "Control Account",
-					  						FullLocalDefaultText =  "חשבון מרכז",
+					  						FullLocalDefaultTextBack_up =  "חשבון מרכז",
+					  						FullLocalDefaultText =  "BS64:IteX16nXkdeV158g157XqNeb15Yi",
 					  						ListFieldLable =  "IsControlAccountListLable",
 					  						ListLableDefaultText =  "Control Account",
-					  						ListLocalDefaultText =  "חשבון מרכז",
+					  						ListLocalDefaultTextBack_up =  "חשבון מרכז",
+					  						ListLocalDefaultText =  "BS64:IteX16nXkdeV158g157XqNeb15Yi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -940,10 +962,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsId",
 					  						DefaultText =  "Chart Of Accounts",
-					  						FullLocalDefaultText =  "קבוצת מאזן",
+					  						FullLocalDefaultTextBack_up =  "קבוצת מאזן",
+					  						FullLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
 					  						ListFieldLable =  "ChartOfAccountsIdListLable",
 					  						ListLableDefaultText =  "Chart Of Accounts ",
-					  						ListLocalDefaultText =  "קבוצת מאזן",
+					  						ListLocalDefaultTextBack_up =  "קבוצת מאזן",
+					  						ListLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ChartOfAccount",
 					  						NavigationPropertyName =  "ChartOfAccount",
@@ -1008,10 +1032,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Inactive",
 					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "חסום",
+					  						FullLocalDefaultTextBack_up =  "חסום",
+					  						FullLocalDefaultText =  "BS64:IteX16HXldedIg==",
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "חסום",
+					  						ListLocalDefaultTextBack_up =  "חסום",
+					  						ListLocalDefaultText =  "BS64:IteX16HXldedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1073,11 +1099,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountTypeName",
-					  						DefaultText =  "סוג חשבון",
-					  						FullLocalDefaultText =  "סוג חשבון",
+					  						DefaultText =  "Account Type",
+					  						FullLocalDefaultTextBack_up =  "סוג חשבון",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXl9ep15HXldefIg==",
 					  						ListFieldLable =  "AccountTypeNameListLable",
 					  						ListLableDefaultText =  "Account Type",
-					  						ListLocalDefaultText =  "סוג חשבון",
+					  						ListLocalDefaultTextBack_up =  "סוג חשבון",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXl9ep15HXldefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1140,10 +1168,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyName",
 					  						DefaultText =  "Currency",
-					  						FullLocalDefaultText =  "שם מטבע",
+					  						FullLocalDefaultTextBack_up =  "שם מטבע",
+					  						FullLocalDefaultText =  "BS64:Itep150g157XmNeR16Ii",
 					  						ListFieldLable =  "CurrencyNameListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultText =  "שם מטבע ",
+					  						ListLocalDefaultTextBack_up =  "שם מטבע ",
+					  						ListLocalDefaultText =  "BS64:Itep150g157XmNeR16IgIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1206,10 +1236,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevenueExpenseName",
 					  						DefaultText =  "Revenue/Expense",
-					  						FullLocalDefaultText =  "הכנסות/הוצאות",
+					  						FullLocalDefaultTextBack_up =  "הכנסות/הוצאות",
+					  						FullLocalDefaultText =  "BS64:IteU15vXoNeh15XXqi/XlNeV16bXkNeV16oi",
 					  						ListFieldLable =  "RevenueExpenseNameListLable",
 					  						ListLableDefaultText =  "Revenue/Expense",
-					  						ListLocalDefaultText =  "הכנסות/הוצאות",
+					  						ListLocalDefaultTextBack_up =  "הכנסות/הוצאות",
+					  						ListLocalDefaultText =  "BS64:IteU15vXoNeh15XXqi/XlNeV16bXkNeV16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1272,10 +1304,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsName",
 					  						DefaultText =  "Chart of Accounts",
-					  						FullLocalDefaultText =  "קבוצת מאזן",
+					  						FullLocalDefaultTextBack_up =  "קבוצת מאזן",
+					  						FullLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
 					  						ListFieldLable =  "ChartOfAccountsNameListLable",
 					  						ListLableDefaultText =  "Chart of Accounts",
-					  						ListLocalDefaultText =  "קבוצת מאזן",
+					  						ListLocalDefaultTextBack_up =  "קבוצת מאזן",
+					  						ListLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1339,10 +1373,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeCode",
 					  						DefaultText =  "Chart of Accounts Type ",
-					  						FullLocalDefaultText =  "סוג קבוצת מאזן",
+					  						FullLocalDefaultTextBack_up =  "סוג קבוצת מאזן",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXp9eR15XXpteqINee15DXltefIg==",
 					  						ListFieldLable =  "ChartOfAccountsTypeCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Type ",
-					  						ListLocalDefaultText =  "סוג קבוצת מאזן",
+					  						ListLocalDefaultTextBack_up =  "סוג קבוצת מאזן",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXp9eR15XXpteqINee15DXltefIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ChartOfAccountsType",
 					  						NavigationPropertyName =  "ChartOfAccountsType",
@@ -1407,10 +1443,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeName",
 					  						DefaultText =  "Chart of Accounts Type",
-					  						FullLocalDefaultText =  "סוג קבוצת מאזן",
+					  						FullLocalDefaultTextBack_up =  "סוג קבוצת מאזן",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXp9eR15XXpteqINee15DXltefIg==",
 					  						ListFieldLable =  "ChartOfAccountsTypeNameListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Type",
-					  						ListLocalDefaultText =  "סוג קבוצת מאזן",
+					  						ListLocalDefaultTextBack_up =  "סוג קבוצת מאזן",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXp9eR15XXpteqINee15DXltefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1473,10 +1511,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyCode",
 					  						DefaultText =  "Currency Code",
-					  						FullLocalDefaultText =  "קוד מטבע",
+					  						FullLocalDefaultTextBack_up =  "קוד מטבע",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXnteY15HXoiI=",
 					  						ListFieldLable =  "CurrencyCodeListLable",
 					  						ListLableDefaultText =  "Currency Code",
-					  						ListLocalDefaultText =  "קוד מטבע",
+					  						ListLocalDefaultTextBack_up =  "קוד מטבע",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnteY15HXoiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1512,7 +1552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -1540,10 +1580,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcileMethodCode",
 					  						DefaultText =  "Reconcile Method ",
-					  						FullLocalDefaultText =  "שיטת התאמה",
+					  						FullLocalDefaultTextBack_up =  "שיטת התאמה",
+					  						FullLocalDefaultText =  "BS64:Itep15nXmNeqINeU16rXkNee15Qi",
 					  						ListFieldLable =  "ReconcileMethodCodeListLable",
 					  						ListLableDefaultText =  "Reconcile Method ",
-					  						ListLocalDefaultText =  "שיטת התאמה",
+					  						ListLocalDefaultTextBack_up =  "שיטת התאמה",
+					  						ListLocalDefaultText =  "BS64:Itep15nXmNeqINeU16rXkNee15Qi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ReconcileMethod",
 					  						NavigationPropertyName =  "ReconcileMethod",
@@ -1576,7 +1618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  100,
@@ -1608,10 +1650,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcileMethodName",
 					  						DefaultText =  "Reconcile Method",
-					  						FullLocalDefaultText =  "שיטת התאמה",
+					  						FullLocalDefaultTextBack_up =  "שיטת התאמה",
+					  						FullLocalDefaultText =  "BS64:Itep15nXmNeqINeU16rXkNee15Qi",
 					  						ListFieldLable =  "ReconcileMethodNameListLable",
 					  						ListLableDefaultText =  "Reconcile Method",
-					  						ListLocalDefaultText =  "שיטת התאמה",
+					  						ListLocalDefaultTextBack_up =  "שיטת התאמה",
+					  						ListLocalDefaultText =  "BS64:Itep15nXmNeqINeU16rXkNee15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1675,10 +1719,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControlAccountId",
 					  						DefaultText =  "Control Account Id",
-					  						FullLocalDefaultText =  "מספר חשבון מרכז",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון מרכז",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g157XqNeb15Yi",
 					  						ListFieldLable =  "ControlAccountIdListLable",
 					  						ListLableDefaultText =  "Control Account Id",
-					  						ListLocalDefaultText =  "מספר חשבון מרכז",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון מרכז",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g157XqNeb15Yi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "GLAccount",
 					  						NavigationPropertyName =  "ControlAccount",
@@ -1743,10 +1789,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControlAccountName",
 					  						DefaultText =  "Control Account Name",
-					  						FullLocalDefaultText =  "שם חשבון מרכז",
+					  						FullLocalDefaultTextBack_up =  "שם חשבון מרכז",
+					  						FullLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXnteo15vXliI=",
 					  						ListFieldLable =  "ControlAccountNameListLable",
 					  						ListLableDefaultText =  "Control Account Name",
-					  						ListLocalDefaultText =  "שם חשבון מרכז",
+					  						ListLocalDefaultTextBack_up =  "שם חשבון מרכז",
+					  						ListLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXnteo15vXliI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1809,10 +1857,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ControlAccountNumber",
 					  						DefaultText =  "Control Account Number",
-					  						FullLocalDefaultText =  "מספר חשבון מרכז",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון מרכז",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g157XqNeb15Yi",
 					  						ListFieldLable =  "ControlAccountNumberListLable",
 					  						ListLableDefaultText =  "Control Account Number",
-					  						ListLocalDefaultText =  "מספר חשבון מרכז",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון מרכז",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g157XqNeb15Yi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1875,10 +1925,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActiveStatusName",
 					  						DefaultText =  "Status",
-					  						FullLocalDefaultText =  "סטטוס",
+					  						FullLocalDefaultTextBack_up =  "סטטוס",
+					  						FullLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
 					  						ListFieldLable =  "ActiveStatusNameListLable",
 					  						ListLableDefaultText =  "Status",
-					  						ListLocalDefaultText =  "סטטוס",
+					  						ListLocalDefaultTextBack_up =  "סטטוס",
+					  						ListLocalDefaultText =  "BS64:Iteh15jXmNeV16Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2062,10 +2114,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcileId",
 					  						DefaultText =  "Automatic Reconcile Method ",
-					  						FullLocalDefaultText =  "התאמה אוטומטית",
+					  						FullLocalDefaultTextBack_up =  "התאמה אוטומטית",
+					  						FullLocalDefaultText =  "BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=",
 					  						ListFieldLable =  "AutomaticReconcileIdListLable",
 					  						ListLableDefaultText =  "Automatic Reconcile Method ",
-					  						ListLocalDefaultText =  "התאמה אוטומטית",
+					  						ListLocalDefaultTextBack_up =  "התאמה אוטומטית",
+					  						ListLocalDefaultText =  "BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AutomaticReconcileMethod",
 					  						NavigationPropertyName =  "AutomaticReconcile",
@@ -2130,10 +2184,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcileName",
 					  						DefaultText =  "Automatic Reconcile",
-					  						FullLocalDefaultText =  "התאמה אוטומטית",
+					  						FullLocalDefaultTextBack_up =  "התאמה אוטומטית",
+					  						FullLocalDefaultText =  "BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=",
 					  						ListFieldLable =  "AutomaticReconcileNameListLable",
 					  						ListLableDefaultText =  "Automatic Reconcile",
-					  						ListLocalDefaultText =  "התאמה אוטומטית",
+					  						ListLocalDefaultTextBack_up =  "התאמה אוטומטית",
+					  						ListLocalDefaultText =  "BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2196,10 +2252,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousEnglishName",
 					  						DefaultText =  "Previous English Name",
-					  						FullLocalDefaultText =  "שם קודם באנגלית",
+					  						FullLocalDefaultTextBack_up =  "שם קודם באנגלית",
+					  						FullLocalDefaultText =  "BS64:Itep150g16fXldeT150g15HXkNeg15LXnNeZ16oi",
 					  						ListFieldLable =  "PreviousEnglishNameListLable",
 					  						ListLableDefaultText =  "Previous English Name",
-					  						ListLocalDefaultText =  "שם קודם באנגלית",
+					  						ListLocalDefaultTextBack_up =  "שם קודם באנגלית",
+					  						ListLocalDefaultText =  "BS64:Itep150g16fXldeT150g15HXkNeg15LXnNeZ16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2262,10 +2320,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousEnglishNameChangeDate",
 					  						DefaultText =  "English Name Change Date",
-					  						FullLocalDefaultText =  "תאריך שינוי שם באנגלית",
+					  						FullLocalDefaultTextBack_up =  "תאריך שינוי שם באנגלית",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXqdedINeR15DXoNeS15zXmdeqIg==",
 					  						ListFieldLable =  "PreviousEnglishNameChangeDateListLable",
 					  						ListLableDefaultText =  "English Name Change Date",
-					  						ListLocalDefaultText =  "תאריך שינוי שם באנגלית",
+					  						ListLocalDefaultTextBack_up =  "תאריך שינוי שם באנגלית",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXqdedINeR15DXoNeS15zXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2328,10 +2388,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousLocalName",
 					  						DefaultText =  "Previous Local Name",
-					  						FullLocalDefaultText =  "שם קודם מקומי",
+					  						FullLocalDefaultTextBack_up =  "שם קודם מקומי",
+					  						FullLocalDefaultText =  "BS64:Itep150g16fXldeT150g157Xp9eV157XmSI=",
 					  						ListFieldLable =  "PreviousLocalNameListLable",
 					  						ListLableDefaultText =  "Previous Local Name",
-					  						ListLocalDefaultText =  "שם קודם מקומי",
+					  						ListLocalDefaultTextBack_up =  "שם קודם מקומי",
+					  						ListLocalDefaultText =  "BS64:Itep150g16fXldeT150g157Xp9eV157XmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2394,10 +2456,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousLocalNameChangeDate",
 					  						DefaultText =  "Local Name Change Date",
-					  						FullLocalDefaultText =  "תאריך שינוי שם מקומי",
+					  						FullLocalDefaultTextBack_up =  "תאריך שינוי שם מקומי",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXqdedINee16fXldee15ki",
 					  						ListFieldLable =  "PreviousLocalNameChangeDateListLable",
 					  						ListLableDefaultText =  "Local Name Change Date",
-					  						ListLocalDefaultText =  "תאריך שינוי שם מקומי",
+					  						ListLocalDefaultTextBack_up =  "תאריך שינוי שם מקומי",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXqdedINee16fXldee15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2460,10 +2524,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousNumber",
 					  						DefaultText =  "Previous Number",
-					  						FullLocalDefaultText =  "מספר קודם",
+					  						FullLocalDefaultTextBack_up =  "מספר קודם",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINen15XXk9edIg==",
 					  						ListFieldLable =  "PreviousNumberListLable",
 					  						ListLableDefaultText =  "Previous Number",
-					  						ListLocalDefaultText =  "מספר קודם",
+					  						ListLocalDefaultTextBack_up =  "מספר קודם",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINen15XXk9edIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2526,10 +2592,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousNumberChangeDate",
 					  						DefaultText =  "Number Change Date",
-					  						FullLocalDefaultText =  "תאריך שינוי מספר",
+					  						FullLocalDefaultTextBack_up =  "תאריך שינוי מספר",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXnteh16TXqCI=",
 					  						ListFieldLable =  "PreviousNumberChangeDateListLable",
 					  						ListLableDefaultText =  "Number Change Date",
-					  						ListLocalDefaultText =  "תאריך שינוי מספר",
+					  						ListLocalDefaultTextBack_up =  "תאריך שינוי מספר",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXnteh16TXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2592,10 +2660,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousChartOfAccountsId",
 					  						DefaultText =  "Previous Chart of Accounts ",
-					  						FullLocalDefaultText =  "קבוצת מאזן קודמת",
+					  						FullLocalDefaultTextBack_up =  "קבוצת מאזן קודמת",
+					  						FullLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158g16fXldeT157XqiI=",
 					  						ListFieldLable =  "PreviousChartOfAccountsIdListLable",
 					  						ListLableDefaultText =  "Previous Chart of Accounts ",
-					  						ListLocalDefaultText =  "קבוצת מאזן קודמת",
+					  						ListLocalDefaultTextBack_up =  "קבוצת מאזן קודמת",
+					  						ListLocalDefaultText =  "BS64:Iten15HXldem16og157XkNeW158g16fXldeT157XqiI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ChartOfAccount",
 					  						NavigationPropertyName =  "PreviousChartOfAccount",
@@ -2660,10 +2730,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PreviousChartOfAccountsChangeDate",
 					  						DefaultText =  "Chart of Accounts Change Date",
-					  						FullLocalDefaultText =  "תאריך שינוי קבוצת מאזן",
+					  						FullLocalDefaultTextBack_up =  "תאריך שינוי קבוצת מאזן",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXp9eR15XXpteqINee15DXltefIg==",
 					  						ListFieldLable =  "PreviousChartOfAccountsChangeDateListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Change Date",
-					  						ListLocalDefaultText =  "תאריך שינוי קבוצת מאזן",
+					  						ListLocalDefaultTextBack_up =  "תאריך שינוי קבוצת מאזן",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16nXmdeg15XXmSDXp9eR15XXpteqINee15DXltefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2727,10 +2799,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerGLAccountId",
 					  						DefaultText =  "Client Account Id",
-					  						FullLocalDefaultText =  "מזהה חשבון לקוח",
+					  						FullLocalDefaultTextBack_up =  "מזהה חשבון לקוח",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINeX16nXkdeV158g15zXp9eV15ci",
 					  						ListFieldLable =  "CustomerGLAccountIdListLable",
 					  						ListLableDefaultText =  "Client Account Id",
-					  						ListLocalDefaultText =  "מזהה חשבון לקוח",
+					  						ListLocalDefaultTextBack_up =  "מזהה חשבון לקוח",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINeX16nXkdeV158g15zXp9eV15ci",
 					  						IsForeignKey =  false,
 					  						ForeignEntity =  "GLAccount",
 					  						NavigationPropertyName =  "CustomerGLAccount",
@@ -2795,10 +2869,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerGLAccountName",
 					  						DefaultText =  "Customer Account Name",
-					  						FullLocalDefaultText =  "שם חשבון לקוח",
+					  						FullLocalDefaultTextBack_up =  "שם חשבון לקוח",
+					  						FullLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXnNen15XXlyI=",
 					  						ListFieldLable =  "CustomerGLAccountNameListLable",
 					  						ListLableDefaultText =  "Customer Account Name",
-					  						ListLocalDefaultText =  "שם חשבון לקוח",
+					  						ListLocalDefaultTextBack_up =  "שם חשבון לקוח",
+					  						ListLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXnNen15XXlyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2861,10 +2937,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerGLAccountNumber",
 					  						DefaultText =  "Customer Account Number",
-					  						FullLocalDefaultText =  "מספר חשבון לקוח",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון לקוח",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15zXp9eV15ci",
 					  						ListFieldLable =  "CustomerGLAccountNumberListLable",
 					  						ListLableDefaultText =  "Customer Account Number",
-					  						ListLocalDefaultText =  "מספר חשבון לקוח",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון לקוח",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15zXp9eV15ci",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2929,10 +3007,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BalanceInLocalCurrency",
 					  						DefaultText =  "Balance in Local Currency",
-					  						FullLocalDefaultText =  "יתרה במטבע מקומי",
+					  						FullLocalDefaultTextBack_up =  "יתרה במטבע מקומי",
+					  						FullLocalDefaultText =  "BS64:IteZ16rXqNeUINeR157XmNeR16Ig157Xp9eV157XmSI=",
 					  						ListFieldLable =  "BalanceInLocalCurrencyListLable",
 					  						ListLableDefaultText =  "Balance in Local Currency",
-					  						ListLocalDefaultText =  "יתרה במטבע מקומי",
+					  						ListLocalDefaultTextBack_up =  "יתרה במטבע מקומי",
+					  						ListLocalDefaultText =  "BS64:IteZ16rXqNeUINeR157XmNeR16Ig157Xp9eV157XmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2995,10 +3075,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevaluationEnabled",
 					  						DefaultText =  "Revaluation Enabled",
-					  						FullLocalDefaultText =  "שערוך אוטומטי",
+					  						FullLocalDefaultTextBack_up =  "שערוך אוטומטי",
+					  						FullLocalDefaultText =  "BS64:Itep16LXqNeV15og15DXldeY15XXnteY15ki",
 					  						ListFieldLable =  "RevaluationEnabledListLable",
 					  						ListLableDefaultText =  "Revaluation Enabled",
-					  						ListLocalDefaultText =  "שערוך אוטומטי",
+					  						ListLocalDefaultTextBack_up =  "שערוך אוטומטי",
+					  						ListLocalDefaultText =  "BS64:Itep16LXqNeV15og15DXldeY15XXnteY15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3062,10 +3144,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentAccountId",
 					  						DefaultText =  "Parent Account ",
-					  						FullLocalDefaultText =  "מספר חשבון אב",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון אב",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15DXkSI=",
 					  						ListFieldLable =  "ParentAccountIdListLable",
 					  						ListLableDefaultText =  "Parent Account ",
-					  						ListLocalDefaultText =  "מספר חשבון אב",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון אב",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15DXkSI=",
 					  						IsForeignKey =  false,
 					  						ForeignEntity =  "GLAccount",
 					  						NavigationPropertyName =  "ParentAccount",
@@ -3130,10 +3214,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentAccountName",
 					  						DefaultText =  "Parent Account Name",
-					  						FullLocalDefaultText =  "שם חשבון אב",
+					  						FullLocalDefaultTextBack_up =  "שם חשבון אב",
+					  						FullLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXkNeRIg==",
 					  						ListFieldLable =  "ParentAccountNameListLable",
 					  						ListLableDefaultText =  "Parent Account Name",
-					  						ListLocalDefaultText =  "שם חשבון אב",
+					  						ListLocalDefaultTextBack_up =  "שם חשבון אב",
+					  						ListLocalDefaultText =  "BS64:Itep150g15fXqdeR15XXnyDXkNeRIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3196,10 +3282,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentAccountNumber",
 					  						DefaultText =  "Parent Account Number",
-					  						FullLocalDefaultText =  "מספר חשבון אב",
+					  						FullLocalDefaultTextBack_up =  "מספר חשבון אב",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15DXkSI=",
 					  						ListFieldLable =  "ParentAccountNumberListLable",
 					  						ListLableDefaultText =  "Parent Account Number",
-					  						ListLocalDefaultText =  "מספר חשבון אב",
+					  						ListLocalDefaultTextBack_up =  "מספר חשבון אב",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeX16nXkdeV158g15DXkSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3262,10 +3350,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerGLAccountInternalNumber",
 					  						DefaultText =  "Customer GL Account Internal Number",
-					  						FullLocalDefaultText =  "מספר מערכת של חשבון לקוח",
+					  						FullLocalDefaultTextBack_up =  "מספר מערכת של חשבון לקוח",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINee16LXqNeb16og16nXnCDXl9ep15HXldefINec16fXldeXIg==",
 					  						ListFieldLable =  "CustomerGLAccountInternalNumberListLable",
 					  						ListLableDefaultText =  "Customer GL Account Internal Number",
-					  						ListLocalDefaultText =  "מספר מערכת של חשבון לקוח",
+					  						ListLocalDefaultTextBack_up =  "מספר מערכת של חשבון לקוח",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINee16LXqNeb16og16nXnCDXl9ep15HXldefINec16fXldeXIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3329,10 +3419,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1Id",
 					  						DefaultText =  "Category 1 ",
-					  						FullLocalDefaultText =  "מזהה קטגוריה 1",
+					  						FullLocalDefaultTextBack_up =  "מזהה קטגוריה 1",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDEi",
 					  						ListFieldLable =  "Category1IdListLable",
 					  						ListLableDefaultText =  "Category 1 ",
-					  						ListLocalDefaultText =  "מזהה קטגוריה 1",
+					  						ListLocalDefaultTextBack_up =  "מזהה קטגוריה 1",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDEi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Category1",
 					  						NavigationPropertyName =  "Category1",
@@ -3397,10 +3489,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1Name",
 					  						DefaultText =  "Category 1 Name",
-					  						FullLocalDefaultText =  "שם קטגוריה 1",
+					  						FullLocalDefaultTextBack_up =  "שם קטגוריה 1",
+					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMSI=",
 					  						ListFieldLable =  "Category1NameListLable",
 					  						ListLableDefaultText =  "Category 1 Name",
-					  						ListLocalDefaultText =  "שם קטגוריה 1",
+					  						ListLocalDefaultTextBack_up =  "שם קטגוריה 1",
+					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3464,10 +3558,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category2Id",
 					  						DefaultText =  "Category 2 ",
-					  						FullLocalDefaultText =  "מזהה קטגוריה 2",
+					  						FullLocalDefaultTextBack_up =  "מזהה קטגוריה 2",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDIi",
 					  						ListFieldLable =  "Category2IdListLable",
 					  						ListLableDefaultText =  "Category 2 ",
-					  						ListLocalDefaultText =  "מזהה קטגוריה 2",
+					  						ListLocalDefaultTextBack_up =  "מזהה קטגוריה 2",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDIi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Category2",
 					  						NavigationPropertyName =  "Category2",
@@ -3532,10 +3628,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category2Name",
 					  						DefaultText =  "Category 2 Name",
-					  						FullLocalDefaultText =  "שם קטגוריה 2",
+					  						FullLocalDefaultTextBack_up =  "שם קטגוריה 2",
+					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMiI=",
 					  						ListFieldLable =  "Category2NameListLable",
 					  						ListLableDefaultText =  "Category 2 Name",
-					  						ListLocalDefaultText =  "שם קטגוריה 2",
+					  						ListLocalDefaultTextBack_up =  "שם קטגוריה 2",
+					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3599,10 +3697,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category3Id",
 					  						DefaultText =  "Category 3 ",
-					  						FullLocalDefaultText =  "מזהה קטגוריה 3",
+					  						FullLocalDefaultTextBack_up =  "מזהה קטגוריה 3",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDMi",
 					  						ListFieldLable =  "Category3IdListLable",
 					  						ListLableDefaultText =  "Category 3 ",
-					  						ListLocalDefaultText =  "מזהה קטגוריה 3",
+					  						ListLocalDefaultTextBack_up =  "מזהה קטגוריה 3",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDMi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Category3",
 					  						NavigationPropertyName =  "Category3",
@@ -3667,10 +3767,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category3Name",
 					  						DefaultText =  "Category 3 Name",
-					  						FullLocalDefaultText =  "שם קטגוריה 3",
+					  						FullLocalDefaultTextBack_up =  "שם קטגוריה 3",
+					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMyI=",
 					  						ListFieldLable =  "Category3NameListLable",
 					  						ListLableDefaultText =  "Category 3 Name",
-					  						ListLocalDefaultText =  "שם קטגוריה 3",
+					  						ListLocalDefaultTextBack_up =  "שם קטגוריה 3",
+					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgMyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3734,10 +3836,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category4Id",
 					  						DefaultText =  "Category 4 ",
-					  						FullLocalDefaultText =  "מזהה קטגוריה 4",
+					  						FullLocalDefaultTextBack_up =  "מזהה קטגוריה 4",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDQi",
 					  						ListFieldLable =  "Category4IdListLable",
 					  						ListLableDefaultText =  "Category 4 ",
-					  						ListLocalDefaultText =  "מזהה קטגוריה 4",
+					  						ListLocalDefaultTextBack_up =  "מזהה קטגוריה 4",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDQi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Category4",
 					  						NavigationPropertyName =  "Category4",
@@ -3802,10 +3906,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category4Name",
 					  						DefaultText =  "Category 4 Name",
-					  						FullLocalDefaultText =  "שם קטגוריה 4",
+					  						FullLocalDefaultTextBack_up =  "שם קטגוריה 4",
+					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNCI=",
 					  						ListFieldLable =  "Category4NameListLable",
 					  						ListLableDefaultText =  "Category 4 Name",
-					  						ListLocalDefaultText =  "שם קטגוריה 4",
+					  						ListLocalDefaultTextBack_up =  "שם קטגוריה 4",
+					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3869,10 +3975,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5Id",
 					  						DefaultText =  "Category 5 ",
-					  						FullLocalDefaultText =  "מזהה קטגוריה 5",
+					  						FullLocalDefaultTextBack_up =  "מזהה קטגוריה 5",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDUi",
 					  						ListFieldLable =  "Category5IdListLable",
 					  						ListLableDefaultText =  "Category 5 ",
-					  						ListLocalDefaultText =  "מזהה קטגוריה 5",
+					  						ListLocalDefaultTextBack_up =  "מזהה קטגוריה 5",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINen15jXkteV16jXmdeUIDUi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Category5",
 					  						NavigationPropertyName =  "Category5",
@@ -3937,10 +4045,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5Name",
 					  						DefaultText =  "Categor 5 Name",
-					  						FullLocalDefaultText =  "שם קטגוריה 5",
+					  						FullLocalDefaultTextBack_up =  "שם קטגוריה 5",
+					  						FullLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNSI=",
 					  						ListFieldLable =  "Category5NameListLable",
 					  						ListLableDefaultText =  "Categor 5 Name",
-					  						ListLocalDefaultText =  "שם קטגוריה 5",
+					  						ListLocalDefaultTextBack_up =  "שם קטגוריה 5",
+					  						ListLocalDefaultText =  "BS64:Itep150g16fXmNeS15XXqNeZ15QgNSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4003,10 +4113,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsVATExempt",
 					  						DefaultText =  "VAT Exempt",
-					  						FullLocalDefaultText =  "פטור ממעמ",
+					  						FullLocalDefaultTextBack_up =  "פטור ממעמ",
+					  						FullLocalDefaultText =  "BS64:Itek15jXldeoINee157XoteeIg==",
 					  						ListFieldLable =  "IsVATExemptListLable",
 					  						ListLableDefaultText =  "VAT Exempt",
-					  						ListLocalDefaultText =  "פטור ממעמ",
+					  						ListLocalDefaultTextBack_up =  "פטור ממעמ",
+					  						ListLocalDefaultText =  "BS64:Itek15jXldeoINee157XoteeIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4068,10 +4180,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsCode",
 					  						DefaultText =  "Chart of Accounts Code",
-					  						FullLocalDefaultText =  "קוד קבוצת מאזן",
+					  						FullLocalDefaultTextBack_up =  "קוד קבוצת מאזן",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXp9eR15XXpteqINee15DXltefIg==",
 					  						ListFieldLable =  "ChartOfAccountsCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Code",
-					  						ListLocalDefaultText =  "קוד קבוצת מאזן",
+					  						ListLocalDefaultTextBack_up =  "קוד קבוצת מאזן",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXp9eR15XXpteqINee15DXltefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4133,10 +4247,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerCode",
 					  						DefaultText =  "Customer Code",
-					  						FullLocalDefaultText =  "קוד לקוח",
+					  						FullLocalDefaultTextBack_up =  "קוד לקוח",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXnNen15XXlyI=",
 					  						ListFieldLable =  "CustomerCodeListLable",
 					  						ListLableDefaultText =  "Customer Code",
-					  						ListLocalDefaultText =  "קוד לקוח",
+					  						ListLocalDefaultTextBack_up =  "קוד לקוח",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnNen15XXlyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4198,10 +4314,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentAccountByCurrency",
 					  						DefaultText =  "Parent Account by Currency",
-					  						FullLocalDefaultText =  "חשבון אב לפי מטבע",
+					  						FullLocalDefaultTextBack_up =  "חשבון אב לפי מטבע",
+					  						FullLocalDefaultText =  "BS64:IteX16nXkdeV158g15DXkSDXnNek15kg157XmNeR16Ii",
 					  						ListFieldLable =  "ParentAccountByCurrencyListLable",
 					  						ListLableDefaultText =  "Parent Account by Currency",
-					  						ListLocalDefaultText =  "חשבון אב לפי מטבע",
+					  						ListLocalDefaultTextBack_up =  "חשבון אב לפי מטבע",
+					  						ListLocalDefaultText =  "BS64:IteX16nXkdeV158g15DXkSDXnNek15kg157XmNeR16Ii",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4262,10 +4380,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityDate",
 					  						DefaultText =  "Last Activity Date",
-					  						FullLocalDefaultText =  "תאריך פעילות אחרון",
+					  						FullLocalDefaultTextBack_up =  "תאריך פעילות אחרון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXoteZ15zXldeqINeQ15fXqNeV158i",
 					  						ListFieldLable =  "LastActivityDateListLable",
 					  						ListLableDefaultText =  "Last Activity Date",
-					  						ListLocalDefaultText =  "תאריך פעילות אחרון",
+					  						ListLocalDefaultTextBack_up =  "תאריך פעילות אחרון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16TXoteZ15zXldeqINeQ15fXqNeV158i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4326,10 +4446,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityTypeName",
 					  						DefaultText =  "LastActivityTypeName",
-					  						FullLocalDefaultText =  "שם סוג הפעילות האחרונה",
+					  						FullLocalDefaultTextBack_up =  "שם סוג הפעילות האחרונה",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXldeSINeU16TXoteZ15zXldeqINeU15DXl9eo15XXoNeUIg==",
 					  						ListFieldLable =  "LastActivityTypeNameListLable",
 					  						ListLableDefaultText =  "LastActivityTypeName",
-					  						ListLocalDefaultText =  "שם סוג הפעילות האחרונה",
+					  						ListLocalDefaultTextBack_up =  "שם סוג הפעילות האחרונה",
+					  						ListLocalDefaultText =  "BS64:Itep150g16HXldeSINeU16TXoteZ15zXldeqINeU15DXl9eo15XXoNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4390,10 +4512,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityByUserName",
 					  						DefaultText =  "LastActivityByUserName",
-					  						FullLocalDefaultText =  "פעילות אחרונה ע\"י",
+					  						FullLocalDefaultTextBack_up =  "פעילות אחרונה ע\"י",
+					  						FullLocalDefaultText =  "BS64:Itek16LXmdec15XXqiDXkNeX16jXldeg15Qg16Ii15ki",
 					  						ListFieldLable =  "LastActivityByUserNameListLable",
 					  						ListLableDefaultText =  "LastActivityByUserName",
-					  						ListLocalDefaultText =  "פעילות אחרונה ע\"י",
+					  						ListLocalDefaultTextBack_up =  "פעילות אחרונה ע\"י",
+					  						ListLocalDefaultText =  "BS64:Itek16LXmdec15XXqiDXkNeX16jXldeg15Qg16Ii15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4456,10 +4580,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatNumber",
 					  						DefaultText =  "VAT No.",
-					  						FullLocalDefaultText =  "מספר ח.פ",
+					  						FullLocalDefaultTextBack_up =  "מספר ח.פ",
+					  						FullLocalDefaultText =  "BS64:Itee16HXpNeoINeXLtekIg==",
 					  						ListFieldLable =  "VatNumberListLable",
 					  						ListLableDefaultText =  "VAT No.",
-					  						ListLocalDefaultText =  "מספר ח.פ",
+					  						ListLocalDefaultTextBack_up =  "מספר ח.פ",
+					  						ListLocalDefaultText =  "BS64:Itee16HXpNeoINeXLtekIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4647,10 +4773,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SalesmanUserId",
 					  						DefaultText =  "Salesman",
-					  						FullLocalDefaultText =  "איש מכירות",
+					  						FullLocalDefaultTextBack_up =  "איש מכירות",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXqSDXnteb15nXqNeV16oi",
 					  						ListFieldLable =  "SalesmanUserIdListLable",
 					  						ListLableDefaultText =  "Salesman",
-					  						ListLocalDefaultText =  "איש מכירות",
+					  						ListLocalDefaultTextBack_up =  "איש מכירות",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXnteb15nXqNeV16oi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "SalesmanUser",
@@ -4713,10 +4841,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NewGLAccountCardId",
 					  						DefaultText =  "New GL Account Card ",
-					  						FullLocalDefaultText =  "מזהה חשבון כרטיס חדש",
+					  						FullLocalDefaultTextBack_up =  "מזהה חשבון כרטיס חדש",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINeX16nXkdeV158g15vXqNeY15nXoSDXl9eT16ki",
 					  						ListFieldLable =  "NewGLAccountCardIdListLable",
 					  						ListLableDefaultText =  "NewGLAccountCardId",
-					  						ListLocalDefaultText =  "מזהה חשבון כרטיס חדש",
+					  						ListLocalDefaultTextBack_up =  "מזהה חשבון כרטיס חדש",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINeX16nXkdeV158g15vXqNeY15nXoSDXl9eT16ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4781,10 +4911,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalBalanceInDue",
 					  						DefaultText =  "Due Balance",
-					  						FullLocalDefaultText =  "יתרה לגביה",
+					  						FullLocalDefaultTextBack_up =  "יתרה לגביה",
+					  						FullLocalDefaultText =  "BS64:IteZ16rXqNeUINec15LXkdeZ15Qi",
 					  						ListFieldLable =  "LocalBalanceInDueListLable",
 					  						ListLableDefaultText =  "Due Balance",
-					  						ListLocalDefaultText =  "יתרה לגביה",
+					  						ListLocalDefaultTextBack_up =  "יתרה לגביה",
+					  						ListLocalDefaultText =  "BS64:IteZ16rXqNeUINec15LXkdeZ15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4847,10 +4979,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NextDueDate",
 					  						DefaultText =  "Next Due Date",
-					  						FullLocalDefaultText =  "תאריך הבא לחישוב יתרה לפירעון",
+					  						FullLocalDefaultTextBack_up =  "תאריך הבא לחישוב יתרה לפירעון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXkdeQINec15fXmdep15XXkSDXmdeq16jXlCDXnNek15nXqNei15XXnyI=",
 					  						ListFieldLable =  "NextDueDateListLable",
 					  						ListLableDefaultText =  "Next Due Date",
-					  						ListLocalDefaultText =  "תאריך הבא לחישוב יתרה לפירעון",
+					  						ListLocalDefaultTextBack_up =  "תאריך הבא לחישוב יתרה לפירעון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15TXkdeQINec15fXmdep15XXkSDXmdeq16jXlCDXnNek15nXqNei15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4911,10 +5045,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencySign",
 					  						DefaultText =  "Currency ",
-					  						FullLocalDefaultText =  "מטבע",
+					  						FullLocalDefaultTextBack_up =  "מטבע",
+					  						FullLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						ListFieldLable =  "CurrencySignListLable",
 					  						ListLableDefaultText =  "Currency",
-					  						ListLocalDefaultText =  "מטבע",
+					  						ListLocalDefaultTextBack_up =  "מטבע",
+					  						ListLocalDefaultText =  "BS64:Itee15jXkdeiIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5095,10 +5231,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionFileTypeId",
 					  						DefaultText =  "Deduction File Type",
-					  						FullLocalDefaultText =  "סוג עיסוק",
+					  						FullLocalDefaultTextBack_up =  "סוג עיסוק",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXoteZ16HXldenIg==",
 					  						ListFieldLable =  "DeductionFileTypeIdListLable",
 					  						ListLableDefaultText =  "DeductionFileTypeId",
-					  						ListLocalDefaultText =  "סוג עיסוק",
+					  						ListLocalDefaultTextBack_up =  "סוג עיסוק",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXoteZ16HXldenIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "WithholdingTaxDeductionType",
 					  						NavigationPropertyName =  "WithholdingTaxDeductionType",
@@ -5162,10 +5300,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionFileNumber",
 					  						DefaultText =  "Deduction File No.",
-					  						FullLocalDefaultText =  "תיק ניכויים",
+					  						FullLocalDefaultTextBack_up =  "תיק ניכויים",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXpyDXoNeZ15vXldeZ15nXnSI=",
 					  						ListFieldLable =  "DeductionFileNumberListLable",
 					  						ListLableDefaultText =  "Deduction File No.",
-					  						ListLocalDefaultText =  "תיק ניכויים",
+					  						ListLocalDefaultTextBack_up =  "תיק ניכויים",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXpyDXoNeZ15vXldeZ15nXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5226,10 +5366,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AssessingOfficeCode",
 					  						DefaultText =  "Assessing Office Code",
-					  						FullLocalDefaultText =  "פקיד שומה",
+					  						FullLocalDefaultTextBack_up =  "פקיד שומה",
+					  						FullLocalDefaultText =  "BS64:Itek16fXmdeTINep15XXnteUIg==",
 					  						ListFieldLable =  "AssessingOfficeCodeListLable",
 					  						ListLableDefaultText =  "AssessingOfficeCode",
-					  						ListLocalDefaultText =  "פקיד שומה",
+					  						ListLocalDefaultTextBack_up =  "פקיד שומה",
+					  						ListLocalDefaultText =  "BS64:Itek16fXmdeTINep15XXnteUIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TaxWithholdingAssessOffice",
 					  						NavigationPropertyName =  "TaxWithholdingAssessOffice",
@@ -5293,10 +5435,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Occupation",
 					  						DefaultText =  "Occupation",
-					  						FullLocalDefaultText =  "עיסוק",
+					  						FullLocalDefaultTextBack_up =  "עיסוק",
+					  						FullLocalDefaultText =  "BS64:Itei15nXodeV16ci",
 					  						ListFieldLable =  "OccupationListLable",
 					  						ListLableDefaultText =  "Occupation",
-					  						ListLocalDefaultText =  "עיסוק",
+					  						ListLocalDefaultTextBack_up =  "עיסוק",
+					  						ListLocalDefaultText =  "BS64:Itei15nXodeV16ci",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5357,10 +5501,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionTypeId",
 					  						DefaultText =  "Deduction Type",
-					  						FullLocalDefaultText =  "סוג תיק ניכויים",
+					  						FullLocalDefaultTextBack_up =  "סוג תיק ניכויים",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXqteZ16cg16DXmdeb15XXmdeZ150i",
 					  						ListFieldLable =  "DeductionTypeIdListLable",
 					  						ListLableDefaultText =  "DeductionTypeId",
-					  						ListLocalDefaultText =  "סוג תיק ניכויים",
+					  						ListLocalDefaultTextBack_up =  "סוג תיק ניכויים",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXqteZ16cg16DXmdeb15XXmdeZ150i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AccountingCompanyType",
 					  						NavigationPropertyName =  "AccountingCompanyType",
@@ -5424,10 +5570,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConsolidationVat",
 					  						DefaultText =  "Consolidation Vat",
-					  						FullLocalDefaultText =  "איחוד עוסקים",
+					  						FullLocalDefaultTextBack_up =  "איחוד עוסקים",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXl9eV15Mg16LXldeh16fXmdedIg==",
 					  						ListFieldLable =  "ConsolidationVatListLable",
 					  						ListLableDefaultText =  "Consolidation Vat",
-					  						ListLocalDefaultText =  "איחוד עוסקים",
+					  						ListLocalDefaultTextBack_up =  "איחוד עוסקים",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXl9eV15Mg16LXldeh16fXmdedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5672,10 +5820,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsEquipmentVendor",
 					  						DefaultText =  "Is Equipment Supplier",
-					  						FullLocalDefaultText =  "ספק ציוד",
+					  						FullLocalDefaultTextBack_up =  "ספק ציוד",
+					  						FullLocalDefaultText =  "BS64:Iteh16TXpyDXpteZ15XXkyI=",
 					  						ListFieldLable =  "IsEquipmentVendorListLable",
 					  						ListLableDefaultText =  "Is Equipment Supplier",
-					  						ListLocalDefaultText =  "ספק ציוד",
+					  						ListLocalDefaultTextBack_up =  "ספק ציוד",
+					  						ListLocalDefaultText =  "BS64:Iteh16TXpyDXpteZ15XXkyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5737,10 +5887,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExcludeFromDeductionReport",
 					  						DefaultText =  "Exclude from deduction report",
-					  						FullLocalDefaultText =  "לא לכלול בדוח ניכויים",
+					  						FullLocalDefaultTextBack_up =  "לא לכלול בדוח ניכויים",
+					  						FullLocalDefaultText =  "BS64:Itec15Ag15zXm9ec15XXnCDXkdeT15XXlyDXoNeZ15vXldeZ15nXnSI=",
 					  						ListFieldLable =  "ExcludeFromDeductionReportListLable",
 					  						ListLableDefaultText =  "Exclude from deduction report",
-					  						ListLocalDefaultText =  "לא לכלול בדוח ניכויים",
+					  						ListLocalDefaultTextBack_up =  "לא לכלול בדוח ניכויים",
+					  						ListLocalDefaultText =  "BS64:Itec15Ag15zXm9ec15XXnCDXkdeT15XXlyDXoNeZ15vXldeZ15nXnSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5802,10 +5954,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Parent",
 					  						DefaultText =  "Parent",
-					  						FullLocalDefaultText =  "קוד אב",
+					  						FullLocalDefaultTextBack_up =  "קוד אב",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXkNeRIg==",
 					  						ListFieldLable =  "ParentListLable",
-					  						ListLableDefaultText =  "קוד אב",
-					  						ListLocalDefaultText =  "Parent",
+					  						ListLableDefaultText =  "Parent",
+					  						ListLocalDefaultTextBack_up =  "קוד אב",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXkNeRIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5866,10 +6020,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionTypeName",
 					  						DefaultText =  "DeductionTypeName",
-					  						FullLocalDefaultText =  "שם תיק ניכויים",
+					  						FullLocalDefaultTextBack_up =  "שם תיק ניכויים",
+					  						FullLocalDefaultText =  "BS64:Itep150g16rXmdenINeg15nXm9eV15nXmdedIg==",
 					  						ListFieldLable =  "DeductionTypeNameListLable",
 					  						ListLableDefaultText =  "DeductionTypeName",
-					  						ListLocalDefaultText =  "שם תיק ניכויים",
+					  						ListLocalDefaultTextBack_up =  "שם תיק ניכויים",
+					  						ListLocalDefaultText =  "BS64:Itep150g16rXmdenINeg15nXm9eV15nXmdedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5930,10 +6086,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionFileTypeCode",
 					  						DefaultText =  "DeductionFileTypeCode",
-					  						FullLocalDefaultText =  "קוד סוג תיק ניכוי",
+					  						FullLocalDefaultTextBack_up =  "קוד סוג תיק ניכוי",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig16rXmdenINeg15nXm9eV15ki",
 					  						ListFieldLable =  "DeductionFileTypeCodeListLable",
 					  						ListLableDefaultText =  "DeductionFileTypeCode",
-					  						ListLocalDefaultText =  "קוד סוג תיק ניכוי",
+					  						ListLocalDefaultTextBack_up =  "קוד סוג תיק ניכוי",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXodeV15Ig16rXmdenINeg15nXm9eV15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5994,10 +6152,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionFileTypeName",
 					  						DefaultText =  "DeductionFileTypeName",
-					  						FullLocalDefaultText =  "שם סוג תיק ניכוי",
+					  						FullLocalDefaultTextBack_up =  "שם סוג תיק ניכוי",
+					  						FullLocalDefaultText =  "BS64:Itep150g16HXldeSINeq15nXpyDXoNeZ15vXldeZIg==",
 					  						ListFieldLable =  "DeductionFileTypeNameListLable",
 					  						ListLableDefaultText =  "DeductionFileTypeName",
-					  						ListLocalDefaultText =  "שם סוג תיק ניכוי",
+					  						ListLocalDefaultTextBack_up =  "שם סוג תיק ניכוי",
+					  						ListLocalDefaultText =  "BS64:Itep150g16HXldeSINeq15nXpyDXoNeZ15vXldeZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6058,10 +6218,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AssessingOfficeName",
 					  						DefaultText =  "AssessingOfficeName",
-					  						FullLocalDefaultText =  "שם פקיד שומה",
+					  						FullLocalDefaultTextBack_up =  "שם פקיד שומה",
+					  						FullLocalDefaultText =  "BS64:Itep150g16TXp9eZ15Mg16nXldee15Qi",
 					  						ListFieldLable =  "AssessingOfficeNameListLable",
 					  						ListLableDefaultText =  "AssessingOfficeName",
-					  						ListLocalDefaultText =  "שם פקיד שומה",
+					  						ListLocalDefaultTextBack_up =  "שם פקיד שומה",
+					  						ListLocalDefaultText =  "BS64:Itep150g16TXp9eZ15Mg16nXldee15Qi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6122,10 +6284,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionTypeEnglishName",
 					  						DefaultText =  "DeductionTypeEnglishName",
-					  						FullLocalDefaultText =  "סוג ניכוי שם באנגלית",
+					  						FullLocalDefaultTextBack_up =  "סוג ניכוי שם באנגלית",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXoNeZ15vXldeZINep150g15HXkNeg15LXnNeZ16oi",
 					  						ListFieldLable =  "DeductionTypeEnglishNameListLable",
 					  						ListLableDefaultText =  "DeductionTypeEnglishName",
-					  						ListLocalDefaultText =  "סוג ניכוי שם באנגלית",
+					  						ListLocalDefaultTextBack_up =  "סוג ניכוי שם באנגלית",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXoNeZ15vXldeZINep150g15HXkNeg15LXnNeZ16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6190,10 +6354,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalOpenChequesInLocalCur",
 					  						DefaultText =  "Unredeemed Cheques",
-					  						FullLocalDefaultText =  "המחאות שלא נפרעו",
+					  						FullLocalDefaultTextBack_up =  "המחאות שלא נפרעו",
+					  						FullLocalDefaultText =  "BS64:IteU157Xl9eQ15XXqiDXqdec15Ag16DXpNeo16LXlSI=",
 					  						ListFieldLable =  "TotalOpenChequesInLocalCurListLable",
 					  						ListLableDefaultText =  "Unredeemed Cheques",
-					  						ListLocalDefaultText =  "המחאות שלא נפרעו",
+					  						ListLocalDefaultTextBack_up =  "המחאות שלא נפרעו",
+					  						ListLocalDefaultText =  "BS64:IteU157Xl9eQ15XXqiDXqdec15Ag16DXpNeo16LXlSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6254,10 +6420,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcileLocalName",
 					  						DefaultText =  "AutomaticReconcileName",
-					  						FullLocalDefaultText =  "התאמה אוטומטית של שם מקומי",
+					  						FullLocalDefaultTextBack_up =  "התאמה אוטומטית של שם מקומי",
+					  						FullLocalDefaultText =  "BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiDXqdecINep150g157Xp9eV157XmSI=",
 					  						ListFieldLable =  "AutomaticReconcileLocalNameListLable",
 					  						ListLableDefaultText =  "AutomaticReconcileName",
-					  						ListLocalDefaultText =  "התאמה אוטומטית של שם מקומי",
+					  						ListLocalDefaultTextBack_up =  "התאמה אוטומטית של שם מקומי",
+					  						ListLocalDefaultText =  "BS64:IteU16rXkNee15Qg15DXldeY15XXnteY15nXqiDXqdecINep150g157Xp9eV157XmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6318,10 +6486,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcileMethodLocalName",
 					  						DefaultText =  "ReconcileMethodName",
-					  						FullLocalDefaultText =  "שם פעולת התאמה",
+					  						FullLocalDefaultTextBack_up =  "שם פעולת התאמה",
+					  						FullLocalDefaultText =  "BS64:Itep150g16TXoteV15zXqiDXlNeq15DXnteUIg==",
 					  						ListFieldLable =  "ReconcileMethodLocalNameListLable",
 					  						ListLableDefaultText =  "ReconcileMethodName",
-					  						ListLocalDefaultText =  "שם פעולת התאמה",
+					  						ListLocalDefaultTextBack_up =  "שם פעולת התאמה",
+					  						ListLocalDefaultText =  "BS64:Itep150g16TXoteV15zXqiDXlNeq15DXnteUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6386,10 +6556,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotFutureOpenChequesInLocalCur",
 					  						DefaultText =  "Unredeemed Future Cheques",
-					  						FullLocalDefaultText =  "המחאות עתידיות שלא נפרעו",
+					  						FullLocalDefaultTextBack_up =  "המחאות עתידיות שלא נפרעו",
+					  						FullLocalDefaultText =  "BS64:IteU157Xl9eQ15XXqiDXoteq15nXk9eZ15XXqiDXqdec15Ag16DXpNeo16LXlSI=",
 					  						ListFieldLable =  "TotFutureOpenChequesInLocalCurListLable",
 					  						ListLableDefaultText =  "Unredeemed Future Cheques",
-					  						ListLocalDefaultText =  "המחאות עתידיות שלא נפרעו",
+					  						ListLocalDefaultTextBack_up =  "המחאות עתידיות שלא נפרעו",
+					  						ListLocalDefaultText =  "BS64:IteU157Xl9eQ15XXqiDXoteq15nXk9eZ15XXqiDXqdec15Ag16DXpNeo16LXlSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6450,10 +6622,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardId",
 					  						DefaultText =  "CardId",
-					  						FullLocalDefaultText =  "קוד כרטיס",
+					  						FullLocalDefaultTextBack_up =  "קוד כרטיס",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXm9eo15jXmdehIg==",
 					  						ListFieldLable =  "CardIdListLable",
 					  						ListLableDefaultText =  "CardId",
-					  						ListLocalDefaultText =  "קוד כרטיס",
+					  						ListLocalDefaultTextBack_up =  "קוד כרטיס",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXm9eo15jXmdehIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6517,10 +6691,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByUserId",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "נוצר על ידי",
+					  						FullLocalDefaultTextBack_up =  "נוצר על ידי",
+					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZIg==",
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "נוצר על ידי",
+					  						ListLocalDefaultTextBack_up =  "נוצר על ידי",
+					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZIg==",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "CreatedByUser",
@@ -6586,10 +6762,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserId",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "עודכן על ידי",
+					  						FullLocalDefaultTextBack_up =  "עודכן על ידי",
+					  						FullLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15ki",
 					  						ListFieldLable =  "UpdatedByUserIdListLable",
 					  						ListLableDefaultText =  "Updated By",
-					  						ListLocalDefaultText =  "עודכן על ידי",
+					  						ListLocalDefaultTextBack_up =  "עודכן על ידי",
+					  						ListLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15ki",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "User",
 					  						NavigationPropertyName =  "UpdatedByUser",
@@ -6654,10 +6832,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						FullLocalDefaultTextBack_up =  "תאריך יצירה",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLocalDefaultTextBack_up =  "תאריך יצירה",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6720,10 +6900,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdateDate",
 					  						DefaultText =  "Update Date",
-					  						FullLocalDefaultText =  "תאריך עדכון",
+					  						FullLocalDefaultTextBack_up =  "תאריך עדכון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
-					  						ListLocalDefaultText =  "תאריך עדכון",
+					  						ListLocalDefaultTextBack_up =  "תאריך עדכון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16LXk9eb15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6788,9 +6970,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "Created By",
 					  						ListFieldLable =  "CreatedByUserNameListLable",
 					  						ListLableDefaultText =  "Created By",
-					  						ListLocalDefaultText =  "נוצר על ידי",
+					  						ListLocalDefaultTextBack_up =  "נוצר על ידי",
+					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZIg==",
 					  						HelpTextCode =  "CreatedByUserName",
-					  						HelpTextDefaultText =  "נוצר על ידי",
+					  						HelpTextDefaultText =  "Created By",
+					  						HelpLocalDefaultTextBack_up =  "נוצר על ידי",
+					  						HelpLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6852,10 +7037,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByUserName",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "עודכן על ידי",
+					  						FullLocalDefaultTextBack_up =  "עודכן על ידי",
+					  						FullLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15ki",
 					  						ListFieldLable =  "UpdatedByUserNameListLable",
 					  						ListLableDefaultText =  "Updated By",
-					  						ListLocalDefaultText =  "עודכן על ידי",
+					  						ListLocalDefaultTextBack_up =  "עודכן על ידי",
+					  						ListLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6916,10 +7103,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByLocalName",
 					  						DefaultText =  "Created By",
-					  						FullLocalDefaultText =  "נוצר על ידי (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "נוצר על ידי (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZICjXqdedINee16fXldee15kpIg==",
 					  						ListFieldLable =  "CreatedByLocalNameListLable",
 					  						ListLableDefaultText =  "CreatedByLocalName",
-					  						ListLocalDefaultText =  "נוצר על ידי (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "נוצר על ידי (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Iteg15XXpteoINei15wg15nXk9eZICjXqdedINee16fXldee15kpIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -6980,10 +7169,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByLocalName",
 					  						DefaultText =  "Updated By",
-					  						FullLocalDefaultText =  "עודכן על ידי (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "עודכן על ידי (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15kgKNep150g157Xp9eV157XmSki",
 					  						ListFieldLable =  "UpdatedByLocalNameListLable",
 					  						ListLableDefaultText =  "UpdatedByLocalName",
-					  						ListLocalDefaultText =  "עודכן על ידי (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "עודכן על ידי (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Itei15XXk9eb158g16LXnCDXmdeT15kgKNep150g157Xp9eV157XmSki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7165,10 +7356,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AllowEditChequePayToName",
 					  						DefaultText =  "Allow Editing Cheque Pay To Name",
-					  						FullLocalDefaultText =  "אפשר עדכון פרטי משלם בהמחאה",
+					  						FullLocalDefaultTextBack_up =  "אפשר עדכון פרטי משלם בהמחאה",
+					  						FullLocalDefaultText =  "BS64:IteQ16TXqdeoINei15PXm9eV158g16TXqNeY15kg157Xqdec150g15HXlNee15fXkNeUIg==",
 					  						ListFieldLable =  "AllowEditChequePayToNameListLable",
 					  						ListLableDefaultText =  "Allow Editing Cheque Pay To Name",
-					  						ListLocalDefaultText =  "אפשר עדכון פרטי משלם בהמחאה",
+					  						ListLocalDefaultTextBack_up =  "אפשר עדכון פרטי משלם בהמחאה",
+					  						ListLocalDefaultText =  "BS64:IteQ16TXqdeoINei15PXm9eV158g16TXqNeY15kg157Xqdec150g15HXlNee15fXkNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7231,10 +7424,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActiveForInterest",
 					  						DefaultText =  "Active for Interest",
-					  						FullLocalDefaultText =  "פעיל לריבית",
+					  						FullLocalDefaultTextBack_up =  "פעיל לריבית",
+					  						FullLocalDefaultText =  "BS64:Itek16LXmdecINec16jXmdeR15nXqiI=",
 					  						ListFieldLable =  "ActiveForInterestListLable",
 					  						ListLableDefaultText =  "Active for Interest",
-					  						ListLocalDefaultText =  "פעיל לריבית",
+					  						ListLocalDefaultTextBack_up =  "פעיל לריבית",
+					  						ListLocalDefaultText =  "BS64:Itek16LXmdecINec16jXmdeR15nXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7297,10 +7492,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestCalculationStartDate",
 					  						DefaultText =  "Interest Calculation Start Date",
-					  						FullLocalDefaultText =  "תאריך לחישוב ריבית",
+					  						FullLocalDefaultTextBack_up =  "תאריך לחישוב ריבית",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15zXl9eZ16nXldeRINeo15nXkdeZ16oi",
 					  						ListFieldLable =  "InterestCalculationStartDateListLable",
 					  						ListLableDefaultText =  "Interest Calculation Start Date",
-					  						ListLocalDefaultText =  "תאריך לחישוב ריבית",
+					  						ListLocalDefaultTextBack_up =  "תאריך לחישוב ריבית",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15zXl9eZ16nXldeRINeo15nXkdeZ16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7363,10 +7560,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ActiveForInterestCreditInvoice",
 					  						DefaultText =  "Active for Interest Credit invoice",
-					  						FullLocalDefaultText =  "פעיל לחשבונית זיכוי",
+					  						FullLocalDefaultTextBack_up =  "פעיל לחשבונית זיכוי",
+					  						FullLocalDefaultText =  "BS64:Itek16LXmdecINec15fXqdeR15XXoNeZ16og15bXmdeb15XXmSI=",
 					  						ListFieldLable =  "ActiveForInterestCreditInvoiceListLable",
 					  						ListLableDefaultText =  "Active for Interest Credit invoice",
-					  						ListLocalDefaultText =  "פעיל לחשבונית זיכוי",
+					  						ListLocalDefaultTextBack_up =  "פעיל לחשבונית זיכוי",
+					  						ListLocalDefaultText =  "BS64:Itek16LXmdecINec15fXqdeR15XXoNeZ16og15bXmdeb15XXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7494,10 +7693,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestCreditLimit",
 					  						DefaultText =  "Interest Credit",
-					  						FullLocalDefaultText =  "אשראי לריבית",
+					  						FullLocalDefaultTextBack_up =  "אשראי לריבית",
+					  						FullLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg15zXqNeZ15HXmdeqIg==",
 					  						ListFieldLable =  "InterestCreditLimitListLable",
 					  						ListLableDefaultText =  "Interest Credit",
-					  						ListLocalDefaultText =  "אשראי לריבית",
+					  						ListLocalDefaultTextBack_up =  "אשראי לריבית",
+					  						ListLocalDefaultText =  "BS64:IteQ16nXqNeQ15kg15zXqNeZ15HXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7558,10 +7759,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NameForPrintingCheques",
 					  						DefaultText =  "Name for printing cheques",
-					  						FullLocalDefaultText =  "שם להדפסה בשקים",
+					  						FullLocalDefaultTextBack_up =  "שם להדפסה בשקים",
+					  						FullLocalDefaultText =  "BS64:Itep150g15zXlNeT16TXodeUINeR16nXp9eZ150i",
 					  						ListFieldLable =  "NameForPrintingChequesListLable",
 					  						ListLableDefaultText =  "NameForPrintingCheques",
-					  						ListLocalDefaultText =  "שם להדפסה בשקים",
+					  						ListLocalDefaultTextBack_up =  "שם להדפסה בשקים",
+					  						ListLocalDefaultText =  "BS64:Itep150g15zXlNeT16TXodeUINeR16nXp9eZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7622,10 +7825,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Smallcashbook",
 					  						DefaultText =  "Small Cashbook",
-					  						FullLocalDefaultText =  "קופה קטנה",
+					  						FullLocalDefaultTextBack_up =  "קופה קטנה",
+					  						FullLocalDefaultText =  "BS64:Iten15XXpNeUINen15jXoNeUIg==",
 					  						ListFieldLable =  "SmallcashbookListLable",
 					  						ListLableDefaultText =  "Smallcashbook",
-					  						ListLocalDefaultText =  "קופה קטנה",
+					  						ListLocalDefaultTextBack_up =  "קופה קטנה",
+					  						ListLocalDefaultText =  "BS64:Iten15XXpNeUINen15jXoNeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7688,10 +7893,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MinimumInterestInvoiceBilling",
 					  						DefaultText =  "Minimum Interest Invoice billing",
-					  						FullLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
+					  						FullLocalDefaultTextBack_up =  "מינימום חיוב בחשבונית ריבית",
+					  						FullLocalDefaultText =  "BS64:Itee15nXoNeZ157XldedINeX15nXldeRINeR15fXqdeR15XXoNeZ16og16jXmdeR15nXqiI=",
 					  						ListFieldLable =  "MinimumInterestInvoiceBillingListLable",
 					  						ListLableDefaultText =  "Minimum Interest Invoice billing",
-					  						ListLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
+					  						ListLocalDefaultTextBack_up =  "מינימום חיוב בחשבונית ריבית",
+					  						ListLocalDefaultText =  "BS64:Itee15nXoNeZ157XldedINeX15nXldeRINeR15fXqdeR15XXoNeZ16og16jXmdeR15nXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7814,10 +8021,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SalesmanName",
 					  						DefaultText =  "Salesman",
-					  						FullLocalDefaultText =  "איש מכירות",
+					  						FullLocalDefaultTextBack_up =  "איש מכירות",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXqSDXnteb15nXqNeV16oi",
 					  						ListFieldLable =  "SalesmanNameListLable",
 					  						ListLableDefaultText =  "Salesman",
-					  						ListLocalDefaultText =  "איש מכירות",
+					  						ListLocalDefaultTextBack_up =  "איש מכירות",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXnteb15nXqNeV16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7880,10 +8089,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CollectorName",
 					  						DefaultText =  "Collector",
-					  						FullLocalDefaultText =  "גובה",
+					  						FullLocalDefaultTextBack_up =  "גובה",
+					  						FullLocalDefaultText =  "BS64:IteS15XXkdeUIg==",
 					  						ListFieldLable =  "CollectorNameListLable",
 					  						ListLableDefaultText =  "Collector",
-					  						ListLocalDefaultText =  "גובה",
+					  						ListLocalDefaultTextBack_up =  "גובה",
+					  						ListLocalDefaultText =  "BS64:IteS15XXkdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7944,10 +8155,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SplitCurrencyAccount",
 					  						DefaultText =  "Split Currency Account",
-					  						FullLocalDefaultText =  "כרטיסי פיצול לפי מטבע",
+					  						FullLocalDefaultTextBack_up =  "כרטיסי פיצול לפי מטבע",
+					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16HXmSDXpNeZ16bXldecINec16TXmSDXnteY15HXoiI=",
 					  						ListFieldLable =  "SplitCurrencyAccountListLable",
 					  						ListLableDefaultText =  "Split Currency Account",
-					  						ListLocalDefaultText =  "כרטיסי פיצול לפי מטבע",
+					  						ListLocalDefaultTextBack_up =  "כרטיסי פיצול לפי מטבע",
+					  						ListLocalDefaultText =  "BS64:Iteb16jXmNeZ16HXmSDXpNeZ16bXldecINec16TXmSDXnteY15HXoiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8008,10 +8221,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentName",
 					  						DefaultText =  "Main currency glaccount",
-					  						FullLocalDefaultText =  "כרטיס מטבע ראשי",
+					  						FullLocalDefaultTextBack_up =  "כרטיס מטבע ראשי",
+					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg157XmNeR16Ig16jXkNep15ki",
 					  						ListFieldLable =  "ParentNameListLable",
 					  						ListLableDefaultText =  "Main currency glaccount",
-					  						ListLocalDefaultText =  "כרטיס מטבע ראשי",
+					  						ListLocalDefaultTextBack_up =  "כרטיס מטבע ראשי",
+					  						ListLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg157XmNeR16Ig16jXkNep15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8135,10 +8350,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentCurrencyId",
 					  						DefaultText =  "Parent Currency",
-					  						FullLocalDefaultText =  "מזהה מטבע אב",
+					  						FullLocalDefaultTextBack_up =  "מזהה מטבע אב",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXkdeiINeQ15Ei",
 					  						ListFieldLable =  "ParentCurrencyIdListLable",
 					  						ListLableDefaultText =  "ParentCurrencyId",
-					  						ListLocalDefaultText =  "מזהה מטבע אב",
+					  						ListLocalDefaultTextBack_up =  "מזהה מטבע אב",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINee15jXkdeiINeQ15Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8199,10 +8416,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReportingAsAnotherDocument",
 					  						DefaultText =  "Reporting As Another Document",
-					  						FullLocalDefaultText =  "דיווח תשומות -- מסמך אחר ",
+					  						FullLocalDefaultTextBack_up =  "דיווח תשומות -- מסמך אחר ",
+					  						FullLocalDefaultText =  "BS64:IteT15nXldeV15cg16rXqdeV157XldeqIC0tINee16HXnteaINeQ15fXqCAi",
 					  						ListFieldLable =  "ReportingAsAnotherDocumentListLable",
 					  						ListLableDefaultText =  "Reporting As Another Document",
-					  						ListLocalDefaultText =  "דיווח תשומות -- מסמך אחר ",
+					  						ListLocalDefaultTextBack_up =  "דיווח תשומות -- מסמך אחר ",
+					  						ListLocalDefaultText =  "BS64:IteT15nXldeV15cg16rXqdeV157XldeqIC0tINee16HXnteaINeQ15fXqCAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8265,10 +8484,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditAllotmentPercentage",
 					  						DefaultText =  "Credit Allotment Percentage ",
-					  						FullLocalDefaultText =  "% עמלת הקצאת אשראי",
+					  						FullLocalDefaultTextBack_up =  "% עמלת הקצאת אשראי",
+					  						FullLocalDefaultText =  "BS64:IiUg16LXntec16og15TXp9em15DXqiDXkNep16jXkNeZIg==",
 					  						ListFieldLable =  "CreditAllotmentPercentageListLable",
 					  						ListLableDefaultText =  "CreditAllotmentPercentage",
-					  						ListLocalDefaultText =  "% עמלת הקצאת אשראי",
+					  						ListLocalDefaultTextBack_up =  "% עמלת הקצאת אשראי",
+					  						ListLocalDefaultText =  "BS64:IiUg16LXntec16og15TXp9em15DXqiDXkNep16jXkNeZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8330,10 +8551,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1LocalName",
 					  						DefaultText =  "Category1 LocalName",
-					  						FullLocalDefaultText =  "קטגוריה 1 (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "קטגוריה 1 (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDEgKNep150g157Xp9eV157XmSki",
 					  						ListFieldLable =  "Category1LocalNameListLable",
 					  						ListLableDefaultText =  "Category1LocalName",
-					  						ListLocalDefaultText =  "קטגוריה 1 (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "קטגוריה 1 (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDEgKNep150g157Xp9eV157XmSki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8395,10 +8618,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category2LocalName",
 					  						DefaultText =  "Category2LocalName",
-					  						FullLocalDefaultText =  "קטגוריה 2 (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "קטגוריה 2 (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDIgKNep150g157Xp9eV157XmSki",
 					  						ListFieldLable =  "Category2LocalNameListLable",
 					  						ListLableDefaultText =  "Category2LocalName",
-					  						ListLocalDefaultText =  "קטגוריה 2 (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "קטגוריה 2 (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDIgKNep150g157Xp9eV157XmSki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8460,10 +8685,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category3LocalName",
 					  						DefaultText =  "Category3LocalName",
-					  						FullLocalDefaultText =  "קטגוריה 3 (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "קטגוריה 3 (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDMgKNep150g157Xp9eV157XmSki",
 					  						ListFieldLable =  "Category3LocalNameListLable",
 					  						ListLableDefaultText =  "Category3LocalName",
-					  						ListLocalDefaultText =  "קטגוריה 3 (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "קטגוריה 3 (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDMgKNep150g157Xp9eV157XmSki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8525,10 +8752,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category4LocalName",
 					  						DefaultText =  "Category4LocalName",
-					  						FullLocalDefaultText =  "קטגוריה 4 (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "קטגוריה 4 (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDQgKNep150g157Xp9eV157XmSki",
 					  						ListFieldLable =  "Category4LocalNameListLable",
 					  						ListLableDefaultText =  "Category4LocalName",
-					  						ListLocalDefaultText =  "קטגוריה 4 (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "קטגוריה 4 (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDQgKNep150g157Xp9eV157XmSki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8590,10 +8819,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5LocalName",
 					  						DefaultText =  "Category5LocalName",
-					  						FullLocalDefaultText =  "קטגוריה 5 (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "קטגוריה 5 (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDUgKNep150g157Xp9eV157XmSki",
 					  						ListFieldLable =  "Category5LocalNameListLable",
 					  						ListLableDefaultText =  "Category5LocalName",
-					  						ListLocalDefaultText =  "קטגוריה 5 (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "קטגוריה 5 (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Iten15jXkteV16jXmdeUIDUgKNep150g157Xp9eV157XmSki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8654,10 +8885,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RelatedGLAccount",
 					  						DefaultText =  "Related GLAccount",
-					  						FullLocalDefaultText =  "כרטיס מקושר",
+					  						FullLocalDefaultTextBack_up =  "כרטיס מקושר",
+					  						FullLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg157Xp9eV16nXqCI=",
 					  						ListFieldLable =  "RelatedGLAccountListLable",
 					  						ListLableDefaultText =  "Related GLAccount",
-					  						ListLocalDefaultText =  "כרטיס מקושר",
+					  						ListLocalDefaultTextBack_up =  "כרטיס מקושר",
+					  						ListLocalDefaultText =  "BS64:Iteb16jXmNeZ16Eg157Xp9eV16nXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8719,10 +8952,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsEnglishName",
 					  						DefaultText =  "ChartOfAccountsEnglishName",
-					  						FullLocalDefaultText =  "טבלת חשבונות (שם באנגלית)",
+					  						FullLocalDefaultTextBack_up =  "טבלת חשבונות (שם באנגלית)",
+					  						FullLocalDefaultText =  "BS64:IteY15HXnNeqINeX16nXkdeV16DXldeqICjXqdedINeR15DXoNeS15zXmdeqKSI=",
 					  						ListFieldLable =  "ChartOfAccountsEnglishNameListLable",
 					  						ListLableDefaultText =  "ChartOfAccountsEnglishName",
-					  						ListLocalDefaultText =  "טבלת חשבונות (שם באנגלית)",
+					  						ListLocalDefaultTextBack_up =  "טבלת חשבונות (שם באנגלית)",
+					  						ListLocalDefaultText =  "BS64:IteY15HXnNeqINeX16nXkdeV16DXldeqICjXqdedINeR15DXoNeS15zXmdeqKSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8784,10 +9019,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeEnglishName",
 					  						DefaultText =  "ChartOfAccountsTypeEnglishName",
-					  						FullLocalDefaultText =  "טבלת חשבונות (שם באנגלית)",
+					  						FullLocalDefaultTextBack_up =  "טבלת חשבונות (שם באנגלית)",
+					  						FullLocalDefaultText =  "BS64:IteY15HXnNeqINeX16nXkdeV16DXldeqICjXqdedINeR15DXoNeS15zXmdeqKSI=",
 					  						ListFieldLable =  "ChartOfAccountsTypeEnglishNameListLable",
 					  						ListLableDefaultText =  "ChartOfAccountsTypeEnglishName",
-					  						ListLocalDefaultText =  "סוג טבלת חשבונות (שם באנגלית)",
+					  						ListLocalDefaultTextBack_up =  "סוג טבלת חשבונות (שם באנגלית)",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmNeR15zXqiDXl9ep15HXldeg15XXqiAo16nXnSDXkdeQ16DXktec15nXqiki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8849,10 +9086,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeLocalName",
 					  						DefaultText =  "ChartOfAccountsTypeLocalName",
-					  						FullLocalDefaultText =  "סוג טבלת חשבונות (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "סוג טבלת חשבונות (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:Iteh15XXkiDXmNeR15zXqiDXl9ep15HXldeg15XXqiAo16nXnSDXnten15XXnteZKSI=",
 					  						ListFieldLable =  "ChartOfAccountsTypeLocalNameListLable",
 					  						ListLableDefaultText =  "ChartOfAccountsTypeLocalName",
-					  						ListLocalDefaultText =  "סוג טבלת חשבונות (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "סוג טבלת חשבונות (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:Iteh15XXkiDXmNeR15zXqiDXl9ep15HXldeg15XXqiAo16nXnSDXnten15XXnteZKSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -8914,10 +9153,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsLocalName",
 					  						DefaultText =  "ChartOfAccountsLocalName",
-					  						FullLocalDefaultText =  "טבלת חשבונות (שם מקומי)",
+					  						FullLocalDefaultTextBack_up =  "טבלת חשבונות (שם מקומי)",
+					  						FullLocalDefaultText =  "BS64:IteY15HXnNeqINeX16nXkdeV16DXldeqICjXqdedINee16fXldee15kpIg==",
 					  						ListFieldLable =  "ChartOfAccountsLocalNameListLable",
 					  						ListLableDefaultText =  "ChartOfAccountsLocalName",
-					  						ListLocalDefaultText =  "טבלת חשבונות (שם מקומי)",
+					  						ListLocalDefaultTextBack_up =  "טבלת חשבונות (שם מקומי)",
+					  						ListLocalDefaultText =  "BS64:IteY15HXnNeqINeX16nXkdeV16DXldeqICjXqdedINee16fXldee15kpIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9039,10 +9280,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardsDataId",
 					  						DefaultText =  "CardsDataId",
-					  						FullLocalDefaultText =  "מזהה נתוני כרטיסים",
+					  						FullLocalDefaultTextBack_up =  "מזהה נתוני כרטיסים",
+					  						FullLocalDefaultText =  "BS64:Itee15bXlNeUINeg16rXldeg15kg15vXqNeY15nXodeZ150i",
 					  						ListFieldLable =  "CardsDataIdListLable",
 					  						ListLableDefaultText =  "CardsDataId",
-					  						ListLocalDefaultText =  "מזהה נתוני כרטיסים",
+					  						ListLocalDefaultTextBack_up =  "מזהה נתוני כרטיסים",
+					  						ListLocalDefaultText =  "BS64:Itee15bXlNeUINeg16rXldeg15kg15vXqNeY15nXodeZ150i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "GLAccountCardsData",
 					  						NavigationPropertyName =  "GLAccountCardsData",
@@ -9075,13 +9318,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  50,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9105,10 +9349,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentTermName",
 					  						DefaultText =  "Payment Term",
-					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						FullLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						ListFieldLable =  "PaymentTermNameListLable",
 					  						ListLableDefaultText =  "Payment Term",
-					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						ListLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9173,10 +9419,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Period0",
 					  						DefaultText =  "Period 0 ",
-					  						FullLocalDefaultText =  "תקופה גיול 0",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול 0",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMCI=",
 					  						ListFieldLable =  "Period0ListLable",
 					  						ListLableDefaultText =  "Period 0 ",
-					  						ListLocalDefaultText =  "תקופה גיול 0",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול 0",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9241,10 +9489,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Period1",
 					  						DefaultText =  "Period 1",
-					  						FullLocalDefaultText =  "תקופה גיול 1",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול 1",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMSI=",
 					  						ListFieldLable =  "Period1ListLable",
 					  						ListLableDefaultText =  "Period 1",
-					  						ListLocalDefaultText =  "תקופה גיול 1",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול 1",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9309,10 +9559,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Period2",
 					  						DefaultText =  "Period 2",
-					  						FullLocalDefaultText =  "תקופה גיול 2",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול 2",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMiI=",
 					  						ListFieldLable =  "Period2ListLable",
 					  						ListLableDefaultText =  "Period 2",
-					  						ListLocalDefaultText =  "תקופה גיול 2",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול 2",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9377,10 +9629,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Period3",
 					  						DefaultText =  "Period 3",
-					  						FullLocalDefaultText =  "תקופה גיול 3",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול 3",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMyI=",
 					  						ListFieldLable =  "Period3ListLable",
 					  						ListLableDefaultText =  "Period 3",
-					  						ListLocalDefaultText =  "תקופה גיול 3",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול 3",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgMyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9445,10 +9699,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Period4",
 					  						DefaultText =  "Period 4",
-					  						FullLocalDefaultText =  "תקופה גיול 4",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול 4",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgNCI=",
 					  						ListFieldLable =  "Period4ListLable",
 					  						ListLableDefaultText =  "Period 4",
-					  						ListLocalDefaultText =  "תקופה גיול 4",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול 4",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgNCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9513,10 +9769,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Period5",
 					  						DefaultText =  "Period 5",
-					  						FullLocalDefaultText =  "תקופה גיול 5",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול 5",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgNSI=",
 					  						ListFieldLable =  "Period5ListLable",
 					  						ListLableDefaultText =  "Period 5",
-					  						ListLocalDefaultText =  "תקופה גיול 5",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול 5",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wgNSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9581,10 +9839,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodPast",
 					  						DefaultText =  "Period Past",
-					  						FullLocalDefaultText =  "לפני התקופה",
+					  						FullLocalDefaultTextBack_up =  "לפני התקופה",
+					  						FullLocalDefaultText =  "BS64:Itec16TXoNeZINeU16rXp9eV16TXlCI=",
 					  						ListFieldLable =  "PeriodPastListLable",
 					  						ListLableDefaultText =  "Period Past",
-					  						ListLocalDefaultText =  "לפני התקופה",
+					  						ListLocalDefaultTextBack_up =  "לפני התקופה",
+					  						ListLocalDefaultText =  "BS64:Itec16TXoNeZINeU16rXp9eV16TXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9649,10 +9909,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PeriodFuture",
 					  						DefaultText =  "Period Future",
-					  						FullLocalDefaultText =  "תקופה עתידית",
+					  						FullLocalDefaultTextBack_up =  "תקופה עתידית",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg16LXqteZ15PXmdeqIg==",
 					  						ListFieldLable =  "PeriodFutureListLable",
 					  						ListLableDefaultText =  "Period Future",
-					  						ListLocalDefaultText =  "תקופה עתידית",
+					  						ListLocalDefaultTextBack_up =  "תקופה עתידית",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg16LXqteZ15PXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9715,10 +9977,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalOpenTransactions",
 					  						DefaultText =  "Total Open Transactions",
-					  						FullLocalDefaultText =  "סה\"כ תנועות פתוחות",
+					  						FullLocalDefaultTextBack_up =  "סה\"כ תנועות פתוחות",
+					  						FullLocalDefaultText =  "BS64:Iteh15Qi15sg16rXoNeV16LXldeqINek16rXldeX15XXqiI=",
 					  						ListFieldLable =  "TotalOpenTransactionsListLable",
 					  						ListLableDefaultText =  "Total Open Transactions",
-					  						ListLocalDefaultText =  "סה\"כ תנועות פתוחות",
+					  						ListLocalDefaultTextBack_up =  "סה\"כ תנועות פתוחות",
+					  						ListLocalDefaultText =  "BS64:Iteh15Qi15sg16rXoNeV16LXldeqINek16rXldeX15XXqiI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9781,10 +10045,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastReconciledBy",
 					  						DefaultText =  "Last Reconciled By",
-					  						FullLocalDefaultText =  "מבצע ההתאמה האחרונה",
+					  						FullLocalDefaultTextBack_up =  "מבצע ההתאמה האחרונה",
+					  						FullLocalDefaultText =  "BS64:Itee15HXpteiINeU15TXqteQ157XlCDXlNeQ15fXqNeV16DXlCI=",
 					  						ListFieldLable =  "LastReconciledByListLable",
 					  						ListLableDefaultText =  "Last Reconciled By",
-					  						ListLocalDefaultText =  "מבצע ההתאמה האחרונה",
+					  						ListLocalDefaultTextBack_up =  "מבצע ההתאמה האחרונה",
+					  						ListLocalDefaultText =  "BS64:Itee15HXpteiINeU15TXqteQ157XlCDXlNeQ15fXqNeV16DXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9847,10 +10113,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastReconcileDate",
 					  						DefaultText =  "Last Reconcile Date",
-					  						FullLocalDefaultText =  "הותאם לאחרונה בתאריך",
+					  						FullLocalDefaultTextBack_up =  "הותאם לאחרונה בתאריך",
+					  						FullLocalDefaultText =  "BS64:IteU15XXqteQ150g15zXkNeX16jXldeg15Qg15HXqteQ16jXmdeaIg==",
 					  						ListFieldLable =  "LastReconcileDateListLable",
 					  						ListLableDefaultText =  "Last Reconcile Date",
-					  						ListLocalDefaultText =  "הותאם לאחרונה בתאריך",
+					  						ListLocalDefaultTextBack_up =  "הותאם לאחרונה בתאריך",
+					  						ListLocalDefaultText =  "BS64:IteU15XXqteQ150g15zXkNeX16jXldeg15Qg15HXqteQ16jXmdeaIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9874,7 +10142,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreditLimit",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Decimal",
+					  						FieldsDataType =  "Double",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -9915,10 +10183,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditLimit",
 					  						DefaultText =  "CreditLimit",
-					  						FullLocalDefaultText =  "מסגרת אשראי",
+					  						FullLocalDefaultTextBack_up =  "מסגרת אשראי",
+					  						FullLocalDefaultText =  "BS64:Itee16HXkteo16og15DXqdeo15DXmSI=",
 					  						ListFieldLable =  "CreditLimitListLable",
 					  						ListLableDefaultText =  "Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת אשראי",
+					  						ListLocalDefaultTextBack_up =  "מסגרת אשראי",
+					  						ListLocalDefaultText =  "BS64:Itee16HXkteo16og15DXqdeo15DXmSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -9949,7 +10219,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  40,
@@ -9981,10 +10251,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentTerm",
 					  						DefaultText =  "Payment Term",
-					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						FullLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						ListFieldLable =  "PaymentTermListLable",
 					  						ListLableDefaultText =  "Payment Term",
-					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						ListLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10049,10 +10321,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotalOpenShipments",
 					  						DefaultText =  "Total Open Shipments",
-					  						FullLocalDefaultText =  "תיקים פתוחים",
+					  						FullLocalDefaultTextBack_up =  "תיקים פתוחים",
+					  						FullLocalDefaultText =  "BS64:Iteq15nXp9eZ150g16TXqteV15fXmdedIg==",
 					  						ListFieldLable =  "TotalOpenShipmentsListLable",
 					  						ListLableDefaultText =  "Total Open Shipments",
-					  						ListLocalDefaultText =  "תיקים פתוחים",
+					  						ListLocalDefaultTextBack_up =  "תיקים פתוחים",
+					  						ListLocalDefaultText =  "BS64:Iteq15nXp9eZ150g16TXqteV15fXmdedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10115,10 +10389,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Phone",
 					  						DefaultText =  "Phone",
-					  						FullLocalDefaultText =  " טלפון",
+					  						FullLocalDefaultTextBack_up =  " טלפון",
+					  						FullLocalDefaultText =  "BS64:IiDXmNec16TXldefIg==",
 					  						ListFieldLable =  "PhoneListLable",
 					  						ListLableDefaultText =  "Phone",
-					  						ListLocalDefaultText =  " טלפון",
+					  						ListLocalDefaultTextBack_up =  " טלפון",
+					  						ListLocalDefaultText =  "BS64:IiDXmNec16TXldefIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10181,10 +10457,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Salesman",
 					  						DefaultText =  "Salesman",
-					  						FullLocalDefaultText =  "איש מכירות",
+					  						FullLocalDefaultTextBack_up =  "איש מכירות",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXqSDXnteb15nXqNeV16oi",
 					  						ListFieldLable =  "SalesmanListLable",
 					  						ListLableDefaultText =  "Salesman",
-					  						ListLocalDefaultText =  "איש מכירות",
+					  						ListLocalDefaultTextBack_up =  "איש מכירות",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXnteb15nXqNeV16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10247,10 +10525,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Collector",
 					  						DefaultText =  "Collector",
-					  						FullLocalDefaultText =  "גובה",
+					  						FullLocalDefaultTextBack_up =  "גובה",
+					  						FullLocalDefaultText =  "BS64:IteS15XXkdeUIg==",
 					  						ListFieldLable =  "CollectorListLable",
 					  						ListLableDefaultText =  "Collector",
-					  						ListLocalDefaultText =  "גובה",
+					  						ListLocalDefaultTextBack_up =  "גובה",
+					  						ListLocalDefaultText =  "BS64:IteS15XXkdeUIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10313,10 +10593,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowupDate",
 					  						DefaultText =  "Follow up Date",
-					  						FullLocalDefaultText =  "תאריך למעקב",
+					  						FullLocalDefaultTextBack_up =  "תאריך למעקב",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15zXntei16fXkSI=",
 					  						ListFieldLable =  "FollowupDateListLable",
 					  						ListLableDefaultText =  "Follow up Date",
-					  						ListLocalDefaultText =  "תאריך למעקב",
+					  						ListLocalDefaultTextBack_up =  "תאריך למעקב",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og15zXntei16fXkSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10379,10 +10661,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowupNotes",
 					  						DefaultText =  "Follow up Notes",
-					  						FullLocalDefaultText =  "הערות למעקב",
+					  						FullLocalDefaultTextBack_up =  "הערות למעקב",
+					  						FullLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXntei16fXkSI=",
 					  						ListFieldLable =  "FollowupNotesListLable",
 					  						ListLableDefaultText =  "Follow up Notes",
-					  						ListLocalDefaultText =  "הערות למעקב",
+					  						ListLocalDefaultTextBack_up =  "הערות למעקב",
+					  						ListLocalDefaultText =  "BS64:IteU16LXqNeV16og15zXntei16fXkSI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10565,11 +10849,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedAgingPeriod1",
-					  						DefaultText =  "תקופה גיול מחושבת",
-					  						FullLocalDefaultText =  "תקופה גיול מחושבת 1",
+					  						DefaultText =  "Calculated Aging Period 1",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול מחושבת 1",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wg157Xl9eV16nXkdeqIDEi",
 					  						ListFieldLable =  "CalculatedAgingPeriod1ListLable",
 					  						ListLableDefaultText =  "Calculated Aging Period 1 ",
-					  						ListLocalDefaultText =  "תקופה גיול מחושבת 1",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול מחושבת 1",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wg157Xl9eV16nXkdeqIDEi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10633,10 +10919,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedAgingPeriod2",
 					  						DefaultText =  " Calculated Aging Period 2",
-					  						FullLocalDefaultText =  "תקופה גיול מחושבת 2",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול מחושבת 2",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wg157Xl9eV16nXkdeqIDIi",
 					  						ListFieldLable =  "CalculatedAgingPeriod2ListLable",
 					  						ListLableDefaultText =  " Calculated Aging Period 2",
-					  						ListLocalDefaultText =  "תקופה גיול מחושבת 2",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול מחושבת 2",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wg157Xl9eV16nXkdeqIDIi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10700,10 +10988,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedAgingPeriod3",
 					  						DefaultText =  " Calculated Aging Period 3",
-					  						FullLocalDefaultText =  "תקופה גיול מחושבת 3",
+					  						FullLocalDefaultTextBack_up =  "תקופה גיול מחושבת 3",
+					  						FullLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wg157Xl9eV16nXkdeqIDMi",
 					  						ListFieldLable =  "CalculatedAgingPeriod3ListLable",
 					  						ListLableDefaultText =  " Calculated Aging Period 3",
-					  						ListLocalDefaultText =  "תקופה גיול מחושבת 3",
+					  						ListLocalDefaultTextBack_up =  "תקופה גיול מחושבת 3",
+					  						ListLocalDefaultText =  "BS64:Iteq16fXldek15Qg15LXmdeV15wg157Xl9eV16nXkdeqIDMi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10764,10 +11054,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstPeriodsMonths",
 					  						DefaultText =  "FirstPeriodsMonths",
-					  						FullLocalDefaultText =  "מחזורים ראשונים",
+					  						FullLocalDefaultTextBack_up =  "מחזורים ראשונים",
+					  						FullLocalDefaultText =  "BS64:Itee15fXlteV16jXmdedINeo15DXqdeV16DXmdedIg==",
 					  						ListFieldLable =  "FirstPeriodsMonthsListLable",
 					  						ListLableDefaultText =  "FirstPeriodsMonths",
-					  						ListLocalDefaultText =  "מחזורים ראשונים",
+					  						ListLocalDefaultTextBack_up =  "מחזורים ראשונים",
+					  						ListLocalDefaultText =  "BS64:Itee15fXlteV16jXmdedINeo15DXqdeV16DXmdedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10828,10 +11120,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecondPeriodsMonths",
 					  						DefaultText =  "SecondPeriodsMonths",
-					  						FullLocalDefaultText =  "מחזורים שניים",
+					  						FullLocalDefaultTextBack_up =  "מחזורים שניים",
+					  						FullLocalDefaultText =  "BS64:Itee15fXlteV16jXmdedINep16DXmdeZ150i",
 					  						ListFieldLable =  "SecondPeriodsMonthsListLable",
 					  						ListLableDefaultText =  "SecondPeriodsMonths",
-					  						ListLocalDefaultText =  "מחזורים שניים",
+					  						ListLocalDefaultTextBack_up =  "מחזורים שניים",
+					  						ListLocalDefaultText =  "BS64:Itee15fXlteV16jXmdedINep16DXmdeZ150i",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10892,10 +11186,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ThirdPeriodsMonths",
 					  						DefaultText =  "ThirdPeriodsMonths",
-					  						FullLocalDefaultText =  "מחזורים שלישיים",
+					  						FullLocalDefaultTextBack_up =  "מחזורים שלישיים",
+					  						FullLocalDefaultText =  "BS64:Itee15fXlteV16jXmdedINep15zXmdep15nXmdedIg==",
 					  						ListFieldLable =  "ThirdPeriodsMonthsListLable",
 					  						ListLableDefaultText =  "ThirdPeriodsMonths",
-					  						ListLocalDefaultText =  "מחזורים שלישיים",
+					  						ListLocalDefaultTextBack_up =  "מחזורים שלישיים",
+					  						ListLocalDefaultText =  "BS64:Itee15fXlteV16jXmdedINep15zXmdep15nXmdedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -10960,10 +11256,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredCreditLimit",
 					  						DefaultText =  "Insured Credit Limit",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultTextBack_up =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "BS64:Itee16HXkteo16og15DXqdeo15DXmSDXnteR15XXmNeX16oi",
 					  						ListFieldLable =  "InsuredCreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
-					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						ListLocalDefaultTextBack_up =  "מסגרת אשראי מבוטחת",
+					  						ListLocalDefaultText =  "BS64:Itee16HXkteo16og15DXqdeo15DXmSDXnteR15XXmNeX16oi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11028,10 +11326,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PostponedChequesCommission",
 					  						DefaultText =  "Postponed Cheques Commission",
-					  						FullLocalDefaultText =  "עמלת שיק דחוי",
+					  						FullLocalDefaultTextBack_up =  "עמלת שיק דחוי",
+					  						FullLocalDefaultText =  "BS64:Itei157XnNeqINep15nXpyDXk9eX15XXmSI=",
 					  						ListFieldLable =  "PostponedChequesCommissionListLable",
 					  						ListLableDefaultText =  "Postponed Cheques Commission",
-					  						ListLocalDefaultText =  "עמלת שיק דחוי ",
+					  						ListLocalDefaultTextBack_up =  "עמלת שיק דחוי ",
+					  						ListLocalDefaultText =  "BS64:Itei157XnNeqINep15nXpyDXk9eX15XXmSAi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11096,10 +11396,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BalanceInForeignCurrency",
 					  						DefaultText =  "Balance in Foreign Currency",
-					  						FullLocalDefaultText =  "יתרה במטבע זר",
+					  						FullLocalDefaultTextBack_up =  "יתרה במטבע זר",
+					  						FullLocalDefaultText =  "BS64:IteZ16rXqNeUINeR157XmNeR16Ig15bXqCI=",
 					  						ListFieldLable =  "BalanceInForeignCurrencyListLable",
 					  						ListLableDefaultText =  "Balance in Foreign Currency",
-					  						ListLocalDefaultText =  "יתרה במטבע זר",
+					  						ListLocalDefaultTextBack_up =  "יתרה במטבע זר",
+					  						ListLocalDefaultText =  "BS64:IteZ16rXqNeUINeR157XmNeR16Ig15bXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11164,10 +11466,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignBalanceInDue",
 					  						DefaultText =  "Due Foreign Balance",
-					  						FullLocalDefaultText =  "יתרה לפרעון במטבע זר ",
+					  						FullLocalDefaultTextBack_up =  "יתרה לפרעון במטבע זר ",
+					  						FullLocalDefaultText =  "BS64:IteZ16rXqNeUINec16TXqNei15XXnyDXkdee15jXkdeiINeW16ggIg==",
 					  						ListFieldLable =  "ForeignBalanceInDueListLable",
 					  						ListLableDefaultText =  "Due Foreign Balance",
-					  						ListLocalDefaultText =  "יתרה לפרעון במטבע זר ",
+					  						ListLocalDefaultTextBack_up =  "יתרה לפרעון במטבע זר ",
+					  						ListLocalDefaultText =  "BS64:IteZ16rXqNeUINec16TXqNei15XXnyDXkdee15jXkdeiINeW16ggIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11228,10 +11532,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSecurityLevelsEnabled",
 					  						DefaultText =  "IsSecurityLevelsEnabled",
-					  						FullLocalDefaultText =  "רמת האבטחה מופעלת",
+					  						FullLocalDefaultTextBack_up =  "רמת האבטחה מופעלת",
+					  						FullLocalDefaultText =  "BS64:Iteo157XqiDXlNeQ15HXmNeX15Qg157Xldek16LXnNeqIg==",
 					  						ListFieldLable =  "IsSecurityLevelsEnabledListLable",
 					  						ListLableDefaultText =  "IsSecurityLevelsEnabled",
-					  						ListLocalDefaultText =  "רמת האבטחה מופעלת",
+					  						ListLocalDefaultTextBack_up =  "רמת האבטחה מופעלת",
+					  						ListLocalDefaultText =  "BS64:Iteo157XqiDXlNeQ15HXmNeX15Qg157Xldek16LXnNeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11292,10 +11598,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountSecurityLevel",
 					  						DefaultText =  "ChartOfAccountSecurityLevel",
-					  						FullLocalDefaultText =  "תרשים חשבון רמת אבטחה",
+					  						FullLocalDefaultTextBack_up =  "תרשים חשבון רמת אבטחה",
+					  						FullLocalDefaultText =  "BS64:Iteq16jXqdeZ150g15fXqdeR15XXnyDXqNee16og15DXkdeY15fXlCI=",
 					  						ListFieldLable =  "ChartOfAccountSecurityLevelListLable",
 					  						ListLableDefaultText =  "ChartOfAccountSecurityLevel",
-					  						ListLocalDefaultText =  "תרשים חשבון רמת אבטחה",
+					  						ListLocalDefaultTextBack_up =  "תרשים חשבון רמת אבטחה",
+					  						ListLocalDefaultText =  "BS64:Iteq16jXqdeZ150g15fXqdeR15XXnyDXqNee16og15DXkdeY15fXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11357,10 +11665,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Access",
 					  						DefaultText =  "Security Alert",
-					  						FullLocalDefaultText =  " התראת סיווג",
+					  						FullLocalDefaultTextBack_up =  " התראת סיווג",
+					  						FullLocalDefaultText =  "BS64:IiDXlNeq16jXkNeqINeh15nXldeV15Ii",
 					  						ListFieldLable =  "AccessListLable",
 					  						ListLableDefaultText =  "Security Alert",
-					  						ListLocalDefaultText =  " התראת סיווג",
+					  						ListLocalDefaultTextBack_up =  " התראת סיווג",
+					  						ListLocalDefaultText =  "BS64:IiDXlNeq16jXkNeqINeh15nXldeV15Ii",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11423,10 +11733,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardCollectorId",
 					  						DefaultText =  "Card Collector",
-					  						FullLocalDefaultText =  "אוסף כרטיסים",
+					  						FullLocalDefaultTextBack_up =  "אוסף כרטיסים",
+					  						FullLocalDefaultText =  "BS64:IteQ15XXodejINeb16jXmNeZ16HXmdedIg==",
 					  						ListFieldLable =  "CardCollectorIdListLable",
 					  						ListLableDefaultText =  "Card Collector",
-					  						ListLocalDefaultText =  "אוסף כרטיסים",
+					  						ListLocalDefaultTextBack_up =  "אוסף כרטיסים",
+					  						ListLocalDefaultText =  "BS64:IteQ15XXodejINeb16jXmNeZ16HXmdedIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11487,10 +11799,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSplitGLAccout",
 					  						DefaultText =  "IsSplitGLAccout",
-					  						FullLocalDefaultText =  "חשבון מפוצל",
+					  						FullLocalDefaultTextBack_up =  "חשבון מפוצל",
+					  						FullLocalDefaultText =  "BS64:IteX16nXkdeV158g157XpNeV16bXnCI=",
 					  						ListFieldLable =  "IsSplitGLAccoutListLable",
 					  						ListLableDefaultText =  "IsSplitGLAccout",
-					  						ListLocalDefaultText =  "חשבון מפוצל",
+					  						ListLocalDefaultTextBack_up =  "חשבון מפוצל",
+					  						ListLocalDefaultText =  "BS64:IteX16nXkdeV158g157XpNeV16bXnCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11551,10 +11865,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsMainGLAccount",
 					  						DefaultText =  "IsMainGLAccount",
-					  						FullLocalDefaultText =  "חשבון ראשי",
+					  						FullLocalDefaultTextBack_up =  "חשבון ראשי",
+					  						FullLocalDefaultText =  "BS64:IteX16nXkdeV158g16jXkNep15ki",
 					  						ListFieldLable =  "IsMainGLAccountListLable",
 					  						ListLableDefaultText =  "IsMainGLAccount",
-					  						ListLocalDefaultText =  "חשבון ראשי",
+					  						ListLocalDefaultTextBack_up =  "חשבון ראשי",
+					  						ListLocalDefaultText =  "BS64:IteX16nXkdeV158g16jXkNep15ki",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11619,10 +11935,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InterestOpenBalance",
 					  						DefaultText =  "Interest Open Balance",
-					  						FullLocalDefaultText =  "יתרת פתיחה לריבית",
+					  						FullLocalDefaultTextBack_up =  "יתרת פתיחה לריבית",
+					  						FullLocalDefaultText =  "BS64:IteZ16rXqNeqINek16rXmdeX15Qg15zXqNeZ15HXmdeqIg==",
 					  						ListFieldLable =  "InterestOpenBalanceListLable",
 					  						ListLableDefaultText =  "Interest Open Balance",
-					  						ListLocalDefaultText =  "יתרת פתיחה לריבית",
+					  						ListLocalDefaultTextBack_up =  "יתרת פתיחה לריבית",
+					  						ListLocalDefaultText =  "BS64:IteZ16rXqNeqINek16rXmdeX15Qg15zXqNeZ15HXmdeqIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11687,10 +12005,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Obligo",
 					  						DefaultText =  "Obligo",
-					  						FullLocalDefaultText =  "אובליגו",
+					  						FullLocalDefaultTextBack_up =  "אובליגו",
+					  						FullLocalDefaultText =  "BS64:IteQ15XXkdec15nXkteVIg==",
 					  						ListFieldLable =  "ObligoListLable",
 					  						ListLableDefaultText =  "Obligo",
-					  						ListLocalDefaultText =  "אובליגו",
+					  						ListLocalDefaultTextBack_up =  "אובליגו",
+					  						ListLocalDefaultText =  "BS64:IteQ15XXkdec15nXkteVIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11755,10 +12075,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditUsed",
 					  						DefaultText =  "CreditUsed",
-					  						FullLocalDefaultText =  "מצב אשראי",
+					  						FullLocalDefaultTextBack_up =  "מצב אשראי",
+					  						FullLocalDefaultText =  "BS64:Itee16bXkSDXkNep16jXkNeZIg==",
 					  						ListFieldLable =  "CreditUsedListLable",
 					  						ListLableDefaultText =  "CreditUsed",
-					  						ListLocalDefaultText =  "מצב אשראי",
+					  						ListLocalDefaultTextBack_up =  "מצב אשראי",
+					  						ListLocalDefaultText =  "BS64:Itee16bXkSDXkNep16jXkNeZIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11823,10 +12145,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsuredCreditPercentage",
 					  						DefaultText =  "Insured Credit Percentage",
-					  						FullLocalDefaultText =  "אחוז אשראי מבוטח",
+					  						FullLocalDefaultTextBack_up =  "אחוז אשראי מבוטח",
+					  						FullLocalDefaultText =  "BS64:IteQ15fXldeWINeQ16nXqNeQ15kg157XkdeV15jXlyI=",
 					  						ListFieldLable =  "InsuredCreditPercentageListLable",
 					  						ListLableDefaultText =  "Insured Credit Percentage",
-					  						ListLocalDefaultText =  "אחוז אשראי מבוטח",
+					  						ListLocalDefaultTextBack_up =  "אחוז אשראי מבוטח",
+					  						ListLocalDefaultText =  "BS64:IteQ15fXldeWINeQ16nXqNeQ15kg157XkdeV15jXlyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11888,10 +12212,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DateFormat",
 					  						DefaultText =  "DateFormat",
-					  						FullLocalDefaultText =  "פורמט לקליטת תאריך בדפי בנק",
+					  						FullLocalDefaultTextBack_up =  "פורמט לקליטת תאריך בדפי בנק",
+					  						FullLocalDefaultText =  "BS64:Itek15XXqNee15gg15zXp9ec15nXmNeqINeq15DXqNeZ15og15HXk9ek15kg15HXoNenIg==",
 					  						ListFieldLable =  "DateFormatListLable",
 					  						ListLableDefaultText =  "DateFormat",
-					  						ListLocalDefaultText =  "פורמט לקליטת תאריך בדפי בנק",
+					  						ListLocalDefaultTextBack_up =  "פורמט לקליטת תאריך בדפי בנק",
+					  						ListLocalDefaultText =  "BS64:Itek15XXqNee15gg15zXp9ec15nXmNeqINeq15DXqNeZ15og15HXk9ek15kg15HXoNenIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -11923,11 +12249,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -11955,10 +12281,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentTerms",
 					  						DefaultText =  "PaymentTerms",
-					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						FullLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						FullLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						ListFieldLable =  "PaymentTermsListLable",
 					  						ListLableDefaultText =  "PaymentTerms",
-					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						ListLocalDefaultTextBack_up =  "תנאי תשלום",
+					  						ListLocalDefaultText =  "BS64:Iteq16DXkNeZINeq16nXnNeV150i",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PaymentTerm",
 					  						NavigationPropertyName =  "PaymentTerm",
@@ -12024,10 +12352,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactId",
 					  						DefaultText =  "Contact Id",
-					  						FullLocalDefaultText =  "איש קשר",
+					  						FullLocalDefaultTextBack_up =  "איש קשר",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						ListFieldLable =  "ContactIdListLable",
 					  						ListLableDefaultText =  "ContactId",
-					  						ListLocalDefaultText =  "איש קשר",
+					  						ListLocalDefaultTextBack_up =  "איש קשר",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Contact",
 					  						NavigationPropertyName =  "Contact",
@@ -12092,10 +12422,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactName",
 					  						DefaultText =  "ContactName",
-					  						FullLocalDefaultText =  "איש קשר",
+					  						FullLocalDefaultTextBack_up =  "איש קשר",
+					  						FullLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						ListFieldLable =  "ContactNameListLable",
 					  						ListLableDefaultText =  "ContactName",
-					  						ListLocalDefaultText =  "איש קשר",
+					  						ListLocalDefaultTextBack_up =  "איש קשר",
+					  						ListLocalDefaultText =  "BS64:IteQ15nXqSDXp9ep16gi",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12158,10 +12490,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactEmail",
 					  						DefaultText =  "Contact Email",
-					  						FullLocalDefaultText =  "מיל איש קשר",
+					  						FullLocalDefaultTextBack_up =  "מיל איש קשר",
+					  						FullLocalDefaultText =  "BS64:Itee15nXnCDXkNeZ16kg16fXqdeoIg==",
 					  						ListFieldLable =  "ContactEmailListLable",
 					  						ListLableDefaultText =  "Contact Email",
-					  						ListLocalDefaultText =  "מיל איש קשר",
+					  						ListLocalDefaultTextBack_up =  "מיל איש קשר",
+					  						ListLocalDefaultText =  "BS64:Itee15nXnCDXkNeZ16kg16fXqdeoIg==",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12224,10 +12558,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactPhone",
 					  						DefaultText =  "Contact Phone",
-					  						FullLocalDefaultText =  "טלפון איש קשר",
+					  						FullLocalDefaultTextBack_up =  "טלפון איש קשר",
+					  						FullLocalDefaultText =  "BS64:IteY15zXpNeV158g15DXmdepINen16nXqCI=",
 					  						ListFieldLable =  "ContactPhoneListLable",
 					  						ListLableDefaultText =  "ContactPhone",
-					  						ListLocalDefaultText =  "טלפון איש קשר",
+					  						ListLocalDefaultTextBack_up =  "טלפון איש קשר",
+					  						ListLocalDefaultText =  "BS64:IteY15zXpNeV158g15DXmdepINen16nXqCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12289,10 +12625,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MarkDate",
 					  						DefaultText =  "Mark Date",
-					  						FullLocalDefaultText =  "תאריך סימון",
+					  						FullLocalDefaultTextBack_up =  "תאריך סימון",
+					  						FullLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16HXmdee15XXnyI=",
 					  						ListFieldLable =  "MarkDateListLable",
 					  						ListLableDefaultText =  "Mark Date",
-					  						ListLocalDefaultText =  "תאריך סימון",
+					  						ListLocalDefaultTextBack_up =  "תאריך סימון",
+					  						ListLocalDefaultText =  "BS64:Iteq15DXqNeZ15og16HXmdee15XXnyI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12354,10 +12692,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardCountryCode",
 					  						DefaultText =  "Card Country Code",
-					  						FullLocalDefaultText =  "קוד מדינת כרטיס",
+					  						FullLocalDefaultTextBack_up =  "קוד מדינת כרטיס",
+					  						FullLocalDefaultText =  "BS64:Iten15XXkyDXnteT15nXoNeqINeb16jXmNeZ16Ei",
 					  						ListFieldLable =  "CardCountryCodeListLable",
 					  						ListLableDefaultText =  "Card Country Code",
-					  						ListLocalDefaultText =  "קוד מדינת כרטיס",
+					  						ListLocalDefaultTextBack_up =  "קוד מדינת כרטיס",
+					  						ListLocalDefaultText =  "BS64:Iten15XXkyDXnteT15nXoNeqINeb16jXmNeZ16Ei",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12421,10 +12761,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExchangeRateId",
 					  						DefaultText =  "Exchange Rate",
-					  						FullLocalDefaultText =  "שער המרה",
+					  						FullLocalDefaultTextBack_up =  "שער המרה",
+					  						FullLocalDefaultText =  "BS64:Itep16LXqCDXlNee16jXlCI=",
 					  						ListFieldLable =  "ExchangeRateIdListLable",
 					  						ListLableDefaultText =  "Exchange Rate",
-					  						ListLocalDefaultText =  "שער המרה",
+					  						ListLocalDefaultTextBack_up =  "שער המרה",
+					  						ListLocalDefaultText =  "BS64:Itep16LXqCDXlNee16jXlCI=",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "AdditionalCurrencyRate",
 					  						NavigationPropertyName =  "AdditionalCurrencyRate",
@@ -12489,10 +12831,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExchangeRateName",
 					  						DefaultText =  "Exchange Rate",
-					  						FullLocalDefaultText =  "שער המרה",
+					  						FullLocalDefaultTextBack_up =  "שער המרה",
+					  						FullLocalDefaultText =  "BS64:Itep16LXqCDXlNee16jXlCI=",
 					  						ListFieldLable =  "ExchangeRateNameListLable",
 					  						ListLableDefaultText =  "Exchange Rate",
-					  						ListLocalDefaultText =  "שער המרה",
+					  						ListLocalDefaultTextBack_up =  "שער המרה",
+					  						ListLocalDefaultText =  "BS64:Itep16LXqCDXlNee16jXlCI=",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -12535,75 +12879,75 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode GLAccountTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.GLAccounts", DefaultText = @"General Ledger Accounts",LocalDefaultText = "חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.GLAccounts", DefaultText = @"General Ledger Accounts",LocalDefaultText = "BS64:IteX16nXkdeV16DXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.GLAccounts", NameTextCodeDefaultText = "General Ledger Accounts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = @"All Customers",LocalDefaultText = "לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = @"All Customers",LocalDefaultText = "BS64:Itec16fXldeX15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLIENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Clients", NameTextCodeDefaultText = "All Customers Accounts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Collectors", DefaultText = @"My Customers (As Collectors)",LocalDefaultText = "לקוחות שלי(כגובה)", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Collectors", DefaultText = @"My Customers (As Collectors)",LocalDefaultText = "BS64:Itec16fXldeX15XXqiDXqdec15ko15vXkteV15HXlCki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "collectorsGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.collectorsGLA", NameTextCodeDefaultText = "My Customers (As Colectors)", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Vendors", DefaultText = @"Vendor Accounts",LocalDefaultText = "ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Vendors", DefaultText = @"Vendor Accounts",LocalDefaultText = "BS64:Iteh16TXp9eZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Vendors", NameTextCodeDefaultText = "Vendor Accounts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.debetors", DefaultText = @"Debtors Customers",LocalDefaultText = "לקוחות חייבים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.debetors", DefaultText = @"Debtors Customers",LocalDefaultText = "BS64:Itec16fXldeX15XXqiDXl9eZ15nXkdeZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "debetorsGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.debetorsGLA", NameTextCodeDefaultText = "Debetors Customers", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ActiveCustomers", DefaultText = @"Active Customers",LocalDefaultText = "לקוחות פעילים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ActiveCustomers", DefaultText = @"Active Customers",LocalDefaultText = "BS64:Itec16fXldeX15XXqiDXpNei15nXnNeZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "activeCustomersGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.activeCustomersGLA", NameTextCodeDefaultText = "Active Customers", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = "לקוחות חסומים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.InactiveCustomers", DefaultText = @"Inactive Customers",LocalDefaultText = "BS64:Itec16fXldeX15XXqiDXl9eh15XXnteZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "inactiveCustomersGla", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.inactiveCustomersGla", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ActiveGLAccounts", DefaultText = @"Active GL Account",LocalDefaultText = "כרטיסים פעילים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ActiveGLAccounts", DefaultText = @"Active GL Account",LocalDefaultText = "BS64:Iteb16jXmNeZ16HXmdedINek16LXmdec15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ACTIVEGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.ACTIVEGLACCOUNTS", NameTextCodeDefaultText = "Active GL Account", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.InActiveGLAccounts", DefaultText = @"Inactive GL Account",LocalDefaultText = "כרטיסים לא פעילים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.InActiveGLAccounts", DefaultText = @"Inactive GL Account",LocalDefaultText = "BS64:Iteb16jXmNeZ16HXmdedINec15Ag16TXoteZ15zXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACTIVEGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.INACTIVEGLACCOUNTS", NameTextCodeDefaultText = "Inactive GL Account", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.OpenFiles", DefaultText = @"Open Files",LocalDefaultText = "תקים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.OpenFiles", DefaultText = @"Open Files",LocalDefaultText = "BS64:Iteq16fXmdedINek16rXldeX15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "OPENFILESGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.OPENFILESGLACCOUNTS", NameTextCodeDefaultText = "Open Files", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ClosedFiles", DefaultText = @"Closed Files",LocalDefaultText = "תיקים סגורים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ClosedFiles", DefaultText = @"Closed Files",LocalDefaultText = "BS64:Iteq15nXp9eZ150g16HXkteV16jXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEDFILESGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.CLOSEDFILESGLACCOUNTS", NameTextCodeDefaultText = "Closed Files", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllFiles", DefaultText = @"All Files",LocalDefaultText = "כל התיקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllFiles", DefaultText = @"All Files",LocalDefaultText = "BS64:Iteb15wg15TXqteZ16fXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLFILESGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.ALLFILESGLACCOUNTS", NameTextCodeDefaultText = "All Files", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllJobs", DefaultText = @"All Jobs",LocalDefaultText = "כל הג’ובים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_12 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllJobs", DefaultText = @"All Jobs",LocalDefaultText = "BS64:Iteb15wg15TXkuKAmdeV15HXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLJOBSGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.ALLJOBSGLACCOUNTS", NameTextCodeDefaultText = "All Jobs", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ActiveVendors", DefaultText = @"Active Vendors",LocalDefaultText = "ספקים פעילים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_13 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.ActiveVendors", DefaultText = @"Active Vendors",LocalDefaultText = "BS64:Iteh16TXp9eZ150g16TXoteZ15zXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_13 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "activeVendorsGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.activeVendorsGLA", NameTextCodeDefaultText = "Active Vendors", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.InactiveVendors", DefaultText = @"Inactive Vendors",LocalDefaultText = "ספקים חסומים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_14 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.InactiveVendors", DefaultText = @"Inactive Vendors",LocalDefaultText = "BS64:Iteh16TXp9eZ150g15fXodeV157XmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_14 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "inactiveVendorsGla", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.inactiveVendorsGla", NameTextCodeDefaultText = "Inactive Vendors", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.Q.ClientAccounts", DefaultText = @"All Customers",LocalDefaultText = "לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_15 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.Q.ClientAccounts", DefaultText = @"All Customers",LocalDefaultText = "BS64:Itec16fXldeX15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_15 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLIENTGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Clients", NameTextCodeDefaultText = "All Customers Accounts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllGLAccounts", DefaultText = @"All GL Accounts",LocalDefaultText = "כל הכרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_16 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllGLAccounts", DefaultText = @"All GL Accounts",LocalDefaultText = "BS64:Iteb15wg15TXm9eo15jXmdeh15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_16 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ALLGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.AllGLAccounts", NameTextCodeDefaultText = "All GL Accounts", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
  
 
-			   TextCode GLAccountTextCode_17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.Q.OpenMasters", DefaultText = @"Open Masters",LocalDefaultText = "גו’בים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
+			   TextCode GLAccountTextCode_17 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.Q.OpenMasters", DefaultText = @"Open Masters",LocalDefaultText = "BS64:IteS15XigJnXkdeZ150g16TXqteV15fXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes,contextTenant);
 			   Feature GLAccountFeature_17 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Q.OpenMasters", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.OpenMasters", NameTextCodeDefaultText = "OpenMasters", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes,contextTenant);
 
 	        //TextCodeRepository.SubmitChanges();
@@ -13142,52 +13486,52 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
 			   ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault();  
                  
-			   TextCode GLAccountOverviewTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Overview", DefaultText = "Overview",LocalDefaultText = "מבט על", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode GLAccountOverviewTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Overview", DefaultText = "Overview",LocalDefaultText = "BS64:Itee15HXmCDXotecIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature GLAccountOverviewFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.Overview", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GAOV", NameTextCodeDefaultText = "Overview", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountTransactionsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Transactions", DefaultText = "Transactions",LocalDefaultText = "תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   TextCode GLAccountTransactionsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Transactions", DefaultText = "Transactions",LocalDefaultText = "BS64:Iteq16DXldei15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
 			   Feature GLAccountTransactionsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TRANSACTIONS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Transactions", NameTextCodeDefaultText = "Transactions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountGeneralTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountGeneralFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountCustomerDebtNotificationTextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.CustomerDebtNotification", DefaultText = "Customer Debt Notification",LocalDefaultText = "BS64:IteU15XXk9ei16og15fXldeRINeQ15XXmNeV157XmNeZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountCustomerDebtNotificationFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.CustomerDebtNotification", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.CDNO", NameTextCodeDefaultText = "Customer Debt Notification", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountManageReconcTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.ManageReconciliations", DefaultText = "Manage Reconc.",LocalDefaultText = "ניהול התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountManageReconcFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MANAGERECONCILIATIONS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.ManageReconciliations", NameTextCodeDefaultText = "Manage Reconc.", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountGeneralTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.General", DefaultText = "General",LocalDefaultText = "BS64:Iteb15zXnNeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountGeneralFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountExternalTransactionsTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.ExternalTransactions", DefaultText = "External Transactions",LocalDefaultText = "תנועות חיצוניות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountExternalTransactionsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.ExternalTransactions", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GLET", NameTextCodeDefaultText = "External Transactions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountManageReconcTextCode_TH4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.ManageReconciliations", DefaultText = "Manage Reconc.",LocalDefaultText = "BS64:Iteg15nXlNeV15wg15TXqteQ157XldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountManageReconcFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MANAGERECONCILIATIONS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.ManageReconciliations", NameTextCodeDefaultText = "Manage Reconc.", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountManageExternalRecoTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.ManageExternalReco", DefaultText = "Manage External Reco",LocalDefaultText = "ניהול התאמות חיצוניות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountManageExternalRecoFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.ManageExternalReco", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GMER", NameTextCodeDefaultText = "Manage External Reco", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountExternalTransactionsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.ExternalTransactions", DefaultText = "External Transactions",LocalDefaultText = "BS64:Iteq16DXldei15XXqiDXl9eZ16bXldeg15nXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountExternalTransactionsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.ExternalTransactions", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GLET", NameTextCodeDefaultText = "External Transactions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountTaxwithholdingTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Tax", DefaultText = "Tax withholding",LocalDefaultText = "ניכוי מס במקור", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountTaxwithholdingFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TAX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Tax", NameTextCodeDefaultText = "Tax Withholding", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountManageExternalRecoTextCode_TH6 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.ManageExternalReco", DefaultText = "Manage External Reco",LocalDefaultText = "BS64:Iteg15nXlNeV15wg15TXqteQ157XldeqINeX15nXpteV16DXmdeV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountManageExternalRecoFeature_TH6 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.ManageExternalReco", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GMER", NameTextCodeDefaultText = "Manage External Reco", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountAdditionalDataTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Additional", DefaultText = "Additional Data",LocalDefaultText = "נתונים נוספים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountAdditionalDataFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDITIONAL", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Additional", NameTextCodeDefaultText = "Additional Data", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountTaxwithholdingTextCode_TH7 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Tax", DefaultText = "Tax withholding",LocalDefaultText = "BS64:Iteg15nXm9eV15kg157XoSDXkdee16fXldeoIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountTaxwithholdingFeature_TH7 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TAX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Tax", NameTextCodeDefaultText = "Tax Withholding", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountInterestTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Interest", DefaultText = "Interest",LocalDefaultText = "ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountInterestFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.Interest", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GAIT", NameTextCodeDefaultText = "Interest", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountAdditionalDataTextCode_TH8 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Additional", DefaultText = "Additional Data",LocalDefaultText = "BS64:Iteg16rXldeg15nXnSDXoNeV16HXpNeZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountAdditionalDataFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDITIONAL", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Additional", NameTextCodeDefaultText = "Additional Data", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountInterestTransactionsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.InterestTransactions", DefaultText = "Interest Transactions",LocalDefaultText = "תנועות ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountInterestTransactionsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.InterestTransactions", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GLIT", NameTextCodeDefaultText = "Interest Transactions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountInterestTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Interest", DefaultText = "Interest",LocalDefaultText = "BS64:Iteo15nXkdeZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountInterestFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.Interest", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GAIT", NameTextCodeDefaultText = "Interest", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountEventsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountEventsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountInterestTransactionsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.InterestTransactions", DefaultText = "Interest Transactions",LocalDefaultText = "BS64:Iteq16DXldei15XXqiDXqNeZ15HXmdeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountInterestTransactionsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.InterestTransactions", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GLIT", NameTextCodeDefaultText = "Interest Transactions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
  
                  
-			   TextCode GLAccountCustomerDebtNotificationTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.CustomerDebtNotification", DefaultText = "Customer Debt Notification",LocalDefaultText = "הודעת חוב אוטומטית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
-			   Feature GLAccountCustomerDebtNotificationFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.CustomerDebtNotification", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.CDNO", NameTextCodeDefaultText = "Customer Debt Notification", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
+			   TextCode GLAccountEventsTextCode_TH11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Events", DefaultText = "Events",LocalDefaultText = "BS64:IteQ15nXqNeV16LXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes,contextTenant);
+			   Feature GLAccountEventsFeature_TH11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable,contextTenant);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -13197,25 +13541,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GATR",HtmlComponentName = "GLAccountTransactionsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent", FeatureId = GLAccountTransactionsFeature_TH1.Id,FeatureUniqeCode = GLAccountTransactionsFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTransactionsTextCode_TH1.Id, TabNameTextCodeCode = GLAccountTransactionsTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = GLAccountGeneralFeature_TH2.Id,FeatureUniqeCode = GLAccountGeneralFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountGeneralTextCode_TH2.Id, TabNameTextCodeCode = GLAccountGeneralTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CDNO",HtmlComponentName = "CustomerDebtNotificationComponent",HtmlComponentUrl = "./Accounting/Components/Maintenance/CustomerDebtNotificationComponent", FeatureId = GLAccountCustomerDebtNotificationFeature_TH2.Id,FeatureUniqeCode = GLAccountCustomerDebtNotificationFeature_TH2.FeatureUniqeCode, ControlPath = "CustomerDebtNotificationComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountCustomerDebtNotificationTextCode_TH2.Id, TabNameTextCodeCode = GLAccountCustomerDebtNotificationTextCode_TH2.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = GLAccountManageReconcFeature_TH3.Id,FeatureUniqeCode = GLAccountManageReconcFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageReconcTextCode_TH3.Id, TabNameTextCodeCode = GLAccountManageReconcTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = GLAccountGeneralFeature_TH3.Id,FeatureUniqeCode = GLAccountGeneralFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountGeneralTextCode_TH3.Id, TabNameTextCodeCode = GLAccountGeneralTextCode_TH3.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLET",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = GLAccountExternalTransactionsFeature_TH4.Id,FeatureUniqeCode = GLAccountExternalTransactionsFeature_TH4.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountExternalTransactionsTextCode_TH4.Id, TabNameTextCodeCode = GLAccountExternalTransactionsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = GLAccountManageReconcFeature_TH4.Id,FeatureUniqeCode = GLAccountManageReconcFeature_TH4.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageReconcTextCode_TH4.Id, TabNameTextCodeCode = GLAccountManageReconcTextCode_TH4.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GMER",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = GLAccountManageExternalRecoFeature_TH5.Id,FeatureUniqeCode = GLAccountManageExternalRecoFeature_TH5.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageExternalRecoTextCode_TH5.Id, TabNameTextCodeCode = GLAccountManageExternalRecoTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLET",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = GLAccountExternalTransactionsFeature_TH5.Id,FeatureUniqeCode = GLAccountExternalTransactionsFeature_TH5.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountExternalTransactionsTextCode_TH5.Id, TabNameTextCodeCode = GLAccountExternalTransactionsTextCode_TH5.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = GLAccountTaxwithholdingFeature_TH6.Id,FeatureUniqeCode = GLAccountTaxwithholdingFeature_TH6.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTaxwithholdingTextCode_TH6.Id, TabNameTextCodeCode = GLAccountTaxwithholdingTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GMER",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = GLAccountManageExternalRecoFeature_TH6.Id,FeatureUniqeCode = GLAccountManageExternalRecoFeature_TH6.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageExternalRecoTextCode_TH6.Id, TabNameTextCodeCode = GLAccountManageExternalRecoTextCode_TH6.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = GLAccountAdditionalDataFeature_TH7.Id,FeatureUniqeCode = GLAccountAdditionalDataFeature_TH7.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountAdditionalDataTextCode_TH7.Id, TabNameTextCodeCode = GLAccountAdditionalDataTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = GLAccountTaxwithholdingFeature_TH7.Id,FeatureUniqeCode = GLAccountTaxwithholdingFeature_TH7.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTaxwithholdingTextCode_TH7.Id, TabNameTextCodeCode = GLAccountTaxwithholdingTextCode_TH7.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAIT",HtmlComponentName = "GLAccountInterestComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestComponent", FeatureId = GLAccountInterestFeature_TH8.Id,FeatureUniqeCode = GLAccountInterestFeature_TH8.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTextCode_TH8.Id, TabNameTextCodeCode = GLAccountInterestTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = GLAccountAdditionalDataFeature_TH8.Id,FeatureUniqeCode = GLAccountAdditionalDataFeature_TH8.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountAdditionalDataTextCode_TH8.Id, TabNameTextCodeCode = GLAccountAdditionalDataTextCode_TH8.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLIT",HtmlComponentName = "GLAccountInterestTransactionsComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent", FeatureId = GLAccountInterestTransactionsFeature_TH9.Id,FeatureUniqeCode = GLAccountInterestTransactionsFeature_TH9.FeatureUniqeCode, ControlPath = "GLAccountInterestTransactionsComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTransactionsTextCode_TH9.Id, TabNameTextCodeCode = GLAccountInterestTransactionsTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAIT",HtmlComponentName = "GLAccountInterestComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestComponent", FeatureId = GLAccountInterestFeature_TH9.Id,FeatureUniqeCode = GLAccountInterestFeature_TH9.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTextCode_TH9.Id, TabNameTextCodeCode = GLAccountInterestTextCode_TH9.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GLAccountEventsFeature_TH10.Id,FeatureUniqeCode = GLAccountEventsFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountEventsTextCode_TH10.Id, TabNameTextCodeCode = GLAccountEventsTextCode_TH10.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLIT",HtmlComponentName = "GLAccountInterestTransactionsComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent", FeatureId = GLAccountInterestTransactionsFeature_TH10.Id,FeatureUniqeCode = GLAccountInterestTransactionsFeature_TH10.FeatureUniqeCode, ControlPath = "GLAccountInterestTransactionsComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTransactionsTextCode_TH10.Id, TabNameTextCodeCode = GLAccountInterestTransactionsTextCode_TH10.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CDNO",HtmlComponentName = "CustomerDebtNotificationComponent",HtmlComponentUrl = "./Accounting/Components/Maintenance/CustomerDebtNotificationComponent", FeatureId = GLAccountCustomerDebtNotificationFeature_TH11.Id,FeatureUniqeCode = GLAccountCustomerDebtNotificationFeature_TH11.FeatureUniqeCode, ControlPath = "CustomerDebtNotificationComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountCustomerDebtNotificationTextCode_TH11.Id, TabNameTextCodeCode = GLAccountCustomerDebtNotificationTextCode_TH11.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GLAccountEventsFeature_TH11.Id,FeatureUniqeCode = GLAccountEventsFeature_TH11.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountEventsTextCode_TH11.Id, TabNameTextCodeCode = GLAccountEventsTextCode_TH11.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs,contextTenant);
    
 	    } 
 	
@@ -14100,7 +14444,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "GCC",
                 EnglishName =  "Changed to Multi iCurrency",
-                LocalName =  "הומר לרב מטבעי",
+                LocalNameBack_up =  "הומר לרב מטבעי",
+                LocalName =  "BS64:IteU15XXnteoINec16jXkSDXnteY15HXoteZIg==",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -14118,7 +14463,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             {
                 Code =  "RCLC",
                 EnglishName =  "Account Recalculated",
-                LocalName =  "בוצע חישוב מחדש",
+                LocalNameBack_up =  "בוצע חישוב מחדש",
+                LocalName =  "BS64:IteR15XXpteiINeX15nXqdeV15Eg157Xl9eT16ki",
                 IsManualEntry =  false,
                 ShortView =  false,
                 IsAgentView =  false,
@@ -14192,7 +14538,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "button",
 						FeatureId = GLAccountFeature_MB0.Id,
 						Style = "ApproveButtonStyle",
-						LocalDefaultText = "התאם",
+						LocalDefaultText = "BS64:IteU16rXkNedIg==",
 						FeatureUniqeCode = GLAccountFeature_MB0.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -14212,7 +14558,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "dropdownbutton",
 						FeatureId = GLAccountFeature_MB1.Id,
 						Style = null,
-						LocalDefaultText = "נוספים",
+						LocalDefaultText = "BS64:Iteg15XXodek15nXnSI=",
 						FeatureUniqeCode = GLAccountFeature_MB1.FeatureUniqeCode,
 						HtmlComponentPath = null,
 						Width = 0,
@@ -14232,7 +14578,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  GLAccountFeature_MB10.Id,
 						Style = null,
-						LocalDefaultText = "חסימה",
+						LocalDefaultText = "BS64:IteX16HXmdee15Qi",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  GLAccountFeature_MB10.FeatureUniqeCode,
@@ -14252,7 +14598,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  GLAccountFeature_MB11.Id,
 						Style = null,
-						LocalDefaultText = "הפעל מחדש",
+						LocalDefaultText = "BS64:IteU16TXotecINee15fXk9epIg==",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  GLAccountFeature_MB11.FeatureUniqeCode,
@@ -14272,7 +14618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  GLAccountFeature_MB12.Id,
 						Style = null,
-						LocalDefaultText = "חשב מחדש",
+						LocalDefaultText = "BS64:IteX16nXkSDXnteX15PXqSI=",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  GLAccountFeature_MB12.FeatureUniqeCode,
@@ -14287,519 +14633,519 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable GLAccountObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "GLAccount" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode GLAccountTextCode_GLAccountTHNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.New", DefaultText = "New",LocalDefaultText = @"חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountTHNew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.New", DefaultText = "New",LocalDefaultText = @"BS64:IteX15PXqSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountTHReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Reconcile", DefaultText = "Reconcile",LocalDefaultText = @"התאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountTHReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Reconcile", DefaultText = "Reconcile",LocalDefaultText = @"BS64:IteU16rXkNee15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GeneralMCACCGLAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.GLAccounts", DefaultText = "General Ledger Accounts",LocalDefaultText = @"חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GeneralMCACCGLAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.GLAccounts", DefaultText = "General Ledger Accounts",LocalDefaultText = @"BS64:IteX16nXkdeV16DXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GeneralMCACCClients = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Clients", DefaultText = "Client Accounts",LocalDefaultText = @"לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GeneralMCACCClients = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Clients", DefaultText = "Client Accounts",LocalDefaultText = @"BS64:Itec16fXldeX15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Multi", DefaultText = "Multi",LocalDefaultText = @"רב מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Multi", DefaultText = "Multi",LocalDefaultText = @"BS64:Iteo15Eg157XmNeR16LXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Active", DefaultText = "Active",LocalDefaultText = @"פעיל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQActive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Active", DefaultText = "Active",LocalDefaultText = @"BS64:Itek16LXmdecIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Inactive", DefaultText = "Inactive",LocalDefaultText = @"חסום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Inactive", DefaultText = "Inactive",LocalDefaultText = @"BS64:IteX16HXldedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsODisplayNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayNumberAlreadyExists", DefaultText = "The card the system is trying to open ({0}) is already exists. It can be connected by clicking on the ''Connect'' button.",LocalDefaultText = "הכרטיס שהמערת מנסה לפתוח ({0}) כבר קיים. ניתן לחבר אותו ע''י לחיצה על כפתור ''חיבור כרטיס קיים''.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsODisplayNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayNumberAlreadyExists", DefaultText = "The card the system is trying to open ({0}) is already exists. It can be connected by clicking on the ''Connect'' button.",LocalDefaultText = @"BS64:IteU15vXqNeY15nXoSDXqdeU157Xoteo16og157XoNeh15Qg15zXpNeq15XXlyAoezB9KSDXm9eR16gg16fXmdeZ150uINeg15nXqtefINec15fXkdeoINeQ15XXqteVINeiIteZINec15fXmdem15Qg16LXnCDXm9ek16rXldeoICLXl9eZ15HXldeoINeb16jXmNeZ16Eg16fXmdeZ150iLiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOInternalNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InternalNumberAlreadyExists", DefaultText = "The Internal Number exists with another GL Account",LocalDefaultText = @"המספר הפנימי קיים בחשבון אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOInternalNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InternalNumberAlreadyExists", DefaultText = "The Internal Number exists with another GL Account",LocalDefaultText = @"BS64:IteU157Xodek16gg15TXpNeg15nXnteZINen15nXmdedINeR15fXqdeR15XXnyDXkNeX16gi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOClientMultiAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ClientMultiAlreadyExists", DefaultText = "A multi-currency account already exists for the Client - please choose a currrency",LocalDefaultText = @"ללקוח קיים כבר חשבון רב-מטבעי - אנא בחר מטבע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOClientMultiAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ClientMultiAlreadyExists", DefaultText = "A multi-currency account already exists for the Client - please choose a currrency",LocalDefaultText = @"BS64:Itec15zXp9eV15cg16fXmdeZ150g15vXkdeoINeX16nXkdeV158g16jXkS3XnteY15HXoteZIC0g15DXoNeQINeR15fXqCDXnteY15HXoiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOClientCurrencyAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ClientCurrencyAlreadyExists", DefaultText = "Client account already exists in ",LocalDefaultText = @"ללקוח קיים כבר חשבון במטבע ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOClientCurrencyAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ClientCurrencyAlreadyExists", DefaultText = "Client account already exists in ",LocalDefaultText = @"BS64:Itec15zXp9eV15cg16fXmdeZ150g15vXkdeoINeX16nXkdeV158g15HXnteY15HXoiAi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOVendorMultiAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.VendorMultiAlreadyExists", DefaultText = "A multi-currency account already exists for the Vendor - please choose a currrency",LocalDefaultText = @"לספק קיים כבר חשבון רב-מטבעי - אנא בחר מטבע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOVendorMultiAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.VendorMultiAlreadyExists", DefaultText = "A multi-currency account already exists for the Vendor - please choose a currrency",LocalDefaultText = @"BS64:Itec16HXpNenINen15nXmdedINeb15HXqCDXl9ep15HXldefINeo15Et157XmNeR16LXmSAtINeQ16DXkCDXkdeX16gg157XmNeR16Ii", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOVendorCurrencyAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.VendorCurrencyAlreadyExists", DefaultText = "Vendor account already exists in ",LocalDefaultText = @"ללקוח קיים כבר חשבון במטבע ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOVendorCurrencyAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.VendorCurrencyAlreadyExists", DefaultText = "Vendor account already exists in ",LocalDefaultText = @"BS64:Itec15zXp9eV15cg16fXmdeZ150g15vXkdeoINeX16nXkdeV158g15HXnteY15HXoiAi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionExists", DefaultText = "Ledger account transactions exist",LocalDefaultText = @"לכרטיס יש תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionExists", DefaultText = "Ledger account transactions exist",LocalDefaultText = @"BS64:Itec15vXqNeY15nXoSDXmdepINeq16DXldei15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionManyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionManyExist", DefaultText = "This account has transactions with different currencies",LocalDefaultText = @"לכרטיס ישנם תנועות במטבעות שונים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionManyExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionManyExist", DefaultText = "This account has transactions with different currencies",LocalDefaultText = @"BS64:Itec15vXqNeY15nXoSDXmdep16DXnSDXqteg15XXoteV16og15HXnteY15HXoteV16og16nXldeg15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOParentAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ParentAccountNotFound", DefaultText = "Parent account not found",LocalDefaultText = @"לא נמצא חשבון אב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOParentAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ParentAccountNotFound", DefaultText = "Parent account not found",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Ag15fXqdeR15XXnyDXkNeRIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCustomerAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerAccountNotFound", DefaultText = "Customer account not found",LocalDefaultText = @"לא נמצא חשבון לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerAccountNotFound", DefaultText = "Customer account not found",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Ag15fXqdeR15XXnyDXnNen15XXlyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOChartOfAccountsNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountsNotFound", DefaultText = "Chart of accounts not found",LocalDefaultText = @"לא נמצא לוח חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOChartOfAccountsNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountsNotFound", DefaultText = "Chart of accounts not found",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Ag15zXldeXINeX16nXkdeV16DXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCardRevExpOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardRevExpOnly", DefaultText = "A Card may ber Revenue or Expense only",LocalDefaultText = @"כרטיס יכול להיות הוצאות או הכנסות בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCardRevExpOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardRevExpOnly", DefaultText = "A Card may ber Revenue or Expense only",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg15nXm9eV15wg15zXlNeZ15XXqiDXlNeV16bXkNeV16og15DXlSDXlNeb16DXodeV16og15HXnNeR15Mi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsORevExpOther = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RevExpOther", DefaultText = "Revenue or Expense permitted for a Card only",LocalDefaultText = @"שדה סוג חשבון נדרש רק עבור כרטיסי הכנסות או הוצאות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsORevExpOther = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RevExpOther", DefaultText = "Revenue or Expense permitted for a Card only",LocalDefaultText = @"BS64:Itep15PXlCDXodeV15Ig15fXqdeR15XXnyDXoNeT16jXqSDXqNenINei15HXldeoINeb16jXmNeZ16HXmSDXlNeb16DXodeV16og15DXlSDXlNeV16bXkNeV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOWrongParentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongParentType", DefaultText = "Type of the Chart of Accounts differs from this GL Account",LocalDefaultText = @"סוג קבוצת מאזן שונה מסוג של חשבון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOWrongParentType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongParentType", DefaultText = "Type of the Chart of Accounts differs from this GL Account",LocalDefaultText = @"BS64:Iteh15XXkiDXp9eR15XXpteqINee15DXltefINep15XXoNeUINee16HXldeSINep15wg15fXqdeR15XXnyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCustomerAccountMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerAccountMissing", DefaultText = "Customer Account is missing",LocalDefaultText = @"חסר חשבון לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerAccountMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerAccountMissing", DefaultText = "Customer Account is missing",LocalDefaultText = @"BS64:IteX16HXqCDXl9ep15HXldefINec16fXldeXIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOControlAccountNotDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountNotDefined", DefaultText = "The Account is defined as a Control Account but is not connected to the Full Accounting Settings",LocalDefaultText = @"החשבון מוגדר כמרכז אבל חסר בהגדרות הנהלת החשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOControlAccountNotDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountNotDefined", DefaultText = "The Account is defined as a Control Account but is not connected to the Full Accounting Settings",LocalDefaultText = @"BS64:IteU15fXqdeR15XXnyDXnteV15LXk9eoINeb157XqNeb15Yg15DXkdecINeX16HXqCDXkdeU15LXk9eo15XXqiDXlNeg15TXnNeqINeU15fXqdeR15XXoNeV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOControlAccountMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountMissing", DefaultText = "Control Account is missing",LocalDefaultText = @"חסר חשבון מרכז", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOControlAccountMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountMissing", DefaultText = "Control Account is missing",LocalDefaultText = @"BS64:IteX16HXqCDXl9ep15HXldefINee16jXm9eWIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOControlAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountNotFound", DefaultText = "Control Account is missing",LocalDefaultText = @"חשבון מרכז לא נמצא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOControlAccountNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlAccountNotFound", DefaultText = "Control Account is missing",LocalDefaultText = @"BS64:IteX16nXkdeV158g157XqNeb15Yg15zXkCDXoNee16bXkCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOWrongControlChartType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongControlChartType", DefaultText = "Control Account's Chart of Accounts Type differs from this GL Account",LocalDefaultText = @"סוג קבוצת מאזן של המרכז שונה מזה של חשבון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOWrongControlChartType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongControlChartType", DefaultText = "Control Account's Chart of Accounts Type differs from this GL Account",LocalDefaultText = @"BS64:Iteh15XXkiDXp9eR15XXpteqINee15DXltefINep15wg15TXnteo15vXliDXqdeV16DXlCDXnteW15Qg16nXnCDXl9ep15HXldefIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAccountTypeCodeMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountTypeCodeMissing", DefaultText = "Account Type Code is missing",LocalDefaultText = @"חסר קוד של סוג חשבון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAccountTypeCodeMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountTypeCodeMissing", DefaultText = "Account Type Code is missing",LocalDefaultText = @"BS64:IteX16HXqCDXp9eV15Mg16nXnCDXodeV15Ig15fXqdeR15XXnyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOWrongCustomerAccountType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongCustomerAccountType", DefaultText = "Wrong Customer Account Type",LocalDefaultText = @"סוג חשבון לקוח שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOWrongCustomerAccountType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.WrongCustomerAccountType", DefaultText = "Wrong Customer Account Type",LocalDefaultText = @"BS64:Iteh15XXkiDXl9ep15HXldefINec16fXldeXINep15LXldeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCurrencyOrMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CurrencyOrMulti", DefaultText = "Currency or Multi is a must",LocalDefaultText = @"מטבע או רב מטבעי - חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCurrencyOrMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CurrencyOrMulti", DefaultText = "Currency or Multi is a must",LocalDefaultText = @"BS64:Itee15jXkdeiINeQ15Ug16jXkSDXnteY15HXoteZIC0g15fXldeR15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAccountIsaMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountIsaMulti", DefaultText = "The account is defined as multi currency account",LocalDefaultText = @"החשבון מוגדר כחשבון רב-מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAccountIsaMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountIsaMulti", DefaultText = "The account is defined as multi currency account",LocalDefaultText = @"BS64:IteU15fXqdeR15XXnyDXnteV15LXk9eoINeb15fXqdeR15XXnyDXqNeRLdee15jXkdei15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOControlMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlMulti", DefaultText = "Control account must be a multi currency account, would you like to make it a multi currency account?",LocalDefaultText = @"חשבון מרכז חייב להיות רב מטבעי, האם ברצונך להפוך אותו לחשבון רב מטבעי?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOControlMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ControlMulti", DefaultText = "Control account must be a multi currency account, would you like to make it a multi currency account?",LocalDefaultText = @"BS64:IteX16nXkdeV158g157XqNeb15Yg15fXmdeZ15Eg15zXlNeZ15XXqiDXqNeRINee15jXkdei15ksINeU15DXnSDXkdeo16bXldeg15og15zXlNek15XXmiDXkNeV16rXlSDXnNeX16nXkdeV158g16jXkSDXnteY15HXoteZPyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAmountToReconcileTooBig = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AmountToReconcileTooBig", DefaultText = "Amount to reconcile is too big",LocalDefaultText = @"סכום ההתאמה גדול מדי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAmountToReconcileTooBig = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AmountToReconcileTooBig", DefaultText = "Amount to reconcile is too big",LocalDefaultText = @"BS64:Iteh15vXldedINeU15TXqteQ157XlCDXkteT15XXnCDXnteT15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAmountToReconcileWrongSign = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AmountToReconcileWrongSign", DefaultText = "Amount to reconcile has wrong sign",LocalDefaultText = @"סכום ההתאמה בסימן שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAmountToReconcileWrongSign = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AmountToReconcileWrongSign", DefaultText = "Amount to reconcile has wrong sign",LocalDefaultText = @"BS64:Iteh15vXldedINeU15TXqteQ157XlCDXkdeh15nXntefINep15LXldeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOReconcileSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileSearch", DefaultText = "Search by:",LocalDefaultText = @"חפש לפי:", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcileSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileSearch", DefaultText = "Search by:",LocalDefaultText = @"BS64:IteX16TXqSDXnNek15k6Ig==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountsOReconcileSearchHelpText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileSearchHelpText", DefaultText = " Journal\n Accounting Entity Ref.\n Ref.1\n Ref.2\n Ref.3",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOYearTransferSucceed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.YearTransferSucceed", DefaultText = " Year Transfer Succeed",LocalDefaultText = @"מעבר שנה הסתיים בהצלחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOYearTransferSucceed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.YearTransferSucceed", DefaultText = " Year Transfer Succeed",LocalDefaultText = @"BS64:Itee16LXkdeoINep16DXlCDXlNeh16rXmdeZ150g15HXlNem15zXl9eUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsORevaluationSucceed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RevaluationSucceed", DefaultText = " Revaluation Succeed",LocalDefaultText = @"שערוך הסתיים בהצלחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsORevaluationSucceed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RevaluationSucceed", DefaultText = " Revaluation Succeed",LocalDefaultText = @"BS64:Itep16LXqNeV15og15TXodeq15nXmdedINeR15TXptec15fXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "H", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOMultiCurrencyForSplitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MultiCurrencyForSplitted", DefaultText = "The GL Account must be defined as multi currency in order to create splitted GL Accounts by currency",LocalDefaultText = @"הכרטיס חייב להיות מוגדר כרב מטבעי ע”מ ליצור כרטיסים מפוצלים לפי מטבעות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOMultiCurrencyForSplitted = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MultiCurrencyForSplitted", DefaultText = "The GL Account must be defined as multi currency in order to create splitted GL Accounts by currency",LocalDefaultText = @"BS64:IteU15vXqNeY15nXoSDXl9eZ15nXkSDXnNeU15nXldeqINee15XXkteT16gg15vXqNeRINee15jXkdei15kg16LigJ3XniDXnNeZ16bXldeoINeb16jXmNeZ16HXmdedINee16TXldem15zXmdedINec16TXmSDXnteY15HXoteV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCurrencyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CurrencyExists", DefaultText = "This customer has GL Account with the chosen currency. choose another one",LocalDefaultText = @"ללקוח קיים כרטיס במטבע הנבחר. נא לבחור מטבע אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCurrencyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CurrencyExists", DefaultText = "This customer has GL Account with the chosen currency. choose another one",LocalDefaultText = @"BS64:Itec15zXp9eV15cg16fXmdeZ150g15vXqNeY15nXoSDXkdee15jXkdeiINeU16DXkdeX16guINeg15Ag15zXkdeX15XXqCDXnteY15HXoiDXkNeX16gi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOConnectedGLAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ConnectedGLAccounts", DefaultText = "Connected GL Accounts",LocalDefaultText = @"כרטיסים מקושרים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOConnectedGLAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ConnectedGLAccounts", DefaultText = "Connected GL Accounts",LocalDefaultText = @"BS64:Iteb16jXmNeZ16HXmdedINee16fXldep16jXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOSplittedByCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.SplittedByCurrency", DefaultText = "Splitted by Currency",LocalDefaultText = @"פיצול לפי מטבע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOSplittedByCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.SplittedByCurrency", DefaultText = "Splitted by Currency",LocalDefaultText = @"BS64:Itek15nXpteV15wg15zXpNeZINee15jXkdeiIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOChildren = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Children", DefaultText = "Children GL Accounts",LocalDefaultText = @"כרטיסי בנים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOChildren = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Children", DefaultText = "Children GL Accounts",LocalDefaultText = @"BS64:Iteb16jXmNeZ16HXmSDXkdeg15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Choose", DefaultText = "Choose",LocalDefaultText = @"בחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOChoose = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Choose", DefaultText = "Choose",LocalDefaultText = @"BS64:IteR15fXqCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAdd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Add", DefaultText = "Add",LocalDefaultText = @"הוסף", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAdd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Add", DefaultText = "Add",LocalDefaultText = @"BS64:IteU15XXodejIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsONotValidDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotValidDate", DefaultText = "Can’t enter two identical periods",LocalDefaultText = @"לא ניתן להזין שתי תקופות חופפות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsONotValidDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotValidDate", DefaultText = "Can’t enter two identical periods",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeW15nXnyDXqdeq15kg16rXp9eV16TXldeqINeX15XXpNek15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingBalance", DefaultText = "Accounting Balance",LocalDefaultText = @"יתרה חשבונאית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAccountingBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AccountingBalance", DefaultText = "Accounting Balance",LocalDefaultText = @"BS64:IteZ16rXqNeUINeX16nXkdeV16DXkNeZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsODispalyTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DispalyTransactions", DefaultText = "Dispaly transactions",LocalDefaultText = @"הצג תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsODispalyTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DispalyTransactions", DefaultText = "Dispaly transactions",LocalDefaultText = @"BS64:IteU16bXkiDXqteg15XXoteV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOTotalDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalDue", DefaultText = "Total Due",LocalDefaultText = @"יתרה לגביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOTotalDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalDue", DefaultText = "Total Due",LocalDefaultText = @"BS64:IteZ16rXqNeUINec15LXkdeZ15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsONextDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NextDueDate", DefaultText = "Next due date",LocalDefaultText = @"תאריך פרעון הבא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsONextDueDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NextDueDate", DefaultText = "Next due date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16TXqNei15XXnyDXlNeR15Ai", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOOpenTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.OpenTransactions", DefaultText = "Open Transactions",LocalDefaultText = @"תנועות פתוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOOpenTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.OpenTransactions", DefaultText = "Open Transactions",LocalDefaultText = @"BS64:Iteq16DXldei15XXqiDXpNeq15XXl9eV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Reconcile", DefaultText = "Reconcile",LocalDefaultText = @"בצע התאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Reconcile", DefaultText = "Reconcile",LocalDefaultText = @"BS64:IteR16bXoiDXlNeq15DXnteUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOLastTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LastTransactions", DefaultText = "Last Transactions",LocalDefaultText = @"תנועות אחרונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOLastTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LastTransactions", DefaultText = "Last Transactions",LocalDefaultText = @"BS64:Iteq16DXldei15XXqiDXkNeX16jXldeg15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Date", DefaultText = "Date",LocalDefaultText = @"תאריך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsODate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Date", DefaultText = "Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCollecting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Collecting", DefaultText = "Due",LocalDefaultText = @"גביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCollecting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Collecting", DefaultText = "Due",LocalDefaultText = @"BS64:IteS15HXmdeUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Accounting", DefaultText = "Accounting",LocalDefaultText = @"חשבונאית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Accounting", DefaultText = "Accounting",LocalDefaultText = @"BS64:IteX16nXkdeV16DXkNeZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOMustBeMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency",LocalDefaultText = @"כרטיס אב חייב להיות רב מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOMustBeMultiCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MustBeMultiCurrency", DefaultText = "Parent GLAccount must be multi currency",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg15DXkSDXl9eZ15nXkSDXnNeU15nXldeqINeo15Eg157XmNeR16LXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_APInvoiceOCheckInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger than the Accounting Date",LocalDefaultText = @"לא ניתן להקליד תאריך אסמכתא מאוחר מהתאריך החשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_APInvoiceOCheckInvoiceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.O.CheckInvoiceDate", DefaultText = "Invoice Date can't be bigger than the Accounting Date",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNen15zXmdeTINeq15DXqNeZ15og15DXodee15vXqteQINee15DXldeX16gg157XlNeq15DXqNeZ15og15TXl9ep15HXldeg15DXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-            TextCode GLAccountTextCode_GLAccountsODisplayOpenFiles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayOpenFiles", DefaultText = "Display Open Files", LocalDefaultText = @"הצג תיקים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes, contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQDisplayOpenFiles = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.DisplayOpenFiles", DefaultText = "Display Open Files",LocalDefaultText = @"הצג תיקים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
-            TextCode GLAccountTextCode_APPaymentOVendorGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The vendor is not connected to GLAccount",LocalDefaultText = @"הספק לא קושר לכרטיס הנהלת חשבונות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+            TextCode GLAccountTextCode_APPaymentOVendorGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.O.VendorGLAccount", DefaultText = "The vendor is not connected to GLAccount",LocalDefaultText = @"BS64:IteU16HXpNenINec15Ag16fXldep16gg15zXm9eo15jXmdehINeU16DXlNec16og15fXqdeR15XXoNeV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AccountingPeriodsOWrongOpenMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.WrongOpenMonth", DefaultText = "Wrong open month",LocalDefaultText = @"חודש פתוח שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOWrongOpenMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.WrongOpenMonth", DefaultText = "Wrong open month",LocalDefaultText = @"BS64:IteX15XXk9epINek16rXldeXINep15LXldeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AccountingPeriodsOWrongClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.WrongClosedMonth", DefaultText = "Wrong closed month",LocalDefaultText = @"חודש סגור שגוי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOWrongClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.WrongClosedMonth", DefaultText = "Wrong closed month",LocalDefaultText = @"BS64:IteX15XXk9epINeh15LXldeoINep15LXldeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AccountingPeriodsOFutureMonthForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.FutureMonthForbidden", DefaultText = "Future month is not allowed",LocalDefaultText = @"לא ניתן להגדיר חודש עתידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOFutureMonthForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.FutureMonthForbidden", DefaultText = "Future month is not allowed",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeX15XXk9epINei16rXmdeT15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AccountingPeriodsOClosedAfterOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedAfterOpen", DefaultText = "Closed month later than open month is not allowed",LocalDefaultText = @"לא ניתן להגדיר חודש סגור אחרי חודש פתוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOClosedAfterOpen = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedAfterOpen", DefaultText = "Closed month later than open month is not allowed",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeX15XXk9epINeh15LXldeoINeQ15fXqNeZINeX15XXk9epINek16rXldeXIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AccountingPeriodsOtherearejournalsdidnottranslated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.therearejournalsdidnottranslated", DefaultText = "Can’t close this month. there are journals that did not translated into transactions for this month",LocalDefaultText = @"לא ניתן לסגור את החודש, ישנן פקודות יומן ללא תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOtherearejournalsdidnottranslated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.therearejournalsdidnottranslated", DefaultText = "Can’t close this month. there are journals that did not translated into transactions for this month",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXodeS15XXqCDXkNeqINeU15fXldeT16ksINeZ16nXoNefINek16fXldeT15XXqiDXmdeV157XnyDXnNec15Ag16rXoNeV16LXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AccountingPeriodsOClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedMonth", DefaultText = "Closed month",LocalDefaultText = @"חודש סגור", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AccountingPeriodsOClosedMonth = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AccountingPeriods.O.ClosedMonth", DefaultText = "Closed month",LocalDefaultText = @"BS64:IteX15XXk9epINeh15LXldeoIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_TransactionsFWithAttachAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Transactions.F.WithAttachAccount", DefaultText = "With Attach Account",LocalDefaultText = @"הצג חשבונות קשורים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_TransactionsFWithAttachAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Transactions.F.WithAttachAccount", DefaultText = "With Attach Account",LocalDefaultText = @"BS64:IteU16bXkiDXl9ep15HXldeg15XXqiDXp9ep15XXqNeZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_TransactionsFWithoutAdjustedTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Transactions.F.WithoutAdjustedTransactions", DefaultText = "Without adjusted Transactions",LocalDefaultText = @"ללא תנועות מותאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_TransactionsFWithoutAdjustedTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Transactions.F.WithoutAdjustedTransactions", DefaultText = "Without adjusted Transactions",LocalDefaultText = @"BS64:Itec15zXkCDXqteg15XXoteV16og157Xldeq15DXnteV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GeneralMCACCVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Vendors", DefaultText = "Vendor Accounts",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GeneralMCACCVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Vendors", DefaultText = "Vendor Accounts",LocalDefaultText = @"BS64:Iteh16TXp9eZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GeneralMCACCSuppliers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Suppliers", DefaultText = "Suppliers",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GeneralMCACCSuppliers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.Suppliers", DefaultText = "Suppliers",LocalDefaultText = @"BS64:Iteh16TXp9eZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQSuppliers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Suppliers", DefaultText = "Suppliers",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQSuppliers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Suppliers", DefaultText = "Suppliers",LocalDefaultText = @"BS64:Iteh16TXp9eZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQNewClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.NewClient", DefaultText = "New Client Account",LocalDefaultText = @"לקוח חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQNewClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.NewClient", DefaultText = "New Client Account",LocalDefaultText = @"BS64:Itec16fXldeXINeX15PXqSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQNewVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.NewVendor", DefaultText = "New Vendor Account",LocalDefaultText = @"ספק חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQNewVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.NewVendor", DefaultText = "New Vendor Account",LocalDefaultText = @"BS64:Iteh16TXpyDXl9eT16ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsFDisplayNumberLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.DisplayNumberLabel", DefaultText = "Account No.: ",LocalDefaultText = @"מספר חשבון: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsFDisplayNumberLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.DisplayNumberLabel", DefaultText = "Account No.: ",LocalDefaultText = @"BS64:Itee16HXpNeoINeX16nXkdeV1586ICI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsFEnglishNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.EnglishNameLabel", DefaultText = "Account Name: ",LocalDefaultText = @"שם חשבון: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsFEnglishNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.EnglishNameLabel", DefaultText = "Account Name: ",LocalDefaultText = @"BS64:Itep150g15fXqdeR15XXnzogIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsFCurrencyCodeLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.CurrencyCodeLabel", DefaultText = "Currency: ",LocalDefaultText = @"מטבע: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsFCurrencyCodeLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.CurrencyCodeLabel", DefaultText = "Currency: ",LocalDefaultText = @"BS64:Itee15jXkdeiOiAi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsFReconcileMethodNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.ReconcileMethodNameLabel", DefaultText = "Reconcile Method: ",LocalDefaultText = @"שיטת התאמה: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsFReconcileMethodNameLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.ReconcileMethodNameLabel", DefaultText = "Reconcile Method: ",LocalDefaultText = @"BS64:Itep15nXmNeqINeU16rXkNee15Q6ICI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsFInternalNumberLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.InternalNumberLabel", DefaultText = "System No.: ",LocalDefaultText = @"מספר מערכת: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsFInternalNumberLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.F.InternalNumberLabel", DefaultText = "System No.: ",LocalDefaultText = @"BS64:Itee16HXpNeoINee16LXqNeb16o6ICI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_RevaluationsQFutureDateForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.FutureDateForbidden", DefaultText = "Future date is not allowed",LocalDefaultText = @"לא ניתן להגדיר תאריך עתידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_RevaluationsQFutureDateForbidden = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.FutureDateForbidden", DefaultText = "Future date is not allowed",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeq15DXqNeZ15og16LXqteZ15PXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_RevaluationsQRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.Revaluation", DefaultText = "Revaluation",LocalDefaultText = @"שערוך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_RevaluationsQRevaluation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.Revaluation", DefaultText = "Revaluation",LocalDefaultText = @"BS64:Itep16LXqNeV15oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_RevaluationsQRevaluationError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RevaluationError", DefaultText = "Revaluation error: ",LocalDefaultText = @"שגיאת התאמה: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_RevaluationsQRevaluationError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RevaluationError", DefaultText = "Revaluation error: ",LocalDefaultText = @"BS64:Itep15LXmdeQ16og15TXqteQ157XlDogIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_RevaluationsQRateNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RateNotFound", DefaultText = " exchange rate not found for ",LocalDefaultText = @" שער המרה לא נמצא לתאריך ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_RevaluationsQRateNotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.RateNotFound", DefaultText = " exchange rate not found for ",LocalDefaultText = @"BS64:IiDXqdei16gg15TXnteo15Qg15zXkCDXoNee16bXkCDXnNeq15DXqNeZ15ogIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_RevaluationsQDiffAccountNotDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DiffAccountNotDefined", DefaultText = "Difference account not defined",LocalDefaultText = @"לא מודגר חשבון להפרשים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_RevaluationsQDiffAccountNotDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DiffAccountNotDefined", DefaultText = "Difference account not defined",LocalDefaultText = @"BS64:Itec15Ag157XldeT15LXqCDXl9ep15HXldefINec15TXpNeo16nXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_RevaluationsQDataMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DataMissing", DefaultText = "Chart of accounts or an account or 'Revaluation Enabled' is missing",LocalDefaultText = @"חסרים: קבוצת מאזן או חשבון או 'מאופשר שערוך'", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_RevaluationsQDataMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.DataMissing", DefaultText = "Chart of accounts or an account or 'Revaluation Enabled' is missing",LocalDefaultText = @"BS64:IteX16HXqNeZ1506INen15HXldem16og157XkNeW158g15DXlSDXl9ep15HXldefINeQ15UgJ9ee15DXldek16nXqCDXqdei16jXldeaJyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_RevaluationsQOpenRevaluations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.OpenRevaluations", DefaultText = "Other open revaluations exist",LocalDefaultText = @"קיימים שערוכים אחרים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_RevaluationsQOpenRevaluations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Revaluations.Q.OpenRevaluations", DefaultText = "Other open revaluations exist",LocalDefaultText = @"BS64:Iten15nXmdee15nXnSDXqdei16jXldeb15nXnSDXkNeX16jXmdedINek16rXldeX15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_1", DefaultText = "Journal with External Number ",LocalDefaultText = @"פקודת יומן עם מספר חיצוני ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_1", DefaultText = "Journal with External Number ",LocalDefaultText = @"BS64:Itek16fXldeT16og15nXldee158g16LXnSDXnteh16TXqCDXl9eZ16bXldeg15kgIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_2", DefaultText = " from ",LocalDefaultText = @" מ- ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_2", DefaultText = " from ",LocalDefaultText = @"BS64:IiDXni0gIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_3", DefaultText = " exists already",LocalDefaultText = @"כבר קיימת", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_3", DefaultText = " exists already",LocalDefaultText = @"BS64:Iteb15HXqCDXp9eZ15nXnteqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_4", DefaultText = " as a Journal No. ",LocalDefaultText = @" כפקודת יומן מספר ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_JournalsOExternalNoAlreadyExists_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journals.O.ExternalNoAlreadyExists_4", DefaultText = " as a Journal No. ",LocalDefaultText = @"BS64:IiDXm9ek16fXldeT16og15nXldee158g157Xodek16ggIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOLocalCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LocalCurrencyErr", DefaultText = "The reconcile method for multi currency GLAaccount must be local currency",LocalDefaultText = @"שיטת ההתאמה עבור כרטיסים רב מטבעיים היא במטבע מקומי בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOLocalCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LocalCurrencyErr", DefaultText = "The reconcile method for multi currency GLAaccount must be local currency",LocalDefaultText = @"BS64:Itep15nXmNeqINeU15TXqteQ157XlCDXoteR15XXqCDXm9eo15jXmdeh15nXnSDXqNeRINee15jXkdei15nXmdedINeU15nXkCDXkdee15jXkdeiINee16fXldee15kg15HXnNeR15Mi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOGLAccountIsControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountIsControl", DefaultText = "This GL Account is defined as control account",LocalDefaultText = @"כרטיס זה מוגדר ככרטיס מרכז", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAccountIsControl = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountIsControl", DefaultText = "This GL Account is defined as control account",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg15bXlCDXnteV15LXk9eoINeb15vXqNeY15nXoSDXnteo15vXliI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RequiredFields", DefaultText = "Fill the required fields",LocalDefaultText = @"נא למלא שדה חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RequiredFields", DefaultText = "Fill the required fields",LocalDefaultText = @"BS64:Iteg15Ag15zXntec15Ag16nXk9eUINeX15XXkdeUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOAgingDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AgingDetails", DefaultText = "Aging Details",LocalDefaultText = @"נתוני גיול בש”ח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOAgingDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.AgingDetails", DefaultText = "Aging Details",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15LXmdeV15wg15HXqeKAndeXIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOChartOfAccountCantChangedGLAhaveTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", DefaultText = "The chart of account can’t be changed, the GL account have transactions",LocalDefaultText = @"לא ניתן לשנות את קבוצת המאזן לכרטיס שיש בו תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOChartOfAccountCantChangedGLAhaveTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ChartOfAccountCantChangedGLAhaveTrans", DefaultText = "The chart of account can’t be changed, the GL account have transactions",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXqdeg15XXqiDXkNeqINen15HXldem16og15TXnteQ15bXnyDXnNeb16jXmNeZ16Eg16nXmdepINeR15Ug16rXoNeV16LXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOGLAParentValidation1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation1", DefaultText = "GLAccount and its parent must be same chart of account type",LocalDefaultText = @"סוג קבוצת מאזן עבור הכרטיס וכרטיס האב שמקושר אליו חייב להיות זהה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAParentValidation1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation1", DefaultText = "GLAccount and its parent must be same chart of account type",LocalDefaultText = @"BS64:Iteh15XXkiDXp9eR15XXpteqINee15DXltefINei15HXldeoINeU15vXqNeY15nXoSDXldeb16jXmNeZ16Eg15TXkNeRINep157Xp9eV16nXqCDXkNec15nXlSDXl9eZ15nXkSDXnNeU15nXldeqINeW15TXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOGLAParentValidation2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation2", DefaultText = "GLAccount and its parent must be same chart of account",LocalDefaultText = @"קבוצת מאזן עבור הכרטיס ווכרטיס האב שמקושר אליו חייבת להיות זהה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAParentValidation2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAParentValidation2", DefaultText = "GLAccount and its parent must be same chart of account",LocalDefaultText = @"BS64:Iten15HXldem16og157XkNeW158g16LXkdeV16gg15TXm9eo15jXmdehINeV15XXm9eo15jXmdehINeU15DXkSDXqdee16fXldep16gg15DXnNeZ15Ug15fXmdeZ15HXqiDXnNeU15nXldeqINeW15TXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOReconcileMethodcantUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAccount has transations",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcileMethodcantUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAccount has transations",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXoteT15vXnyDXqdeZ15jXqiDXlNeq15DXnteULCDXoNeo16nXnteVINeq16DXldei15XXqiDXotecINeU15vXqNeY15nXoSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOReconcileMethodCannotBeUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodCannotBeUpdated", DefaultText = "The reconcile method cannot be updated, the GLAccount has reconciliations",LocalDefaultText = @"לא ניתן לעדכן את שיטת ההתאמה, נרשמו התאמות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOReconcileMethodCannotBeUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodCannotBeUpdated", DefaultText = "The reconcile method cannot be updated, the GLAccount has reconciliations",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXoteT15vXnyDXkNeqINep15nXmNeqINeU15TXqteQ157XlCwg16DXqNep157XlSDXlNeq15DXnteV16og16LXnCDXlNeb16jXmNeZ16Ei", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfilter_accounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting Date",LocalDefaultText = @"תאריך חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_accounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfilter_reference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document Date",LocalDefaultText = @"תאריך אסמכתא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_reference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15DXodee15vXqteQIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfilter_due = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due Date",LocalDefaultText = @"תאריך פרעון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_due = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16TXqNei15XXnyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCreditDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details",LocalDefaultText = @"נתוני אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCreditDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details",LocalDefaultText = @"BS64:Iteg16rXldeg15kg15DXqdeo15DXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCreditLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit",LocalDefaultText = @"מסגרת אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCreditLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditLimit", DefaultText = "Credit Limit",LocalDefaultText = @"BS64:Itee16HXkteo16og15DXqdeo15DXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCardIndex = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardIndex", DefaultText = "Card Index",LocalDefaultText = @"הצג תנועות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCardIndex = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CardIndex", DefaultText = "Card Index",LocalDefaultText = @"BS64:IteU16bXkiDXqteg15XXoteV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOFutureChequesToday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureChequesToday", DefaultText = "Open Cheques",LocalDefaultText = @"המחאות שלא נפרעו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOFutureChequesToday = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureChequesToday", DefaultText = "Open Cheques",LocalDefaultText = @"BS64:IteU157Xl9eQ15XXqiDXqdec15Ag16DXpNeo16LXlSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsODisplayChequelist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayChequelist", DefaultText = "Display Cheque list",LocalDefaultText = @" הצג רשימת המחאות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsODisplayChequelist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayChequelist", DefaultText = "Display Cheque list",LocalDefaultText = @"BS64:IiDXlNem15Ig16jXqdeZ157XqiDXlNee15fXkNeV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOFutureCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheques", DefaultText = "Future Open Cheques",LocalDefaultText = @"המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOFutureCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheques", DefaultText = "Future Open Cheques",LocalDefaultText = @"BS64:IteU157Xl9eQ15XXqiDXoteq15nXk9eZ15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOTotalOpenShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalOpenShipments", DefaultText = "Open Shipments",LocalDefaultText = @" תיקים פתוחים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOTotalOpenShipments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.TotalOpenShipments", DefaultText = "Open Shipments",LocalDefaultText = @"BS64:IiDXqteZ16fXmdedINek16rXldeX15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfromfieldrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.fromfieldrequired", DefaultText = "From date field is required",LocalDefaultText = @"מתאריך שדה חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOfromfieldrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.fromfieldrequired", DefaultText = "From date field is required",LocalDefaultText = @"BS64:Itee16rXkNeo15nXmiDXqdeT15Qg15fXldeR15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOtofieldrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.tofieldrequired", DefaultText = "To data field is required",LocalDefaultText = @"עד תאריך שדה חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOtofieldrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.tofieldrequired", DefaultText = "To data field is required",LocalDefaultText = @"BS64:Itei15Mg16rXkNeo15nXmiDXqdeT15Qg15fXldeR15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOGLAccountReactivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountReactivated", DefaultText = "GLAccount Reactivated",LocalDefaultText = @"הכרטיס הופעל מחדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAccountReactivated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountReactivated", DefaultText = "GLAccount Reactivated",LocalDefaultText = @"BS64:IteU15vXqNeY15nXoSDXlNeV16TXotecINee15fXk9epIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOGLAccountRecalculating = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountRecalculating", DefaultText = "Recalculating; check batch or event",LocalDefaultText = @"מבצע חישוב מחדש, בדוק תור או אירוע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOGLAccountRecalculating = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.GLAccountRecalculating", DefaultText = "Recalculating; check batch or event",LocalDefaultText = @"BS64:Itee15HXpteiINeX15nXqdeV15Eg157Xl9eT16ksINeR15PXldenINeq15XXqCDXkNeVINeQ15nXqNeV16Ii", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllCustomers", DefaultText = "All Customers",LocalDefaultText = @"כל הלקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQAllCustomers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllCustomers", DefaultText = "All Customers",LocalDefaultText = @"BS64:Iteb15wg15TXnNen15XXl9eV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsQAllVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllVendors", DefaultText = "All Vendors",LocalDefaultText = @"כל הספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsQAllVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.AllVendors", DefaultText = "All Vendors",LocalDefaultText = @"BS64:Iteb15wg15TXodek16fXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsFCreatedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.CreatedByUser", DefaultText = "Created by User",LocalDefaultText = @"נוצר על ידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsFCreatedByUser = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.CreatedByUser", DefaultText = "Created by User",LocalDefaultText = @"BS64:Iteg15XXpteoINei15wg15nXk9eZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsFReconciliationNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ReconciliationNumber", DefaultText = "Reconciliation No.",LocalDefaultText = @"התאמה מספר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsFReconciliationNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ReconciliationNumber", DefaultText = "Reconciliation No.",LocalDefaultText = @"BS64:IteU16rXkNee15Qg157Xodek16gi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsFCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.CreateDate", DefaultText = "Create Date",LocalDefaultText = @"תאריך פתיחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsFCreateDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.CreateDate", DefaultText = "Create Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16TXqteZ15fXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsFManageReconciliations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ManageReconciliations", DefaultText = "Manage Reconciliations",LocalDefaultText = @"ניהול התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsFManageReconciliations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ManageReconciliations", DefaultText = "Manage Reconciliations",LocalDefaultText = @"BS64:Iteg15nXlNeV15wg15TXqteQ157XldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsFFromDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.FromDateLabel", DefaultText = "From Date: ",LocalDefaultText = @"מתאריך: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsFFromDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.FromDateLabel", DefaultText = "From Date: ",LocalDefaultText = @"BS64:Itee16rXkNeo15nXmjogIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsFToDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ToDateLabel", DefaultText = "To: ",LocalDefaultText = @"עד: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsFToDateLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.F.ToDateLabel", DefaultText = "To: ",LocalDefaultText = @"BS64:Itei15M6ICI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsQOnlyFirstRecords = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.OnlyFirstRecords", DefaultText = "Only the first ",LocalDefaultText = @"מוצגות רק ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsQOnlyFirstRecords = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.OnlyFirstRecords", DefaultText = "Only the first ",LocalDefaultText = @"BS64:Itee15XXpteS15XXqiDXqNenICI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsQOnlyFirstRecords_Ending = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.OnlyFirstRecords_Ending", DefaultText = " records are shown. Please refine your search to get less results.",LocalDefaultText = @" רשומות ראשונות. נא לחדד את החיפוש שלך כדי לקבל פחות תוצאות.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsQOnlyFirstRecords_Ending = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.OnlyFirstRecords_Ending", DefaultText = " records are shown. Please refine your search to get less results.",LocalDefaultText = @"BS64:IiDXqNep15XXnteV16og16jXkNep15XXoNeV16ouINeg15Ag15zXl9eT15Mg15DXqiDXlNeX15nXpNeV16kg16nXnNeaINeb15PXmSDXnNen15HXnCDXpNeX15XXqiDXqteV16bXkNeV16ouIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsQSearchWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.SearchWarning", DefaultText = "Search Warning",LocalDefaultText = @"אזהרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsQSearchWarning = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.SearchWarning", DefaultText = "Search Warning",LocalDefaultText = @"BS64:IteQ15bXlNeo15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsQreconciliationwassavedas = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.reconciliationwassavedas", DefaultText = "The reconciliation was successfully saved as draft, and it will be dispalyed next time entering the the screen.",LocalDefaultText = @"ההתאמה נשמרה כטיוטה והיא תוצג ברגע שנכנסים למסך התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsQreconciliationwassavedas = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.reconciliationwassavedas", DefaultText = "The reconciliation was successfully saved as draft, and it will be dispalyed next time entering the the screen.",LocalDefaultText = @"BS64:IteU15TXqteQ157XlCDXoNep157XqNeUINeb15jXmdeV15jXlCDXldeU15nXkCDXqteV16bXkiDXkdeo15LXoiDXqdeg15vXoNeh15nXnSDXnNee16HXmiDXlNeq15DXnteV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsQThereisUncompletedReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.ThereisUncompletedReconciliation", DefaultText = "There is uncompleted reconciliation, do you want to complete it?",LocalDefaultText = @"קיימת התאמה שלא הושלמה, האם תרצה להשלים אותה?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsQThereisUncompletedReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.Q.ThereisUncompletedReconciliation", DefaultText = "There is uncompleted reconciliation, do you want to complete it?",LocalDefaultText = @"BS64:Iten15nXmdee16og15TXqteQ157XlCDXqdec15Ag15TXldep15zXnteULCDXlNeQ150g16rXqNem15Qg15zXlNep15zXmdedINeQ15XXqteUPyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsOAmountMustBSmaller2OpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.AmountMustBSmaller2OpenAmount", DefaultText = "The amount must be smaller or equal to open amount",LocalDefaultText = @"הסכום חייב להיות קטן או שווה לסכום הפתוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsOAmountMustBSmaller2OpenAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.AmountMustBSmaller2OpenAmount", DefaultText = "The amount must be smaller or equal to open amount",LocalDefaultText = @"BS64:IteU16HXm9eV150g15fXmdeZ15Eg15zXlNeZ15XXqiDXp9eY158g15DXlSDXqdeV15XXlCDXnNeh15vXldedINeU16TXqteV15ci", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsOZeroNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ZeroNotAllowed", DefaultText = "Zero amount is not allowed; instead delete the line from the reconciliation",LocalDefaultText = @"לא ניתן להזין אפס, במקום זה יש למחוק את השורה מההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsOZeroNotAllowed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ZeroNotAllowed", DefaultText = "Zero amount is not allowed; instead delete the line from the reconciliation",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeW15nXnyDXkNek16EsINeR157Xp9eV150g15bXlCDXmdepINec157Xl9eV16cg15DXqiDXlNep15XXqNeUINee15TXlNeq15DXnteUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ReconciliationsOErrorsInSelectedLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines",LocalDefaultText = @"קיימת הודעת שגיאה בשורת ההתאמה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ReconciliationsOErrorsInSelectedLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInSelectedLines", DefaultText = "There are errors in the selected reconciliation lines",LocalDefaultText = @"BS64:Iten15nXmdee16og15TXldeT16LXqiDXqdeS15nXkNeUINeR16nXldeo16og15TXlNeq15DXnteUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_ChequesQChequeNotDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cheques.Q.ChequeNotDeposited", DefaultText = "Cheque has not been deposited",LocalDefaultText = @"המחאה לא הופקדה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_ChequesQChequeNotDeposited = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Cheques.Q.ChequeNotDeposited", DefaultText = "Cheque has not been deposited",LocalDefaultText = @"BS64:IteU157Xl9eQ15Qg15zXkCDXlNeV16TXp9eT15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AgingReportOAgingForDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.AgingForDate", DefaultText = "Aging For Date",LocalDefaultText = @"גיול לתאריך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AgingReportOAgingForDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.AgingForDate", DefaultText = "Aging For Date",LocalDefaultText = @"BS64:IteS15nXldecINec16rXkNeo15nXmiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AgingReportOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.Customer", DefaultText = "Customer",LocalDefaultText = @"לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AgingReportOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.Customer", DefaultText = "Customer",LocalDefaultText = @"BS64:Itec16fXldeXIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AgingReportONumberMonthsBackwards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.NumberMonthsBackwards", DefaultText = "Number of months backwards",LocalDefaultText = @"מספר חודשים אחורנית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AgingReportONumberMonthsBackwards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.NumberMonthsBackwards", DefaultText = "Number of months backwards",LocalDefaultText = @"BS64:Itee16HXpNeoINeX15XXk9ep15nXnSDXkNeX15XXqNeg15nXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AgingReportOCurrenciesDetailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.CurrenciesDetailed", DefaultText = "Currencies Detailed",LocalDefaultText = @"פירוט מטבעות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AgingReportOCurrenciesDetailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.CurrenciesDetailed", DefaultText = "Currencies Detailed",LocalDefaultText = @"BS64:Itek15nXqNeV15gg157XmNeR16LXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AgingReportORunReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReport", DefaultText = "Run Report",LocalDefaultText = @"הרץ דוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AgingReportORunReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReport", DefaultText = "Run Report",LocalDefaultText = @"BS64:IteU16jXpSDXk9eV15ci", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AgingReportOFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.FutureDate", DefaultText = "Future date",LocalDefaultText = @"תאריך עתידי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AgingReportOFutureDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.FutureDate", DefaultText = "Future date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16LXqteZ15PXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountNo", DefaultText = "GLAccount No",LocalDefaultText = @"מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountNo", DefaultText = "GLAccount No",LocalDefaultText = @"BS64:Itee16HXpNeoINeb16jXmNeZ16Ei", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountZrequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountZrequierd", DefaultText = "GL Account field is requierd",LocalDefaultText = @"חובה למלא את השדה מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountZrequierd = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountZrequierd", DefaultText = "GL Account field is requierd",LocalDefaultText = @"BS64:IteX15XXkdeUINec157XnNeQINeQ16og15TXqdeT15Qg157Xodek16gg15vXqNeY15nXoSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOWithClosedTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.WithClosedTransactions", DefaultText = "With Closed Transactions",LocalDefaultText = @"כלול תנועות סגורות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOWithClosedTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.WithClosedTransactions", DefaultText = "With Closed Transactions",LocalDefaultText = @"BS64:Iteb15zXldecINeq16DXldei15XXqiDXodeS15XXqNeV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFields", DefaultText = "One of the following filters is required: GLAccount /Chartofaccount/ Chart Of Accounts Type / Category / Salesman",LocalDefaultText = @"חובה לתחום אחת מהאפשרויות הבאות : כרטיס /קבוצת מאזן/סוג קבוצת מאזן / קטגוריה/איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLTransactionReportORequiredFields = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.RequiredFields", DefaultText = "One of the following filters is required: GLAccount /Chartofaccount/ Chart Of Accounts Type / Category / Salesman",LocalDefaultText = @"BS64:IteX15XXkdeUINec16rXl9eV150g15DXl9eqINee15TXkNek16nXqNeV15nXldeqINeU15HXkNeV16ogOiDXm9eo15jXmdehIC/Xp9eR15XXpteqINee15DXltefL9eh15XXkiDXp9eR15XXpteqINee15DXltefIC8g16fXmNeS15XXqNeZ15Qv15DXmdepINee15vXmdeo15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountsSTransactionsTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.S.Transactions.Transactions", DefaultText = "Transactions",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "S", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GeneralMCACCYearTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.YearTransfer", DefaultText = "Year Transfer",LocalDefaultText = @"מעבר שנה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GeneralMCACCYearTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.YearTransfer", DefaultText = "Year Transfer",LocalDefaultText = @"BS64:Itee16LXkdeoINep16DXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_YearTransferQYearTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.Q.YearTransfer", DefaultText = "Year Transfer",LocalDefaultText = @"מעבר שנה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_YearTransferQYearTransfer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.Q.YearTransfer", DefaultText = "Year Transfer",LocalDefaultText = @"BS64:Itee16LXkdeoINep16DXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_YearTransferFYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_YearTransferFYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.Year", DefaultText = "Year",LocalDefaultText = @"BS64:Itep16DXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_YearTransferFYearLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.YearLabel", DefaultText = "Year: ",LocalDefaultText = @"שנה: ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_YearTransferFYearLabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.YearLabel", DefaultText = "Year: ",LocalDefaultText = @"BS64:Itep16DXlDogIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_YearTransferORevenueExpenseType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.RevenueExpenseType", DefaultText = "A year transfer account is undefined or is not configured correctly.",LocalDefaultText = @"חשבון להעברת שנה אינו מוגדר או אינו מוגדר תקין.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_YearTransferORevenueExpenseType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.RevenueExpenseType", DefaultText = "A year transfer account is undefined or is not configured correctly.",LocalDefaultText = @"BS64:IteX16nXkdeV158g15zXlNei15HXqNeqINep16DXlCDXkNeZ16DXlSDXnteV15LXk9eoINeQ15Ug15DXmdeg15Ug157XldeS15PXqCDXqten15nXny4i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_YearTransferOTwoOrFourDigits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.TwoOrFourDigits", DefaultText = "Enter year in either two or four digits only",LocalDefaultText = @"יש להזין שנה בשתי ספרות או בארבע ספרות בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_YearTransferOTwoOrFourDigits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.TwoOrFourDigits", DefaultText = "Enter year in either two or four digits only",LocalDefaultText = @"BS64:IteZ16kg15zXlNeW15nXnyDXqdeg15Qg15HXqdeq15kg16HXpNeo15XXqiDXkNeVINeR15DXqNeR16Ig16HXpNeo15XXqiDXkdec15HXkyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_YearTransferOPastYears = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.PastYears", DefaultText = "Enter past years only",LocalDefaultText = @"יש להזין שנים קודמות בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_YearTransferOPastYears = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.PastYears", DefaultText = "Enter past years only",LocalDefaultText = @"BS64:IteZ16kg15zXlNeW15nXnyDXqdeg15nXnSDXp9eV15PXnteV16og15HXnNeR15Mi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GeneralMCACCSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.System1000", DefaultText = "System 1000",LocalDefaultText = @"מערכת 1000", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GeneralMCACCSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.System1000", DefaultText = "System 1000",LocalDefaultText = @"BS64:Itee16LXqNeb16ogMTAwMCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000QSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.Q.System1000", DefaultText = "System 1000",LocalDefaultText = @"מערכת 1000", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000QSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.Q.System1000", DefaultText = "System 1000",LocalDefaultText = @"BS64:Itee16LXqNeb16ogMTAwMCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000ODeductionFileNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.",LocalDefaultText = @"מספר תיק ניכויים אינו מוגדר.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000ODeductionFileNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DeductionFileNumber", DefaultText = "Deduction File Number is undefined.",LocalDefaultText = @"BS64:Itee16HXpNeoINeq15nXpyDXoNeZ15vXldeZ15nXnSDXkNeZ16DXlSDXnteV15LXk9eoLiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OFinishingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowType", DefaultText = "Finishing Row Type",LocalDefaultText = @"רשומת סיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowType", DefaultText = "Finishing Row Type",LocalDefaultText = @"BS64:Iteo16nXldee16og16HXmdeb15XXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OStartingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowType", DefaultText = "Starting Row Type",LocalDefaultText = @"רשומת פתיחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OStartingRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowType", DefaultText = "Starting Row Type",LocalDefaultText = @"BS64:Iteo16nXldee16og16TXqteZ15fXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OVendorLineRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineRowType", DefaultText = "Vendor Line Row Type",LocalDefaultText = @"רשומת תנועה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OVendorLineRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineRowType", DefaultText = "Vendor Line Row Type",LocalDefaultText = @"BS64:Iteo16nXldee16og16rXoNeV16LXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000ONotValidRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotValidRowType", DefaultText = "Not a valid Row Type",LocalDefaultText = @"רשומת לא מסוג תקין", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000ONotValidRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotValidRowType", DefaultText = "Not a valid Row Type",LocalDefaultText = @"BS64:Iteo16nXldee16og15zXkCDXnteh15XXkiDXqten15nXnyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000ODoesntStartWithRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DoesntStartWithRowType", DefaultText = "does not start with a Line Row Type",LocalDefaultText = @"לא מתחיל בסוג רשומה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000ODoesntStartWithRowType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DoesntStartWithRowType", DefaultText = "does not start with a Line Row Type",LocalDefaultText = @"BS64:Itec15Ag157XqteX15nXnCDXkdeh15XXkiDXqNep15XXnteUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000ONotEncountered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotEncountered", DefaultText = "not encountered",LocalDefaultText = @"לא זוהתה עד כה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000ONotEncountered = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotEncountered", DefaultText = "not encountered",LocalDefaultText = @"BS64:Itec15Ag15bXldeU16rXlCDXoteTINeb15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000ODiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DiffersFrom", DefaultText = "differs from ",LocalDefaultText = @"לא זהה ל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000ODiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.DiffersFrom", DefaultText = "differs from ",LocalDefaultText = @"BS64:Itec15Ag15bXlNeUINecIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OIsMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsMissing", DefaultText = "is missing",LocalDefaultText = @"חסר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OIsMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsMissing", DefaultText = "is missing",LocalDefaultText = @"BS64:IteX16HXqCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OIsEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsEmpty", DefaultText = "is empty",LocalDefaultText = @"ריק", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OIsEmpty = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.IsEmpty", DefaultText = "is empty",LocalDefaultText = @"BS64:Iteo15nXpyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000ONotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotFound", DefaultText = "not found",LocalDefaultText = @"לא נמצא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000ONotFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NotFound", DefaultText = "not found",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Ai", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OAppearsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.AppearsBefore", DefaultText = "Appears Before",LocalDefaultText = @"מופיעה לפני", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OAppearsBefore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.AppearsBefore", DefaultText = "Appears Before",LocalDefaultText = @"BS64:Itee15XXpNeZ16LXlCDXnNek16DXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OStartingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowDeductionFile", DefaultText = "Starting Row Deduction File",LocalDefaultText = @"תיק ניכויים ברשומת הפתיחה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OStartingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartingRowDeductionFile", DefaultText = "Starting Row Deduction File",LocalDefaultText = @"BS64:Iteq15nXpyDXoNeZ15vXldeZ15nXnSDXkdeo16nXldee16og15TXpNeq15nXl9eUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OFinishingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowDeductionFile", DefaultText = "Finishing Row Deduction File",LocalDefaultText = @"תיק ניכויים ברשומת הסיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowDeductionFile", DefaultText = "Finishing Row Deduction File",LocalDefaultText = @"BS64:Iteq15nXpyDXoNeZ15vXldeZ15nXnSDXkdeo16nXldee16og15TXodeZ15vXldedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OOurDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.OurDeductionFile", DefaultText = "Our Deduction File Number",LocalDefaultText = @"מספר תיק הניכויים שלנו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OOurDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.OurDeductionFile", DefaultText = "Our Deduction File Number",LocalDefaultText = @"BS64:Itee16HXpNeoINeq15nXpyDXlNeg15nXm9eV15nXmdedINep15zXoNeVIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OFinishingRowTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotals", DefaultText = "Finishing Row totals are not summing up together",LocalDefaultText = @"כמויות לא מתחברות יחד ברשימת הסיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowTotals = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotals", DefaultText = "Finishing Row totals are not summing up together",LocalDefaultText = @"BS64:Iteb157XldeZ15XXqiDXnNeQINee16rXl9eR16jXldeqINeZ15fXkyDXkdeo16nXmdee16og15TXodeZ15vXldedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OFinishingRowTotalVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotalVendors", DefaultText = "Finishing Row Total Vendor Number",LocalDefaultText = @"כמות ספקים ברשימת הסיכום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OFinishingRowTotalVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FinishingRowTotalVendors", DefaultText = "Finishing Row Total Vendor Number",LocalDefaultText = @"BS64:Iteb157XldeqINeh16TXp9eZ150g15HXqNep15nXnteqINeU16HXmdeb15XXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OCountVendorRows = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.CountVendorRows", DefaultText = "count of Vendor Rows",LocalDefaultText = @"ספירת שורות ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OCountVendorRows = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.CountVendorRows", DefaultText = "count of Vendor Rows",LocalDefaultText = @"BS64:Iteh16TXmdeo16og16nXldeo15XXqiDXodek16fXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OVendorLineNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineNo", DefaultText = "Vendor Line #",LocalDefaultText = @"שורת ספק מס' ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OVendorLineNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorLineNo", DefaultText = "Vendor Line #",LocalDefaultText = @"BS64:Itep15XXqNeqINeh16TXpyDXntehJyAi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OVendorNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorNo", DefaultText = "Vendor #",LocalDefaultText = @"ספק מס' ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OVendorNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorNo", DefaultText = "Vendor #",LocalDefaultText = @"BS64:Iteh16TXpyDXntehJyAi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OVendorCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorCode", DefaultText = "Vendor Code",LocalDefaultText = @"מספר ספק", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OVendorCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.VendorCode", DefaultText = "Vendor Code",LocalDefaultText = @"BS64:Itee16HXpNeoINeh16TXpyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OLocatedDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedDeductionFile", DefaultText = "Located Deduction File",LocalDefaultText = @"תיק ניכויים שאותר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OLocatedDeductionFile = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedDeductionFile", DefaultText = "Located Deduction File",LocalDefaultText = @"BS64:Iteq15nXpyDXoNeZ15vXldeZ15nXnSDXqdeQ15XXqteoIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OLocatedVATNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedVATNumber", DefaultText = "Located VAT Number",LocalDefaultText = @"מספר עוסק מורשה שאותר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OLocatedVATNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.LocatedVATNumber", DefaultText = "Located VAT Number",LocalDefaultText = @"BS64:Itee16HXpNeoINei15XXodenINee15XXqNep15Qg16nXkNeV16rXqCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OStartDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartDate", DefaultText = "Start Date",LocalDefaultText = @"תאריך התחלה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OStartDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.StartDate", DefaultText = "Start Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15TXqteX15zXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OEndDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date",LocalDefaultText = @"תאריך סיום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OEndDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og16HXmdeV150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OFailedWhilePerforming = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing",LocalDefaultText = @"תקלה בביצוע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OFailedWhilePerforming = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing",LocalDefaultText = @"BS64:Iteq16fXnNeUINeR15HXmdem15XXoiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000ONoVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number",LocalDefaultText = @"לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000ONoVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number",LocalDefaultText = @"BS64:Itec15Ag15DXldeq16jXlSDXodek16fXmdedINei150g16rXmdenINeg15nXm9eV15nXmdedINeV16LXnSDXnteh16TXqCDXoteV16HXpyDXnteV16jXqdeUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_System1000OFoundVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FoundVatNumber", DefaultText = "Found Vat Number",LocalDefaultText = @"אותר מספר עוסק מורשה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_System1000OFoundVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FoundVatNumber", DefaultText = "Found Vat Number",LocalDefaultText = @"BS64:IteQ15XXqteoINee16HXpNeoINei15XXodenINee15XXqNep15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountONoCreditDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoCreditDefined", DefaultText = "Credit balance not defined",LocalDefaultText = @"לא הוגדרה מסגרת אשראי ללקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountONoCreditDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoCreditDefined", DefaultText = "Credit balance not defined",LocalDefaultText = @"BS64:Itec15Ag15TXldeS15PXqNeUINee16HXkteo16og15DXqdeo15DXmSDXnNec16fXldeXIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCreditStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditStatus ", DefaultText = "Credit Status",LocalDefaultText = @"מצב אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCreditStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditStatus ", DefaultText = "Credit Status",LocalDefaultText = @"BS64:Itee16bXkSDXkNep16jXkNeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Queries", DefaultText = "GL Accounts Queries",LocalDefaultText = @"שאילתות כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOQueries = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Queries", DefaultText = "GL Accounts Queries",LocalDefaultText = @"BS64:Itep15DXmdec16rXldeqINeb16jXmNeZ16HXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCounterIsntDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CounterIsntDefined", DefaultText = "Counter is not defined, please check accounting settings ",LocalDefaultText = @"מונה כרטיס לא הוגדר , אנא בדוק הגדרות הנהח''ש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCounterIsntDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CounterIsntDefined", DefaultText = "Counter is not defined, please check accounting settings ",LocalDefaultText = @"BS64:Itee15XXoNeUINeb16jXmNeZ16Eg15zXkCDXlNeV15LXk9eoICwg15DXoNeQINeR15PXldenINeU15LXk9eo15XXqiDXlNeg15TXlycn16ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOConnect2ExistingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connect2ExistingCard", DefaultText = "Connect to an existing card",LocalDefaultText = @"חיבור לכרטיס קיים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOConnect2ExistingCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connect2ExistingCard", DefaultText = "Connect to an existing card",LocalDefaultText = @"BS64:IteX15nXkdeV16gg15zXm9eo15jXmdehINen15nXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOThisGLAccountConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThisGLAccountConnected", DefaultText = "This GL Account is already connected to card (#cards). GL Account cannot be linked to two clients card.",LocalDefaultText = @"שים לב כי הכרטיס כבר מקושר לכרטיס תפעולי (#cards), לא ניתן לקשר כרטיס לשני לקוחות.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOThisGLAccountConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThisGLAccountConnected", DefaultText = "This GL Account is already connected to card (#cards). GL Account cannot be linked to two clients card.",LocalDefaultText = @"BS64:Itep15nXnSDXnNeRINeb15kg15TXm9eo15jXmdehINeb15HXqCDXnten15XXqdeoINec15vXqNeY15nXoSDXqtek16LXldec15kgKCNjYXJkcyksINec15Ag16DXmdeq158g15zXp9ep16gg15vXqNeY15nXoSDXnNep16DXmSDXnNen15XXl9eV16ouIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOThisGLAccountConnectedContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThisGLAccountConnectedContinue", DefaultText = "This GL Account is already connected to cards (#cards), Do you want to continue?",LocalDefaultText = @"שים לב כי הכרטסת כבר מקושרת לכרטיס תפעולי (#cards), האם ברצונך להמשיך?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOThisGLAccountConnectedContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThisGLAccountConnectedContinue", DefaultText = "This GL Account is already connected to cards (#cards), Do you want to continue?",LocalDefaultText = @"BS64:Itep15nXnSDXnNeRINeb15kg15TXm9eo15jXodeqINeb15HXqCDXnten15XXqdeo16og15zXm9eo15jXmdehINeq16TXoteV15zXmSAoI2NhcmRzKSwg15TXkNedINeR16jXpteV16DXmiDXnNeU157XqdeZ15o/Ig==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOExternalAdjust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ExternalAdjust", DefaultText = "External Adjust",LocalDefaultText = @"התאם חיצונית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOExternalAdjust = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ExternalAdjust", DefaultText = "External Adjust",LocalDefaultText = @"BS64:IteU16rXkNedINeX15nXpteV16DXmdeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountONewExternalTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NewExternalTransaction", DefaultText = "New External Transaction",LocalDefaultText = @"דף חיצוני חדש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountONewExternalTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NewExternalTransaction", DefaultText = "New External Transaction",LocalDefaultText = @"BS64:IteT16Mg15fXmdem15XXoNeZINeX15PXqSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOExternalTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ExternalTransaction", DefaultText = "External Transaction",LocalDefaultText = @"תנועות חיצוניות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOExternalTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ExternalTransaction", DefaultText = "External Transaction",LocalDefaultText = @"BS64:Iteq16DXldei15XXqiDXl9eZ16bXldeg15nXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountODeleteExistInterestperiods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.DeleteExistInterestperiods", DefaultText = "You must delete the Interest periods record before Deactivating the customer",LocalDefaultText = @"יש למחוק הגדרת תקופות ריבית לפני חסימת לקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountODeleteExistInterestperiods = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.DeleteExistInterestperiods", DefaultText = "You must delete the Interest periods record before Deactivating the customer",LocalDefaultText = @"BS64:IteZ16kg15zXnteX15XXpyDXlNeS15PXqNeqINeq16fXldek15XXqiDXqNeZ15HXmdeqINec16TXoNeZINeX16HXmdee16og15zXp9eV15ci", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOLineDateExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LineDateExist", DefaultText = "Line with the same date already exist",LocalDefaultText = @"קיימת כבר שורה עם תאריך זהה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOLineDateExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LineDateExist", DefaultText = "Line with the same date already exist",LocalDefaultText = @"BS64:Iten15nXmdee16og15vXkdeoINep15XXqNeUINei150g16rXkNeo15nXmiDXlteU15Qi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOFieldInterestCalculationStartDateismandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.FieldInterestCalculationStartDateismandatory", DefaultText = "Field Interest Calculation Start Date is mandatory",LocalDefaultText = @"שדה תאריך הוא חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOFieldInterestCalculationStartDateismandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.FieldInterestCalculationStartDateismandatory", DefaultText = "Field Interest Calculation Start Date is mandatory",LocalDefaultText = @"BS64:Itep15PXlCDXqteQ16jXmdeaINeU15XXkCDXl9eV15HXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "If you want that this glaccount will be active for interest,  At least one GLAccount Interest Periods record is required",LocalDefaultText = @"אם ברצונך שחשבון זה יהיה פעיל לריבית ,יש להגדיר לפחות תקופת ריבית אחת", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "If you want that this glaccount will be active for interest,  At least one GLAccount Interest Periods record is required",LocalDefaultText = @"BS64:IteQ150g15HXqNem15XXoNeaINep15fXqdeR15XXnyDXlteUINeZ15TXmdeUINek16LXmdecINec16jXmdeR15nXqiAs15nXqSDXnNeU15LXk9eZ16gg15zXpNeX15XXqiDXqten15XXpNeqINeo15nXkdeZ16og15DXl9eqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Customer", DefaultText = "Customer",LocalDefaultText = @"לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Customer", DefaultText = "Customer",LocalDefaultText = @"BS64:Itec16fXldeX15XXqiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Vendor", DefaultText = "Vendor",LocalDefaultText = @"BS64:Iteh16TXp9eZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOGroupByDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GroupByDate", DefaultText = "Group By Date:",LocalDefaultText = @"לפי תאריך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOGroupByDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GroupByDate", DefaultText = "Group By Date:",LocalDefaultText = @"BS64:Itec16TXmSDXqteQ16jXmdeaIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountODebtorsOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.DebtorsOnly", DefaultText = "Debtors only",LocalDefaultText = @"רק בעלי חוב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountODebtorsOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.DebtorsOnly", DefaultText = "Debtors only",LocalDefaultText = @"BS64:Iteo16cg15HXotec15kg15fXldeRIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLaccountODebtAbove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.DebtAbove", DefaultText = "Debt Above",LocalDefaultText = @"חוב מעל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLaccountODebtAbove = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.DebtAbove", DefaultText = "Debt Above",LocalDefaultText = @"BS64:IteX15XXkSDXntei15wi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Balance", DefaultText = "Balance",LocalDefaultText = @"יתרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOBalance = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Balance", DefaultText = "Balance",LocalDefaultText = @"BS64:IteZ16rXqNeUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_AgingReportOPreviewReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.PreviewReport", DefaultText = "Preview",LocalDefaultText = null, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOIsCreditLimitSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.IsCreditLimitSet", DefaultText = "Credit Limit Is Set",LocalDefaultText = @"מוגדר מסגרת אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOIsCreditLimitSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.IsCreditLimitSet", DefaultText = "Credit Limit Is Set",LocalDefaultText = @"BS64:Itee15XXkteT16gg157XodeS16jXqiDXkNep16jXkNeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"מיון לפי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOSortBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SortBy", DefaultText = "Sort By",LocalDefaultText = @"BS64:Itee15nXldefINec16TXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccount", DefaultText = "GLAccount",LocalDefaultText = @"מזהה פנימי לכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccount", DefaultText = "GLAccount",LocalDefaultText = @"BS64:Itee15bXlNeUINek16DXmdee15kg15zXm9eo15jXmdehIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connect", DefaultText = "Connect",LocalDefaultText = @"חיבור כרטיס קיים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connect", DefaultText = "Connect",LocalDefaultText = @"BS64:IteX15nXkdeV16gg15vXqNeY15nXoSDXp9eZ15nXnSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountODisconnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Disconnect", DefaultText = "Disconnect",LocalDefaultText = @"ניתוק", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountODisconnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Disconnect", DefaultText = "Disconnect",LocalDefaultText = @"BS64:Iteg15nXqteV16ci", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOWantToDisconnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WantToDisconnect", DefaultText = "Do you want to disconnect?",LocalDefaultText = @"האם ברצונך גם לנתק את הקשר?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOWantToDisconnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WantToDisconnect", DefaultText = "Do you want to disconnect?",LocalDefaultText = @"BS64:IteU15DXnSDXkdeo16bXldeg15og15LXnSDXnNeg16rXpyDXkNeqINeU16fXqdeoPyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOConnectToAnExisting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ConnectToAnExisting", DefaultText = "Connect to an existing GLAccount",LocalDefaultText = @"חיבור לכרטיס מטבעי קיים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOConnectToAnExisting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ConnectToAnExisting", DefaultText = "Connect to an existing GLAccount",LocalDefaultText = @"BS64:IteX15nXkdeV16gg15zXm9eo15jXmdehINee15jXkdei15kg16fXmdeZ150i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOGLAccountCurrencyConected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccountCurrencyConected", DefaultText = "GLAccount.currency conected",LocalDefaultText = @"חיבור כרטסת מטבעית בוצעה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOGLAccountCurrencyConected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccountCurrencyConected", DefaultText = "GLAccount.currency conected",LocalDefaultText = @"BS64:IteX15nXkdeV16gg15vXqNeY16HXqiDXnteY15HXoteZ16og15HXldem16LXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOGlaccountCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Glaccount.Currency", DefaultText = "glaccount .currency",LocalDefaultText = @"כרטיס מטבעי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOGlaccountCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Glaccount.Currency", DefaultText = "glaccount .currency",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg157XmNeR16LXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOWasConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WasConnected", DefaultText = "was connected to glaccount .main",LocalDefaultText = @"חובר לכרטיס ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOWasConnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WasConnected", DefaultText = "was connected to glaccount .main",LocalDefaultText = @"BS64:IteX15XXkdeoINec15vXqNeY15nXoSDXqNeQ16nXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOGLAccountCurrencyDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccountCurrencyDisconnected", DefaultText = "GLAccount.currency disconnected",LocalDefaultText = @"ניתוק כרטסת מטבעית בוצע", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOGLAccountCurrencyDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLAccountCurrencyDisconnected", DefaultText = "GLAccount.currency disconnected",LocalDefaultText = @"BS64:Iteg15nXqteV16cg15vXqNeY16HXqiDXnteY15HXoteZ16og15HXldem16Ii", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOWasDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WasDisconnected", DefaultText = "was disconnected to glaccount .main",LocalDefaultText = @"נותק מכרטיס ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOWasDisconnected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.WasDisconnected", DefaultText = "was disconnected to glaccount .main",LocalDefaultText = @"BS64:Iteg15XXqtenINee15vXqNeY15nXoSDXqNeQ16nXmSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCategory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Category", DefaultText = "Category",LocalDefaultText = @"קטגוריה ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCategory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Category", DefaultText = "Category",LocalDefaultText = @"BS64:Iten15jXkteV16jXmdeUICI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOGLaccountConnectedMoreOneCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLaccountConnectedMoreOneCard", DefaultText = "the GLaccount is connected to more than one operational card",LocalDefaultText = @"הכרטסת מחוברת ליותר מכרטיס תפעולי אחד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOGLaccountConnectedMoreOneCard = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.GLaccountConnectedMoreOneCard", DefaultText = "the GLaccount is connected to more than one operational card",LocalDefaultText = @"BS64:IteU15vXqNeY16HXqiDXnteX15XXkdeo16og15zXmdeV16rXqCDXnteb16jXmNeZ16Eg16rXpNei15XXnNeZINeQ15fXkyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountONoSalesman = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSalesman", DefaultText = "You cannot run this report without filling the Salesman field",LocalDefaultText = @"לא ניתן להפיק את הדוח ללא בחירת איש מכירות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountONoSalesman = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSalesman", DefaultText = "You cannot run this report without filling the Salesman field",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNek15nXpyDXkNeqINeU15PXldeXINec15zXkCDXkdeX15nXqNeqINeQ15nXqSDXnteb15nXqNeV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOConnected10Cards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connected10Cards", DefaultText = "The GLAccount is connected to 10 or more operational cards.",LocalDefaultText = "כרטיס הנח''ש מחובר ליותר מ 10 כרטיסים תפעוליים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOConnected10Cards = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Connected10Cards", DefaultText = "The GLAccount is connected to 10 or more operational cards.",LocalDefaultText = @"BS64:Iteb16jXmNeZ16Eg15TXoNeXItepINee15fXldeR16gg15zXmdeV16rXqCDXniAxMCDXm9eo15jXmdeh15nXnSDXqtek16LXldec15nXmdedIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Multi", DefaultText = "Multi",LocalDefaultText = @"רב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOMulti = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Multi", DefaultText = "Multi",LocalDefaultText = @"BS64:Iteo15Ei", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOSmallCashbookAndReportingValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SmallCashbookAndReportingValidation", DefaultText = "It is not possible to set the same GLAccount as Small cashbook and Reporting As Another Document",LocalDefaultText = "לא ניתן להגדיר את אותו כרטיס גם כ''קופה קטנה'' וגם לדיווח כ ''תשומות מסמך אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOSmallCashbookAndReportingValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SmallCashbookAndReportingValidation", DefaultText = "It is not possible to set the same GLAccount as Small cashbook and Reporting As Another Document",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeQ16og15DXldeq15Ug15vXqNeY15nXoSDXktedINebIten15XXpNeUINen15jXoNeUIiDXldeS150g15zXk9eZ15XXldeXINebICLXqtep15XXnteV16og157Xodee15og15DXl9eoIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOInterestCalculationStartDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestCalculationStartDateValidation", DefaultText = "There needs to be at least one interest period that covers the Interest Calculation Start Date",LocalDefaultText = @"חייב להיות מוגדרת תקופת ריבית שכוללת את תאריך תחילת חישוב הריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOInterestCalculationStartDateValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestCalculationStartDateValidation", DefaultText = "There needs to be at least one interest period that covers the Interest Calculation Start Date",LocalDefaultText = @"BS64:IteX15nXmdeRINec15TXmdeV16og157XldeS15PXqNeqINeq16fXldek16og16jXmdeR15nXqiDXqdeb15XXnNec16og15DXqiDXqteQ16jXmdeaINeq15fXmdec16og15fXmdep15XXkSDXlNeo15nXkdeZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCantChangeRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CantChangeRecoMethod", DefaultText = "The reconcile method can’t be updated, the GLAcocunt has transactions",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCantChangeRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CantChangeRecoMethod", DefaultText = "The reconcile method can’t be updated, the GLAcocunt has transactions",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXoteT15vXnyDXqdeZ15jXqiDXlNeq15DXnteULCDXoNeo16nXnteVINeq16DXldei15XXqiDXotecINeU15vXqNeY15nXoSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOThereIsExternalTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThereIsExternalTrans", DefaultText = "Includes ledger transactions from external system",LocalDefaultText = @"כולל תנועות ממערכת חיצונית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOThereIsExternalTrans = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ThereIsExternalTrans", DefaultText = "Includes ledger transactions from external system",LocalDefaultText = @"BS64:Iteb15XXnNecINeq16DXldei15XXqiDXntee16LXqNeb16og15fXmdem15XXoNeZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOInterestForeignCurrencyAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestForeignCurrencyAccount", DefaultText = "Interest cannot be defined for a foreign currency account",LocalDefaultText = @"לא ניתן להגדיר תנאי ריבית לכרטיס במטבע זר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOInterestForeignCurrencyAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestForeignCurrencyAccount", DefaultText = "Interest cannot be defined for a foreign currency account",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeS15PXmdeoINeq16DXkNeZINeo15nXkdeZ16og15zXm9eo15jXmdehINeR157XmNeR16Ig15bXqCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCreditAllotmentLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditAllotmentLimit", DefaultText = "The Credit Allotment Percentage should be between 0 and 99.99",LocalDefaultText = @"אחוז הקצאת האשראי צריך להיות בין 0 ל -99.99", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCreditAllotmentLimit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditAllotmentLimit", DefaultText = "The Credit Allotment Percentage should be between 0 and 99.99",LocalDefaultText = @"BS64:IteQ15fXldeWINeU16fXpteQ16og15TXkNep16jXkNeZINem16jXmdeaINec15TXmdeV16og15HXmdefIDAg15wgLTk5Ljk5Ig==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOParent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Parent", DefaultText = "Parent",LocalDefaultText = @"אב", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOParent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Parent", DefaultText = "Parent",LocalDefaultText = @"BS64:IteQ15Ei", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOChild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Child", DefaultText = "Child",LocalDefaultText = @"בן", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOChild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.Child", DefaultText = "Child",LocalDefaultText = @"BS64:IteR158i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOAmountIsInsured = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AmountIsInsured", DefaultText = "of this amount is insured",LocalDefaultText = @"מהסכום הוא מבוטח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOAmountIsInsured = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AmountIsInsured", DefaultText = "of this amount is insured",LocalDefaultText = @"BS64:Itee15TXodeb15XXnSDXlNeV15Ag157XkdeV15jXlyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOChequesList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ChequesList", DefaultText = "Cheques List",LocalDefaultText = @"רשימת המחאות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOChequesList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ChequesList", DefaultText = "Cheques List",LocalDefaultText = @"BS64:Iteo16nXmdee16og15TXnteX15DXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLaccountODebtBetween = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.DebtBetween", DefaultText = "Debt Between",LocalDefaultText = @"חוב בין", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLaccountODebtBetween = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.DebtBetween", DefaultText = "Debt Between",LocalDefaultText = @"BS64:IteX15XXkSDXkdeZ158i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLaccountOFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.From", DefaultText = "From",LocalDefaultText = @"מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLaccountOFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.From", DefaultText = "From",LocalDefaultText = @"BS64:IteeIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLaccountOTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.To", DefaultText = "To",LocalDefaultText = @"עד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLaccountOTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.To", DefaultText = "To",LocalDefaultText = @"BS64:Itei15Mi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOLevelWarningMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LevelWarningMsg", DefaultText = "Some data has been hidden due to insufficient security clearance",LocalDefaultText = @"חלק מהמידע מוסתר , עקב הגבלת הרשאה של המשתמש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOLevelWarningMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LevelWarningMsg", DefaultText = "Some data has been hidden due to insufficient security clearance",LocalDefaultText = @"BS64:IteX15zXpyDXnteU157XmdeT16Ig157Xldeh16rXqCAsINei16fXkSDXlNeS15HXnNeqINeU16jXqdeQ15Qg16nXnCDXlNee16nXqtee16ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOSecurityLevelHiddenItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SecurityLevelHiddenItem", DefaultText = "GLAccount's data is hidden due to insufficient Security Clearance",LocalDefaultText = @"לא ניתן להציג את נתוני הדוח מכיוון שלמשתמש אין הרשאה לקבוצת המאזן שנבחרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOSecurityLevelHiddenItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SecurityLevelHiddenItem", DefaultText = "GLAccount's data is hidden due to insufficient Security Clearance",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNem15nXkiDXkNeqINeg16rXldeg15kg15TXk9eV15cg157Xm9eZ15XXldefINep15zXntep16rXntepINeQ15nXnyDXlNeo16nXkNeUINec16fXkdeV16bXqiDXlNee15DXltefINep16DXkdeX16jXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsORecoCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RecoCurrencyErr", DefaultText = "The reconcile method for an accounting currency account must be local currency",LocalDefaultText = @"שיטת ההתאמה עבור כרטיסים שקליים היא במטבע מקומי בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsORecoCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RecoCurrencyErr", DefaultText = "The reconcile method for an accounting currency account must be local currency",LocalDefaultText = @"BS64:Itep15nXmNeqINeU15TXqteQ157XlCDXoteR15XXqCDXm9eo15jXmdeh15nXnSDXqden15zXmdeZ150g15TXmdeQINeR157XmNeR16Ig157Xp9eV157XmSDXkdec15HXkyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountONotIncludedInTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NotIncludedInTax", DefaultText = "Not included in any Tax Report",LocalDefaultText = @"לא דווחו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountONotIncludedInTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NotIncludedInTax", DefaultText = "Not included in any Tax Report",LocalDefaultText = @"BS64:Itec15Ag15PXldeV15fXlSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOTotalObligo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.TotalObligo", DefaultText = "Total Obligo",LocalDefaultText = @"אובליגו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOTotalObligo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.TotalObligo", DefaultText = "Total Obligo",LocalDefaultText = @"BS64:IteQ15XXkdec15nXkteVIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOCustomerGLaccountDefinedSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerGLaccountDefinedSplit", DefaultText = "The customer GLaccount is already defined as a split by currency Account",LocalDefaultText = @"לא ניתן להוסיף את כרטיס פיצול זה מכיוון שהוא מוגדר ככרטיס ראש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerGLaccountDefinedSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerGLaccountDefinedSplit", DefaultText = "The customer GLaccount is already defined as a split by currency Account",LocalDefaultText = @"BS64:Itec15Ag16DXmdeq158g15zXlNeV16HXmdejINeQ16og15vXqNeY15nXoSDXpNeZ16bXldecINeW15Qg157Xm9eZ15XXldefINep15TXldeQINee15XXkteT16gg15vXm9eo15jXmdehINeo15DXqSI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLAccountsONegativePostponedChequesCommission = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NegativePostponedChequesCommission", DefaultText = "Please enter positive values only in the postponed cheques commission",LocalDefaultText = @"Please enter positive values only in the postponed cheques commission", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Split", DefaultText = "Split",LocalDefaultText = @"מפוצל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Split", DefaultText = "Split",LocalDefaultText = @"BS64:Itee16TXldem15wi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Main", DefaultText = "Main",LocalDefaultText = @"ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Main", DefaultText = "Main",LocalDefaultText = @"BS64:Iteo15DXqdeZIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOUnsavedChangesSaveBeforeContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.UnsavedChangesSaveBeforeContinue", DefaultText = "You have Unsaved changes, please save them before you continue",LocalDefaultText = @"קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOUnsavedChangesSaveBeforeContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.UnsavedChangesSaveBeforeContinue", DefaultText = "You have Unsaved changes, please save them before you continue",LocalDefaultText = @"BS64:Iten15nXmdee15nXnSDXqdeZ16DXldeZ15nXnSDXqdeY16jXnSDXoNep157XqNeVLCDXkNeg15Ag15HXpteiINep157Xmdeo15Qg15zXpNeg15kg15TXmdem15nXkNeULiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOFilterInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Interest", DefaultText = "Interest value",LocalDefaultText = @"תאריכי ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOFilterInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Interest", DefaultText = "Interest value",LocalDefaultText = @"BS64:Iteq15DXqNeZ15vXmSDXqNeZ15HXmdeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOFilterAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Accounting", DefaultText = "Accounting",LocalDefaultText = @"תאריך חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOFilterAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Accounting", DefaultText = "Accounting",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15fXqdeR15XXoNeQ15ki", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOFilterCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Create", DefaultText = "Create",LocalDefaultText = @"תאריך יצירה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOFilterCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Create", DefaultText = "Create",LocalDefaultText = @"BS64:Iteq15DXqNeZ15og15nXpteZ16jXlCI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOInterestReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestReport", DefaultText = "Interest report",LocalDefaultText = @"דוח ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOInterestReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestReport", DefaultText = "Interest report",LocalDefaultText = @"BS64:IteT15XXlyDXqNeZ15HXmdeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCollector = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Collector", DefaultText = "Collector",LocalDefaultText = @"גובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCollector = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Collector", DefaultText = "Collector",LocalDefaultText = @"BS64:IteS15XXkdeUIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOBalanceInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.BalanceInHebrew", DefaultText = "Balance",LocalDefaultText = @"יתרה לפי יתרה לגביה בשח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOBalanceInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.BalanceInHebrew", DefaultText = "Balance",LocalDefaultText = @"BS64:IteZ16rXqNeUINec16TXmSDXmdeq16jXlCDXnNeS15HXmdeUINeR16nXlyI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOLocalInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LocalInHebrew", DefaultText = "Local",LocalDefaultText = @"שח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOLocalInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LocalInHebrew", DefaultText = "Local",LocalDefaultText = @"BS64:Itep15ci", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOSettingOfCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.SettingOfCurrency", DefaultText = "Setting the currency on the card",LocalDefaultText = @"הגדרת המטבע בכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOSettingOfCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.SettingOfCurrency", DefaultText = "Setting the currency on the card",LocalDefaultText = @"BS64:IteU15LXk9eo16og15TXnteY15HXoiDXkdeb16jXmNeZ16Ei", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOInCorrectCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InCorrectCorrect", DefaultText = "Data is Incorrect please correct",LocalDefaultText = @"שגויה יש לבצע תיקון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOInCorrectCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InCorrectCorrect", DefaultText = "Data is Incorrect please correct",LocalDefaultText = @"BS64:Itep15LXldeZ15Qg15nXqSDXnNeR16bXoiDXqteZ16fXldefIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsONotRepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotRepaid", DefaultText = "Not Repaid",LocalDefaultText = @"פירוט שלא נפרעו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsONotRepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotRepaid", DefaultText = "Not Repaid",LocalDefaultText = @"BS64:Itek15nXqNeV15gg16nXnNeQINeg16TXqNei15Ui", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"פירוט המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"BS64:Itek15nXqNeV15gg15TXnteX15DXldeqINei16rXmdeT15nXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCancelSelectedReco = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedReco", DefaultText = "Cancel Selected Reconciles",LocalDefaultText = @"ביטול התאמות מסומנות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCancelSelectedReco = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedReco", DefaultText = "Cancel Selected Reconciles",LocalDefaultText = @"BS64:IteR15nXmNeV15wg15TXqteQ157XldeqINee16HXldee16DXldeqIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountOCancelSelectedRecoConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedRecoConfirm", DefaultText = "The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?",LocalDefaultText = @"תהליך ביטול ההתאמות לשורות שסומנו יבוצע ברקע וימשך מספר דקות בזמן זה לא ניתן יהיה לעצור את התהליך, האם אתה מאשר?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountOCancelSelectedRecoConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedRecoConfirm", DefaultText = "The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?",LocalDefaultText = @"BS64:Iteq15TXnNeZ15og15HXmdeY15XXnCDXlNeU16rXkNee15XXqiDXnNep15XXqNeV16og16nXodeV157XoNeVINeZ15HXldem16Ig15HXqNen16Ig15XXmdee16nXmiDXnteh16TXqCDXk9en15XXqiDXkdeW157XnyDXlteUINec15Ag16DXmdeq158g15nXlNeZ15Qg15zXotem15XXqCDXkNeqINeU16rXlNec15nXmiwg15TXkNedINeQ16rXlCDXnteQ16nXqD8i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"BS64:Itec15Ag16DXkdeX16jXlSDXlNeq15DXnteV16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOMarkedByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MarkedByAnother ", DefaultText = "There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.",LocalDefaultText = @"ישנם תנועות שסומנו אך הותאמו במקביל על ידי משתמש או בסשן אחר , יש לבצע רענון למסך.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOMarkedByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MarkedByAnother ", DefaultText = "There are movements that have been marked but have been adjusted at the same time by a user or in another session, the screen must be refreshed.",LocalDefaultText = @"BS64:IteZ16nXoNedINeq16DXldei15XXqiDXqdeh15XXnteg15Ug15DXmiDXlNeV16rXkNee15Ug15HXnten15HXmdecINei15wg15nXk9eZINee16nXqtee16kg15DXlSDXkdeh16nXnyDXkNeX16ggLCDXmdepINec15HXpteiINeo16LXoNeV158g15zXnteh15ouIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionInProgress", DefaultText = "There are Ledger Transaction in the process.",LocalDefaultText = @"יש התאמות בתהליך", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOLedgerTransactionInProgress = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.LedgerTransactionInProgress", DefaultText = "There are Ledger Transaction in the process.",LocalDefaultText = @"BS64:IteZ16kg15TXqteQ157XldeqINeR16rXlNec15nXmiI=", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsONoAddressToVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NoAddressToVendor", DefaultText = "To Vendor no country specified in default address",LocalDefaultText = @"לספק לא צוינה מדינה בכתובת ברירת המחדל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"BS64:IteZ16rXqNeUINep15XXoNeUINeeIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLaccountOBalanceDiffersFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.BalanceDiffersFrom", DefaultText = "Balance differs from",LocalDefaultText = @"יתרה שונה מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsONoAddressToVendor = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NoAddressToVendor", DefaultText = "To Vendor no country specified in default address",LocalDefaultText = @"BS64:Itec16HXpNenINec15Ag16bXldeZ16DXlCDXnteT15nXoNeUINeR15vXqteV15HXqiDXkdeo15nXqNeqINeU157Xl9eT15wi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLaccountOIsGroupMultiAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.IsGroupMultiAccounts", DefaultText = "To consolidate split GLAccount",LocalDefaultText = @"לאחד כרטיסי פיצול", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLaccountOIsGroupMultiAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.IsGroupMultiAccounts", DefaultText = "To consolidate split GLAccount",LocalDefaultText = @"BS64:Itec15DXl9eTINeb16jXmNeZ16HXmSDXpNeZ16bXldecIg==", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"לא נמצא {field} בכרטיס ספק: {account}", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLAccountsOMissingFieldInAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.MissingFieldInAccount", DefaultText = "Missing {field} in vendor account: {account} ",LocalDefaultText = @"BS64:Itec15Ag16DXntem15Age2ZpZWxkfSDXkdeb16jXmNeZ16Eg16HXpNenOiB7YWNjb3VudH0i", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
  		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountList", DefaultText = "GLAccount List",LocalDefaultText = @"רשימת כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
@@ -14809,9 +15155,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLTransactionReportOToGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.ToGLAccount", DefaultText = "To GLAccount ",LocalDefaultText = @"עד כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים לפי מספר כרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_GLTransactionReportOGLAccountsRange = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLTransactionReport.O.GLAccountsRange", DefaultText = "GLAccount range by Display Number",LocalDefaultText = @"טווח כרטיסים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
 
- 		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"הרץ מיידית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+ 		   TextCode GLAccountTextCode_AgingReportORunReportImmediately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "AgingReport.O.RunReportImmediately", DefaultText = "Run Immediately",LocalDefaultText = @"BS64:IteU16jXpSDXnteZ15nXk9eZ16oi", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes,contextTenant);
+
 
    
 	    

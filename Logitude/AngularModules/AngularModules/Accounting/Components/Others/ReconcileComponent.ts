@@ -1368,8 +1368,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.CurrencyId"),
             Styles: { width: '100px' },
-            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
-            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'CurrencyCode',

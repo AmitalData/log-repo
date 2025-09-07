@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
 			{
 				string data = "Tenant: " + Tenant.ToString() + "ScacCode: " + ScacCode?.ToString() + "ReferenceNo: " + ReferenceNo?.ToString() + "Type: " + Type?.ToString();
 				WriteLogMe("Insert: " + data,null , "UpsertTrackedShipments");
-				return UnitedRequest(Tenant, ScacCode, ReferenceNo, Type)?.Result;
+				return UnitedRequest(Tenant, ScacCode, ReferenceNo, Type,System)?.Result;
 			}
 			catch(Exception ex) 
 			{
@@ -136,15 +136,10 @@ namespace WebFreight.Web.WcfApi
 					if (OceanInsightsRequestPm == null)
 					{
 						OceanInsightsRequestPm = new OceanInsightsRequestPM();
-						if (Type == "c_id")
-						{
-							Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors);//ActivateOperation("STARTMONITOR", ref Table, ref Temp, out Result, out Status, out Errors);
+						
+							Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors, Type);
 
-						}
-						else
-						{
-							Task.StartMonitor(ScacCode, ReferenceNo, OIToken, out Result, out Status, out Errors, false);
-						}
+					
 						if (!string.IsNullOrEmpty(Errors) || !string.IsNullOrWhiteSpace(Errors))
 						{
 							string SearchErrors;

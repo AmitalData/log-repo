@@ -13,7 +13,7 @@ export class SearchListDDLDirective implements  AfterViewInit {
   @Input() set appSearchListDDL(options: any[]) {
     if (this.componentRef && options) {
       this.componentRef.instance.dropdownOptions = options;
-      this.componentRef.instance.showDropdown = options.length > 0;
+      this.componentRef.instance.showDropdown = true;
     }
   }
 

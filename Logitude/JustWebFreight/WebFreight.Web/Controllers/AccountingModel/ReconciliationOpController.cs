@@ -381,25 +381,17 @@ tenant);
 
                 QueryOperations queryOperations = buildQueryOperationsForLedgerTransactions(filters, tenant);
 
-
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
                 transactionQuery.displayNotReconciledOnly = true;
                 GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
-
-                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
-
                 ServiceResponse response = new ServiceResponse();
+                response.Result = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
                 if (filters.GetCount)
                 {
-                    int count = callback.TotalRecord;
-                    response.Count = count;
+                    response.Count = callback.TotalRecord;
                 }
-
-                response.Result = openTransactions;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
-
-                return reponseMessage;
+                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {

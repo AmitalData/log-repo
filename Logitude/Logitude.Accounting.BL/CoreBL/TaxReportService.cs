@@ -268,19 +268,17 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 string aPInvoiceVatNumber = "";
                 string aPInvoiceVatNumberNormalized = "";
-                if (FeatureToggleHelper.HasFeatureToggle("VPI", transaction.Tenant) && transaction.AccountingEntity == AccountingEntityValues.APInvoice)
+
+                var aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
+
+                if (aPInvoice != null && !String.IsNullOrWhiteSpace(aPInvoice.VATNumber))
                 {
-                    var aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
-
-                    if (aPInvoice != null && !String.IsNullOrWhiteSpace(aPInvoice.VATNumber))
-                    {
-                        aPInvoiceVatNumber = aPInvoice.VATNumber;
-                        aPInvoiceVatNumberNormalized = CheckVATValidation(aPInvoice.VATNumber);
-                        if (aPInvoice.VATNumber != "999999999" && aPInvoice.VATNumber != "999999998" && aPInvoice.VATNumber == aPInvoiceVatNumberNormalized)
-                            VatNumber = aPInvoice.VATNumber;
-                    }
-
+                    aPInvoiceVatNumber = aPInvoice.VATNumber;
+                    aPInvoiceVatNumberNormalized = CheckVATValidation(aPInvoice.VATNumber);
+                    if (aPInvoice.VATNumber != "999999999" && aPInvoice.VATNumber != "999999998" && aPInvoice.VATNumber == aPInvoiceVatNumberNormalized)
+                        VatNumber = aPInvoice.VATNumber;
                 }
+
                 if (String.IsNullOrWhiteSpace(VatNumber) && account != null)
                 {
                     if (account.AccountTypeCode == "3" || account.AccountTypeCode == "2" || account.AccountTypeCode == "1")

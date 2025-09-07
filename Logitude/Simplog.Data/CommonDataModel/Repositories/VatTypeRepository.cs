@@ -12,10 +12,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     public class VatTypeRepository:IRepository<VatType>
     {
         ICommonDataContext commonDataContext;
-        public VatTypeRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
         public VatTypeRepository(ICommonDataContext context)
         {
             commonDataContext = context;

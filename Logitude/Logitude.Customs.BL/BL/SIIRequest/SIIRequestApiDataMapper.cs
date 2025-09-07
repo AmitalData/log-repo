@@ -5,6 +5,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.DataContracts.SIIRequest;
 using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityKeys.Extended;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
@@ -62,7 +63,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
 
         public ReleaseRequestApiDto Build(CredentialsDto credentials,
             string siiRequestId,
-            List<SupplierInvoiceItemsReqListKeys> requestItemsKeys)
+            List<SiiSelectedRowDto> requestItemsKeys)
         {
             try
             {
@@ -283,7 +284,7 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                 importCountry = new CountryAlphaDto { alphaCode = sii.OriginCountryCode },
 
                 warehouseLocationName = sii.WareHouseAddress,
-                warehouseSettlement = new IdDto { id = ToInt(sii.WareHouseCity, "WareHouseCity") },
+                warehouseSettlement = string.IsNullOrEmpty(sii.WareHouseCity)? null: new IdDto { id = ToInt(sii.WareHouseCity, "WareHouseCity") },
                 destinationPort = new IdDto
                 {
                     id = ToInt(
@@ -299,24 +300,22 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         }
 
         private ReleaseRequestLineDto BuildLine(
-            SupplierInvoiceItemsReqListKeys key,
+            SiiSelectedRowDto key,
             SupplierInvoiceItemsReqListQueryService service)
         {
-            var item = service.GetSingle(
-                key.DeclarationId,
-                key.LineNumber,
+            var item = service.GetRequest(
                 key.SIIRequestID,
+                key.DeclarationId,
                 key.InvoiceCounterKey,
                 key.InvoiceItemLineNumber,
-                true,
-                false);
+                this._tenant );
             if (item == null)
             {
                 var lineLbl = SIIRequestValidator.Translate(LineCode, _tenant);
                 var dataMsg = SIIRequestValidator.Translate(ItemNotCompleted, _tenant);
 
                 throw new InvalidOperationException(
-                    $"{lineLbl} {key.LineNumber} - {dataMsg}");
+                    $"{lineLbl} {key.UiIndex} - {dataMsg}");
             }
 
             var line = new ReleaseRequestLineDto
@@ -351,7 +350,8 @@ namespace Logitude.Customs.BL.BL.SIIRequest
                                       HebrewRegex
                                           .Replace(item.VendorName, "")
                                           .Trim().Length)),
-                formAttachmentIndexes = new List<int>()
+                formAttachmentIndexes = new List<int>(),
+               UiLineNumber = key.UiIndex
             };
 
             if (string.IsNullOrWhiteSpace(item.ProductFileNumber))
@@ -398,6 +398,4 @@ namespace Logitude.Customs.BL.BL.SIIRequest
         }
 
     }
-
-
 }

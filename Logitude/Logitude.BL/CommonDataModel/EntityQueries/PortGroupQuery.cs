@@ -13,10 +13,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class PortGroupQuery
     {
         PortGroupRepository repository;
-        public PortGroupQuery()
-        {
-            repository = new PortGroupRepository();
-        }
+
         public PortGroupQuery(int tenant)
         {
             repository = new PortGroupRepository(tenant);

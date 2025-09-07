@@ -9,10 +9,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
     {
         ICommonDataContext commonDataContext;
 
-        public RoleFeatureRepository()
-        {
-            commonDataContext = new CommonDataContext();
-        }
+
 
         public RoleFeatureRepository(ICommonDataContext context)
         {

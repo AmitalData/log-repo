@@ -12,10 +12,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         MentionRepository repository;
 
-        public MentionQuery()
-        {
-            repository = new MentionRepository();
-        }
+
 
         public MentionQuery(int tenant)
         {

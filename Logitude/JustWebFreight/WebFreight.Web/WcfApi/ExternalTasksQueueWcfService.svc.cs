@@ -357,7 +357,7 @@ namespace WebFreight.Web.WcfApi
                 logi_list = CFILOGIAPITask.GetLogiOcc();
                 if (queryId == "EXTERNAL_LOGIAPI")
                 {
-                    sql_logi = JsonConvert.DeserializeObject<CFILOGIAPI>(queryParams["CFILOGIAPI"]);
+                    //sql_logi = JsonConvert.DeserializeObject<CFILOGIAPI>(queryParams["CFILOGIAPI"]);
                 }
                 else
                 {
@@ -400,6 +400,7 @@ namespace WebFreight.Web.WcfApi
                 {
                     sqlQuery = sqlQuery.Replace("@CLOSE_TABLE", queryParams["CLOSE_TABLE"]);
                 }
+
                 using (SqlConnection connection = new SqlConnection())
                 {
                     if (from_global)
@@ -425,6 +426,25 @@ namespace WebFreight.Web.WcfApi
                     connection.Open();
                     using (var cmd = new SqlCommand(sqlQuery, connection))
                     {
+
+                        if (!string.IsNullOrEmpty(sql_logi.HAS_IN_OPER))
+                        {
+                            //sqlQuery = sqlQuery.Replace(sql_logi.HAS_IN_OPER, queryParams[sql_logi.HAS_IN_OPER.Substring(1)]);
+                            string in_list = queryParams[sql_logi.HAS_IN_OPER.Substring(1)].Replace("'","");
+                            var ids =  in_list.Split(',').ToList();
+
+                            // create DataTable for parameter
+                            var dt = new DataTable();
+                            dt.Columns.Add(sql_logi.HAS_IN_OPER.Substring(1), typeof(string));
+                            foreach (var id in ids) dt.Rows.Add(id);
+
+                            var p = cmd.Parameters.AddWithValue(sql_logi.HAS_IN_OPER.Substring(1), dt);
+                            p.SqlDbType = SqlDbType.Structured;
+                            p.TypeName = "dbo.StringList"; // match the type in SQL
+                            queryParams.Remove(sql_logi.HAS_IN_OPER.Substring(1));
+                            table_types(connection);
+                        }
+
                         foreach (var field in queryParams)
                         {
 
@@ -518,6 +538,18 @@ namespace WebFreight.Web.WcfApi
                 return (response);
             }
 
+        }
+        public bool table_types(SqlConnection connection)
+        {
+            string sqlQuery= @"IF NOT EXISTS (SELECT 1 FROM sys.table_types 
+                WHERE name='StringList' AND SCHEMA_NAME(schema_id)='dbo')
+                CREATE TYPE dbo.StringList AS TABLE (value nvarchar(400) NOT NULL);";
+            using (var cmd = new SqlCommand(sqlQuery, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            return (true);
         }
         public string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
         {

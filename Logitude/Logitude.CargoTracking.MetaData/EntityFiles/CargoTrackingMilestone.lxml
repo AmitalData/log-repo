@@ -13,6 +13,7 @@
   SupportSubEntity="false"
   ApplyGenericCustomFields="false"
   AvailableInDocumentTypes="false"
+  IsLock="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -731,6 +732,8 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+ 
+  
   <Screen
     Name="&quot;CargoTrackingMilestoneHeaderScreen&quot;"
     ObjectTableName="&quot;CargoTrackingMilestone&quot;"

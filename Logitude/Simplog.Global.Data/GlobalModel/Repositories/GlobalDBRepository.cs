@@ -99,7 +99,25 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             return db;
         }
 
-        public static GlobalDB GetGlobalDBByTenant(int tenant)
+		public List<GlobalDB> GetGlobalDBsActive()
+		{
+			const string cacheKey = "GetGlobalDBs";
+
+			if (HttpContext.Current != null)
+			{
+				var cached = CacheManager.CacheWrapper.Get(cacheKey) as List<GlobalDB>;
+				if (cached != null)
+					return cached;
+
+				var dbs = GetActiveDataBases();
+				CacheManager.CacheWrapper.Insert(cacheKey, dbs, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+				return dbs;
+			}
+
+			return GetActiveDataBases();
+		}
+
+		public static GlobalDB GetGlobalDBByTenant(int tenant)
         {
             string name = "TenantDB" + tenant;
             GlobalDB db = null;

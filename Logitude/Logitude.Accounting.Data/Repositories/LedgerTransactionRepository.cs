@@ -1883,6 +1883,31 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
         }
 
+
+        public LedgerTransactionList GetSingleAsLiteForReco(string transactionId)
+        {
+            var transaction = context.LedgerTransactions.Include("JournalLine").Include("Currency").Include("Journal")
+                .Where(t => t.Id == transactionId)
+                .Select(t => new LedgerTransactionList
+                {
+                    Id = t.Id,
+                    CreateDate = t.CreateDate,
+                    DueDate = t.DueDate,
+                    ForeignAmountDebit = t.ForeignAmountDebit,
+                    ForeignAmountCredit = t.ForeignAmountCredit,
+                    Reference1 = t.Reference1,
+                    Reference2 = t.Reference2,
+                    Reference3 = t.Reference3,
+                    Notes = t.Notes,
+                    JournalNumber = t.JournalLine.Journal.JournalNumber,
+                    JournalId = t.JournalId,
+                    JournalLineNumber = t.JournalLineNumber,
+                    OpenAmountCurrencySign = t.Currency!=null?t.Currency.Sign:String.Empty,
+                    SearchFields = t.SearchFields,
+                }).FirstOrDefault();
+            return transaction;
+        }
+
         public List<GLAccountTotalByMonthsDTO> GetControllerTotalDateType1(int tenant)
         {
             return (from a in context.LedgerTransactions
@@ -1954,5 +1979,6 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
     public struct JournalStatuses
     {
         public const string Voided = "3";
+        public const string Cancelled = "5";
     }
 }

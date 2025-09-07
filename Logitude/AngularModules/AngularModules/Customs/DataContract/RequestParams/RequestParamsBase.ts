@@ -47,8 +47,7 @@ export class RequestParamsBase {
 
     public SuppressSplitWR: boolean;
 
-    
-
+    public DeclarationDirection: string;
     public ForcePersonalSign: boolean;
     public TestCase: TestCase
 }

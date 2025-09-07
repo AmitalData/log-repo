@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         CustomerSizeRepository repository;
 
-        public CustomerSizeQuery()
-        {
-            repository = new CustomerSizeRepository(); 
-        }
+
 
         public CustomerSizeQuery(int tenant)
         {

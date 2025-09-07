@@ -17,10 +17,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             get { return Context; }
         }
 
-        public ContactsUnseenEntitieRepository()
-        {
-            this.Context = new CommonDataContext();
-        }
+
 
         public ContactsUnseenEntitieRepository(int tenant)
         {

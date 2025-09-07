@@ -13,10 +13,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         TemperatureUnitRepository repository;
 
-        public TemperatureUnitQuery()
-        {
-            repository = new TemperatureUnitRepository();
-        }
 
         public TemperatureUnitQuery(int tenant)
         {

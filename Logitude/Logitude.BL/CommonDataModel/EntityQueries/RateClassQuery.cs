@@ -16,10 +16,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     {
         RateClassRepository repository;
 
-        public RateClassQuery()
-        {
-            repository = new RateClassRepository(); 
-        }
+
 
         public RateClassQuery(int tenant)
         {

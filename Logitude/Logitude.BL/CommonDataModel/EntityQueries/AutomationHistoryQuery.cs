@@ -15,10 +15,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
     public class AutomationHistoryQuery
     {
         AutomationHistoryRepository repository;
-        public AutomationHistoryQuery()
-        {
-            repository = new AutomationHistoryRepository();
-        }
+   
 
         public AutomationHistoryQuery(int tenant)
         {
