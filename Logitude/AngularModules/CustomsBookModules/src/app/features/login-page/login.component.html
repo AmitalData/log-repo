@@ -3,7 +3,7 @@
         [ngStyle]="{ 'background-image': BackGroundImg}">
         <div class="container-login-child">
             <div class="wrap-login">
-                <div class="login-form">
+                <div  class="login-form">
                     <div>
                         <img alt="" class="logo-img" src="{{LogoImgSrc}}">
                     </div>
@@ -35,7 +35,7 @@
                             <div class="login-form-bgbtn"></div>
                             <button (click)="LogInClicked()" class="login-form-btn"
                                 [ngStyle]="SecondaryColor != null ? {'background': SecondaryColor} : {}">
-                                {{'General.G.LoginBtn' | TextCodeTranslationPipe}}
+                                {{ 'General.O.Login'  | TextCodeTranslationPipe }}
                             </button>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                     <div class="text-center" style="margin:20px;margin-bottom:10px;">
                         <a class="txt1" [ngStyle]="MainColor != null ? {'color': MainColor} : {}"
                             (click)="ForgotPasswordClicked()" style="cursor: pointer;">
-                            {{'General.G.ForgotPasswordMsg' | TextCodeTranslationPipe}}
+                            {{ text.getValue() }} 
                         </a>
                     </div>
 

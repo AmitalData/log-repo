@@ -3,10 +3,15 @@ import { SessionLocator } from '../Utilities/SessionLocator';
 import { AppTool } from '../Tools';
 // Replace deprecated import with recommended check
 import { ObjectsLocator } from '../Locators/ObjectsLocator';
+import lzString from 'lz-string';
+import { LocalStorageManager } from './LocalStorageManager';
 
 const isNullOrUndefined = (value: any) => value === undefined || value === null;
 
 export class TextCodeTranslator {
+
+
+
 	static BIReportTranslate(value: string) {
 		var translation = '';
 		var translationObject = window.TextCodes.filter((d) => d.Code == value)[0];
@@ -24,11 +29,25 @@ export class TextCodeTranslator {
 	}
 
 	static Translate(value: string, Fix: boolean = true): string {
+			if (isNullOrUndefined(window.TextCodes)) { 
+			let texts = lzString.decompress(LocalStorageManager.GetItem("TextCodes"));
+			texts = JSON.parse(texts);
+			console.log(texts)
+			if (texts) {
+				window.TenantTranslations = texts;
+				window.TenantLanguageTranslations = texts;
+				window.TextCodesTranslations = texts;
+				window.TranslationsCache = texts;
+				window.TextCodes = texts;
+				window.TextCodesCache = texts;
+
+			}
+		}
 		if (SessionLocator.UseCachedData) {
 			return this.TranslateCached(value, Fix);
 		}
 		//console.log('88888888888888:', value);
-
+	
 		var translation: string = '';
 
 		var cachedTranslationObject = window.TranslationsCache.filter((d: any) => d.Code === value)[0];
@@ -60,7 +79,7 @@ export class TextCodeTranslator {
 		var cachedTranslationObject = window.TextCodesCache?.filter((d: any) => d.Code === value)[0];
 
 		if (cachedTranslationObject) {
-			if (SessionLocator.LoggedUserPM.DontShowLocal) {
+			if (SessionLocator.LoggedUserPM?.DontShowLocal) {
 				translation = cachedTranslationObject.DefaultText;
 			} else {
 				if (cachedTranslationObject.LocalDefaultText) {
@@ -114,8 +133,8 @@ export class TextCodeTranslator {
 				}
 
 				window.TextCodesCache?.push(translationObject);
-			} 
-			
+			}
+
 		}
 
 		if (window.TextCodesCache?.length > 200) {

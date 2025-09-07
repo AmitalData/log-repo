@@ -1,8 +1,6 @@
 import {Pipe} from '@angular/core';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 import { SessionLocator } from '../Utilities/SessionLocator';
-import { ObjectsLocator } from '../Locators/ObjectsLocator';
-import { AppTool } from '../Tools';
 
 @Pipe({ name: 'TextCodeTranslationPipe', standalone: true })
 

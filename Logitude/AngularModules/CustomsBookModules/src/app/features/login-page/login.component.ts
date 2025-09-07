@@ -13,6 +13,10 @@ import { Pipes } from '../../core/Infrastructure/ModuleDeclarations';
 import { SessionLocator } from '../../core/Infrastructure/Utilities/SessionLocator';
 import { QueriesPMService } from '../../core/Infrastructure/Services/StandardPMs/QueriesPMService';
 import { TextCodePMService } from '../../core/Infrastructure/Services/StandardPMs/TextCodePMService';
+import { LocalStorageManager } from '../../core/Infrastructure/Utilities/LocalStorageManager';
+import lzString from 'lz-string';
+import { BehaviorSubject } from 'rxjs';
+import { TextCodeTranslator } from '../../core/Infrastructure/Utilities/TextCodeTranslator';
 
 
 @Component({
@@ -41,6 +45,8 @@ export class LoginComponent implements OnInit {
     public MainColor: string = "rgb(25, 105, 180)"; // "#000000";;
     public SecondaryColor: string = "rgb(184, 189, 229)"; // "#002664";
     public BackGroundImg: string = "url('assets/images/map-bg.svg')";
+
+    public text: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
 
     constructor(private router: Router,
@@ -244,29 +250,33 @@ export class LoginComponent implements OnInit {
     }
 
     public getTranslation(): void {
-        window.TenantTranslations = [];
-        window.TenantLanguageTranslations = [];
-        window.TextCodesTranslations = [];
-        window.TranslationsCache = [];
-        window.TextCodes = [];
-        window.TextCodesCache = [];
+        let texts = lzString.decompress(LocalStorageManager.GetItem("TextCodes"));
+        texts = JSON.parse(texts);
+        console.log(JSON.parse(texts))
+        if (texts === null || texts.length === 0) {
+            this.loginService
+                .GetTenantTextCode()
+                .toPromise().then((myResult: any) => {
+                    if (myResult) {
+                        window.TextCodesCache = myResult;
+                        window.TenantTranslations = myResult;
+                        window.TenantLanguageTranslations = myResult;
+                        window.TextCodesTranslations = myResult;
+                        window.TranslationsCache = myResult;
+                        window.TextCodes = myResult;
+                        LocalStorageManager.SetItem("TextCodes", lzString.compress(JSON.stringify(myResult)));
+                    }
+
+                }).then(() => {
+                    console.log(this.text.getValue())
+                    this.text.next(TextCodeTranslator.Translate('General.G.ForgotPasswordMsg',false));
+                });
 
 
 
-
-        this.loginService
-            .GetTenantTextCode()
-            .subscribe((myResult: any) => {
-                if (myResult) {
-                    window.TextCodes =
-                        window.TextCodes.concat(myResult);
-                    window.TextCodesTranslations.push(myResult)
-                    window.TranslationsCache.push(myResult);
-                    window.TextCodesCache.push(myResult);
-
-                }
-            });
+        }
+       
 
     }
-
 }
+
